@@ -107,7 +107,7 @@ class Application extends AWFApplication
 		$sessionTimeout = (int) $this->container->appConfig->get('session_timeout', 1440);
 
 		// Get the base URL and set the cookie path
-		$uri = new Uri(Uri::base(false, $this->container), $this);
+		$uri = new Uri(Uri::base(false, $this->container));
 
 		// Force the cookie timeout to coincide with the session timeout
 		if ($sessionTimeout > 0)

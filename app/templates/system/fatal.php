@@ -5,7 +5,7 @@
  * @license   GNU General Public License version 3, or later
  */
 
-defined('_AKEEBA') || die;
+defined('AKEEBA') || die;
 
 use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 
