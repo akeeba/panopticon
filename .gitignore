@@ -1,0 +1,17 @@
+### Application stuff
+/app/config.php
+/app/cache/**
+!/app/cache/.gitkeep
+/app/tmp/**
+!/app/tmp/.gitkeep
+/app/version.php
+
+### Composer
+/app/vendor
+
+### Node.js
+/node_modules
+
+### Build & Release files
+/build/override.properties
+/release

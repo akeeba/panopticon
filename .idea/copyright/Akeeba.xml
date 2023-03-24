@@ -1,0 +1,8 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="allowReplaceRegexp" value="Copyright.*20[0-9]{2,2}.*(Nicholas|Akeeba)" />
+    <option name="keyword" value="Copyright.*20[0-9]{2,2}.*(Nicholas|Akeeba)" />
+    <option name="notice" value="@package   panopticon&#10;@copyright Copyright (c)2023-&amp;#36;today.year Nicholas K. Dionysopoulos / Akeeba Ltd&#10;@license   GNU General Public License version 3, or later" />
+    <option name="myName" value="Akeeba" />
+  </copyright>
+</component>

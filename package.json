@@ -1,0 +1,39 @@
+{
+	"name": "akeeba-panopticon",
+	"description": "Akeeba Panopticon",
+	"devDependencies": {
+		"@babel/cli": "^7.11.6",
+		"@babel/core": "^7.11.6",
+		"@babel/preset-env": "^7.11.5",
+		"babel-preset-minify": "^0.5.1",
+		"bootstrap": "^5.3.0-alpha1",
+		"core-js": "^3.9.1"
+	},
+	"babel": {
+		"presets": [
+			[
+				"@babel/preset-env",
+				{
+					"useBuiltIns": "entry",
+					"corejs": {
+						"version": "3.9",
+						"proposals": true
+					}
+				}
+			],
+			[
+				"minify",
+				{
+					"builtIns": false,
+					"removeConsole": false
+				}
+			]
+		],
+		"comments": false,
+		"sourceType": "script",
+		"ignore": [
+			"app/media/js/*.min.js",
+			"app/media/css/*.min.css"
+		]
+	}
+}

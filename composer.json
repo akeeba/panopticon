@@ -1,0 +1,50 @@
+{
+	"name": "akeeba/panopticon",
+	"type": "project",
+	"description": "Akeeba Panopticon — Site monitoring",
+	"homepage": "https://github.com/akeeba/panopticon",
+	"license": "GPL-3.0+",
+	"authors": [
+		{
+			"name": "Nicholas K. Dionysopoulos",
+			"email": "nicholas_NO_SPAM_PLEASE@akeeba.com",
+			"homepage": "http://www.dionysopoulos.me",
+			"role": "Lead Developer"
+		}
+	],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/akeeba/remotecli"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/akeeba/awf"
+		}
+	],
+	"require": {
+		"php": ">=8.0",
+		"ext-curl": "*",
+		"ext-mbstring": "*",
+		"ext-json": "*",
+		"akeeba/awf": "dev-development",
+		"akeeba/remotecli": "^3.0.0",
+		"composer/ca-bundle": "^1.3.4",
+		"dragonmantank/cron-expression": "^3.3.2",
+		"symfony/error-handler": "^5.2"
+	},
+	"suggest": {
+		"ext-zend-opcache": "*"
+	},
+	"config": {
+		"vendor-dir": "app/vendor",
+		"platform": {
+			"php": "8.0.0"
+		}
+	},
+	"autoload" : {
+		"psr-4": {
+			"Akeeba\\Panopticon\\": "app/src"
+		}
+	}
+}
