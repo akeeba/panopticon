@@ -34,9 +34,15 @@ class Application extends AWFApplication
 		$this->discoverSessionSavePath();
 		$this->setTemplate('default');
 		$this->loadLanguages();
-		$this->container->appConfig->loadConfiguration();
-		$this->applyTimezonePreference();
-		$this->applySessionTimeout();
+
+
+		if (!$this->redirectToSetup())
+		{
+			$this->container->appConfig->loadConfiguration();
+			$this->applyTimezonePreference();
+			$this->applySessionTimeout();
+		}
+
 		$this->loadRoutes();
 
 		// Attach the user privileges to the user manager
@@ -338,5 +344,27 @@ class Application extends AWFApplication
 		{
 			$this->getContainer()->mediaQueryKey = md5(__DIR__ . ':' . AKEEBA_PANOPTICON_VERSION . ':' . AKEEBA_PANOPTICON_DATE);
 		}
+	}
+
+	private function redirectToSetup(): bool
+	{
+		$configPath = $this->container->appConfig->getDefaultPath();
+
+		if (
+			@file_exists($configPath)
+			|| in_array(
+				$this->getContainer()->input->getCmd('view', ''),
+				self::NO_LOGIN_VIEWS
+			)
+		)
+		{
+			return false;
+		}
+
+		$this->getContainer()->input->setData([
+			'view' => 'setup',
+		]);
+
+		return true;
 	}
 }

@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+
+<project name="panopticon" description="Akeeba Panopticon" default="git">
+    <import file="${phing.dir}/../buildfiles/phing/common.xml"/>
+
+    <!-- Override properties set up in common.xml -->
+    <property name="dirs.root" value="${phing.dir}" override="true" />
+    <property name="dirs.phpapp" value="app" override="true" />
+    <property name="dirs.release" value="${dirs.root}/release" override="true" />
+
+    <!-- Load externally defined properties -->
+    <property file="${phing.dir.common}/default.properties" override="true" />
+    <property file="${phing.dir}/../build.properties" override="true" />
+    <property file="${phing.dir}/../build.${host.os}.properties" override="true" />
+    <property file="${phing.dir}/build.properties" override="true" />
+    <property file="${phing.dir}/override.properties" override="true" />
+
+    <!--
+    ====================================================================================================
+    File sets
+    ====================================================================================================
+    -->
+    <fileset dir="${dirs.phpapp}" id="app" expandsymboliclinks="true">
+        <include name="**" />
+
+        <!-- Do not copy the configuration -->
+        <exclude name="config.php" />
+
+        <!-- Exclude SCSS -->
+        <exclude name="media/scss/**" />
+
+        <!-- Exclude map files -->
+        <exclude name="media/css/*.map" />
+        <exclude name="media/js/*.map" />
+    </fileset>
+
+    <!--
+    ====================================================================================================
+    Tasks - General
+    ====================================================================================================
+    -->
+    <target name="git" description="Makes only packages, not the documentation"
+            depends="new-release,setup-properties,copy-bs-js,compile-css,compile-javascript,app-package">
+    </target>
+
+    <target name="new-release" depends="composer-install,npm-install,link">
+        <echo>Emptying release directory</echo>
+        <delete dir="${dirs.release}" quiet="true" includeemptydirs="true"/>
+        <mkdir dir="${dirs.release}"/>
+
+        <echo>Clearing old cache and temporary files</echo>
+        <delete quiet="true">
+            <fileset dir="${dirs.phpapp}/cache">
+                <include name="**"/>
+                <exclude name=".gitkeep"/>
+            </fileset>
+            <fileset dir="${dirs.phpapp}/tmp">
+                <include name="**"/>
+                <exclude name=".gitkeep"/>
+            </fileset>
+        </delete>
+
+        <echo>Removing .DS_Store files</echo>
+        <exec command="sh killDS.sh" dir="${dirs.root}"/>
+    </target>
+
+    <target name="setup-properties" description="Set up version and build properties">
+        <!-- Initialize the build.date timestamp -->
+        <tstamp>
+            <format property="build.date" pattern="%Y-%m-%d"/>
+        </tstamp>
+
+        <!-- Initialize the version if it's not set -->
+        <if>
+            <equals arg1="${version}" arg2="git" />
+            <then>
+                <autoversion workingCopy="${dirs.root}" propertyName="version" />
+            </then>
+        </if>
+
+        <filterchain id="standard-tokens">
+            <replacetokens begintoken="##" endtoken="##">
+                <token key="DATE" value="${build.date}"/>
+                <token key="VERSION" value="${version}"/>
+                <token key="PRO" value="1"/>
+            </replacetokens>
+        </filterchain>
+    </target>
+
+    <target name="npm-install" description="Install the NPM dev dependencies">
+        <echo>Installing NPM dev dependencies</echo>
+        <exec executable="npm" dir="${dirs.root}" checkreturn="true">
+            <arg value="install" />
+        </exec>
+    </target>
+
+    <target name="compile-javascript" description="Transpile and minify JavaScript files">
+        <echo>Minifying JavaScript files</echo>
+        <exec executable="npx" dir="${dirs.root}" checkreturn="true">
+            <arg value="babel" />
+
+            <arg value="${dirs.phpapp}/media/js" />
+
+            <arg value="--out-dir" />
+            <arg value="${dirs.phpapp}/media/js" />
+
+            <arg value="--out-file-extension" />
+            <arg value=".min.js" />
+
+            <arg value="--source-maps" />
+        </exec>
+    </target>
+
+    <target name="compile-css" description="Compile SCSS to minified CSS">
+        <echo>Compiling SCSS into CSS</echo>
+        <foreach param="filename" target="sass-apply">
+            <fileset dir="${dirs.phpapp}/media/scss">
+                <include name="*.scss" />
+                <exclude name="_*.scss" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="sass-apply">
+        <basename property="basename" file="${filename}" suffix=".scss" />
+
+        <exec executable="sass" dir="${phing.dir}" checkreturn="true" passthru="true">
+            <arg value="${dirs.phpapp}/media/scss/${filename}:${dirs.phpapp}/media/css/${basename}.min.css" />
+
+            <arg value="-s" />
+            <arg value="compressed" />
+
+            <arg value="--update" />
+        </exec>
+    </target>
+
+    <target name="copy-bs-js" description="Copy the Bootstrap JavaScript files">
+        <echo>Copying Bootstrap JavaScript files</echo>
+        <copy todir="${dirs.phpapp}/media/js">
+            <fileset dir="${dirs.root}/node_modules/bootstrap/dist/js">
+                <include name="bootstrap.bundle.*" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!--
+    ====================================================================================================
+    Tasks - Packages
+    ====================================================================================================
+    -->
+    <target name="app-package" description="Component package build"
+            depends="new-release,setup-properties">
+        <echo>Creating ZIP package</echo>
+
+        <copy file="${dirs.root}/CHANGELOG" tofile="${dirs.phpapp}/CHANGELOG.php" overwrite="true"/>
+
+        <copy file="./build/templates/version.php" tofile="${dirs.phpapp}/version.php" overwrite="true">
+            <filterchain refid="standard-tokens"/>
+        </copy>
+
+        <zipme basedir="${dirs.phpapp}"
+               destfile="${dirs.release}/panopticon-${version}.zip"
+               includeemptydirs="true">
+            <fileset refid="app"/>
+        </zipme>
+    </target>
+
+    <!--
+    ====================================================================================================
+    Tasks - Documentation
+    ====================================================================================================
+    -->
+
+    <target name="documentation" description="Creates the documentation packages"
+            depends="doc-epub">
+    </target>
+
+    <target name="doc-epub" description="Documentation in ePub format">
+        <phingcall target="docbook-epub">
+            <property name="docs.input" value="panopticon.xml"/>
+        </phingcall>
+    </target>
+
+</project>

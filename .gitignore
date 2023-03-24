@@ -1,5 +1,7 @@
 ### Application stuff
+/app/CHANGELOG.php
 /app/config.php
+/app/config.dist.php
 /app/cache/**
 !/app/cache/.gitkeep
 /app/tmp/**

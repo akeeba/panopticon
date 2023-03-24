@@ -27,6 +27,11 @@ class Configuration extends AWFConfiguration
 		// Reset the class
 		$this->data = new \stdClass();
 
+		if (!file_exists($filePath))
+		{
+			return;
+		}
+
 		// Try to open the file
 		require_once $filePath;
 

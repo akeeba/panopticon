@@ -1,0 +1,7 @@
+################################################################################
+##                        DO NOT REMOVE THIS FILE
+################################################################################
+##
+## This files tells the PostUpgradeScript to NOT execute when we are inside a
+## symlinked local site.
+##

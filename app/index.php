@@ -5,6 +5,7 @@
  * @license   GNU General Public License version 3, or later
  */
 
+use Akeeba\Panopticon\Application;
 use Akeeba\Panopticon\Factory;
 
 define('AKEEBA', 1);
@@ -16,7 +17,7 @@ require APATH_ROOT . '/includes/bootstrap.php';
 
 // Wrap execution in a callable to avoid polluting the global namespace with variables
 call_user_func(
-	function ($app)
+	function (Application $app)
 	{
 		$app->initialise();
 		$app->route();

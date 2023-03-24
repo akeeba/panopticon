@@ -45,21 +45,23 @@ require_once APATH_ROOT . '/vendor/autoload.php';
 $errorHandler = \Symfony\Component\ErrorHandler\ErrorHandler::register();
 \Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer::setTemplate(APATH_THEMES . '/system/fatal.php');
 
-// Do we need to redirect the user to the installation application?
-if (
-	!file_exists(APATH_CONFIGURATION . '/config.php')
-	|| (filesize(APATH_CONFIGURATION . '/config.php') < 10)
-	|| (file_exists(APATH_INSTALLATION . '/index.php') && \Akeeba\Panopticon\Library\Version\Version::getInstance()->isStable())
-) {
-	if (file_exists(APATH_INSTALLATION . '/index.php')) {
-		header('Location: ' . substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], 'index.php')) . 'installation/index.php');
+if (!file_exists(APATH_CONFIGURATION . '/config.php'))
+{
+	/**
+	 * Forcibly enable debug mode (and detailed exception reporting) during the initial setup.
+	 *
+	 * This helps to identify and resolve errors during the initial setup.
+	 */
+	define('AKEEBADEBUG', 1);
 
-		exit;
-	} else {
-		echo 'There is no configuration file and the installation code is missing.';
+	$errorHandler->setExceptionHandler(
+		[
+			new \Symfony\Component\ErrorHandler\ErrorHandler(null, true),
+			'renderException'
+		]
+	);
 
-		exit;
-	}
+	return;
 }
 
 // Load the configuration; we'll need it to set up error reporting and handling
