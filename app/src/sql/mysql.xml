@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ @package   panopticon
+  ~ @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+  ~ @license   GNU General Public License version 3, or later
+  -->
+
+<schema>
+    <meta>
+        <drivers>
+            <driver>mysqli</driver>
+            <driver>pdomysql</driver>
+        </drivers>
+    </meta>
+
+    <sql>
+        <action table="#__akeeba_common" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__akeeba_common`
+(
+    `key`   VARCHAR(255) NOT NULL,
+    `value` LONGTEXT     NOT NULL,
+    PRIMARY KEY (`key`(64))
+)
+    DEFAULT COLLATE utf8mb4_unicode_ci
+    ENGINE = InnoDB;
+            ]]></query>
+        </action>
+
+        <action table="#__users" canfail="0">
+            <condition type="missing" value="" />
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__users`
+(
+    `id`         BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `username`   VARCHAR(255)        NOT NULL,
+    `name`       VARCHAR(255)        NOT NULL,
+    `email`      VARCHAR(255)        NOT NULL,
+    `password`   VARCHAR(255)        NOT NULL,
+    `parameters` LONGTEXT,
+    PRIMARY KEY (`id`)
+)
+    DEFAULT COLLATE utf8mb4_unicode_ci
+    ENGINE = InnoDB;
+]]></query>
+        </action>
+
+        <action table="#__sites" canfail="0">
+            <condition type="missing" value="" />
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__sites`
+(
+    `id`          SERIAL,
+    `name`        VARCHAR(255)     NOT NULL,
+    `url`         VARCHAR(1024)    NOT NULL,
+    `enabled`     TINYINT UNSIGNED NOT NULL DEFAULT 1,
+    `created_on`  DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created_by`  BIGINT UNSIGNED  NOT NULL,
+    `modified_on` DATETIME         NULL,
+    `modified_by` BIGINT UNSIGNED  NULL,
+    `locked_on`   DATETIME         NULL,
+    `locked_by`   BIGINT UNSIGNED  NULL,
+    `config`      JSON,
+    FOREIGN KEY `#__sites_users_created` (`created_by`) REFERENCES `#__users` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY `#__sites_users_modified` (`modified_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL,
+    FOREIGN KEY `#__sites_users_locked` (`locked_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL
+)
+    DEFAULT COLLATE `utf8mb4_unicode_ci`
+    ENGINE = InnoDB;
+            ]]></query>
+        </action>
+
+        <action table="#__tasks" canfail="0">
+            <condition type="missing" value="" />
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__tasks`
+(
+    `id`              SERIAL,
+    `site_id`         BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    `type`            VARCHAR(255)    NOT NULL,
+    `params`          LONGTEXT,
+    `cron_expression` VARCHAR(255)    NOT NULL DEFAULT '@daily',
+    `state`           TINYINT         NOT NULL DEFAULT 1,
+    `last_exit_code`  INT             NOT NULL DEFAULT 0,
+    `last_execution`  DATETIME        NULL,
+    `next_execution`  DATETIME        NOT NULL DEFAULT '2000-01-01 00:00:00',
+    `times_executed`  INT UNSIGNED    NOT NULL DEFAULT 0,
+    `times_failed`    INT UNSIGNED    NOT NULL DEFAULT 0,
+    `locked`          DATETIME,
+    `priority`        INT             NOT NULL DEFAULT 0,
+    FOREIGN KEY `#__tasks_sites` (`site_id`) REFERENCES `#__sites` (`id`) ON DELETE CASCADE
+)
+    DEFAULT COLLATE `utf8mb4_unicode_ci`
+    ENGINE = InnoDB;
+            ]]></query>
+        </action>
+    </sql>
+</schema>
