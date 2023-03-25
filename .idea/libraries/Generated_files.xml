@@ -2,13 +2,19 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/app/media/js/ajax.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/bootstrap.bundle.min.js" />
-        <item url="file://$PROJECT_DIR$/app/media/js/bootstrap.bundle.min.min.js" />
+        <item url="file://$PROJECT_DIR$/app/media/js/gui-helpers.min.js" />
+        <item url="file://$PROJECT_DIR$/app/media/js/showon.min.js" />
+        <item url="file://$PROJECT_DIR$/app/media/js/system.min.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/media/js/ajax.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/bootstrap.bundle.min.js" />
-      <root url="file://$PROJECT_DIR$/app/media/js/bootstrap.bundle.min.min.js" />
+      <root url="file://$PROJECT_DIR$/app/media/js/gui-helpers.min.js" />
+      <root url="file://$PROJECT_DIR$/app/media/js/showon.min.js" />
+      <root url="file://$PROJECT_DIR$/app/media/js/system.min.js" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
