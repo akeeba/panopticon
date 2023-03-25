@@ -40,7 +40,7 @@
     ====================================================================================================
     -->
     <target name="git" description="Makes only packages, not the documentation"
-            depends="new-release,setup-properties,copy-bs-js,compile-css,compile-javascript,app-package">
+            depends="new-release,setup-properties,compile-css,compile-javascript,app-package">
     </target>
 
     <target name="new-release" depends="composer-install,npm-install,link">
@@ -52,13 +52,32 @@
         <delete quiet="true">
             <fileset dir="${dirs.phpapp}/cache">
                 <include name="**"/>
-                <exclude name=".gitkeep"/>
+                <exclude name=".htaccess"/>
+                <exclude name="web.config"/>
             </fileset>
             <fileset dir="${dirs.phpapp}/tmp">
                 <include name="**"/>
-                <exclude name=".gitkeep"/>
+                <exclude name=".htaccess"/>
+                <exclude name="web.config"/>
             </fileset>
         </delete>
+
+        <!-- The vendor folder may have been created afresh; copy the .htaccess and web.config files into it -->
+        <echo>Copying .htaccess and web.config into the vendor folder</echo>
+        <copy todir="${dirs.phpapp}/vendor">
+            <fileset dir="${dirs.phpapp}/src">
+                <include name=".htaccess" />
+                <include name="web.config" />
+            </fileset>
+        </copy>
+
+        <!-- Bootstrap may have been updated. Copy its JS files. Bootstrap's SCSS is handled by compile-css. -->
+        <echo>Copying Bootstrap JavaScript files</echo>
+        <copy todir="${dirs.phpapp}/media/js">
+            <fileset dir="${dirs.root}/node_modules/bootstrap/dist/js">
+                <include name="bootstrap.bundle.*" />
+            </fileset>
+        </copy>
 
         <echo>Removing .DS_Store files</echo>
         <exec command="sh killDS.sh" dir="${dirs.root}"/>
@@ -132,15 +151,6 @@
 
             <arg value="--update" />
         </exec>
-    </target>
-
-    <target name="copy-bs-js" description="Copy the Bootstrap JavaScript files">
-        <echo>Copying Bootstrap JavaScript files</echo>
-        <copy todir="${dirs.phpapp}/media/js">
-            <fileset dir="${dirs.root}/node_modules/bootstrap/dist/js">
-                <include name="bootstrap.bundle.*" />
-            </fileset>
-        </copy>
     </target>
 
     <!--

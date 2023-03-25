@@ -3,9 +3,11 @@
 /app/config.php
 /app/config.dist.php
 /app/cache/**
-!/app/cache/.gitkeep
+!/app/cache/.htaccess
+!/app/cache/web.config
 /app/tmp/**
-!/app/tmp/.gitkeep
+!/app/tmp/.htaccess
+!/app/tmp/web.config
 /app/version.php
 
 ### Composer
