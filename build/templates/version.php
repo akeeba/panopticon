@@ -5,6 +5,6 @@
  * @license   GNU General Public License version 3, or later
  */
 
-define('AKEEBA_PANOPTICON_VERSION', '##VERSION##');
-define('AKEEBA_PANOPTICON_DATE', '##DATE##');
-define('AKEEBA_PANOPTICON_MINPHP', '8.1.0');
+const AKEEBA_PANOPTICON_VERSION = '##VERSION##';
+const AKEEBA_PANOPTICON_DATE    = '##DATE##';
+const AKEEBA_PANOPTICON_MINPHP  = '8.1.0';

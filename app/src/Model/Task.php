@@ -85,7 +85,7 @@ class Task extends DataModel
 		return $this;
 	}
 
-	public function runNextTask(): void
+	public function runNextTask(): bool
 	{
 		$db = $this->getDbo();
 
@@ -102,7 +102,7 @@ class Task extends DataModel
 		{
 			ob_end_clean();
 
-			return;
+			return false;
 		}
 
 		// Cancel any tasks which appear to be stuck
@@ -117,7 +117,7 @@ class Task extends DataModel
 
 			@ob_end_clean();
 
-			return;
+			return false;
 		}
 
 		// Get the next pending task
@@ -129,7 +129,7 @@ class Task extends DataModel
 			{
 				$db->unlockTables();
 
-				return;
+				return false;
 			}
 		}
 		catch (Exception)
@@ -138,7 +138,7 @@ class Task extends DataModel
 
 			@ob_end_clean();
 
-			return;
+			return false;
 		}
 
 		// Mark the current task as running
@@ -168,7 +168,7 @@ class Task extends DataModel
 
 			@ob_end_clean();
 
-			return;
+			return true;
 		}
 
 		try
@@ -246,6 +246,8 @@ class Task extends DataModel
 			}
 
 			@ob_end_clean();
+
+			return true;
 		}
 	}
 

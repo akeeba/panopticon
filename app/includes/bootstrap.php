@@ -12,6 +12,16 @@ if (version_compare(
 	'lt'
 ))
 {
+	if (defined('AKEEBA_PANOPTICON_CLI') || @is_file(APATH_THEMES . '/system/incompatible.html'))
+	{
+		echo sprintf(
+			"Akeeba Panopticon requires PHP %s or later. Your server is using PHP %s.". PHP_EOL,
+			AKEEBA_PANOPTICON_MINPHP, PHP_VERSION
+		);
+
+		exit(254);
+	}
+
 	die(
 	str_replace(
 		['{{minphpversion}}', '{{phpversion}}'],
@@ -24,6 +34,13 @@ if (version_compare(
 // We cannot possibly be running under HHVM?!!
 if (defined('HHVM_VERSION'))
 {
+	if (defined('AKEEBA_PANOPTICON_CLI') || !@is_file(APATH_THEMES . '/system/hhvm.html'))
+	{
+		echo "Akeeba Panopticon is not compatible with HHVM. Please use PHP proper.". PHP_EOL;
+
+		exit(254);
+	}
+
 	die(
 		file_get_contents(APATH_THEMES . '/system/hhvm.html')
 	);
@@ -31,8 +48,15 @@ if (defined('HHVM_VERSION'))
 
 
 // Check if the build process has run
-if (!file_exists(APATH_ROOT . '/vendor/autoload.php'))
+if (!file_exists(APATH_ROOT . '/vendor/autoload.php') || !@is_file(APATH_THEMES . '/system/incomplete.html'))
 {
+	if (defined('AKEEBA_PANOPTICON_CLI'))
+	{
+		echo "Akeeba Panopticon has not been installed correctly." . PHP_EOL;
+
+		exit(254);
+	}
+
 	die(
 	file_get_contents(APATH_THEMES . '/system/incomplete.html')
 	);

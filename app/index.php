@@ -8,22 +8,19 @@
 use Akeeba\Panopticon\Application;
 use Akeeba\Panopticon\Factory;
 
-define('AKEEBA', 1);
+const AKEEBA = 1;
 
-// Load prerequisites
-require __DIR__ . '/defines.php';
-require APATH_ROOT . '/version.php';
-require APATH_ROOT . '/includes/bootstrap.php';
+call_user_func(function (){
+	// Load prerequisites
+	require __DIR__ . '/defines.php';
+	require APATH_ROOT . '/version.php';
+	require APATH_ROOT . '/includes/bootstrap.php';
 
-// Wrap execution in a callable to avoid polluting the global namespace with variables
-call_user_func(
-	function (Application $app)
-	{
-		$app->initialise();
-		$app->route();
-		$app->dispatch();
-		$app->render();
-		$app->close();
-	},
-	Factory::getApplication()
-);
+	$app = Factory::getApplication();
+
+	$app->initialise();
+	$app->route();
+	$app->dispatch();
+	$app->render();
+	$app->close();
+});
