@@ -14,6 +14,9 @@ defined('AKEEBA') || die;
 trait ACLTrait
 {
 	protected array $aclChecks = [
+		'cron' => [
+			'*' => ['*'],
+		],
 		'emails' => [
 			'*' => ['super'],
 		],

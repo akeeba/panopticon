@@ -7,13 +7,21 @@
 
 namespace Akeeba\Panopticon\Model;
 
+use Akeeba\Panopticon\Exception\InvalidCronExpression;
+use Akeeba\Panopticon\Exception\InvalidTaskType;
+use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
 use Awf\Container\Container;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use Cron\CronExpression;
+use DateInterval;
+use DateTime;
+use DateTimeImmutable;
+use DateTimeZone;
+use Exception;
+use Throwable;
 
 defined('AKEEBA') || die;
 
@@ -24,6 +32,7 @@ defined('AKEEBA') || die;
  * @property int            $site_id         The site the task belongs to, 0 = system task
  * @property string         $type            Task type
  * @property Registry       $params          Task parameters
+ * @property Registry       $storage         Transient data storage
  * @property CronExpression $cron_expression The CRON expression for task execution
  * @property bool           $enabled         Is it enabled?
  * @property Status         $last_exit_code  Last execution's exit code
@@ -34,6 +43,8 @@ defined('AKEEBA') || die;
  * @property int            $times_failed    How many times this task has failed
  * @property Date|null      $locked          Date and time the task was locked
  * @property int            $priority
+ *
+ * @noinspection PhpUnused
  */
 class Task extends DataModel
 {
@@ -57,8 +68,16 @@ class Task extends DataModel
 		 */
 		if ($this->last_execution === null)
 		{
-			$previousRun          = $this->cron_expression->getPreviousRunDate()->format(DATE_W3C);
-			$this->last_execution = (new Date($previousRun))->toSql();
+			try
+			{
+				$previousRun          = $this->cron_expression->getPreviousRunDate()->format(DATE_W3C);
+				$this->last_execution = (new Date($previousRun))->toSql();
+			}
+			catch (Exception)
+			{
+				$this->last_execution = (new Date('2000-01-01 00:00:00'))->toSql();
+			}
+
 			$this->last_run_end   = null;
 			$this->last_exit_code = Status::INITIAL_SCHEDULE;
 		}
@@ -66,14 +85,204 @@ class Task extends DataModel
 		return $this;
 	}
 
-	// TODO private function getTaskRoutine(self $task): ?callable
+	public function runNextTask(): void
+	{
+		$db = $this->getDbo();
 
-	// TODO public function runNextTask(): void
+		@ob_start();
 
-	// TODO public function cleanUpStuckTasks(): void
+		// Lock the table to avoid concurrency issues
+		try
+		{
+			$query = 'LOCK TABLES ' . $db->quoteName($this->tableName) . ' WRITE, '
+				. $db->quoteName($this->tableName, 's') . ' WRITE';
+			$db->setQuery($query)->execute();
+		}
+		catch (Exception)
+		{
+			ob_end_clean();
 
-	// TODO private function getNextTask(): ?self
+			return;
+		}
 
+		// Cancel any tasks which appear to be stuck
+		try
+		{
+			$this->cleanUpStuckTasks();
+		}
+		catch (Throwable)
+		{
+			// If an error occurred it means that a past lock has not yet been freed; give up.
+			$db->unlockTables();
+
+			@ob_end_clean();
+
+			return;
+		}
+
+		// Get the next pending task
+		try
+		{
+			$pendingTask = $this->getNextTask();
+
+			if (empty($pendingTask))
+			{
+				$db->unlockTables();
+
+				return;
+			}
+		}
+		catch (Exception)
+		{
+			$db->unlockTables();
+
+			@ob_end_clean();
+
+			return;
+		}
+
+		// Mark the current task as running
+		try
+		{
+			$willResume = $pendingTask->last_exit_code === Status::WILL_RESUME;
+
+			$pendingTask->save([
+				'last_exit'      => Status::RUNNING,
+				'last_execution' => (new Date())->toSql(),
+			]);
+		}
+		catch (Exception)
+		{
+			// Failure to save the task means that the task execution has ultimately failed.
+			try
+			{
+				$pendingTask->save([
+					'last_exit'      => Status::NO_LOCK,
+					'last_execution' => (new Date())->toSql(),
+				]);
+			}
+			catch (Exception)
+			{
+				// If that fails to, man, I don't know! Your database died or something?
+			}
+
+			@ob_end_clean();
+
+			return;
+		}
+
+		try
+		{
+			$db->unlockTables();
+		}
+		catch (Exception)
+		{
+			// This should not fail; but if it does, we can survive it.
+		}
+
+		// Catch the user abort signal, in case we are executed over the web (not ideal...)
+		if (function_exists('ignore_user_abort'))
+		{
+			ignore_user_abort(true);
+		}
+
+		// Install a PHP timeout trap
+		register_shutdown_function([$this, 'timeoutTrap'], $pendingTask);
+
+		try
+		{
+			/** @var CallbackInterface $callback */
+			$callback   = $this->container->taskRegistry->get($pendingTask->type);
+			$taskObject = (object) $pendingTask->toArray();
+			$storage    = $pendingTask->storage;
+			$storage->set('task.resumed', $willResume);
+
+			$return = $callback($taskObject, $storage);
+
+			if (empty($return) && $return !== 0)
+			{
+				$pendingTask->last_exit_code = Status::NO_EXIT;
+			}
+			elseif (!is_numeric($return))
+			{
+				$pendingTask->last_exit_code = Status::INVALID_EXIT;
+			}
+			else
+			{
+				$pendingTask->last_exit_code = Status::tryFrom($return) ?? Status::INVALID_EXIT;
+			}
+		}
+		catch (InvalidTaskType)
+		{
+			$pendingTask->last_exit_code = Status::NO_ROUTINE;
+			$pendingTask->storage->loadString('{}');
+		}
+		catch (Throwable $e)
+		{
+			$pendingTask->last_exit_code = Status::EXCEPTION;
+			$pendingTask->storage->loadString(
+				json_encode([
+					'error' => $e->getMessage(),
+					'trace' => $e->getFile() . '::' . $e->getLine() . "\n" . $e->getTraceAsString(),
+				])
+			);
+		}
+		finally
+		{
+			try
+			{
+				$db->lockTable($this->tableName);
+				$pendingTask->save([
+					'last_run_end' => (new Date())->toSql(),
+				]);
+				$db->unlockTables();
+			}
+			catch (Exception)
+			{
+				$pendingTask->save([
+					'last_run_end'   => (new Date())->toSql(),
+					'last_exit_code' => Status::NO_RELEASE,
+				]);
+			}
+
+			@ob_end_clean();
+		}
+	}
+
+	public function cleanUpStuckTasks(): void
+	{
+		$db         = $this->getDbo();
+		$threshold  = max(3, (int) $this->container->appConfig->get('cron_stuck_threshold', 3));
+		$cutoffTime = (new Date())->sub(new DateInterval('PT' . $threshold . 'M'));
+
+		$query = $db->getQuery(true)
+			->update($db->qn($this->tableName))
+			->set([
+				$db->qn('last_exit_code') . ' = ' . Status::TIMEOUT->value,
+				$db->qn('last_run_end') . ' = NOW()',
+				$db->qn('storage') . ' = NULL',
+			])
+			->where([
+				$db->qn('last_exit') . ' = ' . Status::RUNNING->value,
+				$db->qn('last_execution') . ' <= ' . $db->quote($cutoffTime->toSql()),
+			]);
+
+		$db->setQuery($query)->execute();
+	}
+
+	public function timeoutTrap(self $pendingTask): void
+	{
+		// The request has timed out. Whomp, whomp.
+		if (in_array(connection_status(), [2, 3]))
+		{
+			$pendingTask->save([
+				'last_exit' => Status::TIMEOUT,
+				'storage'   => null,
+			]);
+
+			exit(127);
+		}
+	}
 
 	protected function set_site_id_attribute(int $site_id): int
 	{
@@ -88,7 +297,11 @@ class Task extends DataModel
 
 	protected function set_type_attribute(string $type): string
 	{
-		// TODO Check if it's valid
+		if (!$this->container->taskRegistry->has($type))
+		{
+			throw new InvalidTaskType($type);
+		}
+
 		return $type;
 	}
 
@@ -97,7 +310,24 @@ class Task extends DataModel
 		return new Registry($params);
 	}
 
-	protected function get_params_attribute(Registry $params): string
+	protected function get_params_attribute(?Registry $params): ?string
+	{
+		$ret = $params?->toString();
+
+		if ($ret === '{}' || empty($ret))
+		{
+			return null;
+		}
+
+		return $ret;
+	}
+
+	protected function set_storage_attribute(?string $params): Registry
+	{
+		return new Registry($params ?? '');
+	}
+
+	protected function get_storage_attribute(Registry $params): string
 	{
 		return $params->toString();
 	}
@@ -106,8 +336,7 @@ class Task extends DataModel
 	{
 		if (empty($cronExpression) || !CronExpression::isValidExpression($cronExpression))
 		{
-			// TODO create exception
-			throw new InvalidCronExpression();
+			throw new InvalidCronExpression($cronExpression);
 		}
 
 		return new CronExpression($cronExpression);
@@ -221,5 +450,80 @@ class Task extends DataModel
 	protected function get_last_exit_code_attribute(Status $lastExitCode): string
 	{
 		return (string) $lastExitCode->value;
+	}
+
+	private function getNextTask(): ?self
+	{
+		$db    = $this->getDbo();
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->qn($this->tableName))
+			->where($db->qn('last_exit_code') . ' = ' . Status::WILL_RESUME->value)
+			->order($db->qn('last_run_end') . ' DESC')
+			->union(
+				$db->getQuery(true)
+					->select('*')
+					->from($db->qn($this->tableName, 's'))
+					->where([
+						$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value,
+						$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value,
+					])
+					->order($db->qn('id') . ' DESC')
+			);
+
+		$tasks = $db->setQuery($query)->loadObjectList();
+
+		if (empty($tasks))
+		{
+			return null;
+		}
+
+		$now = new DateTimeImmutable();
+
+		try
+		{
+			$tz       = $this->container->appConfig->get('timezone', 'UTC');
+
+			// Do not remove. This tests the validity of the configured timezone.
+			new DateTimeZone($tz);
+		}
+		catch (Exception)
+		{
+			$tz = 'UTC';
+		}
+
+		$nullDate = $this->getDbo()->getNullDate();
+
+		foreach ($tasks as $task)
+		{
+			if ($task->last_exit == Status::WILL_RESUME)
+			{
+				return $this->getClone()->bind($task);
+			}
+
+			$previousRunStamp = $task->last_run_start ?? '2000-01-01 00:00:00';
+			$previousRunStamp = $previousRunStamp === $nullDate ? '2000-01-01 00:00:00' : $previousRunStamp;
+			try
+			{
+				$previousRun  = new DateTime($previousRunStamp);
+				$relativeTime = $previousRun;
+			}
+			catch (Exception)
+			{
+				$previousRun  = new DateTime('2000-01-01 00:00:00');
+				$relativeTime = new DateTime('now');
+			}
+
+			$cronParser = new CronExpression($task->cron_expression);
+			$nextRun    = $cronParser->getNextRunDate($relativeTime, 0, false, $tz);
+
+			// A task is pending if its next run is after its last run but before the current date and time
+			if ($nextRun > $previousRun && $nextRun <= $now)
+			{
+				return $this->getClone()->bind($task);
+			}
+		}
+
+		return null;
 	}
 }

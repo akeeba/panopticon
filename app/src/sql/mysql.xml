@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `#__tasks`
     `site_id`         BIGINT UNSIGNED NOT NULL DEFAULT 0,
     `type`            VARCHAR(255)    NOT NULL,
     `params`          LONGTEXT,
+    `storage`         LONGTEXT,
     `cron_expression` VARCHAR(255)    NOT NULL DEFAULT '@daily',
     `enabled`         TINYINT         NOT NULL DEFAULT 1,
     `last_exit_code`  INT             NOT NULL DEFAULT 0,
