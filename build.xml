@@ -32,6 +32,93 @@
         <!-- Exclude map files -->
         <exclude name="media/css/*.map" />
         <exclude name="media/js/*.map" />
+
+        <!-- Exclude cache, log, tmp files -->
+        <exclude name="cache/**" />
+        <exclude name="log/**" />
+        <exclude name="tmp/**" />
+        <include name="cache/.htaccess" />
+        <include name="cache/web.config" />
+        <include name="log/.htaccess" />
+        <include name="log/web.config" />
+        <include name="tmp/.htaccess" />
+        <include name="tmp/web.config" />
+
+        <!-- Clean up Composer vendor folder -->
+        <exclude name="vendor/akeeba/awf/src/Database/Driver/None.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Driver/Pgsql.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Driver/Postgresql.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Driver/Sqlazure.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Driver/Sqlite.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Driver/Sqlsrv.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Query/Pgsql.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Query/Postgresql.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Query/Sqlazure.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Query/Sqlite.php" />
+        <exclude name="vendor/akeeba/awf/src/Database/Query/Sqlsrv.php" />
+        <exclude name="vendor/akeeba/awf/src/Encrypt/AesAdapter/Mcrypt.php" />
+        <exclude name="vendor/akeeba/awf/tests/**" />
+        <exclude name="vendor/akeeba/awf/.gitattributes" />
+        <exclude name="vendor/akeeba/awf/.gitignore" />
+        <exclude name="vendor/akeeba/awf/.travis.yml" />
+        <exclude name="vendor/akeeba/awf/composer.lock" />
+        <exclude name="vendor/akeeba/awf/phpunit*" />
+
+        <exclude name="vendor/akeeba/remotecli/build/**" />
+        <exclude name="vendor/akeeba/remotecli/documentation/**" />
+        <exclude name="vendor/akeeba/remotecli/.gitattributes" />
+        <exclude name="vendor/akeeba/remotecli/.gitignore" />
+        <exclude name="vendor/akeeba/remotecli/CHANGELOG" />
+        <exclude name="vendor/akeeba/remotecli/composer.lock" />
+        <exclude name="vendor/akeeba/remotecli/DESCRIPTION*" />
+        <exclude name="vendor/akeeba/remotecli/Dockerfile" />
+        <exclude name="vendor/akeeba/remotecli/RELEASENOTES*" />
+
+        <exclude name="vendor/bin/**" />
+
+        <exclude name="vendor/dragonmantank/cron-expression/CHAMGELOG*" />
+        <exclude name="vendor/dragonmantank/cron-expression/phpstan*" />
+
+        <exclude name="vendor/joomla/data/.editorconfig" />
+        <exclude name="vendor/joomla/data/ruleset.xml" />
+        <exclude name="vendor/joomla/data/SECURITY.md" />
+
+        <exclude name="vendor/joomla/filesystem/.editorconfig" />
+        <exclude name="vendor/joomla/filesystem/ruleset.xml" />
+        <exclude name="vendor/joomla/filesystem/SECURITY.md" />
+
+        <exclude name="vendor/joomla/http/.drone*" />
+        <exclude name="vendor/joomla/http/.editorconfig" />
+        <exclude name="vendor/joomla/http/SECURITY.md" />
+
+        <exclude name="vendor/joomla/registry/.github/***" />
+        <exclude name="vendor/joomla/registry/docs/***" />
+        <exclude name="vendor/joomla/registry/tests/***" />
+        <exclude name="vendor/joomla/registry/.editorconfig" />
+        <exclude name="vendor/joomla/registry/phpunit*" />
+        <exclude name="vendor/joomla/registry/ruleset*" />
+        <exclude name="vendor/joomla/registry/SECURITY.md" />
+
+        <exclude name="vendor/joomla/string/.github/***" />
+        <exclude name="vendor/joomla/string/Tests/***" />
+        <exclude name="vendor/joomla/string/.drone*" />
+        <exclude name="vendor/joomla/string/.editorconfig" />
+        <exclude name="vendor/joomla/string/phpunit*" />
+        <exclude name="vendor/joomla/string/ruleset*" />
+        <exclude name="vendor/joomla/string/SECURITY.md" />
+
+        <exclude name="vendor/joomla/uri/.github/***" />
+        <exclude name="vendor/joomla/uri/tests/***" />
+        <exclude name="vendor/joomla/uri/.drone*" />
+        <exclude name="vendor/joomla/uri/.editorconfig" />
+        <exclude name="vendor/joomla/uri/phpunit*" />
+        <exclude name="vendor/joomla/uri/ruleset*" />
+        <exclude name="vendor/joomla/uri/SECURITY.md" />
+
+        <exclude name="vendor/psr/http-factory/.gitignore" />
+        <exclude name="vendor/psr/http-factory/.pullapprove.yml" />
+
+        <exclude name="vendor/symfony/deprecation-contracts/.gitignore" />
     </fileset>
 
     <!--
@@ -47,20 +134,6 @@
         <echo>Emptying release directory</echo>
         <delete dir="${dirs.release}" quiet="true" includeemptydirs="true"/>
         <mkdir dir="${dirs.release}"/>
-
-        <echo>Clearing old cache and temporary files</echo>
-        <delete quiet="true">
-            <fileset dir="${dirs.phpapp}/cache">
-                <include name="**"/>
-                <exclude name=".htaccess"/>
-                <exclude name="web.config"/>
-            </fileset>
-            <fileset dir="${dirs.phpapp}/tmp">
-                <include name="**"/>
-                <exclude name=".htaccess"/>
-                <exclude name="web.config"/>
-            </fileset>
-        </delete>
 
         <!-- The vendor folder may have been created afresh; copy the .htaccess and web.config files into it -->
         <echo>Copying .htaccess and web.config into the vendor folder</echo>
