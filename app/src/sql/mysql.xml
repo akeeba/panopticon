@@ -80,13 +80,14 @@ CREATE TABLE IF NOT EXISTS `#__tasks`
     `type`            VARCHAR(255)    NOT NULL,
     `params`          LONGTEXT,
     `cron_expression` VARCHAR(255)    NOT NULL DEFAULT '@daily',
-    `state`           TINYINT         NOT NULL DEFAULT 1,
+    `enabled`         TINYINT         NOT NULL DEFAULT 1,
     `last_exit_code`  INT             NOT NULL DEFAULT 0,
     `last_execution`  DATETIME        NULL,
+    `last_run_end`    DATETIME        NULL,
     `next_execution`  DATETIME        NOT NULL DEFAULT '2000-01-01 00:00:00',
     `times_executed`  INT UNSIGNED    NOT NULL DEFAULT 0,
     `times_failed`    INT UNSIGNED    NOT NULL DEFAULT 0,
-    `locked`          DATETIME,
+    `locked`          DATETIME        NULL,
     `priority`        INT             NOT NULL DEFAULT 0,
     FOREIGN KEY `#__tasks_sites` (`site_id`) REFERENCES `#__sites` (`id`) ON DELETE CASCADE
 )

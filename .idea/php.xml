@@ -30,13 +30,12 @@
       <path value="$PROJECT_DIR$/app/vendor/psr/http-factory" />
       <path value="$PROJECT_DIR$/app/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/app/vendor/psr/http-client" />
-      <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-php80" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/var-dumper" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/error-handler" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>

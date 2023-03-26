@@ -12,30 +12,29 @@ if (version_compare(
 	'lt'
 ))
 {
-	die(
-	str_replace(
-		['{{minphpversion}}', '{{phpversion}}'],
-		[AKEEBA_PANOPTICON_MINPHP, PHP_VERSION],
-		file_get_contents(APATH_THEMES . '/system/incompatible.html')
-	)
+	echo sprintf(
+		"Akeeba Panopticon requires PHP %s or later. Your server is using PHP %s.",
+		AKEEBA_PANOPTICON_MINPHP, PHP_VERSION
 	);
+
+	exit(254);
 }
 
 // We cannot possibly be running under HHVM?!!
 if (defined('HHVM_VERSION'))
 {
-	die(
-		file_get_contents(APATH_THEMES . '/system/hhvm.html')
-	);
+	echo "Akeeba Panopticon is not compatible with HHVM. Please use PHP proper.";
+
+	exit(254);
 }
 
 
 // Check if the build process has run
 if (!file_exists(APATH_ROOT . '/vendor/autoload.php'))
 {
-	die(
-	file_get_contents(APATH_THEMES . '/system/incomplete.html')
-	);
+	echo "Akeeba Panopticon has not been installed correctly.";
+
+	exit(254);
 }
 
 // Load the Composer autoloader
@@ -43,25 +42,12 @@ require_once APATH_ROOT . '/vendor/autoload.php';
 
 // Set up the basic error handler for fatal errors
 $errorHandler = \Symfony\Component\ErrorHandler\ErrorHandler::register();
-\Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer::setTemplate(APATH_THEMES . '/system/fatal.php');
 
 if (!file_exists(APATH_CONFIGURATION . '/config.php'))
 {
-	/**
-	 * Forcibly enable debug mode (and detailed exception reporting) during the initial setup.
-	 *
-	 * This helps to identify and resolve errors during the initial setup.
-	 */
-	define('AKEEBADEBUG', 1);
+	echo "Please finish configuring Akeeba Panopticon before running this CLI scipt.";
 
-	$errorHandler->setExceptionHandler(
-		[
-			new \Symfony\Component\ErrorHandler\ErrorHandler(null, true),
-			'renderException'
-		]
-	);
-
-	return;
+	exit(254);
 }
 
 // Load the configuration; we'll need it to set up error reporting and handling
