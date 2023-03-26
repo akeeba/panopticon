@@ -1,0 +1,27 @@
+Use symfony/console ^6.2.7 for cli app
+    https://symfony.com/doc/current/components/console.html
+
+Allow installation by CLI app
+    cli config:create [--driver=mysqli] [--host=localhost] --user=USER --pass=PASS --name=DBNAME
+        [--prefix=ak_] [--encryption=0] [--sslcipher=CIPHER] [--sslca=CS] [--sslkey=KEY] [--sslcert=CERT]
+        [--sslverifyservercert]
+    cli db:create [--drop]
+    cli user:create --username=USERNAME --password=PASS [--name="Full Name"]
+    cli config:set KEY VALUE
+
+Logging in task execution, and pass logger to task callbacks
+    https://packagist.org/packages/monolog/monolog
+
+Web view (view=cron ???) for task execution
+
+Task to benchmark max execution time (up to 3 minutes)
+    This is set up by the web interface, or the CLI command `cli task:add:benchmark [--force]`
+
+Web installer
+    tell user how to set up task execution
+    wait for task execution and benchmark (also allow user to skip over this step / finish setup later)
+
+Connector plugin for J4 + build infrastructure for it
+
+Log rotation https://packagist.org/packages/cesargb/php-log-rotation
+    Install a daily task for it during setup, or by CLI `cli task:add:logrotate [--expression="@daily"] [--maxsize=1048756] [--files=1] [--compress=1]`
