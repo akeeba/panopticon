@@ -16,4 +16,6 @@ interface CallbackInterface
 	public function __invoke(object $task, Registry $storage): int;
 
 	public function getTaskType(): string;
+
+	public function getDescription(): string;
 }

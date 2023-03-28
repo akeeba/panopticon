@@ -136,4 +136,9 @@ if (AKEEBADEBUG || ($config->error_reporting ?? 'default') === 'maximum') {
 // Tell AWF whether we are behind a proxy or load balancer
 \Awf\Utils\Ip::setAllowIpOverrides($config->behind_load_balancer ?? false);
 
+if (file_exists(APATH_USER_CODE . '/bootstrap.php'))
+{
+	require_once APATH_USER_CODE . '/bootstrap.php';
+}
+
 unset($config);

@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 use Akeeba\Panopticon\Exception\InvalidCronExpression;
 use Akeeba\Panopticon\Exception\InvalidTaskType;
+use Akeeba\Panopticon\Helper\TaskUtils;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
 use Awf\Container\Container;
@@ -21,6 +22,8 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Throwable;
 
 defined('AKEEBA') || die;
@@ -85,11 +88,14 @@ class Task extends DataModel
 		return $this;
 	}
 
-	public function runNextTask(): bool
+	public function runNextTask(?LoggerInterface $logger = null): bool
 	{
-		$db = $this->getDbo();
+		$logger ??= new NullLogger();
+		$db     = $this->getDbo();
 
 		@ob_start();
+
+		$logger->info('Locking task tables');
 
 		// Lock the table to avoid concurrency issues
 		try
@@ -98,8 +104,17 @@ class Task extends DataModel
 				. $db->quoteName($this->tableName, 's') . ' WRITE';
 			$db->setQuery($query)->execute();
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			$logger->error(
+				sprintf(
+					'Locking task tables failed [%s:%d]: %s',
+					$e->getFile(),
+					$e->getLine(),
+					$e->getMessage()
+				)
+			);
+
 			ob_end_clean();
 
 			return false;
@@ -108,10 +123,21 @@ class Task extends DataModel
 		// Cancel any tasks which appear to be stuck
 		try
 		{
+			$logger->info('Cleaning up stuck tasks');
+
 			$this->cleanUpStuckTasks();
 		}
-		catch (Throwable)
+		catch (Throwable $e)
 		{
+			$logger->error(
+				sprintf(
+					'Failed to clean up stuck tasks [%s:%d]: %s',
+					$e->getFile(),
+					$e->getLine(),
+					$e->getMessage()
+				)
+			);
+
 			// If an error occurred it means that a past lock has not yet been freed; give up.
 			$db->unlockTables();
 
@@ -123,17 +149,30 @@ class Task extends DataModel
 		// Get the next pending task
 		try
 		{
+			$logger->info('Getting next task');
+
 			$pendingTask = $this->getNextTask();
 
 			if (empty($pendingTask))
 			{
+				$logger->info('There are no pending tasks.');
+
 				$db->unlockTables();
 
 				return false;
 			}
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
+			$logger->error(
+				sprintf(
+					'Task retrieval failed [%s:%d]: %s',
+					$e->getFile(),
+					$e->getLine(),
+					$e->getMessage()
+				)
+			);
+
 			$db->unlockTables();
 
 			@ob_end_clean();
@@ -144,20 +183,32 @@ class Task extends DataModel
 		// Mark the current task as running
 		try
 		{
+			$logger->info(
+				sprintf(
+					'Task #%d — “%s” for site #%d (%s)',
+					$pendingTask->id,
+					TaskUtils::getTaskDescription($pendingTask->type),
+					$pendingTask->site_id,
+					TaskUtils::getSiteName($pendingTask->site_id)
+				)
+			);
+
 			$willResume = $pendingTask->last_exit_code === Status::WILL_RESUME;
 
 			$pendingTask->save([
-				'last_exit'      => Status::RUNNING,
+				'last_exit_code' => Status::RUNNING,
 				'last_execution' => (new Date())->toSql(),
 			]);
 		}
 		catch (Exception)
 		{
+			$logger->error('Failed to update task execution information');
+
 			// Failure to save the task means that the task execution has ultimately failed.
 			try
 			{
 				$pendingTask->save([
-					'last_exit'      => Status::NO_LOCK,
+					'last_exit_code' => Status::NO_LOCK,
 					'last_execution' => (new Date())->toSql(),
 				]);
 			}
@@ -173,6 +224,8 @@ class Task extends DataModel
 
 		try
 		{
+			$logger->debug('Unlocking tables');
+
 			$db->unlockTables();
 		}
 		catch (Exception)
@@ -197,28 +250,64 @@ class Task extends DataModel
 			$storage    = $pendingTask->storage;
 			$storage->set('task.resumed', $willResume);
 
+			$logger->debug(
+				$willResume
+					? 'Resuming task'
+					: 'Executing task'
+			);
+
 			$return = $callback($taskObject, $storage);
+
+			$storage->set('task.resumed', null);
 
 			if (empty($return) && $return !== 0)
 			{
+				$logger->notice('Task finished without an exit status');
+
 				$pendingTask->last_exit_code = Status::NO_EXIT;
 			}
 			elseif (!is_numeric($return))
 			{
+				$logger->notice('Task finished with an invalid exit value type');
+
 				$pendingTask->last_exit_code = Status::INVALID_EXIT;
 			}
 			else
 			{
 				$pendingTask->last_exit_code = Status::tryFrom($return) ?? Status::INVALID_EXIT;
 			}
+
+			if ($pendingTask->last_exit_code === Status::INVALID_EXIT)
+			{
+				$logger->notice('Task finished with an invalid exit value');
+			}
+			else
+			{
+				$logger->info(sprintf('Task finished with status “%s”', $pendingTask->last_exit_code->forHumans()));
+			}
+
+			if ($pendingTask->last_execution !== Status::WILL_RESUME)
+			{
+				$pendingTask->storage->loadString('{}');
+			}
 		}
 		catch (InvalidTaskType)
 		{
+			$logger->error(sprintf('Unknown Task type ‘%s’', $pendingTask->type));
+
 			$pendingTask->last_exit_code = Status::NO_ROUTINE;
 			$pendingTask->storage->loadString('{}');
 		}
 		catch (Throwable $e)
 		{
+			$logger->error(sprintf(
+				'Task failed with exception type %s [%s:%d]: %s',
+				get_class($e),
+				$e->getFile(),
+				$e->getLine(),
+				$e->getMessage()
+			));
+
 			$pendingTask->last_exit_code = Status::EXCEPTION;
 			$pendingTask->storage->loadString(
 				json_encode([
@@ -229,6 +318,8 @@ class Task extends DataModel
 		}
 		finally
 		{
+			$logger->debug('Updating the task\'s last execution information');
+
 			try
 			{
 				$db->lockTable($this->tableName);
@@ -239,6 +330,8 @@ class Task extends DataModel
 			}
 			catch (Exception)
 			{
+				$logger->error('Failed to update the task\'s last execution information');
+
 				$pendingTask->save([
 					'last_run_end'   => (new Date())->toSql(),
 					'last_exit_code' => Status::NO_RELEASE,
@@ -265,7 +358,7 @@ class Task extends DataModel
 				$db->qn('storage') . ' = NULL',
 			])
 			->where([
-				$db->qn('last_exit') . ' = ' . Status::RUNNING->value,
+				$db->qn('last_exit_code') . ' = ' . Status::RUNNING->value,
 				$db->qn('last_execution') . ' <= ' . $db->quote($cutoffTime->toSql()),
 			]);
 
@@ -278,8 +371,8 @@ class Task extends DataModel
 		if (in_array(connection_status(), [2, 3]))
 		{
 			$pendingTask->save([
-				'last_exit' => Status::TIMEOUT,
-				'storage'   => null,
+				'last_exit_code' => Status::TIMEOUT,
+				'storage'        => null,
 			]);
 
 			exit(127);
@@ -484,7 +577,7 @@ class Task extends DataModel
 
 		try
 		{
-			$tz       = $this->container->appConfig->get('timezone', 'UTC');
+			$tz = $this->container->appConfig->get('timezone', 'UTC');
 
 			// Do not remove. This tests the validity of the configured timezone.
 			new DateTimeZone($tz);
@@ -498,7 +591,7 @@ class Task extends DataModel
 
 		foreach ($tasks as $task)
 		{
-			if ($task->last_exit == Status::WILL_RESUME)
+			if ($task->last_exit_code == Status::WILL_RESUME)
 			{
 				return $this->getClone()->bind($task);
 			}

@@ -24,6 +24,13 @@ call_user_func(function () {
 	require APATH_ROOT . '/version.php';
 	require APATH_ROOT . '/includes/bootstrap.php';
 
+	/**
+	 * DO NOT REMOVE.
+	 *
+	 * The following line initialises the AWF application which is used to return the AWF Container internally in AWF.
+	 */
+	Factory::getApplication();
+
 	$application = new Application();
 	$application->setName('Akeeba Panopticon CLI');
 	$application->setVersion(AKEEBA_PANOPTICON_VERSION);

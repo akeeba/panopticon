@@ -17,14 +17,18 @@ class Factory
 
 	public static function getContainer(): Container
 	{
-		self::$container ??= new Container();
+		self::$container ??=
+			(function_exists('user_get_container') ? user_get_container() : null)
+			?? new Container();
 
 		return self::$container;
 	}
 
 	public static function getApplication(): Application
 	{
-		self::$application ??= self::getContainer()->application;
+		self::$application ??=
+			(function_exists('user_get_application') ? user_get_application() : null)
+			?? self::getContainer()->application;
 
 		return self::$application;
 	}

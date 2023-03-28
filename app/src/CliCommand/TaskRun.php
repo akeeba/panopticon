@@ -11,12 +11,16 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Logger\ForkedLogger;
 use Akeeba\Panopticon\Model\Task;
+use Awf\Date\Date;
 use Awf\Mvc\Model;
 use Awf\Timer\Timer;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
@@ -30,6 +34,18 @@ class TaskRun extends AbstractCommand
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$container = Factory::getContainer();
+
+		// Mark our last execution time
+		$db = $container->db;
+		$db->lockTable('#__akeeba_common');
+		$query = $db->getQuery(true)
+			->replace($db->quoteName('#__akeeba_common'))
+			->values(implode(',', [
+				$db->quote('panopticon.task.last.execution'),
+				$db->quote((new Date())->toSql())
+			]));
+		$db->setQuery($query)->execute();
+		$db->unlockTables();
 
 		/**
 		 * @var  Task $model The Task model.
@@ -46,15 +62,27 @@ class TaskRun extends AbstractCommand
 			$container->appConfig->get('execution_bias', 75)
 		);
 
+		$logger = $this->getLogger($output);
+
 		while ($timer->getTimeLeft() > 0.01)
 		{
-			if (!$model->runNextTask())
+			if (!$model->runNextTask($logger))
 			{
 				break;
 			}
 		}
 
 		return Command::SUCCESS;
+	}
+
+	private function getLogger(OutputInterface $output): LoggerInterface
+	{
+		return new ForkedLogger(
+			[
+				Factory::getContainer()->logger,
+				new ConsoleLogger($output)
+			]
+		);
 	}
 
 }

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "0fb8d73ce1fe5e8197d4b8eb5700749cfa984e51"
+                "reference": "d9f082165bb8702641fbc5cfb17c751a092e52b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/0fb8d73ce1fe5e8197d4b8eb5700749cfa984e51",
-                "reference": "0fb8d73ce1fe5e8197d4b8eb5700749cfa984e51",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/d9f082165bb8702641fbc5cfb17c751a092e52b2",
+                "reference": "d9f082165bb8702641fbc5cfb17c751a092e52b2",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +72,7 @@
                 "source": "https://github.com/akeeba/awf/tree/development",
                 "issues": "https://github.com/akeeba/awf/issues"
             },
-            "time": "2023-03-25T08:22:45+00:00"
+            "time": "2023-03-28T16:41:11+00:00"
         },
         {
             "name": "akeeba/remotecli",
