@@ -1,13 +1,5 @@
 # TO-DO
 
-Allow installation by CLI app
-    cli config:create [--driver=mysqli] [--host=localhost] --user=USER --pass=PASS --name=DBNAME
-        [--prefix=ak_] [--encryption=0] [--sslcipher=CIPHER] [--sslca=CS] [--sslkey=KEY] [--sslcert=CERT]
-        [--sslverifyservercert]
-    cli database:update [--drop]
-    cli user:create --username=USERNAME --password=PASS [--name="Full Name"]
-    cli config:set KEY VALUE
-
 Logging in task execution, and pass logger to task callbacks
     https://packagist.org/packages/monolog/monolog
 
@@ -159,3 +151,15 @@ Only users with the super privilege can manage application-level configuration:
 - Site management
 - User management
 - Log management
+
+# ✅ Done
+
+Allow installation by CLI app
+    
+    cli config:create [--driver=mysqli] [--host=localhost] --user=USER --pass=PASS --name=DBNAME
+    [--prefix=ak_] [--encryption=0] [--sslcipher=CIPHER] [--sslca=CS] [--sslkey=KEY] [--sslcert=CERT]
+    [--sslverifyservercert]
+    cli database:update [--drop]
+    cli user:create --username=USERNAME --password=PASS [--name="Full Name"]
+    cli config:set KEY VALUE
+
