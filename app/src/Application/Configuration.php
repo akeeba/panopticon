@@ -10,9 +10,27 @@ namespace Akeeba\Panopticon\Application;
 defined('AKEEBA') or die;
 
 use Awf\Application\Configuration as AWFConfiguration;
+use Awf\Container\Container;
 
 class Configuration extends AWFConfiguration
 {
+	use DefaultConfigurationTrait;
+
+	public function __construct(Container $container, $data = null)
+	{
+		parent::__construct($container, $data);
+
+		$this->loadArray($this->getDefaultConfiguration());
+	}
+
+	public function set($path, $value, $separator = null)
+	{
+		$validator = $this->getConfigurationOptionFilterCallback($path);
+		$value     = $validator($value);
+
+		return parent::set($path, $value, $separator);
+	}
+
 	/**
 	 * Loads the configuration off a JSON file
 	 *

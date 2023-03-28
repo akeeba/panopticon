@@ -11,6 +11,7 @@ use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Exception\InvalidTaskType;
 use DirectoryIterator;
 use DomainException;
+use RuntimeException;
 use Throwable;
 
 defined('AKEEBA') || die;
@@ -91,7 +92,7 @@ class Registry
 		}
 		catch (Throwable $e)
 		{
-			throw new DomainException(
+			throw new RuntimeException(
 				sprintf('Error instantiating class ‘%s’: #%d -- %s', $classname, $e->getCode(), $e->getMessage()),
 				500,
 				$e

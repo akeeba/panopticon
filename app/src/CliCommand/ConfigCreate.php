@@ -11,7 +11,6 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Model\Trait\DefaultConfigurationTrait;
 use Awf\Database\Driver;
 use Exception;
 use RuntimeException;
@@ -29,8 +28,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[ConfigAssertion(false)]
 class ConfigCreate extends AbstractCommand
 {
-	use DefaultConfigurationTrait;
-
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		try
@@ -47,7 +44,7 @@ class ConfigCreate extends AbstractCommand
 		$container = Factory::getContainer();
 		$appConfig = $container->appConfig;
 
-		foreach (array_merge($this->getDefaultConfiguration(), $options) as $k => $v)
+		foreach (array_merge($appConfig->getDefaultConfiguration(), $options) as $k => $v)
 		{
 			$appConfig->set($k, $v);
 		}
@@ -63,7 +60,7 @@ class ConfigCreate extends AbstractCommand
 		{
 			$this->ioStyle->error([
 				'Cannot connect to database server. Error message:',
-				$e->getMessage()
+				$e->getMessage(),
 			]);
 
 			return Command::FAILURE;
@@ -97,7 +94,7 @@ class ConfigCreate extends AbstractCommand
 		$this->ioStyle->success(
 			[
 				'Created configuration file.',
-				'File: ' . $appConfig->getDefaultPath()
+				'File: ' . $appConfig->getDefaultPath(),
 			]
 		);
 

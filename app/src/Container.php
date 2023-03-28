@@ -14,7 +14,8 @@ use Akeeba\Panopticon\Library\Task\Registry as TaskRegistry;
 use Awf\Container\Container as AWFContainer;
 
 /**
- * @property-read TaskRegistry $taskRegistry The task callback registry
+ * @property-read TaskRegistry  $taskRegistry  The task callback registry
+ * @property-read Configuration $appConfig     The application configuration registry
  */
 class Container extends AWFContainer
 {
@@ -27,7 +28,7 @@ class Container extends AWFContainer
 		$values['appConfig']            ??= function (Container $c) {
 			return new Configuration($c);
 		};
-		$values['taskRegistry'] ??= function (Container $c) {
+		$values['taskRegistry']         ??= function (Container $c) {
 			return new TaskRegistry(container: $c);
 		};
 

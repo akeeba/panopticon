@@ -8,8 +8,9 @@
 namespace Akeeba\Panopticon\Exception;
 
 use JetBrains\PhpStorm\Pure;
+use OutOfBoundsException;
 
-class InvalidCronExpression extends \DomainException
+class InvalidCronExpression extends OutOfBoundsException
 {
 	#[Pure] public function __construct(string $cronExpression = "", int $code = 500, ?\Throwable $previous = null)
 	{
