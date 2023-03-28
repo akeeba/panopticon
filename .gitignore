@@ -8,6 +8,7 @@
 /app/tmp/**
 !/app/tmp/.htaccess
 !/app/tmp/web.config
+/app/LICENSE.txt
 /app/version.php
 
 ### Composer

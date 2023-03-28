@@ -24,6 +24,14 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/var-dumper" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/error-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/cesargb/php-log-rotation" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

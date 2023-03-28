@@ -152,6 +152,9 @@
             </fileset>
         </copy>
 
+        <echo>Copying LICENSE.txt</echo>
+        <copy file="${dirs.root}/LICENSE.txt" tofile="${dirs.phpapp}/LICENSE.txt" />
+
         <echo>Removing .DS_Store files</echo>
         <exec command="sh killDS.sh" dir="${dirs.root}"/>
     </target>
