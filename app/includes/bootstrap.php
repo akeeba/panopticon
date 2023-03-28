@@ -96,7 +96,7 @@ ob_end_clean();
 $config = new AConfig();
 
 // Set the PHP error reporting
-switch ($config->error_reporting) {
+switch ($config->error_reporting ?? 'default') {
 	default:
 		break;
 
@@ -120,10 +120,10 @@ switch ($config->error_reporting) {
 
 // Do we need to set up a more detailed error handler?
 if (!defined('AKEEBADEBUG')) {
-	define('AKEEBADEBUG', $config->debug);
+	define('AKEEBADEBUG', $config->debug ?? false);
 }
 
-if (AKEEBADEBUG || $config->error_reporting === 'maximum') {
+if (AKEEBADEBUG || ($config->error_reporting ?? 'default') === 'maximum') {
 	// Set new Exception handler with debug enabled
 	$errorHandler->setExceptionHandler(
 		[
@@ -134,6 +134,6 @@ if (AKEEBADEBUG || $config->error_reporting === 'maximum') {
 }
 
 // Tell AWF whether we are behind a proxy or load balancer
-\Awf\Utils\Ip::setAllowIpOverrides($config->behind_load_balancer);
+\Awf\Utils\Ip::setAllowIpOverrides($config->behind_load_balancer ?? false);
 
 unset($config);

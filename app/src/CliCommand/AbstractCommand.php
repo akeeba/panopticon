@@ -7,6 +7,7 @@
 
 namespace Akeeba\Panopticon\CliCommand;
 
+use Akeeba\Panopticon\CliCommand\Attribute\AppHeader;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
 use Symfony\Component\Console\Command\Command;
@@ -30,6 +31,29 @@ abstract class AbstractCommand extends Command
 		$this->assertConfigured();
 
 		parent::initialize($input, $output);
+
+		$this->header();
+	}
+
+	protected function header()
+	{
+		$showHeader = true;
+		$cliApp     = $this->getApplication();
+
+		$refObj         = new \ReflectionObject($this);
+		$attributes     = $refObj->getAttributes(AppHeader::class);
+
+		if (count($attributes) > 0)
+		{
+			$showHeader = $attributes[0]->getArguments()[0];
+		}
+
+		if ($showHeader && !$this->ioStyle->isQuiet())
+		{
+			$this->ioStyle->writeln($cliApp->getName() . ' <info>' . $cliApp->getVersion() . '</info>');
+
+			$this->ioStyle->title($this->getDescription());
+		}
 	}
 
 	protected function configureSymfonyIO(InputInterface $input, OutputInterface $output)

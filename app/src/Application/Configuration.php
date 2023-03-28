@@ -51,7 +51,7 @@ class Configuration extends AWFConfiguration
 	{
 		$filePath ??= $this->getDefaultPath();
 
-		$fileData = $this->toString('Php', ['class' => 'AConfig']);
+		$fileData = $this->toString('Php', ['class' => 'AConfig', 'closingtag' => false]);
 		$fileData = "<?php defined('AKEEBA') || die;\n" . substr($fileData, 5);
 
 		if (!($this->container->fileSystem->write($filePath, $fileData)))

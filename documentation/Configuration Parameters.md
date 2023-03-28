@@ -71,10 +71,6 @@ Database Encryption
 Should I use an encrypted connection to the MySQL database server? 
 Default: false
 
-### `dbsslcipher`
-
-Default:
-
 ### `dbsslca`
 
 Default:
