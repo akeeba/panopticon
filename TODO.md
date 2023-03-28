@@ -1,7 +1,6 @@
 # TO-DO
 
 Logging in task execution, and pass logger to task callbacks
-    https://packagist.org/packages/monolog/monolog
 
 Web view (view=cron ???) for task execution
 
@@ -162,4 +161,3 @@ Allow installation by CLI app
     cli database:update [--drop]
     cli user:create --username=USERNAME --password=PASS [--name="Full Name"]
     cli config:set KEY VALUE
-

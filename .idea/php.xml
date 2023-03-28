@@ -42,6 +42,7 @@
       <path value="$PROJECT_DIR$/app/vendor/laminas/laminas-diactoros" />
       <path value="$PROJECT_DIR$/app/vendor/psr/container" />
       <path value="$PROJECT_DIR$/app/vendor/mcrumley/php-complexify" />
+      <path value="$PROJECT_DIR$/app/vendor/monolog/monolog" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

@@ -10,12 +10,16 @@ namespace Akeeba\Panopticon;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Application\Configuration;
+use Akeeba\Panopticon\Library\Logger\LoggerFactoryService;
 use Akeeba\Panopticon\Library\Task\Registry as TaskRegistry;
 use Awf\Container\Container as AWFContainer;
+use Psr\Log\LoggerInterface;
 
 /**
- * @property-read TaskRegistry  $taskRegistry  The task callback registry
- * @property-read Configuration $appConfig     The application configuration registry
+ * @property-read TaskRegistry         $taskRegistry  The task callback registry
+ * @property-read Configuration        $appConfig     The application configuration registry
+ * @property-read LoggerFactoryService $loggerFactory A factory for LoggerInterface instances
+ * @property-read LoggerInterface      $logger        The main application logger
  */
 class Container extends AWFContainer
 {
@@ -31,8 +35,11 @@ class Container extends AWFContainer
 		$values['taskRegistry']         ??= function (Container $c) {
 			return new TaskRegistry(container: $c);
 		};
+		$values['loggerFactory']        ??= function (Container $c) {
+			return new LoggerFactoryService($c);
+		};
+		$values['logger']               ??= fn(Container $c) => $c->loggerFactory->get('panopticon');
 
 		parent::__construct($values);
 	}
-
 }

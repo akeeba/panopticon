@@ -33,6 +33,7 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/laminas/laminas-diactoros" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/mcrumley/php-complexify" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/monolog/monolog" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
