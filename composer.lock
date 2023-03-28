@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2be6016ff0ccba84f95df150b7d2f5ff",
+    "content-hash": "9ffe2706acd6fccb24b7e6858c343965",
     "packages": [
         {
             "name": "akeeba/awf",
@@ -879,6 +879,43 @@
                 }
             ],
             "time": "2022-12-20T12:22:40+00:00"
+        },
+        {
+            "name": "mcrumley/php-complexify",
+            "version": "v0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mcrumley/php-complexify.git",
+                "reference": "e726e5140c2c7786d936f4947ebf8730be706d91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mcrumley/php-complexify/zipball/e726e5140c2c7786d936f4947ebf8730be706d91",
+                "reference": "e726e5140c2c7786d936f4947ebf8730be706d91",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Complexify\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Crumley",
+                    "email": "m@michaelcrumley.com"
+                }
+            ],
+            "description": "PHP port of Dan Palmer's jquery.complexify.js",
+            "support": {
+                "issues": "https://github.com/mcrumley/php-complexify/issues",
+                "source": "https://github.com/mcrumley/php-complexify/tree/master"
+            },
+            "time": "2018-02-19T23:05:26+00:00"
         },
         {
             "name": "psr/container",

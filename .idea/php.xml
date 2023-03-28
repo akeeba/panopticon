@@ -13,34 +13,35 @@
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/app/vendor/webmozart/assert" />
-      <path value="$PROJECT_DIR$/app/vendor/symfony/deprecation-contracts" />
-      <path value="$PROJECT_DIR$/app/vendor/joomla/registry" />
-      <path value="$PROJECT_DIR$/app/vendor/joomla/string" />
-      <path value="$PROJECT_DIR$/app/vendor/joomla/utilities" />
-      <path value="$PROJECT_DIR$/app/vendor/joomla/http" />
-      <path value="$PROJECT_DIR$/app/vendor/akeeba/awf" />
-      <path value="$PROJECT_DIR$/app/vendor/joomla/data" />
-      <path value="$PROJECT_DIR$/app/vendor/joomla/uri" />
-      <path value="$PROJECT_DIR$/app/vendor/joomla/filesystem" />
-      <path value="$PROJECT_DIR$/app/vendor/dragonmantank/cron-expression" />
-      <path value="$PROJECT_DIR$/app/vendor/akeeba/remotecli" />
-      <path value="$PROJECT_DIR$/app/vendor/laminas/laminas-diactoros" />
-      <path value="$PROJECT_DIR$/app/vendor/composer" />
-      <path value="$PROJECT_DIR$/app/vendor/psr/log" />
-      <path value="$PROJECT_DIR$/app/vendor/psr/http-factory" />
-      <path value="$PROJECT_DIR$/app/vendor/psr/http-message" />
-      <path value="$PROJECT_DIR$/app/vendor/psr/http-client" />
-      <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/app/vendor/symfony/var-dumper" />
-      <path value="$PROJECT_DIR$/app/vendor/symfony/error-handler" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-intl-grapheme" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/app/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/app/vendor/composer" />
+      <path value="$PROJECT_DIR$/app/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/app/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/app/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/app/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/app/vendor/joomla/registry" />
+      <path value="$PROJECT_DIR$/app/vendor/joomla/string" />
+      <path value="$PROJECT_DIR$/app/vendor/joomla/utilities" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/app/vendor/joomla/http" />
       <path value="$PROJECT_DIR$/app/vendor/cesargb/php-log-rotation" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/app/vendor/akeeba/awf" />
+      <path value="$PROJECT_DIR$/app/vendor/joomla/data" />
+      <path value="$PROJECT_DIR$/app/vendor/joomla/uri" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/app/vendor/joomla/filesystem" />
+      <path value="$PROJECT_DIR$/app/vendor/dragonmantank/cron-expression" />
+      <path value="$PROJECT_DIR$/app/vendor/akeeba/remotecli" />
+      <path value="$PROJECT_DIR$/app/vendor/laminas/laminas-diactoros" />
+      <path value="$PROJECT_DIR$/app/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/app/vendor/mcrumley/php-complexify" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

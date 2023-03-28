@@ -7,6 +7,7 @@
 
 namespace Akeeba\Panopticon\CliCommand;
 
+defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
@@ -16,8 +17,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
-defined('AKEEBA') || die;
 
 #[AsCommand(
 	name: 'database:update',
