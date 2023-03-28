@@ -79,9 +79,13 @@ abstract class AbstractCommand extends Command
 			return;
 		}
 
-		if (!file_exists(Factory::getContainer()->appConfig->getDefaultPath()))
+		$container = Factory::getContainer();
+
+		if (!file_exists($container->appConfig->getDefaultPath()))
 		{
 			throw new \RuntimeException('You need to configure Akeeba Panopticon before running this command.', 125);
 		}
+
+		$container->appConfig->loadConfiguration();
 	}
 }

@@ -4,7 +4,7 @@ Allow installation by CLI app
     cli config:create [--driver=mysqli] [--host=localhost] --user=USER --pass=PASS --name=DBNAME
         [--prefix=ak_] [--encryption=0] [--sslcipher=CIPHER] [--sslca=CS] [--sslkey=KEY] [--sslcert=CERT]
         [--sslverifyservercert]
-    cli db:create [--drop]
+    cli database:update [--drop]
     cli user:create --username=USERNAME --password=PASS [--name="Full Name"]
     cli config:set KEY VALUE
 
