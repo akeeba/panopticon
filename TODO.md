@@ -1,8 +1,5 @@
 # TO-DO
 
-Use symfony/console ^6.2.7 for cli app
-    https://symfony.com/doc/current/components/console.html
-
 Allow installation by CLI app
     cli config:create [--driver=mysqli] [--host=localhost] --user=USER --pass=PASS --name=DBNAME
         [--prefix=ak_] [--encryption=0] [--sslcipher=CIPHER] [--sslca=CS] [--sslkey=KEY] [--sslcert=CERT]
