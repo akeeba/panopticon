@@ -8,6 +8,9 @@
 /app/tmp/**
 !/app/tmp/.htaccess
 !/app/tmp/web.config
+/app/log/**
+!/app/log/.htaccess
+!/app/log/web.config
 /app/LICENSE.txt
 /app/version.php
 
