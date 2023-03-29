@@ -26,7 +26,7 @@ class LoggerFactoryService
 	{
 	}
 
-	public function get(string $logIdentifier): LoggerInterface
+	public function get(string $logIdentifier, null|int|string|Level $levelOverride = null): LoggerInterface
 	{
 		if (isset($this->loggers[$logIdentifier]))
 		{
@@ -35,11 +35,13 @@ class LoggerFactoryService
 
 		$logger = new Logger($logIdentifier);
 
+		$appConfig = $this->container->appConfig;
+		$logLevel  ??= $appConfig->get('debug', false)
+			? Level::Debug
+			: $appConfig->get('log_level', 'warning');
+
 		$logger->pushHandler(
-			new StreamHandler(
-				APATH_LOG . '/' . $logIdentifier . '.log',
-				$this->container->appConfig->get('debug', false) ? Level::Debug : Level::Warning
-			)
+			new StreamHandler(APATH_LOG . '/' . $logIdentifier . '.log', $logLevel)
 		);
 
 		$this->applyCallbacks($logger);

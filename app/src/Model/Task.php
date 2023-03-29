@@ -12,6 +12,7 @@ use Akeeba\Panopticon\Exception\InvalidTaskType;
 use Akeeba\Panopticon\Helper\TaskUtils;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Library\Task\SymfonyStyleAwareInterface;
 use Awf\Container\Container;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
@@ -22,8 +23,10 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
 defined('AKEEBA') || die;
@@ -88,7 +91,7 @@ class Task extends DataModel
 		return $this;
 	}
 
-	public function runNextTask(?LoggerInterface $logger = null): bool
+	public function runNextTask(?LoggerInterface $logger = null, ?SymfonyStyle $ioStyle = null): bool
 	{
 		$logger ??= new NullLogger();
 		$db     = $this->getDbo();
@@ -246,6 +249,22 @@ class Task extends DataModel
 		{
 			/** @var CallbackInterface $callback */
 			$callback   = $this->container->taskRegistry->get($pendingTask->type);
+
+			if (function_exists('user_decorate_cli_task'))
+			{
+				$callback = user_decorate_cli_task($callback);
+			}
+
+			if ($callback instanceof LoggerAwareInterface)
+			{
+				$callback->setLogger($logger);
+			}
+
+			if ($callback instanceof SymfonyStyleAwareInterface)
+			{
+				$callback->setSymfonyStyle($ioStyle);
+			}
+
 			$taskObject = (object) $pendingTask->toArray();
 			$storage    = $pendingTask->storage;
 			$storage->set('task.resumed', $willResume);

@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\CliCommand;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
+use Akeeba\Panopticon\CliCommand\Trait\ForkedLoggerAwareTrait;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Logger\ForkedLogger;
 use Akeeba\Panopticon\Model\Task;
@@ -31,6 +32,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[ConfigAssertion(true)]
 class TaskRun extends AbstractCommand
 {
+	use ForkedLoggerAwareTrait;
+
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$container = Factory::getContainer();
@@ -42,7 +45,7 @@ class TaskRun extends AbstractCommand
 			->replace($db->quoteName('#__akeeba_common'))
 			->values(implode(',', [
 				$db->quote('panopticon.task.last.execution'),
-				$db->quote((new Date())->toSql())
+				$db->quote((new Date())->toSql()),
 			]));
 		$db->setQuery($query)->execute();
 		$db->unlockTables();
@@ -62,11 +65,11 @@ class TaskRun extends AbstractCommand
 			$container->appConfig->get('execution_bias', 75)
 		);
 
-		$logger = $this->getLogger($output);
+		$logger = $this->getForkedLogger($output);
 
 		while ($timer->getTimeLeft() > 0.01)
 		{
-			if (!$model->runNextTask($logger))
+			if (!$model->runNextTask($logger, $this->ioStyle))
 			{
 				break;
 			}
@@ -74,15 +77,4 @@ class TaskRun extends AbstractCommand
 
 		return Command::SUCCESS;
 	}
-
-	private function getLogger(OutputInterface $output): LoggerInterface
-	{
-		return new ForkedLogger(
-			[
-				Factory::getContainer()->logger,
-				new ConsoleLogger($output)
-			]
-		);
-	}
-
 }

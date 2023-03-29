@@ -11,6 +11,7 @@ use Akeeba\Panopticon\CliCommand\Attribute\AppHeader;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -27,6 +28,10 @@ abstract class AbstractCommand extends Command
 	{
 		// Initialise the I/O early
 		$this->configureSymfonyIO($input, $output);
+		$output->getFormatter()->setStyle('debug', new OutputFormatterStyle('gray'));
+		$output->getFormatter()->setStyle('loginfo', new OutputFormatterStyle('bright-blue'));
+		$output->getFormatter()->setStyle('logwarning', new OutputFormatterStyle('yellow', null, ['bold']));
+		$output->getFormatter()->setStyle('lognotice', new OutputFormatterStyle('yellow'));
 		// Make sure Panopticon is configured (unless explicitly asked to do otherwise)
 		$this->assertConfigured();
 
@@ -51,6 +56,15 @@ abstract class AbstractCommand extends Command
 		if ($showHeader && !$this->ioStyle->isQuiet())
 		{
 			$this->ioStyle->writeln($cliApp->getName() . ' <info>' . $cliApp->getVersion() . '</info>');
+
+			$year = gmdate('Y');
+			$this->ioStyle->writeln([
+				"Copyright (c) 2023-$year  Akeeba Ltd",
+				"",
+				"<debug>Distributed under the terms of the GNU General Public License as published",
+				"by the Free Software Foundation, either version 3 of the License, or (at your",
+				"option) any later version. See LICENSE.txt.</debug>",
+			]);
 
 			$this->ioStyle->title($this->getDescription());
 		}

@@ -13,6 +13,36 @@ Time Zone
 The timezone to use for displaying information in the interface
 Default: UTC
 
+### `debug`
+Debug system
+Should system debugging be enabled? Displays more detailed error messages at runtime and enabled very detailed logging. Only enable if you are asked to.
+Default: false
+
+## Logging
+
+### `log_level`
+Minimum log level
+What is the minimum severity level for messages to be kept in the logs. Please note that enabling Debug System will always result in all messages to be logged, as if you had set this option to Debug.
+Default: warning
+Range: emergency, alert, critical, error, warning, notice, info, debug
+
+### `log_rotate_compress`
+Compress rotated logs
+Should the log files which have been rotated be compressed with GZip?
+Default: true
+
+### `log_rotate_files`
+Rotated log files
+How many rotated log files should I keep?
+Default: 3
+Range: 0 to 100
+
+### `log_backup_threshold`
+Backup log files deletion after this many days
+Backup log files will be deleted, instead of rotated, after this many days. 0 means keep forever (NOT RECOMMENDED!).
+Default: 14
+Range: 0 to 65535 (that is almost 179 1/2 years…)
+
 ## Task handling
 
 ### `cron_stuck_threshold`

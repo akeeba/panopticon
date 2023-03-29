@@ -11,6 +11,7 @@ namespace Akeeba\Panopticon\Application;
 use DateTimeZone;
 use Exception;
 use OutOfBoundsException;
+use Psr\Log\LogLevel;
 use RangeException;
 use RuntimeException;
 
@@ -21,9 +22,15 @@ trait DefaultConfigurationTrait
 	public function getDefaultConfiguration(): array
 	{
 		return [
-			'debug'                 => false,
-			'session_timeout'       => 1440,
-			'timezone'              => 'UTC',
+			'session_timeout' => 1440,
+			'timezone'        => 'UTC',
+			'debug'           => false,
+
+			'log_level'            => 'warning',
+			'log_rotate_compress'  => true,
+			'log_rotate_files'     => 3,
+			'log_backup_threshold' => 14,
+
 			'cron_stuck_threshold'  => 3,
 			'max_execution'         => 60,
 			'execution_bias'        => 75,
@@ -45,9 +52,12 @@ trait DefaultConfigurationTrait
 	{
 		$values = match ($key)
 		{
-			'debug', 'dbencryption' => ['true', 'yes', '1', 'on', 'false', 'no', '0', 'off'],
+			'debug', 'dbencryption', 'log_rotate_compress' => ['true', 'yes', '1', 'on', 'false', 'no', '0', 'off'],
 			'session_timeout' => [3, 10, 15, 30, 45, 60, 90, 120, 180, 1440],
 			'timezone' => DateTimeZone::listIdentifiers(),
+			'log_level' => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
+			'log_rotate_files' => [0, 1, 2, 3, 5, 10, 20, 30, 31, 60, 90, 100],
+			'log_backup_threshold' => [0, 1, 3, 5, 7, 10, 14, 30, 31, 60, 90, 180, 365, 366],
 			'cron_stuck_threshold' => [3, 5, 10, 15, 30, 45, 60],
 			'max_execution' => [10, 14, 20, 30, 60, 90, 180, 300, 600, 900, 1800, 3600],
 			'execution_time_bias' => [10, 20, 25, 50, 60, 75, 80, 85, 90, 95, 100],
@@ -64,17 +74,15 @@ trait DefaultConfigurationTrait
 		return array_filter($values, fn($x) => stripos($x, $currentValue) === 0);
 	}
 
-	public function isValidConfigurationKey(string $key)
-	{
-		return array_key_exists($key, $this->getDefaultConfiguration());
-	}
-
 	private function getConfigurationOptionFilterCallback(string $key): callable
 	{
 		return match ($key)
 		{
-			'debug', 'dbencryption' => [$this, 'validateBool'],
+			'debug', 'dbencryption', 'log_rotate_compress' => [$this, 'validateBool'],
 			'session_timeout' => [$this, 'validateSessionTimeout'],
+			'log_level' => [$this, 'validateLogLevel'],
+			'log_rotate_files' => [$this, 'validateLogRotateFiles'],
+			'log_backup_threshold' => [$this, 'validateLogBackupThreshold'],
 			'timezone' => [$this, 'validateTimezone'],
 			'cron_stuck_threshold' => [$this, 'validateCronStuckThreshold'],
 			'max_execution' => [$this, 'validateMaxExecution'],
@@ -82,6 +90,11 @@ trait DefaultConfigurationTrait
 			'dbdriver' => [$this, 'validateDatabaseDriver'],
 			default => fn($x) => $x,
 		};
+	}
+
+	public function isValidConfigurationKey(string $key)
+	{
+		return array_key_exists($key, $this->getDefaultConfiguration());
 	}
 
 	private function validateBool($x): bool
@@ -115,6 +128,19 @@ trait DefaultConfigurationTrait
 		if ($x < 3 || $x > 525600)
 		{
 			throw new RangeException('Session Timeout must be between 3 and 525600 minutes.');
+		}
+
+		return $x;
+	}
+
+	private function validateLogLevel($x): string
+	{
+		if (!in_array($x, [
+			LogLevel::DEBUG, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING, LogLevel::ERROR, LogLevel::CRITICAL,
+			LogLevel::ALERT, LogLevel::EMERGENCY
+		], true))
+		{
+			return LogLevel::WARNING;
 		}
 
 		return $x;
@@ -154,6 +180,26 @@ trait DefaultConfigurationTrait
 		if (!is_numeric($x) || $x < 10 || $x > 3600)
 		{
 			throw new OutOfBoundsException('Not an integer between 10 and 3600');
+		}
+
+		return intval($x);
+	}
+
+	private function validateLogRotateFiles($x): int
+	{
+		if (!is_numeric($x) || $x < 0 || $x > 100)
+		{
+			throw new OutOfBoundsException('Not an integer between 0 and 100');
+		}
+
+		return intval($x);
+	}
+
+	private function validateLogBackupThreshold($x): int
+	{
+		if (!is_numeric($x) || $x < 0 || $x > 65535)
+		{
+			throw new OutOfBoundsException('Not an integer between 0 and 65535');
 		}
 
 		return intval($x);

@@ -40,6 +40,15 @@ function user_get_application(): \Akeeba\Panopticon\Application
 
 You can either configure the regular `\Akeeba\Panopticon\Application` object, or return an instance of a class extending from `\Akeeba\Panopticon\Application`.
 
+### Handle / decorate CLI tasks
+
+```php
+function user_decorate_cli_task(
+    \Akeeba\Panopticon\Library\Task\CallbackInterface $callback
+): \Akeeba\Panopticon\Library\Task\CallbackInterface
+```
+
+
 ### Extend the loggers
 
 Akeeba Panopticon uses Monolog for logging. The logger instances are created by a logger factory service object which is accessible through the Container object.

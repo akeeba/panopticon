@@ -115,10 +115,21 @@
         <exclude name="vendor/joomla/uri/ruleset*" />
         <exclude name="vendor/joomla/uri/SECURITY.md" />
 
+        <!--
+        <exclude name="vendor/nelexa/zip/.php-cs-fixed.php" />
+        <exclude name="vendor/nelexa/zip/.phpstorm.meta.php" />
+        <exclude name="vendor/nelexa/zip/README.RU.md" />
+        -->
+
         <exclude name="vendor/psr/http-factory/.gitignore" />
         <exclude name="vendor/psr/http-factory/.pullapprove.yml" />
 
         <exclude name="vendor/symfony/deprecation-contracts/.gitignore" />
+
+        <!--
+        <exclude name="vendor/wapmorgan/unified-archive/bin/**" />
+        <exclude name="vendor/wapmorgan/unified-archive/docs/**" />
+        -->
     </fileset>
 
     <!--

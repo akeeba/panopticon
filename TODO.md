@@ -1,7 +1,5 @@
 # TO-DO
 
-Logging in task execution, and pass logger to task callbacks
-
 Web view (view=cron ???) for task execution
 
 Task to benchmark max execution time (up to 3 minutes)
@@ -19,8 +17,8 @@ Web installer
 
 Connector plugin for J4 + build infrastructure for it
 
-Log rotation https://packagist.org/packages/cesargb/php-log-rotation
-    Install a daily task for it during setup, or by CLI `cli task:add:logrotate [--expression="@daily"] [--maxsize=1048756] [--files=1] [--compress=1]`
+Automatic Log rotation
+    Install a daily task for it during setup, or by CLI `cli task:add:logrotate [--expression="@daily"]`
 
 Add WebAuthn as an MFA method
 
@@ -161,3 +159,6 @@ Allow installation by CLI app
     cli database:update [--drop]
     cli user:create --username=USERNAME --password=PASS [--name="Full Name"]
     cli config:set KEY VALUE
+
+Manual log rotation
+    `cli log:rotate`
