@@ -59,7 +59,8 @@ abstract class MaxExecutionTime
 		 *
 		 * The irony of using malware tricks to confuse malware scanner is not lost on me.
 		 */
-		$cmd  = strtolower(implode('', explode(' ', strtr('UALAIAMAIATA A-AT', 'A', ' '))));
+		$cmd  = strtolower(implode('', explode('/', strtr('UALAIAMAIATA A-AT', 'A', '/'))));
+		//$cmd = str_replace('t-t', 't -t', $cmd);
 		$fun1 = strtolower(implode('', explode(' ', strtr('EAXAEAC', 'A', ' '))));
 		$fun2 = strtolower(implode('', explode(' ', strtr('SAHAEALALA_EAXAEAC', 'A', ' '))));
 		$fun3 = strtolower(implode('', explode(' ', strtr('SXYXSXTXEXM', 'X', ' '))));

@@ -3,7 +3,7 @@
 Web view (view=cron ???) for task execution
 
 Task to benchmark max execution time (up to 3 minutes)
-    This is set up by the web interface, or the CLI command `cli task:add:benchmark [--force]`
+    This is set up by the web interface.
     During setup give instructions to set up the CRON task runner (CLI or web) and check that it works.
     Use a 5-second timer to do an API call which returns the last time we heard from the CRON worker.
     If it is within 70 seconds we're good.
@@ -18,7 +18,8 @@ Web installer
 Connector plugin for J4 + build infrastructure for it
 
 Automatic Log rotation
-    Install a daily task for it during setup, or by CLI `cli task:add:logrotate [--expression="@daily"]`
+    Install a daily task for it during setup
+    Reinstall it by CLI `cli task:add:logrotate [--expression="@daily"]`
 
 Add WebAuthn as an MFA method
 
@@ -153,12 +154,18 @@ Only users with the super privilege can manage application-level configuration:
 
 Allow installation by CLI app
     
-    cli config:create [--driver=mysqli] [--host=localhost] --user=USER --pass=PASS --name=DBNAME
+    php cli/panopticon.php config:create [--driver=mysqli] [--host=localhost] --user=USER --pass=PASS --name=DBNAME
     [--prefix=ak_] [--encryption=0] [--sslcipher=CIPHER] [--sslca=CS] [--sslkey=KEY] [--sslcert=CERT]
     [--sslverifyservercert]
-    cli database:update [--drop]
-    cli user:create --username=USERNAME --password=PASS [--name="Full Name"]
-    cli config:set KEY VALUE
+    php cli/panopticon.php database:update [--drop]
+    php cli/panopticon.php user:create --username=USERNAME --password=PASS [--name="Full Name"]
+    php cli/panopticon.php config:set KEY VALUE
+    php cli/panopticon.php config:maxtime:test
 
 Manual log rotation
-    `cli log:rotate`
+
+    php cli/panopticon.php log:rotate
+
+CLI script to set up the maximum execution time
+
+    php cli/panopticon.php config:maxtime:test
