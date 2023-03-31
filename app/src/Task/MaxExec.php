@@ -31,6 +31,8 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 
 	private const TICK_KEY = 'maxexec.lasttick';
 
+	private const DONE_KEY = 'maxexec.done';
+
 	public function __invoke(object $task, Registry $storage): int
 	{
 		// If the last execution had timed out, return an OK so this task can be cleared.
@@ -61,7 +63,8 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 		$db->lockTable('#__akeeba_common');
 		$query = $db->getQuery(true)
 			->delete($db->quoteName('#__akeeba_common'))
-			->where($db->quoteName('key') . ' = ' . $db->quote(self::TICK_KEY));
+			->where($db->quoteName('key') . ' IN(' .
+				$db->quote(self::TICK_KEY) . ', ' . $db->quote(self::DONE_KEY) . ')');
 		try
 		{
 			$db->setQuery($query)->execute();
@@ -169,6 +172,27 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 		}
 
 		$bar?->finish();
+
+		$db->lockTable('#__akeeba_common');
+		$query = $db->getQuery(true)
+			->replace($db->quoteName('#__akeeba_common'))
+			->values(
+				'(' . $db->quote(self::DONE_KEY) . ',' .
+				$db->quote(1) . ')'
+			);
+		try
+		{
+			$db->setQuery($query)->execute();
+		}
+		catch (\Throwable)
+		{
+			// Just ignore exceptions...
+		}
+		finally
+		{
+			$db->unlockTables();
+		}
+
 
 		$this->ioStyle?->success('We have finished testing the maximum execution time for your server.');
 

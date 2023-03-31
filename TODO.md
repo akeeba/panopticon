@@ -2,18 +2,12 @@
 
 Web view (view=cron ???) for task execution
 
-Task to benchmark max execution time (up to 3 minutes)
-    This is set up by the web interface.
-    During setup give instructions to set up the CRON task runner (CLI or web) and check that it works.
-    Use a 5-second timer to do an API call which returns the last time we heard from the CRON worker.
-    If it is within 70 seconds we're good.
-    The CRON worker should self-test that it can run for a full 185 seconds.
-    This special task updates a DB field every second. This lets us determine at which point the CLI dies.
-    Set max execution 5 seconds less than the maximum we reached, with a minimum of 10 seconds. Bias = 75% (hardcoded).
-
 Web installer
-    tell user how to set up task execution
-    wait for task execution and benchmark (also allow user to skip over this step / finish setup later)
+    Clear the `maxexec.lasttick` and `maxexec.done` items from `#__akeeba_common`
+    Set up a `maxexec` task (replacing any existing ones)
+    Tell user how to set up task execution
+    Wait for the task execution by polling the `maxexec.lasttick` and `maxexec.done` every 5 seconds. 
+    Also allow user to skip over this step / finish setup later, removing the benchmark task
 
 Connector plugin for J4 + build infrastructure for it
 
@@ -169,3 +163,5 @@ Manual log rotation
 CLI script to set up the maximum execution time
 
     php cli/panopticon.php config:maxtime:test
+
+Task to benchmark max execution time (up to 3 minutes)
