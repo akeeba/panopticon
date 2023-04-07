@@ -17,6 +17,18 @@ Automatic Log rotation
 
 Add WebAuthn as an MFA method
 
+Connection failure detection (and point to documentation):
+* Connection error (TCP/IP, SSL, …) — explain host firewalls, check spelling of site, DNS resolution may take time
+* HTTP !== 401 when accessing /api/index.php/v1/extensions unauthenticated — make sure you can access the /api folder
+* HTTP 403 — make sure the server does not block our User Agent or payload
+* HTTP 401 when accessing /api/index.php/v1/extensions **authenticated** — Invalid Joomla API key, instructions to retrieve it
+* Connector plugin not installed / not activated — instructions to install and activate the plugin
+  * Run https://boot4.local.web/api/index.php/v1/config/com_panopticon?page[limit]=200 and make sure the result is not empty
+* (Warning) Akeeba Backup Pro component not installed / not activated and/or Web Services - Akeeba Backup plugin (if version >= 9.6.0) not installed / not activated — you must install and activate Akeeba Backup Pro and specific plugins for full features
+* (Warning) Cannot get list of profiles — you must install and activate Akeeba Backup Pro and specific plugins for full features
+* (Warning) Admin Tools Pro component and/or Web Services - Admin Tools plugin (if version >= 7.4.0) not installed / not activated — you must install and activate Admin Tools Pro and specific plugins for full features
+* (Warning) Cannot list WAF settings — you must install and activate Admin Tools Pro and specific plugins for full features
+
 # API features
 
 ## Core Joomla
@@ -35,11 +47,17 @@ Can be used to change the update source for core Joomla
 
 **List extensions with version and update status**
 
-GET /v1/panopticon/extensions
+GET /v1/panopticon/extensions/all
     Normal list, with whatever data Joomla has cached
 
-GET /v1/panopticon/extensions?force=true
-    Force reload the extensions' updates
+GET /v1/panopticon/extensions/all?force=true
+    Force reload the extensions' update information
+
+GET /v1/panopticon/extensions/com_foobar
+    Normal list, specific extension, with whatever data Joomla has cached
+
+GET /v1/panopticon/extensions/com_foobar?force=true
+    Normal list, specific extension, force reload the extension's update information
 
 **Install extension updates**
 
@@ -59,6 +77,17 @@ GET /v1/panopticon/extensions/database/123
 **Database fix for an extension**
 
 POST /v1/panopticon/extensions/database/123
+
+**List update sites**
+
+GET /v1/panopticon/extensions/updatesite
+    Get all update sites
+
+Filters
+* Filter by status
+    status=0 or status=1
+* Filter by extension ID    
+    eid[]=123&eid[]=234
 
 **Re-enable a disabled, or disabled an enabled update sites**
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<extension type="package" method="upgrade">
+    <name>pkg_panopticon</name>
+    <author>Nicholas K. Dionysopoulos</author>
+    <creationDate>##DATE##</creationDate>
+    <packagename>panopticon</packagename>
+    <version>##VERSION##</version>
+    <url>https://www.akeeba.com</url>
+    <packager>Akeeba Ltd</packager>
+    <packagerurl>https://www.akeeba.com</packagerurl>
+    <copyright>Copyright (c)2023-2023 Akeeba Ltd / Nicholas K. Dionysopoulos</copyright>
+    <license>GNU GPL v3 or later</license>
+    <description>PKG_PANOPTICON_XML_DESCRIPTION</description>
+
+    <files>
+        <file type="component" id="com_panopticon">com_panopticon.zip</file>
+
+        <file type="plugin" group="webservices" id="plg_webservices_panopticon">plg_webservices_panopticon.zip</file>
+    </files>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB/pkg_panopticon.sys.ini</language>
+    </languages>
+
+    <scriptfile>script.panopticon.php</scriptfile>
+
+    <updateservers>
+        <server type="extension" priority="1" name="Akeeba Panopticon Connector for Joomla!">https://cdn.akeeba.com/updates/pkgpanopticon.xml</server>
+    </updateservers>
+</extension>

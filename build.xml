@@ -7,11 +7,18 @@
     <property name="dirs.root" value="${phing.dir}" override="true" />
     <property name="dirs.phpapp" value="app" override="true" />
     <property name="dirs.release" value="${dirs.root}/release" override="true" />
+    <property name="dirs.templates" value="${phing.dir}/build/templates" override="true" />
+    <property name="dirs.component" value="${phing.dir}/component" override="true" />
+    <property name="dirs.modules" value="${phing.dir}/modules" override="true" />
+    <property name="dirs.plugins" value="${phing.dir}/plugins" override="true" />
+    <property name="dirs.documentation" value="${phing.dir}/documentation" override="true" />
 
     <!-- Load externally defined properties -->
     <property file="${phing.dir.common}/default.properties" override="true" />
     <property file="${phing.dir}/../build.properties" override="true" />
     <property file="${phing.dir}/../build.${host.os}.properties" override="true" />
+    <property file="${phing.dir}/build/build.properties" override="true" />
+    <property file="${phing.dir}/build/override.properties" override="true" />
     <property file="${phing.dir}/build.properties" override="true" />
     <property file="${phing.dir}/override.properties" override="true" />
 
@@ -132,13 +139,32 @@
         -->
     </fileset>
 
+    <fileset dir="${dirs.component}" id="component" expandsymboliclinks="true">
+        <include name="api/**"/>
+        <include name="backend/**"/>
+        <include name="*"/>
+
+        <exclude name="LICENSE.txt"/>
+        <exclude name="script.akeeba.php"/>
+    </fileset>
+
+    <fileset dir="${dirs.release}" id="package">
+        <include name="com_*-pro.zip"/>
+        <include name="mod_*.zip" />
+        <include name="plg_*.zip"/>
+        <include name="pkg_*.xml"/>
+        <include name="language/**"/>
+        <include name="*.txt"/>
+        <include name="script.*.php"/>
+    </fileset>
+
     <!--
     ====================================================================================================
     Tasks - General
     ====================================================================================================
     -->
     <target name="git" description="Makes only packages, not the documentation"
-            depends="new-release,setup-properties,compile-css,compile-javascript,app-package">
+            depends="new-release,setup-properties,compile-css,compile-javascript,app-package,component-packages">
     </target>
 
     <target name="new-release" depends="composer-install,npm-install,link">
@@ -251,7 +277,7 @@
 
         <copy file="${dirs.root}/CHANGELOG" tofile="${dirs.phpapp}/CHANGELOG.php" overwrite="true"/>
 
-        <copy file="./build/templates/version.php" tofile="${dirs.phpapp}/version.php" overwrite="true">
+        <copy file="${dirs.templates}/version.php" tofile="${dirs.phpapp}/version.php" overwrite="true">
             <filterchain refid="standard-tokens"/>
         </copy>
 
