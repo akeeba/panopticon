@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ @package   panopticon
+  ~ @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+  ~ @license   GNU General Public License version 3, or later
+  -->
+
 <extension type="component" method="upgrade">
     <name>com_panopticon</name>
     <author>Akeeba Ltd</author>

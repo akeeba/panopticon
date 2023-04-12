@@ -6,7 +6,7 @@ namespace ${NAMESPACE};
 
 #end
 
-defined('AKEEBA') || die;
+(defined('AKEEBA') || defined('_JEXEC')) || die;
 
 enum ${NAME}#if (${BACKED_TYPE}) : ${BACKED_TYPE} #end{
 

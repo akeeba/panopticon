@@ -1,4 +1,4 @@
 <?php
 #parse("PHP File Header.php")
 
-defined('AKEEBA') || die;
+(defined('AKEEBA') || defined('_JEXEC')) || die;

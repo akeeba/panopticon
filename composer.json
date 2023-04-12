@@ -38,8 +38,9 @@
 		"symfony/error-handler": "^5.2"
 	},
 	"suggest": {
-		"ext-zend-opcache": "*",
-		"ext-pdo": "*"
+		"ext-pdo": "*",
+		"ext-simplexml": "*",
+		"ext-zend-opcache": "*"
 	},
 	"config": {
 		"vendor-dir": "app/vendor",

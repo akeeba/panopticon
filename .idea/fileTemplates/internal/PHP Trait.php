@@ -6,7 +6,7 @@ namespace ${NAMESPACE};
 
 #end
 
-defined('AKEEBA') || die;
+(defined('AKEEBA') || defined('_JEXEC')) || die;
 
 trait ${NAME} {
 
