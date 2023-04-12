@@ -7,15 +7,19 @@
 
 (defined('AKEEBA') || defined('_JEXEC')) || die;
 
-use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 
-$displayData = [
-	'icon'    => 'icon-bookmark panopticon',
-	'title'   => '',
-	'content' => '',
-];
+?>
+	<div class="text-center mt-2 mb-4 px-4">
+		<span class="fa-4x mb-2 icon-plug article" aria-hidden="true"></span>
+		<h2 class="display-5 fw-bold"><?= Text::_('COM_PANOPTICON_WELCOME_TITLE') ?></h2>
+		<p class="fs-3 text-muted"><?= Text::_('COM_PANOPTICON_WELCOME_CONTENT') ?></p>
+	</div>
 
-$user = Factory::getApplication()->getIdentity();
-
-echo LayoutHelper::render('joomla.content.emptystate', $displayData);
+<?php
+echo $this->loadTemplate('plgauth');
+echo $this->loadTemplate('plgusertoken');
+echo $this->loadTemplate('hastoken');
+echo $this->loadTemplate('plgwebservices');
+echo $this->loadTemplate('info');
