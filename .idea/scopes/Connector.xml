@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Connector" pattern="file:component//*||file:plugins//*" />
+</component>
