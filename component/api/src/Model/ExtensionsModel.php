@@ -9,15 +9,20 @@ namespace Akeeba\Component\Panopticon\Api\Model;
 
 (defined('AKEEBA') || defined('_JEXEC')) || die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Object\CMSObject;
+use Joomla\Component\Installer\Administrator\Helper\InstallerHelper;
 use Joomla\Database\ParameterType;
-use Throwable;
+use stdClass;
 
 class ExtensionsModel extends ListModel
 {
+	use ElementToExtensionIdTrait;
+
 	public function __construct($config = [], MVCFactoryInterface $factory = null)
 	{
 		$config['filter_fields'] = $config['filter_fields'] ?? [
@@ -88,11 +93,11 @@ class ExtensionsModel extends ListModel
 			function (object $item): object {
 				try
 				{
-					$manifestCache = @json_decode($item->manifest_cache ?? '{}') ?? new \stdClass();
+					$manifestCache = @json_decode($item->manifest_cache ?? '{}') ?? new stdClass();
 				}
-				catch (\Exception $e)
+				catch (Exception $e)
 				{
-					$manifestCache = new \stdClass();
+					$manifestCache = new stdClass();
 				}
 
 				$item->author      = $manifestCache->author ?? '';
@@ -197,20 +202,41 @@ class ExtensionsModel extends ListModel
 			$items
 		);
 
-		// If no limits were requested return the whole array
-		if ($limitstart === 0 && $limit === 0)
+		// Apply limits
+		$limitstart = $limitstart ?: 0;
+		$limit = $limit ?: 0;
+
+		if ($limitstart !== 0 && $limit === 0)
 		{
-			return $items;
+			$items = array_slice($items, $limitstart);
+		}
+		elseif ($limitstart !== 0 && $limit !== 0)
+		{
+			$items = array_slice($items, $limitstart, $limit);
 		}
 
-		// There's a pagination start, but no limit. A peculiar choice, but I'll oblige.
-		if ($limit === 0)
-		{
-			return array_slice($items, $limitstart);
-		}
+		// Add Update Site information for each extension
+		$updateSites = $this->getUpdateSitesForExtensions(array_map(fn($item) => $item->extension_id, $items));
 
-		// There's both a pagination start and a pagination limit. Apply this choice.
-		return array_slice($items, $limitstart, $limit);
+		$items = array_map(
+			function(object $item) use ($updateSites): object {
+				$item->updatesites = $updateSites[$item->extension_id] ?? [];
+
+				// This is needed by InstallerHelper::getDownloadKey
+				$item->extra_query = array_reduce(
+					$item->updatesites,
+					fn(string $carry, object $item) => $carry ?: $item->extra_query,
+					''
+				);
+
+				$item->downloadkey = InstallerHelper::getDownloadKey(new CMSObject($item));
+
+				return $item;
+			},
+			$items
+		);
+
+		return $items;
 	}
 
 	protected function _getListCount($query)
@@ -218,108 +244,61 @@ class ExtensionsModel extends ListModel
 		return count($this->_getList($query, 0, 0));
 	}
 
-	private function extensionNameToCriteria(string $extensionName): array
+	private function getUpdateSitesForExtensions(array $eids): array
 	{
-		$parts = explode('_', $extensionName, 3);
-
-		switch ($parts[0])
-		{
-			case 'pkg':
-				return [
-					'type'    => 'package',
-					'element' => $extensionName,
-				];
-
-			case 'com':
-				return [
-					'type'    => 'component',
-					'element' => $extensionName,
-				];
-
-			case 'plg':
-				return [
-					'type'    => 'plugin',
-					'folder'  => $parts[1],
-					'element' => $parts[2],
-				];
-
-			case 'mod':
-				return [
-					'type'      => 'module',
-					'element'   => $extensionName,
-					'client_id' => 0,
-				];
-
-			// That's how we note admin modules
-			case 'amod':
-				return [
-					'type'      => 'module',
-					'element'   => substr($extensionName, 1),
-					'client_id' => 1,
-				];
-
-			case 'files':
-				return [
-					'type'    => 'file',
-					'element' => $parts[1],
-				];
-
-			case 'file':
-				return [
-					'type'    => 'file',
-					'element' => $extensionName,
-				];
-
-			case 'lib':
-				return [
-					'type'    => 'library',
-					'element' => $parts[1],
-				];
-		}
-
-		return [];
-	}
-
-	public function getExtensionIdFromElement(string $extensionName): ?int
-	{
-		$criteria = $this->extensionNameToCriteria($extensionName);
-
-		if (empty($criteria))
-		{
-			return null;
-		}
-
 		$db    = method_exists($this, 'getDatabase') ? $this->getDatabase() : $this->getDbo();
 		$query = $db->getQuery(true)
-			->select($db->quoteName('extension_id'))
-			->from($db->quoteName('#__extensions'));
-
-		foreach ($criteria as $key => $value)
-		{
-			$type = is_numeric($value) ? ParameterType::INTEGER : ParameterType::STRING;
-			$type = is_bool($value) ? ParameterType::BOOLEAN : $type;
-			$type = is_null($value) ? ParameterType::NULL : $type;
-
-			/**
-			 * This is required since $value is passed by reference in bind(). If we do not do this unholy trick the
-			 * $value variable is overwritten in the next foreach() iteration, therefore all criteria values will be
-			 * equal to the last value iterated. Groan...
-			 */
-			$varName    = 'queryParam' . ucfirst($key);
-			${$varName} = $value;
-
-			$query->where($db->qn($key) . ' = :' . $key)
-				->bind(':' . $key, ${$varName}, $type);
-		}
+			->select('*')
+			->from('#__update_sites_extensions')
+			->whereIn($db->quoteName('extension_id'), $eids, ParameterType::INTEGER);
 
 		try
 		{
-			return ((int) $db->setQuery($query)->loadResult()) ?: null;
+			$temp = $db->setQuery($query)->loadObjectList() ?: [];
 		}
-		catch (Throwable $e)
+		catch (Exception $e)
 		{
-			return null;
+			return [];
 		}
-	}
 
+		$updateSitesPerEid = [];
+		$updateSiteIDs = [];
+
+		foreach ($temp as $item)
+		{
+			$updateSitesPerEid[$item->extension_id] = $updateSitesPerEid[$item->extension_id] ?? [];
+			$updateSitesPerEid[$item->extension_id][] = $item->update_site_id;
+			$updateSiteIDs[] = $item->update_site_id;
+		}
+
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__update_sites'))
+			->whereIn($db->quoteName('update_site_id'), $updateSiteIDs);
+
+		try
+		{
+			$temp = $db->setQuery($query)->loadObjectList('update_site_id') ?: [];
+		}
+		catch (Exception $e)
+		{
+			return [];
+		}
+
+		$ret = [];
+
+		foreach ($updateSitesPerEid as $eid => $usids)
+		{
+			$ret[$eid] = array_filter(
+				array_map(
+					fn(int $usid) => $temp[$usid] ?? null,
+					$usids
+				)
+			);
+		}
+
+		$ret = array_filter($ret);
+
+		return $ret;
+	}
 }

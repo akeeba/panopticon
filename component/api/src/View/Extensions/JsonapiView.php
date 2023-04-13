@@ -37,6 +37,8 @@ class JsonapiView extends BaseJsonApiView
 		"detailsurl",
 		"infourl",
 		"changelogurl",
+		"updatesites",
+		"downloadkey",
 	];
 
 	protected $fieldsToRenderItem = [
@@ -63,5 +65,7 @@ class JsonapiView extends BaseJsonApiView
 		"detailsurl",
 		"infourl",
 		"changelogurl",
+		"updatesites",
+		"downloadkey",
 	];
 }
