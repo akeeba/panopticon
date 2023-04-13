@@ -1,0 +1,20 @@
+### Refresh updates
+POST {{endpoint}}/v1/panopticon/updates
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### No extension to update
+POST {{endpoint}}/v1/panopticon/update
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### Update extension 457
+POST {{endpoint}}/v1/panopticon/update
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+Content-Type: application/x-www-form-urlencoded
+
+eid[]=457

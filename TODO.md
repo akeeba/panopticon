@@ -43,7 +43,7 @@ Can be used to change the update source for core Joomla
 
 ### List extensions with version and update status
 
-#### GET /v1/panopticon/extensions
+#### ✅ GET /v1/panopticon/extensions
     
 List information about installed extensions and their update availability.
 
@@ -54,93 +54,113 @@ Filters:
 * `id` Display only a specific extension (default: null)
 * `core` Include / exclude core Joomla extensions (default: null)
 
-#### GET /v1/panopticon/extension/123
+#### ✅ GET /v1/panopticon/extension/123
 
 Get information about extension with ID 123
 
-#### GET /v1/panopticon/extension/com_foobar
+#### ✅ GET /v1/panopticon/extension/com_foobar
 
 Get information about an extension given its Joomla extension element e.g. com_example, plg_system_example, tpl_example, etc.
 
+### Update handling
 
+#### ✅ POST /v1/panopticon/updates
 
+Tell Joomla to fetch update information.
 
+Filters:
 
+* `force` Should I force-reload all updates?
 
+#### ✅ POST /v1/panopticon/update
 
+Install updates for specific extension
 
-**Install extension updates**
+POST parameters:
 
-POST /v1/panopticon/extensions/update
-eid[]=123&eid[]=345
+```eid[]=123&eid[]=345```
 
-**Reinstall the current version of an extension**
+#### 🚧 GET /v1/panopticon/updatesites
 
-POST /v1/panopticon/extensions/reinstall/123
+List update sites
 
-**Get database fix info (for all extensions, or specific extensions)**
+Filters:
+* `status` Filter by published / unpublished sites
+* `eid[]` Filter by extension ID (array, multiple elements allowed)
 
-GET /v1/panopticon/extensions/database/0
+##### 🚧 POST /v1/panopticon/updatesite/123
 
-GET /v1/panopticon/extensions/database/123
+Change the publish status and/or the Download Key of an update site
 
-**Database fix for an extension**
+POST parameters:
 
-POST /v1/panopticon/extensions/database/123
+* `status` (mandatory) The new status
+* `key` The new Download Key for this update site
 
-**List update sites**
+##### 🚧 POST /v1/panopticon/updatesites/rebuild
 
-GET /v1/panopticon/extensions/updatesite
-    Get all update sites
+Rebuild the updates sites
 
-Filters
-* Filter by status
-    status=0 or status=1
-* Filter by extension ID    
-    eid[]=123&eid[]=234
+### Reinstall / refresh extensions
 
-**Re-enable a disabled, or disabled an enabled update sites**
+#### POST /v1/panopticon/reinstall/123 ❓
 
-POST /v1/panopticon/extensions/updatesite?eid[]=123
-status=0 or status=1
+Reinstall the current version of an extension, given its extension ID
 
-**List core version and update availability**
+#### POST /v1/panopticon/reinstall/pkg_something ❓
 
-GET /v1/panopticon/core
-    Normal list, with whatever data Joomla has cached
+Reinstall the current version of an extension, given its element
 
-GET /v1/panopticon/core?force=true
-    Force reload the updates
+### Database fix
 
-**Get database fix info for the core**
+#### GET /v1/panopticon/database
 
-GET /v1/panopticon/core
+Get database fix info for all extensions.
 
-**Database fix for the core**
+#### GET /v1/panopticon/database/123
 
-POST /v1/panopticon/core/database
+Get database fix info for an extension, given its ID
 
-**Download the core update package to the server**
+#### GET /v1/panopticon/database/pkg_something
 
-POST /v1/panopticon/core/update/download
-    Downloads the update package, if one exists
+Get database fix info for an extension, given its element
 
-POST /v1/panopticon/core/update/download?reinstall=true
-    Downloads the package for the _currently installed_ version of Joomla
+#### POST /v1/panopticon/database/123 
 
-**Enable administrator/components/com_joomlaupdate/extract.php**
+Apply database fix for an extension given its ID
 
-POST /v1/panopticon/core/update/activate
+#### POST /v1/panopticon/database/pkg_example
+
+Apply database fix for an extension given its element
+
+### Joomla Core Update
+
+#### GET /v1/panopticon/core/update
+
+List core version and update availability
+
+#### POST /v1/panopticon/core/update/download
+
+Download the core update package to the server
+
+POST parameters:
+* `reinstall` Set to 1 to reinstall the current version (only if an update is unavailable)
+
+#### POST /v1/panopticon/core/update/activate
+
+Enable `administrator/components/com_joomlaupdate/extract.php` or `administrator/components/com_joomlaupdate/restore.php` 
 
 Note: the extraction and initial post-update processing is done using extract.php
 
-**Disable administrator/components/com_joomlaupdate/extract.php (only used for communications testing)**
+#### POST /v1/panopticon/core/update/disable
 
-POST /v1/panopticon/core/update/disable
+Disable `administrator/components/com_joomlaupdate/extract.php` or `administrator/components/com_joomlaupdate/restore.php`
 
-**Run the post-update code**
+This should only be used for testing the communication with this file. Otherwise, it will be disabled automatically by Joomla.
 
-POST /v1/panopticon/core/update/postupdate
+#### POST /v1/panopticon/core/update/postupdate
+
+Run the post-update code
 
 ## Integrations
 

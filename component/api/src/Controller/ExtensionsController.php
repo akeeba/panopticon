@@ -10,11 +10,8 @@ namespace Akeeba\Component\Panopticon\Api\Controller;
 (defined('AKEEBA') || defined('_JEXEC')) || die;
 
 use Akeeba\Component\Panopticon\Api\Model\ExtensionsModel;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
-use Joomla\CMS\MVC\View\JsonApiView;
-use Joomla\String\Inflector;
 
 class ExtensionsController extends ApiController
 {
