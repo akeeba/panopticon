@@ -28,3 +28,6 @@
 ### Build & Release files
 /build/override.properties
 /release
+
+### Private files
+/assets/phpstorm_http/http-client.private.env.json

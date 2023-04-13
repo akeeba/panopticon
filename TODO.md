@@ -33,31 +33,41 @@ Connection failure detection (and point to documentation):
 
 ## Core Joomla
 
-**List extensions**
+### Get configuration parameters
 
-GET /v1/extensions?core=false&status=1&type=component
-
-**Get configuration parameters**
-
-GET /v1/config/com_akeebabackup?page[limit]=200
+#### GET /v1/config/com_akeebabackup?page[limit]=200
 
 Can be used to change the update source for core Joomla
 
 ## Own connector
 
-**List extensions with version and update status**
+### List extensions with version and update status
 
-GET /v1/panopticon/extensions/all
-    Normal list, with whatever data Joomla has cached
+#### GET /v1/panopticon/extensions
+    
+List information about installed extensions and their update availability.
 
-GET /v1/panopticon/extensions/all?force=true
-    Force reload the extensions' update information
+Filters:
 
-GET /v1/panopticon/extensions/com_foobar
-    Normal list, specific extension, with whatever data Joomla has cached
+* `updatable` Display only items with / without an update (default: null)
+* `protected` Display only items which are / are not protected (default: 0)
+* `id` Display only a specific extension (default: null)
+* `core` Include / exclude core Joomla extensions (default: null)
 
-GET /v1/panopticon/extensions/com_foobar?force=true
-    Normal list, specific extension, force reload the extension's update information
+#### GET /v1/panopticon/extension/123
+
+Get information about extension with ID 123
+
+#### GET /v1/panopticon/extension/com_foobar
+
+Get information about an extension given its Joomla extension element e.g. com_example, plg_system_example, tpl_example, etc.
+
+
+
+
+
+
+
 
 **Install extension updates**
 

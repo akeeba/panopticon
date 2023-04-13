@@ -1,0 +1,17 @@
+### Get all extensions
+GET {{endpoint}}/v1/panopticon/extensions
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### Get extension by ID
+GET {{endpoint}}/v1/panopticon/extension/100
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### Get extension by element
+GET {{endpoint}}/v1/panopticon/extension/files_joomla
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
