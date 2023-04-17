@@ -80,36 +80,25 @@ POST parameters:
 
 ```eid[]=123&eid[]=345```
 
-#### 🚧 GET /v1/panopticon/updatesites
+#### ✅ GET /v1/panopticon/updatesites
 
 List update sites
 
 Filters:
-* `status` Filter by published / unpublished sites
+* `enabled` Filter by published / unpublished sites
 * `eid[]` Filter by extension ID (array, multiple elements allowed)
 
-##### 🚧 POST /v1/panopticon/updatesite/123
+##### ✅ PATCH /v1/panopticon/updatesite/123
 
-Change the publish status and/or the Download Key of an update site
+Modify an update site
 
-POST parameters:
+##### ✅ DELETE /v1/panopticon/updatesite/123
 
-* `status` (mandatory) The new status
-* `key` The new Download Key for this update site
+Delete an update site
 
 ##### 🚧 POST /v1/panopticon/updatesites/rebuild
 
 Rebuild the updates sites
-
-### Reinstall / refresh extensions
-
-#### POST /v1/panopticon/reinstall/123 ❓
-
-Reinstall the current version of an extension, given its extension ID
-
-#### POST /v1/panopticon/reinstall/pkg_something ❓
-
-Reinstall the current version of an extension, given its element
 
 ### Database fix
 
@@ -161,6 +150,16 @@ This should only be used for testing the communication with this file. Otherwise
 #### POST /v1/panopticon/core/update/postupdate
 
 Run the post-update code
+
+### Reinstall / refresh extensions
+
+#### POST /v1/panopticon/reinstall/123 ❓
+
+Reinstall the current version of an extension, given its extension ID
+
+#### POST /v1/panopticon/reinstall/pkg_something ❓
+
+Reinstall the current version of an extension, given its element
 
 ## Integrations
 

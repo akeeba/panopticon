@@ -93,50 +93,26 @@ class Panopticon extends CMSPlugin implements SubscriberInterface
 		);
 
 		$routes[] = new Route(
-			['POST'],
-			self::API_PREFIX . 'updatesites',
-			'updatesites.rebuild',
-			[],
-			$defaults
-		);
-
-		$routes[] = new Route(
 			['GET'],
 			self::API_PREFIX . 'updatesite/:id',
 			'updatesites.displayItem',
-			[
-				'id' => '(\d+)',
-			],
+			['id' => '(\d+)'],
 			$defaults
 		);
 
 		$routes[] = new Route(
-			['GET'],
-			self::API_PREFIX . 'updatesite/:element',
-			'updatesites.displayItem',
-			[
-				'element' => '([0-9a-z_\.-]+)',
-			],
-			$defaults
-		);
-
-		$routes[] = new Route(
-			['POST'],
+			['PATCH'],
 			self::API_PREFIX . 'updatesite/:id',
-			'updatesites.update',
-			[
-				'id' => '(\d+)',
-			],
+			'updatesites.edit',
+			['id' => '(\d+)'],
 			$defaults
 		);
 
 		$routes[] = new Route(
-			['POST'],
-			self::API_PREFIX . 'updatesite/:element',
-			'updatesites.update',
-			[
-				'element' => '([0-9a-z_\.-]+)',
-			],
+			['DELETE'],
+			self::API_PREFIX . 'updatesite/:id',
+			'updatesites.delete',
+			['id' => '(\d+)'],
 			$defaults
 		);
 

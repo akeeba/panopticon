@@ -1,0 +1,35 @@
+### Get all update sites
+GET {{endpoint}}/v1/panopticon/updatesites
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### Get disabled update sites
+GET {{endpoint}}/v1/panopticon/updatesites?enabled=0
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### Get update sites for extension 448
+GET {{endpoint}}/v1/panopticon/updatesites?eid[]=448
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### Get update site with ID 77
+GET {{endpoint}}/v1/panopticon/updatesite/77
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### Modify update site 104
+PATCH {{endpoint}}/v1/panopticon/updatesite/104
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+Content-Type: application/json
+
+{
+	"enabled": 1,
+    "extra_query": "0123456789abcdef0123456789abcdef"
+}

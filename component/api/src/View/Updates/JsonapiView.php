@@ -9,9 +9,6 @@ namespace Akeeba\Component\Panopticon\Api\View\Updates;
 
 (defined('AKEEBA') || defined('_JEXEC')) || die;
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\View\Event\OnGetApiFields;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\JsonApiView as BaseJsonApiView;
 use Joomla\CMS\Uri\Uri;
 use Tobscure\JsonApi\Collection;
