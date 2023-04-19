@@ -52,5 +52,4 @@ class JsonapiView extends \Joomla\CMS\MVC\View\JsonApiView
 		'editor',
 		'downloadKey',
 	];
-
 }

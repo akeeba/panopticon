@@ -33,3 +33,9 @@ Content-Type: application/json
 	"enabled": 1,
     "extra_query": "0123456789abcdef0123456789abcdef"
 }
+
+### Rebuild the update sites
+POST {{endpoint}}/v1/panopticon/updatesites/rebuild
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0

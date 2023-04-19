@@ -96,7 +96,7 @@ Modify an update site
 
 Delete an update site
 
-##### 🚧 POST /v1/panopticon/updatesites/rebuild
+##### ✅ POST /v1/panopticon/updatesites/rebuild
 
 Rebuild the updates sites
 
