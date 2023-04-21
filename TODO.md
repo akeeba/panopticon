@@ -100,6 +100,35 @@ Delete an update site
 
 Rebuild the updates sites
 
+### Joomla Core Update
+
+#### GET /v1/panopticon/core/update
+
+List core version and update availability
+
+#### POST /v1/panopticon/core/update/download
+
+Download the core update package to the server
+
+POST parameters:
+* `reinstall` Set to 1 to reinstall the current version (only if an update is unavailable)
+
+#### POST /v1/panopticon/core/update/activate
+
+Enable `administrator/components/com_joomlaupdate/extract.php` or `administrator/components/com_joomlaupdate/restore.php`
+
+Note: the extraction and initial post-update processing is done using extract.php
+
+#### POST /v1/panopticon/core/update/disable
+
+Disable `administrator/components/com_joomlaupdate/extract.php` or `administrator/components/com_joomlaupdate/restore.php`
+
+This should only be used for testing the communication with this file. Otherwise, it will be disabled automatically by Joomla.
+
+#### POST /v1/panopticon/core/update/postupdate
+
+Run the post-update code
+
 ### Database fix
 
 #### GET /v1/panopticon/database
@@ -121,35 +150,6 @@ Apply database fix for an extension given its ID
 #### POST /v1/panopticon/database/pkg_example
 
 Apply database fix for an extension given its element
-
-### Joomla Core Update
-
-#### GET /v1/panopticon/core/update
-
-List core version and update availability
-
-#### POST /v1/panopticon/core/update/download
-
-Download the core update package to the server
-
-POST parameters:
-* `reinstall` Set to 1 to reinstall the current version (only if an update is unavailable)
-
-#### POST /v1/panopticon/core/update/activate
-
-Enable `administrator/components/com_joomlaupdate/extract.php` or `administrator/components/com_joomlaupdate/restore.php` 
-
-Note: the extraction and initial post-update processing is done using extract.php
-
-#### POST /v1/panopticon/core/update/disable
-
-Disable `administrator/components/com_joomlaupdate/extract.php` or `administrator/components/com_joomlaupdate/restore.php`
-
-This should only be used for testing the communication with this file. Otherwise, it will be disabled automatically by Joomla.
-
-#### POST /v1/panopticon/core/update/postupdate
-
-Run the post-update code
 
 ### Reinstall / refresh extensions
 
