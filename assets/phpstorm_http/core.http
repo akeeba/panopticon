@@ -1,0 +1,11 @@
+### Get Joomla update information
+GET {{endpoint}}/v1/panopticon/core/update
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0
+
+### Forcibly get Joomla update information
+GET {{endpoint}}/v1/panopticon/core/update?force=1
+Authorization: Bearer {{api_token}}
+Accept: application/vnd.api+json
+User-Agent: FooBar/1.0

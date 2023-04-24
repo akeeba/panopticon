@@ -102,7 +102,7 @@ Rebuild the updates sites
 
 ### Joomla Core Update
 
-#### GET /v1/panopticon/core/update
+#### ✅ GET /v1/panopticon/core/update
 
 List core version and update availability
 
