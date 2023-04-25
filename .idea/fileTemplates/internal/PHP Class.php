@@ -6,7 +6,7 @@ namespace ${NAMESPACE};
 
 #end
 
-(defined('AKEEBA') || defined('_JEXEC')) || die;
+defined('AKEEBA') || die;
 
 class ${NAME} {
 

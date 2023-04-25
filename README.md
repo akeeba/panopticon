@@ -18,4 +18,4 @@ Install Akeeba BuildFiles one level up, on `buildfiles`
 
 Run `phing git` in the repo's root.
 
-Requires Composer and NPM to be already installed.
+Requires Composer, Phing and NPM to be already installed.
