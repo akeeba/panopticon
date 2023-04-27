@@ -1,5 +1,7 @@
 # Configuration parameters
 
+The following are the known application configuration options which can be set in `config.php`.
+
 ## System
 
 ### `session_timeout`
@@ -24,6 +26,26 @@ Default: UTC
 Should system debugging be enabled? Displays more detailed error messages at runtime and enabled very detailed logging. Only enable if you are asked to.
 
 Default: false
+
+## Display preferences
+
+### `darkmode`
+**Dark Mode**
+
+Should the application automatically switch to dark mode?
+
+Default: -1 (use browser settings)
+
+Valid settings: -1 (auto; use browser), 0 (always light), 1 (always dark)
+
+### `fontsize`
+**Font size**
+
+Overrides the body font size.
+
+Default: (empty; uses the browser settings)
+
+UOM: pt (points, i.e. 1/72 inch)
 
 ## Logging
 
