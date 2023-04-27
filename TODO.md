@@ -1,23 +1,41 @@
 # TO-DO
 
-Web view (view=cron ???) for task execution
+## Web view (view=cron ???) for task execution
 
-Web installer
-    Clear the `maxexec.lasttick` and `maxexec.done` items from `#__akeeba_common`
-    Set up a `maxexec` task (replacing any existing ones)
-    Tell user how to set up task execution
-    Wait for the task execution by polling the `maxexec.lasttick` and `maxexec.done` every 5 seconds. 
-    Also allow user to skip over this step / finish setup later, removing the benchmark task
+## User groups implementation
 
-Connector plugin for J4 + build infrastructure for it
+* We need a db table to store groups: id, name, privileges (one or more of the user privileges) 
+* Groups are _flat_ (no hierarchy); we have a very simple use case
+* We need a db table linking users to groups (many to many)
+* Page to view and edit groups
+* Custom user class
+  * Allows setting user groups
+  * Autoloads applicable group permissions on load
+  * `authorise(?int $group, string $privilege, bool $default = false)`. If $group is null returns global privilege (proxy to getPrivilege()). If the user does not belong to $group returns $default.  
+* Custom user manager class, using the custom user class
+* db field in sites table to assign a site to _multiple_ groups
+* All permission checks will go through the site table object
+  * Loop through all user groups and call $user->authorise($group, $privilege). Return immediately on true.
+  * If that failed to return results return $user->authorise(null, $privilege) for the global privilege.
 
-Automatic Log rotation
-    Install a daily task for it during setup
-    Reinstall it by CLI `cli task:add:logrotate [--expression="@daily"]`
+## Custom menu
 
-Add WebAuthn as an MFA method
+Do not let automatic menu item creation
 
-Connection failure detection (and point to documentation):
+## Web installer
+* Clear the `maxexec.lasttick` and `maxexec.done` items from `#__akeeba_common`
+* Set up a `maxexec` task (replacing any existing ones)
+* Tell user how to set up task execution
+* Wait for the task execution by polling the `maxexec.lasttick` and `maxexec.done` every 5 seconds. 
+* Also allow user to skip over this step / finish setup later, removing the benchmark task
+
+## Automatic Log rotation
+* Install a daily task for it during setup
+* Reinstall it by CLI `cli task:add:logrotate [--expression="@daily"]`
+
+## Add WebAuthn as an MFA method
+
+## Connection failure detection (and point to documentation):
 * Connection error (TCP/IP, SSL, …) — explain host firewalls, check spelling of site, DNS resolution may take time
 * HTTP !== 401 when accessing /api/index.php/v1/extensions unauthenticated — make sure you can access the /api folder
 * HTTP 403 — make sure the server does not block our User Agent or payload
@@ -73,7 +91,7 @@ Only users with the super privilege can manage application-level configuration:
 
 # ✅ Done
 
-Allow installation by CLI app
+## Allow installation by CLI app
     
     php cli/panopticon.php config:create [--driver=mysqli] [--host=localhost] --user=USER --pass=PASS --name=DBNAME
     [--prefix=ak_] [--encryption=0] [--sslcipher=CIPHER] [--sslca=CS] [--sslkey=KEY] [--sslcert=CERT]
@@ -83,12 +101,12 @@ Allow installation by CLI app
     php cli/panopticon.php config:set KEY VALUE
     php cli/panopticon.php config:maxtime:test
 
-Manual log rotation
+## Manual log rotation
 
     php cli/panopticon.php log:rotate
 
-CLI script to set up the maximum execution time
+## CLI script to set up the maximum execution time
 
     php cli/panopticon.php config:maxtime:test
 
-Task to benchmark max execution time (up to 3 minutes)
+## Task to benchmark max execution time (up to 3 minutes)
