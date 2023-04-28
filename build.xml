@@ -139,40 +139,17 @@
         -->
     </fileset>
 
-    <fileset dir="${dirs.component}" id="component" expandsymboliclinks="true">
-        <include name="api/**"/>
-        <include name="backend/**"/>
-        <include name="*"/>
-
-        <exclude name="LICENSE.txt"/>
-        <exclude name="script.panopticon.php"/>
-    </fileset>
-
-    <fileset dir="${dirs.release}" id="package">
-        <include name="com_*.zip"/>
-        <include name="mod_*.zip" />
-        <include name="plg_*.zip"/>
-        <include name="pkg_*.xml"/>
-        <include name="language/**"/>
-        <include name="*.txt"/>
-        <include name="script.*.php"/>
-    </fileset>
-
     <!--
     ====================================================================================================
     Tasks - General
     ====================================================================================================
     -->
     <target name="git" description="Makes only packages, not the documentation"
-            depends="new-release,setup-properties,compile-css,compile-javascript,app-package,component-packages">
+            depends="new-release,setup-properties,compile-css,compile-javascript,app-package">
     </target>
 
     <target name="git-app" description="Makes only the application package"
             depends="new-release,setup-properties,compile-css,compile-javascript,app-package">
-    </target>
-
-    <target name="git-connector" description="Makes only the connector package"
-            depends="new-release,setup-properties,component-packages">
     </target>
 
     <target name="new-release" depends="composer-install,npm-install,link">

@@ -8,8 +8,11 @@
     const toggleDarkMode = (dark) => {
         const topBar = document.getElementById('topNavbar');
         document.documentElement.dataset.bsTheme = dark ? 'dark' : 'light';
-        topBar.classList.remove('bg-body-tertiary', 'bg-primary');
-        topBar.classList.add(dark ? 'bg-body-tertiary' : 'bg-primary');
+        if (topBar)
+        {
+            topBar.classList.remove('bg-body-tertiary', 'bg-primary');
+            topBar.classList.add(dark ? 'bg-body-tertiary' : 'bg-primary');
+        }
     };
 
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => toggleDarkMode(e.matches));

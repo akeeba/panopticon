@@ -31,6 +31,7 @@ TemplateHelper::applyDarkModeJavaScript();
 
 $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component';
 ?>
+<!DOCTYPE html>
 <html lang="<?= $langCode ?>" data-bs-theme="<?= $darkModeValue ?>>">
 <head>
 	<meta charset="utf-8">
@@ -43,7 +44,8 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 
 	<link rel="stylesheet" href="<?= Uri::base() ?>media/css/theme.min.css" />
 	<link rel="stylesheet" href="<?= Uri::base() ?>media/css/fontawesome.min.css" />
-	<script type="text/javascript" href="<?= Uri::base() ?>media/js/bootstrap.bundle.min.js" async></script>
+
+	<script src="<?= Uri::base() ?>media/js/bootstrap.bundle.js" async="async"></script>
 
 	<?php include __DIR__ . '/includes/head.php' ?>
 </head>

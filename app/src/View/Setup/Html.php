@@ -19,11 +19,11 @@ class Html extends \Awf\Mvc\DataView\Html
 {
 	public array $reqSettings;
 
-	public bool $reqMet;
+	public bool $requiredMet;
 
 	public array $recommendedSettings;
 
-	public bool $recMet;
+	public bool $recommendedMet;
 
 	public array $params;
 
@@ -31,7 +31,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public function onBeforePrecheck(): bool
 	{
-		$this->setupPageHeader();
+		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_PRECHECK'));
 
 		// Get the model
 		/** @var Setup $model */
@@ -39,9 +39,9 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		// Push data from the model
 		$this->reqSettings         = $model->getRequired();
-		$this->reqMet              = $model->isRequiredMet();
+		$this->requiredMet         = $model->isRequiredMet();
 		$this->recommendedSettings = $model->getRecommended();
-		$this->recMet              = $model->isRecommendedMet();
+		$this->recommendedMet              = $model->isRecommendedMet();
 
 		return true;
 	}
@@ -135,10 +135,20 @@ class Html extends \Awf\Mvc\DataView\Html
 	 *
 	 * @return void
 	 */
-	private function setupPageHeader($buttons = [])
+	private function setupPageHeader(array $buttons = [], string $subTitle = ''): void
 	{
+		$title   = Text::_('PANOPTICON_SETUP_TITLE');
+
+		if ($subTitle)
+		{
+			$title .= sprintf(
+				'<small class="ms-1 text-muted"><span class="fa fa-chevron-right" aria-hidden="true"></span></small><small class="ms-2 text-primary-emphasis">%s</small>',
+				$subTitle
+			);
+		}
+
 		$toolbar = $this->container->application->getDocument()->getToolbar();
-		$toolbar->setTitle(Text::_('PANOPTICON_SETUP_TITLE'));
+		$toolbar->setTitle($title);
 
 		foreach ($buttons as $button)
 		{
