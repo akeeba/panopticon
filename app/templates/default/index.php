@@ -42,6 +42,7 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 	<link rel="mask-icon" href="<?= Uri::base() ?>media/images/logo_bw.svg" color="#000000">
 
 	<link rel="stylesheet" href="<?= Uri::base() ?>media/css/theme.min.css" />
+	<link rel="stylesheet" href="<?= Uri::base() ?>media/css/fontawesome.min.css" />
 	<script type="text/javascript" href="<?= Uri::base() ?>media/js/bootstrap.bundle.min.js" async></script>
 
 	<?php include __DIR__ . '/includes/head.php' ?>
@@ -113,30 +114,36 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 </main>
 
 <?php if (!$isBareDisplay): ?>
-<footer class="container-xl bg-dark text-light py-2 text-light small fixed-bottom" data-bs-theme="dark">
-	<details>
-		<summary>
-			<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= AKEEBA_PANOPTICON_VERSION ?>
-			<?php if (defined('AKEEBADEBUG')): ?>
-			<span class="ms-2 text-muted float-end">
-				Page creation <?= sprintf('%0.3f', $this->getApplication()->getTimeElapsed()) ?> s
-				&bull;
-				Peak memory usage <?= sprintf('%0.1f', memory_get_peak_usage() / 1048576) ?> MiB
-			</span>
-			<div class="clearfix"></div>
-			<?php endif; ?>
-		</summary>
-		<div class="d-flex flex-column mt-2">
-			<p class="m-0">
-				<?= Text::sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>
-			</p>
-			<p class="m-0">
-				<?= Text::sprintf('PANOPTICON_APP_LBL_LICENSE', Text::_('PANOPTICON_APP_TITLE')) ?>
-			</p>
-		</div>
-	</details>
-
+<footer class="container-xl bg-dark text-light py-2 text-light small sticky-bottom" data-bs-theme="dark">
+	<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= AKEEBA_PANOPTICON_VERSION ?>
 </footer>
+<footer class="container-xl bg-dark text-light py-2 text-light small" data-bs-theme="dark">
+	<div class="d-flex flex-column mt-2">
+		<p class="m-0">
+			<?= Text::sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>
+		</p>
+		<p class="m-0">
+			<?= Text::sprintf('PANOPTICON_APP_LBL_LICENSE', Text::_('PANOPTICON_APP_TITLE')) ?>
+		</p>
+		<?php if (defined('AKEEBADEBUG')): ?>
+			<div class="mt-1 mb-0 text-muted d-flex flex-row gap-2">
+				<div>
+					<span class="fa fa-clock" aria-hidden="true"></span>
+					<span class="visually-hidden">Page creation time</span>
+					<?= sprintf('%0.3f', $this->getApplication()->getTimeElapsed()) ?> <abbr title="seconds">s</abbr>
+				</div>
+
+				<div>
+					<span class="fa fa-memory" aria-hidden="true"></span>
+					<span class="visually-hidden">Peak memory usage</span>
+					<?= sprintf('%0.1f', memory_get_peak_usage() / 1048576) ?> <abbr title="Megabytes">MiB</abbr>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		<?php endif; ?>
+	</div>
+</footer>
+
 <?php endif ?>
 
 </body>

@@ -93,10 +93,17 @@ $sessionPath = $this->getContainer()->session->getSavePath();
 	</div>
 
 	<div class="row mb-3">
-		<div class="col-sm-9 offset-sm-3">
-			<button type="submit" id="setupFormSubmit" class="btn btn-primary text-light">
+		<div class="col-sm-9 offset-sm-3 d-flex flex-row gap-3 align-items-center">
+			<button type="submit" id="setupFormSubmit" class="btn btn-primary text-white">
+				<span class="fa fa-chevron-circle-right" aria-hidden="true"></span>
 				<?= Text::_('PANOPTICON_SETUP_BTN_MAKE_SESSION_FOLDER') ?>
 			</button>
+
+			<a href="<?= $this->container->router->route('index.php?view=setup&task=precheck') ?>"
+			   class="btn btn-secondary btn-sm">
+				<span class="fa fa-refresh" aria-hidden="true"></span>
+				I fixed it myself; check again
+			</a>
 		</div>
 	</div>
 </form>

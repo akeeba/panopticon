@@ -24,8 +24,9 @@ use Awf\Uri\Uri;
 				<?= Text::_('PANOPTICON_SETUP_LBL_WELCOME_HERO_TEXT') ?>
 			</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-				<a href="<?= $this->container->router->route('index.php?view=setup&task=precheck&layout=precheck') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3 text-light">
+				<a href="<?= $this->container->router->route('index.php?view=setup&task=precheck&layout=precheck') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3 text-white">
 					<?= Text::_('PANOPTICON_SETUP_BTN_LETS_GO') ?>
+					<span class="fa fa-chevron-circle-right" aria-hidden="true"></span>
 				</a>
 			</div>
 		</div>

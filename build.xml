@@ -197,6 +197,18 @@
             </fileset>
         </copy>
 
+        <!-- FontAwesome -->
+        <echo>Copying FontAwesome files</echo>
+        <copy file="${dirs.root}/node_modules/@fortawesome/fontawesome-free/css/all.css" tofile="${dirs.phpapp}/media/css/fontawesome.css" />
+        <copy file="${dirs.root}/node_modules/@fortawesome/fontawesome-free/css/all.min.css" tofile="${dirs.phpapp}/media/css/fontawesome.min.css" />
+        <copy todir="${dirs.phpapp}/media/webfonts">
+            <fileset dir="${dirs.root}/node_modules/@fortawesome/fontawesome-free/webfonts">
+                <include name="fa-brands-400.woff2" />
+                <include name="fa-regular-400.woff2" />
+                <include name="fa-solid-900.woff2" />
+            </fileset>
+        </copy>
+
         <echo>Copying LICENSE.txt</echo>
         <copy file="${dirs.root}/LICENSE.txt" tofile="${dirs.phpapp}/LICENSE.txt" />
 
