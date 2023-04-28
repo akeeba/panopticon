@@ -187,7 +187,7 @@ abstract class DefaultTemplate
 	public static function getRenderedMessages(): string
 	{
 		static $messageTypes = [
-			'error' => 'failure',
+			'error' => 'danger',
 			'warning' => 'warning',
 			'success' => 'success',
 			'info' => 'info',

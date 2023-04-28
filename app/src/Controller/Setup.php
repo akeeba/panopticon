@@ -34,7 +34,7 @@ class Setup extends Controller
 		return parent::execute($task);
 	}
 
-	public function main(): void
+	public function precheck(): void
 	{
 		// If the session save path is not writable,
 		$path = $this->container->session->getSavePath();
@@ -42,7 +42,7 @@ class Setup extends Controller
 		if (!@is_dir($path) || !@is_writeable($path))
 		{
 			$router = $this->container->router;
-			$this->setRedirect($router->route('index.php?view=setup&task=session'));
+			$this->setRedirect($router->route('index.php?view=setup&task=session&layout=session'));
 
 			return;
 		}

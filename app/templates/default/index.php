@@ -42,15 +42,15 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 	<link rel="mask-icon" href="<?= Uri::base() ?>media/images/logo_bw.svg" color="#000000">
 
 	<link rel="stylesheet" href="<?= Uri::base() ?>media/css/theme.min.css" />
+	<script type="text/javascript" href="<?= Uri::base() ?>media/js/bootstrap.bundle.min.js" async></script>
 
 	<?php include __DIR__ . '/includes/head.php' ?>
 </head>
 <body>
 
-<header class="container-xl p-0">
-	<?php // Top header ?>
-	<?php if (!$isBareDisplay): ?>
-	<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-2" id="topNavbar">
+<?php // Top header ?>
+<?php if (!$isBareDisplay): ?>
+	<nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary border-bottom border-2 sticky-top container-xl" id="topNavbar">
 		<h1>
 			<a class="navbar-brand ps-2 d-flex flex-row"
 			   href="<?= $this->getMenu()->isEnabled('main') ? Uri::base() : 'javascript:' ?>">
@@ -65,20 +65,19 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 				</div>
 			</a>
 		</h1>
-		<button class="navbar-toggler" type="button"
-		        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-		        aria-controls="navbarSupportedContent" aria-expanded="false"
-		        aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOGGLE_NAVIGATION') ?>">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<?php if ($this->getMenu()->isEnabled('main') && $user->getId()): ?>
+			<button class="navbar-toggler" type="button"
+			        data-bs-toggle="collapse" data-bs-target="#topNavbarMenu"
+			        aria-controls="topNavbarMenu" aria-expanded="false"
+			        aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOGGLE_NAVIGATION') ?>">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		<?php endif ?>
 
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<div class="collapse navbar-collapse" id="topNavbarMenu">
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				<?php if ($this->getMenu()->isEnabled('main') && $user->getId()): ?>
-				<?= TemplateHelper::getRenderedMenuItem($this->getMenu()->getMenuItems('main')) ?>
-				<?php endif ?>
-
-				<?php if ($user->getId()): ?>
+					<?= TemplateHelper::getRenderedMenuItem($this->getMenu()->getMenuItems('main')) ?>
 					<a href="<?= $this->getContainer()->router->route('index.php?view=login&task=logout') ?>"
 					   class="nav-link"
 					>
@@ -88,10 +87,11 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 			</ul>
 		</div>
 	</nav>
-	<?php endif ?>
-	<?php // Toolbar / page title ?>
-	<?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
-	<section class="navbar bg-dark" id="toolbar" data-bs-theme="dark" aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOOLBAR') ?>">
+<?php endif ?>
+
+<?php // Toolbar / page title ?>
+<?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
+	<section class="navbar container-xl bg-dark" id="toolbar" data-bs-theme="dark" aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOOLBAR') ?>">
 		<div class="ms-2 me-auto">
 			<?= TemplateHelper::getRenderedToolbarButtons() ?>
 		</div>
@@ -99,36 +99,43 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 			<?= $this->getToolbar()->getTitle() ?>
 		</h2>
 	</section>
-	<?php endif ?>
-	<?php // Messages ?>
-	<?php if ($messages = TemplateHelper::getRenderedMessages()): ?>
-	<section aria-label="<?= Text::_('PANOPTICON_APP_LBL_MESSAGES') ?>">
-		<?= $messages ?>
-	</section>
-	<?php endif ?>
-</header>
+<?php endif ?>
 
 <?php // Main Content ?>
-<main class="container-xl">
+<main class="container-xl py-2">
+	<?php // Messages ?>
+	<?php if ($messages = TemplateHelper::getRenderedMessages()): ?>
+		<section aria-label="<?= Text::_('PANOPTICON_APP_LBL_MESSAGES') ?>">
+			<?= $messages ?>
+		</section>
+	<?php endif ?>
 	<?= $this->getBuffer() ?>
 </main>
 
 <?php if (!$isBareDisplay): ?>
-<footer class="container-xl bg-dark text-light py-2 text-muted small" data-bs-theme="dark">
-	<p class="m-0">
-		<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= AKEEBA_PANOPTICON_VERSION ?>
-		&bull;
-		<?= Text::sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>
-		<br/>
-		<?= Text::sprintf('PANOPTICON_APP_LBL_LICENSE', Text::_('PANOPTICON_APP_TITLE')) ?>
-	</p>
-	<?php if (defined('AKEEBADEBUG')): ?>
-		<p class="m-0 text-light">
-		Page creation <?= sprintf('%0.3f', $this->getApplication()->getTimeElapsed()) ?> sec
-		&bull;
-		Peak memory usage <?= sprintf('%0.1f', memory_get_peak_usage() / 1048576) ?> MiB
-	</p>
-	<?php endif; ?>
+<footer class="container-xl bg-dark text-light py-2 text-light small fixed-bottom" data-bs-theme="dark">
+	<details>
+		<summary>
+			<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= AKEEBA_PANOPTICON_VERSION ?>
+			<?php if (defined('AKEEBADEBUG')): ?>
+			<span class="ms-2 text-muted float-end">
+				Page creation <?= sprintf('%0.3f', $this->getApplication()->getTimeElapsed()) ?> s
+				&bull;
+				Peak memory usage <?= sprintf('%0.1f', memory_get_peak_usage() / 1048576) ?> MiB
+			</span>
+			<div class="clearfix"></div>
+			<?php endif; ?>
+		</summary>
+		<div class="d-flex flex-column mt-2">
+			<p class="m-0">
+				<?= Text::sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>
+			</p>
+			<p class="m-0">
+				<?= Text::sprintf('PANOPTICON_APP_LBL_LICENSE', Text::_('PANOPTICON_APP_TITLE')) ?>
+			</p>
+		</div>
+	</details>
+
 </footer>
 <?php endif ?>
 
