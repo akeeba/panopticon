@@ -15,6 +15,8 @@ use Awf\Filesystem\Factory as FilesystemFactory;
 use Awf\Mvc\Controller;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
+use Exception;
+use Throwable;
 
 class Setup extends Controller
 {
@@ -24,7 +26,12 @@ class Setup extends Controller
 	{
 		$this->aclCheck($task);
 
-		if (@file_exists($this->container->appConfig->getDefaultPath()))
+		if (
+			!(defined('AKEEBADEBUG') && AKEEBADEBUG)
+			&& @file_exists($this->container->appConfig->getDefaultPath())
+			&& !$this->container->userManager->getUser()->getPrivilege('panopticon.super')
+			&& !$this->container->segment->get('panopticon.installing', false)
+		)
 		{
 			return false;
 		}
@@ -46,6 +53,8 @@ class Setup extends Controller
 
 			return;
 		}
+
+		$this->container->segment->set('panopticon.installing', true);
 
 		$this->display();
 	}
@@ -79,16 +88,16 @@ class Setup extends Controller
 
 			$this->container->application->createOrUpdateSessionPath($sessionPath, false);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$errorMessage = base64_encode($e->getMessage());
-			$url          = Uri::rebase('?view=setup&task=session&error=' . $errorMessage, $this->container);
+			$url          = $this->container->router->route('index.php?view=setup&task=session&error=' . $errorMessage);
 			$this->setRedirect($url);
 
 			return;
 		}
 
-		$url = Uri::rebase('?view=setup', $this->container);
+		$url = $this->container->router->route('index.php?view=setup');
 		$this->setRedirect($url);
 	}
 
@@ -109,11 +118,11 @@ class Setup extends Controller
 			$model->applyDatabaseParameters();
 			$model->installDatabase();
 
-			$this->setRedirect(Uri::rebase('?view=setup&task=setup', $this->container));
+			$this->setRedirect($this->container->router->route('index.php?view=setup&task=setup'));
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
-			$this->setRedirect(Uri::rebase('?view=setup&task=database', $this->container), $e->getMessage(), 'error');
+			$this->setRedirect($this->container->router->route('index.php?view=setup&task=database'), $e->getMessage(), 'error');
 		}
 	}
 
@@ -126,32 +135,20 @@ class Setup extends Controller
 
 	public function saveconfig()
 	{
+		$this->getView()->setLayout('saveconfig');
+
 		try
 		{
 			/** @var SetupModel $model */
 			$model = $this->getModel();
 
-			// Apply database settings to app config
 			$model->applyDatabaseParameters();
-
-			// Apply configuration settings to app config
 			$model->setSetupParameters();
-
-			/**
-			 * Try to connect to (S)FTP, if something like that was configured in the previous page.
-			 *
-			 * If it fails we get a nice exception to throw us to the previous page.
-			 *
-			 * @noinspection PhpUnusedLocalVariableInspection
-			 */
-			$fs = FilesystemFactory::getAdapter($this->container, false);
-
-			// Try to create the new admin user and log them in
 			$model->createAdminUser();
 		}
-		catch (\Exception $e)
+		catch (Throwable $e)
 		{
-			$url = Uri::rebase('?view=setup&task=setup', $this->container);
+			$url = $this->container->router->route('index.php?view=setup&task=setup');
 			$this->setRedirect($url, $e->getMessage(), 'error');
 
 			return;
@@ -163,9 +160,9 @@ class Setup extends Controller
 			$this->container->appConfig->saveConfiguration();
 
 			// Redirect to the CRON setup page – we're done here
-			$this->setRedirect(Uri::rebase('?view=setup&task=cron', $this->container));
+			$this->setRedirect($this->container->router->route('index.php?view=setup&task=cron'));
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			// We could not save the configuration. Show the page informing the user of the next steps to follow.
 			$this->getView()->setLayout('saveconfig');

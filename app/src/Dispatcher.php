@@ -24,11 +24,14 @@ class Dispatcher extends AWFDispatcher
 
 	private function loadCommonJavaScript(): void
 	{
+		Template::addJs('media://js/bootstrap.bundle.min.js', defer: true);
 		Template::addJs('media://js/system.min.js', defer: true);
+		Template::addJs('media://js/ajax.min.js', defer: true);
 	}
 
 	private function loadCommonCSS()
 	{
 		Template::addCss('media://css/theme.min.css');
+		Template::addCss('media://css/fontawesome.min.css');
 	}
 }

@@ -146,8 +146,6 @@ class Showon
                 }
             });
         }
-
-        console.log(this.fields);
     }
 
     /**

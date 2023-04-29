@@ -4,6 +4,13 @@ The following are the known application configuration options which can be set i
 
 ## System
 
+### `debug`
+**Debug Mode**
+
+Should I enabled debug mode?
+
+Default: false
+
 ### `session_timeout`
 **Session Timeout**
 

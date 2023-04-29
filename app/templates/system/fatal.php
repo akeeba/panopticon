@@ -15,10 +15,23 @@ use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
  *
  * For regular exceptions handling we use the error.php file, not this one.
  *
- * @var  HtmlErrorRenderer  $this       object containing charset
- * @var  string             $statusText exception error message
- * @var  string             $statusCode exception error code
+ * @var  HtmlErrorRenderer $this       object containing charset
+ * @var  string            $statusText exception error message
+ * @var  string            $statusCode exception error code
  */
+
+$realException = debug_backtrace()[2]['args'][0] ?? new RuntimeException($statusText, $statusCode);
+
+$replacements = [
+	'{{statusCode}}'            => $statusCode,
+	'{{statusText}}'            => $statusText,
+	'{{statusCode_statusText}}' => $statusCode . ' - ' . $statusText,
+	'{{message}}'               => $realException->getMessage(),
+	'{{code}}'                  => $realException->getCode(),
+	'{{file}}'                  => $realException->getFile(),
+	'{{line}}'                  => $realException->getLine(),
+	'{{backtrace}}'             => $realException->getTraceAsString(),
+];
 
 // Fallback template
 $template = @file_exists(__DIR__ . '/fatal.html')
@@ -28,7 +41,7 @@ $template = @file_exists(__DIR__ . '/fatal.html')
 $template = $template ?: '{{statusCode_statusText}}';
 
 echo str_replace(
-	['{{statusCode_statusText}}', '{{statusCode}}', '{{statusText}}'],
-	[$statusCode . ' - ' . $statusText, $statusCode, $statusText],
+	array_keys($replacements),
+	array_values($replacements),
 	$template
 );

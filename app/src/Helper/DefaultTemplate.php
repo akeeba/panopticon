@@ -14,6 +14,7 @@ use Awf\Document\Toolbar\Button;
 use Awf\Inflector\Inflector;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
+use Awf\Utils\ArrayHelper;
 
 defined('AKEEBA') || die;
 
@@ -157,15 +158,58 @@ abstract class DefaultTemplate
 					)
 					: '';
 
-				if ($button->getUrl())
+				if (!empty($button->getUrl()))
 				{
 					$html .= sprintf(
-						'<a class="btn btn-sm %s" id="%s">',
+						'<a class="btn btn-sm %s" href="%s" id="%s">',
 						$button->getClass(),
+						$button->getUrl(),
 						$button->getId(),
 					);
 					$html .= $icon . $button->getTitle();
 					$html .= '</a>';
+
+					return $html;
+				}
+				elseif (!empty($button->getOnClick()))
+				{
+					try
+					{
+						$decoded = @json_decode($button->getOnClick(), true);
+					}
+					catch (\Exception $e)
+					{
+						$decoded = null;
+					}
+
+					if ($decoded)
+					{
+						$attribs = array_merge(
+							[
+								'class' => 'btn btn-sm ' . $button->getClass(),
+								'id' => $button->getId(),
+							],
+							$decoded
+						);
+
+						$html .= sprintf(
+							'<button type="button" %s>%s%s</button>',
+							ArrayHelper::toString($attribs),
+							$icon,
+							$button->getTitle()
+						);
+					}
+					else
+					{
+						$html .= sprintf(
+							'<button class="btn btn-sm %s" id="%s" onclick="%s">',
+							$button->getClass(),
+							$button->getId(),
+							$button->getOnClick(),
+						);
+						$html .= $icon . $button->getTitle();
+						$html .= '</button>';
+					}
 
 					return $html;
 				}
@@ -176,7 +220,7 @@ abstract class DefaultTemplate
 					$button->getId(),
 				);
 				$html .= $icon . $button->getTitle();
-				$html .= '</a>';
+				$html .= '</button>';
 
 				return $html;
 			},

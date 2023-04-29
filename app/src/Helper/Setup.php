@@ -79,7 +79,7 @@ abstract class Setup
 		);
 	}
 
-	public static function timezoneSelect(string $selected = '', string $name = 'timezone', $includeDefaults = false, $disabled = false): string
+	public static function timezoneSelect(string $selected = '', string $name = 'timezone', $disabled = false): string
 	{
 		$groups      = [];
 		$zoneHeaders = [
@@ -133,16 +133,13 @@ abstract class Setup
 			sort($location);
 		}
 
-		if ($includeDefaults)
-		{
-			$defaultGroup = [
-				Select::option('GMT', 'GMT'),
-			];
+		$defaultGroup = [
+			Select::option('UTC', 'UTC'),
+		];
 
-			$groups[Text::_('PANOPTICON_SYSCONFIG_DEFAULTGROUP')] = $defaultGroup;
+		$groups['UTC'] = $defaultGroup;
 
-			ksort($groups);
-		}
+		ksort($groups);
 
 		$options = [
 			'id'          => $name,

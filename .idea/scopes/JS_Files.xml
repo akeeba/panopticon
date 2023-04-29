@@ -1,3 +1,3 @@
 <component name="DependencyValidationManager">
-  <scope name="JS Files" pattern="file:app/media/js//*.js&amp;&amp;!file:app/media/js/bootstrap.bundle.*" />
+  <scope name="JS Files" pattern="file:app/media/js//*.js&amp;&amp;!file:app/media/js/bootstrap.bundle.*&amp;&amp;!file:app/media/js/*.min*" />
 </component>

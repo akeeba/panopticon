@@ -294,12 +294,12 @@ class Setup extends Model
 	public function getSetupParameters(): array
 	{
 		return [
-			'timezone'        => $this->getSetupParameter('timezone', 'UTC'),
+			'timezone'        => $this->getSetupParameter('timezone', date_default_timezone_get()),
 			'live_site'       => $this->getSetupParameter('live_site', ''),
 			'session_timeout' => $this->getSetupParameter('session_timeout', '1440'),
 			'fs.driver'       => $this->getSetupParameter('fs.driver', 'file'),
-			'fs.host'         => $this->getSetupParameter('fs.host', '127.0.0.1'),
-			'fs.port'         => $this->getSetupParameter('fs.port', '21'),
+			'fs.host'         => $this->getSetupParameter('fs.host', ''),
+			'fs.port'         => $this->getSetupParameter('fs.port', ''),
 			'fs.username'     => $this->getSetupParameter('fs.username', ''),
 			'fs.password'     => $this->getSetupParameter('fs.password', ''),
 			'fs.directory'    => $this->getSetupParameter('fs.directory', '/'),
@@ -389,6 +389,9 @@ class Setup extends Model
 		$user->bind($data);
 		$user->setPassword($params['user.password']);
 		$user->setPrivilege('panopticon.super', true);
+		$user->setPrivilege('panopticon.admin', true);
+		$user->setPrivilege('panopticon.run', true);
+		$user->setPrivilege('panopticon.view', true);
 
 		$manager->saveUser($user);
 		$manager->loginUser($params['user.username'], $params['user.password']);

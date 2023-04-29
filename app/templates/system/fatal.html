@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>An error occurred: {{statusText}}</title>
+	<title>An error occurred: {{message}}</title>
 
 	<style>
         html {
@@ -76,7 +76,7 @@
 				The server returned the following error:
 			</p>
 			<p>
-				{{statusCode_statusText}}
+				{{code}} — {{message}}
 			</p>
 		</div>
 	</div>

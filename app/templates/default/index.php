@@ -42,11 +42,6 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 	<link rel="icon" href="<?= Uri::base() ?>media/images/logo_colour.svg">
 	<link rel="mask-icon" href="<?= Uri::base() ?>media/images/logo_bw.svg" color="#000000">
 
-	<link rel="stylesheet" href="<?= Uri::base() ?>media/css/theme.min.css" />
-	<link rel="stylesheet" href="<?= Uri::base() ?>media/css/fontawesome.min.css" />
-
-	<script src="<?= Uri::base() ?>media/js/bootstrap.bundle.js" async="async"></script>
-
 	<?php include __DIR__ . '/includes/head.php' ?>
 </head>
 <body>
@@ -130,15 +125,15 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 		<?php if (defined('AKEEBADEBUG')): ?>
 			<div class="mt-1 mb-0 text-muted d-flex flex-row gap-2">
 				<div>
-					<span class="fa fa-clock" aria-hidden="true"></span>
-					<span class="visually-hidden">Page creation time</span>
-					<?= sprintf('%0.3f', $this->getApplication()->getTimeElapsed()) ?> <abbr title="seconds">s</abbr>
+					<span class="fa fa-clock" title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?>" aria-hidden="true"></span>
+					<span class="visually-hidden"><?= Text::_('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?></span>
+					<?= sprintf('%0.3f', $this->getApplication()->getTimeElapsed()) ?> <abbr title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_SECONDS') ?>">s</abbr>
 				</div>
 
 				<div>
-					<span class="fa fa-memory" aria-hidden="true"></span>
-					<span class="visually-hidden">Peak memory usage</span>
-					<?= sprintf('%0.1f', memory_get_peak_usage() / 1048576) ?> <abbr title="Megabytes">MiB</abbr>
+					<span class="fa fa-memory" title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_PEAK_MEM_USAGE') ?>" aria-hidden="true"></span>
+					<span class="visually-hidden"><?= Text::_('PANOPTICON_APP_LBL_DEBUG_PEAK_MEM_USAGE') ?></span>
+					<?= sprintf('%0.1f', memory_get_peak_usage() / 1048576) ?> <abbr title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_MEGABYTES') ?>">MiB</abbr>
 				</div>
 			</div>
 			<div class="clearfix"></div>

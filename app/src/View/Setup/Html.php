@@ -11,7 +11,6 @@ namespace Akeeba\Panopticon\View\Setup;
 use Akeeba\Panopticon\Model\Setup;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Awf\Text\Text;
-use Awf\Uri\Uri;
 use Awf\Utils\Template;
 
 defined('AKEEBA') || die;
@@ -51,7 +50,18 @@ class Html extends \Awf\Mvc\DataView\Html
 	{
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
 
-		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_DATABASE'));
+		$buttons = [
+			[
+				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
+				'class'   => 'btn-info text-white',
+				'onClick' => json_encode([
+					'data-bs-toggle' => "collapse", 'data-bs-target' => ".form-text", 'aria-expanded' => "false",
+				]),
+				'icon'    => 'fa fa-question-circle me-1',
+			],
+		];
+
+		$this->setupPageHeader($buttons, subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_DATABASE'));
 
 		$this->connectionParameters = $this->getModel()->getDatabaseParameters();
 
@@ -71,38 +81,26 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public function onBeforeSetup()
 	{
-		Template::addJs('media://js/solo/setup.js', $this->getContainer()->application);
-
-		// Set up the page header and toolbar buttons
 		$buttons = [
 			[
-				'title' => Text::_('PANOPTICON_BTN_PREV'),
-				'class' => 'akeeba-btn--grey',
-				'url'   => Uri::rebase('?view=database', $this->container),
-				'icon'  => 'akion-chevron-left',
-			],
-			[
-				'title'   => Text::_('PANOPTICON_BTN_NEXT'),
-				'class'   => 'akeeba-btn--teal',
-				'onClick' => "akeeba.System.triggerEvent('setupFormSubmit', 'click')",
-				'icon'    => 'akion-chevron-right',
+				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
+				'class'   => 'btn-info text-white',
+				'onClick' => json_encode([
+					'data-bs-toggle' => "collapse", 'data-bs-target' => ".form-text", 'aria-expanded' => "false",
+				]),
+				'icon'    => 'fa fa-question-circle me-1',
 			],
 		];
-		$this->setupPageHeader($buttons);
 
-		// Get the model
-		/** @var Setup $model */
-		$model    = $this->getModel();
-		$document = $this->getContainer()->application->getDocument();
+		$this->setupPageHeader($buttons, subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_SETUP'));
 
-		$this->params = $model->getSetupParameters();
+		$this->params = $this->getModel()->getSetupParameters();
 
-		// Language strings communicated to JavaScript
 		Text::script('PANOPTICON_COMMON_LBL_ROOT');
-		Text::script('COM_AKEEBA_CONFIG_DIRECTFTP_TEST_OK');
-		Text::script('COM_AKEEBA_CONFIG_DIRECTFTP_TEST_FAIL');
-		Text::script('COM_AKEEBA_CONFIG_DIRECTSFTP_TEST_OK');
-		Text::script('COM_AKEEBA_CONFIG_DIRECTSFTP_TEST_FAIL');
+		Text::script('PANOPTICON_CONFIG_DIRECTFTP_TEST_OK');
+		Text::script('PANOPTICON_CONFIG_DIRECTFTP_TEST_FAIL');
+		Text::script('PANOPTICON_CONFIG_DIRECTSFTP_TEST_OK');
+		Text::script('PANOPTICON_CONFIG_DIRECTSFTP_TEST_FAIL');
 
 		return true;
 	}

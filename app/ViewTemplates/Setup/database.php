@@ -185,7 +185,6 @@ use Awf\Text\Text;
 		</div>
 	</div>
 
-
 	<div class="row mb-3">
 		<div class="col-sm-9 offset-sm-3">
 			<button type="submit" id="dbFormSubmit"
@@ -195,5 +194,4 @@ use Awf\Text\Text;
 			</button>
 		</div>
 	</div>
-
 </form>
