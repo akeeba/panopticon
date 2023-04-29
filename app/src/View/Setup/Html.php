@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\Setup;
 
 
 use Akeeba\Panopticon\Model\Setup;
+use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\Utils\Template;
@@ -17,6 +18,8 @@ defined('AKEEBA') || die;
 
 class Html extends \Awf\Mvc\DataView\Html
 {
+	use ShowOnTrait;
+
 	public array $reqSettings;
 
 	public bool $requiredMet;
@@ -33,59 +36,35 @@ class Html extends \Awf\Mvc\DataView\Html
 	{
 		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_PRECHECK'));
 
-		// Get the model
 		/** @var Setup $model */
 		$model = $this->getModel();
 
-		// Push data from the model
 		$this->reqSettings         = $model->getRequired();
 		$this->requiredMet         = $model->isRequiredMet();
 		$this->recommendedSettings = $model->getRecommended();
-		$this->recommendedMet              = $model->isRecommendedMet();
+		$this->recommendedMet      = $model->isRecommendedMet();
+
+		return true;
+	}
+
+	public function onBeforeDatabase(): bool
+	{
+		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
+
+		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_DATABASE'));
+
+		$this->connectionParameters = $this->getModel()->getDatabaseParameters();
 
 		return true;
 	}
 
 	public function onBeforeSession()
 	{
-		Template::addJs('media://js/solo/setup.js', $this->getContainer()->application);
-
 		// Get the model
 		/** @var Setup $model */
 		$model = $this->getModel();
 
 		$this->params = $model->getSetupParameters();
-
-		return true;
-	}
-
-	public function onBeforeDatabase()
-	{
-		Template::addJs('media://js/solo/setup.js', $this->getContainer()->application);
-
-		// Set up the page header and toolbar buttons
-		$buttons = [
-			[
-				'title' => Text::_('PANOPTICON_BTN_PREV'),
-				'class' => 'akeeba-btn--grey',
-				'url'   => Uri::rebase('?view=setup&view=precheck', $this->container),
-				'icon'  => 'akion-chevron-left',
-			],
-			[
-				'title'   => Text::_('PANOPTICON_BTN_NEXT'),
-				'class'   => 'akeeba-btn--teal',
-				'onClick' => "akeeba.System.triggerEvent('dbFormSubmit', 'click')",
-				'icon'    => 'akion-chevron-right',
-			],
-		];
-		$this->setupPageHeader($buttons);
-
-		// Get the model
-		/** @var Setup $model */
-		$model = $this->getModel();
-
-		// Push data from the model
-		$this->connectionParameters = $model->getDatabaseParameters();
 
 		return true;
 	}
@@ -137,7 +116,7 @@ class Html extends \Awf\Mvc\DataView\Html
 	 */
 	private function setupPageHeader(array $buttons = [], string $subTitle = ''): void
 	{
-		$title   = Text::_('PANOPTICON_SETUP_TITLE');
+		$title = Text::_('PANOPTICON_SETUP_TITLE');
 
 		if ($subTitle)
 		{

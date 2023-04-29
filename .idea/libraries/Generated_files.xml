@@ -9,6 +9,7 @@
         <item url="file://$PROJECT_DIR$/app/media/js/darkmode.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/gui-helpers.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/gui-helpers.min.min.js" />
+        <item url="file://$PROJECT_DIR$/app/media/js/setup.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/showon.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/showon.min.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/system.min.js" />
@@ -23,6 +24,7 @@
       <root url="file://$PROJECT_DIR$/app/media/js/darkmode.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/gui-helpers.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/gui-helpers.min.min.js" />
+      <root url="file://$PROJECT_DIR$/app/media/js/setup.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/showon.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/showon.min.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/system.min.js" />

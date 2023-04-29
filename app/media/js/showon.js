@@ -264,14 +264,14 @@ class Showon
             {
                 if (showfield)
                 {
-                    field.classList.remove("akeeba-showon-hidden");
+                    field.classList.remove("d-none");
                     field.dispatchEvent(new CustomEvent("akeeba:showon-show", {
                         bubbles: true,
                     }));
                 }
                 else
                 {
-                    field.classList.add("akeeba-showon-hidden");
+                    field.classList.add("d-none");
                     field.dispatchEvent(new CustomEvent("akeeba:showon-hide", {
                         bubbles: true,
                     }));

@@ -124,7 +124,7 @@ class Setup extends Controller
 		$this->display();
 	}
 
-	public function finish()
+	public function saveconfig()
 	{
 		try
 		{
@@ -162,17 +162,22 @@ class Setup extends Controller
 			// Save the configuration
 			$this->container->appConfig->saveConfiguration();
 
-			// Redirect to the Wizard page – we're done here
-			$this->setRedirect(Uri::rebase('?view=wizard', $this->container), Text::_('PANOPTICON_SETUP_MSG_DONE'), 'info');
+			// Redirect to the CRON setup page – we're done here
+			$this->setRedirect(Uri::rebase('?view=setup&task=cron', $this->container));
 		}
 		catch (\Exception $e)
 		{
 			// We could not save the configuration. Show the page informing the user of the next steps to follow.
-			$this->getView()->setLayout('finish');
+			$this->getView()->setLayout('saveconfig');
 
 			parent::display();
 		}
+	}
 
-		return;
+	public function cron()
+	{
+		$this->getView()->setLayout('cron');
+
+		$this->display();
 	}
 }

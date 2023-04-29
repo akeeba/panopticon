@@ -197,7 +197,7 @@ class Setup extends Model
 			'user'   => $session->get('db_user', ''),
 			'pass'   => $session->get('db_pass', ''),
 			'name'   => $session->get('db_name', ''),
-			'prefix' => $session->get('db_prefix', 'PANOPTICON_'),
+			'prefix' => $session->get('db_prefix', 'pnptc_'),
 			'ssl'    => $session->get('db_ssl', []),
 		];
 
@@ -287,6 +287,7 @@ class Setup extends Model
 	public function installDatabase(): void
 	{
 		$dbInstaller = new Installer($this->container);
+		$dbInstaller->setXmlDirectory($this->container->basePath . '/src/schema');
 		$dbInstaller->updateSchema();
 	}
 
