@@ -43,6 +43,7 @@
 		"ext-zend-opcache": "*"
 	},
 	"config": {
+		"optimize-autoloader": true,
 		"vendor-dir": "app/vendor",
 		"platform": {
 			"php": "8.1.0"

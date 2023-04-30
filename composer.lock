@@ -11,13 +11,13 @@
             "version": "dev-development",
             "source": {
                 "type": "git",
-                "url": "git@github.com:akeeba/awf.git",
-                "reference": "394d5d38c79fb68c68c38881371b3a92b9747058"
+                "url": "https://github.com/akeeba/awf.git",
+                "reference": "e4d91e89c632450252c703a637cb12ec86b10e7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/394d5d38c79fb68c68c38881371b3a92b9747058",
-                "reference": "394d5d38c79fb68c68c38881371b3a92b9747058",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/e4d91e89c632450252c703a637cb12ec86b10e7f",
+                "reference": "e4d91e89c632450252c703a637cb12ec86b10e7f",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,11 @@
                 "joomla",
                 "wordpress"
             ],
-            "time": "2023-04-27T18:30:34+00:00"
+            "support": {
+                "source": "https://github.com/akeeba/awf/tree/development",
+                "issues": "https://github.com/akeeba/awf/issues"
+            },
+            "time": "2023-04-30T14:20:36+00:00"
         },
         {
             "name": "akeeba/remotecli",

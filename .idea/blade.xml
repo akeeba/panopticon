@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BladeInjectionConfiguration" default="false" rawSuffix="}}" rawPrefix="{{" contentSuffix="!!}" contentPrefix="{!!">
+    <directives>
+      <data directive="@append" />
+      <data directive="@css" injection="true" prefix="&lt;?php \Awf\Utils\Template::addCss(" suffix="); ?&gt;" />
+      <data directive="@each" injection="true" prefix="&lt;?= $this-&gt;renderEach(" suffix="); ?&gt;" />
+      <data directive="@else" />
+      <data directive="@elseif" injection="true" prefix="&lt;?php elseif(" suffix="): ?&gt;" />
+      <data directive="@empty" injection="true" prefix="&lt;?php if(empty(" suffix=")): ?&gt;" />
+      <data directive="@endfor" />
+      <data directive="@endforeach" />
+      <data directive="@endforelse" />
+      <data directive="@endif" />
+      <data directive="@endpush" />
+      <data directive="@endrepeatable" />
+      <data directive="@endsection" />
+      <data directive="@endunless" />
+      <data directive="@endwhile" />
+      <data directive="@extends" injection="true" prefix="&lt;?= $this-&gt;loadAnyTemplate(" suffix="); ?&gt;" />
+      <data directive="@for" injection="true" prefix="&lt;?php for(" suffix="): ?&gt;" />
+      <data directive="@foreach" injection="true" prefix="&lt;?php&#10;foreach(" suffix="): ?&gt;" />
+      <data directive="@forelse" injection="true" prefix="&lt;?php foreach(" suffix="): ?&gt;" />
+      <data directive="@html" injection="true" prefix="&lt;?= \AwfHtml\Html::_(" suffix="); ?&gt;" />
+      <data directive="@if" injection="true" prefix="&lt;?php if(" suffix="): ?&gt;" />
+      <data directive="@include" injection="true" prefix="&lt;?= $this-&gt;loadAnyTemplate(" suffix="); ?&gt;" />
+      <data directive="@inlinecss" injection="true" prefix="&lt;?php $this-&gt;container-&gt;application-&gt;getDocument()-&gt;addStyleDeclaration(" suffix=") ?&gt;" />
+      <data directive="@inlinejs" injection="true" prefix="&lt;?php $this-&gt;container-&gt;application-&gt;getDocument()-&gt;addScriptDeclaration(" suffix=") ?&gt;" />
+      <data directive="@js" injection="true" prefix="&lt;?php \Awf\Utils\Template::addJs(" suffix="); ?&gt;" />
+      <data directive="@lang" injection="true" prefix="&lt;?= \Awf\Text\Text::_(" suffix="); ?&gt;" />
+      <data directive="@media" injection="true" prefix="&lt;?= \Awf\Utils\Template::parsePath(" suffix="); ?&gt;" />
+      <data directive="@overwrite" />
+      <data directive="@plural" injection="true" prefix="&lt;?= \Awf\Text\Text::plural(" suffix="); ?&gt;" />
+      <data directive="@push" injection="true" prefix="&lt;?php $__env-&gt;startPush(" suffix="); ?&gt;" />
+      <data directive="@repeatable" injection="true" prefix="&lt;?php __dummyRepeatable(" suffix="); ?&gt;" />
+      <data directive="@route" injection="true" prefix="&lt;?= $this-&gt;container-&gt;router-&gt;route(" suffix="); ?&gt;" />
+      <data directive="@section" injection="true" prefix="&lt;?php $this-&gt;startSection(" suffix="); ?&gt;" />
+      <data directive="@show" />
+      <data directive="@sprintf" injection="true" prefix="&lt;?= \Awf\Text\Text::sprintf(" suffix="); ?&gt;" />
+      <data directive="@stack" injection="true" prefix="$this-&gt;yieldContent(" suffix="); ?&gt;" />
+      <data directive="@stop" />
+      <data directive="@token" />
+      <data directive="@unless" injection="true" prefix="&lt;?php if (! (" suffix=")): ?&gt;" />
+      <data directive="@while" injection="true" prefix="&lt;?php while(" suffix="): ?&gt;" />
+      <data directive="@yield" injection="true" prefix="&lt;?= $this-&gt;yieldContent(" suffix="); ?&gt;" />
+      <data directive="@yieldRepeatable" injection="true" prefix="&lt;?php __dummyYieldRepeatable(" suffix="); ?&gt;" />
+    </directives>
+  </component>
+</project>
