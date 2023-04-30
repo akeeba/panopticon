@@ -20,10 +20,14 @@ trait ACLTrait
 		'emails' => [
 			'*' => ['super'],
 		],
+		'login' => [
+			'*' => ['*'],
+		],
 		'mailtemplates' => [
 			'*' => ['super'],
 		],
 		'setup'     => [
+			'cron' => ['super'],
 			'*' => ['*'],
 		],
 		'sysconfig' => [

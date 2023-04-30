@@ -65,6 +65,73 @@ if (!file_exists(APATH_ROOT . '/vendor/autoload.php') || !@is_file(APATH_THEMES 
 // Load the Composer autoloader
 require_once APATH_ROOT . '/vendor/autoload.php';
 
+/**
+ * Overrides the Symfony HtmlErrorRenderer:
+ * - Always give detailed information, even to the "simple" error page
+ * - Allow overriding the debug template
+ *
+ * Why this in-memory patching trickery instead of overriding the class, you ask? There's a good reason!
+ *
+ * We need to override two private methods. Overriding a private method in a descendant class doesn't work (the parent
+ * class' code will still use the parent class' private member instead of the one we defined in the descendant). This
+ * means that we'd have to copy the entire class instead of extending from it. While possible, it makes it far harder
+ * to update the code several months or years later when the overridden class breaks. Using in-memory patching we can
+ * readily see the handful of lines we changed, making it easy to update.
+ *
+ * Kids, don't try this at home. We are trained professionals with over two decades of experience doing weird things in
+ * PHP code.
+ */
+call_user_func(function() {
+	// Loads the buffer class and registers the `awf://` stream handler.
+	class_exists(\Awf\Utils\Buffer::class);
+
+	// Override FlattenException
+	$sourceCode = @file_get_contents(APATH_BASE . '/vendor/symfony/error-handler/Exception/FlattenException.php');
+
+	$sourceCode = str_replace('$statusCode = 500;', <<< PHP
+\$statusCode = in_array(\$exception->getCode(), [400, 401, 403, 404, 406, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 425, 428, 429, 431, 451, 500, 501, 502, 503, 504, 505, 506, 510, 511]) ? \$exception->getCode() : 500;
+PHP
+, $sourceCode);
+	$sourceCode = str_replace('$statusText = \'Whoops, looks like something went wrong.\';', '$statusText = $exception->getMessage();', $sourceCode);
+
+
+	$tempFile = 'awf://tmp/FlattenException.php';
+	file_put_contents($tempFile, $sourceCode);
+	require_once  $tempFile;
+	@unlink($tempFile);
+
+	// Override HtmlErrorRenderer
+	$sourceCode = @file_get_contents(APATH_BASE . '/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php');
+
+	//$sourceCode = str_replace('if (!$debug) {', 'if (true) {', $sourceCode);
+	$sourceCode = str_replace('return $this->include(self::$template, [', <<<PHP
+return \$this->include(self::\$template, [
+            'exception' => \$exception,
+            'exceptionMessage' => \$this->escape(\$exception->getMessage()),
+            'logger' => \$this->logger instanceof DebugLoggerInterface ? \$this->logger : null,
+            'currentContent' => \is_string(\$this->outputBuffer) ? \$this->outputBuffer : (\$this->outputBuffer)(),
+
+PHP
+, $sourceCode);
+	$sourceCode = str_replace(
+		'include is_file(\dirname(__DIR__).\'/Resources/\'.$name) ? \dirname(__DIR__).\'/Resources/\'.$name : $name;',
+		<<<PHP
+	include array_reduce([
+		APATH_THEMES . '/system/' . str_replace('views/', 'error/', \$name),
+		APATH_BASE . '/vendor/symfony/error-handler/Resources/' . \$name,
+		\$name
+	], fn(\$carry, \$path) => \$carry ?? (file_exists(\$path) ? \$path : null), null);
+
+PHP,
+		$sourceCode
+	);
+
+	$tempFile = 'awf://tmp/HtmlErrorRenderer.php';
+	file_put_contents($tempFile, $sourceCode);
+	require_once  $tempFile;
+	@unlink($tempFile);
+});
+
 // Set up the basic error handler for fatal errors
 $errorHandler = \Symfony\Component\ErrorHandler\ErrorHandler::register();
 \Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer::setTemplate(APATH_THEMES . '/system/fatal.php');
@@ -102,11 +169,12 @@ switch ($config->error_reporting ?? 'default') {
 
 	case 'none':
 		error_reporting(0);
+		ini_set('display_errors', 0);
 
 		break;
 
 	case 'simple':
-		error_reporting(E_ERROR | E_WARNING | E_PARSE);
+		error_reporting(E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING);
 		ini_set('display_errors', 1);
 
 		break;

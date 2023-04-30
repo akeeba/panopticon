@@ -175,6 +175,8 @@ class Setup extends Controller
 	{
 		$this->getView()->setLayout('cron');
 
+		// TODO Check if test task is registered; if not, register it
+
 		$this->display();
 	}
 }

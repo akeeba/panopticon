@@ -20,17 +20,17 @@ use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
  * @var  string            $statusCode exception error code
  */
 
-$realException = debug_backtrace()[2]['args'][0] ?? new RuntimeException($statusText, $statusCode);
+//$exception = debug_backtrace()[2]['args'][0] ?? new RuntimeException($statusText, $statusCode);
 
 $replacements = [
 	'{{statusCode}}'            => $statusCode,
 	'{{statusText}}'            => $statusText,
 	'{{statusCode_statusText}}' => $statusCode . ' - ' . $statusText,
-	'{{message}}'               => $realException->getMessage(),
-	'{{code}}'                  => $realException->getCode(),
-	'{{file}}'                  => $realException->getFile(),
-	'{{line}}'                  => $realException->getLine(),
-	'{{backtrace}}'             => $realException->getTraceAsString(),
+	'{{message}}'               => $exception->getMessage(),
+	'{{code}}'                  => $exception->getCode(),
+	'{{file}}'                  => $exception->getFile(),
+	'{{line}}'                  => $exception->getLine(),
+	'{{backtrace}}'             => $exception->getTraceAsString(),
 ];
 
 // Fallback template

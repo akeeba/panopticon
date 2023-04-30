@@ -4,13 +4,6 @@ The following are the known application configuration options which can be set i
 
 ## System
 
-### `debug`
-**Debug Mode**
-
-Should I enabled debug mode?
-
-Default: false
-
 ### `session_timeout`
 **Session Timeout**
 
@@ -31,6 +24,17 @@ Default: UTC
 **Debug system**
 
 Should system debugging be enabled? Displays more detailed error messages at runtime and enabled very detailed logging. Only enable if you are asked to.
+
+Default: false
+
+### `error_reporting`
+**Error reporting level**
+
+How verbose should error reporting to the browser output be? The valid options are:
+* `default`. Use the PHP configuration.
+* `none`. No error reporting to the browser
+* `simple`. Only fatal error and warnings (core PHP or user-defined) are output to the browser.
+* `maximum`. All fatal errors, warnings, notices, and deprecation notices are output.
 
 Default: false
 
