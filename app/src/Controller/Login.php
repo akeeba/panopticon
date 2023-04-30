@@ -10,10 +10,13 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Awf\Mvc\Controller;
+use Awf\Uri\Uri;
+use Exception;
+use Throwable;
 
 class Login extends Controller
 {
-	public function login()
+	public function login(): bool
 	{
 		try
 		{
@@ -22,14 +25,14 @@ class Login extends Controller
 			// Get the username and password from the request
 			$username = $this->input->get('username', '', 'raw');
 			$password = $this->input->get('password', '', 'raw');
-			$secret = $this->input->get('secret', '', 'raw');
+			$secret   = $this->input->get('secret', '', 'raw');
 
-			// Try to log in the user
+			// Try to    log in the user
 			$manager = $this->container->userManager;
-			$manager->loginUser($username, $password, array('secret' => $secret));
+			$manager->loginUser($username, $password, ['secret' => $secret]);
 
 			// Redirect to the saved return_url or, if none specified, to the application's main page
-			$url = $this->container->segment->getFlash('return_url');
+			$url    = $this->getReturnUrl();
 			$router = $this->container->router;
 
 			if (empty($url))
@@ -39,7 +42,7 @@ class Login extends Controller
 
 			$this->setRedirect($url);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$router = $this->container->router;
 
@@ -50,12 +53,49 @@ class Login extends Controller
 		return true;
 	}
 
-	public function logout()
+	public function logout(): bool
 	{
-		$router = $this->container->router;
+		$router  = $this->container->router;
 		$manager = $this->container->userManager;
 		$manager->logoutUser();
 
-		$this->setRedirect($router->route('index.php?view=main'));
+		$this->setRedirect($router->route('index.php?view=login'));
+
+		return true;
+	}
+
+	protected function onBeforeDefault(): bool
+	{
+		$this->getView()->returnUrl = $this->getReturnUrl();
+
+		return true;
+	}
+
+	private function getReturnUrl(): ?string
+	{
+		$url = $this->container->segment->getFlash('return_url');
+
+		if ($url)
+		{
+			return $url;
+		}
+
+		$url = $this->input->getBase64('return', '');
+
+		try
+		{
+			$url = base64_decode($url) ?: null;
+		}
+		catch (Throwable $e)
+		{
+			$url = null;
+		}
+
+		if (empty($url) || !Uri::isInternal($url))
+		{
+			return null;
+		}
+
+		return $url;
 	}
 }

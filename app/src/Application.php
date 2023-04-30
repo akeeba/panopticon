@@ -25,7 +25,10 @@ use Exception;
 
 class Application extends AWFApplication
 {
-	private const NO_LOGIN_VIEWS = ['check', 'login', 'setup'];
+	/**
+	 * LIst of view names we're allowed to access directly, without a login, and without redirection to the setup view
+	 */
+	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup'];
 
 	public function initialise()
 	{
@@ -41,6 +44,7 @@ class Application extends AWFApplication
 			$this->container->appConfig->loadConfiguration();
 			$this->applyTimezonePreference();
 			$this->applySessionTimeout();
+			$this->conditionRedirectToCronSetup();
 		}
 
 		$this->loadRoutes();
@@ -107,7 +111,7 @@ class Application extends AWFApplication
 		}
 	}
 
-	public function applySessionTimeout(): void
+	private function applySessionTimeout(): void
 	{
 		// Get the session timeout
 		$sessionTimeout = (int) $this->container->appConfig->get('session_timeout', 1440);
@@ -366,5 +370,28 @@ class Application extends AWFApplication
 		]);
 
 		return true;
+	}
+
+	private function conditionRedirectToCronSetup(): void
+	{
+		// If we have finished the initial installation there's no need to redirect
+		if ($this->container->appConfig->get('finished_setup', false))
+		{
+			return;
+		}
+
+		// Do not redirect if we're in a view which is allowed to be accessed directly (check, cron, login, setup)
+		$view = $this->getContainer()->input->getCmd('view', '');
+
+		if (in_array($view, self::NO_LOGIN_VIEWS))
+		{
+			return;
+		}
+
+		// Let the user finish the installation at their own time
+		$this->getContainer()->input->setData([
+			'view' => 'setup',
+			'task' => 'cron',
+		]);
 	}
 }

@@ -136,14 +136,12 @@ PHP,
 $errorHandler = \Symfony\Component\ErrorHandler\ErrorHandler::register();
 \Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer::setTemplate(APATH_THEMES . '/system/fatal.php');
 
+/**
+ * Forcibly enable detailed exception reporting during the initial setup.
+ */
 if (!file_exists(APATH_CONFIGURATION . '/config.php'))
 {
-	/**
-	 * Forcibly enable debug mode (and detailed exception reporting) during the initial setup.
-	 *
-	 * This helps to identify and resolve errors during the initial setup.
-	 */
-	define('AKEEBADEBUG', 1);
+	//define('AKEEBADEBUG', 1);
 
 	$errorHandler->setExceptionHandler(
 		[

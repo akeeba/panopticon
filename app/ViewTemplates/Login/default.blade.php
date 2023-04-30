@@ -54,6 +54,7 @@ defined('AKEEBA') or die();
         </button>
 
         <input type="hidden" name="token" value="@token()">
+        <input type="hidden" name="return" value="<?= empty($this->returnUrl) ? '' : base64_encode($this->returnUrl) ?>">
     </div>
 </form>
 

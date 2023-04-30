@@ -14,9 +14,14 @@ use Awf\Mvc\View;
 class Html extends View
 {
 	public ?string $username;
+
 	public ?string $password;
+
 	public ?string $secret;
+
 	public ?string $autologin;
+
+	public ?string $returnUrl;
 
 	public function onBeforeMain()
 	{

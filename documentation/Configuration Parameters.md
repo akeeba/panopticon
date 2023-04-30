@@ -38,6 +38,12 @@ How verbose should error reporting to the browser output be? The valid options a
 
 Default: false
 
+### `finished_setup`
+**Have we finished installing up the application?**
+
+This is automatically set at the end of the initial installation, after the CRON job configuration has been confirmed
+(or the user chose to skip it).
+
 ## Display preferences
 
 ### `darkmode`
