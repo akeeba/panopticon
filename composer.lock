@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1598f4670790de7e29f4f4758fe2a4be",
+    "content-hash": "1c4d969134e504eb9260c43f6c15230e",
     "packages": [
         {
             "name": "akeeba/awf",
@@ -250,6 +250,112 @@
                 }
             ],
             "time": "2023-01-11T08:27:00+00:00"
+        },
+        {
+            "name": "delight-im/alphabets",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/delight-im/PHP-Alphabets.git",
+                "reference": "54bbe2672875264e583414446b102a1f84bd5b9e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/delight-im/PHP-Alphabets/zipball/54bbe2672875264e583414446b102a1f84bd5b9e",
+                "reference": "54bbe2672875264e583414446b102a1f84bd5b9e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Delight\\Alphabets\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Sets of digits or characters that may be used for base conversions, encoding and decoding tasks, and input validation",
+            "homepage": "https://github.com/delight-im/PHP-Alphabets",
+            "keywords": [
+                "alpha",
+                "alphabet",
+                "alphabets",
+                "alphanumeric",
+                "ascii",
+                "base32",
+                "base58",
+                "base64",
+                "base64url",
+                "base85",
+                "binary",
+                "decimal",
+                "decode",
+                "decoding",
+                "encode",
+                "encoding",
+                "hex",
+                "hexadecimal",
+                "octal"
+            ],
+            "support": {
+                "issues": "https://github.com/delight-im/PHP-Alphabets/issues",
+                "source": "https://github.com/delight-im/PHP-Alphabets/tree/v1.0.0"
+            },
+            "time": "2019-11-17T23:48:59+00:00"
+        },
+        {
+            "name": "delight-im/random",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/delight-im/PHP-Random.git",
+                "reference": "133aed6cc760065c8dbfc4ae0e8bdacfbb6ce273"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/delight-im/PHP-Random/zipball/133aed6cc760065c8dbfc4ae0e8bdacfbb6ce273",
+                "reference": "133aed6cc760065c8dbfc4ae0e8bdacfbb6ce273",
+                "shasum": ""
+            },
+            "require": {
+                "delight-im/alphabets": "^1.0",
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Delight\\Random\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The most convenient way to securely generate anything random in PHP",
+            "homepage": "https://github.com/delight-im/PHP-Random",
+            "keywords": [
+                "PRNG",
+                "cryptography",
+                "csprng",
+                "generator",
+                "integers",
+                "numbers",
+                "pseudo-random",
+                "pseudorandom",
+                "random",
+                "random-numbers",
+                "random-strings",
+                "strings"
+            ],
+            "support": {
+                "issues": "https://github.com/delight-im/PHP-Random/issues",
+                "source": "https://github.com/delight-im/PHP-Random/tree/v1.0.0"
+            },
+            "time": "2019-11-19T23:07:00+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",

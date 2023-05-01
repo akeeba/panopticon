@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `#__sites`
 CREATE TABLE IF NOT EXISTS `#__tasks`
 (
     `id`              SERIAL,
-    `site_id`         BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    `site_id`         BIGINT UNSIGNED NULL DEFAULT NULL,
     `type`            VARCHAR(255)    NOT NULL,
     `params`          LONGTEXT,
     `storage`         LONGTEXT,

@@ -2,6 +2,14 @@
 
 ## Web view (view=cron ???) for task execution
 
+## Web installer
+* Clear the `maxexec.lasttick` and `maxexec.done` items from `#__akeeba_common`
+* Set up a `maxexec` task (replacing any existing ones)
+* Tell user how to set up task execution
+* Wait for the task execution by polling the `maxexec.lasttick` and `maxexec.done` every 5 seconds.
+* Also allow user to skip over this step / finish setup later, removing the benchmark task
+* Finally, set the config variable `finished_setup` to true in app config
+
 ## User groups implementation
 
 * We need a db table to store groups: id, name, privileges (one or more of the user privileges) 
@@ -21,13 +29,6 @@
 ## Custom menu
 
 Do not let automatic menu item creation
-
-## Web installer
-* Clear the `maxexec.lasttick` and `maxexec.done` items from `#__akeeba_common`
-* Set up a `maxexec` task (replacing any existing ones)
-* Tell user how to set up task execution
-* Wait for the task execution by polling the `maxexec.lasttick` and `maxexec.done` every 5 seconds. 
-* Also allow user to skip over this step / finish setup later, removing the benchmark task
 
 ## Automatic Log rotation
 * Install a daily task for it during setup

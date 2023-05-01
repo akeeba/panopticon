@@ -35,6 +35,8 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/mcrumley/php-complexify" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/delight-im/alphabets" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/delight-im/random" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

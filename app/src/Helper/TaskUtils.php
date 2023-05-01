@@ -17,9 +17,9 @@ abstract class TaskUtils
 {
 	private static ?array $siteNames = null;
 
-	public static function getSiteName(int $siteId): string
+	public static function getSiteName(?int $siteId): string
 	{
-		if ($siteId === 0)
+		if (($siteId ?? 0) === 0)
 		{
 			return Text::_('PANOPTICON_APP_LBL_SYSTEM_TASK');
 		}

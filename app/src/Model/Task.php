@@ -220,6 +220,8 @@ class Task extends DataModel
 				// If that fails to, man, I don't know! Your database died or something?
 			}
 
+			$db->unlockTables();
+
 			@ob_end_clean();
 
 			return true;
@@ -248,7 +250,7 @@ class Task extends DataModel
 		try
 		{
 			/** @var CallbackInterface $callback */
-			$callback   = $this->container->taskRegistry->get($pendingTask->type);
+			$callback = $this->container->taskRegistry->get($pendingTask->type);
 
 			if (function_exists('user_decorate_cli_task'))
 			{
@@ -267,6 +269,13 @@ class Task extends DataModel
 
 			$taskObject = (object) $pendingTask->toArray();
 			$storage    = $pendingTask->storage;
+
+			if (!is_object($storage))
+			{
+				$pendingTask->storage = new Registry($storage);
+				$storage = $pendingTask->storage;
+			}
+
 			$storage->set('task.resumed', $willResume);
 
 			$logger->debug(
@@ -308,6 +317,13 @@ class Task extends DataModel
 			if ($pendingTask->last_execution !== Status::WILL_RESUME)
 			{
 				$pendingTask->storage->loadString('{}');
+
+				$cronExpression = new CronExpression($this->cron_expression);
+
+				$lastExecution        = new DateTime($this->last_execution ?: 'now');
+				$nextRun              = (new CronExpression($this->cron_expression))
+					->getNextRunDate($lastExecution)->format(DATE_W3C);
+				$this->next_execution = (new Date($nextRun))->toSql();
 			}
 		}
 		catch (InvalidTaskType)
@@ -398,9 +414,9 @@ class Task extends DataModel
 		}
 	}
 
-	protected function set_site_id_attribute(int $site_id): int
+	protected function set_site_id_attribute(?int $site_id): int
 	{
-		if ($site_id === 0)
+		if (($site_id ?? 0) === 0)
 		{
 			return 0;
 		}

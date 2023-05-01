@@ -83,6 +83,16 @@
 
         <exclude name="vendor/bin/**" />
 
+        <exclude name="vendor/akeeba/delight-im/alphabets/tests/**" />
+        <exclude name="vendor/akeeba/delight-im/alphabets/.editorconfig" />
+        <exclude name="vendor/akeeba/delight-im/alphabets/.gitignore" />
+        <exclude name="vendor/akeeba/delight-im/alphabets/composer.lock" />
+
+        <exclude name="vendor/akeeba/delight-im/random/tests/**" />
+        <exclude name="vendor/akeeba/delight-im/random/.editorconfig" />
+        <exclude name="vendor/akeeba/delight-im/random/.gitignore" />
+        <exclude name="vendor/akeeba/delight-im/random/composer.lock" />
+
         <exclude name="vendor/dragonmantank/cron-expression/CHAMGELOG*" />
         <exclude name="vendor/dragonmantank/cron-expression/phpstan*" />
 

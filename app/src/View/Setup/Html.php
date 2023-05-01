@@ -31,6 +31,10 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public array $connectionParameters;
 
+	public string $cronKey;
+
+	public int $maxExec;
+
 	public function onBeforePrecheck(): bool
 	{
 		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_PRECHECK'));
@@ -101,6 +105,22 @@ class Html extends \Awf\Mvc\DataView\Html
 		Text::script('PANOPTICON_CONFIG_DIRECTFTP_TEST_FAIL');
 		Text::script('PANOPTICON_CONFIG_DIRECTSFTP_TEST_OK');
 		Text::script('PANOPTICON_CONFIG_DIRECTSFTP_TEST_FAIL');
+
+		return true;
+	}
+
+	public function onBeforeCron()
+	{
+		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_CRON'));
+
+		$this->cronKey = $this->container->appConfig->get('webcron_key', '');
+
+		return true;
+	}
+
+	public function onBeforeFinish()
+	{
+		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_FINISH'));
 
 		return true;
 	}

@@ -77,7 +77,7 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 				<?php if ($this->getMenu()->isEnabled('main') && $user->getId()): ?>
 					<?= TemplateHelper::getRenderedMenuItem($this->getMenu()->getMenuItems('main')) ?>
 					<a href="<?= $this->getContainer()->router->route('index.php?view=login&task=logout') ?>"
-					   class="nav-link"
+					   class="nav-link text-white"
 					>
 						<?= Text::_('PANOPTICON_APP_LBL_LOGOUT') ?>
 					</a>

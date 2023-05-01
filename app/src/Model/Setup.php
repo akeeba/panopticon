@@ -10,10 +10,15 @@ namespace Akeeba\Panopticon\Model;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
+use Akeeba\Panopticon\Library\Task\Status;
 use Awf\Database\Driver;
 use Awf\Database\Installer;
+use Awf\Date\Date;
 use Awf\Mvc\Model;
 use Awf\Text\Text;
+use Complexify\Complexify;
+use Delight\Alphabets\Alphabet;
+use Delight\Random\Random;
 
 class Setup extends Model
 {
@@ -395,6 +400,128 @@ class Setup extends Model
 
 		$manager->saveUser($user);
 		$manager->loginUser($params['user.username'], $params['user.password']);
+	}
+
+	public function conditionallyCreateWebCronKey(): void
+	{
+		$currentKey = $this->container->appConfig->get('webcron_key', '');
+		$complexify = new Complexify();
+
+		if (!empty($currentKey) && $complexify->evaluateSecurity($currentKey)->valid)
+		{
+			return;
+		}
+
+		do
+		{
+			$newPassword = Random::stringFromAlphabet(Alphabet::BASE_64_URL, 32);
+
+			if (!$complexify->evaluateSecurity($newPassword)->valid)
+			{
+				$newPassword = '';
+			}
+		} while (empty($newPassword));
+
+		$this->container->appConfig->set('webcron_key', $newPassword);
+		$this->container->appConfig->saveConfiguration();
+
+		if (function_exists('opcache_invalidate'))
+		{
+			opcache_invalidate(APATH_ROOT . '/config.php');
+		}
+	}
+
+	public function reRegisterMaxExecTask(): void
+	{
+		$db = $this->container->db;
+
+		// Delete any existing task
+		$query = $db->getQuery(true)
+			->delete($db->quoteName('#__tasks'))
+			->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
+		$db->setQuery($query)->execute();
+
+		$query = $db->getQuery(true)
+			->delete($db->quoteName('#__akeeba_common'))
+			->where($db->quoteName('key') . ' LIKE ' . $db->quote('maxexec.%'));
+		$db->setQuery($query)->execute();
+
+		$newTask = (object) [
+			'id' => null,
+			'site_id' => NULL,
+			'type' => 'maxexec',
+			'cron_expression' => '@daily',
+			'enabled' => 1,
+			'last_exit_code' => Status::INITIAL_SCHEDULE->value,
+			'next_execution' => (new Date('now', 'UTC'))->toSql(),
+		];
+		$db->insertObject('#__tasks', $newTask);
+	}
+
+	public function getHeartbeat(): object
+	{
+		$ret = new \stdClass();
+		$ret->hasTask = false;
+		$ret->started = false;
+		$ret->finished = false;
+		$ret->elapsed = 0;
+		$ret->error = null;
+
+		$db = $this->container->db;
+
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__tasks'))
+			->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
+		try
+		{
+			$taskObject = $db->setQuery($query, 0, 1)->loadObject();
+		}
+		catch (\Exception $e)
+		{
+			$ret->error = $e->getMessage();
+
+			return $ret;
+		}
+
+		$ret->hasTask = true;
+
+		try
+		{
+			$query      = $db->getQuery(true)
+				->select('*')
+				->from($db->quoteName('#__akeeba_common'))
+				->where($db->quoteName('key') . ' LIKE ' . $db->quote('maxexec.%'));
+			$tempValues = $db->setQuery($query)->loadAssocList('key', 'value');
+		}
+		catch (\Exception $e)
+		{
+			$ret->error = $e->getMessage();
+
+			return $ret;
+		}
+
+		$ret->started = ($tempValues['maxexec.lasttick'] ?? 0) !== 0;
+		$ret->finished = ($tempValues['maxexec.done'] ?? 0) == 1;
+		$ret->elapsed = (int) $tempValues['maxexec.lasttick'] ?? 0;
+
+		return $ret;
+	}
+
+	public function removeMaxExecTask(): void
+	{
+		$db = $this->container->db;
+		$query = $db->getQuery(true)
+			->delete($db->quoteName('#__tasks'))
+			->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
+
+		try
+		{
+			$db->setQuery($query)->execute();
+		}
+		catch (\Exception)
+		{
+		}
 	}
 
 	private function getIniParserAvailability(): bool

@@ -120,8 +120,8 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 			$query = $db->getQuery(true)
 				->replace($db->quoteName('#__akeeba_common'))
 				->values(
-					'(' . $db->quote(self::TICK_KEY) . ',' .
-					$db->quote($integerSeconds) . ')'
+					$db->quote(self::TICK_KEY) . ',' .
+					$db->quote($integerSeconds)
 				);
 			try
 			{
@@ -177,8 +177,8 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 		$query = $db->getQuery(true)
 			->replace($db->quoteName('#__akeeba_common'))
 			->values(
-				'(' . $db->quote(self::DONE_KEY) . ',' .
-				$db->quote(1) . ')'
+				$db->quote(self::DONE_KEY) . ',' .
+				$db->quote(1)
 			);
 		try
 		{

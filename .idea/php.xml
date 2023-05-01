@@ -43,6 +43,8 @@
       <path value="$PROJECT_DIR$/app/vendor/psr/container" />
       <path value="$PROJECT_DIR$/app/vendor/mcrumley/php-complexify" />
       <path value="$PROJECT_DIR$/app/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/app/vendor/delight-im/random" />
+      <path value="$PROJECT_DIR$/app/vendor/delight-im/alphabets" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

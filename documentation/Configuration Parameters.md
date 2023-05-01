@@ -41,6 +41,8 @@ Default: false
 ### `finished_setup`
 **Have we finished installing up the application?**
 
+_Hidden option._
+
 This is automatically set at the end of the initial installation, after the CRON job configuration has been confirmed
 (or the user chose to skip it).
 
@@ -101,6 +103,13 @@ Default: 14
 Range: 0 to 65535 (that is almost 179 1/2 years…)
 
 ## Task handling
+
+### `webcron_key`
+**Web CRON key**
+
+This key must be provided in the Web CRON URL for it to work.
+
+Default: (auto generated during installation)
 
 ### `cron_stuck_threshold`
 **Stuck Task Threshold**

@@ -35,7 +35,8 @@
 		"mcrumley/php-complexify": "^0.4.1",
 		"monolog/monolog": "^3.3.1",
 		"symfony/console": "^6.2.7",
-		"symfony/error-handler": "^5.2"
+		"symfony/error-handler": "^5.2",
+		"delight-im/random": "^1.0"
 	},
 	"suggest": {
 		"ext-pdo": "*",

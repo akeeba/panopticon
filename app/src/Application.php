@@ -44,7 +44,7 @@ class Application extends AWFApplication
 			$this->container->appConfig->loadConfiguration();
 			$this->applyTimezonePreference();
 			$this->applySessionTimeout();
-			$this->conditionRedirectToCronSetup();
+			$this->conditionalRedirectToCronSetup();
 		}
 
 		$this->loadRoutes();
@@ -372,7 +372,7 @@ class Application extends AWFApplication
 		return true;
 	}
 
-	private function conditionRedirectToCronSetup(): void
+	private function conditionalRedirectToCronSetup(): void
 	{
 		// If we have finished the initial installation there's no need to redirect
 		if ($this->container->appConfig->get('finished_setup', false))
@@ -389,9 +389,6 @@ class Application extends AWFApplication
 		}
 
 		// Let the user finish the installation at their own time
-		$this->getContainer()->input->setData([
-			'view' => 'setup',
-			'task' => 'cron',
-		]);
+		$this->redirect(Uri::rebase('index.php?view=setup&task=cron', $this->container));
 	}
 }

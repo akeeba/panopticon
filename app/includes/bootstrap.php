@@ -135,6 +135,8 @@ PHP,
 // Set up the basic error handler for fatal errors
 $errorHandler = \Symfony\Component\ErrorHandler\ErrorHandler::register();
 \Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer::setTemplate(APATH_THEMES . '/system/fatal.php');
+// Don't throw for trivial warnings and notices
+$errorHandler->throwAt(0, true);
 
 /**
  * Forcibly enable detailed exception reporting during the initial setup.
