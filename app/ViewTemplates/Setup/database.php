@@ -12,8 +12,11 @@ use Awf\Text\Text;
 /** @var \Akeeba\Panopticon\View\Setup\Html $this */
 
 ?>
+<p class="h4">
+	<?= Text::_('PANOPTICON_SETUP_SUBTITLE_DATABASE') ?>
+</p>
 
-<p class="mt-2 mb-4">
+<p class="mt-2 mb-5 col-lg-6">
 	<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_HEAD_TEXT') ?>
 </p>
 

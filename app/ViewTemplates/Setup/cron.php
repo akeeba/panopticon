@@ -20,7 +20,7 @@ defined('AKEEBA') || die;
 		Set up a CRON job
 	</h3>
 	<p class="lead text-center">
-		Panopticon uses automation heavily. For this, you need to set up a CRON job to run every minute.
+		Panopticon uses a lot of automation to make your life easier. For this, you need to set up a CRON job to run every minute.
 	</p>
 	<p class="lead text-center">
 		Set up a CRON job using one of the methods below. Then, wait for up to a minute for this page to change.

@@ -13,9 +13,14 @@ use Awf\Text\Text;
 /** @var \Akeeba\Panopticon\View\Setup\Html $this */
 
 ?>
-<p class="mt-2 mb-4">
+<p class="h4">
+	<?= Text::_('PANOPTICON_SETUP_SUBTITLE_SETUP') ?>
+</p>
+
+<p class="mt-2 mb-5 col-lg-6">
 	<?= Text::_('PANOPTICON_SETUP_LBL_SETUP_HEAD_TEXT') ?>
 </p>
+
 
 <form action="<?= $this->container->router->route('index.php?view=setup&task=saveconfig') ?>" role="form"
       method="post" name="setupForm" id="setupForm">
