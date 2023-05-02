@@ -45,9 +45,9 @@
 		"comments": false,
 		"sourceType": "script",
 		"ignore": [
-			"app/media/js/bootstrap.bundle.*",
-			"app/media/js/*.min.js",
-			"app/media/css/*.min.css"
+			"**/bootstrap.bundle.*",
+			"**/*.min.js",
+			"**/*.min.css"
 		]
 	},
 	"dependencies": {

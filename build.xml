@@ -235,10 +235,25 @@
 
     <target name="compile-javascript" description="Transpile and minify JavaScript files">
         <echo>Minifying JavaScript files</echo>
-        <exec executable="npx" dir="${dirs.root}" checkreturn="true">
+
+        <!--
+        Babel sucks. It will NEVER ignore files you tell it to ignore.
+        -->
+        <foreach param="filename" target="really-compile-javascript">
+            <fileset dir="${dirs.phpapp}/media/js">
+                <include name="*.js" />
+                <exclude name="*.min.js" />
+                <exclude name="bootstrap.*" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="really-compile-javascript">
+        <basename property="basename" file="${filename}" suffix=".js" />
+        <exec executable="npx" dir="${dirs.root}" checkreturn="true" output="true">
             <arg value="babel" />
 
-            <arg value="${dirs.phpapp}/media/js" />
+            <arg value="${dirs.phpapp}/media/js/${basename}.js" />
 
             <arg value="--out-dir" />
             <arg value="${dirs.phpapp}/media/js" />
