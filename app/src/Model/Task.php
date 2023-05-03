@@ -257,7 +257,8 @@ class Task extends DataModel
 				$callback = user_decorate_task($pendingTask->type, $callback);
 			}
 
-			if (!$callback instanceof CallbackInterface) {
+			if (!$callback instanceof CallbackInterface)
+			{
 				throw new InvalidTaskType;
 			}
 
@@ -277,7 +278,7 @@ class Task extends DataModel
 			if (!is_object($storage))
 			{
 				$pendingTask->storage = new Registry($storage);
-				$storage = $pendingTask->storage;
+				$storage              = $pendingTask->storage;
 			}
 
 			$storage->set('task.resumed', $willResume);
@@ -325,7 +326,7 @@ class Task extends DataModel
 				$cronExpression = new CronExpression($this->cron_expression);
 
 				$lastExecution        = new DateTime($this->last_execution ?: 'now');
-				$nextRun              = (new CronExpression($this->cron_expression))
+				$nextRun              = $cronExpression
 					->getNextRunDate($lastExecution)->format(DATE_W3C);
 				$this->next_execution = (new Date($nextRun))->toSql();
 			}
@@ -357,6 +358,18 @@ class Task extends DataModel
 		}
 		finally
 		{
+			$params        = is_object($pendingTask->params) ? $pendingTask->params : new Registry($pendingTask->params);
+			$isInvalidTask = $pendingTask->last_exit_code === Status::NO_ROUTINE;
+			$isError       = $pendingTask->last_exit_code === Status::EXCEPTION;
+			$runOnceAction = $params->get('run_once', null);
+
+			if (($runOnceAction === 'disable') && !$isError && !$isInvalidTask)
+			{
+				$logger->debug('Run Once task: action set to disable; disabling task');
+
+				$pendingTask->enabled = 0;
+			}
+
 			$logger->debug('Updating the task\'s last execution information');
 
 			try
@@ -375,6 +388,20 @@ class Task extends DataModel
 					'last_run_end'   => (new Date())->toSql(),
 					'last_exit_code' => Status::NO_RELEASE,
 				]);
+			}
+
+			if (($runOnceAction === 'delete') && !$isError && !$isInvalidTask)
+			{
+				$logger->debug('Run Once task: action set to delete; deleting task');
+
+				try
+				{
+					$pendingTask->delete();
+				}
+				catch (Exception $e)
+				{
+					// Don't worry about it.
+				}
 			}
 
 			@ob_end_clean();

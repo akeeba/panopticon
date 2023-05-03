@@ -1,10 +1,5 @@
 # TO-DO
 
-## Run once tasks
-* Tasks which run exactly once and never again.
-* Once the task finishes running it is automatically disabled.
-* The task runner code, in the Task table, is responsible for disabling the task
-
 ## Custom menu
 
 Do not let automatic menu item creation
@@ -102,8 +97,12 @@ Only users with the super privilege can manage application-level configuration:
 
 # ✅ Done
 
-## Web view (view=cron) for task execution
+## Run once tasks
+* They need to have the `params` key `run_once`.
+* If the `params` key `run_once` is `delete` the task is deleted upon completion.
+* If the `params` key `run_once` is `disable` the task is disabled upon completion.
 
+## Web view (view=cron) for task execution
 
 ## Allow installation by CLI app
     

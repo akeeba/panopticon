@@ -15,6 +15,7 @@ use Awf\Database\Driver;
 use Awf\Database\Installer;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
+use Awf\Registry\Registry;
 use Awf\Text\Text;
 use Complexify\Complexify;
 use Delight\Alphabets\Alphabet;
@@ -454,6 +455,7 @@ class Setup extends Model
 			'enabled' => 1,
 			'last_exit_code' => Status::INITIAL_SCHEDULE->value,
 			'next_execution' => (new Date('now', 'UTC'))->toSql(),
+			'params' => (new Registry('{"run_once": "delete"}'))->toString()
 		];
 		$db->insertObject('#__tasks', $newTask);
 	}
