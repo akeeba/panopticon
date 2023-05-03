@@ -1,22 +1,9 @@
 # TO-DO
 
-## Web view (view=cron ???) for task execution
-
-## User groups implementation
-
-* We need a db table to store groups: id, name, privileges (one or more of the user privileges) 
-* Groups are _flat_ (no hierarchy); we have a very simple use case
-* We need a db table linking users to groups (many to many)
-* Page to view and edit groups
-* Custom user class
-  * Allows setting user groups
-  * Autoloads applicable group permissions on load
-  * `authorise(?int $group, string $privilege, bool $default = false)`. If $group is null returns global privilege (proxy to getPrivilege()). If the user does not belong to $group returns $default.  
-* Custom user manager class, using the custom user class
-* db field in sites table to assign a site to _multiple_ groups
-* All permission checks will go through the site table object
-  * Loop through all user groups and call $user->authorise($group, $privilege). Return immediately on true.
-  * If that failed to return results return $user->authorise(null, $privilege) for the global privilege.
+## Run once tasks
+* Tasks which run exactly once and never again.
+* Once the task finishes running it is automatically disabled.
+* The task runner code, in the Task table, is responsible for disabling the task
 
 ## Custom menu
 
@@ -40,6 +27,19 @@ Do not let automatic menu item creation
 * (Warning) Admin Tools Pro component and/or Web Services - Admin Tools plugin (if version >= 7.4.0) not installed / not activated — you must install and activate Admin Tools Pro and specific plugins for full features
 * (Warning) Cannot list WAF settings — you must install and activate Admin Tools Pro and specific plugins for full features
 
+## Core updates
+* Install one task per site for core version checks. The task caches the results to the site's definition.
+* Install one global task for automatically installing updates.
+  * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
+  * Configurable conditions for upgrading (only stable versions? only within the same minor/major?)
+  * Create (or re-enable) a "run once" task to upgrade the site. This is a high priority task.
+  * If there are sites queued up for upgrade allow 2 minutes between each site's upgrade task.
+* Notify user when there is a new available version and whether it will be auto-installed.
+* Notify the user when the upgrade succeeds / fails.
+* When the user chooses to upgrade a site, push a new (or re-enable an existing) "run once" task to upgrade the site.
+* The time of the update installation should be something the user can define. Remember that sites may be used in different timezones e.g. a US-centric site is best updated around midnight CST i.e. 05:00 UTC
+* In the future, we can choose whether to schedule a backup before the update
+  * This requires making pre-requisite tasks, or otherwise avoid duplicating the backup logic
 
 # Integrations
 
@@ -82,7 +82,28 @@ Only users with the super privilege can manage application-level configuration:
 - User management
 - Log management
 
+# 🤔 Maybe
+
+## User groups implementation
+
+* We need a db table to store groups: id, name, privileges (one or more of the user privileges)
+* Groups are _flat_ (no hierarchy); we have a very simple use case
+* We need a db table linking users to groups (many to many)
+* Page to view and edit groups
+* Custom user class
+  * Allows setting user groups
+  * Autoloads applicable group permissions on load
+  * `authorise(?int $group, string $privilege, bool $default = false)`. If $group is null returns global privilege (proxy to getPrivilege()). If the user does not belong to $group returns $default.
+* Custom user manager class, using the custom user class
+* db field in sites table to assign a site to _multiple_ groups
+* All permission checks will go through the site table object
+  * Loop through all user groups and call $user->authorise($group, $privilege). Return immediately on true.
+  * If that failed to return results return $user->authorise(null, $privilege) for the global privilege.
+
 # ✅ Done
+
+## Web view (view=cron) for task execution
+
 
 ## Allow installation by CLI app
     
