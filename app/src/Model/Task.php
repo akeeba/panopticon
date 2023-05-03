@@ -252,9 +252,13 @@ class Task extends DataModel
 			/** @var CallbackInterface $callback */
 			$callback = $this->container->taskRegistry->get($pendingTask->type);
 
-			if (function_exists('user_decorate_cli_task'))
+			if (function_exists('user_decorate_task'))
 			{
-				$callback = user_decorate_cli_task($callback);
+				$callback = user_decorate_task($pendingTask->type, $callback);
+			}
+
+			if (!$callback instanceof CallbackInterface) {
+				throw new InvalidTaskType;
 			}
 
 			if ($callback instanceof LoggerAwareInterface)
@@ -423,16 +427,6 @@ class Task extends DataModel
 
 		// TODO Check if it's valid
 		return $site_id;
-	}
-
-	protected function set_type_attribute(string $type): string
-	{
-		if (!$this->container->taskRegistry->has($type))
-		{
-			throw new InvalidTaskType($type);
-		}
-
-		return $type;
 	}
 
 	protected function set_params_attribute(string $params): Registry
