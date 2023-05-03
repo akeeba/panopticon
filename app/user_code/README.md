@@ -4,13 +4,13 @@ Here you can place code specific to your installation, to further customise Akee
 
 ## Your `bootstrap.php` file
 
-The file `bootstrap.php` in this folder will be loaded at the end of the regular application bootstrap code found in `includes/bootstrap.php`. The variable `$config` will be defined in it, an instance of the `AConfig` configuration class.
+The file `bootstrap.php` in this folder will be loaded at the end of the regular application bootstrap code found in `includes/bootstrap.php`. The variable `$config` will be defined in it, an instance of the `AConfig` configuration class (in other words, your Panopticon installation's `config.php`).
 
 **IMPORTANT!** The `bootstrap.php` file in this folder will _only_ be included if you have finished configuring Akeeba Panopticon, i.e. there is a `config.php` file at the root folder of your installation.
 
-**IMPORTANT!** The `bootstrap.php` file is loaded in all execution contexts: web and CLI. Do not assume that you have a STDOUT / STDERR as these may not be available in the web context. Do not assume you can grab an HTML document and modify it as this will not work in the CLI context.
+**IMPORTANT!** The `bootstrap.php` file is loaded in _all_ execution contexts: web and CLI. Do not assume that you have a STDOUT / STDERR as these may not be available in the web context. Do not assume you can grab an HTML document and modify it as this will not work in the CLI context.
 
-## What you can do with it
+## What you can do with `user_code/bootstrap.php`
 
 ### Load your own Composer dependencies
 
@@ -30,6 +30,8 @@ function user_get_container(): \Akeeba\Panopticon\Container
 
 You can either configure the regular `\Akeeba\Panopticon\Container` object by passing it configuration variables, or return an instance of a class extending from `\Akeeba\Panopticon\Container`.
 
+**⚠️ WARNING**: If you subclass, or completely replace, `\Akeeba\Panopticon\Container` make sure to check your code in each minor version (when the y component of the version number x.y.z changes) to ensure that you are not breaking expected behaviour. 
+
 ### Override the application
 
 Define the following function:
@@ -40,18 +42,29 @@ function user_get_application(): \Akeeba\Panopticon\Application
 
 You can either configure the regular `\Akeeba\Panopticon\Application` object, or return an instance of a class extending from `\Akeeba\Panopticon\Application`.
 
-### Handle / decorate CLI tasks
+**⚠️ WARNING**: If you subclass, or completely replace, `\Akeeba\Panopticon\Application` make sure to check your code on _every_ new version to ensure that you are not breaking expected behaviour. 
+
+### Decorate (or provide alternative handles for) tasks
+
+You can modify the handling of a task type, or register your own custom task types, by declaring the function 
+`user_decorate_task` with the following signature:
 
 ```php
-function user_decorate_cli_task(
-    \Akeeba\Panopticon\Library\Task\CallbackInterface $callback
+function user_decorate_task(
+    ?string $taskType,
+    ?\Akeeba\Panopticon\Library\Task\CallbackInterface $callback
 ): \Akeeba\Panopticon\Library\Task\CallbackInterface
 ```
 
+The `$taskType` parameter is a string, communicating the task type stored in the `#__tasks` table in the database. The `$callback` parameters contains the currently registered callback (typically, an instance of a callable class) for this task type.
+
+You can either modify the existing callback, or replace it with a custom one.
+
+**⚠️ WARNING**: If you subclass, or completely replace, an existing task handler make sure to check your code on _every_ new version to ensure that you are not breaking expected behaviour.
 
 ### Extend the loggers
 
-Akeeba Panopticon uses Monolog for logging. The logger instances are created by a logger factory service object which is accessible through the Container object.
+Akeeba Panopticon uses [Monolog](http://seldaek.github.io/monolog/) for logging. The logger instances are created by a logger factory service object which is accessible through the Container object.
 
 The logger factory service object allows you to define callbacks which can be used to (re)configure the logger objects.
 
@@ -77,11 +90,11 @@ For example, you can add this to your bootstrap.php to send all log messages to 
     );
 ```
 
-A web agency with hundreds of sites can use this trick to push Akeeba Panopticon's log messages to a log aggregator service. This could be used, for example, to raise alerts if there are a bunch of sites running Joomla versions with critical vulnerabilities so that you can prioritise them for upgrades — without even having to visit Panopticon's web interface.
+A web agency with hundreds of sites can use this kind of customisation to push Akeeba Panopticon's log messages to a log aggregator service. This could be used, for example, to raise alerts if there are a bunch of sites running Joomla versions with critical vulnerabilities so that you can prioritise them for upgrades — without even having to visit Panopticon's web interface.
 
 ### Replace the loggers
 
-We already discussed how Akeeba Panopticon uses Monolog for logging. Well, this is not the entire truth of it. The logger factor service _technically_ returns objects adhering to the [PSR-3](https://www.php-fig.org/psr/psr-3/) specification's `\Psr\Log\LoggerInterface` interface. You can of course replace Monolog with any logging interface you want.
+We already discussed how Akeeba Panopticon uses Monolog for logging. Well, this is the default implementation but not the only possibility. The logger factor service returns objects adhering to the [PSR-3](https://www.php-fig.org/psr/psr-3/) specification's `\Psr\Log\LoggerInterface` interface and Panopticon's code only expects that logger objects adhere to the `\Psr\Log\LoggerInterface` of version 3 of the PSR-3 specification. Therefore, you can of course replace Monolog with any logging interface you want.
 
 For example, let's say you want to use [Analog](https://packagist.org/packages/analog/analog), another popular logging framework, with its PDO driver to log into a SQLite database — which, by the way, is not recommended due to the volume of log entries produced in debug mode. But, hey, this is an example!
 
@@ -125,4 +138,4 @@ require_once APATH_USER_CODE . '/vendor/autoload.php';
         });
 ```
 
-As you can see, we overwrote the `$logger` variable passed to our callback with a new logger. This will still work fine with Akeeba Panopticon because all of its log consumers expect a PSR-3 object, _not_ a Monolog logger.
+As you can see, we overwrote the `$logger` variable passed to our callback with a new logger. This will still work fine with Akeeba Panopticon because all of its log consumers expect a PSR-3 object, _not_ a Monolog object.
