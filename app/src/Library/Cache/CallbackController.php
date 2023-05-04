@@ -33,6 +33,7 @@ class CallbackController
 	 * @param   callable       $callback      The callback to call if there is no cached data.
 	 * @param   array          $args          The arguments to the callback.
 	 * @param   string|null    $id            The cache key. NULL to determine automatically.
+	 * @param   string|null    $poolName      The name of the cache pool. NULL to use the 'system' pool.
 	 * @param   string|null    $namespace     The cache namespace. Not all cache pools support namespaces.
 	 * @param   array          $tags          The cache item's tags. Only used when the cache item doesn't already
 	 *                                        exist.
@@ -47,14 +48,26 @@ class CallbackController
 		array                            $args = [],
 		?string                          $id = null,
 		\DateInterval|\DateTime|int|null $expiration = null,
+		?string                          $poolName = null,
 		?string                          $namespace = null,
 		array                            $tags = [],
 		?callable                        $serializer = null,
 		?callable                        $deserializer = null
 	)
 	{
-		$id   ??= $this->makeId($callback, $args);
-		$pool = $this->container->cache;
+		$id ??= $this->makeId($callback, $args);
+
+		try
+		{
+			$pool = $poolName
+				? $this->container->cacheFactory->pool($poolName)
+				: $this->container->cacheFactory->pool();
+		}
+		catch (\Exception $e)
+		{
+			$pool = $this->container->cacheFactory->pool();
+			$namespace = $poolName . (empty($namespace) ? '' : "|$namespace");
+		}
 
 		if ($namespace && $pool instanceof HierarchicalPoolInterface)
 		{
@@ -64,7 +77,7 @@ class CallbackController
 		elseif (!empty($namespace))
 		{
 			// Pseudo-namespacing...
-			$id = md5($namespace) . '_' . $id;
+			$id = sha1($namespace. '_' . $id);
 		}
 
 		if ($pool->hasItem($id))
@@ -121,7 +134,7 @@ class CallbackController
 		{
 			$hash = spl_object_hash($callback);
 
-			return md5($hash . serialize([$args]));
+			return sha1($hash . serialize([$args]));
 		}
 
 		if (\is_array($callback) && \is_object($callback[0]))

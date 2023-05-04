@@ -61,15 +61,11 @@ class HttpFactory
 		if ($cache)
 		{
 			$cachePool = new Psr6CacheStorage(
-				Factory::getContainer()->cache
+				Factory::getContainer()->cacheFactory->pool('http')
 			);
-			$cacheStrategy = new PrivateCacheStrategy($cachePool);
-			$stack->push(new CacheMiddleware($cacheStrategy), 'cache');
 
 			if ($cacheTTL !== null && $cacheTTL > 0)
 			{
-				$cachePool = new FlysystemStorage(new Local(APATH_CACHE));
-
 				$greedyCacheStrategy = new GreedyCacheStrategy(
 					$cachePool,
 					$cacheTTL,
@@ -79,6 +75,11 @@ class HttpFactory
 				);
 
 				$stack->push(new CacheMiddleware($greedyCacheStrategy), 'greedy-cache');
+			}
+			else
+			{
+				$cacheStrategy = new PrivateCacheStrategy($cachePool);
+				$stack->push(new CacheMiddleware($cacheStrategy), 'cache');
 			}
 
 		}

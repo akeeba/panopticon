@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Application\Configuration;
+use Akeeba\Panopticon\Library\Cache\CacheFactory;
 use Akeeba\Panopticon\Library\Http\HttpFactory;
 use Akeeba\Panopticon\Library\Logger\LoggerFactoryService;
 use Akeeba\Panopticon\Library\Task\Registry as TaskRegistry;
@@ -23,7 +24,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * @property-read Configuration                             $appConfig     The application configuration registry
- * @property-read CacheItemPoolInterface|CacheItemInterface $cache         The application, file-based cache pool
+ * @property-read CacheFactory                              $cacheFactory  The cache pool factory
  * @property-read HttpFactory                               $httpFactory   A factory for Guzzle HTTP client instances
  * @property-read LoggerFactoryService                      $loggerFactory A factory for LoggerInterface instances
  * @property-read LoggerInterface                           $logger        The main application logger
@@ -42,12 +43,8 @@ class Container extends AWFContainer
 			return new Configuration($c);
 		};
 
-		$values['cache'] ??= function (Container $c) {
-			$filesystemAdapter = new Local(APATH_CACHE);
-			$filesystem        = new Filesystem($filesystemAdapter);
-			$pool              = new FilesystemCachePool($filesystem, '');
-
-			return $pool;
+		$values['cacheFactory'] ??= function (Container $c) {
+			return new CacheFactory();
 		};
 
 		$values['httpFactory'] ??= function (Container $c) {

@@ -115,7 +115,7 @@ class PhpVersion
 		return $cacheController->get(
 			fn() => $this->realGetPhpEolInformation(),
 			expiration: $this->expiration,
-			namespace: 'php_eol_information',
+			poolName: 'php_net_version_info',
 		);
 	}
 
