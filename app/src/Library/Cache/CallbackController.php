@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
+use Psr\Cache\CacheException;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -31,20 +32,30 @@ class CallbackController
 	}
 
 	/**
-	 * Get cached data or execute the callback and cache the result
+	 * Get cached data or execute the callback and cache the result.
 	 *
-	 * @param   callable       $callback      The callback to call if there is no cached data.
-	 * @param   array          $args          The arguments to the callback.
-	 * @param   string|null    $id            The cache key. NULL to determine automatically.
-	 * @param   string|null    $poolName      The name of the cache pool. NULL to use the 'system' pool.
-	 * @param   string|null    $namespace     The cache namespace. Not all cache pools support namespaces.
-	 * @param   array          $tags          The cache item's tags. Only used when the cache item doesn't already
-	 *                                        exist.
-	 * @param   callable|null  $serializer    Optional. Callable to serialise the callback's result.
-	 * @param   callable|null  $deserializer  Optional. Callable to deserialise the cached data.
+	 * In the default case, where a Symfony Cache adapter is used, this is a simple proxy to the Symfony Cache
+	 * contract's  \Symfony\Contracts\Cache\CacheInterface::get() method. When a generic PSR-6 cache pool object is
+	 * used we implement a similar approach, **WITHOUT** cache stampede protection.
+	 *
+	 * Using a serializer and deserializer is not ideal. It's best to use a Marshaller in the Symfony Cache
+	 * contract object instead. However, this is only available for Symfony Cache objects, not generic PSR-6 cache
+	 * pools.
+	 *
+	 * @param   callable                          $callback      The callback to call if there is no cached data.
+	 * @param   array                             $args          The arguments to the callback.
+	 * @param   string|null                       $id            The cache key. NULL to determine automatically.
+	 * @param   \DateInterval|\DateTime|int|null  $expiration    Expiration date, or cache lifetime. NULL for global
+	 *                                                           default. 0 to force re-caching regardless of
+	 *                                                           expiration. Integers express seconds.
+	 * @param   array                             $tags          The cache item's tags. Only used when the cache item
+	 *                                                           doesn't already exist.
+	 * @param   callable|null                     $serializer    Optional. Callable to serialise the callback's result.
+	 * @param   callable|null                     $deserializer  Optional. Callable to deserialise the cached data.
 	 *
 	 * @return  mixed
-	 * @throws  InvalidArgumentException
+	 * @throws InvalidArgumentException
+	 * @throws CacheException
 	 */
 	public function get(
 		callable                         $callback,
@@ -56,19 +67,28 @@ class CallbackController
 		?callable                        $deserializer = null
 	)
 	{
-		$id ??= $this->makeId($callback, $args);
+		$id         ??= $this->makeId($callback, $args);
+		$forceCache = false;
 
 		if (is_int($expiration))
 		{
-			$expiration = new \DateInterval(sprintf('PT%dS', $expiration));
+			if ($expiration === 0)
+			{
+				$forceCache = true;
+			}
+			else
+			{
+				$expiration = new \DateInterval(sprintf('PT%dS', $expiration));
+			}
 		}
 
 		if ($this->pool instanceof CacheInterface)
 		{
+			$beta = $forceCache ? INF : 0;
 			// Prefer Symfony Cache Contracts if supported by the pool; they implement stampede prevention.
 			$data = $this->pool->get(
-				$id,
-				function (ItemInterface $item) use ($callback, $args, $serializer, $tags, $expiration) {
+				key: $id,
+				callback: function (ItemInterface $item) use ($callback, $args, $serializer, $tags, $expiration) {
 					$data = call_user_func_array($callback, $args);
 
 					// This is icky. Using a Marshaller is preferable, but Marshallers only apply to Symfony Cache.
@@ -92,13 +112,14 @@ class CallbackController
 					}
 
 					return $data;
-				}
+				},
+				beta: $beta,
 			);
 		}
 		else
 		{
 			// Otherwise, we have a standard PSR-6 cache pool.
-			if ($this->pool->hasItem($id))
+			if (!$forceCache && $this->pool->hasItem($id))
 			{
 				$data = $this->pool->getItem($id)->get();
 			}

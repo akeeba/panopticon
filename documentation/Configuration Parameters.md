@@ -13,15 +13,6 @@ Default: 1440
 
 UOM: Minutes
 
-### `caching_time`
-**Cache Time**
-
-How long to cache the collected site information and other generated data.
-
-Default: 60
-
-UOM: Minutes
-
 ### `timezone`
 **Time Zone**
 
@@ -54,6 +45,19 @@ _Hidden option._
 
 This is automatically set at the end of the initial installation, after the CRON job configuration has been confirmed
 (or the user chose to skip it).
+
+## Caching
+
+### `caching_time`
+**Cache Time**
+
+How long to cache the collected site information and other generated data.
+
+Default: 60
+
+UOM: Minutes
+
+Range: 1 to 527040 (one minute to one year)
 
 ## Display preferences
 
