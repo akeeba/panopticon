@@ -36,6 +36,12 @@ Do not let automatic menu item creation
 * In the future, we can choose whether to schedule a backup before the update
   * This requires making pre-requisite tasks, or otherwise avoid duplicating the backup logic
 
+## Automatic generation of SBOM
+
+composer --global require cyclonedx/cyclonedx-php-composer
+
+CycloneDX:make-sbom --output-format=json --omit=dev --output-reproducible --validate --mc-version=0.0.1 --output-file=app/vendor/sbom.json
+
 # Integrations
 
 ## Akeeba Backup
