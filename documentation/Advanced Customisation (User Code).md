@@ -1,14 +1,16 @@
-# The `user_code` folder
+# Advanced Customisation (User Code) 
 
-Here you can place code specific to your installation, to further customise Akeeba Panopticon to your liking.
+You can customise Akeeba Panopticon with your own executable PHP code _without_ modifying the core application itself. Modifying the core application is a discouraged practice colloquially referred to as “core hacking”.
 
-## Your `bootstrap.php` file
+All of your code must be placed in the `user_code` folder, under the main directory of Akeeba Panopticon.
 
-The file `bootstrap.php` in this folder will be loaded at the end of the regular application bootstrap code found in `includes/bootstrap.php`. The variable `$config` will be defined in it, an instance of the `AConfig` configuration class (in other words, your Panopticon installation's `config.php`).
+## The `bootstrap.php` file
 
-**IMPORTANT!** The `bootstrap.php` file in this folder will _only_ be included if you have finished configuring Akeeba Panopticon, i.e. there is a `config.php` file at the root folder of your installation.
+The file `bootstrap.php` in the `user_code` folder will be loaded at the end of the regular application bootstrap code found in `includes/bootstrap.php`. The variable `$config` will be defined in it, an instance of the `AConfig` configuration class (in other words, your Panopticon installation's `config.php`).
 
-**IMPORTANT!** The `bootstrap.php` file is loaded in _all_ execution contexts: web and CLI. Do not assume that you have a STDOUT / STDERR as these may not be available in the web context. Do not assume you can grab an HTML document and modify it as this will not work in the CLI context.
+**❗️IMPORTANT**: The `bootstrap.php` file in this folder will _only_ be included if you have finished configuring Akeeba Panopticon, i.e. there is a `config.php` file at the root folder of your installation.
+
+**❗️IMPORTANT**: The `bootstrap.php` file is loaded in _all_ execution contexts: web and CLI. Do not assume that you have a STDOUT / STDERR as these may not be available in the web context. Do not assume you can grab an HTML document and modify it as this will not work in the CLI context.
 
 ## What you can do with `user_code/bootstrap.php`
 

@@ -115,7 +115,7 @@ class Version
 
 	public function fullVersion(): string
 	{
-		$version = $this->getVersion();
+		$version = $this->version;
 
 		if (!$this->hasTag())
 		{
@@ -143,6 +143,11 @@ class Version
 		}
 
 		return implode('.', $keep);
+	}
+
+	public function versionFamily(): string
+	{
+		return implode('.', [$this->major(), $this->minor()]);
 	}
 
 	public function tag(): string

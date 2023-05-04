@@ -7,9 +7,18 @@ The following are the known application configuration options which can be set i
 ### `session_timeout`
 **Session Timeout**
 
-How long is a login session valid for
+How long is a login session valid for.
 
 Default: 1440
+
+UOM: Minutes
+
+### `caching_time`
+**Cache Time**
+
+How long to cache the collected site information and other generated data.
+
+Default: 60
 
 UOM: Minutes
 

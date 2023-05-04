@@ -42,14 +42,19 @@
 
         <!-- Exclude cache, log, tmp files -->
         <exclude name="cache/**" />
-        <exclude name="log/**" />
-        <exclude name="tmp/**" />
         <include name="cache/.htaccess" />
         <include name="cache/web.config" />
+
+        <exclude name="log/**" />
         <include name="log/.htaccess" />
         <include name="log/web.config" />
+
+        <exclude name="tmp/**" />
         <include name="tmp/.htaccess" />
         <include name="tmp/web.config" />
+
+        <exclude name="user_code/**" />
+        <include name="user_code/.gitkeep" />
 
         <!-- Clean up Composer vendor folder -->
         <exclude name="vendor/akeeba/awf/src/Database/Driver/None.php" />
@@ -83,18 +88,33 @@
 
         <exclude name="vendor/bin/**" />
 
-        <exclude name="vendor/akeeba/delight-im/alphabets/tests/**" />
-        <exclude name="vendor/akeeba/delight-im/alphabets/.editorconfig" />
-        <exclude name="vendor/akeeba/delight-im/alphabets/.gitignore" />
-        <exclude name="vendor/akeeba/delight-im/alphabets/composer.lock" />
+        <exclude name="vendor/cache/hierarchical-cache/Changelog.md" />
 
-        <exclude name="vendor/akeeba/delight-im/random/tests/**" />
-        <exclude name="vendor/akeeba/delight-im/random/.editorconfig" />
-        <exclude name="vendor/akeeba/delight-im/random/.gitignore" />
-        <exclude name="vendor/akeeba/delight-im/random/composer.lock" />
+        <exclude name="vendor/cache/namespaced-cache/Changelog.md" />
+
+        <exclude name="vendor/cache/tag-interop/.github/**" />
+        <exclude name="vendor/cache/tag-interop/.gitignore" />
+        <exclude name="vendor/cache/tag-interop/.travis.yml" />
+
+        <exclude name="vendor/delight-im/alphabets/tests/**" />
+        <exclude name="vendor/delight-im/alphabets/.editorconfig" />
+        <exclude name="vendor/delight-im/alphabets/.gitignore" />
+        <exclude name="vendor/delight-im/alphabets/composer.lock" />
+
+        <exclude name="vendor/delight-im/random/tests/**" />
+        <exclude name="vendor/delight-im/random/.editorconfig" />
+        <exclude name="vendor/delight-im/random/.gitignore" />
+        <exclude name="vendor/delight-im/random/composer.lock" />
 
         <exclude name="vendor/dragonmantank/cron-expression/CHAMGELOG*" />
         <exclude name="vendor/dragonmantank/cron-expression/phpstan*" />
+
+        <exclude name="vendor/guzzlehttp/guzzle/CHANGELOG.md" />
+        <exclude name="vendor/guzzlehttp/guzzle/UPGRADING.md" />
+
+        <exclude name="vendor/guzzlehttp/promises/CHANGELOG.md" />
+
+        <exclude name="vendor/guzzlehttp/psr-7/CHANGELOG.md" />
 
         <exclude name="vendor/joomla/data/.editorconfig" />
         <exclude name="vendor/joomla/data/ruleset.xml" />
@@ -132,21 +152,40 @@
         <exclude name="vendor/joomla/uri/ruleset*" />
         <exclude name="vendor/joomla/uri/SECURITY.md" />
 
-        <!--
-        <exclude name="vendor/nelexa/zip/.php-cs-fixed.php" />
-        <exclude name="vendor/nelexa/zip/.phpstorm.meta.php" />
-        <exclude name="vendor/nelexa/zip/README.RU.md" />
-        -->
+        <exclude name="vendor/league/flysystem/CODE_OF_CONDUCT.md" />
+        <exclude name="vendor/league/flysystem/deprecations.md" />
+        <exclude name="vendor/league/flysystem/SECURITY.md" />
+
+        <exclude name="vendor/league/mime-type-detection/CHANGELOG.md" />
+
+        <exclude name="vendor/phpgt/cssxpath/.github/**" />
+        <exclude name="vendor/phpgt/cssxpath/test/**" />
+        <exclude name="vendor/phpgt/cssxpath/.gitignore" />
+        <exclude name="vendor/phpgt/cssxpath/.scrutinizer" />
+        <exclude name="vendor/phpgt/cssxpath/CONTRIBUTING.md" />
+
+        <exclude name="vendor/phpgt/dom/.github/**" />
+        <exclude name="vendor/phpgt/dom/test/**" />
+        <exclude name="vendor/phpgt/dom/.gitignore" />
+        <exclude name="vendor/phpgt/dom/.scrutinizer" />
+        <exclude name="vendor/phpgt/dom/CONTRIBUTING.md" />
+        <exclude name="vendor/phpgt/dom/logo.png" />
+        <exclude name="vendor/phpgt/dom/phpcs.xml" />
+        <exclude name="vendor/phpgt/dom/phpmd.xml" />
+
+        <exclude name="vendor/phpgt/propfunc/.github/**" />
+        <exclude name="vendor/phpgt/propfunc/test/**" />
+        <exclude name="vendor/phpgt/propfunc/.gitignore" />
+        <exclude name="vendor/phpgt/propfunc/.scrutinizer" />
+
+        <exclude name="vendor/psr/cache/CHANGELOG.md" />
 
         <exclude name="vendor/psr/http-factory/.gitignore" />
         <exclude name="vendor/psr/http-factory/.pullapprove.yml" />
 
-        <exclude name="vendor/symfony/deprecation-contracts/.gitignore" />
+        <exclude name="vendor/psr/simple-cache/.editorconfig" />
 
-        <!--
-        <exclude name="vendor/wapmorgan/unified-archive/bin/**" />
-        <exclude name="vendor/wapmorgan/unified-archive/docs/**" />
-        -->
+        <exclude name="vendor/symfony/deprecation-contracts/.gitignore" />
     </fileset>
 
     <!--

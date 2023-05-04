@@ -37,6 +37,23 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/delight-im/alphabets" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/delight-im/random" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/cache/adapter-common" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/cache/filesystem-adapter" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/cache/hierarchical-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/cache/namespaced-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/cache/tag-interop" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phpgt/cssxpath" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phpgt/dom" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phpgt/propfunc" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/kevinrob/guzzle-cache-middleware" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/ralouphie/getallheaders" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
