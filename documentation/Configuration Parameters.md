@@ -59,6 +59,34 @@ UOM: Minutes
 
 Range: 1 to 527040 (one minute to one year)
 
+### `cache_adapter`
+**Cache Adapter**
+
+Where will the cached items be stored?
+
+Default: filesystem
+
+Valid settings:
+* `filesystem` Files in the `cache` directory. Safest and slowest option.
+* `linuxfs` Files and symlinks in the `cache` directory. Only usable on Linux and macOS, as long as PHP can create symlinks.
+* `db` Uses the database table `#__cache` in your database (it's created on the fly). If your `dbdriver` configuration option is anything other than `pdomysql` you will have two or more concurrent database connections to your database server per execution thread which might be problematic for some servers.
+* `memcached` Use a memcached server. Requires the PHP `memcached` extension. Note that Panopticon only supports using a single server. If you want to use a cluster you'll have to override the `cacheFactory` service in the container using user-provided code. 
+* `redis` Use a Redis server. Requires the PHP `redis` extension. Note that Panopticon only supports using a single server. If you want to use a cluster you'll have to override the `cacheFactory` service in the container using user-provided code.
+
+### `caching_redis_dsn`
+**Redis Data Source Name (DSN)**
+
+How to connect to the Redis server. See [the Symfony Cache Redis adapter documentation](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection). Required when `cache_adapter` is set to `redis`.
+
+Default: (none)
+
+### `caching_memcached_dsn`
+**Memcached Data Source Name (DSN)**
+
+How to connect to the Memcached server. See [the Symfony Cache Memcached adapter documentation](https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection). Required when `cache_adapter` is set to `memcached`.
+
+Default: (none)
+
 ## Display preferences
 
 ### `darkmode`

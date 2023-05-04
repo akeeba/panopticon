@@ -9,8 +9,14 @@ namespace Akeeba\Panopticon\Library\Cache;
 
 
 use Akeeba\Panopticon\Container;
-use Psr\Cache\CacheItemPoolInterface;
+use Awf\Database\Driver;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
+use Symfony\Component\Cache\Adapter\MemcachedAdapter;
+use Symfony\Component\Cache\Adapter\PdoAdapter;
+use Symfony\Component\Cache\Adapter\RedisAdapter;
+use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Contracts\Cache\CacheInterface;
 
 defined('AKEEBA') || die;
 
@@ -22,7 +28,7 @@ class CacheFactory
 	{
 	}
 
-	public function pool($poolName = 'system'): CacheItemPoolInterface
+	public function pool($poolName = 'system'): CacheInterface
 	{
 		if (!$this->isValid($poolName))
 		{
@@ -34,11 +40,79 @@ class CacheFactory
 			return self::$instances[$poolName];
 		}
 
-		self::$instances[$poolName] = new FilesystemAdapter(
-			$poolName,
-			(int) $this->container->appConfig->get('caching_time', 60) * 60,
-			APATH_CACHE
-		);
+		$appConfig          = $this->container->appConfig;
+		$cacheAdapter       = $appConfig->get('cache_adapter', 'filesystem');
+		$cacheTimeInSeconds = (int) $appConfig->get('caching_time', 60) * 60;
+
+		switch ($cacheAdapter)
+		{
+			case 'filesystem':
+			default:
+				self::$instances[$poolName] = new TagAwareAdapter(
+					new FilesystemAdapter(
+						namespace: $poolName,
+						defaultLifetime: $cacheTimeInSeconds,
+						directory: APATH_CACHE
+					)
+				);
+				break;
+
+			case 'linuxfs':
+				self::$instances[$poolName] = new FilesystemTagAwareAdapter(
+					namespace: $poolName,
+					defaultLifetime: $cacheTimeInSeconds,
+					directory: APATH_CACHE
+				);
+				break;
+
+			case 'redis':
+				self::$instances[$poolName] = new RedisAdapter(
+					redis: RedisAdapter::createConnection($appConfig->get('caching_redis_dsn', '')),
+					namespace: $poolName,
+					defaultLifetime: $cacheTimeInSeconds,
+				);
+				break;
+
+			case 'memcached':
+				self::$instances[$poolName] = new MemcachedAdapter(
+					client: MemcachedAdapter::createConnection($appConfig->get('caching_memcached_dsn', '')),
+					namespace: $poolName,
+					defaultLifetime: $cacheTimeInSeconds,
+				);
+				break;
+
+			case 'db':
+				$driver = $appConfig->get('dbdriver', 'mysql');
+
+				if ($driver === 'pdomysql')
+				{
+					$db = $this->container->db;
+				}
+				else
+				{
+					$options = [
+						'driver'   => 'pdomysql',
+						'database' => $appConfig->get('dbname'),
+						'select'   => $appConfig->get('dbselect', true),
+						'host'     => $appConfig->get('dbhost'),
+						'user'     => $appConfig->get('dbuser'),
+						'password' => $appConfig->get('dbpass'),
+						'prefix'   => $appConfig->get('prefix'),
+						'ssl'      => [],
+					];
+
+					$db = Driver::getInstance($options);
+				}
+
+				self::$instances[$poolName] = new PdoAdapter(
+					connOrDsn: $db->getConnection(),
+					namespace: $poolName,
+					defaultLifetime: $cacheTimeInSeconds
+				);
+
+				break;
+		}
+
 
 		return self::$instances[$poolName];
 	}
@@ -69,7 +143,7 @@ class CacheFactory
 				[
 					'CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9',
 					'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9', 'STDIN', 'STDOUT',
-					'WEB.CONFIG'
+					'WEB.CONFIG',
 				],
 				fn(bool $carry, string $item) => $carry || str_starts_with(strtoupper($poolName), $item),
 				false
