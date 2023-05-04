@@ -15,20 +15,15 @@ use Akeeba\Panopticon\Library\Http\HttpFactory;
 use Akeeba\Panopticon\Library\Logger\LoggerFactoryService;
 use Akeeba\Panopticon\Library\Task\Registry as TaskRegistry;
 use Awf\Container\Container as AWFContainer;
-use Cache\Adapter\Filesystem\FilesystemCachePool;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Filesystem;
-use Psr\Cache\CacheItemInterface;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @property-read Configuration                             $appConfig     The application configuration registry
- * @property-read CacheFactory                              $cacheFactory  The cache pool factory
- * @property-read HttpFactory                               $httpFactory   A factory for Guzzle HTTP client instances
- * @property-read LoggerFactoryService                      $loggerFactory A factory for LoggerInterface instances
- * @property-read LoggerInterface                           $logger        The main application logger
- * @property-read TaskRegistry                              $taskRegistry  The task callback registry
+ * @property-read Configuration        $appConfig     The application configuration registry
+ * @property-read CacheFactory         $cacheFactory  The cache pool factory
+ * @property-read HttpFactory          $httpFactory   A factory for Guzzle HTTP client instances
+ * @property-read LoggerFactoryService $loggerFactory A factory for LoggerInterface instances
+ * @property-read LoggerInterface      $logger        The main application logger
+ * @property-read TaskRegistry         $taskRegistry  The task callback registry
  */
 class Container extends AWFContainer
 {
