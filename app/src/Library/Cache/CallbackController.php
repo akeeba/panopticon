@@ -10,10 +10,11 @@ namespace Akeeba\Panopticon\Library\Cache;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
-use Cache\Hierarchy\HierarchicalPoolInterface;
-use Cache\Namespaced\NamespacedCachePool;
-use Cache\TagInterop\TaggableCacheItemInterface;
+use Akeeba\Panopticon\Factory;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * Callback cache controller.
@@ -23,8 +24,10 @@ use Psr\Cache\InvalidArgumentException;
  */
 class CallbackController
 {
-	public function __construct(private Container $container)
+	public function __construct(private ?Container $container = null, private CacheInterface|CacheItemPoolInterface|null $pool = null)
 	{
+		$this->container ??= Factory::getContainer();
+		$this->pool      ??= $this->container->cacheFactory->pool();
 	}
 
 	/**
@@ -48,8 +51,6 @@ class CallbackController
 		array                            $args = [],
 		?string                          $id = null,
 		\DateInterval|\DateTime|int|null $expiration = null,
-		?string                          $poolName = null,
-		?string                          $namespace = null,
 		array                            $tags = [],
 		?callable                        $serializer = null,
 		?callable                        $deserializer = null
@@ -57,68 +58,92 @@ class CallbackController
 	{
 		$id ??= $this->makeId($callback, $args);
 
-		try
+		if (is_int($expiration))
 		{
-			$pool = $poolName
-				? $this->container->cacheFactory->pool($poolName)
-				: $this->container->cacheFactory->pool();
-		}
-		catch (\Exception $e)
-		{
-			$pool = $this->container->cacheFactory->pool();
-			$namespace = $poolName . (empty($namespace) ? '' : "|$namespace");
+			$expiration = new \DateInterval(sprintf('PT%dS', $expiration));
 		}
 
-		if ($namespace && $pool instanceof HierarchicalPoolInterface)
+		if ($this->pool instanceof CacheInterface)
 		{
-			// Forward compatibility; the default file cache doesn't support hierarchy, therefore NamespacedCachePool
-			$pool = new NamespacedCachePool($pool, $namespace);
-		}
-		elseif (!empty($namespace))
-		{
-			// Pseudo-namespacing...
-			$id = sha1($namespace. '_' . $id);
-		}
+			// Prefer Symfony Cache Contracts if supported by the pool; they implement stampede prevention.
+			$data = $this->pool->get(
+				$id,
+				function (ItemInterface $item) use ($callback, $args, $serializer, $tags, $expiration) {
+					$data = call_user_func_array($callback, $args);
 
-		if ($pool->hasItem($id))
-		{
-			$data = $pool->getItem($id)->get();
+					// This is icky. Using a Marshaller is preferable, but Marshallers only apply to Symfony Cache.
+					if (is_callable($serializer))
+					{
+						$data = call_user_func($serializer, $data);
+					}
+
+					if (!empty($tags))
+					{
+						$item->tag($tags);
+					}
+
+					if ($expiration instanceof \DateInterval)
+					{
+						$item->expiresAfter($expiration);
+					}
+					elseif ($expiration instanceof \DateTime)
+					{
+						$item->expiresAt($expiration);
+					}
+
+					return $data;
+				}
+			);
 		}
 		else
 		{
-			$data = call_user_func_array($callback, $args);
-
-			if (is_callable($serializer))
+			// Otherwise, we have a standard PSR-6 cache pool.
+			if ($this->pool->hasItem($id))
 			{
-				$data = call_user_func($serializer, $data);
+				$data = $this->pool->getItem($id)->get();
 			}
-
-			$item = $pool->getItem($id)->set($data);
-
-			if (!empty($tags) && $item instanceof TaggableCacheItemInterface)
+			else
 			{
-				$item->setTags($tags);
-			}
+				/**
+				 * Standard PSR-6 cache pools don't have a default expiration time implementation. Therefore, we have to
+				 * ensure manually that a default expiration time is implemented. Otherwise, items without an explicit
+				 * expiration time / lifetime would end up being cached forever.
+				 */
+				$expiration ??= new \DateInterval(sprintf('PT%dM', $this->container->appConfig->get('caching_time', '60')));
 
-			$expiration ??= new \DateInterval(sprintf('PT%dM', $this->container->appConfig->get('caching_time', '60')));
+				$data = call_user_func_array($callback, $args);
 
-			if (is_int($expiration))
-			{
-				$expiration = new \DateInterval(sprintf('PT%dS', $expiration));
-				$item->expiresAfter($expiration);
-			}
-			elseif ($expiration instanceof \DateInterval)
-			{
-				$item->expiresAfter($expiration);
-			}
-			elseif ($expiration instanceof \DateTime)
-			{
-				$item->expiresAt($expiration);
-			}
+				// This is icky. Using a Marshaller is preferable, but Marshallers only apply to Symfony Cache.
+				if (is_callable($serializer))
+				{
+					$data = call_user_func($serializer, $data);
+				}
 
-			$pool->save($item);
+				$item = $this->pool->getItem($id)->set($data);
+
+				/**
+				 * Yeah, tagging is only available when using Symfony Cache. If you sub it out for another PSR-6 cache
+				 * pool you're on your own.
+				 */
+				if (!empty($tags) && $item instanceof \Symfony\Contracts\Cache\ItemInterface)
+				{
+					$item->tag($tags);
+				}
+
+				if ($expiration instanceof \DateInterval)
+				{
+					$item->expiresAfter($expiration);
+				}
+				elseif ($expiration instanceof \DateTime)
+				{
+					$item->expiresAt($expiration);
+				}
+
+				$this->pool->save($item);
+			}
 		}
 
+		// This is icky. Using a Marshaller is preferable, but Marshallers only apply to Symfony Cache.
 		if (is_callable($deserializer))
 		{
 			$data = call_user_func($deserializer, $data);

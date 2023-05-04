@@ -44,7 +44,7 @@ class Container extends AWFContainer
 		};
 
 		$values['cacheFactory'] ??= function (Container $c) {
-			return new CacheFactory();
+			return new CacheFactory($c);
 		};
 
 		$values['httpFactory'] ??= function (Container $c) {

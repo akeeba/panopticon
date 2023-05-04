@@ -48,20 +48,15 @@
       <path value="$PROJECT_DIR$/app/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/app/vendor/delight-im/alphabets" />
       <path value="$PROJECT_DIR$/app/vendor/delight-im/random" />
-      <path value="$PROJECT_DIR$/app/vendor/psr/simple-cache" />
       <path value="$PROJECT_DIR$/app/vendor/psr/cache" />
-      <path value="$PROJECT_DIR$/app/vendor/cache/filesystem-adapter" />
-      <path value="$PROJECT_DIR$/app/vendor/cache/tag-interop" />
-      <path value="$PROJECT_DIR$/app/vendor/cache/adapter-common" />
-      <path value="$PROJECT_DIR$/app/vendor/league/flysystem" />
-      <path value="$PROJECT_DIR$/app/vendor/league/mime-type-detection" />
-      <path value="$PROJECT_DIR$/app/vendor/cache/namespaced-cache" />
-      <path value="$PROJECT_DIR$/app/vendor/cache/hierarchical-cache" />
       <path value="$PROJECT_DIR$/app/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/app/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/app/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/app/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/app/vendor/kevinrob/guzzle-cache-middleware" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/cache" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

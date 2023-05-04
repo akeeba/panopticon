@@ -110,12 +110,14 @@ class PhpVersion
 
 	public function getPhpEolInformation(): array
 	{
-		$cacheController = new CallbackController($this->container);
+		$cacheController = new CallbackController(
+			container: $this->container,
+			pool: $this->container->cacheFactory->pool('php_net_version_info'),
+		);
 
 		return $cacheController->get(
 			fn() => $this->realGetPhpEolInformation(),
 			expiration: $this->expiration,
-			poolName: 'php_net_version_info',
 		);
 	}
 

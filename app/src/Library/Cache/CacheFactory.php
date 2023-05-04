@@ -8,11 +8,9 @@
 namespace Akeeba\Panopticon\Library\Cache;
 
 
-use Cache\Adapter\Filesystem\FilesystemCachePool;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Filesystem;
-use Psr\Cache\CacheItemInterface;
+use Akeeba\Panopticon\Container;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 defined('AKEEBA') || die;
 
@@ -20,7 +18,11 @@ class CacheFactory
 {
 	private static $instances = [];
 
-	public function pool($poolName = 'system'): CacheItemPoolInterface|CacheItemInterface
+	public function __construct(private Container $container)
+	{
+	}
+
+	public function pool($poolName = 'system'): CacheItemPoolInterface
 	{
 		if (!$this->isValid($poolName))
 		{
@@ -32,10 +34,11 @@ class CacheFactory
 			return self::$instances[$poolName];
 		}
 
-		$filesystemAdapter = new Local(APATH_CACHE);
-		$filesystem        = new Filesystem($filesystemAdapter);
-
-		self::$instances[$poolName] = new FilesystemCachePool($filesystem, $poolName);
+		self::$instances[$poolName] = new FilesystemAdapter(
+			$poolName,
+			(int) $this->container->appConfig->get('caching_time', 60) * 60,
+			APATH_CACHE
+		);
 
 		return self::$instances[$poolName];
 	}

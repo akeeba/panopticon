@@ -88,14 +88,6 @@
 
         <exclude name="vendor/bin/**" />
 
-        <exclude name="vendor/cache/hierarchical-cache/Changelog.md" />
-
-        <exclude name="vendor/cache/namespaced-cache/Changelog.md" />
-
-        <exclude name="vendor/cache/tag-interop/.github/**" />
-        <exclude name="vendor/cache/tag-interop/.gitignore" />
-        <exclude name="vendor/cache/tag-interop/.travis.yml" />
-
         <exclude name="vendor/delight-im/alphabets/tests/**" />
         <exclude name="vendor/delight-im/alphabets/.editorconfig" />
         <exclude name="vendor/delight-im/alphabets/.gitignore" />
@@ -152,12 +144,6 @@
         <exclude name="vendor/joomla/uri/ruleset*" />
         <exclude name="vendor/joomla/uri/SECURITY.md" />
 
-        <exclude name="vendor/league/flysystem/CODE_OF_CONDUCT.md" />
-        <exclude name="vendor/league/flysystem/deprecations.md" />
-        <exclude name="vendor/league/flysystem/SECURITY.md" />
-
-        <exclude name="vendor/league/mime-type-detection/CHANGELOG.md" />
-
         <exclude name="vendor/phpgt/cssxpath/.github/**" />
         <exclude name="vendor/phpgt/cssxpath/test/**" />
         <exclude name="vendor/phpgt/cssxpath/.gitignore" />
@@ -183,9 +169,13 @@
         <exclude name="vendor/psr/http-factory/.gitignore" />
         <exclude name="vendor/psr/http-factory/.pullapprove.yml" />
 
-        <exclude name="vendor/psr/simple-cache/.editorconfig" />
+        <exclude name="vendor/symfony/cache-contracts/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/cache-contracts/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/deprecation-contracts/.gitignore" />
+
+        <exclude name="vendor/symfony/var-exporter/CHANGELOG.md" />
     </fileset>
 
     <!--

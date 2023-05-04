@@ -33,15 +33,14 @@
 		"composer/ca-bundle": "^1.3.4",
 		"delight-im/random": "^1.0",
 		"dragonmantank/cron-expression": "^3.3.2",
+		"guzzlehttp/guzzle": "^7.5",
+		"kevinrob/guzzle-cache-middleware": "^4.0",
 		"mcrumley/php-complexify": "^0.4.1",
 		"monolog/monolog": "^3.3.1",
-		"symfony/console": "^6.2.7",
-		"symfony/error-handler": "^5.2",
 		"phpgt/dom": "^4.1.2",
-		"cache/filesystem-adapter": "^1.2.0",
-		"cache/namespaced-cache": "^1.2.0",
-		"guzzlehttp/guzzle": "^7.5",
-		"kevinrob/guzzle-cache-middleware": "^4.0"
+		"symfony/cache": "^6.2",
+		"symfony/console": "^6.2.7",
+		"symfony/error-handler": "^5.2"
 	},
 	"suggest": {
 		"ext-pdo": "*",
