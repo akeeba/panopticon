@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Application\Configuration;
 use Akeeba\Panopticon\Library\Cache\CacheFactory;
 use Akeeba\Panopticon\Library\Http\HttpFactory;
 use Akeeba\Panopticon\Library\Logger\LoggerFactoryService;
+use Akeeba\Panopticon\Library\Queue\QueueFactory;
 use Akeeba\Panopticon\Library\Task\Registry as TaskRegistry;
 use Awf\Container\Container as AWFContainer;
 use Psr\Log\LoggerInterface;
@@ -23,6 +24,7 @@ use Psr\Log\LoggerInterface;
  * @property-read HttpFactory          $httpFactory   A factory for Guzzle HTTP client instances
  * @property-read LoggerFactoryService $loggerFactory A factory for LoggerInterface instances
  * @property-read LoggerInterface      $logger        The main application logger
+ * @property-read QueueFactory         $queueFactory  The queue factory service
  * @property-read TaskRegistry         $taskRegistry  The task callback registry
  */
 class Container extends AWFContainer
@@ -55,6 +57,10 @@ class Container extends AWFContainer
 		};
 
 		$values['logger'] ??= fn(Container $c) => $c->loggerFactory->get('panopticon');
+
+		$values['queueFactory'] ??= function (Container $c) {
+			return new QueueFactory($c);
+		};
 
 		parent::__construct($values);
 	}

@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `#__akeeba_common`
         </action>
 
         <action table="#__users" canfail="0">
-            <condition type="missing" value="" />
+            <condition type="missing" value=""/>
             <query><![CDATA[
 CREATE TABLE IF NOT EXISTS `#__users`
 (
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `#__users`
         </action>
 
         <action table="#__sites" canfail="0">
-            <condition type="missing" value="" />
+            <condition type="missing" value=""/>
             <query><![CDATA[
 CREATE TABLE IF NOT EXISTS `#__sites`
 (
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `#__sites`
         </action>
 
         <action table="#__tasks" canfail="0">
-            <condition type="missing" value="" />
+            <condition type="missing" value=""/>
             <query><![CDATA[
 CREATE TABLE IF NOT EXISTS `#__tasks`
 (
@@ -94,6 +94,19 @@ CREATE TABLE IF NOT EXISTS `#__tasks`
 )
     DEFAULT COLLATE `utf8mb4_unicode_ci`
     ENGINE = InnoDB;
+            ]]></query>
+        </action>
+
+        <action table="#__queue" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__queue`
+(
+    `id`    SERIAL,
+    `time`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `item`  JSON,
+) DEFAULT COLLATE `binary`
+  ENGINE = InnoDB;
             ]]></query>
         </action>
     </sql>
