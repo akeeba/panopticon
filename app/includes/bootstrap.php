@@ -15,7 +15,7 @@ if (version_compare(
 	if (defined('AKEEBA_PANOPTICON_CLI') || @is_file(APATH_THEMES . '/system/incompatible.html'))
 	{
 		echo sprintf(
-			"Akeeba Panopticon requires PHP %s or later. Your server is using PHP %s.". PHP_EOL,
+			"Akeeba Panopticon requires PHP %s or later. Your server is using PHP %s." . PHP_EOL,
 			AKEEBA_PANOPTICON_MINPHP, PHP_VERSION
 		);
 
@@ -36,13 +36,13 @@ if (defined('HHVM_VERSION'))
 {
 	if (defined('AKEEBA_PANOPTICON_CLI') || !@is_file(APATH_THEMES . '/system/hhvm.html'))
 	{
-		echo "Akeeba Panopticon is not compatible with HHVM. Please use PHP proper.". PHP_EOL;
+		echo "Akeeba Panopticon is not compatible with HHVM. Please use PHP proper." . PHP_EOL;
 
 		exit(254);
 	}
 
 	die(
-		file_get_contents(APATH_THEMES . '/system/hhvm.html')
+	file_get_contents(APATH_THEMES . '/system/hhvm.html')
 	);
 }
 
@@ -81,7 +81,7 @@ require_once APATH_ROOT . '/vendor/autoload.php';
  * Kids, don't try this at home. We are trained professionals with over two decades of experience doing weird things in
  * PHP code.
  */
-call_user_func(function() {
+call_user_func(function () {
 	// Loads the buffer class and registers the `awf://` stream handler.
 	class_exists(\Awf\Utils\Buffer::class);
 
@@ -91,13 +91,13 @@ call_user_func(function() {
 	$sourceCode = str_replace('$statusCode = 500;', <<< PHP
 \$statusCode = in_array(\$exception->getCode(), [400, 401, 403, 404, 406, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 425, 428, 429, 431, 451, 500, 501, 502, 503, 504, 505, 506, 510, 511]) ? \$exception->getCode() : 500;
 PHP
-, $sourceCode);
+		, $sourceCode);
 	$sourceCode = str_replace('$statusText = \'Whoops, looks like something went wrong.\';', '$statusText = $exception->getMessage();', $sourceCode);
 
 
 	$tempFile = 'awf://tmp/FlattenException.php';
 	file_put_contents($tempFile, $sourceCode);
-	require_once  $tempFile;
+	require_once $tempFile;
 	@unlink($tempFile);
 
 	// Override HtmlErrorRenderer
@@ -112,7 +112,7 @@ return \$this->include(self::\$template, [
             'currentContent' => \is_string(\$this->outputBuffer) ? \$this->outputBuffer : (\$this->outputBuffer)(),
 
 PHP
-, $sourceCode);
+		, $sourceCode);
 	$sourceCode = str_replace(
 		'include is_file(\dirname(__DIR__).\'/Resources/\'.$name) ? \dirname(__DIR__).\'/Resources/\'.$name : $name;',
 		<<<PHP
@@ -128,7 +128,7 @@ PHP,
 
 	$tempFile = 'awf://tmp/HtmlErrorRenderer.php';
 	file_put_contents($tempFile, $sourceCode);
-	require_once  $tempFile;
+	require_once $tempFile;
 	@unlink($tempFile);
 });
 
@@ -148,7 +148,7 @@ if (!file_exists(APATH_CONFIGURATION . '/config.php'))
 	$errorHandler->setExceptionHandler(
 		[
 			new \Symfony\Component\ErrorHandler\ErrorHandler(null, true),
-			'renderException'
+			'renderException',
 		]
 	);
 
@@ -163,7 +163,8 @@ ob_end_clean();
 $config = new AConfig();
 
 // Set the PHP error reporting
-switch ($config->error_reporting ?? 'default') {
+switch ($config->error_reporting ?? 'default')
+{
 	default:
 		break;
 
@@ -187,16 +188,18 @@ switch ($config->error_reporting ?? 'default') {
 }
 
 // Do we need to set up a more detailed error handler?
-if (!defined('AKEEBADEBUG')) {
+if (!defined('AKEEBADEBUG'))
+{
 	define('AKEEBADEBUG', $config->debug ?? false);
 }
 
-if (AKEEBADEBUG || ($config->error_reporting ?? 'default') === 'maximum') {
+if (AKEEBADEBUG || ($config->error_reporting ?? 'default') === 'maximum')
+{
 	// Set new Exception handler with debug enabled
 	$errorHandler->setExceptionHandler(
 		[
 			new \Symfony\Component\ErrorHandler\ErrorHandler(null, true),
-			'renderException'
+			'renderException',
 		]
 	);
 }
@@ -204,6 +207,45 @@ if (AKEEBADEBUG || ($config->error_reporting ?? 'default') === 'maximum') {
 // Tell AWF whether we are behind a proxy or load balancer
 \Awf\Utils\Ip::setAllowIpOverrides($config->behind_load_balancer ?? false);
 
+// Apply user-defined CA files
+
+// Note: This is necessary! tmpfile() will kill the temporary file as soon as this variable goes out of scope.
+$tempCaCert = null;
+
+call_user_func(function () use (&$tempCaCert) {
+	if (defined('AKEEBA_CACERT_PEM'))
+	{
+		return;
+	}
+
+	$defaultCacertPath  = \Composer\CaBundle\CaBundle::getBundledCaBundlePath();
+	$customFile         = APATH_USER_CODE . '/cacert.pem';
+	$customFileContents = (file_exists($customFile) && is_readable($customFile)) ? @file_get_contents($customFile) : null;
+	$customFileContents = $customFileContents ?: null;
+
+	if ($customFileContents === null)
+	{
+		define('AKEEBA_CACERT_PEM', $defaultCacertPath);
+
+		return;
+	}
+
+	$cacertContents = file_get_contents($defaultCacertPath);
+	$tempCaCert = tmpfile();
+	$tempCaCertPath = stream_get_meta_data($tempCaCert)['uri'];
+	fwrite($tempCaCert, $cacertContents);
+	fwrite($tempCaCert,"\n\n");
+	fwrite($tempCaCert,$customFileContents);
+
+	define('AKEEBA_CACERT_PEM', $tempCaCertPath);
+});
+
+if (is_resource($tempCaCert))
+{
+	echo stream_get_meta_data($tempCaCert)['uri'] . "\n";
+}
+
+// Load user code
 if (file_exists(APATH_USER_CODE . '/bootstrap.php'))
 {
 	require_once APATH_USER_CODE . '/bootstrap.php';

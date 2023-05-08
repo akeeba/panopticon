@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\CliCommand\Trait\ForkedLoggerAwareTrait;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
+use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Task\LogRotate as LogRotateTask;
 use Awf\Registry\Registry;
 use Psr\Log\LoggerAwareInterface;
@@ -48,7 +49,10 @@ class LogRotate extends AbstractCommand
 
 		$dummy1 = new \stdClass();
 		$dummy2 = new Registry();
-		$callback($dummy1, $dummy2);
+
+		do {
+			$return = $callback($dummy1, $dummy2);
+		} while ($return === Status::WILL_RESUME);
 
 		return Command::SUCCESS;
 	}

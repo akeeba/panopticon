@@ -14,6 +14,9 @@
 /app/LICENSE.txt
 /app/version.php
 
+### User code dir
+/app/user_code/*
+
 ### Component stuff
 /component/backend/version.php
 /component/backend/panopticon.xml

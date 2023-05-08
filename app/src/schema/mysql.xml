@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `#__queue`
 (
     `id`    SERIAL,
     `time`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `item`  JSON,
+    `item`  JSON
 ) DEFAULT COLLATE `binary`
   ENGINE = InnoDB;
             ]]></query>

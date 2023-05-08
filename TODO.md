@@ -1,16 +1,15 @@
 # TO-DO
 
-## Periodic retrieval of site information
+## Automatic (re)installation of tasks
 
-Add one task per site to run every hour (at a random minute?) to fetch the site's information (core update status, environment i.e. PHP info, and installed extensions).
+The following tasks must be installed at the end of the installation, and a feature provided to (re)install them if they are missing / modified:
+
+- Once daily, `logrotate`
+- Every hour, `refreshsiteinfo`
 
 ## Custom menu
 
 Do not let automatic menu item creation
-
-## Automatic Log rotation
-* Install a daily task for it during setup
-* Reinstall it by CLI `cli task:add:logrotate [--expression="@daily"]`
 
 ## Add WebAuthn as an MFA method
 
@@ -141,3 +140,14 @@ Only users with the super privilege can manage application-level configuration:
 * Wait for the task execution by polling the `maxexec.lasttick` and `maxexec.done` every 5 seconds.
 * Also allow user to skip over this step / finish setup later, removing the benchmark task
 * Finally, set the config variable `finished_setup` to true in app config
+
+## Periodic retrieval of site information
+
+Add one task per site to run every hour (at a random minute?) to fetch the site's information (core update status, environment i.e. PHP info, and installed extensions).
+
+Or we could add an hourly task which iterates through all sites.
+* First, add all sites to a queue
+* Loop
+  * Fetch 5 sites -- TODO Make this configurable
+  * Do parallel requests to get the information from the server, then call the code to parse their results.
+
