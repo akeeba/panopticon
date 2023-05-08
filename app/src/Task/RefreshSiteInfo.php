@@ -77,6 +77,18 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 	{
 		$db = $this->container->db;
 
+		/**
+		 * Reasoning behind this code:
+		 *
+		 * “The correct way to use LOCK TABLES and UNLOCK TABLES with transactional tables, such as InnoDB tables, is to
+		 * begin a transaction with SET autocommit = 0 (not START TRANSACTION) followed by LOCK TABLES, and to not call
+		 * UNLOCK TABLES until you commit the transaction explicitly.”
+		 *
+		 * This is meant to avoid deadlocks.
+		 *
+		 * @see https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html
+		 */
+		$db->setQuery('SET autocommit = 0')->execute();
 		$db->lockTable('#__sites');
 
 		$query = $db->getQuery(true)
@@ -102,7 +114,48 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 		}
 
 		$siteIDs = $db->setQuery($query, $limitStart, $limit)->loadColumn() ?: [];
+		$siteIDs = array_filter(ArrayHelper::toInteger($siteIDs, []));
 
+		/**
+		 * Update config.core.lastAttempt to avoid the same sites being fetched by another process.
+		 *
+		 * We may have more than one site information updater process executing simultaneously, e.g. the periodic task
+		 * and someone working on the CLI.
+		 *
+		 * Each process runs its own MySQL query which finds sites to fetch information for, based on each site's
+		 * config.core.lastAttempt value and the current date and time.
+		 *
+		 * By updating this value while the #__sites table is locked, as soon as we get a list of site IDs, before we
+		 * actually process the sites, we make sure that concurrent processes **cannot** select the sites we are going
+		 * to be processing in **this** process.
+		 *
+		 * The reason we do this instead of using a queue is that enqueueing sites ultimately suffers from a similar
+		 * problem. We can certainly lock the #__sites table to select all sites in need of an update and update the
+		 * queue. However, this is contingent upon having enough execution time to execute this atomically. On resource
+		 * constrained hosts with thousands of sites (and possibly a remote database) we might time out. This means we
+		 * would need to perform enqueueing in smaller batches, e.g. 100 sites at a time, which brings us back to the
+		 * issue of how do you enqueue sites without having more than one process try to enqueue the same site. This
+		 * becomes really hard to solve without using e.g. Redis, so it's better to fudge it with this trick than
+		 * implementing a semaphore system which would work on bottom-tier hosts. As always, there is method to my
+		 * madness.
+		 *
+		 * As a final note: if you use the --force flag in CLI you are bypassing this protection. The --force flag
+		 * really DOES FORCE things to happen, even if said things are utterly idiotic. You've been warned.
+		 */
+		if (!empty($siteIDs))
+		{
+			$updateQuery = $db->getQuery(true)
+				->update($db->quoteName('#__sites'))
+				->set(
+					$db->quoteName('config') . ' = JSON_SET(' . $db->quoteName('config') . ', ' .
+					$db->quote('$.core.lastAttempt') . ', UNIX_TIMESTAMP(NOW()))'
+				)
+				->where($db->quoteName('id')) . 'IN(' . implode(',', $siteIDs) . ')';
+			$db->setQuery($updateQuery)->execute();
+		}
+
+		// For the reasoning of this code see https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html
+		$db->setQuery('COMMIT')->execute();
 		$db->unlockTables();
 
 		return $siteIDs;
