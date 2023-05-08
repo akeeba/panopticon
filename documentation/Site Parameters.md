@@ -40,6 +40,35 @@ This is an insecure connection method and should be avoided. In fact, the “API
 
 ## The `core` key
 
-Caches the information collected about core Joomla! and the server environment.
+Caches the information collected about core Joomla! and the server environment. It looks like this:
 
-> **TODO** — This section has not been written yet
+```json5
+{
+    // Currently installed Joomla version information
+	"current": {
+        "version": "4.3.0",
+        "stability": "stable"
+    },
+    // Latest available version information
+    "latest": {
+		"version": "4.3.1",
+		"stability": "stable"
+    },
+    // PHP version
+    "php": "8.1.2",
+    // Can this site be upgraded?
+    "canUpgrade": true,
+    // Sanity check: does the site have the files_joomla pseudo-extension installed?
+	"extensionAvailable": true,
+    // Sanity check: does the site have the core Joomla update site installed and enabled?
+	"updateSiteAvailable": true,
+    // How many hours does Joomla! cache the updates for?
+	"maxCacheHours": 6,
+    // What is the minimum update stability allowed?
+	"minimumStability": "stable",
+    // When did Joomla! last check for core updates?
+	"lastUpdateTimestamp": 1682418579,
+    // What was Panopticon's last attempt to fetch this information from Joomla?
+    "lastAttempt": 1683481398,
+}
+```

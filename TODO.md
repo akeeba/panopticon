@@ -1,5 +1,9 @@
 # TO-DO
 
+## Periodic retrieval of site information
+
+Add one task per site to run every hour (at a random minute?) to fetch the site's information (core update status, environment i.e. PHP info, and installed extensions).
+
 ## Custom menu
 
 Do not let automatic menu item creation
