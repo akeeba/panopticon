@@ -98,9 +98,12 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 
 		if (!$force)
 		{
+			$frequency = (int) $this->container->appConfig->get('siteinfo_freq', 60);
+			$frequency = min(1440, max(15, $frequency));
+
 			$query->andWhere([
 				'JSON_EXTRACT(' . $db->quoteName('config') . ', ' . $db->quote('$.core.lastAttempt') . ') IS NULL',
-				'JSON_EXTRACT(' . $db->quoteName('config') . ', ' . $db->quote('$.core.lastAttempt') . ') < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 1 HOUR))',
+				'JSON_EXTRACT(' . $db->quoteName('config') . ', ' . $db->quote('$.core.lastAttempt') . ') < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL ' . $frequency . ' MINUTE))',
 			], 'OR');
 		}
 
@@ -145,12 +148,12 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 		if (!empty($siteIDs))
 		{
 			$updateQuery = $db->getQuery(true)
-				->update($db->quoteName('#__sites'))
-				->set(
-					$db->quoteName('config') . ' = JSON_SET(' . $db->quoteName('config') . ', ' .
-					$db->quote('$.core.lastAttempt') . ', UNIX_TIMESTAMP(NOW()))'
-				)
-				->where($db->quoteName('id')) . 'IN(' . implode(',', $siteIDs) . ')';
+					->update($db->quoteName('#__sites'))
+					->set(
+						$db->quoteName('config') . ' = JSON_SET(' . $db->quoteName('config') . ', ' .
+						$db->quote('$.core.lastAttempt') . ', UNIX_TIMESTAMP(NOW()))'
+					)
+					->where($db->quoteName('id')) . 'IN(' . implode(',', $siteIDs) . ')';
 			$db->setQuery($updateQuery)->execute();
 		}
 

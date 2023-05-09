@@ -4,6 +4,8 @@ The following are the known application configuration options which can be set i
 
 ## System
 
+Fundamental behaviour of the entire application.
+
 ### `session_timeout`
 **Session Timeout**
 
@@ -46,48 +48,9 @@ _Hidden option._
 This is automatically set at the end of the initial installation, after the CRON job configuration has been confirmed
 (or the user chose to skip it).
 
-## Caching
-
-### `caching_time`
-**Cache Time**
-
-How long to cache the collected site information and other generated data.
-
-Default: 60
-
-UOM: Minutes
-
-Range: 1 to 527040 (one minute to one year)
-
-### `cache_adapter`
-**Cache Adapter**
-
-Where will the cached items be stored?
-
-Default: filesystem
-
-Valid settings:
-* `filesystem` Files in the `cache` directory. Safest and slowest option.
-* `linuxfs` Files and symlinks in the `cache` directory. Only usable on Linux and macOS, as long as PHP can create symlinks.
-* `db` Uses the database table `#__cache` in your database (it's created on the fly). If your `dbdriver` configuration option is anything other than `pdomysql` you will have two or more concurrent database connections to your database server per execution thread which might be problematic for some servers.
-* `memcached` Use a memcached server. Requires the PHP `memcached` extension. Note that Panopticon only supports using a single server. If you want to use a cluster you'll have to override the `cacheFactory` service in the container using user-provided code. 
-* `redis` Use a Redis server. Requires the PHP `redis` extension. Note that Panopticon only supports using a single server. If you want to use a cluster you'll have to override the `cacheFactory` service in the container using user-provided code.
-
-### `caching_redis_dsn`
-**Redis Data Source Name (DSN)**
-
-How to connect to the Redis server. See [the Symfony Cache Redis adapter documentation](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection). Required when `cache_adapter` is set to `redis`.
-
-Default: (none)
-
-### `caching_memcached_dsn`
-**Memcached Data Source Name (DSN)**
-
-How to connect to the Memcached server. See [the Symfony Cache Memcached adapter documentation](https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection). Required when `cache_adapter` is set to `memcached`.
-
-Default: (none)
-
 ## Display preferences
+
+Controls how the HTML application displays its information.
 
 ### `darkmode`
 **Dark Mode**
@@ -107,43 +70,9 @@ Default: (empty; uses the browser settings)
 
 UOM: pt (points, i.e. 1/72 inch)
 
-## Logging
+## Automation
 
-### `log_level`
-**Minimum log level**
-
-What is the minimum severity level for messages to be kept in the logs. Please note that enabling Debug System will always result in all messages to be logged, as if you had set this option to Debug.
-
-Default: warning
-
-Valid settings: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
-
-### `log_rotate_compress`
-**Compress rotated logs**
-
-Should the log files which have been rotated be compressed with GZip?
-
-Default: true
-
-### `log_rotate_files`
-**Rotated log files**
-
-How many rotated log files should I keep?
-
-Default: 3
-
-Range: 0 to 100
-
-### `log_backup_threshold`
-**Backup log files deletion after this many days**
-
-Backup log files will be deleted, instead of rotated, after this many days. 0 means keep forever (NOT RECOMMENDED!).
-
-Default: 14
-
-Range: 0 to 65535 (that is almost 179 1/2 years…)
-
-## Task handling
+Panopticon uses automation to keep track of what is going on with your sites, and perform any administrative work on them (e.g. update Joomla and extensions). These options control how the automation works.
 
 ### `webcron_key`
 **Web CRON key**
@@ -173,18 +102,116 @@ UOM: Seconds
 ### `execution_bias`
 **Execution Time Bias**
 
-When the current execution time exceeds this percentage of the Maximum Execution Time we will not try to execute another task to avoid a timeout. 
+When the current execution time exceeds this percentage of the Maximum Execution Time we will not try to execute another task to avoid a timeout.
 
 Default: 75
 
 UOM: %
 
+## Site Operations
+
+Configuration for the automation and administrative tasks in Panopticon.
+
+### `siteinfo_freq`
+**Site information update frequency**
+
+The site information (Joomla version, update availability, PHP version) will be automatically updated after at least this many minutes since the last time.
+
+Default: 60
+
+UOM: minutes
+
+Range: 15 to 1440
+
+## Caching
+
+Panopticon uses caching to avoid repeating the same time-consuming operations. These options control how caching works.
+
+### `caching_time`
+**Cache Time**
+
+How long to cache data by default. Individual features may use a different cache time.
+
+Default: 60
+
+UOM: Minutes
+
+Range: 1 to 527040 (one minute to one year)
+
+### `cache_adapter`
+**Cache Adapter**
+
+Where will the cached items be stored?
+
+Default: filesystem
+
+Valid settings:
+* `filesystem` (Files) Files in the `cache` directory. Safest and slowest option.
+* `linuxfs` (Files and Symlinks) Files and symlinks in the `cache` directory. Only usable on Linux and macOS, as long as PHP can create symlinks.
+* `db` (Database) Uses the database table `#__cache` in your database (it's created on the fly). If your `dbdriver` configuration option is anything other than `pdomysql` you will have two or more concurrent database connections to your database server per execution thread which might be problematic for some servers.
+* `memcached` (memcached) Use a memcached server. Requires the PHP `memcached` extension. Note that Panopticon only supports using a single server. If you want to use a cluster you'll have to override the `cacheFactory` service in the container using user-provided code. 
+* `redis` (Redis) Use a Redis server. Requires the PHP `redis` extension. Note that Panopticon only supports using a single server. If you want to use a cluster you'll have to override the `cacheFactory` service in the container using user-provided code.
+
+### `caching_redis_dsn`
+**Redis Data Source Name (DSN)**
+
+How to connect to the Redis server. See [the Symfony Cache Redis adapter documentation](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection). Required when `cache_adapter` is set to `redis`.
+
+Default: (none)
+
+### `caching_memcached_dsn`
+**Memcached Data Source Name (DSN)**
+
+How to connect to the Memcached server. See [the Symfony Cache Memcached adapter documentation](https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection). Required when `cache_adapter` is set to `memcached`.
+
+Default: (none)
+
+## Logging
+
+Panopticon keeps a log of its actions. You can choose how the log works.
+
+### `log_level`
+**Minimum log level**
+
+What is the minimum severity level for messages to be kept in the logs. Please note that enabling Debug System will always result in all messages to be logged, as if you had set this option to Debug.
+
+Default: warning
+
+Valid settings: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`
+
+### `log_rotate_compress`
+**Compress rotated logs**
+
+Should the log files which have been rotated be compressed with GZip?
+
+Default: true
+
+### `log_rotate_files`
+**Rotated log files to keep**
+
+How many rotated log files should I keep?
+
+Default: 3
+
+Range: 0 to 100
+
+### `log_backup_threshold`
+**Backup log files deletion after this many days**
+
+Backup log files will be deleted, instead of rotated, after this many days. 0 means keep forever (NOT RECOMMENDED!).
+
+Default: 14
+
+Range: 0 to 65535 (that is almost 179 1/2 years…)
+
 ## Database
+
+Panopticon uses a MySQL database to store its information. You are advised not to change this configuration after installing Panopticon unless you know what you're doing and have a _very_ good reason to do it.
 
 ### `dbdriver`
 **Database Driver**
 
-The PHP MYSQL database driver to use
+The PHP MySQL database driver to use
 
 Default: mysqli
 
@@ -228,7 +255,7 @@ Default: ak_
 ### `dbencryption`
 **Database Encryption**
 
-Should I use an encrypted connection to the MySQL database server? 
+Should I use an encrypted connection to the MySQL database server?
 
 Default: false
 
@@ -258,4 +285,4 @@ Default:
 
 Should I verify the SSL/TLS server certificates against the SSL/TLS CA?
 
-Default: true 
+Default: true
