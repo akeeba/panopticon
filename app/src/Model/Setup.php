@@ -10,19 +10,30 @@ namespace Akeeba\Panopticon\Model;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
+use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Task\Status;
 use Awf\Database\Driver;
 use Awf\Database\Installer;
 use Awf\Date\Date;
+use Awf\Mvc\DataModel;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 use Complexify\Complexify;
 use Delight\Alphabets\Alphabet;
 use Delight\Random\Random;
+use Exception;
+use PDO;
+use RuntimeException;
+use stdClass;
 
 class Setup extends Model
 {
+	private const DEFAULT_TASKS = [
+		'logrotate'       => '@daily',
+		'refreshsiteinfo' => '*/10 * * * *',
+	];
+
 	private static bool|null $isRequiredMet = null;
 
 	private static bool|null $isRecommendedMet = null;
@@ -101,7 +112,7 @@ class Setup extends Model
 					// MySQLi functions
 					function_exists('mysqli_connect') ||
 					// PDO MySQL
-					(class_exists('\\PDO') && in_array('mysql', \PDO::getAvailableDrivers()))
+					(class_exists('\\PDO') && in_array('mysql', PDO::getAvailableDrivers()))
 				),
 				'warning' => false,
 			];
@@ -355,27 +366,27 @@ class Setup extends Model
 
 		if (empty($params['user.username']))
 		{
-			throw new \RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'), 500);
+			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'), 500);
 		}
 
 		if (empty($params['user.password']))
 		{
-			throw new \RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYPASSWORD'), 500);
+			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYPASSWORD'), 500);
 		}
 
 		if ($params['user.password'] != $params['user.password2'])
 		{
-			throw new \RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_PASSWORDSDONTMATCH'), 500);
+			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_PASSWORDSDONTMATCH'), 500);
 		}
 
 		if (empty($params['user.email']))
 		{
-			throw new \RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYEMAIL'), 500);
+			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYEMAIL'), 500);
 		}
 
 		if (empty($params['user.name']))
 		{
-			throw new \RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYNAME'), 500);
+			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYNAME'), 500);
 		}
 
 		$manager = $this->container->userManager;
@@ -448,26 +459,26 @@ class Setup extends Model
 		$db->setQuery($query)->execute();
 
 		$newTask = (object) [
-			'id' => null,
-			'site_id' => NULL,
-			'type' => 'maxexec',
+			'id'              => null,
+			'site_id'         => null,
+			'type'            => 'maxexec',
 			'cron_expression' => '@daily',
-			'enabled' => 1,
-			'last_exit_code' => Status::INITIAL_SCHEDULE->value,
-			'next_execution' => (new Date('now', 'UTC'))->toSql(),
-			'params' => (new Registry('{"run_once": "delete"}'))->toString()
+			'enabled'         => 1,
+			'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
+			'next_execution'  => (new Date('now', 'UTC'))->toSql(),
+			'params'          => (new Registry('{"run_once": "delete"}'))->toString(),
 		];
 		$db->insertObject('#__tasks', $newTask);
 	}
 
 	public function getHeartbeat(): object
 	{
-		$ret = new \stdClass();
-		$ret->hasTask = false;
-		$ret->started = false;
+		$ret           = new stdClass();
+		$ret->hasTask  = false;
+		$ret->started  = false;
 		$ret->finished = false;
-		$ret->elapsed = 0;
-		$ret->error = null;
+		$ret->elapsed  = 0;
+		$ret->error    = null;
 
 		$db = $this->container->db;
 
@@ -479,7 +490,7 @@ class Setup extends Model
 		{
 			$taskObject = $db->setQuery($query, 0, 1)->loadObject();
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$ret->error = $e->getMessage();
 
@@ -496,23 +507,23 @@ class Setup extends Model
 				->where($db->quoteName('key') . ' LIKE ' . $db->quote('maxexec.%'));
 			$tempValues = $db->setQuery($query)->loadAssocList('key', 'value');
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$ret->error = $e->getMessage();
 
 			return $ret;
 		}
 
-		$ret->started = ($tempValues['maxexec.lasttick'] ?? 0) !== 0;
+		$ret->started  = ($tempValues['maxexec.lasttick'] ?? 0) !== 0;
 		$ret->finished = ($tempValues['maxexec.done'] ?? 0) == 1;
-		$ret->elapsed = (int) $tempValues['maxexec.lasttick'] ?? 0;
+		$ret->elapsed  = (int) $tempValues['maxexec.lasttick'] ?? 0;
 
 		return $ret;
 	}
 
 	public function removeMaxExecTask(): void
 	{
-		$db = $this->container->db;
+		$db    = $this->container->db;
 		$query = $db->getQuery(true)
 			->delete($db->quoteName('#__tasks'))
 			->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
@@ -521,9 +532,42 @@ class Setup extends Model
 		{
 			$db->setQuery($query)->execute();
 		}
-		catch (\Exception)
+		catch (Exception)
 		{
 		}
+	}
+
+	public function installDefaultTasks(): void
+	{
+		foreach (self::DEFAULT_TASKS as $type => $cronExpression)
+		{
+			$this->deleteSystemTasks($type);
+
+			/** @var Task $task */
+			$task = DataModel::getInstance(null, 'Task', Factory::getContainer());
+
+			$task->save([
+				'site_id'         => null,
+				'type'            => $type,
+				'cron_expression' => $cronExpression,
+				'enabled'         => 1,
+				'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
+			]);
+		}
+	}
+
+	private function deleteSystemTasks(string $type)
+	{
+		$db = $this->container->db;
+
+		$query = $db->getQuery(true)
+			->delete($db->quoteName('#__tasks'))
+			->where([
+				$db->quoteName('type') . ' = ' . $db->quote($type),
+				$db->quoteName('site_id') . ' = 0',
+			]);
+
+		$db->setQuery($query)->execute();
 	}
 
 	private function getIniParserAvailability(): bool

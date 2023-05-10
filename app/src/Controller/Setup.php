@@ -247,6 +247,8 @@ class Setup extends Controller
 			opcache_invalidate(APATH_ROOT . '/config.php');
 		}
 
+		$model->installDefaultTasks();
+
 		$this->setRedirect(
 			$this->container->router->route('index.php?view=main')
 		);
@@ -254,16 +256,16 @@ class Setup extends Controller
 		return true;
 	}
 
-		public function finish()
+	public function finish()
 	{
 		$this->csrfProtection();
 
 		/** @var SetupModel $model */
-		$model           = $this->getModel();
+		$model = $this->getModel();
 
 		$model->removeMaxExecTask();
 
-		$maxExec = min(
+		$maxExec    = min(
 			180,
 			intval(
 				ceil(
@@ -286,11 +288,13 @@ class Setup extends Controller
 			opcache_invalidate(APATH_ROOT . '/config.php');
 		}
 
+		$model->installDefaultTasks();
+
 		$this->getView()->setLayout('finish');
 
 		$this->getView()->maxExec = $maxExec;
 
-		$this->display();;
+		$this->display();
 	}
 
 	private function needsRedirectToMainView(): bool

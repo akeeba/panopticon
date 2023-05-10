@@ -1,12 +1,5 @@
 # TO-DO
 
-## Automatic (re)installation of tasks
-
-The following tasks must be installed at the end of the installation, and a feature provided to (re)install them if they are missing / modified:
-
-- Once daily: `logrotate`
-- Every `siteinfo_freq` minutes: `refreshsiteinfo`
-
 ## Custom menu
 
 Do not let automatic menu item creation
@@ -151,3 +144,9 @@ Or we could add an hourly task which iterates through all sites.
   * Fetch 5 sites -- TODO Make this configurable
   * Do parallel requests to get the information from the server, then call the code to parse their results.
 
+## Automatic (re)installation of tasks
+
+The following tasks must be installed at the end of the installation, and a feature provided to (re)install them if they are missing / modified:
+
+- Once daily: `logrotate`
+- Every 10 minutes: `refreshsiteinfo`

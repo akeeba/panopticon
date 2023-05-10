@@ -9,9 +9,12 @@ namespace Akeeba\Panopticon\Helper;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Task;
 use Awf\Database\Driver;
 use Awf\Html\Select;
-use Awf\Text\Text;
+use Awf\Mvc\DataModel;
 use DateTimeZone;
 
 abstract class Setup
