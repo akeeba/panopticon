@@ -7,7 +7,6 @@
 
 namespace Akeeba\Panopticon\Model;
 
-use Akeeba\Panopticon\Exception\InvalidCronExpression;
 use Akeeba\Panopticon\Exception\InvalidTaskType;
 use Akeeba\Panopticon\Helper\TaskUtils;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
@@ -76,12 +75,15 @@ class Task extends DataModel
 		{
 			try
 			{
-				$previousRun          = $this->cron_expression->getPreviousRunDate()->format(DATE_W3C);
-				$this->last_execution = (new Date($previousRun))->toSql();
+				$cron_expression = $this->cron_expression instanceof CronExpression
+					? $this->cron_expression
+					: new CronExpression($this->cron_expression);
+				$previousRun          = $cron_expression->getPreviousRunDate()->format(DATE_W3C);
+				$this->last_execution = (new Date($previousRun, 'UTC'))->toSql();
 			}
 			catch (Exception)
 			{
-				$this->last_execution = (new Date('2000-01-01 00:00:00'))->toSql();
+				$this->last_execution = (new Date('2000-01-01 00:00:00', 'UTC'))->toSql();
 			}
 
 			$this->last_run_end   = null;
@@ -200,7 +202,7 @@ class Task extends DataModel
 
 			$pendingTask->save([
 				'last_exit_code' => Status::RUNNING,
-				'last_execution' => (new Date())->toSql(),
+				'last_execution' => (new Date('now', 'UTC'))->toSql(),
 			]);
 		}
 		catch (Exception)
@@ -212,7 +214,7 @@ class Task extends DataModel
 			{
 				$pendingTask->save([
 					'last_exit_code' => Status::NO_LOCK,
-					'last_execution' => (new Date())->toSql(),
+					'last_execution' => (new Date('now', 'UTC'))->toSql(),
 				]);
 			}
 			catch (Exception)
@@ -323,13 +325,15 @@ class Task extends DataModel
 			{
 				$pendingTask->storage->loadString('{}');
 
-				$cronExpression = new CronExpression($this->cron_expression);
+				$cronExpression = new CronExpression($pendingTask->cron_expression);
 
-				$lastExecution        = new DateTime($this->last_execution ?: 'now');
+				$lastExecution        = new Date($pendingTask->last_execution ?: 'now', 'UTC');
 				$nextRun              = $cronExpression
-					->getNextRunDate($lastExecution)->format(DATE_W3C);
-				$this->next_execution = (new Date($nextRun))->toSql();
+					->getNextRunDate($lastExecution)->format(DATE_RFC822);
+				$pendingTask->next_execution = (new Date($nextRun, 'UTC'))->toSql();
 			}
+
+			$pendingTask->times_executed++;
 		}
 		catch (InvalidTaskType)
 		{
@@ -337,6 +341,7 @@ class Task extends DataModel
 
 			$pendingTask->last_exit_code = Status::NO_ROUTINE;
 			$pendingTask->storage->loadString('{}');
+			$pendingTask->times_failed++;
 		}
 		catch (Throwable $e)
 		{
@@ -355,6 +360,7 @@ class Task extends DataModel
 					'trace' => $e->getFile() . '::' . $e->getLine() . "\n" . $e->getTraceAsString(),
 				])
 			);
+			$pendingTask->times_failed++;
 		}
 		finally
 		{
@@ -376,7 +382,7 @@ class Task extends DataModel
 			{
 				$db->lockTable($this->tableName);
 				$pendingTask->save([
-					'last_run_end' => (new Date())->toSql(),
+					'last_run_end' => (new Date('now', 'UTC'))->toSql(),
 				]);
 				$db->unlockTables();
 			}
@@ -385,7 +391,7 @@ class Task extends DataModel
 				$logger->error('Failed to update the task\'s last execution information');
 
 				$pendingTask->save([
-					'last_run_end'   => (new Date())->toSql(),
+					'last_run_end'   => (new Date('now', 'UTC'))->toSql(),
 					'last_exit_code' => Status::NO_RELEASE,
 				]);
 			}
@@ -414,7 +420,7 @@ class Task extends DataModel
 	{
 		$db         = $this->getDbo();
 		$threshold  = max(3, (int) $this->container->appConfig->get('cron_stuck_threshold', 3));
-		$cutoffTime = (new Date())->sub(new DateInterval('PT' . $threshold . 'M'));
+		$cutoffTime = (new Date('now', 'UTC'))->sub(new DateInterval('PT' . $threshold . 'M'));
 
 		$query = $db->getQuery(true)
 			->update($db->qn($this->tableName))
@@ -445,164 +451,6 @@ class Task extends DataModel
 		}
 	}
 
-	protected function set_site_id_attribute(?int $site_id): int
-	{
-		if (($site_id ?? 0) === 0)
-		{
-			return 0;
-		}
-
-		// TODO Check if it's valid
-		return $site_id;
-	}
-
-	protected function set_params_attribute(string $params): Registry
-	{
-		return new Registry($params);
-	}
-
-	protected function get_params_attribute(?Registry $params): ?string
-	{
-		$ret = $params?->toString();
-
-		if ($ret === '{}' || empty($ret))
-		{
-			return null;
-		}
-
-		return $ret;
-	}
-
-	protected function set_storage_attribute(?string $params): Registry
-	{
-		return new Registry($params ?? '');
-	}
-
-	protected function get_storage_attribute(Registry $params): string
-	{
-		return $params->toString();
-	}
-
-	protected function set_cron_expression_attribute(string $cronExpression): CronExpression
-	{
-		if (empty($cronExpression) || !CronExpression::isValidExpression($cronExpression))
-		{
-			throw new InvalidCronExpression($cronExpression);
-		}
-
-		return new CronExpression($cronExpression);
-	}
-
-	protected function get_cron_expression_attribute(CronExpression $cronExpression): string
-	{
-		return $cronExpression->getExpression();
-	}
-
-	protected function set_enabled_attribute(mixed $value): bool
-	{
-		return boolval($value);
-	}
-
-	protected function get_enabled_attribute(bool $enabled): string
-	{
-		return $enabled ? '1' : '0';
-	}
-
-	protected function set_last_exit_code_attribute(string $lastExitCode): Status
-	{
-		return Status::tryFrom(intval($lastExitCode));
-	}
-
-	protected function get_last_execution_attribute(string $value): ?Date
-	{
-		if (empty($value) || $value === $this->getDbo()->getNullDate())
-		{
-			return null;
-		}
-
-		return new Date($value);
-	}
-
-	protected function set_last_execution_attribute(?Date $value): ?string
-	{
-		return $value?->toSql();
-	}
-
-	protected function get_last_run_end_attribute(string $value): ?Date
-	{
-		if (empty($value) || $value === $this->getDbo()->getNullDate())
-		{
-			return null;
-		}
-
-		return new Date($value);
-	}
-
-	protected function set_last_run_end_attribute(?Date $value): ?string
-	{
-		return $value?->toSql();
-	}
-
-	protected function get_next_execution_attribute(string $value): Date
-	{
-		return new Date($value);
-	}
-
-	protected function set_next_execution_attribute(Date $value): string
-	{
-		return $value->toSql();
-	}
-
-	protected function get_times_executed_attribute(mixed $value): int
-	{
-		return intval($value ?? 0);
-	}
-
-	protected function set_times_executed_attribute(int $value): string
-	{
-		return (string) $value;
-	}
-
-	protected function get_times_failed_attribute(mixed $value): int
-	{
-		return intval($value ?? 0);
-	}
-
-	protected function set_times_failed_attribute(int $value): string
-	{
-		return (string) $value;
-	}
-
-	protected function get_locked_attribute(string $value): ?Date
-	{
-		if (empty($value) || $value === $this->getDbo()->getNullDate())
-		{
-			return null;
-		}
-
-		return new Date($value);
-	}
-
-	protected function set_locked_attribute(?Date $value): string
-	{
-		return $value?->toSql();
-	}
-
-	protected function get_priority_attribute(mixed $value): int
-	{
-		return intval($value ?? 0);
-	}
-
-	protected function set_priority_attribute(int $value): string
-	{
-		return (string) $value;
-	}
-
-	protected function get_last_exit_code_attribute(Status $lastExitCode): string
-	{
-		return (string) $lastExitCode->value;
-	}
-
 	private function getNextTask(): ?self
 	{
 		$db    = $this->getDbo();
@@ -618,8 +466,9 @@ class Task extends DataModel
 					->where([
 						$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value,
 						$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value,
+						$db->qn('next_execution') . ' <= ' . $db->quote((new Date('now', 'UTC'))->toSql())
 					])
-					->order($db->qn('id') . ' DESC')
+					->order($db->qn('priority') . ' ASC, ' . $db->qn('id') . ' ASC')
 			);
 
 		$tasks = $db->setQuery($query)->loadObjectList();
