@@ -240,11 +240,6 @@ call_user_func(function () use (&$tempCaCert) {
 	define('AKEEBA_CACERT_PEM', $tempCaCertPath);
 });
 
-if (is_resource($tempCaCert))
-{
-	echo stream_get_meta_data($tempCaCert)['uri'] . "\n";
-}
-
 // Load user code
 if (file_exists(APATH_USER_CODE . '/bootstrap.php'))
 {
