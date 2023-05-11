@@ -31,7 +31,8 @@ class Setup extends Model
 {
 	private const DEFAULT_TASKS = [
 		'logrotate'       => '@daily',
-		'refreshsiteinfo' => '*/10 * * * *',
+		'refreshsiteinfo' => '*/15 * * * *',
+		'refreshinstalledextensions' => '*/15 * * * *',
 	];
 
 	private static bool|null $isRequiredMet = null;

@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CLI site:info:refresh" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/app/cli/panopticon.php" scriptParameters="site:info:update -vvv --force --batchSize=3">
+    <method v="2" />
+  </configuration>
+</component>

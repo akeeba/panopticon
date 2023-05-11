@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CLI user:create" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/app/cli/panopticon.php" scriptParameters="user:create --username admin --email admin@local.web --password &quot;N1fp%lEP@t0z3$&quot; --overwrite">
+    <method v="2" />
+  </configuration>
+</component>

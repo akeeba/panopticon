@@ -23,10 +23,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-	name: "site:info:update",
-	description: "Update the cached site information"
+	name: "site:extensions:refresh",
+	description: "Update the cached installed extensions information"
 )]
-class SiteUpdateInfo extends AbstractCommand
+class SiteExtensionsRefresh extends AbstractCommand
 {
 	use ForkedLoggerAwareTrait;
 
@@ -34,7 +34,7 @@ class SiteUpdateInfo extends AbstractCommand
 	{
 		/** @var LogRotateTask|CallbackInterface $callback */
 		$container = Factory::getContainer();
-		$callback  = $container->taskRegistry->get('refreshsiteinfo');
+		$callback  = $container->taskRegistry->get('refreshinstalledextensions');
 
 		if ($callback instanceof LoggerAwareInterface)
 		{
@@ -42,7 +42,7 @@ class SiteUpdateInfo extends AbstractCommand
 				$this->getForkedLogger(
 					$output,
 					[
-						$container->loggerFactory->get('get_site_info'),
+						$container->loggerFactory->get('get_extensions_info'),
 					]
 				)
 			);

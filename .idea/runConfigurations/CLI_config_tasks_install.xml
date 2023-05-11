@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CLI config:tasks:install" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/app/cli/panopticon.php" scriptParameters="config:tasks:install">
+    <method v="2" />
+  </configuration>
+</component>

@@ -31,6 +31,7 @@ Do not let automatic menu item creation
 * The time of the update installation should be something the user can define. Remember that sites may be used in different timezones e.g. a US-centric site is best updated around midnight CST i.e. 05:00 UTC
 * In the future, we can choose whether to schedule a backup before the update
   * This requires making pre-requisite tasks, or otherwise avoid duplicating the backup logic
+* Fetch the changed template files after the update is over
 
 ## Automatic generation of SBOM
 
@@ -150,3 +151,5 @@ The following tasks must be installed at the end of the installation, and a feat
 
 - Once daily: `logrotate`
 - Every 10 minutes: `refreshsiteinfo`
+
+## Periodic retrieval of installed extensions
