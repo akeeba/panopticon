@@ -1,13 +1,7 @@
 <?php
-/**
- * @package   solo
- * @copyright Copyright (c)2014-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
- * @license   GNU General Public License version 3, or later
- */
+defined('AKEEBA') or die();
 
 use Awf\Text\Text;
-
-defined('AKEEBA') or die();
 
 // Used for type hinting
 /** @var  \Akeeba\Panopticon\View\Login\Html  $this */

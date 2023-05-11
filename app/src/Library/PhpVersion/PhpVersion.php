@@ -88,7 +88,7 @@ class PhpVersion
 		$ret->dates   = (object) $phpInfo[$version];
 
 		$today = new Date();
-		$ret->eol = $ret->dates->diff($today)->invert === 0;
+		$ret->eol = $ret->dates->eol->diff($today)->invert === 0;
 		$ret->supported = !$ret->eol && !empty($ret->dates->activeSupport) && $ret->dates->activeSupport->diff($today)->invert === 1;
 
 		return $ret;
@@ -105,7 +105,7 @@ class PhpVersion
 	{
 		$versionInformation = $this->getVersionInformation($version);
 
-		return !$versionInformation->unknown && !$versionInformation->eol && !$versionInformation->activeSupport;
+		return !$versionInformation->unknown && !$versionInformation->eol && !$versionInformation->supported;
 	}
 
 	public function getPhpEolInformation(): array

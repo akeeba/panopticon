@@ -68,7 +68,67 @@ Caches the information collected about core Joomla! and the server environment. 
 	"minimumStability": "stable",
     // When did Joomla! last check for core updates?
 	"lastUpdateTimestamp": 1682418579,
-    // What was Panopticon's last attempt to fetch this information from Joomla?
+    // When was Panopticon's last attempt to fetch this information from Joomla (UNIX timestamp)?
     "lastAttempt": 1683481398,
+}
+```
+
+### The `extensions` key
+
+It has two subkeys:
+* `list` A list of installed top-level extensions. This means it does not include core or third party sub-extensions, which are part of another package.
+* `lastAttempt` When was Panopticon's last attempt to fetch this information from Joomla (UNIX timestamp)?
+
+Each extension in the `list` is keyed by its extension ID and contains an object with the following items:
+
+```json5
+{
+	"extension_id": 217,
+    // Extension name (human-readable) as reported by Joomla!.
+	"name": "file_fof30",
+    // Description, human-readable
+	"description": "\n\t\t\n\t\tFramework-on-Framework (FOF) 3.x - The rapid application development framework for Joomla!.<br/>\n\t\t<b>WARNING</b>: This is NOT a duplicate of the FOF library already installed with Joomla!. It is a different version used by other extensions on your site. Do NOT uninstall either FOF package. If you do you will break your site.\n\t\t\n\t",
+    // Extension type (component, module, plugin, template, package, file, library)
+	"type": "file",
+	// Plugin folder
+	"folder": "",
+	// Extension element (depends on extension type)
+	"element": "file_fof30",
+    // Joomla Application ID
+	"client_id": 0,
+    // Extension author
+	"author": "Nicholas K. Dionysopoulos / Akeeba Ltd",
+	// Extension author's URL
+	"authorUrl": "https://www.akeebabackup.com",
+	// Extension author's email address
+	"authorEmail": "nicholas@akeebabackup.com",
+    // Is the extension locked (core)?
+	"locked": 0,
+    // Is the extension protected?
+	"protected": 0,
+    // Is the extension published?
+	"enabled": 1,
+    // Version information
+	"version": {
+        // Currently installed
+		"current": "revB061E1B9",
+        // Latest available, if different
+		"new": null,
+	},
+	// Extension type, human-readable
+	"type_s": "File",
+	// Application side, human-readable
+	"client_s": "Site",
+    // Plugin folder, human-readable
+	"folder_s": "N/A",
+    // Download Key information
+	"downloadkey": {
+        // Is a key required?
+		"supported": false,
+        // Is there a valid key present?
+		"valid": false,
+	},
+    // Does the extension have any associated update sites?
+	"hasUpdateSites": false
 }
 ```

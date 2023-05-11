@@ -311,7 +311,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 				'author'         => $item?->author,
 				'authorUrl'      => $item?->authorUrl,
 				'authorEmail'    => $item?->authorEmail,
-				'hasUpdateSites' => !empty($item?->updatesutes),
+				'hasUpdateSites' => !empty($item?->updatesites),
 				'downloadkey'    => (object) [
 					'supported' => $item?->downloadkey?->supported ?? false,
 					'valid'     => $item?->downloadkey?->valid ?? false,
