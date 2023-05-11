@@ -565,7 +565,7 @@ class Setup extends Model
 			->delete($db->quoteName('#__tasks'))
 			->where([
 				$db->quoteName('type') . ' = ' . $db->quote($type),
-				$db->quoteName('site_id') . ' = 0',
+				$db->quoteName('site_id') . ' IS NULL',
 			]);
 
 		$db->setQuery($query)->execute();
