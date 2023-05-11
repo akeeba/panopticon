@@ -34,33 +34,34 @@ $numKeyMissing = array_reduce(
 ?>
 
 @if (empty($extensions))
-	<span class="badge bg-secondary-subtle">Unknown</span>
+	<span class="badge bg-secondary-subtle">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UNKNOWN')</span>
 @else
 	@if ($numUpdates)
-		<div class="badge bg-warning"
+		<div class="text-warning fw-bold"
 			 data-bs-toggle="tooltip" data-bs-placement="bottom"
-			 data-bs-title="There are %d extension updates"
+			 data-bs-title="@plural('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N', $numUpdates)"
 		>
 			<span class="fa fa-arrow-up-right-dots" aria-hidden="true"></span>
-			<span class="visually-hidden">Updates found:</span>
+			<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADES_FOUND')</span>
 			{{ $numUpdates }}
 		</div>
 	@elseif ($numKeyMissing === 0)
 		<div class="text-body">
 			<span class="fa fa-check-circle" aria-hidden="true"
 				  data-bs-toggle="tooltip" data-bs-placement="bottom"
-				  data-bs-title="All installed extensions are up-to-date"
+				  data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_EXT_NO_UPGRADES')"
 			></span>
-			<span class="visually-hidden">All installed extensions are up-to-date</span>
+			<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_NO_UPGRADES')</span>
 		</div>
 	@endif
 
 	@if ($numKeyMissing)
 		<div class="badge bg-danger"
 			 data-bs-toggle="tooltip" data-bs-placement="bottom"
-			 data-bs-title="%d Download Keys are missing or invalid"
+			 data-bs-title="@plural('PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING_N', $numKeyMissing)"
 		>
 			<span class="fa fa-key" aria-hidden="true"></span>
+			<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING')</span>
 			{{ $numKeyMissing }}
 		</div>
 	@endif

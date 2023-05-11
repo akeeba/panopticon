@@ -28,34 +28,11 @@ class PhpVersion
 	{
 		$this->container ??= Factory::getContainer();
 
-		/**
-		 * Get a suitable caching time for PHP version information.
-		 *
-		 * PHP only releases a new version every mid-November to mid-December. If the date is between November 15th and
-		 * December 20th we cache the version information for three days. In any other case we cache it until the next
-		 * November 15th.
-		 */
-		$today = new Date();
-
-		if (
-			($today->month == 11 && $today->day >= 15)
-			|| ($today->month == 12 && $today->day <= 20)
-		)
-		{
-			$this->expiration = (clone $today)->add(new DateInterval('P3D'));
-		}
-		elseif ($today->month == 12)
-		{
-			$this->expiration = (clone $today)->setDate((int) $today->year + 1, 11, 15);
-		}
-		else
-		{
-			$this->expiration = (clone $today)->setDate($today->year, 11, 15);
-		}
-
 		if (empty($this->httpClient))
 		{
-			$interval = $today->diff($this->expiration);
+			$today            = new Date();
+			$this->expiration = (clone $today)->add(new DateInterval('P1W'));
+			$interval         = $today->diff($this->expiration);
 
 			$this->httpClient = $this->container->httpFactory->makeClient(
 				cacheTTL: $interval->days * 86400
@@ -72,6 +49,7 @@ class PhpVersion
 			'unknown'   => true,
 			'supported' => false,
 			'eol'       => false,
+			'latest'    => null,
 			'dates'     => (object) [
 				'initialRelease' => null,
 				'activeSupport'  => null,
@@ -85,10 +63,15 @@ class PhpVersion
 		}
 
 		$ret->unknown = false;
-		$ret->dates   = (object) $phpInfo[$version];
+		$ret->latest  = $phpInfo[$version]['latestVersion'];
+		$ret->dates   = (object) [
+			'initialRelease' => $phpInfo[$version]['initialRelease'],
+			'activeSupport'  => $phpInfo[$version]['activeSupport'],
+			'eol'            => $phpInfo[$version]['eol'],
+		];
 
-		$today = new Date();
-		$ret->eol = $ret->dates->eol->diff($today)->invert === 0;
+		$today          = new Date();
+		$ret->eol       = $ret->dates->eol->diff($today)->invert === 0;
 		$ret->supported = !$ret->eol && !empty($ret->dates->activeSupport) && $ret->dates->activeSupport->diff($today)->invert === 1;
 
 		return $ret;
@@ -145,10 +128,11 @@ class PhpVersion
 
 		foreach ($this->scrapeDownloadsPage($contents['downloads'] ?? null) as $version => $date)
 		{
-			$v       = Version::create($version);
-			$version = $v->major() . '.' . $v->minor();
+			$v            = Version::create($version);
+			$shortVersion = $v->major() . '.' . $v->minor();
 
-			$ret[$version]['initialRelease'] = $date;
+			$ret[$shortVersion]['initialRelease'] = $date;
+			$ret[$shortVersion]['latestVersion']  ??= $version;
 		}
 
 		return $ret;

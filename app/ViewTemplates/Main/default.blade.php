@@ -6,35 +6,37 @@ defined('AKEEBA') || die;
  */
 ?>
 <table class="table table-striped">
+    <caption class="visually-hidden">
+        @lang('PANOPTICON_MAIN_SITES_TABLE_CAPTION')
+    </caption>
     <thead>
     <tr valign="middle">
-        <th>#</th>
-        <th>Site</th>
+        <th>@lang('PANOPTICON_MAIN_SITES_THEAD_SITE')</th>
         <th>
             <span class="fab fa-joomla fs-3" aria-hidden="true"
                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                  data-bs-title="Joomla™ version"
+                  data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_JOOMLA')"
             ></span>
             <span class="visually-hidden">
-            Joomla™ version
+            @lang('PANOPTICON_MAIN_SITES_THEAD_JOOMLA')
             </span>
         </th>
         <th>
             <span class="fa fa-cubes fs-3" aria-hidden="true"
                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                  data-bs-title="Extensions status"
+                  data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')"
             ></span>
             <span class="visually-hidden">
-            Extensions status
+            @lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')
             </span>
         </th>
         <th>
             <span class="fab fa-php fs-3" aria-hidden="true"
                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                  data-bs-title="PHP version"
+                  data-bs-title="@lang('PHP version')"
             ></span>
             <span class="visually-hidden">
-            PHP version
+            @lang('PHP version')
             </span>
         </th>
     </tr>
@@ -50,13 +52,11 @@ defined('AKEEBA') || die;
         ?>
         <tr>
             <td>
-                {{ $item->id }}
-            </td>
-            <td>
                 <div class="fw-medium">
                     {{ $item->name }}
                 </div>
                 <div class="small">
+                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
                     <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
                         {{{ $url }}}
                         <span class="fa fa-external-link-square"></span>
