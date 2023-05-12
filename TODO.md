@@ -1,8 +1,28 @@
 # TO-DO
 
-## Custom menu
+## Warn if the automation is not running
 
-Do not let automatic menu item creation
+If the last CRON job execution was more than 3 minutes ago, show a warning which takes you to a page to help you set up and test the CRON jobs.
+
+## Email setup
+
+In the config.php
+
+## System Configuration page
+
+## Sites page
+
+## Site report page
+
+## Tasks page
+
+## Log viewer page
+
+## Email templates page
+
+Note: it will require adding a WYSIWYG editor.
+
+Beyond that, we need a separate text are for CSS to add at the top of the HTML message, since TinyMCE will strip that (IIRC).
 
 ## Add WebAuthn as an MFA method
 
@@ -153,3 +173,7 @@ The following tasks must be installed at the end of the installation, and a feat
 - Every 10 minutes: `refreshsiteinfo`
 
 ## Periodic retrieval of installed extensions
+
+## Custom menu
+
+See \Akeeba\Panopticon\Application::MAIN_MENU

@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Application\UserPrivileges;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Application\Application as AWFApplication;
 use Awf\Application\TransparentAuthentication;
+use Awf\Document\Menu\Item;
 use Awf\Html\Grid;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
@@ -29,6 +30,31 @@ class Application extends AWFApplication
 	 * LIst of view names we're allowed to access directly, without a login, and without redirection to the setup view
 	 */
 	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup'];
+
+	private const MAIN_MENU = [
+		[
+			'view' => 'sites',
+			'permissions' => ['panopticon.super'],
+		],
+		[
+			'view' => 'tasks',
+			'permissions' => ['panopticon.super'],
+		],
+		[
+			'view' => 'templates',
+			'permissions' => ['panopticon.super'],
+		],
+		[
+			'view' => 'sysconfig',
+			'permissions' => ['panopticon.super'],
+		],
+		[
+			'view' => 'login',
+			'task' => 'logout',
+			'title' => 'PANOPTICON_APP_LBL_LOGOUT',
+			'permissions' => [],
+		],
+	];
 
 	public function initialise()
 	{
@@ -62,6 +88,14 @@ class Application extends AWFApplication
 
 		// Set up the media query key
 		$this->setupMediaVersioning();
+	}
+
+	public function dispatch()
+	{
+		parent::dispatch();
+
+		// Initialise the main menu
+		$this->initialiseMenu();
 	}
 
 	public function createOrUpdateSessionPath(string $path, bool $silent = true): void
@@ -108,6 +142,46 @@ class Application extends AWFApplication
 			{
 				throw $e;
 			}
+		}
+	}
+
+	private function initialiseMenu(): void
+	{
+		$menu  = $this->getDocument()->getMenu();
+		$user  = $this->container->userManager->getUser();
+		$order = 0;
+
+		foreach (self::MAIN_MENU as $params)
+		{
+			$allowed = array_reduce(
+				$params['permissions'] ?? [],
+				fn(bool $carry, string $permission) => $carry && $user->getPrivilege($permission),
+				true
+			);
+
+			if (!$allowed)
+			{
+				continue;
+			}
+
+			if (isset($params['permissions']))
+			{
+				unset($params['permissions']);
+			}
+
+			$order += 10;
+			$options = [
+				'show'   => $params['show'] ?? ['main'],
+				'params' => $params,
+				'name'   => $params['name'] ?? $params['view'],
+				'title'  => Text::_(
+					$params['title'] ?? sprintf('%s_%s_TITLE', $this->getName(), $params['view'])
+				),
+				'order'  => $params['order'] ?? $order,
+			];
+
+			$item = new Item($options, $this->container);
+			$menu->addItem($item);
 		}
 	}
 
