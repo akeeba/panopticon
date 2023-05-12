@@ -5,6 +5,7 @@
  * @license   GNU General Public License version 3, or later
  */
 
-const AKEEBA_PANOPTICON_VERSION = '##VERSION##';
-const AKEEBA_PANOPTICON_DATE    = '##DATE##';
-const AKEEBA_PANOPTICON_MINPHP  = '8.1.0';
+const AKEEBA_PANOPTICON_VERSION  = '##VERSION##';
+const AKEEBA_PANOPTICON_DATE     = '##DATE##';
+const AKEEBA_PANOPTICON_CODENAME = 'Aphelion';
+const AKEEBA_PANOPTICON_MINPHP   = '8.1.0';

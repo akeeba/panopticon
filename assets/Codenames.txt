@@ -1,0 +1,37 @@
+Aphelion [1.0 Alphas]
+Perihelion [1.0 Betas]
+Halo [1.0 RCs]
+Morn
+Dawn
+Twilight
+Aurora
+Daybreak
+Sunrise
+Cockcrow
+Sunup
+Morning
+Daylight
+Sunshine
+Glow
+Forenoon
+Beam
+Midday
+Noon
+Noonday
+Noontide
+High noon
+Glare
+Blaze
+Afternoon
+Sunset
+Evenfall
+Evening
+Eventide
+Crepuscule
+Nightfall
+Dusk
+Night
+Moonlight
+Starlight
+Midnight
+Stygian
