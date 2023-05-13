@@ -82,7 +82,7 @@ abstract class Setup
 		);
 	}
 
-	public static function timezoneSelect(string $selected = '', string $name = 'timezone', $disabled = false): string
+	public static function timezoneSelect(string $selected = '', string $name = 'timezone', $disabled = false, ?string $id = null): string
 	{
 		$groups      = [];
 		$zoneHeaders = [
@@ -145,7 +145,7 @@ abstract class Setup
 		ksort($groups);
 
 		$options = [
-			'id'          => $name,
+			'id'          => $id ?? $name,
 			'list.select' => $selected,
 			'group.items' => null,
 			'list.attr'   => [

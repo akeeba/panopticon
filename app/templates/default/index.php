@@ -88,9 +88,9 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 
 <?php // Toolbar / page title ?>
 <?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
-	<section class="navbar container-xl bg-dark" id="toolbar" data-bs-theme="dark"
+	<section class="navbar container-xl bg-secondary" id="toolbar" data-bs-theme="dark"
 	         aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOOLBAR') ?>">
-		<div class="ms-2 me-auto">
+		<div class="ms-2 me-auto d-flex flex-row gap-2">
 			<?= TemplateHelper::getRenderedToolbarButtons() ?>
 		</div>
 		<h2 class="navbar-text ps-2 fs-5 py-0 my-0 me-2">

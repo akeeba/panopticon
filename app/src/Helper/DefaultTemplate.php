@@ -153,7 +153,7 @@ abstract class DefaultTemplate
 			function (string $html, Button $button) {
 				$icon = !empty($button->getIcon())
 					? sprintf(
-						'<span class="%s" aria-hidden="true"></span>',
+						'<span class="%s pe-2" aria-hidden="true"></span>',
 						$button->getIcon(),
 					)
 					: '';

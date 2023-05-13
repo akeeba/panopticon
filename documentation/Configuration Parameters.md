@@ -38,7 +38,7 @@ How verbose should error reporting to the browser output be? The valid options a
 * `simple`. Only fatal error and warnings (core PHP or user-defined) are output to the browser.
 * `maximum`. All fatal errors, warnings, notices, and deprecation notices are output.
 
-Default: false
+Default: default
 
 ### `finished_setup`
 **Have we finished installing up the application?**

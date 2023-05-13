@@ -9,19 +9,28 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Container\Container;
 use Awf\Mvc\Controller;
-use Awf\Mvc\Model;
 
 class Main extends Controller
 {
+	use ACLTrait;
+
 	public function __construct(Container $container = null)
 	{
 		$this->modelName = 'site';
 
 		parent::__construct($container);
 	}
+
+	public function execute($task)
+	{
+		$this->aclCheck($task);
+
+		return parent::execute($task);
+	}
+
 
 	protected function onBeforeDefault(): bool
 	{

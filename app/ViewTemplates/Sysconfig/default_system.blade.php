@@ -1,0 +1,88 @@
+<?php
+/**
+ * @var \Akeeba\Panopticon\View\Sysconfig\Html $this
+ */
+
+$config = $this->container->appConfig;
+
+?>
+
+{{--session_timeout--}}
+<div class="row mb-3">
+    <label for="session_timeout" class="col-sm-3 col-form-label">
+        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TIMEOUT')
+    </label>
+    <div class="col-sm-9">
+        <div class="input-group">
+            <input type="number" class="form-control" id="session_timeout" name="options[session_timeout]"
+                   value="{{{ $config->get('session_timeout', 1440) }}}"
+                   min="1"
+            >
+            <div class="input-group-text">
+                @lang('PANOPTICON_SYSCONFIG_LBL_UOM_MINUTES')
+            </div>
+        </div>
+    </div>
+</div>
+
+{{--timezone--}}
+<div class="row mb-3">
+    <label for="timezone" class="col-sm-3 col-form-label">
+        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE')
+    </label>
+    <div class="col-sm-9">
+        {{ \Akeeba\Panopticon\Helper\Setup::timezoneSelect(
+            $config->get('timezone', 'UTC'),
+            name: 'config[timezone]',
+            id: 'timezone'
+        ) }}
+    </div>
+</div>
+
+{{--debug--}}
+<div class="row mb-3">
+    <div class="col-sm-9 offset-sm-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="config[debug]" id="debug"
+                {{ $config->get('debug', false) ? 'checked' : '' }}
+            >
+            <label class="form-check-label" for="debug">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DEBUG')
+            </label>
+        </div>
+    </div>
+</div>
+
+{{--error_reporting--}}
+<div class="row mb-3">
+    <label for="error_reporting" class="col-sm-3 col-form-label">
+        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_ERROR_REPORTING')
+    </label>
+    <div class="col-sm-9">
+        {{ \Awf\Html\Select::genericList(
+	        data: [
+                'default' => 'PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_DEFAULT',
+                'none' => 'PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_NONE',
+                'simple' => 'PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_SIMPLE',
+                'maximum' => 'PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_MAXIMUM',
+            ],
+			name: 'options[error_reporting]',
+			attribs: [
+				'class' => 'form-select'
+            ],
+	        selected: $config->get('error_reporting', 'default'),
+			idTag: 'error_reporting',
+			translate: true
+        ) }}
+    </div>
+</div>
+
+{{--finished_setup--}}
+<input type="hidden" name="config[finished_setup]" id="finished_setup" value="{{ $config->get('finished_setup', false) ? 1 : 0 }}">
+
+{{--================================================================================================================--}}
+{{-- Display preferences --}}
+{{--================================================================================================================--}}
+
+{{--darkmode--}}
+{{--fontsize--}}

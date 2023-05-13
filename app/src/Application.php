@@ -34,7 +34,7 @@ class Application extends AWFApplication
 	private const MAIN_MENU = [
 		[
 			'view' => 'sites',
-			'permissions' => ['panopticon.super'],
+			'permissions' => ['panopticon.admin'],
 		],
 		[
 			'view' => 'tasks',

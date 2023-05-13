@@ -14,23 +14,32 @@ defined('AKEEBA') || die;
 trait ACLTrait
 {
 	protected array $aclChecks = [
-		'cron' => [
+		'cron'      => [
 			'*' => ['*'],
 		],
-		'emails' => [
+		'emails'    => [
 			'*' => ['super'],
 		],
-		'login' => [
+		'login'     => [
 			'*' => ['*'],
 		],
-		'mailtemplates' => [
-			'*' => ['super'],
+		'main'      => [
+			'*' => ['view'],
 		],
 		'setup'     => [
 			'cron' => ['super'],
-			'*' => ['*'],
+			'*'    => ['*'],
+		],
+		'sites'     => [
+			'*' => ['admin'],
 		],
 		'sysconfig' => [
+			'*' => ['super'],
+		],
+		'tasks'     => [
+			'*' => ['super'],
+		],
+		'templates' => [
 			'*' => ['super'],
 		],
 	];

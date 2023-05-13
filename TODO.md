@@ -1,14 +1,14 @@
 # TO-DO
 
-## Warn if the automation is not running
-
-If the last CRON job execution was more than 3 minutes ago, show a warning which takes you to a page to help you set up and test the CRON jobs.
+## System Configuration page
 
 ## Email setup
 
 In the config.php
 
-## System Configuration page
+## Warn if the automation is not running
+
+If the last CRON job execution was more than 3 minutes ago, show a warning which takes you to a page to help you set up and test the CRON jobs.
 
 ## Sites page
 
