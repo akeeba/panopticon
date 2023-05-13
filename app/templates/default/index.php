@@ -55,7 +55,7 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 
 <?php // Top header ?>
 <?php if (!$isBareDisplay): ?>
-	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark"
+	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark pt-1 pb-0"
 	     id="topNavbar">
 		<h1>
 			<?php if (!$isMenuEnabled): ?>
