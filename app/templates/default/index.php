@@ -87,11 +87,18 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 					<div>
 						<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
 						<?php if (in_array($versionTag, [
-							Version::TAG_TYPE_ALPHA, Version::TAG_TYPE_BETA, Version::TAG_TYPE_RELEASE_CANDIDATE,
-							Version::TAG_TYPE_DEV,
+							Version::TAG_TYPE_DEV, Version::TAG_TYPE_ALPHA, Version::TAG_TYPE_BETA,
 						])): ?>
 							<sup>
-								<span class="badge bg-danger-subtle"><?= ucfirst($versionTag) ?></span>
+								<span class="badge bg-danger"><?= ucfirst($versionTag) ?></span>
+							</sup>
+						<?php elseif ($versionTag === Version::TAG_TYPE_BETA): ?>
+							<sup>
+								<span class="badge bg-warning"><?= ucfirst($versionTag) ?></span>
+							</sup>
+						<?php elseif ($versionTag === Version::TAG_TYPE_RELEASE_CANDIDATE): ?>
+							<sup>
+								<span class="badge bg-secondary"><?= ucfirst($versionTag) ?></span>
 							</sup>
 						<?php endif ?>
 					</div>
