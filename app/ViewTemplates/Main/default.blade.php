@@ -7,14 +7,14 @@ defined('AKEEBA') || die;
 ?>
 
 <div class="card">
-    <h3 class="card-header bg-light d-flex flex-column flex-sm-row gap-2">
+    <h3 class="card-header bg-secondary-subtle d-flex flex-column align-items-center flex-sm-row gap-2 fs-5">
         <span class="flex-grow-1">
             <span class="fa fa-globe pe-2" aria-hidden="true"></span>
             @lang('PANOPTICON_MAIN_SITES_LBL_MY_SITES_HEAD')
         </span>
         <span>
             <a href="@route('index.php?view=sites')"
-               class="btn btn-outline-dark">
+               class="btn btn-outline-dark btn-sm">
                 <span class="fa fa-gears" aria-hidden="true"></span>
                 @lang('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE')
             </a>
