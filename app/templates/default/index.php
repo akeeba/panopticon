@@ -25,13 +25,9 @@ $darkModeValue = match ($darkMode)
 	default => ''
 };
 
-if ($darkModeValue === '')
-{
-	TemplateHelper::applyDarkModeJavaScript();
-}
-
 $versionTag    = Version::create(AKEEBA_PANOPTICON_VERSION)->tagType();
 
+TemplateHelper::applyDarkModeJavaScript();
 TemplateHelper::applyFontSize();
 
 $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component';
@@ -55,7 +51,7 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 	<?php endif ?>
 	<meta name="theme-color" content="#147878">
 </head>
-<body data-bs-theme="<?= $darkModeValue ?: 'light' ?>">
+<body data-bs-theme="<?= $darkModeValue ?: '' ?>">
 
 <?php // Top header ?>
 <?php if (!$isBareDisplay): ?>
