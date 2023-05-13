@@ -41,7 +41,7 @@ use Awf\Text\Text;
             </div>
         @endif
 
-        <button type="submit" class="w-100 btn btn-primary btn-lg text-white"
+        <button type="submit" class="w-100 btn btn-primary btn-lg"
                 id="btnLoginSubmit">
             <span class="fa fa-user-check" aria-hidden="true"></span>
             @lang('PANOPTICON_LOGIN_LBL_LOGIN')

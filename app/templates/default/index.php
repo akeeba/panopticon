@@ -24,10 +24,15 @@ $darkModeValue = match ($darkMode)
 	DarkModeEnum::LIGHT => 'light',
 	default => ''
 };
+
+if ($darkModeValue === '')
+{
+	TemplateHelper::applyDarkModeJavaScript();
+}
+
 $versionTag    = Version::create(AKEEBA_PANOPTICON_VERSION)->tagType();
 
 TemplateHelper::applyFontSize();
-TemplateHelper::applyDarkModeJavaScript();
 
 $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component';
 ?>
@@ -48,7 +53,7 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 
 <?php // Top header ?>
 <?php if (!$isBareDisplay): ?>
-	<nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary border-bottom border-2 sticky-top container-xl"
+	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark"
 	     id="topNavbar">
 		<h1>
 			<a class="navbar-brand ps-2 d-flex flex-row"

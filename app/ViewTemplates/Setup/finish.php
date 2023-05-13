@@ -61,7 +61,7 @@ defined('AKEEBA') || die;
 		</div>
 		<?php endif ?>
 		<div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center">
-			<a href="<?= $this->container->router->route('index.php?view=main') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3 text-white">
+			<a href="<?= $this->container->router->route('index.php?view=main') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3">
 				<span class="fas fa-rocket me-2" aria-hidden="true"></span>
 				Start using
 			</a>

@@ -57,7 +57,7 @@ class Html extends \Awf\Mvc\DataView\Html
 		$buttons = [
 			[
 				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
-				'class'   => 'btn-info text-white',
+				'class'   => 'btn-info',
 				'onClick' => json_encode([
 					'data-bs-toggle' => "collapse", 'data-bs-target' => ".form-text", 'aria-expanded' => "false",
 				]),
@@ -88,7 +88,7 @@ class Html extends \Awf\Mvc\DataView\Html
 		$buttons = [
 			[
 				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
-				'class'   => 'btn-info text-white',
+				'class'   => 'btn-info',
 				'onClick' => json_encode([
 					'data-bs-toggle' => "collapse", 'data-bs-target' => ".form-text", 'aria-expanded' => "false",
 				]),

@@ -94,7 +94,7 @@ $sessionPath = $this->getContainer()->session->getSavePath();
 
 	<div class="row mb-3">
 		<div class="col-sm-9 offset-sm-3 d-flex flex-row gap-3 align-items-center">
-			<button type="submit" id="setupFormSubmit" class="btn btn-primary text-white">
+			<button type="submit" id="setupFormSubmit" class="btn btn-primary">
 				<span class="fa fa-chevron-circle-right" aria-hidden="true"></span>
 				<?= Text::_('PANOPTICON_SETUP_BTN_MAKE_SESSION_FOLDER') ?>
 			</button>

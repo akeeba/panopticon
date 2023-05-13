@@ -46,7 +46,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 					<?= Text::_('PANOPTICON_SETUP_LBL_PRECHECK_CANNOT_CONTINUE') ?>
 				</p>
 				<div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center">
-					<a href="<?= Uri::current() ?>" role="button" class="btn btn-warning btn-lg px-4 gap-3 text-white">
+					<a href="<?= Uri::current() ?>" role="button" class="btn btn-warning btn-lg px-4 gap-3">
 						<span class="fa fa-refresh" aria-hidden="true"></span>
 						<?= Text::_('PANOPTICON_SETUP_BTN_RETRY_PRECHECK') ?>
 					</a>
@@ -78,7 +78,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 				<?= Text::_('PANOPTICON_SETUP_LBL_PRECHECK_CANNOT_CONTINUE') ?>
 			</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center">
-				<a href="<?= Uri::current() ?>" role="button" class="btn btn-warning btn-lg px-4 gap-3 text-white">
+				<a href="<?= Uri::current() ?>" role="button" class="btn btn-warning btn-lg px-4 gap-3">
 					<span class="fa fa-refresh" aria-hidden="true"></span>
 					<?= Text::_('PANOPTICON_SETUP_BTN_RETRY_PRECHECK') ?>
 				</a>
@@ -113,7 +113,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 				<?= Text::_('PANOPTICON_SETUP_LBL_PRECHECK_YOU_MAY_CONTINUE') ?>
 			</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center">
-				<a href="<?= $this->container->router->route('index.php?view=setup&task=database&layout=database') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3 text-white">
+				<a href="<?= $this->container->router->route('index.php?view=setup&task=database&layout=database') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3">
 					<span class="fa fa-chevron-circle-right" aria-hidden="true"></span>
 					<?= Text::_('PANOPTICON_BTN_NEXT') ?>
 				</a>
@@ -149,7 +149,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 				<?= Text::_('PANOPTICON_SETUP_LBL_PRECHECK_CANNOT_CONTINUE') ?>
 			</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center">
-				<a href="<?= Uri::current() ?>" role="button" class="btn btn-warning btn-lg px-4 gap-3 text-white">
+				<a href="<?= Uri::current() ?>" role="button" class="btn btn-warning btn-lg px-4 gap-3">
 					<span class="fa fa-refresh" aria-hidden="true"></span>
 					<?= Text::_('PANOPTICON_SETUP_BTN_RETRY_PRECHECK') ?>
 				</a>

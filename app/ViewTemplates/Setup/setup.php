@@ -105,7 +105,7 @@ use Awf\Text\Text;
 	<div class="row mb-3">
 		<div class="col-sm-9 offset-sm-3">
 			<button type="submit" id="dbFormSubmit"
-			        class="btn btn-primary text-white">
+			        class="btn btn-primary">
 				<span class="fa fa-chevron-right" aria-hidden="true"></span>
 				<?= Text::_('PANOPTICON_BTN_NEXT') ?>
 			</button>

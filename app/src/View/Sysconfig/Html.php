@@ -36,7 +36,7 @@ class Html extends \Awf\Mvc\DataView\Html
 			],
 			[
 				'title'   => Text::_('PANOPTICON_BTN_PHPINFO'),
-				'class'   => 'btn btn-dark',
+				'class'   => 'btn btn-warning',
 				'onClick' => $this->container->router->route('index.php?view=phpinfo'),
 				'icon'    => 'fa fa-info-circle',
 			],

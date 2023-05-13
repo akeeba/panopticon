@@ -27,7 +27,7 @@ $headAndFootHeight = (defined('AKEEBADEBUG') && AKEEBADEBUG) ? '13em' : '11em';
 				<?= Text::_('PANOPTICON_SETUP_LBL_WELCOME_HERO_TEXT') ?>
 			</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-				<a href="<?= $this->container->router->route('index.php?view=setup&task=precheck&layout=precheck') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3 text-white">
+				<a href="<?= $this->container->router->route('index.php?view=setup&task=precheck&layout=precheck') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3">
 					<span class="fa fa-chevron-circle-right" aria-hidden="true"></span>
 					<?= Text::_('PANOPTICON_SETUP_BTN_LETS_GO') ?>
 				</a>

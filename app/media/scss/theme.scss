@@ -5,7 +5,7 @@
  */
 
 // Akeeba grays
-$white:    #fff;
+$white: #ffffff;
 $gray-100: #fcfcfc;
 $gray-200: #efefef;
 $gray-300: #e6e6e6;
@@ -15,17 +15,17 @@ $gray-600: #6b686a;
 $gray-700: #514f50;
 $gray-800: #373637;
 $gray-900: #212021;
-$black:    #100010;
+$black: #100010;
 
 // Akeeba colours
-$primary:       #40b5b8;
-$secondary:     #514f50 ;
-$success:       #93c34e;
-$info:          #40a0b8;
-$warning:       #f0ad4e;
-$danger:        #e2363c;
-$light:         #efefef;
-$dark:          #373637;
+$primary: #147878;
+$secondary: #514f50;
+$success: #93c34e;
+$info: #467d8c;
+$warning: #e6a449;
+$danger: #cc3136;
+$light: #efefef;
+$dark: #373637;
 
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
@@ -34,19 +34,38 @@ svg.panopticonLogoColour {
 }
 
 html[data-bs-theme=dark] svg.panopticonLogoColour {
-  path.main {fill: $gray-600}
-  path.w {fill: $primary}
+  path.main {
+    fill: $gray-100
+  }
 
+  path.w {
+    fill: $dark;
+  }
+}
+
+svg.panopticonLogoColour
+{
   &[data-bs-theme=success] {
-    path.w {fill: $success}
+    path.w {
+      fill: $success
+    }
   }
+
   &[data-bs-theme=warning] {
-    path.w {fill: $warning}
+    path.w {
+      fill: $warning
+    }
   }
+
   &[data-bs-theme=danger] {
-    path.w {fill: $danger}
+    path.w {
+      fill: $danger
+    }
   }
+
   &[data-bs-theme=off] {
-    path.w {fill: $secondary}
+    path.w {
+      fill: $secondary
+    }
   }
 }

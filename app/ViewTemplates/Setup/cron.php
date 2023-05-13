@@ -332,7 +332,7 @@ defined('AKEEBA') || die;
 		<p id="errorMessage" class="text-danger">
 		</p>
 		<div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center">
-			<a href="<?= Uri::current() ?>" role="button" class="btn btn-warning btn-lg px-4 gap-3 text-white">
+			<a href="<?= Uri::current() ?>" role="button" class="btn btn-warning btn-lg px-4 gap-3">
 				<span class="fa fa-refresh" aria-hidden="true"></span>
 				<?= Text::_('PANOPTICON_SETUP_LBL_CRON_BENCHMARK_FAILED_BTN_RETRY') ?>
 			</a>

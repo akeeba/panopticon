@@ -11,7 +11,6 @@ namespace Akeeba\Panopticon\Helper;
 use Akeeba\Panopticon\Factory;
 use Awf\Document\Menu\Item;
 use Awf\Document\Toolbar\Button;
-use Awf\Inflector\Inflector;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\Utils\ArrayHelper;
@@ -87,7 +86,7 @@ abstract class DefaultTemplate
 		Factory::getApplication()->getDocument()->addScript(Uri::base() . 'media/js/darkmode.min.js', async: true);
 	}
 
-	public static function getRenderedMenuItem(Item $item, string $listItemClass = 'nav-item', $anchorClass = 'nav-link text-white', bool $onlyChildren = false): string
+	public static function getRenderedMenuItem(Item $item, string $listItemClass = 'nav-item', $anchorClass = 'nav-link', bool $onlyChildren = false): string
 	{
 		// If it's the root menu item render its children without wrapping in a dropdown
 		if ($onlyChildren)
