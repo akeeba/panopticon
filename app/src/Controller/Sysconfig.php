@@ -13,13 +13,12 @@ use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
 use Awf\Text\Text;
 
-
 class Sysconfig extends Controller
 {
 	use ACLTrait;
 
 	private const CHECKBOX_KEYS = [
-		'mail_online', 'mail_smtpauth'
+		'debug', 'log_rotate_compress',
 	];
 
 	public function execute($task)
@@ -36,9 +35,19 @@ class Sysconfig extends Controller
 		$urlRedirect = $this->input->get('urlredirect', null, 'raw');
 		$data        = $this->input->get('options', [], 'none');
 
+		// Handle checkbox keys
+		array_walk(
+			$data,
+			function (&$value, string $key) {
+				if (in_array($key, self::CHECKBOX_KEYS))
+				{
+					$value = in_array(strtolower($value), ['on', 'checked', 1, 'true']);
+				}
+			}
+		);
+
 		$config = $this->container->appConfig;
 
-		// TODO Handle checkbox keys
 		foreach ($data as $k => $v)
 		{
 			$config->set($k, $v);
@@ -48,7 +57,7 @@ class Sysconfig extends Controller
 
 		$url = $urlRedirect ? base64_decode($urlRedirect) : $this->container->router->route('index.php');
 
-		$this->setRedirect($url, Text::_('SOLO_SYSCONFIG_SAVE'));
+		$this->setRedirect($url, Text::_('PANOPTICON_SYSCONFIG_MSG_SAVED'));
 	}
 
 	public function apply()
@@ -57,7 +66,7 @@ class Sysconfig extends Controller
 
 		$url = $this->container->router->route('index.php?view=sysconfig');
 
-		$this->setRedirect($url, Text::_('SOLO_SYSCONFIG_SAVE'));
+		$this->setRedirect($url, Text::_('PANOPTICON_SYSCONFIG_MSG_SAVED'));
 	}
 
 	// TODO Implement testemail()

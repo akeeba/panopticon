@@ -295,4 +295,6 @@ if (!akeeba.Showon)
 /**
  * Initialize 'showon' feature at an initial page load
  */
-akeeba.Showon.initialise(document);
+window.addEventListener('DOMContentLoaded', () =>{
+    akeeba.Showon.initialise(document);
+});

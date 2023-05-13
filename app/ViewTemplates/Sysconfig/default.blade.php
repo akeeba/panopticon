@@ -19,6 +19,14 @@ $router = $this->getContainer()->router;
             </button>
         </li>
         <li class="nav-item" role="presentation">
+            <button type="button" id="sysconfigTabEmail"
+                    class="nav-link" aria-selected="true"
+                    data-bs-toggle="tab" role="tab"
+                    data-bs-target="#sysconfigTabEmailContent" aria-controls="sysconfigTabEmailContent">
+                @lang('PANOPTICON_SYSCONFIG_LBL_TAB_EMAIL')
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
             <button type="button" id="sysconfigTabDisplay"
                     class="nav-link" aria-selected="false"
                     data-bs-toggle="tab" role="tab"
@@ -34,74 +42,39 @@ $router = $this->getContainer()->router;
                 @lang('PANOPTICON_SYSCONFIG_LBL_TAB_AUTOMATION')
             </button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button type="button" id="sysconfigTabSites"
-                    class="nav-link" aria-selected="false"
-                    data-bs-toggle="tab" role="tab"
-                    data-bs-target="#sysconfigTabSitesContent" aria-controls="sysconfigTabSitesContent">
-                @lang('PANOPTICON_SYSCONFIG_LBL_TAB_SITES')
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button type="button" id="sysconfigTabCaching"
-                    class="nav-link" aria-selected="false"
-                    data-bs-toggle="tab" role="tab"
-                    data-bs-target="#sysconfigTabCachingContent" aria-controls="sysconfigTabCachingContent">
-                @lang('PANOPTICON_SYSCONFIG_LBL_TAB_CACHING')
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button type="button" id="sysconfigTabLogging"
-                    class="nav-link" aria-selected="false"
-                    data-bs-toggle="tab" role="tab"
-                    data-bs-target="#sysconfigTabLoggingContent" aria-controls="sysconfigTabLoggingContent">
-                @lang('PANOPTICON_SYSCONFIG_LBL_TAB_LOGGING')
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button type="button" id="sysconfigTabDatabase"
-                    class="nav-link" aria-selected="false"
-                    data-bs-toggle="tab" role="tab"
-                    data-bs-target="#sysconfigTabDatabaseContent" aria-controls="sysconfigTabDatabaseContent">
-                @lang('PANOPTICON_SYSCONFIG_LBL_TAB_DATABASE')
-            </button>
-        </li>
     </ul>
-    <div class="tab-content py-3" id="sysconfigTabContent">
+    <div class="tab-content container py-3" id="sysconfigTabContent" tabindex="-1">
         <div class="tab-pane show active"
-             id="sysconfigTabSystemContent" role="tabpanel" aria-labelledby="sysconfigTabSystem" tabindex="0"
+             id="sysconfigTabSystemContent" role="tabpanel" aria-labelledby="sysconfigTabSystem" tabindex="-1"
         >
-            @include('Sysconfig/default_system')
+            <div class="d-flex flex-column gap-3">
+                @include('Sysconfig/default_system')
+                @include('Sysconfig/default_caching')
+                @include('Sysconfig/default_logging')
+                @include('Sysconfig/default_database')
+            </div>
         </div>
         <div class="tab-pane"
-             id="sysconfigTabDisplayContent" role="tabpanel" aria-labelledby="sysconfigTabDisplay" tabindex="0"
+             id="sysconfigTabEmailContent" role="tabpanel" aria-labelledby="sysconfigTabEmail" tabindex="-1"
         >
-            {{--include('Sysconfig/default_display')--}}
+            <div class="d-flex flex-column gap-3">
+                @include('Sysconfig/default_email')
+            </div>
         </div>
         <div class="tab-pane"
-             id="sysconfigTabAutomationContent" role="tabpanel" aria-labelledby="sysconfigTabAutomation" tabindex="0"
+             id="sysconfigTabDisplayContent" role="tabpanel" aria-labelledby="sysconfigTabDisplay" tabindex="-1"
         >
-            {{--include('Sysconfig/default_automation')--}}
+            <div class="d-flex flex-column gap-3">
+                @include('Sysconfig/default_display')
+            </div>
         </div>
         <div class="tab-pane"
-             id="sysconfigTabSitesContent" role="tabpanel" aria-labelledby="sysconfigTabSites" tabindex="0"
+             id="sysconfigTabAutomationContent" role="tabpanel" aria-labelledby="sysconfigTabAutomation" tabindex="-1"
         >
-            {{--include('Sysconfig/default_sites')--}}
-        </div>
-        <div class="tab-pane"
-             id="sysconfigTabCachingContent" role="tabpanel" aria-labelledby="sysconfigTabCaching" tabindex="0"
-        >
-            {{--include('Sysconfig/default_caching')--}}
-        </div>
-        <div class="tab-pane"
-             id="sysconfigTabLoggingContent" role="tabpanel" aria-labelledby="sysconfigTabLogging" tabindex="0"
-        >
-            {{--include('Sysconfig/default_logging')--}}
-        </div>
-        <div class="tab-pane"
-             id="sysconfigTabDatabaseContent" role="tabpanel" aria-labelledby="sysconfigTabDatabase" tabindex="0"
-        >
-            {{--include('Sysconfig/default_database')--}}
+            <div class="d-flex flex-column gap-3">
+                @include('Sysconfig/default_automation')
+                @include('Sysconfig/default_sites')
+            </div>
         </div>
     </div>
 

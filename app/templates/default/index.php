@@ -35,9 +35,10 @@ $versionTag    = Version::create(AKEEBA_PANOPTICON_VERSION)->tagType();
 TemplateHelper::applyFontSize();
 
 $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component';
+$isMenuEnabled = $this->getMenu()->isEnabled('main');
 ?>
 <!DOCTYPE html>
-<html lang="<?= $langCode ?>" data-bs-theme="<?= $darkModeValue ?>>">
+<html lang="<?= $langCode ?>">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,31 +49,61 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 	<link rel="mask-icon" href="<?= Uri::base() ?>media/images/logo_bw.svg" color="#000000">
 
 	<?php include __DIR__ . '/includes/head.php' ?>
+
+	<?php if($darkModeValue): ?>
+	<meta name="color-scheme" content="<?= $darkModeValue ?>">
+	<?php endif ?>
+	<meta name="theme-color" content="#147878">
 </head>
-<body>
+<body data-bs-theme="<?= $darkModeValue ?: 'light' ?>">
 
 <?php // Top header ?>
 <?php if (!$isBareDisplay): ?>
 	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark"
 	     id="topNavbar">
 		<h1>
-			<a class="navbar-brand ps-2 d-flex flex-row"
-			   href="<?= $this->getMenu()->isEnabled('main') ? Uri::base() : 'javascript:' ?>">
-				<?= file_get_contents(APATH_MEDIA . '/images/logo_colour.svg') ?>
-				<div>
-					<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
-					<?php if (in_array($versionTag, [
-						Version::TAG_TYPE_ALPHA, Version::TAG_TYPE_BETA, Version::TAG_TYPE_RELEASE_CANDIDATE,
-						Version::TAG_TYPE_DEV,
-					])): ?>
-						<sup>
-							<span class="badge bg-danger-subtle"><?= ucfirst($versionTag) ?></span>
-						</sup>
-					<?php endif ?>
+			<?php if (!$isMenuEnabled): ?>
+				<div class="navbar-brand ps-2 d-flex flex-row">
+					<?= file_get_contents(APATH_MEDIA . '/images/logo_colour.svg') ?>
+					<div>
+						<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
+						<?php if (in_array($versionTag, [
+							Version::TAG_TYPE_DEV, Version::TAG_TYPE_ALPHA, Version::TAG_TYPE_BETA,
+						])): ?>
+							<sup>
+								<span class="badge bg-danger"><?= ucfirst($versionTag) ?></span>
+							</sup>
+						<?php elseif ($versionTag === Version::TAG_TYPE_BETA): ?>
+							<sup>
+								<span class="badge bg-warning"><?= ucfirst($versionTag) ?></span>
+							</sup>
+						<?php elseif ($versionTag === Version::TAG_TYPE_RELEASE_CANDIDATE): ?>
+							<sup>
+								<span class="badge bg-secondary"><?= ucfirst($versionTag) ?></span>
+							</sup>
+						<?php endif ?>
+					</div>
 				</div>
-			</a>
+			<?php else: ?>
+				<a class="navbar-brand ps-2 d-flex flex-row"
+				   href="<?= Uri::base() ?>">
+					<?= file_get_contents(APATH_MEDIA . '/images/logo_colour.svg') ?>
+					<div>
+						<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
+						<?php if (in_array($versionTag, [
+							Version::TAG_TYPE_ALPHA, Version::TAG_TYPE_BETA, Version::TAG_TYPE_RELEASE_CANDIDATE,
+							Version::TAG_TYPE_DEV,
+						])): ?>
+							<sup>
+								<span class="badge bg-danger-subtle"><?= ucfirst($versionTag) ?></span>
+							</sup>
+						<?php endif ?>
+					</div>
+				</a>
+			<?php endif ?>
+
 		</h1>
-		<?php if ($this->getMenu()->isEnabled('main') && $user->getId()): ?>
+		<?php if ($isMenuEnabled && $user->getId()): ?>
 			<button class="navbar-toggler" type="button"
 			        data-bs-toggle="collapse" data-bs-target="#topNavbarMenu"
 			        aria-controls="topNavbarMenu" aria-expanded="false"
@@ -83,7 +114,7 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 
 		<div class="collapse navbar-collapse" id="topNavbarMenu">
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-				<?php if ($this->getMenu()->isEnabled('main') && $user->getId()): ?>
+				<?php if ($isMenuEnabled && $user->getId()): ?>
 					<?= TemplateHelper::getRenderedMenuItem($this->getMenu()->getMenuItems('main'), onlyChildren: true) ?>
 				<?php endif; ?>
 			</ul>

@@ -29,7 +29,7 @@ class Sysconfig extends Model
 			'finished_setup' => filter_var($value, FILTER_VALIDATE_BOOL),
 
 			// Display
-			'darkmode' => filter_var($value, FILTER_VALIDATE_INT) && in_array($value, [-1, 0, 1]),
+			'darkmode' => filter_var($value, FILTER_VALIDATE_INT) && in_array($value, [1, 2, 3]),
 			'fontsize' => filter_var($value, FILTER_VALIDATE_INT) && $value >= 8 && $value <= 48,
 
 			// Automation
