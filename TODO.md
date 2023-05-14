@@ -1,7 +1,5 @@
 # TO-DO
 
-## Sites page
-
 ## Email setup
 
 In the configuration page
@@ -23,18 +21,6 @@ Note: it will require adding a WYSIWYG editor.
 Beyond that, we need a separate text are for CSS to add at the top of the HTML message, since TinyMCE will strip that (IIRC).
 
 ## Add WebAuthn as an MFA method
-
-## Connection failure detection (and point to documentation):
-* Connection error (TCP/IP, SSL, …) — explain host firewalls, check spelling of site, DNS resolution may take time
-* HTTP !== 401 when accessing /api/index.php/v1/extensions unauthenticated — make sure you can access the /api folder
-* HTTP 403 — make sure the server does not block our User Agent or payload
-* HTTP 401 when accessing /api/index.php/v1/extensions **authenticated** — Invalid Joomla API key, instructions to retrieve it
-* Connector plugin not installed / not activated — instructions to install and activate the plugin
-  * Run https://boot4.local.web/api/index.php/v1/config/com_panopticon?page[limit]=200 and make sure the result is not empty
-* (Warning) Akeeba Backup Pro component not installed / not activated and/or Web Services - Akeeba Backup plugin (if version >= 9.6.0) not installed / not activated — you must install and activate Akeeba Backup Pro and specific plugins for full features
-* (Warning) Cannot get list of profiles — you must install and activate Akeeba Backup Pro and specific plugins for full features
-* (Warning) Admin Tools Pro component and/or Web Services - Admin Tools plugin (if version >= 7.4.0) not installed / not activated — you must install and activate Admin Tools Pro and specific plugins for full features
-* (Warning) Cannot list WAF settings — you must install and activate Admin Tools Pro and specific plugins for full features
 
 ## Core updates
 * Install one task per site for core version checks. The task caches the results to the site's definition.
@@ -181,3 +167,17 @@ See \Akeeba\Panopticon\Application::MAIN_MENU
 ## Warn if the automation is not running
 
 If the last CRON job execution was more than a minute ago show a warning which takes you to a page to help you set up the CRON jobs.
+
+## Sites page
+
+## Connection failure detection (and point to documentation):
+* Connection error (TCP/IP, SSL, …) — explain host firewalls, check spelling of site, DNS resolution may take time
+* HTTP !== 401 when accessing /api/index.php/v1/extensions unauthenticated — make sure you can access the /api folder
+* HTTP 403 — make sure the server does not block our User Agent or payload
+* HTTP 401 when accessing /api/index.php/v1/extensions **authenticated** — Invalid Joomla API key, instructions to retrieve it
+* Connector plugin not installed / not activated — instructions to install and activate the plugin
+  * Run https://boot4.local.web/api/index.php/v1/config/com_panopticon?page[limit]=200 and make sure the result is not empty
+* (Warning) Akeeba Backup Pro component not installed / not activated and/or Web Services - Akeeba Backup plugin (if version >= 9.6.0) not installed / not activated — you must install and activate Akeeba Backup Pro and specific plugins for full features
+* (Warning) Cannot get list of profiles — you must install and activate Akeeba Backup Pro and specific plugins for full features
+* (Warning) Admin Tools Pro component and/or Web Services - Admin Tools plugin (if version >= 7.4.0) not installed / not activated — you must install and activate Admin Tools Pro and specific plugins for full features
+* (Warning) Cannot list WAF settings — you must install and activate Admin Tools Pro and specific plugins for full features
