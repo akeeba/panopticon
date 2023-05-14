@@ -4,6 +4,52 @@
 
 If any of the default tasks are missing, install them
 
+## Check the database for consistency
+
+## Notify about PHP versions going out of support
+
+Subtle notification the first six months into a security-only release, can be dismissed for 3 months. More prominent the last six months, can be dismissed for 1 month. Big notification on EOL, cannot be dismissed.
+
+## Core updates
+
+We need to provide a global default for core updates:
+* No updates (only sends emails)
+* Only patch versions (e.g. 1.2.3 -> 1.2.4)
+* Patch and minor (e.g. 1.2 -> 1.3)
+* Patch, minor, and major (e.g. 1.2 -> 2.0)
+The factory default is Patch and Minor.
+
+The global default can be overridden per site.
+
+* Install one task per site for core version checks. The task caches the results to the site's definition.
+* Install one global task for automatically installing updates.
+  * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
+  * Configurable conditions for upgrading (only stable versions? only within the same minor/major?)
+  * Create (or re-enable) a "run once" task to upgrade the site. This is a high priority task.
+  * If there are sites queued up for upgrade allow 2 minutes between each site's upgrade task.
+* Notify user when there is a new available version and whether it will be auto-installed.
+* Notify the user when the upgrade succeeds / fails.
+* When the user chooses to upgrade a site, push a new (or re-enable an existing) "run once" task to upgrade the site.
+* The time of the update installation should be something the user can define. Remember that sites may be used in different timezones e.g. a US-centric site is best updated around midnight CST i.e. 05:00 UTC
+* In the future, we can choose whether to schedule a backup before the update
+  * This requires making pre-requisite tasks, or otherwise avoid duplicating the backup logic
+* Fetch the changed template files after the update is over
+
+## Extension updates
+
+We need to provide a global default for extension updates:
+* No updates (only sends emails)
+* Only patch versions (e.g. 1.2.3 -> 1.2.4)
+* Patch and minor (e.g. 1.2 -> 1.3)
+* Patch, minor, and major (e.g. 1.2 -> 2.0)
+
+The factory default is Patch, Minor, and Major.
+
+The global default should be overridable in the following levels:
+* Global, per extension. For example, all versions of Akeeba Backup should be set to “Patch, Minor, and Major”
+* Per site, all extensions.
+* Per site, per extension.
+
 ## Email setup
 
 In the configuration page
@@ -26,26 +72,21 @@ Beyond that, we need a separate text are for CSS to add at the top of the HTML m
 
 ## Add WebAuthn as an MFA method
 
-## Core updates
-* Install one task per site for core version checks. The task caches the results to the site's definition.
-* Install one global task for automatically installing updates.
-  * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
-  * Configurable conditions for upgrading (only stable versions? only within the same minor/major?)
-  * Create (or re-enable) a "run once" task to upgrade the site. This is a high priority task.
-  * If there are sites queued up for upgrade allow 2 minutes between each site's upgrade task.
-* Notify user when there is a new available version and whether it will be auto-installed.
-* Notify the user when the upgrade succeeds / fails.
-* When the user chooses to upgrade a site, push a new (or re-enable an existing) "run once" task to upgrade the site.
-* The time of the update installation should be something the user can define. Remember that sites may be used in different timezones e.g. a US-centric site is best updated around midnight CST i.e. 05:00 UTC
-* In the future, we can choose whether to schedule a backup before the update
-  * This requires making pre-requisite tasks, or otherwise avoid duplicating the backup logic
-* Fetch the changed template files after the update is over
-
 ## Automatic generation of SBOM
 
 composer --global require cyclonedx/cyclonedx-php-composer
 
 CycloneDX:make-sbom --output-format=json --omit=dev --output-reproducible --validate --mc-version=0.0.1 --output-file=app/vendor/sbom.json
+
+## About page which lists the SBOM?
+
+## Implement self-update
+
+Both on the web and CLI
+
+Web version needs to show a notification if there's a new version AND it's can be installed (i.e. PHP version is fine)
+
+Best use the same dead-simple INI format as Solo.
 
 # Integrations
 
