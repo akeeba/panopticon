@@ -84,19 +84,19 @@ defined('AKEEBA') || die;
                             </div>
                         </td>
                         <td>
-                            @include('main/site_joomla', [
+                            @include('Main/site_joomla', [
                                 'item' => $item,
                                 'config' => $config,
                             ])
                         </td>
                         <td>
-                            @include('main/site_extensions', [
+                            @include('Main/site_extensions', [
                                 'item' => $item,
                                 'config' => $config,
                             ])
                         </td>
                         <td>
-                            @include('main/site_php', [
+                            @include('Main/site_php', [
                                 'item' => $item,
                                 'config' => $config,
                                 'php' => $config->get('core.php')
