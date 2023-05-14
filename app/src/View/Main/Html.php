@@ -9,6 +9,8 @@ namespace Akeeba\Panopticon\View\Main;
 
 use Akeeba\Panopticon\Model\Site;
 use Awf\Pagination\Pagination;
+use Awf\Text\Text;
+use Awf\Utils\Template;
 
 defined('AKEEBA') || die;
 
@@ -28,8 +30,8 @@ class Html extends \Awf\Mvc\DataView\Html
 		$model->savestate(1);
 
 		// Ordering information
-		$this->lists->order		 = $model->getState('filter_order', $model->getIdFieldName(), 'cmd');
-		$this->lists->order_Dir	 = $model->getState('filter_order_Dir', 'DESC', 'cmd');
+		$this->lists->order     = $model->getState('filter_order', $model->getIdFieldName(), 'cmd');
+		$this->lists->order_Dir = $model->getState('filter_order_Dir', 'DESC', 'cmd');
 
 		// Display limits
 		$this->lists->limitStart = $model->getState('limitstart', 0, 'int');
@@ -40,19 +42,28 @@ class Html extends \Awf\Mvc\DataView\Html
 		$this->itemsCount = $model->count();
 
 		// Pagination
-		$displayedLinks = 10;
+		$displayedLinks   = 10;
 		$this->pagination = new Pagination($this->itemsCount, $this->lists->limitStart, $this->lists->limit, $displayedLinks, $this->container->application);
 
-		$inlineJs = <<< JS
-(() => {
-    window.addEventListener('DOMContentLoaded', () => {
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))  
-    })
-})()
+		// Back button in the CRON instructions page
+		if ($this->layout === 'cron')
+		{
+			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition([
+				'title'   => Text::_('PANOPTICON_BTN_PREV'),
+				'class'   => 'btn btn-secondary border-light',
+				'url' => $this->container->router->route('index.php'),
+				'icon'    => 'fa fa-chevron-left',
+			]);
+		}
 
-JS;
-		$this->container->application->getDocument()->addScriptDeclaration($inlineJs);
+		// JavaScript
+		$doc = $this->container->application->getDocument();
+		$doc->addScriptOptions('panopticon.heartbeat', [
+			'url'       => $this->container->router->route('index.php?view=main&task=heartbeat&format=json'),
+			'warningId' => 'heartbeatWarning',
+		]);
+
+		Template::addJs('media://js/main.js', async: true);
 
 		return true;
 	}

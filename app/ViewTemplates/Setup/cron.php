@@ -12,6 +12,8 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Setup\Html $this */
 
+$whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
+
 ?>
 
 <!-- Instructions -->
@@ -23,9 +25,9 @@ defined('AKEEBA') || die;
 		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_SUBHEAD') ?>
 	</p>
 	<p class="lead text-center">
-		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_SUBHEAD_CTA') ?>
+		<?= Text::_( $ctaLangString ?? 'PANOPTICON_SETUP_LBL_CRON_SUBHEAD_CTA') ?>
 	</p>
-	<p class="small text-muted text-center">
+	<p class="small text-muted text-center <?= $whatsNextClass ?>">
 		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_SUBHEAD_BREATHE') ?>
 	</p>
 
@@ -274,20 +276,22 @@ defined('AKEEBA') || die;
 		</div>
 	</div>
 
-	<h3><?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT') ?></h3>
-	<p>
-		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO') ?>
-	</p>
-	<p>
-		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER') ?>
-	</p>
-	<p class="text-muted">
-		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER') ?>
-		<br/>
-		<a href="<?= $this->getContainer()->router->route('index.php?view=setup&task=skipcron') ?>" class="link-secondary">
-			<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_SKIP_CRON') ?>
-		</a>
-	</p>
+	<div id="whatNextAfterCron" class="<?= $whatsNextClass ?>">
+		<h3><?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT') ?></h3>
+		<p>
+			<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO') ?>
+		</p>
+		<p>
+			<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER') ?>
+		</p>
+		<p class="text-muted">
+			<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER') ?>
+			<br/>
+			<a href="<?= $this->getContainer()->router->route('index.php?view=setup&task=skipcron') ?>" class="link-secondary">
+				<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_SKIP_CRON') ?>
+			</a>
+		</p>
+	</div>
 </div>
 
 <!-- Benchmark -->

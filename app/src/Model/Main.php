@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Awf\Date\Date;
 use Awf\Mvc\Model;
 
 class Main extends Model
@@ -30,5 +31,33 @@ class Main extends Model
 				: (version_compare($carry, $item, 'lt') ? $item : $carry),
 			null
 		);
+	}
+
+	public function getLastCronExecutionTime(): ?Date
+	{
+		$db = $this->container->db;
+		$db->lockTable('#__akeeba_common');
+		$query = $db->getQuery(true)
+			->select($db->quoteName('value'))
+			->from($db->quoteName('#__akeeba_common'))
+			->where($db->quoteName('key') . ' = ' . $db->quote('panopticon.task.last.execution'));
+
+		$lastExecution = $db->setQuery($query)->loadResult();
+
+		$db->unlockTables();
+
+		if (empty($lastExecution))
+		{
+			return null;
+		}
+
+		try
+		{
+			return new Date($lastExecution);
+		}
+		catch (\Throwable $e)
+		{
+			return null;
+		}
 	}
 }

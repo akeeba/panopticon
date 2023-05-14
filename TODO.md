@@ -1,16 +1,14 @@
 # TO-DO
 
-## System Configuration page
+## Sites page
 
 ## Email setup
 
-In the config.php
+In the configuration page
 
-## Warn if the automation is not running
+## Database setup
 
-If the last CRON job execution was more than 3 minutes ago, show a warning which takes you to a page to help you set up and test the CRON jobs.
-
-## Sites page
+In the configuration page
 
 ## Site report page
 
@@ -177,3 +175,9 @@ The following tasks must be installed at the end of the installation, and a feat
 ## Custom menu
 
 See \Akeeba\Panopticon\Application::MAIN_MENU
+
+## System Configuration page
+
+## Warn if the automation is not running
+
+If the last CRON job execution was more than a minute ago show a warning which takes you to a page to help you set up the CRON jobs.

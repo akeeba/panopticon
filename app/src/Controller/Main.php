@@ -9,8 +9,12 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Application;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Model\Main as MainModel;
 use Awf\Container\Container;
+use Awf\Date\Date;
+use Awf\Document\Json;
 use Awf\Mvc\Controller;
 
 class Main extends Controller
@@ -31,6 +35,36 @@ class Main extends Controller
 		return parent::execute($task);
 	}
 
+	public function heartbeat()
+	{
+		/** @var MainModel $model */
+		$model             = $this->getModel('Main');
+		$lastExecutionTime = $model->getLastCronExecutionTime();
+
+		if (empty($lastExecutionTime))
+		{
+			$isValid = false;
+		}
+		else
+		{
+			$lastPlausibleRun = (new Date())->sub(new \DateInterval('PT55S'));
+			$lastPlausibleRun->setTime($lastPlausibleRun->hour, $lastPlausibleRun->minute, 0, 0);
+
+			$isValid = $lastPlausibleRun->diff($lastExecutionTime)->invert === 0;
+		}
+
+		/**
+		 * @var Application $app
+		 * @var Json        $document
+		 */
+		$app      = $this->container->application;
+		$document = $app->getDocument();
+
+		$document->setUseHashes(false);
+		$document->setBuffer(json_encode($isValid));
+		$app->render();
+		$app->close();
+	}
 
 	protected function onBeforeDefault(): bool
 	{

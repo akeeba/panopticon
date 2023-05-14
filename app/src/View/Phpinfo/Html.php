@@ -24,8 +24,6 @@ class Html extends \Awf\Mvc\DataView\Html
 			'icon'    => 'fa fa-chevron-left',
 		]);
 
-
-
 		$this->phpInfo = $this->getModel()->getPhpInfo();
 
 		return true;

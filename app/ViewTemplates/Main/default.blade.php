@@ -6,6 +6,8 @@ defined('AKEEBA') || die;
  */
 ?>
 
+@include('Main/heartbeat')
+
 <div class="card">
     <h3 class="card-header bg-secondary-subtle d-flex flex-column align-items-center flex-sm-row gap-2 fs-5">
         <span class="flex-grow-1">
