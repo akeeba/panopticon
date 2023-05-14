@@ -1,5 +1,9 @@
 # TO-DO
 
+## Check that all default tasks are installed
+
+If any of the default tasks are missing, install them
+
 ## Email setup
 
 In the configuration page
