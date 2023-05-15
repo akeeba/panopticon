@@ -166,7 +166,7 @@ class Setup extends Controller
 
 			if (function_exists('opcache_invalidate'))
 			{
-				opcache_invalidate(APATH_ROOT . '/config.php');
+				opcache_invalidate(APATH_ROOT . '/config.php', true);
 			}
 
 			// Redirect to the CRON setup page – we're done here
@@ -244,7 +244,7 @@ class Setup extends Controller
 
 		if (function_exists('opcache_invalidate'))
 		{
-			opcache_invalidate(APATH_ROOT . '/config.php');
+			opcache_invalidate(APATH_ROOT . '/config.php', true);
 		}
 
 		$model->installDefaultTasks();
@@ -285,7 +285,7 @@ class Setup extends Controller
 
 		if (function_exists('opcache_invalidate'))
 		{
-			opcache_invalidate(APATH_ROOT . '/config.php');
+			opcache_invalidate(APATH_ROOT . '/config.php', true);
 		}
 
 		$model->installDefaultTasks();

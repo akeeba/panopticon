@@ -440,7 +440,7 @@ class Setup extends Model
 
 		if (function_exists('opcache_invalidate'))
 		{
-			opcache_invalidate(APATH_ROOT . '/config.php');
+			opcache_invalidate(APATH_ROOT . '/config.php', true);
 		}
 	}
 
