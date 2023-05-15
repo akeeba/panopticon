@@ -4,14 +4,14 @@ Before working on core and extension updates remember to remove ALL dev sites fr
 
 ## Core updates
 
-We need to provide a global default for core updates:
+✅ We need to provide a global default for core updates (`tasks_coreupdate_install`):
 * `none` None. No updates, no emails
 * `email` Email. No updates, only sends emails.
 * `patch` Same Version Family. Only patch versions (e.g. 1.2.3 -> 1.2.4)
 * `minor` Same Major Version. Patch and minor (e.g. 1.2 -> 1.3)
 * `major` Any (Not Recommended). Patch, minor, and major (e.g. 1.2 -> 2.0)
 
-The factory default is `patch`.
+✅ The factory default is `patch`.
 
 Each site has these options in `config`, editable in the site config page
 

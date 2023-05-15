@@ -74,6 +74,7 @@ $router = $this->getContainer()->router;
             <div class="d-flex flex-column gap-3">
                 @include('Sysconfig/default_automation')
                 @include('Sysconfig/default_sites')
+                @include('Sysconfig/default_coreupdates')
             </div>
         </div>
     </div>
