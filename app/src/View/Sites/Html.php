@@ -94,7 +94,12 @@ class Html extends DataViewHtml
 
 		$toolbar->setTitle(Text::_('PANOPTICON_SITES_TITLE_NEW'));
 
+		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+		$this->item = $this->getModel();
+
 		$this->connectionError = $this->container->segment->getFlash('site_connection_error', null);
+		$this->httpCode = $this->container->segment->getFlash('site_connection_http_code', null);
+		$this->curlError = $this->container->segment->getFlash('site_connection_curl_error', null);
 
 		return parent::onBeforeAdd();
 	}

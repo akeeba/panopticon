@@ -1,43 +1,83 @@
 # TO-DO
 
+Before working on core and extension updates remember to remove ALL dev sites from the sites list. We are going to be doing something potentially dangerous to dev sites here.
+
 ## Core updates
 
 We need to provide a global default for core updates:
-* No updates (only sends emails)
-* Only patch versions (e.g. 1.2.3 -> 1.2.4)
-* Patch and minor (e.g. 1.2 -> 1.3)
-* Patch, minor, and major (e.g. 1.2 -> 2.0)
-The factory default is Patch and Minor.
+* `none` None. No updates, no emails
+* `email` Email. No updates, only sends emails.
+* `patch` Same Version Family. Only patch versions (e.g. 1.2.3 -> 1.2.4)
+* `minor` Same Major Version. Patch and minor (e.g. 1.2 -> 1.3)
+* `major` Any (Not Recommended). Patch, minor, and major (e.g. 1.2 -> 2.0)
 
-The global default can be overridden per site.
+The factory default is `patch`.
 
-* Install one global task for automatically installing updates.
+Each site has these options in `config`, editable in the site config page
+
+* config.core_update.install: '', none, email, patch, minor, major • default: '' (use global)
+* config.core_update.when: immediately, time • default: immediately
+* config.core_update.time.hour: (integer 0-23) • default: 0
+* config.core_update.time.minute: (integer 0-59) • default: 0
+* config.core_update.email.cc: (list of email addresses to CC) • default: empty
+* config.core_update.email_after: (boolean) Only when config.core_update.install not none or email • default: true  
+
+What to do
+
+* Create new task type `joomlaupdate` which handles the update of one specific site
+* Install one global task of type `coreupdateconductor` for automatically setting up core update installation
   * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
-  * Configurable conditions for upgrading (only stable versions? only within the same minor/major?)
-  * Create (or re-enable) a "run once" task to upgrade the site. This is a high priority task.
-  * If there are sites queued up for upgrade allow 2 minutes between each site's upgrade task.
-* Notify user when there is a new available version and whether it will be auto-installed.
-* Notify the user when the upgrade succeeds / fails.
-* When the user chooses to upgrade a site, push a new (or re-enable an existing) "run once" task to upgrade the site.
-* The time of the update installation should be something the user can define. Remember that sites may be used in different timezones e.g. a US-centric site is best updated around midnight CST i.e. 05:00 UTC
-* In the future, we can choose whether to schedule a backup before the update
-  * This requires making pre-requisite tasks, or otherwise avoid duplicating the backup logic
-* Fetch the changed template files after the update is over
+  * Create (or re-enable) a "run once" task to upgrade the site.
+  * Enqueue email for sending
+* Install one global task of type `mailsending` which sends the enqueued emails
+
+The `joomlaupdate` task
+* Performs any pre-upgrade tasks (TO-DO)
+* Downloads the update package
+* Enables Joomla Update's restoration.php / extract.php
+* Goes through the extraction and post-extraction steps
+* Performs any post-upgrade tasks (TO-DO)
+* Conditionally enqueues completion email
+* Fetch the number of changed template files after the update is over and update the site record
+
+If a user chooses to upgrade a site with no auto-updates (the resolved config.core_update.install is none or email) follow the same process as the `coreupdateconductor` task FORCING the value of config.core_update.install to `major`. Do NOT send an email that an update will be installed automatically (the user initiated this action themselves).
 
 ## Extension updates
 
-We need to provide a global default for extension updates:
-* No updates (only sends emails)
-* Only patch versions (e.g. 1.2.3 -> 1.2.4)
-* Patch and minor (e.g. 1.2 -> 1.3)
-* Patch, minor, and major (e.g. 1.2 -> 2.0)
+We need to provide a global default for extension updates PER EXTENSION:
+* `none` None. No updates, no emails.
+* `email` Email. No updates, only sends emails
+* `patch` Same Version Family. Only patch versions (e.g. 1.2.3 -> 1.2.4)
+* `minor` Same Major Version. Patch and minor (e.g. 1.2 -> 1.3)
+* `major` Any (Not Recommended). Patch, minor, and major (e.g. 1.2 -> 2.0)
 
-The factory default is Patch, Minor, and Major.
+The factory default is `email`.
 
-The global default should be overridable in the following levels:
-* Global, per extension. For example, all versions of Akeeba Backup should be set to “Patch, Minor, and Major”
-* Per site, all extensions.
-* Per site, per extension.
+The global default can be overriden in two levels: 
+* Global, per extension. For example, all versions of Akeeba Backup should be set to “Patch, Minor, and Major”. Requires new page, Extensions.
+* Per site, per extension. The default setting will be "Use global". Only extensions deviating from Use Global will have their preference recorded under the site param key `config.extension_update.extensions` which is an array keyed to _the extension ID_.
+
+> **Reasoning**: Typically, extensions which are “safe” to upgrade are safe across _all_ of your sites. For example, Akeeba Backup and JCE can be updated without anything breaking, Akeeba Ticket System can only be expected to do so within the same major version, some other extension may be introducing random breaking changes all the time, therefore you don't want to ever update it automatically. However, you may have a special snowflake of a site where upgrading JCE would break some third party extension for reasons unknown. If you have set JCE to always update to any version it would break that site; hence the need to be able to say "nope, I don't want to even be told that JCE is out of date on that site".
+
+The list of upgradeable extensions will be populated by the extensions discovered in the defined sites and continuously refined every time we update the sites' extensions list.
+
+What to do
+
+* Create new task type `extensionsupdate` which handles the update of the extensions of one specific site
+* Install one global task of type `extupdateconductor` for automatically setting up extension update installation
+  * Query sites with extension updates (use MySQL's JSON features) which do NOT already have an enabled run-once extension update task.
+  * Create (or re-enable) a "run once" task to update the site's extensions.
+  * Create a queue for the extensions to update on this site
+  * Enqueue email for sending
+
+The `extensionsupdate` task
+* Loop through the list of extensions to update and tell the site to install the update
+* After all updates have been installed (or failed to install) send an email telling the user how many updates were available, how many were installed, and how many failed to install
+
+If a user chooses to update an extension with no auto-updates:
+* If a queue for the extensions to update on this site does not exist, create it
+* Add the extension ID to the queue
+* Create (or re-enable) a "run once" task to update the site's extensions.
 
 ## Database setup
 
@@ -45,7 +85,7 @@ In the configuration page
 
 ## Site report page
 
-## Tasks page
+## Tasks page (only listing, no management)
 
 ## Log viewer page
 
