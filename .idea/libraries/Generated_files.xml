@@ -6,6 +6,7 @@
         <item url="file://$PROJECT_DIR$/app/media/js/bootstrap.bundle.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/darkmode.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/main.min.js" />
+        <item url="file://$PROJECT_DIR$/app/media/js/remember-tab.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/setup.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/showon.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/system.min.js" />
@@ -16,6 +17,7 @@
       <root url="file://$PROJECT_DIR$/app/media/js/bootstrap.bundle.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/darkmode.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/main.min.js" />
+      <root url="file://$PROJECT_DIR$/app/media/js/remember-tab.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/setup.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/showon.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/system.min.js" />

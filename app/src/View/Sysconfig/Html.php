@@ -54,6 +54,11 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		array_walk($buttons, fn($button) => $toolbar->addButtonFromDefinition($button));
 
+		$document->addScriptOptions('panopticon.rememberTab', [
+			'key' => 'panopticon.sysconfig.rememberTab'
+		]);
+		Template::addJs('media://js/remember-tab.js');
+
 		return true;
 	}
 }
