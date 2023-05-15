@@ -55,6 +55,11 @@ class Sysconfig extends Controller
 
 		$this->container->appConfig->saveConfiguration();
 
+		if (function_exists('opcache_invalidate'))
+		{
+			opcache_invalidate($this->container->appConfig->getDefaultPath(), true);
+		}
+
 		$url = $urlRedirect ? base64_decode($urlRedirect) : $this->container->router->route('index.php');
 
 		$this->setRedirect($url, Text::_('PANOPTICON_SYSCONFIG_MSG_SAVED'));
