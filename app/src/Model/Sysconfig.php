@@ -66,6 +66,18 @@ class Sysconfig extends Model
 			'dbsslcert' => empty($value) || (is_file($value) && is_readable($value)),
 			'dbsslverifyservercert' => filter_var($value, FILTER_VALIDATE_BOOL),
 
+			// Email
+			'mail_online' => filter_var($value, FILTER_VALIDATE_BOOL),
+			'mailer' => in_array($value, ['mail', 'sendmail', 'smtp']),
+			'mailfrom' => empty($value) || filter_var($value, FILTER_VALIDATE_EMAIL),
+			'fromname' => true,
+			'smtphost' => true,
+			'smtpport' => is_integer($value) && ($value >= 1) && ($value <= 65535),
+			'smtpsecure' => in_array($value, ['none', 'ssl', 'tls']),
+			'smtpauth' => filter_var($value, FILTER_VALIDATE_BOOL),
+			'smtpuser' => true,
+			'smtppass' => true,
+
 			// Anything else, we don't know what it is.
 			default => false,
 		};

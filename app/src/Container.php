@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Application\Configuration;
 use Akeeba\Panopticon\Library\Cache\CacheFactory;
 use Akeeba\Panopticon\Library\Http\HttpFactory;
 use Akeeba\Panopticon\Library\Logger\LoggerFactoryService;
+use Akeeba\Panopticon\Library\Mailer\Mailer;
 use Akeeba\Panopticon\Library\Queue\QueueFactory;
 use Akeeba\Panopticon\Library\Task\Registry as TaskRegistry;
 use Awf\Container\Container as AWFContainer;
@@ -46,6 +47,10 @@ class Container extends AWFContainer
 
 		$values['httpFactory'] ??= function (Container $c) {
 			return new HttpFactory();
+		};
+
+		$values['mailer'] ??= function (Container $c) {
+			return new Mailer($c);
 		};
 
 		$values['taskRegistry'] ??= function (Container $c) {

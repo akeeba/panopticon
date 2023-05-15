@@ -293,3 +293,88 @@ Default:
 Should I verify the SSL/TLS server certificates against the SSL/TLS CA?
 
 Default: true
+
+## Email
+
+Tells Panopticon how to send emails
+
+### `mail_online`
+**Mail Sending**
+
+Is Panopticon allowed to send email? 
+
+Default: false
+
+### `mailer`
+**Mail handler**
+
+How will Panopticon send emails?
+
+One of:
+* `smtp` Use the configured SMTP server.
+* `sendmail` Use `sendmail`, as configured in PHP (see [`sendmail_path`](https://www.php.net/manual/en/mail.configuration.php#ini.sendmail-path)).
+* `mail` Use the built-in PHP `mail()` function. For its configuration please consult [PHP's Mail configuration options page](https://www.php.net/manual/en/mail.configuration.php#ini.sendmail-path).
+
+Default: mail
+
+### `mailfrom`
+**Sender address**
+
+The sender email address for any email sent by Panopticon.
+
+Default: (blank; must be configured)
+
+### `fromname`
+**Sender name**
+
+The sender email name for any email sent by Panopticon.
+
+Default: "Panopticon"
+
+### `smtphost`
+**SMTP Host**
+
+Only when you use the SMTP mail handler. The host name of your SMTP server, e.g. `mail.example.com`
+
+Default: `localhost`
+
+### `smtpport`
+**SMTP Port**
+
+Only when you use the SMTP mail handler. The TCP/IP port used to connect to your SMTP server. Usual ports are 25 (unencrypted SMTP), 587 (SMTP over TLS), and 465 (SMTP over SSL).
+
+Default: 25
+
+### `smtpsecure`
+**SMTP Security**
+
+Only when you use the SMTP mail handler. Should an encryption method be applied when contacting your SMTP server?
+
+One of:
+* `none` No security. Usernames, passwords, and the emails themselves are transmitted unencrypted to the SMTP server. Not recommended.
+* `ssl` Use SMTP over SSL. The SSL encryption standard has been obsolete since 1996. Some odd hosts may still use it. Not recommended.
+* `tls` Use SMTP over TLS. The most modern encryption standard, used by most commercial hosts.
+
+Default: `none`
+
+### `smtpauth`
+**SMTP Authentication**
+
+Only when you use the SMTP mail handler. Does your SMTP server require authentication?
+
+Default: false
+
+### `smtpuser`
+**SMTP Username**
+
+Only when you use the SMTP mail handler and SMTP Authentication is enabled. The username to connect to your SMTP server. Usually it's the same as your email address.
+
+Default: (blank)
+
+### `smtppass`
+**SMTP Password**
+
+Only when you use the SMTP mail handler and SMTP Authentication is enabled. The password to connect to your SMTP server. Usually it's the same as the password you use to receive email from the same address.
+
+Default: (blank)
+

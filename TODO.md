@@ -11,7 +11,6 @@ The factory default is Patch and Minor.
 
 The global default can be overridden per site.
 
-* Install one task per site for core version checks. The task caches the results to the site's definition.
 * Install one global task for automatically installing updates.
   * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
   * Configurable conditions for upgrading (only stable versions? only within the same minor/major?)
@@ -39,10 +38,6 @@ The global default should be overridable in the following levels:
 * Global, per extension. For example, all versions of Akeeba Backup should be set to “Patch, Minor, and Major”
 * Per site, all extensions.
 * Per site, per extension.
-
-## Email setup
-
-In the configuration page
 
 ## Database setup
 
@@ -224,3 +219,7 @@ If any of the default tasks are missing, install them
 ## Check the database for consistency
 
 ## Notify about PHP versions going out of support
+
+## Email setup
+
+In the configuration page
