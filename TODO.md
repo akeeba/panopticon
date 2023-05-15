@@ -1,7 +1,5 @@
 # TO-DO
 
-## Check the database for consistency
-
 ## Notify about PHP versions going out of support
 
 Subtle notification the first six months into a security-only release, can be dismissed for 3 months. More prominent the last six months, can be dismissed for 1 month. Big notification on EOL, cannot be dismissed.
@@ -226,3 +224,5 @@ If the last CRON job execution was more than a minute ago show a warning which t
 ## Check that all default tasks are installed
 
 If any of the default tasks are missing, install them
+
+## Check the database for consistency
