@@ -16,12 +16,15 @@ use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Date\Date;
 use DateInterval;
 use DateTime;
-use Gt\Dom\HTMLDocument;
+use DateTimeZone;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Promise\Utils;
 
 class PhpVersion
 {
+	private const API_ENDPOINT = 'https://endoflife.date/api/php.json';
+
+	private const CACHE_KEY = 'php_versions';
+
 	private DateTime $expiration;
 
 	public function __construct(private ?Container $container = null, private ?ClientInterface $httpClient = null)
@@ -51,9 +54,8 @@ class PhpVersion
 			'eol'       => false,
 			'latest'    => null,
 			'dates'     => (object) [
-				'initialRelease' => null,
-				'activeSupport'  => null,
-				'eol'            => null,
+				'activeSupport' => null,
+				'eol'           => null,
 			],
 		];
 
@@ -63,11 +65,10 @@ class PhpVersion
 		}
 
 		$ret->unknown = false;
-		$ret->latest  = $phpInfo[$version]['latestVersion'];
+		$ret->latest  = $phpInfo[$version]->latestVersion;
 		$ret->dates   = (object) [
-			'initialRelease' => $phpInfo[$version]['initialRelease'],
-			'activeSupport'  => $phpInfo[$version]['activeSupport'],
-			'eol'            => $phpInfo[$version]['eol'],
+			'activeSupport' => $phpInfo[$version]->activeSupport,
+			'eol'           => $phpInfo[$version]->eol,
 		];
 
 		$today          = new Date();
@@ -95,143 +96,46 @@ class PhpVersion
 	{
 		$cacheController = new CallbackController(
 			container: $this->container,
-			pool: $this->container->cacheFactory->pool('php_net_version_info'),
+			pool: $this->container->cacheFactory->pool(self::CACHE_KEY),
 		);
 
 		return $cacheController->get(
-			fn() => $this->realGetPhpEolInformation(),
+			function () {
+				$json = $this->httpClient->get(self::API_ENDPOINT)?->getBody()?->getContents() ?: [];
+
+				try
+				{
+					$rawData = @json_decode($json);
+				}
+				catch (\Throwable $e)
+				{
+					$rawData = [];
+				}
+
+				$ret      = [];
+
+				try
+				{
+					$timezone = new DateTimeZone('UTC');
+				}
+				catch (\Throwable)
+				{
+					$timezone = null;
+				}
+
+				foreach ($rawData as $rawItem)
+				{
+					$ret[$rawItem->cycle] = (object) [
+						'activeSupport' => new DateTime($rawItem->support, $timezone),
+						'eol'           => new DateTime($rawItem->eol, $timezone),
+						'releaseDate'   => new DateTime($rawItem->releaseDate, $timezone),
+						'latestVersion' => $rawItem->latest,
+					];
+				}
+
+				return $ret;
+			},
 			expiration: $this->expiration,
 		);
-	}
-
-	private function realGetPhpEolInformation(): array
-	{
-		$contents = $this->getAllURLs();
-
-		try
-		{
-			$ret = $this->scrapeSupportedVersions($contents['supported'] ?? null);
-		}
-		catch (\Throwable $e)
-		{
-			$ret = [];
-		}
-
-		try
-		{
-			$data = $this->scrapeEolVersions($contents['eol'] ?? null);
-			$ret  = array_merge($ret, $data);
-		}
-		catch (\Throwable $e)
-		{
-		}
-
-		foreach ($this->scrapeDownloadsPage($contents['downloads'] ?? null) as $version => $date)
-		{
-			$v            = Version::create($version);
-			$shortVersion = $v->major() . '.' . $v->minor();
-
-			$ret[$shortVersion]['initialRelease'] = $date;
-			$ret[$shortVersion]['latestVersion']  ??= $version;
-		}
-
-		return $ret;
-	}
-
-	private function getAllURLs(): array
-	{
-		$promises = [
-			'downloads' => $this->httpClient->getAsync('https://www.php.net/releases/'),
-			'supported' => $this->httpClient->getAsync('https://www.php.net/supported-versions.php'),
-			'eol'       => $this->httpClient->getAsync('https://www.php.net/eol.php'),
-		];
-
-		$responses = Utils::settle($promises)->wait();
-		$ret       = [];
-
-		foreach ($responses as $key => $response)
-		{
-			if ($response['state'] === 'rejected')
-			{
-				$ret[$key] = null;
-
-				continue;
-			}
-
-			$ret[$key] = $response['value']?->getBody()?->getContents();
-		}
-
-		return $ret;
-	}
-
-	private function getFromURL(string $url): ?string
-	{
-		return $this->httpClient->get($url)?->getBody()?->getContents();
-	}
-
-	private function scrapeDownloadsPage(?string $html): array
-	{
-		$html = $html ?? $this->getFromURL('https://www.php.net/releases/');
-
-		$ret      = [];
-		$document = new HTMLDocument($html);
-
-		foreach ($document->querySelectorAll('h2') as $heading)
-		{
-			$version = trim($heading->textContent);
-			$li      = $heading->nextElementSibling->children;
-			[, $dateRaw] = explode(':', $li[0]->textContent);
-			$ret[$version] = new Date($dateRaw);
-		}
-
-		return $ret;
-	}
-
-	private function scrapeSupportedVersions(?string $html): array
-	{
-		$html = $html ?? $this->getFromURL('https://www.php.net/supported-versions.php');
-
-		$ret      = [];
-		$document = new HTMLDocument($html);
-
-		foreach ($document->querySelectorAll('table.standard tbody tr') as $row)
-		{
-			$cells          = $row->querySelectorAll('td');
-			$version        = trim($cells[0]->textContent);
-			$initialRelease = new Date($cells[1]->textContent);
-			$activeSupport  = new Date($cells[3]->textContent);
-			$eol            = new Date($cells[5]->textContent);
-
-			$ret[$version] = [
-				'initialRelease' => $initialRelease,
-				'activeSupport'  => $activeSupport,
-				'eol'            => $eol,
-			];
-		}
-
-		return $ret;
-	}
-
-	private function scrapeEolVersions(?string $html): array
-	{
-		$html = $html ?? $this->getFromURL('https://www.php.net/eol.php');
-
-		$ret      = [];
-		$document = new HTMLDocument($html);
-
-		foreach ($document->querySelectorAll('table.standard tbody tr') as $row)
-		{
-			$cells   = $row->querySelectorAll('td');
-			$version = trim($cells[0]->textContent);
-			[$eol,] = explode('<br', $cells[1]->innerHTML);
-
-			$ret[$version] = [
-				'initialRelease' => null,
-				'activeSupport'  => null,
-				'eol'            => new Date($eol),
-			];
-		}
-
-		return $ret;
 	}
 }
