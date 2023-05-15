@@ -557,6 +557,53 @@ class Setup extends Model
 		}
 	}
 
+	public function checkDefaultTasks(): void
+	{
+		$db = $this->container->db;
+
+		$query = $db->getQuery(true)
+			->select([
+				$db->quoteName('type'),
+				$db->quoteName('cron_expression'),
+			])
+			->from($db->quoteName('#__tasks'))
+			->where(
+				[
+					$db->quoteName('site_id') . ' IS NULL',
+					$db->quoteName('type') . 'IN(' . implode(',', array_map([$db, 'quote'], array_keys(self::DEFAULT_TASKS))) . ')'
+				]
+			);
+
+		$installedTypes = $db->setQuery($query)->loadObjectList('type');
+		$dirty = false;
+
+		foreach (self::DEFAULT_TASKS as $type => $cronExpression)
+		{
+			$installed = $installedTypes[$type] ?? null;
+
+			if ($installed === null)
+			{
+				$dirty = true;
+
+				break;
+			}
+
+			if ($installed->cron_expression != $cronExpression)
+			{
+				$dirty = true;
+
+				break;
+			}
+		}
+
+		if (!$dirty)
+		{
+			return;
+		}
+
+		$this->installDefaultTasks();
+	}
+
 	private function deleteSystemTasks(string $type)
 	{
 		$db = $this->container->db;

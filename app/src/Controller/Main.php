@@ -73,6 +73,11 @@ class Main extends Controller
 			$this->input->set('savestate', true);
 		}
 
+		// Check the installed default tasks
+		/** @var \Akeeba\Panopticon\Model\Setup $model */
+		$model = $this->getModel('Setup');
+		$model->checkDefaultTasks();
+
 		return true;
 	}
 }

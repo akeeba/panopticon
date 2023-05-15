@@ -1,9 +1,5 @@
 # TO-DO
 
-## Check that all default tasks are installed
-
-If any of the default tasks are missing, install them
-
 ## Check the database for consistency
 
 ## Notify about PHP versions going out of support
@@ -226,3 +222,7 @@ If the last CRON job execution was more than a minute ago show a warning which t
 * (Warning) Cannot get list of profiles — you must install and activate Akeeba Backup Pro and specific plugins for full features
 * (Warning) Admin Tools Pro component and/or Web Services - Admin Tools plugin (if version >= 7.4.0) not installed / not activated — you must install and activate Admin Tools Pro and specific plugins for full features
 * (Warning) Cannot list WAF settings — you must install and activate Admin Tools Pro and specific plugins for full features
+
+## Check that all default tasks are installed
+
+If any of the default tasks are missing, install them
