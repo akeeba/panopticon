@@ -37,9 +37,6 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/delight-im/alphabets" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/delight-im/random" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phpgt/cssxpath" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phpgt/dom" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phpgt/propfunc" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/promises" />

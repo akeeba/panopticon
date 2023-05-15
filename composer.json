@@ -37,7 +37,6 @@
 		"kevinrob/guzzle-cache-middleware": "^4.0",
 		"mcrumley/php-complexify": "^0.4.1",
 		"monolog/monolog": "^3.3.1",
-		"phpgt/dom": "^4.1.2",
 		"symfony/cache": "^6.2",
 		"symfony/console": "^6.2.7",
 		"symfony/error-handler": "^5.2"

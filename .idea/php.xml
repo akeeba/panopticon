@@ -12,9 +12,6 @@
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
-      <path value="$PROJECT_DIR$/app/vendor/phpgt/propfunc" />
-      <path value="$PROJECT_DIR$/app/vendor/phpgt/dom" />
-      <path value="$PROJECT_DIR$/app/vendor/phpgt/cssxpath" />
       <path value="$PROJECT_DIR$/app/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/string" />
