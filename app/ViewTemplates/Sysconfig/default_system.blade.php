@@ -74,7 +74,7 @@ $config = $this->container->appConfig;
         {{--debug--}}
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
-                <div class="form-check">
+                <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[debug]" id="debug"
                             {{ $config->get('debug', false) ? 'checked' : '' }}
                     >

@@ -79,7 +79,7 @@ $config = $this->container->appConfig;
         {{--log_rotate_compress--}}
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
-                <div class="form-check">
+                <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[log_rotate_compress]" id="log_rotate_compress"
                             {{ $config->get('log_rotate_compress', true) ? 'checked' : '' }}
                     >
