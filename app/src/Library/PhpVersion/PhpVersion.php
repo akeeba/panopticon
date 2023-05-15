@@ -78,6 +78,20 @@ class PhpVersion
 		return $ret;
 	}
 
+	public function getMinimumSupportedBranch(): string
+	{
+		$phpInfo = $this->getPhpEolInformation();
+
+		return array_keys($phpInfo)[2];
+	}
+
+	public function getRecommendedSupportedBranch(): string
+	{
+		$phpInfo = $this->getPhpEolInformation();
+
+		return array_keys($phpInfo)[1];
+	}
+
 	public function isEOL(string $version): bool
 	{
 		$versionInformation = $this->getVersionInformation($version);

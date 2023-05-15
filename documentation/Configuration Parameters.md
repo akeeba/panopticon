@@ -70,6 +70,13 @@ Default: (empty; uses the browser settings)
 
 UOM: pt (points, i.e. 1/72 inch)
 
+### `phpwarnings`
+**PHP Version Messages in Main Page**
+
+Should I display the PHP version messages (End of Life, approaching End of Life, out of date) in the main page of the application?
+
+Default: true
+
 ## Automation
 
 Panopticon uses automation to keep track of what is going on with your sites, and perform any administrative work on them (e.g. update Joomla and extensions). These options control how the automation works.

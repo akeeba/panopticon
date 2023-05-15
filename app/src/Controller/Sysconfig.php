@@ -18,7 +18,7 @@ class Sysconfig extends Controller
 	use ACLTrait;
 
 	private const CHECKBOX_KEYS = [
-		'debug', 'log_rotate_compress',
+		'debug', 'log_rotate_compress', 'phpwarnings'
 	];
 
 	public function execute($task)
@@ -41,15 +41,21 @@ class Sysconfig extends Controller
 			function (&$value, string $key) {
 				if (in_array($key, self::CHECKBOX_KEYS))
 				{
-					$value = in_array(strtolower($value), ['on', 'checked', 1, 'true']);
+					$value = in_array(strtolower($value), ['on', 'checked', 1, 'true']) ? 1 : 0;
 				}
 			}
 		);
+
+		foreach (self::CHECKBOX_KEYS as $k)
+		{
+			$data[$k] ??= 0;
+		}
 
 		$config = $this->container->appConfig;
 
 		foreach ($data as $k => $v)
 		{
+			// TODO Validate
 			$config->set($k, $v);
 		}
 

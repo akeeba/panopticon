@@ -151,7 +151,19 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 
 <?php if (!$isBareDisplay): ?>
 	<footer class="container-xl bg-dark text-light py-2 text-light small sticky-bottom" data-bs-theme="dark">
-		<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= AKEEBA_PANOPTICON_VERSION ?>
+		<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= Version::create(AKEEBA_PANOPTICON_VERSION)->shortVersion(true) ?><?php if (Version::create(AKEEBA_PANOPTICON_VERSION)->hasTag()): ?><span class="text-muted small">.<?= Version::create(AKEEBA_PANOPTICON_VERSION)->tag() ?></span><?php endif; ?>
+		<?php if (defined('AKEEBADEBUG') && AKEEBADEBUG): ?>
+			<span class="text-body-tertiary">on</span>
+			<span class="text-muted">PHP <?= PHP_VERSION ?>
+				<span class="text-body-tertiary">at</span>
+				<?= htmlentities($_SERVER['HTTP_HOST']) ?>
+				<?php if ($_SERVER['HTTP_HOST'] != php_uname('n')): ?>
+				<span class="text-body-tertiary">
+					(<?= php_uname('n') ?>)
+				</span>
+				<?php endif ?>
+			</span>
+		<?php endif ?>
 	</footer>
 	<footer class="container-xl bg-dark text-light py-2 text-light small" data-bs-theme="dark">
 		<div class="d-flex flex-column mt-2">
@@ -161,8 +173,8 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 			<p class="m-0">
 				<?= Text::sprintf('PANOPTICON_APP_LBL_LICENSE', Text::_('PANOPTICON_APP_TITLE')) ?>
 			</p>
-			<?php if (defined('AKEEBADEBUG')): ?>
-				<div class="mt-1 mb-0 text-muted d-flex flex-row gap-2">
+			<?php if (defined('AKEEBADEBUG') && AKEEBADEBUG): ?>
+				<div class="mt-0 mb-0 text-muted d-flex flex-row gap-2">
 					<div>
 						<span class="fa fa-clock" title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?>"
 						      aria-hidden="true"></span>

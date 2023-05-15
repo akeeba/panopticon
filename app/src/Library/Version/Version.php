@@ -125,11 +125,11 @@ class Version
 		return $version . '-' . $this->tag();
 	}
 
-	public function shortVersion(): string
+	public function shortVersion(bool $forceThreeParts = false): string
 	{
 		$keep = [];
 
-		if ($this->parts[2] > 0)
+		if ($forceThreeParts || $this->parts[2] > 0)
 		{
 			$keep = $this->parts;
 		}

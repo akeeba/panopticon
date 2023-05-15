@@ -51,5 +51,19 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--phpwarnings--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="options[phpwarnings]" id="phpwarnings"
+                            {{ $config->get('phpwarnings', true) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="phpwarnings">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PHPWARNINGS')
+                    </label>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
