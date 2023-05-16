@@ -173,7 +173,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 			return;
 		}
 
-		$httpClient = $this->container->httpFactory->makeClient();
+		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$promises = array_map(
 			function (int $id) use ($httpClient) {

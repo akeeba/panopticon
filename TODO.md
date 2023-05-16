@@ -5,11 +5,11 @@ Before working on core and extension updates remember to remove ALL dev sites fr
 ## Core updates
 
 ✅ We need to provide a global default for core updates (`tasks_coreupdate_install`):
-* `none` None. No updates, no emails
-* `email` Email. No updates, only sends emails.
-* `patch` Same Version Family. Only patch versions (e.g. 1.2.3 -> 1.2.4)
-* `minor` Same Major Version. Patch and minor (e.g. 1.2 -> 1.3)
-* `major` Any (Not Recommended). Patch, minor, and major (e.g. 1.2 -> 2.0)
+* ✅ `none` None. No updates, no emails
+* ✅ `email` Email. No updates, only sends emails.
+* ✅ `patch` Same Version Family. Only patch versions (e.g. 1.2.3 -> 1.2.4)
+* ✅ `minor` Same Major Version. Patch and minor (e.g. 1.2 -> 1.3)
+* ✅ `major` Any (Not Recommended). Patch, minor, and major (e.g. 1.2 -> 2.0)
 
 ✅ The factory default is `patch`.
 
@@ -20,11 +20,12 @@ Each site has these options in `config`, editable in the site config page
 * config.core_update.time.hour: (integer 0-23) • default: 0
 * config.core_update.time.minute: (integer 0-59) • default: 0
 * config.core_update.email.cc: (list of email addresses to CC) • default: empty
-* config.core_update.email_after: (boolean) Only when config.core_update.install not none or email • default: true  
+* config.core_update.email_error: (boolean) • default: false  
+* config.core_update.email_after: (boolean) Only when config.core_update.install not none or email • default: false  
 
 What to do
 
-* Create new task type `joomlaupdate` which handles the update of one specific site
+* ✅ Create new task type `joomlaupdate` which handles the update of one specific site
 * Install one global task of type `coreupdateconductor` for automatically setting up core update installation
   * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
   * Create (or re-enable) a "run once" task to upgrade the site.
@@ -32,11 +33,11 @@ What to do
 * Install one global task of type `mailsending` which sends the enqueued emails
 
 The `joomlaupdate` task
-* Performs any pre-upgrade tasks (TO-DO)
-* Downloads the update package
-* Enables Joomla Update's restoration.php / extract.php
-* Goes through the extraction and post-extraction steps
-* Performs any post-upgrade tasks (TO-DO)
+* ✅ Performs any pre-upgrade tasks (TO-DO)
+* ✅ Downloads the update package
+* ✅ Enables Joomla Update's restoration.php / extract.php
+* ✅ Goes through the extraction and post-extraction steps
+* ✅ Performs any post-upgrade tasks (TO-DO)
 * Conditionally enqueues completion email
 * Fetch the number of changed template files after the update is over and update the site record
 
@@ -53,7 +54,7 @@ We need to provide a global default for extension updates PER EXTENSION:
 
 The factory default is `email`.
 
-The global default can be overriden in two levels: 
+The global default can be overridden in two levels: 
 * Global, per extension. For example, all versions of Akeeba Backup should be set to “Patch, Minor, and Major”. Requires new page, Extensions.
 * Per site, per extension. The default setting will be "Use global". Only extensions deviating from Use Global will have their preference recorded under the site param key `config.extension_update.extensions` which is an array keyed to _the extension ID_.
 
@@ -159,6 +160,16 @@ Only users with the super privilege can manage application-level configuration:
 - Log management
 
 # 🤔 Maybe
+
+## Chunked Joomla update package uploads
+
+Well over a year(!) since I first reported this issue, downloading update packages in the office take forever, at an average transfer rate of 50Kbps (I have a 100Mbps line and no throttling on any other site). This is 100% a problem with Joomla using S3 as the primary download source, something I have explained to them how to solve, and save money, by making one simple change in a single XML file. They won't do it.
+
+I had made a PR to download the updates in chunks. It was rejected because some useless busybodies are not affected by this problem and, of course, it was me making a PR. Same old story.
+
+So. Let's change the connector to try and use the CloudFlare URL for the download source AND download the archive in small chunks. As it happens, this also lets us do a HEAD request to avoid re-downloading the same update package all over again if it's already downloaded and complete in our temp folder (Gasp! Imagine that! Being efficient! Whoda thunk it!).
+
+In short, since Joomla sucks let's work around it to make it suck less. Story of my life, ever since Joomla was called Mambo.
 
 ## User groups implementation
 

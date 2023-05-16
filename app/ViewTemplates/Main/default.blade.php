@@ -60,6 +60,7 @@ defined('AKEEBA') || die;
                         @lang('PHP version')
                         </span>
                     </th>
+                    <th width="1">#</th>
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -102,6 +103,9 @@ defined('AKEEBA') || die;
                                 'config' => $config,
                                 'php' => $config->get('core.php')
                             ])
+                        </td>
+                        <td class="font-monospace text-body-tertiary small px-2">
+                            {{{ $item->id }}}
                         </td>
                     </tr>
                 @endforeach

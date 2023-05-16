@@ -82,6 +82,14 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					$this->runFinalise($task, $storage);
 					break;
 
+				case 'reloadUpdates':
+					$this->runReloadUpdates($task, $storage);
+					break;
+
+				case 'siteInfo':
+					$this->runSiteInfo($task, $storage);
+					break;
+
 				case 'afterEvents':
 					$this->runAfterEvents($task, $storage);
 					break;
@@ -174,7 +182,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	}
 
 	/**
-	 * Implements a simplistic finite states machine.
+	 * Implements a simplistic finite-state machine.
 	 *
 	 * The states are:
 	 * - init: Initial state, performs sanity self-checks
@@ -200,7 +208,9 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			'enable' => 'extract',
 			'extract' => 'postExtract',
 			'postExtract' => 'finalise',
-			'finalise' => 'afterEvents',
+			'finalise' => 'reloadUpdates',
+			'reloadUpdates' => 'siteInfo',
+			'siteInfo' => 'afterEvents',
 			'afterEvents' => 'email',
 			'email' => 'finish',
 		};
@@ -258,6 +268,36 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			$site->name
 		));
 
+		// Does this site actually have an update available?
+		$config = $site->getFieldValue('config', '{}');
+		$config = ($config instanceof Registry) ? $config->toString() : $config;
+		try
+		{
+			$config = @json_decode($config);
+		}
+		catch (Exception $e)
+		{
+			$config = null;
+		}
+
+		$currentVersion = $config?->core?->current?->version;
+		$latestVersion = $config?->core?->latest?->version;
+
+		if (!empty($currentVersion) && !empty($latestVersion) && version_compare($currentVersion, $latestVersion, 'ge'))
+		{
+			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_UPDATE_AVAILABLE', $site->id, $site->name, $currentVersion, $latestVersion));
+		}
+		elseif (!empty($currentVersion) && !empty($latestVersion))
+		{
+			$this->logger->info(Text::sprintf(
+				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_WILL_BE_UPDATED',
+				$site->id,
+				$site->name,
+				$currentVersion,
+				$latestVersion
+			));
+		}
+
 		// Finally, advance the state
 		$this->advanceState();
 	}
@@ -271,7 +311,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * @return  void
 	 * @throws  GuzzleException
 	 */
-	private function runDownload(mixed $task, Registry $storage): void
+	private function runDownload(object $task, Registry $storage): void
 	{
 		$site       = $this->getSite($task);
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
@@ -282,7 +322,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			$site->name
 		));
 
-		[$url, $options] = $this->getRequestOptions($site, 'index.php/v1/panopticon/core/update/download');
+		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/download');
 		$response = $httpClient->post($url, $options);
 		$json     = $response->getBody()->getContents();
 
@@ -317,12 +357,12 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Executes the event which take place BEFORE the update itself
 	 *
-	 * @param   mixed     $task
-	 * @param   Registry  $storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 */
-	private function runBeforeEvents(mixed $task, Registry $storage): void
+	private function runBeforeEvents(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
 
@@ -359,7 +399,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * @return  void
 	 * @throws  GuzzleException
 	 */
-	private function runEnable(mixed $task, Registry $storage): void
+	private function runEnable(object $task, Registry $storage): void
 	{
 		$site       = $this->getSite($task);
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
@@ -370,7 +410,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			$site->name
 		));
 
-		[$url, $options] = $this->getRequestOptions($site, 'index.php/v1/panopticon/core/update/activate');
+		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/activate');
 		$response = $httpClient->post($url, $options);
 		$json     = $response->getBody()->getContents();
 
@@ -417,13 +457,13 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * The extract.php file is used by Joomla 4.0.4 and later. It is a rewritten and refactored version of the
 	 * extraction script which I contributed to Joomla: https://github.com/joomla/joomla-cms/pull/35388
 	 *
-	 * @param   mixed     $task
-	 * @param   Registry  $storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
-	 * @return void
-	 * @throws GuzzleException
+	 * @return  void
+	 * @throws  GuzzleException
 	 */
-	private function runExtract(mixed $task, Registry $storage): void
+	private function runExtract(object $task, Registry $storage): void
 	{
 		$step = $storage->get('restore.step', 'start');
 		$site = $this->getSite($task);
@@ -441,53 +481,48 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 				$this->j40ExtractStart($site, $storage);
 
+				$done = false;
+
 				$storage->set('restore.step', 'step');
-
-				return;
 			}
-
-			$this->logger->info(Text::sprintf(
-				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE',
-				$site->id,
-				$site->name
-			));
-
-			if ($this->j40ExtractStep($site, $storage))
+			else
 			{
 				$this->logger->info(Text::sprintf(
-					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_FINISH',
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE',
 					$site->id,
 					$site->name
 				));
 
-				$this->advanceState();
+				$done = $this->j40ExtractStep($site, $storage);
 			}
-
-			return;
 		}
-
-		if ($step == 'start')
+		else
 		{
-			$this->logger->info(Text::sprintf(
-				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START',
-				$site->id,
-				$site->name
-			));
+			if ($step == 'start')
+			{
+				$this->logger->info(Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START',
+					$site->id,
+					$site->name
+				));
 
-			$this->j404ExtractStart($site, $storage);
+				$done = $this->j404ExtractStart($site, $storage);
 
-			$storage->set('restore.step', 'step');
+				$storage->set('restore.step', 'step');
+			}
+			else
+			{
+				$this->logger->info(Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE',
+					$site->id,
+					$site->name
+				));
 
-			return;
+				$done = $this->j404ExtractStep($site, $storage);
+			}
 		}
 
-		$this->logger->info(Text::sprintf(
-			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE',
-			$site->id,
-			$site->name
-		));
-
-		if ($this->j404ExtractStep($site, $storage))
+		if ($done)
 		{
 			$this->logger->info(Text::sprintf(
 				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_FINISH',
@@ -497,6 +532,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 			$this->advanceState();
 		}
+
 	}
 
 	/**
@@ -508,13 +544,13 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * The extract.php file is used by Joomla 4.0.4 and later. It is a rewritten and refactored version of the
 	 * extraction script which I contributed to Joomla: https://github.com/joomla/joomla-cms/pull/35388
 	 *
-	 * @param   mixed     $task
-	 * @param   Registry  $storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
-	 * @return void
-	 * @throws GuzzleException
+	 * @return  void
+	 * @throws  GuzzleException
 	 */
-	private function runPostExtract(mixed $task, Registry $storage): void
+	private function runPostExtract(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
 		$url  = $this->getExtractUrl($site);
@@ -548,13 +584,13 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * responsible for upgrading the database schema, add records for new core extensions, remove records for removed
 	 * core extensions, and perform any database (data) migrations which need to take place.
 	 *
-	 * @param   mixed     $task
-	 * @param   Registry  $storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
 	 */
-	private function runFinalise(mixed $task, Registry $storage): void
+	private function runFinalise(object $task, Registry $storage): void
 	{
 		$site       = $this->getSite($task);
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
@@ -565,7 +601,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			$site->name
 		));
 
-		[$url, $options] = $this->getRequestOptions($site, 'index.php/v1/panopticon/core/update/postupdate');
+		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/postupdate');
 		$response = $httpClient->post($url, $options);
 
 		if ($response->getStatusCode() !== 200)
@@ -577,14 +613,91 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	}
 
 	/**
-	 * Executes the event which take place AFTER the update itself
+	 * Forcibly reload the update information after updating a site.
 	 *
-	 * @param   mixed     $task
-	 * @param   Registry  $storage
+	 * This is required when Joomla offers only "step" updates. For example, you can only update Joomla 4.0.0–4.0.3 to
+	 * 4.0.4. Only **then** can you see further updates. By forcibly reloading the updates on the remote site we allow
+	 * these "stepped" updates to become discovered faster than relying on the natural update information timeout in
+	 * Joomla and Panopticon alone.
+	 *
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 */
-	private function runAfterEvents(mixed $task, Registry $storage): void
+	private function runReloadUpdates(object $task, Registry $storage): void
+	{
+		$site       = $this->getSite($task);
+		$httpClient = $this->container->httpFactory->makeClient(cache: false);
+
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_UPDATES',
+			$site->id,
+			$site->name
+		));
+
+		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update?force=1');
+		$response = $httpClient->get($url, $options);
+
+		if ($response->getStatusCode() !== 200)
+		{
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
+		}
+
+		$this->advanceState();
+	}
+
+	/**
+	 * Forcibly reload the site information after updating it
+	 *
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
+	 *
+	 * @return  void
+	 */
+	private function runSiteInfo(object $task, Registry $storage): void
+	{
+		$site     = $this->getSite($task);
+
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_SITEINFO',
+			$site->id,
+			$site->name
+		));
+
+		$callback = $this->container->taskRegistry->get('refreshsiteinfo');
+
+		if ($callback instanceof LoggerAwareInterface)
+		{
+			$callback->setLogger($this->logger);
+		}
+
+		$dummy         = new \stdClass();
+		$dummyRegistry = new Registry();
+
+		$dummyRegistry->set('limitStart', 0);
+		$dummyRegistry->set('limit', 10);
+		$dummyRegistry->set('force', true);
+		$dummyRegistry->set('filter.ids', [$site->id]);
+
+		do
+		{
+			$return = $callback($dummy, $dummyRegistry);
+		} while ($return === Status::WILL_RESUME->value);
+
+
+		$this->advanceState();
+	}
+
+	/**
+	 * Executes the event which take place AFTER the update itself
+	 *
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
+	 *
+	 * @return  void
+	 */
+	private function runAfterEvents(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
 
@@ -625,7 +738,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		$config = json_decode(($config instanceof Registry) ? $config->toString() : $config);
 
 		$currentVersion = $config?->core?->current?->version ?? '4.0.4';
-		$endpoint       = version_compare($currentVersion, '4.0.3', 'ge') ? 'extract.php' : 'restore.php';
+		$endpoint       = version_compare($currentVersion, '4.0.3', 'gt') ? 'extract.php' : 'restore.php';
 		$url            = rtrim($site->url, "/ \t\n\r\0\x0B");
 
 		if (str_ends_with($url, '/api'))
@@ -665,11 +778,13 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			'json' => $json,
 		];
 
+		[, $options] = $this->getRequestOptions($site, '/foobar');
+
 		// Send the request
 		$response = $this->container->httpFactory->makeClient(cache: false)
-			->post($url, [
+			->post($url, array_merge($options, [
 				'form_params' => $postData,
-			]);
+			]));
 
 		// We must always get HTTP 200
 		if ($response->getStatusCode() !== 200)
@@ -811,14 +926,17 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			);
 		}
 
+		$isDone  = $data?->done ?? false;
 		$factory = $data?->factory ?? null;
 
-		if ($factory === null)
+		if (!$isDone && $factory === null)
 		{
 			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
 		}
-
-		$storage->set('restore.factory', $factory);
+		elseif ($factory !== null)
+		{
+			$storage->set('restore.factory', $factory);
+		}
 
 		// Update progress indicators
 		$bytesIn  = $storage->get('progress.bytesIn', 0) + ($data?->bytesIn ?? 0);
@@ -832,7 +950,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		$storage->set('progress.files', $files);
 		$storage->set('progress.percent', $percent);
 
-		if ($data?->done ?? false)
+		if ($isDone)
 		{
 			$storage->set('progress.percent', 100);
 
@@ -894,11 +1012,13 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		$postData             = (array) $data;
 		$postData['password'] = $storage->get('update.password', '');
 
+		[, $options] = $this->getRequestOptions($site, '/foobar');
+
 		// Send the request
 		$response = $this->container->httpFactory->makeClient(cache: false)
-			->post($url, [
+			->post($url, array_merge($options, [
 				'form_params' => $postData,
-			]);
+			]));
 
 		// We must always get HTTP 200
 		if ($response->getStatusCode() !== 200)
@@ -974,14 +1094,22 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * @param   Site      $site     The site we are working on
 	 * @param   Registry  $storage  The temporary storage for the update task
 	 *
-	 * @return  bool  True if we're done extracting, false otherwise
+	 * @return  void
 	 * @throws  GuzzleException
 	 */
-	private function j404ExtractFinalise(Site $site, Registry $storage): bool
+	private function j404ExtractFinalise(Site $site, Registry $storage): void
 	{
 		$data = $this->doExtractAjax($site, $storage, ['task' => 'finalizeUpdate']);
 
-		return $this->handleJ404ExtractResponse($data, $storage);
+		if (($data?->status ?? false) === false)
+		{
+			throw new RuntimeException(
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
+					$data?->message ?? 'Unknown error'
+				)
+			);
+		}
 	}
 
 	/**
@@ -1004,14 +1132,17 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			);
 		}
 
+		$isDone  = $data?->done ?? false;
 		$factory = $data?->instance ?? null;
 
-		if ($factory === null)
+		if (!$isDone && $factory === null)
 		{
 			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
 		}
-
-		$storage->set('restore.factory', $factory);
+		elseif ($factory !== null)
+		{
+			$storage->set('restore.factory', $factory);
+		}
 
 		// Update progress indicators
 		$bytesIn  = $storage->get('progress.bytesIn', 0) + ($data?->bytesIn ?? 0);
@@ -1024,7 +1155,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		$storage->set('progress.files', $files);
 		$storage->set('progress.percent', $percent);
 
-		if ($data?->done ?? false)
+		if ($isDone)
 		{
 			$storage->set('progress.percent', 100);
 
