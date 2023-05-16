@@ -79,6 +79,10 @@ If a user chooses to update an extension with no auto-updates:
 * Add the extension ID to the queue
 * Create (or re-enable) a "run once" task to update the site's extensions.
 
+## Refresh site information after saving it
+
+We need to run the site information and extension information gathering in the background, e.g. schedule a run-once task with top priority.
+
 ## Database setup
 
 In the configuration page
