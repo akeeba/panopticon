@@ -15,9 +15,9 @@ use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
-use Akeeba\Panopticon\Model\Task;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
+use Awf\Text\Text;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use LogicException;
@@ -47,15 +47,6 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 	public function __invoke(object $task, Registry $storage): int
 	{
-		if ($task instanceof Task)
-		{
-			$params = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
-		}
-		else
-		{
-			$params = new Registry();
-		}
-
 		$this->currentState = $storage->get('fsm.state', 'init');
 
 		try
@@ -80,15 +71,15 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					break;
 
 				case 'extract':
-					// TODO
+					$this->runExtract($task, $storage);
 					break;
 
 				case 'postExtract':
-					// TODO
+					$this->runPostExtract($task, $storage);
 					break;
 
 				case 'finalise':
-					// TODO
+					$this->runFinalise($task, $storage);
 					break;
 
 				case 'afterEvents':
@@ -96,7 +87,9 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					break;
 
 				case 'email':
-					// TODO
+					// TODO Send email that the update is now complete
+
+					$this->advanceState();
 					break;
 
 			}
@@ -225,7 +218,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		// Do we have a site?
 		if ($task->site_id <= 0)
 		{
-			throw new RuntimeException('Invalid site ID');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_INVALIDID'));
 		}
 
 		// Does the site exist?
@@ -235,7 +228,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($site->id != $task->site_id)
 		{
-			throw new RuntimeException(sprintf('Site %d does not exist', $task->site_id));
+			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_NOT_EXIST', $task->site_id));
 		}
 
 		return $site;
@@ -256,11 +249,11 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		// Is the site enabled?
 		if (!$site->enabled)
 		{
-			throw new RuntimeException(sprintf('Site %d is disabled', $task->site_id));
+			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED', $task->site_id));
 		}
 
-		$this->logger->info(sprintf(
-			'Preparing to update site %d (%s)',
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREPARING',
 			$site->id,
 			$site->name
 		));
@@ -283,8 +276,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		$site       = $this->getSite($task);
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
-		$this->logger->info(sprintf(
-			'Downloading update package to site %d (%s)',
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING',
 			$site->id,
 			$site->name
 		));
@@ -304,7 +297,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if (empty($raw) || empty($raw->data?->attributes?->basename))
 		{
-			throw new RuntimeException('Downloading the update package has failed');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_DOWNLOAD_FAILED'));
 		}
 
 		$baseName = $raw->data?->attributes?->basename;
@@ -312,7 +305,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if (!$check)
 		{
-			throw new RuntimeException('The downloaded update package has an invalid checksum.');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_CHECKSUM'));
 		}
 
 		$storage->set('update.basename', $baseName);
@@ -333,23 +326,23 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	{
 		$site = $this->getSite($task);
 
-		$this->logger->info(sprintf(
-			'Executing pre-update events for site %d (%s)',
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_EVENTS',
 			$site->id,
 			$site->name
 		));
 
 		if (!$this->runEvent('onBeforeJoomlaUpdate', $task, $storage))
 		{
-			$this->logger->info(sprintf(
-				'Will continue executing pre-update events for site %d (%s)',
+			$this->logger->info(Text::sprintf(
+				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_WILL_CONTINUE',
 				$site->id,
 				$site->name
 			));
 		}
 
-		$this->logger->info(sprintf(
-			'Finished executing pre-update events for site %d (%s)',
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_FINISHED',
 			$site->id,
 			$site->name
 		));
@@ -371,8 +364,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		$site       = $this->getSite($task);
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
-		$this->logger->info(sprintf(
-			'Enabling Joomla Update\'s extraction script for site %d (%s)',
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT',
 			$site->id,
 			$site->name
 		));
@@ -392,7 +385,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if (empty($raw) || empty($raw->data?->attributes?->password))
 		{
-			throw new RuntimeException('Enabling the Joomla Update extraction script has failed');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_ENABLE_FAILED'));
 		}
 
 		$baseName = $raw->data?->attributes?->file;
@@ -401,16 +394,184 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if (basename($baseName) != $storage->get('update.basename') || $filesize <= 0)
 		{
-			throw new RuntimeException('The update package has disappeared from the site. Is a plugin, or your host, clearing your site\'s temporary directory automatically?');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED'));
 		}
 
 		if (empty($password))
 		{
-			throw new RuntimeException('Could not get the password for the Joomla Update extraction script');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_PASSWORD'));
 		}
 
 		$storage->set('update.password', $password);
 		$storage->set('update.filesize', $filesize);
+
+		$this->advanceState();
+	}
+
+	/**
+	 * Extracts the update package using Joomla Update's restore.php or extract.php
+	 *
+	 * The restore.php file is used by Joomla 4.0.0–4.0.3 inclusive. It is, in fact, a very old version of Akeeba
+	 * Restore we retired in 2016.
+	 *
+	 * The extract.php file is used by Joomla 4.0.4 and later. It is a rewritten and refactored version of the
+	 * extraction script which I contributed to Joomla: https://github.com/joomla/joomla-cms/pull/35388
+	 *
+	 * @param   mixed     $task
+	 * @param   Registry  $storage
+	 *
+	 * @return void
+	 * @throws GuzzleException
+	 */
+	private function runExtract(mixed $task, Registry $storage): void
+	{
+		$step = $storage->get('restore.step', 'start');
+		$site = $this->getSite($task);
+		$url  = $this->getExtractUrl($site);
+
+		if (str_ends_with($url, 'restore.php'))
+		{
+			if ($step == 'start')
+			{
+				$this->logger->info(Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START',
+					$site->id,
+					$site->name
+				));
+
+				$this->j40ExtractStart($site, $storage);
+
+				$storage->set('restore.step', 'step');
+
+				return;
+			}
+
+			$this->logger->info(Text::sprintf(
+				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE',
+				$site->id,
+				$site->name
+			));
+
+			if ($this->j40ExtractStep($site, $storage))
+			{
+				$this->logger->info(Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_FINISH',
+					$site->id,
+					$site->name
+				));
+
+				$this->advanceState();
+			}
+
+			return;
+		}
+
+		if ($step == 'start')
+		{
+			$this->logger->info(Text::sprintf(
+				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START',
+				$site->id,
+				$site->name
+			));
+
+			$this->j404ExtractStart($site, $storage);
+
+			$storage->set('restore.step', 'step');
+
+			return;
+		}
+
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE',
+			$site->id,
+			$site->name
+		));
+
+		if ($this->j404ExtractStep($site, $storage))
+		{
+			$this->logger->info(Text::sprintf(
+				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_FINISH',
+				$site->id,
+				$site->name
+			));
+
+			$this->advanceState();
+		}
+	}
+
+	/**
+	 * Executes the post-extraction code in Joomla Update's restore.php or extract.php
+	 *
+	 * The restore.php file is used by Joomla 4.0.0–4.0.3 inclusive. It is, in fact, a very old version of Akeeba
+	 * Restore we retired in 2016.
+	 *
+	 * The extract.php file is used by Joomla 4.0.4 and later. It is a rewritten and refactored version of the
+	 * extraction script which I contributed to Joomla: https://github.com/joomla/joomla-cms/pull/35388
+	 *
+	 * @param   mixed     $task
+	 * @param   Registry  $storage
+	 *
+	 * @return void
+	 * @throws GuzzleException
+	 */
+	private function runPostExtract(mixed $task, Registry $storage): void
+	{
+		$site = $this->getSite($task);
+		$url  = $this->getExtractUrl($site);
+
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTEXTRACT',
+			$site->id,
+			$site->name
+		));
+
+		if (str_ends_with($url, 'restore.php'))
+		{
+			$this->j40ExtractFinalise($site, $storage);
+		}
+		else
+		{
+			$this->j404ExtractFinalise($site, $storage);
+		}
+
+		$this->advanceState();
+	}
+
+	/**
+	 * Executes the post-upgrade code in Joomla Update itself.
+	 *
+	 * This is different to runPostExtract. The code executed by runPostExtract is in restore.php/extract.php which runs
+	 * outside Joomla itself. It is responsible for cleaning up the filesystem of leftover files to prevent the updated
+	 * site having a mix of old and new code which would break the site.
+	 *
+	 * The code triggered in runFinalise is in the Joomla Update model code and executes inside Joomla. It is
+	 * responsible for upgrading the database schema, add records for new core extensions, remove records for removed
+	 * core extensions, and perform any database (data) migrations which need to take place.
+	 *
+	 * @param   mixed     $task
+	 * @param   Registry  $storage
+	 *
+	 * @return  void
+	 * @throws  GuzzleException
+	 */
+	private function runFinalise(mixed $task, Registry $storage): void
+	{
+		$site       = $this->getSite($task);
+		$httpClient = $this->container->httpFactory->makeClient(cache: false);
+
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_FINALISE',
+			$site->id,
+			$site->name
+		));
+
+		[$url, $options] = $this->getRequestOptions($site, 'index.php/v1/panopticon/core/update/postupdate');
+		$response = $httpClient->post($url, $options);
+
+		if ($response->getStatusCode() !== 200)
+		{
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FINALISE_FAILED'));
+		}
 
 		$this->advanceState();
 	}
@@ -427,23 +588,23 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	{
 		$site = $this->getSite($task);
 
-		$this->logger->info(sprintf(
-			'Executing pre-update events for site %d (%s)',
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_EVENTS',
 			$site->id,
 			$site->name
 		));
 
 		if (!$this->runEvent('onAfterJoomlaUpdate', $task, $storage))
 		{
-			$this->logger->info(sprintf(
-				'Will continue executing pre-update events for site %d (%s)',
+			$this->logger->info(Text::sprintf(
+				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_WILL_CONTINUE',
 				$site->id,
 				$site->name
 			));
 		}
 
-		$this->logger->info(sprintf(
-			'Finished executing pre-update events for site %d (%s)',
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_FINISHED',
 			$site->id,
 			$site->name
 		));
@@ -493,7 +654,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		// If it's extract.php, not restore.php, we have done something wrong!
 		if (!str_ends_with($url, '/restore.php'))
 		{
-			throw new LogicException('This is not a Joomla 4.0.0 to 4.0.3 (inclusive) site; cannot use restore.php for updates.');
+			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J40'));
 		}
 
 		// Encrypt the request data with AES-128-CTR
@@ -513,7 +674,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		// We must always get HTTP 200
 		if ($response->getStatusCode() !== 200)
 		{
-			throw new RuntimeException(sprintf('Unexpected HTTP %d while extracting the update; the site may be broken.', $response->getStatusCode()));
+			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UNEXPECTED_HTTP', $response->getStatusCode()));
 		}
 
 		// The response is enclosed in '###'. Make sure of that and extract the actual response.
@@ -522,7 +683,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($firstHashes === false)
 		{
-			throw new RuntimeException('Invalid JSON response from the update extraction script; the site may be broken.');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
 		}
 
 		$json = substr($json, $firstHashes + 3);
@@ -531,7 +692,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($secondHashes === false)
 		{
-			throw new RuntimeException('Invalid JSON response from the update extraction script; the site may be broken.');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
 		}
 
 		$json = substr($json, 0, $secondHashes);
@@ -562,7 +723,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($raw === null)
 		{
-			throw new RuntimeException('Invalid JSON response from the update extraction script; the site may be broken.');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
 		}
 
 		return $raw;
@@ -585,8 +746,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				sprintf(
-					'The update extraction has failed; the site may be broken. Returned error message: “%s”',
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
 			);
@@ -598,8 +759,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				sprintf(
-					'The update extraction has failed; the site may be broken. Returned error message: “%s”',
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
 			);
@@ -609,9 +770,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($factory === null)
 		{
-			throw new RuntimeException(
-				'The update extraction script did not return its internal state; the site may be broken.'
-			);
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
 		}
 
 		$storage->set('restore.factory', $factory);
@@ -632,7 +791,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($factory === null)
 		{
-			throw new LogicException('Internal error extracting the update: we lost the internal state of the update extraction script. The site may be broken.');
+			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
 		}
 
 		$data = [
@@ -645,8 +804,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				sprintf(
-					'The update extraction has failed; the site may be broken. Returned error message: “%s”',
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
 			);
@@ -656,9 +815,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($factory === null)
 		{
-			throw new RuntimeException(
-				'The update extraction script did not return its internal state; the site may be broken.'
-			);
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
 		}
 
 		$storage->set('restore.factory', $factory);
@@ -700,7 +857,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($factory === null)
 		{
-			throw new LogicException('Internal error extracting the update: we lost the internal state of the update extraction script. The site may be broken.');
+			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
 		}
 
 		$data = [
@@ -731,7 +888,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		// If it's restore.php, not extract.php, we have done something wrong!
 		if (!str_ends_with($url, '/extract.php'))
 		{
-			throw new LogicException('This is not a Joomla 4.0.4 or later site; cannot use restore.php for updates.');
+			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J404'));
 		}
 
 		$postData             = (array) $data;
@@ -746,7 +903,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		// We must always get HTTP 200
 		if ($response->getStatusCode() !== 200)
 		{
-			throw new RuntimeException(sprintf('Unexpected HTTP %d while extracting the update; the site may be broken.', $response->getStatusCode()));
+			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UNEXPECTED_HTTP', $response->getStatusCode()));
 		}
 
 		// Get the JSON response and decode it
@@ -763,7 +920,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($raw === null)
 		{
-			throw new RuntimeException('Invalid JSON response from the update extraction script; the site may be broken.');
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
 		}
 
 		return $raw;
@@ -800,13 +957,29 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($factory === null)
 		{
-			throw new LogicException('Internal error extracting the update: we lost the internal state of the update extraction script. The site may be broken.');
+			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
 		}
 
 		$data = $this->doExtractAjax($site, $storage, [
 			'task'     => 'stepRestore',
 			'instance' => $factory,
 		]);
+
+		return $this->handleJ404ExtractResponse($data, $storage);
+	}
+
+	/**
+	 * Finalise the update extraction on Joomla 4.0.4 or later
+	 *
+	 * @param   Site      $site     The site we are working on
+	 * @param   Registry  $storage  The temporary storage for the update task
+	 *
+	 * @return  bool  True if we're done extracting, false otherwise
+	 * @throws  GuzzleException
+	 */
+	private function j404ExtractFinalise(Site $site, Registry $storage): bool
+	{
+		$data = $this->doExtractAjax($site, $storage, ['task' => 'finalizeUpdate']);
 
 		return $this->handleJ404ExtractResponse($data, $storage);
 	}
@@ -824,8 +997,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				sprintf(
-					'The update extraction has failed; the site may be broken. Returned error message: “%s”',
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
 			);
@@ -835,9 +1008,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		if ($factory === null)
 		{
-			throw new RuntimeException(
-				'The update extraction script did not return its internal state; the site may be broken.'
-			);
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
 		}
 
 		$storage->set('restore.factory', $factory);
@@ -856,6 +1027,9 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		if ($data?->done ?? false)
 		{
 			$storage->set('progress.percent', 100);
+
+			// Unlike restore.php, we don't need the serialised instance to run the post-extraction finalisation
+			$storage->set('restore.factory', null);
 
 			return true;
 		}
