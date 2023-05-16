@@ -680,11 +680,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		$dummyRegistry->set('force', true);
 		$dummyRegistry->set('filter.ids', [$site->id]);
 
-		do
-		{
-			$return = $callback($dummy, $dummyRegistry);
-		} while ($return === Status::WILL_RESUME->value);
-
+		$return = $callback($dummy, $dummyRegistry);
 
 		$this->advanceState();
 	}
