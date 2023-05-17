@@ -7,11 +7,11 @@
 
 namespace Akeeba\Panopticon\Library\Editor;
 
+defined('AKEEBA') || die;
+
 use Akeeba\Panopticon\Factory;
 use Awf\Uri\Uri;
 use Awf\Utils\Template;
-
-defined('AKEEBA') || die;
 
 /**
  * Integration of the TinyMCE editor with Panopticon
