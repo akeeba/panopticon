@@ -244,6 +244,23 @@ class Site extends DataModel
 		return $warnings;
 	}
 
+	/**
+	 * Get the base URL of the site (instead of the API endpoint).
+	 *
+	 * @return  string
+	 */
+	public function getBaseUrl(): string
+	{
+		$url            = rtrim($this->url, "/ \t\n\r\0\x0B");
+
+		if (str_ends_with($url, '/api'))
+		{
+			$url = rtrim(substr($url, 0, -4), '/');
+		}
+
+		return $url;
+	}
+
 	private function cleanUrl(?string $url): string
 	{
 		$url = trim($url ?? '');

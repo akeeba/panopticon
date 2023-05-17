@@ -281,7 +281,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		}
 
 		$currentVersion = $config?->core?->current?->version;
-		$latestVersion = $config?->core?->latest?->version;
+		$latestVersion  = $config?->core?->latest?->version;
 
 		if (!empty($currentVersion) && !empty($latestVersion) && version_compare($currentVersion, $latestVersion, 'ge'))
 		{
@@ -657,7 +657,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 */
 	private function runSiteInfo(object $task, Registry $storage): void
 	{
-		$site     = $this->getSite($task);
+		$site = $this->getSite($task);
 
 		$this->logger->info(Text::sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_SITEINFO',
@@ -735,12 +735,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		$currentVersion = $config?->core?->current?->version ?? '4.0.4';
 		$endpoint       = version_compare($currentVersion, '4.0.3', 'gt') ? 'extract.php' : 'restore.php';
-		$url            = rtrim($site->url, "/ \t\n\r\0\x0B");
-
-		if (str_ends_with($url, '/api'))
-		{
-			$url = rtrim(substr($url, 0, -4), '/');
-		}
+		$url            = $site->getBaseUrl();
 
 		return $url . '/administrator/components/com_joomlaupdate/' . $endpoint;
 	}

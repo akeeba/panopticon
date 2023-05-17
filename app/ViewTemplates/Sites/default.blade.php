@@ -71,7 +71,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                     <div class="small mt-1">
                         <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
                         <span class="text-secondary">
-                            {{{ substr($site->url, 0, strrpos($site->url, '/api')) }}}
+                            {{{ $site->getBaseUrl() }}}
                         </span>
                     </div>
                 </td>

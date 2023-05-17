@@ -70,6 +70,8 @@ The `joomlaupdate` task
 
 If a user chooses to upgrade a site with no auto-updates (the resolved config.core_update.install is none or email) follow the same process as the `coreupdateconductor` task FORCING the value of config.core_update.install to `major`. Do NOT send an email that an update will be installed automatically (the user initiated this action themselves).
 
+## Setup: use language strings instead of hardcoded English text in view templates
+
 ## Extension updates
 
 We need to provide a global default for extension updates PER EXTENSION:

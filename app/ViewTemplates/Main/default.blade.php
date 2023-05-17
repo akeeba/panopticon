@@ -69,7 +69,7 @@ defined('AKEEBA') || die;
                 ?>
                 @foreach($this->items as $item)
                     <?php
-                    $url    = substr($item->url, 0, strrpos($item->url, '/api'));
+                    $url    = $item->getBaseUrl();
                     $config = new Awf\Registry\Registry($item->config);
                     ?>
                     <tr>
