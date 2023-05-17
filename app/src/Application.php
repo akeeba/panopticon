@@ -41,7 +41,7 @@ class Application extends AWFApplication
 			'permissions' => ['panopticon.super'],
 		],
 		[
-			'view' => 'templates',
+			'view' => 'mailtemplates',
 			'permissions' => ['panopticon.super'],
 		],
 		[

@@ -33,6 +33,11 @@ $dark: #373637;
   height: min(400px, 30vh);
 }
 
+div.tox-textarea-wrap > textarea.tox-textarea {
+  height: min(500px, 70vh) !important;
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono", "Droid Sans Mono", monospace, monospace;
+}
+
 svg.panopticonLogoColour {
   height: 1.3em;
 }

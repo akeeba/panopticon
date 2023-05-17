@@ -23,6 +23,9 @@ trait ACLTrait
 		'login'     => [
 			'*' => ['*'],
 		],
+		'mailtemplates' => [
+			'*' => ['super'],
+		],
 		'main'      => [
 			'*' => ['view'],
 		],
@@ -37,9 +40,6 @@ trait ACLTrait
 			'*' => ['super'],
 		],
 		'tasks'     => [
-			'*' => ['super'],
-		],
-		'templates' => [
 			'*' => ['super'],
 		],
 	];

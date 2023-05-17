@@ -36,32 +36,50 @@ abstract class ACE
 	 *
 	 * @return string
 	 */
-	public static function editor(string $name, ?string $content, string $mode = 'css'): string
+	public static function editor(string $name, ?string $content, string $mode = 'css', array $options = []): string
 	{
 		self::initialise();
 
-		$document = Factory::getContainer()->application->getDocument();
-		$content  = $content ?: '';
-		$id       = 'c9aceEditor_' . Random::alphaLowercaseString(32);
+		$container = Factory::getContainer();
+		$document  = $container->application->getDocument();
+		$content   = $content ?: '';
+		$id        = $options['id'] ?? ('c9aceEditor_' . Random::alphaLowercaseString(32));
+		$height    = $options['height'] ?? '70vh';
+
+		if (isset($options['id']))
+		{
+			unset($options['id']);
+		}
+
+		if (isset($options['height']))
+		{
+			unset($options['height']);
+		}
 
 		if (!in_array($mode, ['plain_text', 'css', 'html', 'php', 'php_laravel_blade']))
 		{
 			$mode = 'plain_text';
 		}
 
+
 		// See https://github.com/ajaxorg/ace/wiki/Configuring-Ace
-		$options = [
-			'highlightActiveLine'       => true,
-			'behavioursEnabled'         => true,
-			'copyWithEmptySelection'    => true,
-			'highlightGutterLine'       => true,
-			'showPrintMargin'           => false,
-			'theme'                     => 'ace/theme/dracula',
-			'newLineMode'               => 'unix',
-			'mode'                      => 'ace/mode/' . $mode,
-			'enableBasicAutocompletion' => true,
-			'enableLiveAutocompletion'  => true,
-		];
+		$options = array_merge(
+			[
+				'highlightActiveLine'       => true,
+				'behavioursEnabled'         => true,
+				'copyWithEmptySelection'    => true,
+				'highlightGutterLine'       => true,
+				'showPrintMargin'           => false,
+				'theme'                     => 'ace/theme/dracula',
+				'newLineMode'               => 'unix',
+				'mode'                      => 'ace/mode/' . $mode,
+				'enableBasicAutocompletion' => true,
+				'enableLiveAutocompletion'  => true,
+			],
+			$options
+		);
+
+		$container->eventDispatcher->trigger('onACEEditorConfig', [$name, $id, &$options]);
 
 		$document->addScriptOptions('panopticon.aceEditor', [
 			$id => $options,
@@ -70,7 +88,7 @@ abstract class ACE
 		$js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {
     const panopticonAceInit = () => {
-        if (!ace) return;
+        if (typeof ace === "undefined") return;
         window.clearInterval(waitHandlerTimeout);
 
         const editor = ace.edit('$id');
@@ -91,7 +109,7 @@ JS;
 
 		return <<<HTML
 <textarea id="{$id}_textarea" name="$name" class="d-none">$content</textarea>
-<div id="$id">$contentAlt</div>
+<div id="$id" style="white-space: pre; height: $height">$contentAlt</div>
 
 HTML;
 	}

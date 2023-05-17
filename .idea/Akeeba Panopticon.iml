@@ -46,6 +46,9 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/cache" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/cache-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/var-exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/app/media/ace" />
+      <excludeFolder url="file://$MODULE_DIR$/app/media/tinymce" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `#__sites`
     FOREIGN KEY `#__sites_users_modified` (`modified_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL,
     FOREIGN KEY `#__sites_users_locked` (`locked_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL
 )
-    DEFAULT COLLATE `utf8mb4_unicode_ci`
+    DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
             ]]></query>
         </action>
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `#__tasks`
     `priority`        INT             NOT NULL DEFAULT 0,
     FOREIGN KEY `#__tasks_sites` (`site_id`) REFERENCES `#__sites` (`id`) ON DELETE CASCADE
 )
-    DEFAULT COLLATE `utf8mb4_unicode_ci`
+    DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
             ]]></query>
         </action>
@@ -105,7 +105,24 @@ CREATE TABLE IF NOT EXISTS `#__queue`
     `id`    SERIAL,
     `time`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `item`  JSON
-) DEFAULT COLLATE `binary`
+) DEFAULT COLLATE binary
+  ENGINE = InnoDB;
+            ]]></query>
+        </action>
+
+        <action table="#__mailtemplates" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__mailtemplates`
+(
+    `id`    SERIAL,
+    `type`  VARCHAR(255) NOT NULL,
+    `language` VARCHAR(50) NOT NULL DEFAULT '*',
+    `subject` VARCHAR(255) NOT NULL,
+    `html` LONGTEXT,
+    `plaintext` LONGTEXT,
+    INDEX `#__mailtemplates_type` (`type`(60))
+) DEFAULT COLLATE utf8mb4_unicode_ci
   ENGINE = InnoDB;
             ]]></query>
         </action>

@@ -66,7 +66,7 @@ class Main extends Controller
 		$app->close();
 	}
 
-	protected function onBeforeDefault(): bool
+	public function onBeforeDefault(): bool
 	{
 		if ($this->input->get('savestate', -999, 'int') == -999)
 		{

@@ -41,7 +41,7 @@ $numKeyMissing = array_reduce(
 			 data-bs-toggle="tooltip" data-bs-placement="bottom"
 			 data-bs-title="@plural('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N', $numUpdates)"
 		>
-			<span class="fa fa-arrow-up-right-dots" aria-hidden="true"></span>
+			<span class="fa fa-box-open" aria-hidden="true"></span>
 			<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADES_FOUND')</span>
 			{{ $numUpdates }}
 		</div>
