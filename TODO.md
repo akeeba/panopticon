@@ -2,6 +2,20 @@
 
 Before working on core and extension updates remember to remove ALL dev sites from the sites list. We are going to be doing something potentially dangerous to dev sites here.
 
+## Email templates page
+
+Beyond that, we need a separate text are for CSS to add at the top of the HTML message, since TinyMCE will strip that (IIRC).
+
+## Content-Security-Policy
+
+Both at the application level and in a .htaccess file (name it htaccess.txt).
+
+## Composer installation
+
+Explore installation through Composer with automated post-update scripts (clean tmp, upgrade database, …).
+
+Remember that we will need an `archive` section in `composer.json` to exclude the build stuff.
+
 ## Core updates
 
 ✅ We need to provide a global default for core updates (`tasks_coreupdate_install`):
@@ -93,12 +107,6 @@ In the configuration page
 ## Tasks page (only listing, no management)
 
 ## Log viewer page
-
-## Email templates page
-
-Note: it will require adding a WYSIWYG editor.
-
-Beyond that, we need a separate text are for CSS to add at the top of the HTML message, since TinyMCE will strip that (IIRC).
 
 ## Add WebAuthn as an MFA method
 

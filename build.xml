@@ -225,6 +225,20 @@
             </fileset>
         </copy>
 
+        <!-- TinyMCE -->
+        <echo>Copying TinyMCE files</echo>
+        <copy todir="${dirs.phpapp}/media/tinymce">
+            <fileset dir="${dirs.root}/node_modules/tinymce">
+                <include name="icons/**" />
+                <include name="models/**" />
+                <include name="plugins/**" />
+                <include name="skins/**" />
+                <include name="themes/**" />
+                <include name="tinymce.js" />
+                <include name="tinymce.min.js" />
+            </fileset>
+        </copy>
+
         <echo>Copying LICENSE.txt</echo>
         <copy file="${dirs.root}/LICENSE.txt" tofile="${dirs.phpapp}/LICENSE.txt" />
 
