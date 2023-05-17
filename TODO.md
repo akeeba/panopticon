@@ -4,7 +4,20 @@ Before working on core and extension updates remember to remove ALL dev sites fr
 
 ## Email templates page
 
-Beyond that, we need a separate text are for CSS to add at the top of the HTML message, since TinyMCE will strip that (IIRC).
+Common CSS for all mail templates, handled in its own task.
+
+The edit task of a template initialises a TinyMCE editor with the common CSS added as the `content_style` option.
+
+Each mail template consists of
+- Mailing Type (from a list)
+- Language (hide this for now, set it to `*` i.e. all languages)
+- Subject
+- HTML Content
+- Plaintext Content
+
+We need to document which variables (in the form `[FOOBAR]`) are supported in general, and for each mail template.
+
+We need a mail helper to find the correct email template.
 
 ## Content-Security-Policy
 

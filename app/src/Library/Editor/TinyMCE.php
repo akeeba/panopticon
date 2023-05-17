@@ -83,7 +83,6 @@ HTML;
 			'remove_script_host'          => false,
 			'document_base_url'           => Uri::base(),
 			'link_default_protocol'       => 'https',
-			// link_default_protocol
 		];
 
 		$container = Factory::getContainer();
