@@ -30,8 +30,6 @@ All three content fields —Subject, HTML Content, and Plain Text Content— sup
 
 All mail types support the following variables:
 
-* `[NAME]` The name of the user receiving the email. In case of an additional email set up on a site's preferences, the email address of the recipient is used instead.
-* `[EMAIL]` The email address of the recipient.
 * `[URL]` The URL to your Akeeba Panopticon installation
 
 ### Joomla!™ core update

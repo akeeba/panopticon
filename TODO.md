@@ -17,7 +17,11 @@ Before working on core and extension updates remember to remove ALL dev sites fr
 
 ✅ We need to document which variables (in the form `[FOOBAR]`) are supported in general, and for each mail template.
 
-We need a mail helper to find the correct email template.
+✅ We need a mail helper to find the correct email template.
+
+Create default email templates
+
+Auto-populate default email templates on database installation.
 
 ## Content-Security-Policy
 
@@ -183,6 +187,8 @@ Only users with the super privilege can manage application-level configuration:
 - Log management
 
 # 🤔 Maybe
+
+## Buttons to reset email templates to default (all, or specific ones)
 
 ## Chunked Joomla update package uploads
 

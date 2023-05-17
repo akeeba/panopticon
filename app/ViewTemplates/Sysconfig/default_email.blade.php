@@ -26,6 +26,20 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--mail_inline_images--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[mail_inline_images]" id="mail_inline_images"
+                            {{ $config->get('mail_inline_images', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="mail_inline_images">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_MAIL_INLINE_IMAGES')
+                    </label>
+                </div>
+            </div>
+        </div>
+
         {{--mailer--}}
         <div class="row mb-3">
             <label for="mailer" class="col-sm-3 col-form-label">

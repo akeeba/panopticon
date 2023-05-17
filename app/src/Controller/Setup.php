@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Model\Setup as SetupModel;
 use Awf\Filesystem\Factory as FilesystemFactory;
 use Awf\Mvc\Controller;
 use Awf\Text\Text;
+use Awf\Uri\Uri;
 use Awf\Utils\Template;
 use Exception;
 use Throwable;
@@ -162,6 +163,7 @@ class Setup extends Controller
 		try
 		{
 			// Save the configuration
+			$this->container->appConfig->set('live_site', Uri::base());
 			$this->container->appConfig->saveConfiguration();
 
 			if (function_exists('opcache_invalidate'))

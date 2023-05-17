@@ -40,6 +40,13 @@ How verbose should error reporting to the browser output be? The valid options a
 
 Default: default
 
+### `live_site`
+**Panopticon installation URL**
+
+The URL Panopticon is installed on. Used when sending emails through a CLI CRON job.
+
+Default: (blank)
+
 ### `finished_setup`
 **Have we finished installing up the application?**
 
@@ -302,6 +309,13 @@ Tells Panopticon how to send emails
 **Mail Sending**
 
 Is Panopticon allowed to send email? 
+
+Default: false
+
+### `mail_inline_images`
+**Inline Images in Email**
+
+Should Panopticon try to attach images in the emails it sends? When disabled the images will be linked to. When enabled the images are included in the email as inline attachments.
 
 Default: false
 

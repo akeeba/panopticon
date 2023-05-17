@@ -14,6 +14,23 @@ $config = $this->container->appConfig;
     <div class="card-body">
         <h3 class="card-title h5">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SYSTEM')</h3>
 
+        {{--live_site--}}
+        <div class="row mb-3">
+            <label for="live_site" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_LIVE_SITE')
+            </label>
+            <div class="col-sm-9">
+                <input type="url" class="form-control"
+                       id="live_site" name="options[live_site]"
+                       value="{{{ $config->get('live_site', \Awf\Uri\Uri::base()) }}}"
+                       min="1" required
+                >
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_LIVE_SITE_HELP')
+                </div>
+            </div>
+        </div>
+
         {{--session_timeout--}}
         <div class="row mb-3">
             <label for="session_timeout" class="col-sm-3 col-form-label">
