@@ -29,6 +29,10 @@ $dark: #373637;
 
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
+.ace_editor {
+  height: min(400px, 30vh);
+}
+
 svg.panopticonLogoColour {
   height: 1.3em;
 }

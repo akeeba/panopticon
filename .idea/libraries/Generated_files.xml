@@ -4,6 +4,7 @@
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/app/media/js/ajax.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/bootstrap.bundle.min.js" />
+        <item url="file://$PROJECT_DIR$/app/media/js/codemirror.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/darkmode.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/main.min.js" />
         <item url="file://$PROJECT_DIR$/app/media/js/remember-tab.min.js" />
@@ -15,6 +16,7 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/app/media/js/ajax.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/bootstrap.bundle.min.js" />
+      <root url="file://$PROJECT_DIR$/app/media/js/codemirror.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/darkmode.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/main.min.js" />
       <root url="file://$PROJECT_DIR$/app/media/js/remember-tab.min.js" />

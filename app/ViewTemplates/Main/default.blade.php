@@ -9,6 +9,14 @@ defined('AKEEBA') || die;
 @include('Main/heartbeat')
 @include('Main/php_warnings')
 
+<div class="bg-body-tertiary border border-2 border-warning mx-2 my-4 rounded-1">
+    <h3 class="bg-warning-subtle p-2 border-bottom border-warning text-warning-emphasis">Debug</h3>
+    <div class="p-2">
+        {{ \Akeeba\Panopticon\Library\Editor\TinyMCE::editor('derp', "<p>Hello, world.</p>") }}
+    </div>
+</div>
+
+
 <div class="card">
     <h3 class="card-header bg-secondary-subtle d-flex flex-column align-items-center flex-sm-row gap-2 fs-5">
         <span class="flex-grow-1">

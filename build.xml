@@ -239,6 +239,38 @@
             </fileset>
         </copy>
 
+        <!-- ACE (https://ace.c9.io/#nav=embedding) -->
+        <echo>Copying ACE files</echo>
+        <copy todir="${dirs.phpapp}/media/ace/css">
+            <fileset dir="${dirs.root}/node_modules/ace-builds/css">
+                <include name="ace.css" />
+                <include name="dracula*.png" />
+                <include name="github*.png" />
+                <include name="main*.png" />
+                <include name="theme/dracula.css" />
+                <include name="theme/github.css" />
+            </fileset>
+        </copy>
+        <copy todir="${dirs.phpapp}/media/ace">
+            <fileset dir="${dirs.root}/node_modules/ace-builds/src">
+                <include name="**" />
+                <include name="ace*.js" />
+                <include name="ext-searchbox.js" />
+                <include name="ext-languagetools.js" />
+                <include name="mode-css.*" />
+                <include name="mode-html.*" />
+                <include name="mode-plain_text.*" />
+                <include name="mode-php.*" />
+                <include name="mode-php_laravel_blade.*" />
+                <include name="theme-dracula.*" />
+                <include name="theme-github.*" />
+                <include name="worker-base.*" />
+                <include name="worker-css.*" />
+                <include name="worker-html.*" />
+                <include name="worker-php.*" />
+            </fileset>
+        </copy>
+
         <echo>Copying LICENSE.txt</echo>
         <copy file="${dirs.root}/LICENSE.txt" tofile="${dirs.phpapp}/LICENSE.txt" />
 

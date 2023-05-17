@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Factory;
 use Awf\Uri\Uri;
 use Awf\Utils\Template;
+use Delight\Random\Random;
 
 /**
  * Integration of the TinyMCE editor with Panopticon
@@ -27,7 +28,7 @@ abstract class TinyMCE
 		$content = $content ?: '';
 
 		return <<<HTML
-<textarea class="tinyMceEditor">$content</textarea><a href="https://www.tiny.cloud/powered-by-tiny/?utm_campaign=editor_referral&utm_medium=poweredby&utm_source=tinymce&utm_content=v6" class="text-muted text-decoration-none" style="font-size: 6pt">Powered by TinyMCE</a>
+<textarea class="tinyMceEditor" name="$name">$content</textarea><a href="https://www.tiny.cloud/powered-by-tiny/?utm_campaign=editor_referral&utm_medium=poweredby&utm_source=tinymce&utm_content=v6" class="text-muted text-decoration-none" style="font-size: 6pt">Powered by TinyMCE</a>
 HTML;
 	}
 
@@ -74,7 +75,7 @@ HTML;
 			'resize'                      => true,
 			'promotion'                   => false,
 			'branding'                    => false,
-			'content_security_policy'     => "script-src: 'none'",
+			'content_security_policy'     => "script-src 'none'",
 			'skin'                        => 'akeeba',
 			'importcss_exclusive'         => false,
 			'browser_spellcheck'          => true,
