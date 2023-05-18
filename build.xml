@@ -275,7 +275,7 @@
         <copy file="${dirs.root}/LICENSE.txt" tofile="${dirs.phpapp}/LICENSE.txt" />
 
         <echo>Removing .DS_Store files</echo>
-        <exec command="sh killDS.sh" dir="${dirs.root}"/>
+        <exec command="find . -name .DS_Store -delete" dir="${dirs.root}"/>
     </target>
 
     <target name="setup-properties" description="Set up version and build properties">
