@@ -2,31 +2,6 @@
 
 Before working on core and extension updates remember to remove ALL dev sites from the sites list. We are going to be doing something potentially dangerous to dev sites here.
 
-## Email templates page
-
-✅ Common CSS for all mail templates, handled in its own task.
-
-✅ The edit task of a template initialises a TinyMCE editor with the common CSS added as the `content_style` option.
-
-✅ Each mail template consists of
-- Mailing Type (from a list)
-- Language (hide this for now, set it to `*` i.e. all languages)
-- Subject
-- HTML Content
-- Plaintext Content
-
-✅ We need to document which variables (in the form `[FOOBAR]`) are supported in general, and for each mail template.
-
-✅ We need a mail helper to find the correct email template.
-
-Create default email templates
-
-Auto-populate default email templates on database installation.
-
-## Content-Security-Policy
-
-Both at the application level and in a .htaccess file (name it htaccess.txt).
-
 ## Composer installation
 
 Explore installation through Composer with automated post-update scripts (clean tmp, upgrade database, …).
@@ -69,7 +44,7 @@ The `joomlaupdate` task
 * ✅ Enables Joomla Update's restoration.php / extract.php
 * ✅ Goes through the extraction and post-extraction steps
 * ✅ Performs any post-upgrade tasks (TO-DO)
-* Conditionally enqueues completion email
+* Send completion email
 * Fetch the number of changed template files after the update is over and update the site record
 
 If a user chooses to upgrade a site with no auto-updates (the resolved config.core_update.install is none or email) follow the same process as the `coreupdateconductor` task FORCING the value of config.core_update.install to `major`. Do NOT send an email that an update will be installed automatically (the user initiated this action themselves).
@@ -113,9 +88,9 @@ If a user chooses to update an extension with no auto-updates:
 * Add the extension ID to the queue
 * Create (or re-enable) a "run once" task to update the site's extensions.
 
-## Refresh site information after saving it
+## Content-Security-Policy
 
-We need to run the site information and extension information gathering in the background, e.g. schedule a run-once task with top priority.
+Both at the application level and in a .htaccess file (name it htaccess.txt).
 
 ## Database setup
 
@@ -217,6 +192,31 @@ In short, since Joomla sucks let's work around it to make it suck less. Story of
   * If that failed to return results return $user->authorise(null, $privilege) for the global privilege.
 
 # ✅ Done
+
+## Refresh site information after saving it
+
+We need to run the site information and extension information gathering in the background, e.g. schedule a run-once task with top priority.
+
+## Email templates page
+
+✅ Common CSS for all mail templates, handled in its own task.
+
+✅ The edit task of a template initialises a TinyMCE editor with the common CSS added as the `content_style` option.
+
+✅ Each mail template consists of
+- Mailing Type (from a list)
+- Language (hide this for now, set it to `*` i.e. all languages)
+- Subject
+- HTML Content
+- Plaintext Content
+
+✅ We need to document which variables (in the form `[FOOBAR]`) are supported in general, and for each mail template.
+
+✅ We need a mail helper to find the correct email template.
+
+✅ Create default email templates
+
+✅ Auto-populate default email templates on database installation.
 
 ## Run once tasks
 * They need to have the `params` key `run_once`.
