@@ -31,6 +31,7 @@
         <include name="**" />
 
         <!-- Do not copy the configuration and internal repo files and folders -->
+        <exclude name=".idea/**" />
         <exclude name="assets/**" />
         <exclude name="build/**" />
         <exclude name="documentation/**" />
@@ -253,21 +254,20 @@
         </copy>
         <copy todir="${dirs.phpapp}/media/ace">
             <fileset dir="${dirs.root}/node_modules/ace-builds/src">
-                <include name="**" />
                 <include name="ace*.js" />
                 <include name="ext-searchbox.js" />
                 <include name="ext-languagetools.js" />
                 <include name="mode-css.*" />
                 <include name="mode-html.*" />
                 <include name="mode-plain_text.*" />
-                <include name="mode-php.*" />
-                <include name="mode-php_laravel_blade.*" />
+                <!--<include name="mode-php.*" />-->
+                <!--<include name="mode-php_laravel_blade.*" />-->
                 <include name="theme-dracula.*" />
                 <include name="theme-github.*" />
                 <include name="worker-base.*" />
                 <include name="worker-css.*" />
                 <include name="worker-html.*" />
-                <include name="worker-php.*" />
+                <!--<include name="worker-php.*" />-->
             </fileset>
         </copy>
 

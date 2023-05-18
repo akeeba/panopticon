@@ -27,8 +27,6 @@ abstract class ACE
 	 * - `plain_text` No syntax highlighting
 	 * - `css` CSS
 	 * - `html` HTML5
-	 * - `php` PHP
-	 * - `php_laravel_blade` Blade view templates
 	 *
 	 * @param   string       $name     The name of the form input control
 	 * @param   string|null  $content  Initial content
@@ -56,7 +54,7 @@ abstract class ACE
 			unset($options['height']);
 		}
 
-		if (!in_array($mode, ['plain_text', 'css', 'html', 'php', 'php_laravel_blade']))
+		if (!in_array($mode, ['plain_text', 'css', 'html']))
 		{
 			$mode = 'plain_text';
 		}
