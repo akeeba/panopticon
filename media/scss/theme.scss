@@ -27,7 +27,7 @@ $danger: #cc3136;
 $light: #efefef;
 $dark: #373637;
 
-@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 .ace_editor {
   height: min(400px, 30vh);
