@@ -63,7 +63,8 @@ CREATE TABLE IF NOT EXISTS `#__sites`
     `config`      JSON,
     FOREIGN KEY `#__sites_users_created` (`created_by`) REFERENCES `#__users` (`id`) ON DELETE CASCADE,
     FOREIGN KEY `#__sites_users_modified` (`modified_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL,
-    FOREIGN KEY `#__sites_users_locked` (`locked_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL
+    FOREIGN KEY `#__sites_users_locked` (`locked_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL,
+    PRIMARY KEY (`id`)
 )
     DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
@@ -90,7 +91,8 @@ CREATE TABLE IF NOT EXISTS `#__tasks`
     `times_failed`    INT UNSIGNED    NOT NULL DEFAULT 0,
     `locked`          DATETIME        NULL,
     `priority`        INT             NOT NULL DEFAULT 0,
-    FOREIGN KEY `#__tasks_sites` (`site_id`) REFERENCES `#__sites` (`id`) ON DELETE CASCADE
+    FOREIGN KEY `#__tasks_sites` (`site_id`) REFERENCES `#__sites` (`id`) ON DELETE CASCADE,
+    PRIMARY KEY (`id`)
 )
     DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
@@ -104,7 +106,8 @@ CREATE TABLE IF NOT EXISTS `#__queue`
 (
     `id`    SERIAL,
     `time`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `item`  JSON
+    `item`  JSON,
+    PRIMARY KEY (`id`)
 ) DEFAULT COLLATE binary
   ENGINE = InnoDB;
             ]]></query>
@@ -121,7 +124,8 @@ CREATE TABLE IF NOT EXISTS `#__mailtemplates`
     `subject` VARCHAR(255) NOT NULL,
     `html` LONGTEXT,
     `plaintext` LONGTEXT,
-    INDEX `#__mailtemplates_type` (`type`(60))
+    INDEX `#__mailtemplates_type` (`type`(60)),
+    PRIMARY KEY (`id`)
 ) DEFAULT COLLATE utf8mb4_unicode_ci
   ENGINE = InnoDB;
             ]]></query>
