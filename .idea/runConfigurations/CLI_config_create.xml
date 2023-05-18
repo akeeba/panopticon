@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CLI config:create" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/app/cli/panopticon.php" scriptParameters="config:create --user=panopticon --password=panopticon --name=panopticon">
+  <configuration default="false" name="CLI config:create" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="config:create --user=panopticon --password=panopticon --name=panopticon">
     <method v="2" />
   </configuration>
 </component>

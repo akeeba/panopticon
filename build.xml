@@ -5,7 +5,7 @@
 
     <!-- Override properties set up in common.xml -->
     <property name="dirs.root" value="${phing.dir}" override="true" />
-    <property name="dirs.phpapp" value="app" override="true" />
+    <property name="dirs.phpapp" value="${phing.dir}" override="true" />
     <property name="dirs.release" value="${dirs.root}/release" override="true" />
     <property name="dirs.templates" value="${phing.dir}/build/templates" override="true" />
     <property name="dirs.component" value="${phing.dir}/component" override="true" />
@@ -30,8 +30,23 @@
     <fileset dir="${dirs.phpapp}" id="app" expandsymboliclinks="true">
         <include name="**" />
 
-        <!-- Do not copy the configuration -->
+        <!-- Do not copy the configuration and internal repo files and folders -->
+        <exclude name="assets/**" />
+        <exclude name="build/**" />
+        <exclude name="documentation/**" />
+        <exclude name="node_modules/**" />
+        <exclude name="release/**" />
+
+        <exclude name=".gitattributes" />
+        <exclude name=".gitignore" />
+        <exclude name="build.xml" />
+        <exclude name="CHANGELOG" />
+        <exclude name="composer.json" />
+        <exclude name="composer.lock" />
         <exclude name="config.php" />
+        <exclude name="package.json" />
+        <exclude name="package-lock.json" />
+        <exclude name="*.md" />
 
         <!-- Exclude SCSS -->
         <exclude name="media/scss/**" />
@@ -144,25 +159,10 @@
         <exclude name="vendor/joomla/uri/ruleset*" />
         <exclude name="vendor/joomla/uri/SECURITY.md" />
 
-        <exclude name="vendor/phpgt/cssxpath/.github/**" />
-        <exclude name="vendor/phpgt/cssxpath/test/**" />
-        <exclude name="vendor/phpgt/cssxpath/.gitignore" />
-        <exclude name="vendor/phpgt/cssxpath/.scrutinizer" />
-        <exclude name="vendor/phpgt/cssxpath/CONTRIBUTING.md" />
-
-        <exclude name="vendor/phpgt/dom/.github/**" />
-        <exclude name="vendor/phpgt/dom/test/**" />
-        <exclude name="vendor/phpgt/dom/.gitignore" />
-        <exclude name="vendor/phpgt/dom/.scrutinizer" />
-        <exclude name="vendor/phpgt/dom/CONTRIBUTING.md" />
-        <exclude name="vendor/phpgt/dom/logo.png" />
-        <exclude name="vendor/phpgt/dom/phpcs.xml" />
-        <exclude name="vendor/phpgt/dom/phpmd.xml" />
-
-        <exclude name="vendor/phpgt/propfunc/.github/**" />
-        <exclude name="vendor/phpgt/propfunc/test/**" />
-        <exclude name="vendor/phpgt/propfunc/.gitignore" />
-        <exclude name="vendor/phpgt/propfunc/.scrutinizer" />
+        <exclude name="vendor/phpmailer/phpmailer/COMMITMENT" />
+        <exclude name="vendor/phpmailer/phpmailer/get_*.php" />
+        <exclude name="vendor/phpmailer/phpmailer/SECURITY.md" />
+        <exclude name="vendor/phpmailer/phpmailer/VERSION" />
 
         <exclude name="vendor/psr/cache/CHANGELOG.md" />
 
@@ -271,9 +271,6 @@
             </fileset>
         </copy>
 
-        <echo>Copying LICENSE.txt</echo>
-        <copy file="${dirs.root}/LICENSE.txt" tofile="${dirs.phpapp}/LICENSE.txt" />
-
         <echo>Removing .DS_Store files</echo>
         <exec command="find . -name .DS_Store -delete" dir="${dirs.root}"/>
     </target>
@@ -371,8 +368,6 @@
     <target name="app-package" description="Component package build"
             depends="new-release,setup-properties">
         <echo>Creating ZIP package</echo>
-
-        <copy file="${dirs.root}/CHANGELOG" tofile="${dirs.phpapp}/CHANGELOG.php" overwrite="true"/>
 
         <copy file="${dirs.templates}/version.php" tofile="${dirs.phpapp}/version.php" overwrite="true">
             <filterchain refid="standard-tokens"/>

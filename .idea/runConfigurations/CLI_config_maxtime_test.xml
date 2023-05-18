@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CLI config:maxtime:test" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/app/cli/panopticon.php" scriptParameters="config:maxtime:test">
+  <configuration default="false" name="CLI config:maxtime:test" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="config:maxtime:test">
     <method v="2" />
   </configuration>
 </component>

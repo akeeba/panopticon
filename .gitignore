@@ -1,37 +1,26 @@
 ### Application stuff
-/app/CHANGELOG.php
-/app/config.php
-/app/config.dist.php
-/app/cache/**
-!/app/cache/.htaccess
-!/app/cache/web.config
-/app/tmp/**
-!/app/tmp/.htaccess
-!/app/tmp/web.config
-/app/log/**
-!/app/log/.htaccess
-!/app/log/web.config
-/app/LICENSE.txt
-/app/version.php
+config.php
+/cache/**
+!/cache/.htaccess
+!/cache/web.config
+/tmp/**
+!/tmp/.htaccess
+!/tmp/web.config
+/log/**
+!/log/.htaccess
+!/log/web.config
+/version.php
 
 ### User code dir
-/app/user_code/*
-
-### Component stuff
-/component/backend/version.php
-/component/backend/panopticon.xml
-/pkg_panopticon.xml
+/user_code/*
 
 ### Composer
-/app/vendor
+/vendor
 
-### Node.js
+### Node.js dev dependencies
 /node_modules
 
 ### Build & Release files
 /build/override.properties
 /release
 /1
-
-### Private files
-/assets/phpstorm_http/http-client.private.env.json
