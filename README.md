@@ -1,21 +1,13 @@
 # Akeeba Panopticon
 
-Remote site management and backup scheduling
+Centralised site management software.
+
+<div style="background-color: #665500; color: white; padding: 1em; margin: 1em; font-size: larger; border: 3px solid #333000; border-radius: .5em">
+⚠️ <strong>Work in progress</strong>. There be dragons.
+</div>
 
 ## What is it?
 
-Akeeba Panopticon is a standalone PHP application. You install on a domain or subdomain separate from your sites. You can then use it to manage your Joomla 4 (and later) sites remotely, including managing core and 3PD extension updates, as well as managing, and scheduling, backups with Akeeba Backup Professional.
+Akeeba Panopticon is a standalone PHP application. You install on a domain or subdomain separate from your sites. You can then use it to manage your sites remotely.
 
-## WORK IN PROGRESS
-
-This is work in progress. It will take a while before it's in a usable state. The target for stable release is Q2 2024, depending on the breadth and depth of changes in upcoming Joomla and PHP versions.
-
-## Building from sources
-
-**TODO: Expand on this**
-
-Install Akeeba BuildFiles one level up, on `buildfiles`
-
-Run `phing git` in the repo's root.
-
-Requires Composer, Phing and NPM to be already installed.
+Currently, it supports Joomla 4 (and later) sites.
