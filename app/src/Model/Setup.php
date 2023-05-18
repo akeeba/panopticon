@@ -283,6 +283,9 @@ class Setup extends Model
 			}
 		}
 
+		// Hardcoded connection character set for PDOMySQL
+		$config->set('dbcharset', 'utf8mb4');
+
 		// Set the SSL connection parameters
 		$config->set('dbencryption', $dbParameters['ssl']['enable'] ?? false);
 		$config->set('dbsslcipher', $dbParameters['ssl']['cipher'] ?? '');

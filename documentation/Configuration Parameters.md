@@ -266,6 +266,15 @@ A naming prefix to use for Akeeba Panopticon tables. Ideally 2 to 5 characters l
 
 Default: ak_
 
+### `dbcharset`
+**Database Connection Character Set**
+
+Hidden. Only applies to the `pdomysql` driver.
+
+The character set of the connection to the database. This must always be `utf8mb4` on all supported database server versions.
+
+Default: `utf8mb4`
+
 ### `dbencryption`
 **Database Encryption**
 
