@@ -6,34 +6,35 @@
 
 (() =>
 {
-    const onTabClick = (e) =>
-    {
-        const options = akeeba.System.getOptions("panopticon.rememberTab");
-        let itemName  = options?.key ?? "rememberTab";
+	console.log('Derpidi');
+	const onTabClick = (e) =>
+	{
+		const options = akeeba.System.getOptions("panopticon.rememberTab");
+		let itemName  = options?.key ?? "rememberTab";
 
-        window.localStorage.setItem(itemName, e.target.id || "");
-    }
+		window.localStorage.setItem(itemName, e.target.id || "");
+	};
 
-    document.addEventListener("DOMContentLoaded", () =>
-    {
-        document.querySelectorAll("button[data-bs-toggle=\"tab\"]").forEach((el) =>
-        {
-            el.addEventListener("click", onTabClick)
-        });
+	document.addEventListener("DOMContentLoaded", () =>
+	{
+		document.querySelectorAll("button[data-bs-toggle=\"tab\"]").forEach((el) =>
+		{
+			el.addEventListener("click", onTabClick);
+		});
 
-        const options          = akeeba.System.getOptions("panopticon.rememberTab");
-        let itemName           = options?.key ?? "rememberTab";
-        let activeItem         = null;
-        let activeItemSelector = window.localStorage.getItem(itemName);
+		const options          = akeeba.System.getOptions("panopticon.rememberTab");
+		let itemName           = options?.key ?? "rememberTab";
+		let activeItem         = null;
+		let activeItemSelector = window.localStorage.getItem(itemName);
 
-        if (activeItemSelector)
-        {
-            activeItem = document.getElementById(activeItemSelector);
-        }
+		if (activeItemSelector)
+		{
+			activeItem = document.getElementById(activeItemSelector);
+		}
 
-        if (activeItem)
-        {
-            activeItem.click();
-        }
-    })
-})()
+		if (activeItem)
+		{
+			activeItem.click();
+		}
+	});
+})();

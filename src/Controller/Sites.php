@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
-use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBlocked;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Awf\Date\Date;
 use Awf\Mvc\DataController;
@@ -20,6 +19,11 @@ use GuzzleHttp\Exception\GuzzleException;
 class Sites extends DataController
 {
 	use ACLTrait;
+
+	private const CHECKBOX_KEYS = [
+		'config.core_update.email_error',
+		'config.core_update.email_after',
+	];
 
 	public function execute($task)
 	{
@@ -47,7 +51,7 @@ class Sites extends DataController
 			$this->getIDsFromRequest($model, true);
 		}
 
-		$id = $model->getId() ?: 0;
+		$id     = $model->getId() ?: 0;
 		$status = true;
 
 		try
@@ -63,11 +67,31 @@ class Sites extends DataController
 			$config = new \Awf\Registry\Registry($model?->config ?? '{}');
 			$config->set('config.apiKey', $token);
 
-
+			// Get all the data
 			$data = $this->input->getData();
 
 			// Handle the "enabled" field
 			$data['enabled'] = in_array(strtolower($data['enabled'] ?? ''), ['on', 'checked', 1, true]);
+
+			// Handle all the config keys
+			if (isset($data['config']) && is_array($data['config']) && !empty($data['config']))
+			{
+				foreach ($data['config'] ?? [] as $key => $value)
+				{
+					if (in_array($key, self::CHECKBOX_KEYS))
+					{
+						continue;
+					}
+
+					$config->set($key, $value);
+				}
+
+				// Handle the checkbox config keys
+				foreach (self::CHECKBOX_KEYS as $k)
+				{
+					$config->set($k, isset($data['config'][$k]));
+				}
+			}
 
 			// Apply the config parameters
 			$data['config'] = $config->toString('JSON');
@@ -123,7 +147,7 @@ class Sites extends DataController
 		catch (\Throwable $e)
 		{
 			$status = false;
-			$error = $e->getMessage();
+			$error  = $e->getMessage();
 		}
 
 		if ($status)

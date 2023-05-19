@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Mvc\DataView\Html as DataViewHtml;
 use Awf\Text\Text;
+use Awf\Utils\Template;
 
 class Html extends DataViewHtml
 {
@@ -67,7 +68,7 @@ class Html extends DataViewHtml
 	{
 		$document = $this->container->application->getDocument();
 		$toolbar  = $document->getToolbar();
-		$buttons = [
+		$buttons  = [
 			[
 				'title'   => Text::_('PANOPTICON_BTN_SAVE'),
 				'class'   => 'btn btn-primary',
@@ -81,10 +82,10 @@ class Html extends DataViewHtml
 				'icon'    => 'fa fa-check',
 			],
 			[
-				'title' => Text::_('PANOPTICON_BTN_CANCEL'),
-				'class' => 'btn btn-danger',
+				'title'   => Text::_('PANOPTICON_BTN_CANCEL'),
+				'class'   => 'btn btn-danger',
 				'onClick' => 'akeeba.System.submitForm(\'cancel\');',
-				'icon'  => 'fa fa-cancel',
+				'icon'    => 'fa fa-cancel',
 			],
 		];
 
@@ -98,8 +99,13 @@ class Html extends DataViewHtml
 		$this->item = $this->getModel();
 
 		$this->connectionError = $this->container->segment->getFlash('site_connection_error', null);
-		$this->httpCode = $this->container->segment->getFlash('site_connection_http_code', null);
-		$this->curlError = $this->container->segment->getFlash('site_connection_curl_error', null);
+		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
+		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
+
+		$document->addScriptOptions('panopticon.rememberTab', [
+			'key' => 'panopticon.siteAdd.rememberTab',
+		]);
+		Template::addJs('media://js/remember-tab.js');
 
 		return parent::onBeforeAdd();
 	}
@@ -108,7 +114,7 @@ class Html extends DataViewHtml
 	{
 		$document = $this->container->application->getDocument();
 		$toolbar  = $document->getToolbar();
-		$buttons = [
+		$buttons  = [
 			[
 				'title'   => Text::_('PANOPTICON_BTN_SAVE'),
 				'class'   => 'btn btn-primary',
@@ -122,10 +128,10 @@ class Html extends DataViewHtml
 				'icon'    => 'fa fa-check',
 			],
 			[
-				'title' => Text::_('PANOPTICON_BTN_CANCEL'),
-				'class' => 'btn btn-danger',
+				'title'   => Text::_('PANOPTICON_BTN_CANCEL'),
+				'class'   => 'btn btn-danger',
 				'onClick' => 'akeeba.System.submitForm(\'cancel\');',
-				'icon'  => 'fa fa-cancel',
+				'icon'    => 'fa fa-cancel',
 			],
 		];
 
@@ -139,8 +145,13 @@ class Html extends DataViewHtml
 		$this->item = $this->getModel();
 
 		$this->connectionError = $this->container->segment->getFlash('site_connection_error', null);
-		$this->httpCode = $this->container->segment->getFlash('site_connection_http_code', null);
-		$this->curlError = $this->container->segment->getFlash('site_connection_curl_error', null);
+		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
+		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
+
+		$document->addScriptOptions('panopticon.rememberTab', [
+			'key' => 'panopticon.siteEdit.' . $this->getModel()->id . '.rememberTab',
+		]);
+		Template::addJs('media://js/remember-tab.js');
 
 		return parent::onBeforeEdit();
 	}

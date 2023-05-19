@@ -1,13 +1,5 @@
 # TO-DO
 
-Before working on core and extension updates remember to remove ALL dev sites from the sites list. We are going to be doing something potentially dangerous to dev sites here.
-
-## Composer installation
-
-Explore installation through Composer with automated post-update scripts (clean tmp, upgrade database, …).
-
-Remember that we will need an `archive` section in `composer.json` to exclude the build stuff.
-
 ## Core updates
 
 ✅ We need to provide a global default for core updates (`tasks_coreupdate_install`):
@@ -19,7 +11,7 @@ Remember that we will need an `archive` section in `composer.json` to exclude th
 
 ✅ The factory default is `patch`.
 
-Each site has these options in `config`, editable in the site config page
+✅ Each site has these options in `config`, editable in the site config page
 
 * config.core_update.install: '', none, email, patch, minor, major • default: '' (use global)
 * config.core_update.when: immediately, time • default: immediately
@@ -307,3 +299,9 @@ If any of the default tasks are missing, install them
 ## Email setup
 
 In the configuration page
+
+## Composer installation
+
+Explore installation through Composer with automated post-update scripts (clean tmp, upgrade database, …).
+
+Remember that we will need an `archive` section in `composer.json` to exclude the build stuff.
