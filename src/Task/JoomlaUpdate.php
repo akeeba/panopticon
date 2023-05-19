@@ -11,6 +11,8 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Aes\Ctr;
+use Akeeba\Panopticon\Library\Queue\QueueItem;
+use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -313,6 +315,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			'OLD_VERSION' => $currentVersion,
 			'SITE_NAME'   => $site->name,
 		]);
+		$storage->set('site_id', $site->id);
 
 		$cc = array_map(
 			function (string $item) {
@@ -1200,74 +1203,31 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 	private function sendEmail(string $emailKey, Registry $storage, array $permissions = ['panopticon.super'], array $additionalVariables = [])
 	{
+		$this->logger->debug(
+			sprintf(
+				'Enqueueing email with template %s',
+				$emailKey
+			),
+			$additionalVariables
+		);
+
 		$variables = $storage->get('email_variables', []);
 		$variables = array_merge($variables, $additionalVariables);
-		$mailer    = clone $this->container->mailer;
-		$mailer->initialiseWithTemplate($emailKey, replacements: $variables);
 
-		if (empty($mailer->Body))
-		{
-			return;
-		}
+		$data = new Registry();
+		$data->set('template', $emailKey);
+		$data->set('email_variables', $variables);
+		$data->set('permissions', $permissions);
+		$data->set('email_cc', $storage->get('email_cc', []));
 
-		// Add recipient users by permissions
-		$recipients = $this->getRecipientsByPermissions($permissions);
-
-		if (empty($recipients))
-		{
-			return;
-		}
-
-		foreach ($recipients as $recipient)
-		{
-			[$email, $name] = $recipient;
-
-			$mailer->addRecipient($email, $name);
-		}
-
-		// Add CC'ed users by configuration
-		$cc = $storage->get('email_cc', []);
-
-		foreach ($cc as $recipient)
-		{
-			[$email, $name] = $recipient;
-
-			$mailer->addCC($email, $name);
-		}
-
-		// Send the email
-		try
-		{
-			$mailer->Send();
-		}
-		catch (\PHPMailer\PHPMailer\Exception $e)
-		{
-			// Okay, no problem.
-		}
-	}
-
-	private function getRecipientsByPermissions(array $permissions): array
-	{
-		$db    = $this->container->db;
-		$query = $db->getQuery(true)
-			->select([
-				$db->quoteName('name'),
-				$db->quoteName('email'),
-			])
-			->from($db->quoteName('#__users'));
-
-		foreach ($permissions as $permission)
-		{
-			$query
-				->where(
-					$query->jsonPointer('parameters', 'acl.' . $permission) . ' = TRUE',
-					'OR'
-				);
-		}
-
-		return array_map(
-			fn(object $o) => [$o->email, $o->name],
-			$db->setQuery($query)->loadObjectList() ?: []
+		$queueItem = new QueueItem(
+			$data->toString(),
+			QueueTypeEnum::MAIL->value,
+			$storage->get('site_id')
 		);
+
+		$queue = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
+
+		$queue->push($queueItem, 'now');
 	}
 }

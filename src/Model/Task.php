@@ -195,7 +195,8 @@ class Task extends DataModel
 					TaskUtils::getTaskDescription($pendingTask->type),
 					$pendingTask->site_id,
 					TaskUtils::getSiteName($pendingTask->site_id)
-				)
+				),
+				$pendingTask->getData()
 			);
 
 			$willResume = $pendingTask->last_exit_code === Status::WILL_RESUME;
@@ -205,9 +206,9 @@ class Task extends DataModel
 				'last_execution' => (new Date('now', 'UTC'))->toSql(),
 			]);
 		}
-		catch (Exception)
+		catch (Exception $e)
 		{
-			$logger->error('Failed to update task execution information');
+			$logger->error('Failed to update task execution information', $pendingTask->getData());
 
 			// Failure to save the task means that the task execution has ultimately failed.
 			try

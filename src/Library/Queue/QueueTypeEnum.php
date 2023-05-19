@@ -11,23 +11,5 @@ defined('AKEEBA') || die;
 
 enum QueueTypeEnum: string
 {
-	/**
-	 * Retrieve update and environment information for a site.
-	 */
-	case FETCH_INFO = 'fetch';
-
-	/**
-	 * Joomla! core updates
-	 */
-	case CORE_UPDATE = 'core_update';
-
-	/**
-	 * Joomla! extension update
-	 */
-	case EXTENSIONS_UPDATE = 'extensions_update';
-
-	/**
-	 * Take a backup
-	 */
-	case BACKUP = 'backup';
+	case MAIL = 'mail';
 }

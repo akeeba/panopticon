@@ -30,9 +30,10 @@ use stdClass;
 class Setup extends Model
 {
 	private const DEFAULT_TASKS = [
-		'logrotate'       => '@daily',
-		'refreshsiteinfo' => '*/15 * * * *',
+		'logrotate'                  => '@daily',
+		'refreshsiteinfo'            => '*/15 * * * *',
 		'refreshinstalledextensions' => '*/15 * * * *',
+		'sendmail'                   => '* * * * *',
 	];
 
 	private static bool|null $isRequiredMet = null;
@@ -573,12 +574,14 @@ class Setup extends Model
 			->where(
 				[
 					$db->quoteName('site_id') . ' IS NULL',
-					$db->quoteName('type') . 'IN(' . implode(',', array_map([$db, 'quote'], array_keys(self::DEFAULT_TASKS))) . ')'
+					$db->quoteName('type') . 'IN(' . implode(',', array_map([
+						$db, 'quote',
+					], array_keys(self::DEFAULT_TASKS))) . ')',
 				]
 			);
 
 		$installedTypes = $db->setQuery($query)->loadObjectList('type');
-		$dirty = false;
+		$dirty          = false;
 
 		foreach (self::DEFAULT_TASKS as $type => $cronExpression)
 		{
