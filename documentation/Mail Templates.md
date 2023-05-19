@@ -51,6 +51,8 @@ Sent when Akeeba Panopticon detects that there is a new Joomla! version availabl
 
 Use this mail type to notify the user that they will need to install the new Joomla! version manually.
 
+This is sent when the Update Director task finds a new update and the site preferences resolve into a situation where the user needs to be notified by email, but the update will not be installed automatically.
+
 #### Joomla Core Update: Update will be installed
 
 Key: `joomlaupdate_will_install`
@@ -61,6 +63,8 @@ Sent when Akeeba Panopticon detects that there is a new Joomla! version availabl
 
 Use this mail type to notify the user that the site will be updated automatically.
 
+This is sent when the Update Director task finds a new update and the site preferences resolve into a situation where the update will be installed automatically.
+
 #### Joomla Core Update: Update installed
 
 Key: `joomlaupdate_installed`
@@ -69,6 +73,8 @@ Sent after Akeeba Panopticon has installed a new Joomla! on a site.
 
 Use this mail type to notify the user that the site has been updated.
 
+This is sent when the Joomla Update task has finished installing an update.
+
 #### Joomla Core Update: Update failed
 
 Key: `joomlaupdate_failed`
@@ -76,6 +82,8 @@ Key: `joomlaupdate_failed`
 Sent when Akeeba Panopticon attempted to install a new Joomla! version on a site, but it failed to do so.
 
 Use this mail type to notify the user that the site upgrade has failed. They need to check if the site is functional and upgrade it manually.
+
+This is sent when the Joomla Update task has tried installing an update, but failed.
 
 Additional variables available:
 

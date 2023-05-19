@@ -95,16 +95,18 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					break;
 
 				case 'email':
-					// TODO Send email that the update is now complete
+					$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
 
 					$this->advanceState();
 					break;
-
 			}
 		}
 		catch (Throwable $e)
 		{
-			// TODO Send email about the failed update
+			// Send email about the failed update
+			$this->sendEmail('joomlaupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
+				'MESSAGE' => $e->getMessage(),
+			]);
 
 			// TODO Prevent the site from being collected again for update by setting core.brokenUpdate to core.current.version
 
@@ -254,6 +256,14 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 */
 	private function runInit(object $task, Registry $storage): void
 	{
+		// Initialise the email variables
+		$storage->set('email_variables', [
+			'NEW_VERSION' => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
+			'OLD_VERSION' => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
+			'SITE_NAME'   => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
+		]);
+
+		// Try to get the site
 		$site = $this->getSite($task);
 
 		// Is the site enabled?
@@ -297,6 +307,35 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 				$latestVersion
 			));
 		}
+
+		$storage->set('email_variables', [
+			'NEW_VERSION' => $latestVersion,
+			'OLD_VERSION' => $currentVersion,
+			'SITE_NAME'   => $site->name,
+		]);
+
+		$cc = array_map(
+			function (string $item) {
+				$item = trim($item);
+
+				if (!str_contains($item, '<'))
+				{
+					return [$item, ''];
+				}
+
+				[$name, $email] = explode('<', $item, 2);
+				$name  = trim($name);
+				$email = trim(
+					str_contains($email, '>')
+						? substr($email, 0, strrpos($email, '>') - 1)
+						: $email
+				);
+
+				return [$email, $name];
+			},
+			explode(',', $config?->config?->core_update?->email?->cc ?? "")
+		);
+		$storage->set('email_cc', $cc);
 
 		// Finally, advance the state
 		$this->advanceState();
@@ -1157,5 +1196,78 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		}
 
 		return false;
+	}
+
+	private function sendEmail(string $emailKey, Registry $storage, array $permissions = ['panopticon.super'], array $additionalVariables = [])
+	{
+		$variables = $storage->get('email_variables', []);
+		$variables = array_merge($variables, $additionalVariables);
+		$mailer    = clone $this->container->mailer;
+		$mailer->initialiseWithTemplate($emailKey, replacements: $variables);
+
+		if (empty($mailer->Body))
+		{
+			return;
+		}
+
+		// Add recipient users by permissions
+		$recipients = $this->getRecipientsByPermissions($permissions);
+
+		if (empty($recipients))
+		{
+			return;
+		}
+
+		foreach ($recipients as $recipient)
+		{
+			[$email, $name] = $recipient;
+
+			$mailer->addRecipient($email, $name);
+		}
+
+		// Add CC'ed users by configuration
+		$cc = $storage->get('email_cc', []);
+
+		foreach ($cc as $recipient)
+		{
+			[$email, $name] = $recipient;
+
+			$mailer->addCC($email, $name);
+		}
+
+		// Send the email
+		try
+		{
+			$mailer->Send();
+		}
+		catch (\PHPMailer\PHPMailer\Exception $e)
+		{
+			// Okay, no problem.
+		}
+	}
+
+	private function getRecipientsByPermissions(array $permissions): array
+	{
+		$db    = $this->container->db;
+		$query = $db->getQuery(true)
+			->select([
+				$db->quoteName('name'),
+				$db->quoteName('email'),
+			])
+			->from($db->quoteName('#__users'));
+
+		foreach ($permissions as $permission)
+		{
+			$query
+				->where(
+					$query->jsonPointer('parameters', 'acl.' . $permission) . ' = TRUE',
+					'OR'
+				);
+		}
+
+		return array_map(
+			fn(object $o) => [$o->email, $o->name],
+			$db->setQuery($query)->loadObjectList() ?: []
+		);
 	}
 }

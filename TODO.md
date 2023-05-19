@@ -24,7 +24,7 @@
 What to do
 
 * ✅ Create new task type `joomlaupdate` which handles the update of one specific site
-* Install one global task of type `coreupdateconductor` for automatically setting up core update installation
+* Install one global task of type `coreupdatedirector` for automatically setting up core update installation
   * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
   * Create (or re-enable) a "run once" task to upgrade the site.
   * Enqueue email for sending
@@ -36,8 +36,7 @@ The `joomlaupdate` task
 * ✅ Enables Joomla Update's restoration.php / extract.php
 * ✅ Goes through the extraction and post-extraction steps
 * ✅ Performs any post-upgrade tasks (TO-DO)
-* Send completion email
-* Fetch the number of changed template files after the update is over and update the site record
+* ✅ Send completion email
 
 If a user chooses to upgrade a site with no auto-updates (the resolved config.core_update.install is none or email) follow the same process as the `coreupdateconductor` task FORCING the value of config.core_update.install to `major`. Do NOT send an email that an update will be installed automatically (the user initiated this action themselves).
 
@@ -154,6 +153,10 @@ Only users with the super privilege can manage application-level configuration:
 - Log management
 
 # 🤔 Maybe
+
+## Number of changed templates
+
+When fetching site info, get the number of changed template files and show that in the main page and the site info page.
 
 ## Buttons to reset email templates to default (all, or specific ones)
 
