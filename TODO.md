@@ -38,7 +38,7 @@ The `joomlaupdate` task
 * ✅ Performs any post-upgrade tasks (TO-DO)
 * ✅ Send completion email
 
-If a user chooses to upgrade a site with no auto-updates (the resolved config.core_update.install is none or email) follow the same process as the `coreupdateconductor` task FORCING the value of config.core_update.install to `major`. Do NOT send an email that an update will be installed automatically (the user initiated this action themselves).
+If a user chooses to upgrade a site with no auto-updates (the resolved config.core_update.install is none or email) reuse the code in `coreupdatedirector` (maybe make it a Trait?) to create or re-enable a run-once task which carries out the update.
 
 ## Setup: use language strings instead of hardcoded English text in view templates
 
@@ -88,6 +88,14 @@ Both at the application level and in a .htaccess file (name it htaccess.txt).
 In the configuration page
 
 ## Site report page
+
+## Button to immediately enqueue a site update
+
+## Button to immediately enqueue an extension update
+
+## Button to immediately enqueue ALL extensions update
+
+## Edit the missing Download Keys
 
 ## Tasks page (only listing, no management)
 
