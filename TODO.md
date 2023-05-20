@@ -24,11 +24,11 @@
 What to do
 
 * ✅ Create new task type `joomlaupdate` which handles the update of one specific site
+* ✅ Install one global task of type `sendmail` which sends the enqueued emails
 * Install one global task of type `coreupdatedirector` for automatically setting up core update installation
   * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
   * Create (or re-enable) a "run once" task to upgrade the site.
   * Enqueue email for sending
-* Install one global task of type `mailsending` which sends the enqueued emails
 
 The `joomlaupdate` task
 * ✅ Performs any pre-upgrade tasks (TO-DO)

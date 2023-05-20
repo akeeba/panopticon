@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Library\Queue;
 defined('AKEEBA') || die;
 
 use Awf\Database\Driver;
+use Awf\Date\Date;
 use DateTime;
 use Exception;
 
@@ -19,11 +20,11 @@ class MySQLQueue implements QueueInterface
 	{
 	}
 
-	public function push(QueueItem $item, DateTime|int|string|null $time): void
+	public function push(QueueItem $item, DateTime|int|string|null $time = null): void
 	{
-		$db        = $this->db;
-		$timestamp = $this->normaliseTime($time);
-		$query     = $db->getQuery(true)
+		$db    = $this->db;
+		$time  = $this->normaliseTime($time);
+		$query = $db->getQuery(true)
 			->insert($db->quoteName($this->tableName))
 			->columns([
 				$db->quoteName('item'),
@@ -31,7 +32,7 @@ class MySQLQueue implements QueueInterface
 			])
 			->values(
 				$db->quote(json_encode($item)) . ',' .
-				($time === null ? 'NULL' : $db->quote($timestamp))
+				$db->q($time->toSql())
 			);
 
 		$db->transactionStart();
@@ -71,7 +72,7 @@ class MySQLQueue implements QueueInterface
 
 		try
 		{
-			$object = $db->setQuery($query)->loadObject();
+			$object = $db->setQuery($db->replacePrefix((string) $query))->loadObject();
 		}
 		catch (Exception $e)
 		{
@@ -192,37 +193,35 @@ class MySQLQueue implements QueueInterface
 		return $db->setQuery($query)->loadColumn() ?: 0;
 	}
 
-	private function normaliseTime(DateTime|int|string|null $time): int
+	private function normaliseTime(DateTime|int|string|null $time): Date
 	{
 		if (empty($time))
 		{
-			$time = new DateTime();
+			$time = new Date();
 		}
 
 		if (is_integer($time))
 		{
-			return $time;
+			$time = Date('@' . $time);
+		}
+
+		if ($time instanceof DateTime)
+		{
+			$time = $time->format(DATE_RFC3339);
 		}
 
 		if (is_string($time))
 		{
 			try
 			{
-				$time = new DateTime($time);
+				$time = new Date($time);
 			}
 			catch (Exception $e)
 			{
-				$time = new DateTime();
+				$time = new Date();
 			}
 		}
 
-		try
-		{
-			return $time->getTimestamp();
-		}
-		catch (Exception $e)
-		{
-			return $time->format('U');
-		}
+		return $time;
 	}
 }

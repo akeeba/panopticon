@@ -14,7 +14,7 @@ use DateTime;
 
 interface QueueInterface extends Countable
 {
-	public function push(QueueItem $item, int|DateTime|string|null $time): void;
+	public function push(QueueItem $item, int|DateTime|string|null $time = null): void;
 
 	public function pop(): ?QueueItem;
 

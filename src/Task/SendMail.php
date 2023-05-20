@@ -29,9 +29,10 @@ class SendMail extends AbstractCallback implements LoggerAwareInterface
 
 	public function __invoke(object $task, Registry $storage): int
 	{
-		$params    = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
-		$timeLimit = $params->get('timelimit', 60);
-		$bias      = $params->get('bias', 75);
+		$task->params ??= new Registry();
+		$params       = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
+		$timeLimit    = $params->get('timelimit', 60);
+		$bias         = $params->get('bias', 75);
 
 		$container = Factory::getContainer();
 		$mailQueue = $container->queueFactory->makeQueue(QueueTypeEnum::MAIL->name);
