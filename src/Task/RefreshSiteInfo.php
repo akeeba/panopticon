@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
-use Akeeba\Panopticon\Model\Task;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;
@@ -33,14 +32,8 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 
 	public function __invoke(object $task, Registry $storage): int
 	{
-		if ($task instanceof Task)
-		{
-			$params = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
-		}
-		else
-		{
-			$params = new Registry();
-		}
+		$task->params ??= new Registry();
+		$params = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
 
 		$limitStart = (int) $storage->get('limitStart', 0);
 		$limit      = (int) $storage->get('limit', $params->get('limit', 10));

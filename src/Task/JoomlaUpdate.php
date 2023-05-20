@@ -89,7 +89,10 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					break;
 
 				case 'siteInfo':
+					// I have to wrap this in a transaction for saving the new information to work.
+					$this->container->db->transactionStart();
 					$this->runSiteInfo($task, $storage);
+					$this->container->db->transactionCommit();
 					break;
 
 				case 'afterEvents':
@@ -97,6 +100,15 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					break;
 
 				case 'email':
+					// Ensure there are not stray transactions
+					try
+					{
+						$this->container->db->transactionCommit();
+					}
+					catch (Exception)
+					{
+						// Okay...
+					}
 					$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
 
 					$this->advanceState();
@@ -105,12 +117,19 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		}
 		catch (Throwable $e)
 		{
+			// Log the exception
+			$this->logger->critical($e->getMessage(), [
+				'file'  => $e->getFile(),
+				'line'  => $e->getLine(),
+				'trace' => $e->getTraceAsString(),
+			]);
+
+			// TODO Prevent the site from being collected again for update by setting core.brokenUpdate to core.current.version
+
 			// Send email about the failed update
 			$this->sendEmail('joomlaupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
 				'MESSAGE' => $e->getMessage(),
 			]);
-
-			// TODO Prevent the site from being collected again for update by setting core.brokenUpdate to core.current.version
 
 			// Rethrow the exception so that the task gets the "knocked out" state
 			throw $e;

@@ -7,12 +7,11 @@
 
 namespace Akeeba\Panopticon\Library\Queue;
 
+defined('AKEEBA') || die;
 
 use Awf\Database\Driver;
 use DateTime;
 use Exception;
-
-defined('AKEEBA') || die;
 
 class MySQLQueue implements QueueInterface
 {
@@ -32,12 +31,22 @@ class MySQLQueue implements QueueInterface
 			])
 			->values(
 				$db->quote(json_encode($item)) . ',' .
-				$time === null ? 'NULL' : $timestamp
+				($time === null ? 'NULL' : $db->quote($timestamp))
 			);
 
 		$db->transactionStart();
-		$db->setQuery($query)->execute();
-		$db->transactionCommit();
+
+		try
+		{
+			$db->setQuery($query)->execute();
+			$db->transactionCommit();
+		}
+		catch (Exception $e)
+		{
+			$db->transactionRollback();
+
+			throw $e;
+		}
 	}
 
 	public function pop(): ?QueueItem
@@ -60,7 +69,16 @@ class MySQLQueue implements QueueInterface
 		// Wrap the select and delete in a transaction
 		$db->transactionStart();
 
-		$object = $db->setQuery($query)->loadObject();
+		try
+		{
+			$object = $db->setQuery($query)->loadObject();
+		}
+		catch (Exception $e)
+		{
+			$db->transactionRollback();
+
+			throw $e;
+		}
 
 		if (empty($object))
 		{
@@ -73,7 +91,17 @@ class MySQLQueue implements QueueInterface
 		$query = $db->getQuery(true)
 			->delete($db->quoteName($this->tableName))
 			->where($db->quoteName('id') . ' = ' . $object->id);
-		$db->setQuery($query)->execute();
+
+		try
+		{
+			$db->setQuery($query)->execute();
+		}
+		catch (Exception $e)
+		{
+			$db->transactionRollback();
+
+			throw $e;
+		}
 
 		$db->transactionCommit();
 
@@ -105,7 +133,18 @@ class MySQLQueue implements QueueInterface
 		}
 
 		$db->transactionStart();
-		$db->setQuery($query)->execute();
+
+		try
+		{
+			$db->setQuery($query)->execute();
+		}
+		catch (Exception $e)
+		{
+			$db->transactionRollback();
+
+			throw $e;
+		}
+
 		$db->transactionCommit();
 	}
 
