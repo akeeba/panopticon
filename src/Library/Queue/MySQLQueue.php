@@ -61,7 +61,7 @@ class MySQLQueue implements QueueInterface
 			->from($db->quoteName($this->tableName))
 			->where([
 				$db->quoteName('time') . ' <= NOW()',
-				'JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote($this->queueIdentifier),
+				'JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote(strtolower($this->queueIdentifier)),
 			])
 			->order($db->quoteName('time') . 'ASC');
 		// Append this because we can't do this with the query interface

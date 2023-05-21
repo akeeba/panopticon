@@ -68,7 +68,7 @@ class SendMail extends AbstractCallback implements LoggerAwareInterface
 			);
 
 			$mailer = clone $container->mailer;
-			$mailer->initialiseWithTemplate($template, $language, $variables);
+			$mailer->initialiseWithTemplate($template, $language, (array) $variables);
 
 			if (empty($mailer->Body))
 			{
@@ -156,7 +156,7 @@ class SendMail extends AbstractCallback implements LoggerAwareInterface
 		{
 			$query
 				->where(
-					$query->jsonPointer('parameters', 'acl.' . $permission) . ' = TRUE',
+					$query->jsonPointer('parameters', '$.acl.' . $permission) . ' = TRUE',
 					'OR'
 				);
 		}
