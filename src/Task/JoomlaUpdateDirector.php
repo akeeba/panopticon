@@ -329,16 +329,6 @@ class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterf
 			$task->type    = 'joomlaupdate';
 		}
 
-		// Clean up existing tasks
-		$task->setState('site_id', $site->id);
-		$task->setState('type', 'joomlaupdate');
-		$oldTasks = $task->get(true);
-
-		if ($oldTasks->count() > 0)
-		{
-			$oldTasks->delete();
-		}
-
 		// Set up the task
 		$params = new Registry();
 		$params->set('run_once', 'disable');
@@ -375,6 +365,7 @@ class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterf
 
 		$task->next_execution = $then->toSql();
 
+		// TODO WHY THE HELL DOES IT DELETE AN EXISTING TASK INSTEAD OF UPDATING IT?!!
 		$task->save();
 	}
 }
