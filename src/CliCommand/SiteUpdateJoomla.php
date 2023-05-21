@@ -27,7 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 	name: "site:update:joomla",
 	description: "Updates Joomla core"
 )]
-class JoomlaUpdate extends AbstractCommand
+class SiteUpdateJoomla extends AbstractCommand
 {
 	use ForkedLoggerAwareTrait;
 

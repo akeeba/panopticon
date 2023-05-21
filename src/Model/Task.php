@@ -75,7 +75,7 @@ class Task extends DataModel
 		{
 			try
 			{
-				$cron_expression = $this->cron_expression instanceof CronExpression
+				$cron_expression      = $this->cron_expression instanceof CronExpression
 					? $this->cron_expression
 					: new CronExpression($this->cron_expression);
 				$previousRun          = $cron_expression->getPreviousRunDate()->format(DATE_W3C);
@@ -106,7 +106,8 @@ class Task extends DataModel
 		try
 		{
 			$query = 'LOCK TABLES ' . $db->quoteName($this->tableName) . ' WRITE, '
-				. $db->quoteName($this->tableName, 's') . ' WRITE';
+				. $db->quoteName($this->tableName, 's') . ' WRITE, '
+				. $db->quoteName('#__sites') . ' WRITE';
 			$db->setQuery($query)->execute();
 		}
 		catch (Exception $e)
@@ -185,12 +186,24 @@ class Task extends DataModel
 			return false;
 		}
 
-		// Mark the current task as running
-		try
+		// Log the task (System Task)
+		if ($pendingTask->site_id == 0)
 		{
 			$logger->info(
 				sprintf(
-					'Task #%d — “%s” for site #%d (%s)',
+					'System Task #%d — “%s”',
+					$pendingTask->id,
+					TaskUtils::getTaskDescription($pendingTask->type)
+				),
+				$pendingTask->getData()
+			);
+		}
+		// Log the task (Site Task)
+		else
+		{
+			$logger->info(
+				sprintf(
+					'Site Task #%d — “%s” for site #%d (%s)',
 					$pendingTask->id,
 					TaskUtils::getTaskDescription($pendingTask->type),
 					$pendingTask->site_id,
@@ -198,7 +211,11 @@ class Task extends DataModel
 				),
 				$pendingTask->getData()
 			);
+		}
 
+		// Mark the current task as running
+		try
+		{
 			$willResume = $pendingTask->last_exit_code === Status::WILL_RESUME;
 
 			$pendingTask->save([
@@ -206,7 +223,7 @@ class Task extends DataModel
 				'last_execution' => (new Date('now', 'UTC'))->toSql(),
 			]);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$logger->error('Failed to update task execution information', $pendingTask->getData());
 
@@ -296,6 +313,12 @@ class Task extends DataModel
 
 			$storage->set('task.resumed', null);
 
+			// Only advance the execution counter if we're not resuming a task.
+			if (!$willResume)
+			{
+				$pendingTask->times_executed++;
+			}
+
 			if (empty($return) && $return !== 0)
 			{
 				$logger->notice('Task finished without an exit status');
@@ -322,19 +345,19 @@ class Task extends DataModel
 				$logger->info(sprintf('Task finished with status “%s”', $pendingTask->last_exit_code->forHumans()));
 			}
 
-			if ($pendingTask->last_execution !== Status::WILL_RESUME)
+			if ($pendingTask->last_exit_code !== Status::WILL_RESUME)
 			{
-				$pendingTask->storage->loadString('{}');
-
-				$cronExpression = new CronExpression($pendingTask->cron_expression);
-
-				$lastExecution        = new Date($pendingTask->last_execution ?: 'now', 'UTC');
-				$nextRun              = $cronExpression
+				$pendingTask->storage        = '{}';
+				$cronExpression              = new CronExpression($pendingTask->cron_expression);
+				$lastExecution               = new Date($pendingTask->last_execution ?: 'now', 'UTC');
+				$nextRun                     = $cronExpression
 					->getNextRunDate($lastExecution)->format(DATE_RFC822);
 				$pendingTask->next_execution = (new Date($nextRun, 'UTC'))->toSql();
 			}
-
-			$pendingTask->times_executed++;
+			else
+			{
+				$pendingTask->storage = $storage->toString();
+			}
 		}
 		catch (InvalidTaskType)
 		{
@@ -355,12 +378,10 @@ class Task extends DataModel
 			));
 
 			$pendingTask->last_exit_code = Status::EXCEPTION;
-			$pendingTask->storage->loadString(
-				json_encode([
-					'error' => $e->getMessage(),
-					'trace' => $e->getFile() . '::' . $e->getLine() . "\n" . $e->getTraceAsString(),
-				])
-			);
+			$pendingTask->storage        = json_encode([
+				'error' => $e->getMessage(),
+				'trace' => $e->getFile() . '::' . $e->getLine() . "\n" . $e->getTraceAsString(),
+			]);
 			$pendingTask->times_failed++;
 		}
 		finally
@@ -368,11 +389,26 @@ class Task extends DataModel
 			$params        = is_object($pendingTask->params) ? $pendingTask->params : new Registry($pendingTask->params);
 			$isInvalidTask = $pendingTask->last_exit_code === Status::NO_ROUTINE;
 			$isError       = $pendingTask->last_exit_code === Status::EXCEPTION;
+			$isResumable   = $pendingTask->last_exit_code === Status::WILL_RESUME;
 			$runOnceAction = $params->get('run_once', null);
 
-			if (($runOnceAction === 'disable') && !$isError && !$isInvalidTask)
+			if (($runOnceAction === 'disable') && !$isError && !$isInvalidTask && !$isResumable)
 			{
 				$logger->debug('Run Once task: action set to disable; disabling task');
+
+				$pendingTask->enabled = 0;
+			}
+
+			if (!empty($runOnceAction) && ($isError || $isInvalidTask))
+			{
+				if ($isError)
+				{
+					$logger->debug('Run Once task: finished with error; disabling task');
+				}
+				elseif ($isInvalidTask)
+				{
+					$logger->debug('Run Once task: invalid task type; disabling task');
+				}
 
 				$pendingTask->enabled = 0;
 			}
@@ -397,7 +433,7 @@ class Task extends DataModel
 				]);
 			}
 
-			if (($runOnceAction === 'delete') && !$isError && !$isInvalidTask)
+			if (($runOnceAction === 'delete') && !$isError && !$isInvalidTask && !$isResumable)
 			{
 				$logger->debug('Run Once task: action set to delete; deleting task');
 
@@ -458,16 +494,20 @@ class Task extends DataModel
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->qn($this->tableName))
-			->where($db->qn('last_exit_code') . ' = ' . Status::WILL_RESUME->value)
+			->where([
+				$db->quoteName('enabled') . ' = 1',
+				$db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value,
+			])
 			->order($db->qn('last_run_end') . ' DESC')
 			->union(
 				$db->getQuery(true)
 					->select('*')
 					->from($db->qn($this->tableName, 's'))
 					->where([
+						$db->quoteName('enabled') . ' = 1',
 						$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value,
 						$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value,
-						$db->qn('next_execution') . ' <= ' . $db->quote((new Date('now', 'UTC'))->toSql())
+						$db->qn('next_execution') . ' <= ' . $db->quote((new Date('now', 'UTC'))->toSql()),
 					])
 					->order($db->qn('priority') . ' ASC, ' . $db->qn('id') . ' ASC')
 			);

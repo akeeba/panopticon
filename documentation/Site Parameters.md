@@ -38,6 +38,35 @@ This is an insecure connection method and should be avoided. In fact, the “API
 
 ❗️**IMPORTANT**: Either this key pair, or the `config.apiKey` key, must be defined to be able to connect to the site.
 
+### Joomla Update configuration keys
+
+```json5
+{
+    "config": {
+        "core_update" : {
+            // What should I do if an update is found? One of:
+            // "" (use global), "none", "email", "patch", "minor", "major"
+			"install": "",
+            // When should the auto-update be scheduled for? One of "immediately", "time"
+			"when": "immediately",
+            // The time of day to install the auto-update when config.core_update.install = "time"
+			"time" : {
+                "hour": 0,
+                "minute": 0,
+            },
+			"email": {
+                // Email addresses to be CC'ed
+                "cc": ""
+            },
+            // Send an email if the auto-update fails?
+			"email_error": true,
+            // Send an email if the auto-update succeeds?
+			"email_after": true,
+        }
+    }
+}
+```
+
 ## The `core` key
 
 Caches the information collected about core Joomla! and the server environment. It looks like this:
@@ -70,6 +99,8 @@ Caches the information collected about core Joomla! and the server environment. 
 	"lastUpdateTimestamp": 1682418579,
     // When was Panopticon's last attempt to fetch this information from Joomla (UNIX timestamp)?
     "lastAttempt": 1683481398,
+    // Which version did Panopticon try to automatically install, or notified you about, or skipped over per config?
+    "lastAutoUpdateVersion": "4.3.0", 
 }
 ```
 

@@ -25,12 +25,17 @@ What to do
 
 * ✅ Create new task type `joomlaupdate` which handles the update of one specific site
 * ✅ Install one global task of type `sendmail` which sends the enqueued emails
-* Install one global task of type `coreupdatedirector` for automatically setting up core update installation
-  * Query sites with updates (use MySQL's JSON features) which do NOT already have an enabled run-once upgrade task.
-  * Create (or re-enable) a "run once" task to upgrade the site.
-  * Enqueue email for sending
+* ✅ Install one global task of type `joomlaupdatedirector` for automatically setting up core update installation
+  * Query sites with updates (use MySQL's JSON features) and `core.lastUpdateInstallEnqueued` is not `core.latest.version`
+  * For each site, do something depending on what `config.core_update.install` resolves to:
+    * `none`. Nothing.
+    * `email`. Enqueue email about available update
+    * Anything else:
+      * If the update is not allowed: Enqueue email about available update
+      * If the update is allowed: Enqueue email about update to be installed, create (or re-enable) a "run once" task to upgrade the site. 
+    * For all: set `core.lastAutoUpdateVersion` to `core.latest.version`
 
-The `joomlaupdate` task
+The `joomlaupdatedirector` task
 * ✅ Performs any pre-upgrade tasks (TO-DO)
 * ✅ Downloads the update package
 * ✅ Enables Joomla Update's restoration.php / extract.php

@@ -109,7 +109,12 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					{
 						// Okay...
 					}
-					$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
+
+					//email_after
+					if ($storage->get('email_after', true))
+					{
+						$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
+					}
 
 					$this->advanceState();
 					break;
@@ -124,12 +129,13 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 				'trace' => $e->getTraceAsString(),
 			]);
 
-			// TODO Prevent the site from being collected again for update by setting core.brokenUpdate to core.current.version
-
 			// Send email about the failed update
-			$this->sendEmail('joomlaupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
-				'MESSAGE' => $e->getMessage(),
-			]);
+			if ($storage->get('email_errir', true))
+			{
+				$this->sendEmail('joomlaupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
+					'MESSAGE' => $e->getMessage(),
+				]);
+			}
 
 			// Rethrow the exception so that the task gets the "knocked out" state
 			throw $e;
@@ -358,6 +364,10 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			explode(',', $config?->config?->core_update?->email?->cc ?? "")
 		);
 		$storage->set('email_cc', $cc);
+
+		$storage->set('email_after', (bool)($config?->config?->core_update?->email_after ?? true));
+		$storage->set('email_error', (bool)($config?->config?->core_update?->email_error ?? true));
+
 
 		// Finally, advance the state
 		$this->advanceState();
@@ -1231,6 +1241,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		);
 
 		$variables = $storage->get('email_variables', []);
+		$variables = (array) $variables;
 		$variables = array_merge($variables, $additionalVariables);
 
 		$data = new Registry();

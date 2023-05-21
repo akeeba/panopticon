@@ -33,6 +33,7 @@ class Setup extends Model
 		'logrotate'                  => '@daily',
 		'refreshsiteinfo'            => '*/15 * * * *',
 		'refreshinstalledextensions' => '*/15 * * * *',
+		'joomlaupdatedirector'       => '*/3 * * * *',
 		'sendmail'                   => '* * * * *',
 	];
 

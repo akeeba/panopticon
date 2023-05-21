@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CLI task:joomlaupdate:director" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="task:joomlaupdate:director -vvv">
+    <method v="2" />
+  </configuration>
+</component>
