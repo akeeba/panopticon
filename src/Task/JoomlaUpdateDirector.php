@@ -59,7 +59,7 @@ class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterf
 		$sql = 'LOCK TABLES ' . $db->quoteName('#__sites') . ' WRITE, '
 			. $db->quoteName('#__tasks') . ' WRITE, '
 			. $db->quoteName('#__queue') . ' WRITE';
-		$db->execute($sql);
+		$db->setQuery($sql)->execute();
 
 		$siteIDs = $this->getSiteIDs($limitStart, $limit, $force, $filterIDs);
 
@@ -199,12 +199,12 @@ class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterf
 				$query->jsonPointer('config', '$.config.core_update.install') . ' != ' . $db->quote('none'),
 			]);
 			//   AND (
-			//        `config` -> '$.core.lastUpdateInstallEnqueued' IS NULL
-			//        OR `config` -> '$.core.lastUpdateInstallEnqueued' != `config` -> '$.core.latest.version'
+			//        `config` -> '$.core.lastAutoUpdate' IS NULL
+			//        OR `config` -> '$.core.lastAutoUpdateVersion' != `config` -> '$.core.latest.version'
 			//    )
 			$query->extendWhere('AND', [
-				$query->jsonPointer('config', '$.core.lastUpdateInstallEnqueued') . ' IS NULL',
-				$query->jsonPointer('config', '$.core.lastUpdateInstallEnqueued') . ' != ' .
+				$query->jsonPointer('config', '$.core.lastAutoUpdateVersion') . ' IS NULL',
+				$query->jsonPointer('config', '$.core.lastAutoUpdateVersion') . ' != ' .
 				$query->jsonPointer('config', '$.core.latest.version'),
 			], 'OR');
 		}
