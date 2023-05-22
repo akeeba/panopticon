@@ -15,6 +15,17 @@ defined('AKEEBA') || die;
 
 class Dispatcher extends AWFDispatcher
 {
+	public function __construct($container = null)
+	{
+		parent::__construct($container);
+
+		if (empty(Uri::getInstance()->getVar('view')))
+		{
+			Uri::getInstance()->setVar('view', $this->view);
+		}
+	}
+
+
 	public function dispatch()
 	{
 		try
