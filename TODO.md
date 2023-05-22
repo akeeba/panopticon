@@ -1,9 +1,5 @@
 # TO-DO
 
-## Database setup
-
-In the configuration page
-
 ## Site report page
 
 ## Button to immediately enqueue a site update
@@ -155,6 +151,8 @@ In short, since Joomla sucks let's work around it to make it suck less. Story of
   * If that failed to return results return $user->authorise(null, $privilege) for the global privilege.
 
 # ✅ Done
+
+## Database setup in the configuration page
 
 ## Core updates
 
