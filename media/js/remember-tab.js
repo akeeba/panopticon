@@ -6,7 +6,6 @@
 
 (() =>
 {
-	console.log('Derpidi');
 	const onTabClick = (e) =>
 	{
 		const options = akeeba.System.getOptions("panopticon.rememberTab");

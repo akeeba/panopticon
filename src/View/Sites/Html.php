@@ -155,4 +155,44 @@ class Html extends DataViewHtml
 
 		return parent::onBeforeEdit();
 	}
+
+	protected function onBeforeRead(): bool
+	{
+		$document = $this->container->application->getDocument();
+		$toolbar  = $document->getToolbar();
+
+		$buttons = [
+			[
+				'title' => Text::_('PANOPTICON_BTN_PREV'),
+				'class' => 'btn btn-primary',
+				'url'   => $this->container->router->route('index.php?view=main'),
+				'icon'  => 'fa fa-chevron-left',
+			],
+		];
+
+		array_walk($buttons, function (array $button) {
+			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition($button);
+		});
+
+		$toolbar->setTitle(Text::_('PANOPTICON_SITES_TITLE_READ'));
+
+		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+		$this->item = $this->getModel();
+
+		$document->addScriptOptions('panopticon.rememberTab', [
+			'key' => 'panopticon.siteRead.' . $this->getModel()->id . '.rememberTab',
+		]);
+		Template::addJs('media://js/remember-tab.js');
+
+        $js = <<< JS
+window.addEventListener('DOMContentLoaded', () => {
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    });
+
+JS;
+        $document->addScriptDeclaration($js);
+
+		return true;
+	}
 }
