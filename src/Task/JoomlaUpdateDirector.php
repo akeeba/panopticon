@@ -31,6 +31,7 @@ use Psr\Log\LoggerAwareTrait;
 class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterface
 {
 	use LoggerAwareTrait;
+	use EnqueueJoomlaUpdateTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -166,7 +167,7 @@ class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterf
 					$this->sendEmail('joomlaupdate_will_install', $site);
 
 					// Enqueue task
-					$this->enqueueJoomlaUpdate($site);
+					$this->enqueueJoomlaUpdate($site, $this->container);
 					break;
 			}
 		}
@@ -307,65 +308,5 @@ class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterf
 		$queue     = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
 
 		$queue->push($queueItem, 'now');
-	}
-
-	private function enqueueJoomlaUpdate(Site $site): void
-	{
-		/** @var Task $task */
-		$task = Model::getTmpInstance('', 'Task', $this->container);
-
-		// Try to load an existing task
-		try
-		{
-			$task->findOrFail([
-				'site_id' => $site->id,
-				'type'    => 'joomlaupdate',
-			]);
-		}
-		catch (\RuntimeException $e)
-		{
-			$task->reset();
-			$task->site_id = $site->id;
-			$task->type    = 'joomlaupdate';
-		}
-
-		// Set up the task
-		$params = new Registry();
-		$params->set('run_once', 'disable');
-		$task->params         = $params->toString();
-		$task->storage        = '{}';
-		$task->enabled        = 1;
-		$task->last_exit_code = Status::INITIAL_SCHEDULE->value;
-		$task->locked         = null;
-
-		$siteConfig = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
-		switch ($siteConfig->get('config.core_update.when', 'immediately'))
-		{
-			default:
-			case 'immediately':
-				$task->cron_expression = '* * * * *';
-				$then                  = new Date('now', 'UTC');
-				break;
-
-			case 'time':
-				$hour   = max(0, min((int) $siteConfig->get('config.core_update.time.hour', 0), 23));
-				$minute = max(0, min((int) $siteConfig->get('config.core_update.time.minute', 0), 59));
-				$now    = new Date('now', 'UTC');
-				$then   = (clone $now)->setTime($hour, $minute, 0);
-
-				// If the selected time of day is in the past, go forward one day
-				if ($now->diff($then)->invert)
-				{
-					$then->add(new \DateInterval('P1D'));
-				}
-
-				$task->cron_expression = $then->minute . ' ' . $then->hour . ' ' . $then->day . ' ' . $then->month . ' *';
-				break;
-		}
-
-		$task->next_execution = $then->toSql();
-
-		// TODO WHY THE HELL DOES IT DELETE AN EXISTING TASK INSTEAD OF UPDATING IT?!!
-		$task->save();
 	}
 }

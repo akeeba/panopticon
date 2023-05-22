@@ -1,49 +1,12 @@
 # TO-DO
 
-## Core updates
+## Database setup
 
-✅ We need to provide a global default for core updates (`tasks_coreupdate_install`):
-* ✅ `none` None. No updates, no emails
-* ✅ `email` Email. No updates, only sends emails.
-* ✅ `patch` Same Version Family. Only patch versions (e.g. 1.2.3 -> 1.2.4)
-* ✅ `minor` Same Major Version. Patch and minor (e.g. 1.2 -> 1.3)
-* ✅ `major` Any (Not Recommended). Patch, minor, and major (e.g. 1.2 -> 2.0)
+In the configuration page
 
-✅ The factory default is `patch`.
+## Site report page
 
-✅ Each site has these options in `config`, editable in the site config page
-
-* config.core_update.install: '', none, email, patch, minor, major • default: '' (use global)
-* config.core_update.when: immediately, time • default: immediately
-* config.core_update.time.hour: (integer 0-23) • default: 0
-* config.core_update.time.minute: (integer 0-59) • default: 0
-* config.core_update.email.cc: (list of email addresses to CC) • default: empty
-* config.core_update.email_error: (boolean) • default: false  
-* config.core_update.email_after: (boolean) Only when config.core_update.install not none or email • default: false  
-
-What to do
-
-* ✅ Create new task type `joomlaupdate` which handles the update of one specific site
-* ✅ Install one global task of type `sendmail` which sends the enqueued emails
-* ✅ Install one global task of type `joomlaupdatedirector` for automatically setting up core update installation
-  * Query sites with updates (use MySQL's JSON features) and `core.lastUpdateInstallEnqueued` is not `core.latest.version`
-  * For each site, do something depending on what `config.core_update.install` resolves to:
-    * `none`. Nothing.
-    * `email`. Enqueue email about available update
-    * Anything else:
-      * If the update is not allowed: Enqueue email about available update
-      * If the update is allowed: Enqueue email about update to be installed, create (or re-enable) a "run once" task to upgrade the site. 
-    * For all: set `core.lastAutoUpdateVersion` to `core.latest.version`
-
-The `joomlaupdatedirector` task
-* ✅ Performs any pre-upgrade tasks (TO-DO)
-* ✅ Downloads the update package
-* ✅ Enables Joomla Update's restoration.php / extract.php
-* ✅ Goes through the extraction and post-extraction steps
-* ✅ Performs any post-upgrade tasks (TO-DO)
-* ✅ Send completion email
-
-If a user chooses to upgrade a site with no auto-updates (the resolved config.core_update.install is none or email) reuse the code in `coreupdatedirector` (maybe make it a Trait?) to create or re-enable a run-once task which carries out the update.
+## Button to immediately enqueue a site update
 
 ## Setup: use language strings instead of hardcoded English text in view templates
 
@@ -87,14 +50,6 @@ If a user chooses to update an extension with no auto-updates:
 ## Content-Security-Policy
 
 Both at the application level and in a .htaccess file (name it htaccess.txt).
-
-## Database setup
-
-In the configuration page
-
-## Site report page
-
-## Button to immediately enqueue a site update
 
 ## Button to immediately enqueue an extension update
 
@@ -200,6 +155,52 @@ In short, since Joomla sucks let's work around it to make it suck less. Story of
   * If that failed to return results return $user->authorise(null, $privilege) for the global privilege.
 
 # ✅ Done
+
+## Core updates
+
+✅ We need to provide a global default for core updates (`tasks_coreupdate_install`):
+* ✅ `none` None. No updates, no emails
+* ✅ `email` Email. No updates, only sends emails.
+* ✅ `patch` Same Version Family. Only patch versions (e.g. 1.2.3 -> 1.2.4)
+* ✅ `minor` Same Major Version. Patch and minor (e.g. 1.2 -> 1.3)
+* ✅ `major` Any (Not Recommended). Patch, minor, and major (e.g. 1.2 -> 2.0)
+
+✅ The factory default is `patch`.
+
+✅ Each site has these options in `config`, editable in the site config page
+
+* config.core_update.install: '', none, email, patch, minor, major • default: '' (use global)
+* config.core_update.when: immediately, time • default: immediately
+* config.core_update.time.hour: (integer 0-23) • default: 0
+* config.core_update.time.minute: (integer 0-59) • default: 0
+* config.core_update.email.cc: (list of email addresses to CC) • default: empty
+* config.core_update.email_error: (boolean) • default: false
+* config.core_update.email_after: (boolean) Only when config.core_update.install not none or email • default: false
+
+What to do
+
+* ✅ Create new task type `joomlaupdate` which handles the update of one specific site
+* ✅ Install one global task of type `sendmail` which sends the enqueued emails
+* ✅ Install one global task of type `joomlaupdatedirector` for automatically setting up core update installation
+  * Query sites with updates (use MySQL's JSON features) and `core.lastUpdateInstallEnqueued` is not `core.latest.version`
+  * For each site, do something depending on what `config.core_update.install` resolves to:
+    * `none`. Nothing.
+    * `email`. Enqueue email about available update
+    * Anything else:
+      * If the update is not allowed: Enqueue email about available update
+      * If the update is allowed: Enqueue email about update to be installed, create (or re-enable) a "run once" task to upgrade the site.
+    * For all: set `core.lastAutoUpdateVersion` to `core.latest.version`
+
+The `joomlaupdatedirector` task
+* ✅ Performs any pre-upgrade tasks (TO-DO)
+* ✅ Downloads the update package
+* ✅ Enables Joomla Update's restoration.php / extract.php
+* ✅ Goes through the extraction and post-extraction steps
+* ✅ Performs any post-upgrade tasks (TO-DO)
+* ✅ Send completion email
+
+✅ If a user chooses to upgrade a site with no auto-updates (the resolved config.core_update.install is none or email) reuse the code in `coreupdatedirector` (maybe make it a Trait?) to create or re-enable a run-once task which carries out the update.
+
 
 ## Refresh site information after saving it
 
