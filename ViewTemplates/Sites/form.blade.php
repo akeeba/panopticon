@@ -3,6 +3,7 @@
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
 $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
+$returnUrl = $this->input->getBase64('returnurl', '');
 ?>
 
 @if ($this->connectionError !== null)
@@ -46,4 +47,8 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
     <input type="hidden" name="id" value="{{ $this->item->id ?? 0 }}">
     <input type="hidden" name="token" value="@token()">
     <input type="hidden" name="task" id="task" value="browse">
+    @if (!empty($returnUrl))
+    <input type="hidden" name="returnurl" value="{{ $returnUrl }}">
+    @endif
+
 </form>
