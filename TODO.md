@@ -1,9 +1,5 @@
 # TO-DO
 
-## Site report page
-
-## Button to immediately enqueue a site update
-
 ## Setup: use language strings instead of hardcoded English text in view templates
 
 ## Extension updates
@@ -151,6 +147,10 @@ In short, since Joomla sucks let's work around it to make it suck less. Story of
   * If that failed to return results return $user->authorise(null, $privilege) for the global privilege.
 
 # ✅ Done
+
+## Site report page
+
+## Button to immediately enqueue a site update
 
 ## Database setup in the configuration page
 

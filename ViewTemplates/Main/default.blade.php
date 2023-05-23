@@ -64,19 +64,20 @@ defined('AKEEBA') || die;
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                <?php
-                /** @var \Akeeba\Panopticon\Model\Site $item */
-                ?>
+				<?php
+				/** @var \Akeeba\Panopticon\Model\Site $item */
+				?>
                 @foreach($this->items as $item)
-                    <?php
-                    $url    = $item->getBaseUrl();
-                    $config = new Awf\Registry\Registry($item->config);
-                    ?>
+						<?php
+						$url    = $item->getBaseUrl();
+						$config = new Awf\Registry\Registry($item->config);
+						?>
                     <tr>
                         <td>
-                            <div class="fw-medium">
+                            <a class="fw-medium"
+                               href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
                                 {{ $item->name }}
-                            </div>
+                            </a>
                             <div class="small mt-1">
                                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
                                 <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
