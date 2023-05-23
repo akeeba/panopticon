@@ -50,7 +50,7 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
         <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
            href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d', $this->item->id))"
            data-bs-toggle="tooltip" data-bs-placement="bottom"
-           data-bs-title="Reload Joomla!&trade; Update information"
+           data-bs-title="@lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')"
         >
             <span class="fa fa-refresh" aria-hidden="true"></span>
             <span class="visually-hidden">
@@ -215,20 +215,26 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
 
         @if (!$config->get('core.canUpgrade', false))
             <hr class="mt-4"/>
-            <p class="text-info">
-                <span class="fa fa-info-circle" aria-hidden="true"></span>
-                @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_CORE_PROMPT')
-            </p>
-            <p>
-                <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d', $this->item->id))"
-                   class="btn btn-outline-secondary" role="button">
-                    <span class="fa fa-clock" aria-hidden="true"></span>
-                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_BTN_REFRESH_CORE_PROMPT', $this->escape($config->get('core.latest.version')))
-                </a>
-            </p>
-            <p class="small text-muted">
-                @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_CORE_NOTE')
-            </p>
+
+            <details>
+                <summary class="text-info">
+                    <span class="fa fa-info-circle" aria-hidden="true"></span>
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_CORE_PROMPT')
+                </summary>
+                <div class="mt-2 pt-3">
+                    <p>
+                        <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d', $this->item->id))"
+                           class="btn btn-outline-secondary" role="button">
+                            <span class="fa fa-clock" aria-hidden="true"></span>
+                            @sprintf('PANOPTICON_SITE_LBL_JUPDATE_BTN_REFRESH_CORE_PROMPT', $this->escape($config->get('core.latest.version')))
+                        </a>
+                    </p>
+                    <p class="small text-muted">
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_CORE_NOTE')
+                    </p>
+                </div>
+            </details>
+
         @endif
     </div>
 </div>

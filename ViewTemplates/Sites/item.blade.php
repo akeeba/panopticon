@@ -9,31 +9,26 @@ $baseUri = \Awf\Uri\Uri::getInstance($this->item->getBaseUrl());
 </h3>
 
 <div class="text-end">
-    <a href="{{{ $this->item->getBaseUrl() }}}" class="text-decoration-none">
+    <a href="{{{ $this->item->getBaseUrl() }}}" target="_blank" class="text-decoration-none">
         <span class="{{ ($baseUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $baseUri->getScheme() }}}://</span><span class="fw-medium">{{{ $baseUri->toString(['user', 'pass', 'host', 'port', 'path', 'query', 'fragment']) }}}</span>
         <span class="fa fa-external-link-alt fw-light text-muted small" aria-hidden="true"></span>
     </a>
 </div>
 
 <div class="container my-3">
-    <div class="row row-cols-1 row-cols-lg-2 g-3">
+    <div class="row g-3 mb-3">
 
-        <div class="col">
+        <div class="col-12 col-lg-6 order-1 order-lg-0">
             @include('Sites/item_joomlaupdate')
         </div>
 
-        <div class="col">
-            <div class="card">
-                <h3 class="card-header h4">
-                    <span class="fab fa-php" aria-hidden="true"></span>
-                    PHP Version
-                </h3>
-                <div class="card-body">
-                    Body
-                </div>
-            </div>
+        <div class="col-12 col-lg-6 order-0 order-lg-1">
+            @include('Sites/item_php')
         </div>
 
+    </div>
+
+    <div class="row g-3 mb-3">
         <div class="col-12">
             <div class="card">
                 <h3 class="card-header h4">
@@ -41,11 +36,13 @@ $baseUri = \Awf\Uri\Uri::getInstance($this->item->getBaseUrl());
                     Extensions
                 </h3>
                 <div class="card-body">
-                    Body
+                    <div class="display-4 text-center text-muted  py-2 rounded-3">TO-DO</div>
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="row g-3 mb-3">
         <div class="col">
             <div class="card">
                 <h3 class="card-header h4">
@@ -53,7 +50,7 @@ $baseUri = \Awf\Uri\Uri::getInstance($this->item->getBaseUrl());
                     Backup
                 </h3>
                 <div class="card-body">
-                    Body
+                    <div class="display-4 text-center text-muted  py-2 rounded-3">TO-DO</div>
                 </div>
             </div>
         </div>
@@ -65,7 +62,7 @@ $baseUri = \Awf\Uri\Uri::getInstance($this->item->getBaseUrl());
                     Security
                 </h3>
                 <div class="card-body">
-                    Body
+                    <div class="display-4 text-center text-muted  py-2 rounded-3">TO-DO</div>
                 </div>
             </div>
         </div>

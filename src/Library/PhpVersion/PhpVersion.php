@@ -92,6 +92,13 @@ class PhpVersion
 		return array_keys($phpInfo)[1];
 	}
 
+    public function getLatestBranch(): string
+    {
+        $phpInfo = $this->getPhpEolInformation();
+
+        return array_keys($phpInfo)[0];
+    }
+
 	public function isEOL(string $version): bool
 	{
 		$versionInformation = $this->getVersionInformation($version);
