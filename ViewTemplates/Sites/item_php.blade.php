@@ -11,7 +11,7 @@ $config = ($this->item->config instanceof Registry) ? $this->item->config : (new
 $phpVersion = new PhpVersion();
 
 $lastUpdateTimestamp = function () use ($config): string {
-    $timestamp = $config->get('core.lastUpdateTimestamp');
+	$timestamp = $config->get('core.lastAttempt');
 
     return $timestamp ? $this->timeAgo($timestamp) : '(never)';
 };
@@ -35,7 +35,7 @@ $isOldestBranch = $phpBranch === $minimumSupportedBranch;
         <span class="fab fa-php" aria-hidden="true"></span>
         <span class="flex-grow-1">@lang('PANOPTICON_SITE_LBL_PHP_HEAD')</span>
         <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
-           href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d', $this->item->id))"
+           href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d&%s=1', $this->item->id, $this->container->session->getCsrfToken()->getValue()))"
            data-bs-toggle="tooltip" data-bs-placement="bottom"
            data-bs-title="@lang('PANOPTICON_SITE_BTN_PHP_RELOAD')"
         >

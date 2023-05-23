@@ -22,12 +22,13 @@ trait EnqueueJoomlaUpdateTrait
 	/**
 	 * Enqueues a Joomla site for automatic update to a newer Joomla version.
 	 *
-	 * @param   Site       $site       The object of the site to enqueue for update
-	 * @param   Container  $container  The application container
+	 * @param Site      $site      The object of the site to enqueue for update
+	 * @param Container $container The application container
+	 * @param bool      $force     Should I force the update (even if it's the same version as already installed?)
 	 *
 	 * @return  void
 	 */
-	private function enqueueJoomlaUpdate(Site $site, Container $container): void
+	private function enqueueJoomlaUpdate(Site $site, Container $container, bool $force = false): void
 	{
 		/** @var Task $task */
 		$task = Model::getTmpInstance('', 'Task', $container);
@@ -50,6 +51,8 @@ trait EnqueueJoomlaUpdateTrait
 		// Set up the task
 		$params = new Registry();
 		$params->set('run_once', 'disable');
+		$params->set('force', $force);
+
 		$task->params         = $params->toString();
 		$task->storage        = '{}';
 		$task->enabled        = 1;
@@ -66,8 +69,8 @@ trait EnqueueJoomlaUpdateTrait
 				break;
 
 			case 'time':
-				$hour   = max(0, min((int) $siteConfig->get('config.core_update.time.hour', 0), 23));
-				$minute = max(0, min((int) $siteConfig->get('config.core_update.time.minute', 0), 59));
+				$hour   = max(0, min((int)$siteConfig->get('config.core_update.time.hour', 0), 23));
+				$minute = max(0, min((int)$siteConfig->get('config.core_update.time.minute', 0), 59));
 				$now    = new Date('now', 'UTC');
 				$then   = (clone $now)->setTime($hour, $minute, 0);
 
@@ -77,7 +80,8 @@ trait EnqueueJoomlaUpdateTrait
 					$then->add(new \DateInterval('P1D'));
 				}
 
-				$task->cron_expression = $then->minute . ' ' . $then->hour . ' ' . $then->day . ' ' . $then->month . ' *';
+				$task->cron_expression =
+					$then->minute . ' ' . $then->hour . ' ' . $then->day . ' ' . $then->month . ' *';
 				break;
 		}
 

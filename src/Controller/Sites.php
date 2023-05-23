@@ -11,14 +11,22 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
+use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Model\Task;
+use Akeeba\Panopticon\Task\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Awf\Date\Date;
 use Awf\Mvc\DataController;
+use Awf\Registry\Registry;
 use Awf\Text\Text;
+use Awf\Uri\Uri;
 use GuzzleHttp\Exception\GuzzleException;
 
 class Sites extends DataController
 {
 	use ACLTrait;
+	use EnqueueJoomlaUpdateTrait;
 
 	private const CHECKBOX_KEYS = [
 		'config.core_update.email_error',
@@ -30,6 +38,187 @@ class Sites extends DataController
 		$this->aclCheck($task);
 
 		return parent::execute($task);
+	}
+
+	public function refreshSiteInformation(): void
+	{
+		$this->csrfProtection();
+
+		$id   = $this->input->get->getInt('id', 0);
+		$site = $this->getModel('Site', [
+			'modelTemporaryInstance' => true,
+			'modelClearState'        => true,
+			'modelClearInput'        => true,
+		]);
+
+		try
+		{
+			$site->findOrFail($id);
+
+			/** @var RefreshSiteInfo $callback */
+			$callback = $this->container->taskRegistry->get('refreshsiteinfo');
+			$dummy    = new \stdClass();
+			$registry = new Registry();
+
+			$registry->set('limitStart', 0);
+			$registry->set('limit', 1);
+			$registry->set('force', true);
+			$registry->set('filter.ids', [$id]);
+
+			$callback->setLogger($this->container->logger);
+
+			do
+			{
+				$return = $callback($dummy, $registry);
+			} while ($return === Status::WILL_RESUME->value);
+
+			$type    = 'info';
+			$message = Text::_('PANOPTICON_SITE_LBL_REFRESHED_OK');
+		}
+		catch (\Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_ERR_REFRESHED_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
+	public function scheduleJoomlaUpdate()
+	{
+		$this->csrfProtection();
+
+		$id    = $this->input->get->getInt('id', 0);
+		$force = $this->input->get->getBool('force', false);
+
+		/** @var Site $site */
+		$site = $this->getModel('Site', [
+			'modelTemporaryInstance' => true,
+			'modelClearState'        => true,
+			'modelClearInput'        => true,
+		]);
+
+		$site->findOrFail($id);
+
+		try
+		{
+			/** @noinspection PhpParamsInspection */
+			$this->enqueueJoomlaUpdate($site, $this->container, $force);
+
+			// Update the core.lastAutoUpdateVersion after enqueueing
+			$site->findOrFail($id);
+			$config = new Registry($site->config);
+			$config->set('core.lastAutoUpdateVersion', $config->get('core.current.version'));
+			$site->config = $config->toString();
+			$site->save();
+
+			$type    = 'info';
+			$message = Text::_('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_OK');
+		}
+		catch (\Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_ERR_JUPDATE_SCHEDULE_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
+	public function clearUpdateScheduleError()
+	{
+		$this->csrfProtection();
+
+		$id = $this->input->get->getInt('id', 0);
+
+		/** @var Site $site */
+		$tempConfig = [
+			'modelTemporaryInstance' => true,
+			'modelClearState'        => true,
+			'modelClearInput'        => true,
+		];
+		$site       = $this->getModel('Site', $tempConfig);
+
+		$site->findOrFail($id);
+
+		try
+		{
+			/** @var Task $task */
+			$task = $this->getModel('Task', $tempConfig);
+
+			$task->findOrFail([
+				'site_id' => (int)$id,
+				'type'    => 'joomlaupdate',
+			]);
+
+			$task->delete();
+
+			$type    = 'info';
+			$message = Text::_('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_CLEARED');
+		}
+		catch (\Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
 	}
 
 	protected function onBeforeBrowse(): bool

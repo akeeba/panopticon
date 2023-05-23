@@ -13,6 +13,7 @@ config.php
 
 ### User code dir
 /user_code/*
+!/user_code/.gitkeep
 
 ### Composer
 /vendor

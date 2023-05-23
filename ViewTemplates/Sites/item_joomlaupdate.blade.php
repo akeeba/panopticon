@@ -9,38 +9,42 @@ use Awf\Registry\Registry;
 use Awf\Text\Text;
 
 $config = ($this->item->config instanceof Registry) ? $this->item->config : (new Registry($this->item->config));
+$token  = $this->container->session->getCsrfToken()->getValue();
 
-$lastUpdateTimestamp = function () use ($config): string {
-    $timestamp = $config->get('core.lastUpdateTimestamp');
+$lastUpdateTimestamp = function () use ($config): string
+{
+	$timestamp = $config->get('core.lastAttempt');
 
 	return $timestamp ? $this->timeAgo($timestamp) : '(never)';
 };
 
-$getJoomlaUpdateTask = function () use ($config): ?object {
-    /** @var Driver $db */
-    $db = $this->container->db;
-    $query = $db->getQuery(true)
-        ->select([
-            $db->quoteName('enabled'),
-            $db->quoteName('last_exit_code'),
-            $db->quoteName('last_execution'),
-            $db->quoteName('next_execution'),
-            $db->quoteName('storage'),
-        ])
-        ->from($db->quoteName('#__tasks'))
-        ->where([
-            $db->quoteName('site_id') . ' = ' . (int)$this->item->id,
-            $db->quoteName('type') . ' = ' . $db->quote('joomlaupdate'),
-        ]);
+$joomlaUpdateTask = call_user_func(function () use ($config): ?object
+{
+	/** @var Driver $db */
+	$db    = $this->container->db;
+	$query = $db->getQuery(true)
+				->select([
+					$db->quoteName('enabled'),
+					$db->quoteName('last_exit_code'),
+					$db->quoteName('last_execution'),
+					$db->quoteName('next_execution'),
+					$db->quoteName('storage'),
+				])
+				->from($db->quoteName('#__tasks'))
+				->where([
+					$db->quoteName('site_id') . ' = ' . (int)$this->item->id,
+					$db->quoteName('type') . ' = ' . $db->quote('joomlaupdate'),
+				]);
 
-    $record = $db->setQuery($query)->loadObject() ?: null;
+	$record = $db->setQuery($query)->loadObject() ?: null;
 
-    if (is_object($record)) {
-        $record->storage = new Awf\Registry\Registry($record?->storage ?: '{}');
-    }
+	if (is_object($record))
+	{
+		$record->storage = new Awf\Registry\Registry($record?->storage ?: '{}');
+	}
 
-    return $record;
-};
+	return $record;
+});
 
 ?>
 <div class="card">
@@ -48,7 +52,7 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
         <span class="fab fa-joomla d-none d-md-inline" aria-hidden="true"></span>
         <span class="flex-grow-1">@lang('PANOPTICON_SITE_LBL_JUPDATE_HEAD')</span>
         <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
-           href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d', $this->item->id))"
+           href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d&%s=1', $this->item->id, $token))"
            data-bs-toggle="tooltip" data-bs-placement="bottom"
            data-bs-title="@lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')"
         >
@@ -99,10 +103,10 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                 <p class="mb-1">
                     @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CURRENT_VERSION', $this->escape($config->get('core.current.version')))
                 </p>
-                    <?php
-                    $versionCurrent = Version::create($config->get('core.current.version'));
-                    $versionLatest = Version::create($config->get('core.latest.version'));
-                    ?>
+					<?php
+					$versionCurrent = Version::create($config->get('core.current.version'));
+					$versionLatest  = Version::create($config->get('core.latest.version'));
+					?>
                 {{-- Is this a major, minor, or patch update? --}}
                 @if ($versionCurrent->versionFamily() === $versionLatest->versionFamily())
                     <p class="text-success-emphasis my-1">
@@ -147,22 +151,21 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
 
         @if ($config->get('core.canUpgrade', false))
             {{-- Is it scheduled? --}}
-                <?php
-                $joomlaUpdateTask = $getJoomlaUpdateTask();
-                $showScheduleButton = true;
-                ?>
+				<?php
+				$showScheduleButton = true;
+				?>
 
             @if ($config->get('core.lastAutoUpdateVersion') != $config->get('core.latest.version') || $joomlaUpdateTask === null)
                 {{-- Not scheduled --}}
                 <p>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
                 </p>
-            @elseif ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code === Status::OK->value)
+            @elseif ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::OK->value)
                 {{-- Pretend it's not scheduled (database tomfoolery abound?) --}}
                 <p>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
                 </p>
-            @elseif ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code === Status::INITIAL_SCHEDULE->value)
+            @elseif ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
                 {{-- Scheduled, will run --}}
                 <p>
                     @if ($joomlaUpdateTask?->next_execution)
@@ -172,22 +175,29 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                     @endif
                 </p>
 
-                    <?php $showScheduleButton = false; ?>
+					<?php
+					$showScheduleButton = false; ?>
             @elseif ($joomlaUpdateTask->enabled && in_array($joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
                 {{-- Scheduled, running --}}
                 <p>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_RUNNING')
                 </p>
 
-                    <?php $showScheduleButton = false; ?>
+					<?php
+					$showScheduleButton = false; ?>
             @else
                 {{-- Task error condition --}}
-                    <?php $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE ?>
+                <?php
+                $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE
+                ?>
                 <p class="text-warning-emphasis">
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_ERRORED')
                     {{ $status->forHumans() }}
                 </p>
                 @if ($status->value === Status::EXCEPTION->value)
+                    <?php
+						$storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage : (new Registry($joomlaUpdateTask->storage));
+                    ?>
                     <p>
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_THE_ERROR_REPORTED_WAS')
                     </p>
@@ -196,15 +206,20 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                     </p>
                     @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
                         <p>@lang('PANOPTICON_SITE_LBL_JUPDATE_ERROR_TRACE')</p>
-                        <pre>
-                            {{{ $storage->get('trace') }}}
-                        </pre>
+                        <pre>{{{ $storage->get('trace') }}}</pre>
                     @endif
                 @endif
+
+                {{-- Button to reset the error (by removing the failed task) --}}
+                <a href="@route(sprintf('index.php?view=site&task=clearUpdateScheduleError&id=%d&%s=1', $this->item->id, $token))"
+                   class="btn btn-primary mt-3" role="button">
+                    <span class="fa fa-eraser" aria-hidden="true"></span>
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_CLEAR_ERROR')
+                </a>
             @endif
 
             @if ($showScheduleButton)
-                <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d', $this->item->id))"
+                <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d&%s=1', $this->item->id, $token))"
                    class="btn btn-outline-warning" role="button">
                     <span class="fa fa-clock" aria-hidden="true"></span>
                     @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_UPDATE', $this->escape($config->get('core.latest.version')))
@@ -222,7 +237,7 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                 </summary>
                 <div class="mt-2 pt-3">
                     <p>
-                        <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d', $this->item->id))"
+                        <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d&force=1&%s=1', $this->item->id, $token))"
                            class="btn btn-outline-secondary" role="button">
                             <span class="fa fa-clock" aria-hidden="true"></span>
                             @sprintf('PANOPTICON_SITE_LBL_JUPDATE_BTN_REFRESH_CORE_PROMPT', $this->escape($config->get('core.latest.version')))
@@ -234,6 +249,58 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                 </div>
             </details>
 
+            @if(
+	            !is_null($joomlaUpdateTask)
+	            && $joomlaUpdateTask->last_exit_code != Status::OK->value
+	            && $config->get('core.lastAutoUpdateVersion') === $config->get('core.current.version')
+            )
+                @if ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
+                    <div class="alert alert-info mt-2">
+                        @if ($joomlaUpdateTask?->next_execution)
+                            @sprintf('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED', Html::date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')))
+                        @else
+                            @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED_ASAP')
+                        @endif
+                    </div>
+                @elseif($joomlaUpdateTask->enabled && in_array($joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
+                    <div class="alert alert-info mt-2">
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_RUNNING')
+                    </div>
+                @elseif (!$joomlaUpdateTask->enabled)
+                    <?php
+                    $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE;
+                    $storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage : (new Registry($joomlaUpdateTask->storage));
+                    ?>
+                    <div class="alert alert-danger mt-2">
+                        <h4 class="alert-heading h6">
+                            @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_ERRORED')
+                            <span class="fw-normal fst-italic">
+                            {{ $status->forHumans() }}
+                            </span>
+                        </h4>
+
+                        @if ($status->value === Status::EXCEPTION->value)
+                            <p>
+                                @lang('PANOPTICON_SITE_LBL_JUPDATE_THE_ERROR_REPORTED_WAS')
+                            </p>
+                            <p class="text-dark">
+                                {{{ $storage->get('error') }}}
+                            </p>
+                            @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
+                                <p>@lang('PANOPTICON_SITE_LBL_JUPDATE_ERROR_TRACE')</p>
+                                <pre>{{{ $storage->get('trace') }}}</pre>
+                            @endif
+                        @endif
+
+                        {{-- Button to reset the error (by removing the failed task) --}}
+                        <a href="@route(sprintf('index.php?view=site&task=clearUpdateScheduleError&id=%d&%s=1', $this->item->id, $token))"
+                           class="btn btn-primary mt-3" role="button">
+                            <span class="fa fa-eraser" aria-hidden="true"></span>
+                            @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_CLEAR_ERROR')
+                        </a>
+                    </div>
+                @endif
+            @endif
         @endif
     </div>
 </div>

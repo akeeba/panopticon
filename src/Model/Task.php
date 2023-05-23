@@ -87,7 +87,7 @@ class Task extends DataModel
 			}
 
 			$this->last_run_end   = null;
-			$this->last_exit_code = Status::INITIAL_SCHEDULE;
+			$this->last_exit_code = Status::INITIAL_SCHEDULE->value;
 		}
 
 		return $this;
@@ -216,7 +216,7 @@ class Task extends DataModel
 		// Mark the current task as running
 		try
 		{
-			$willResume = $pendingTask->last_exit_code === Status::WILL_RESUME;
+			$willResume = $pendingTask->last_exit_code == Status::WILL_RESUME->value;
 
 			$pendingTask->save([
 				'last_exit_code' => Status::RUNNING,
@@ -323,29 +323,29 @@ class Task extends DataModel
 			{
 				$logger->notice('Task finished without an exit status');
 
-				$pendingTask->last_exit_code = Status::NO_EXIT;
+				$pendingTask->last_exit_code = Status::NO_EXIT->value;
 			}
 			elseif (!is_numeric($return))
 			{
 				$logger->notice('Task finished with an invalid exit value type');
 
-				$pendingTask->last_exit_code = Status::INVALID_EXIT;
+				$pendingTask->last_exit_code = Status::INVALID_EXIT->value;
 			}
 			else
 			{
-				$pendingTask->last_exit_code = Status::tryFrom($return) ?? Status::INVALID_EXIT;
+				$pendingTask->last_exit_code = Status::tryFrom($return)?->value ?? Status::INVALID_EXIT->value;
 			}
 
-			if ($pendingTask->last_exit_code === Status::INVALID_EXIT)
+			if ($pendingTask->last_exit_code === Status::INVALID_EXIT->value)
 			{
 				$logger->notice('Task finished with an invalid exit value');
 			}
 			else
 			{
-				$logger->info(sprintf('Task finished with status “%s”', $pendingTask->last_exit_code->forHumans()));
+				$logger->info(sprintf('Task finished with status “%s”', Status::tryFrom($pendingTask->last_exit_code)->forHumans()));
 			}
 
-			if ($pendingTask->last_exit_code !== Status::WILL_RESUME)
+			if ($pendingTask->last_exit_code !== Status::WILL_RESUME->value)
 			{
 				$pendingTask->storage        = '{}';
 				$cronExpression              = new CronExpression($pendingTask->cron_expression);
@@ -363,7 +363,7 @@ class Task extends DataModel
 		{
 			$logger->error(sprintf('Unknown Task type ‘%s’', $pendingTask->type));
 
-			$pendingTask->last_exit_code = Status::NO_ROUTINE;
+			$pendingTask->last_exit_code = Status::NO_ROUTINE->value;
 			$pendingTask->storage->loadString('{}');
 			$pendingTask->times_failed++;
 		}
@@ -377,7 +377,7 @@ class Task extends DataModel
 				$e->getMessage()
 			));
 
-			$pendingTask->last_exit_code = Status::EXCEPTION;
+			$pendingTask->last_exit_code = Status::EXCEPTION->value;
 			$pendingTask->storage        = json_encode([
 				'error' => $e->getMessage(),
 				'trace' => $e->getFile() . '::' . $e->getLine() . "\n" . $e->getTraceAsString(),
@@ -387,9 +387,9 @@ class Task extends DataModel
 		finally
 		{
 			$params        = is_object($pendingTask->params) ? $pendingTask->params : new Registry($pendingTask->params);
-			$isInvalidTask = $pendingTask->last_exit_code === Status::NO_ROUTINE;
-			$isError       = $pendingTask->last_exit_code === Status::EXCEPTION;
-			$isResumable   = $pendingTask->last_exit_code === Status::WILL_RESUME;
+			$isInvalidTask = $pendingTask->last_exit_code === Status::NO_ROUTINE->value;
+			$isError       = $pendingTask->last_exit_code === Status::EXCEPTION->value;
+			$isResumable   = $pendingTask->last_exit_code === Status::WILL_RESUME->value;
 			$runOnceAction = $params->get('run_once', null);
 
 			if (($runOnceAction === 'disable') && !$isError && !$isInvalidTask && !$isResumable)
@@ -537,7 +537,7 @@ class Task extends DataModel
 
 		foreach ($tasks as $task)
 		{
-			if ($task->last_exit_code == Status::WILL_RESUME)
+			if ($task->last_exit_code == Status::WILL_RESUME->value)
 			{
 				return $this->getClone()->bind($task);
 			}
