@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "5c022e70276bb3400c76bc137f4a1f9d21930b0b"
+                "reference": "184c3cf57b1b977af472b6fefafd79937697b687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/5c022e70276bb3400c76bc137f4a1f9d21930b0b",
-                "reference": "5c022e70276bb3400c76bc137f4a1f9d21930b0b",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/184c3cf57b1b977af472b6fefafd79937697b687",
+                "reference": "184c3cf57b1b977af472b6fefafd79937697b687",
                 "shasum": ""
             },
             "require": {
@@ -27,9 +27,12 @@
             },
             "suggest": {
                 "ext-curl": "*",
+                "ext-libxml": "*",
                 "ext-mysqli": "*",
                 "ext-pdo": "*",
-                "ext-simplexml": "*"
+                "ext-pgsql": "*",
+                "ext-simplexml": "*",
+                "ext-sqlsrv": "*"
             },
             "default-branch": true,
             "type": "library",
@@ -73,7 +76,7 @@
                 "source": "https://github.com/akeeba/awf/tree/development",
                 "issues": "https://github.com/akeeba/awf/issues"
             },
-            "time": "2023-05-18T15:04:42+00:00"
+            "time": "2023-05-23T18:04:14+00:00"
         },
         {
             "name": "akeeba/remotecli",

@@ -68,10 +68,14 @@ class Application extends AWFApplication
 		$this->setTemplate('default');
 		$this->loadLanguages();
 
-
 		if (!$this->redirectToSetup())
 		{
 			$this->container->appConfig->loadConfiguration();
+
+			$this->container->session->setCsrfTokenAlgorithm(
+				$this->container->appConfig->get('session_token_algorithm', 'sha512')
+			);
+
 			$this->applyTimezonePreference();
 			$this->applySessionTimeout();
 			$this->conditionalRedirectToCronSetup();

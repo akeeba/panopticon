@@ -49,6 +49,36 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{-- session_token_algorithm --}}
+        <div class="row mb-3">
+            <label for="session_token_algorithm" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM')
+            </label>
+            <div class="col-sm-9">
+                {{ \Awf\Html\Select::genericList(
+                    data: [
+                        'sha512' => 'PANOPTICON_SYSCONFIG_OPT_SHA512',
+                        'sha384' => 'PANOPTICON_SYSCONFIG_OPT_SHA384',
+                        'sha256' => 'PANOPTICON_SYSCONFIG_OPT_SHA256',
+                        'sha224' => 'PANOPTICON_SYSCONFIG_OPT_SHA224',
+                        'sha1' => 'PANOPTICON_SYSCONFIG_OPT_SHA1',
+                        'md5' => 'PANOPTICON_SYSCONFIG_OPT_MD5',
+                    ],
+                    name: 'options[session_token_algorithm]',
+                    attribs: [
+                        'class' => 'form-select',
+                        'required' => 'required',
+                    ],
+                    selected: $config->get('session_token_algorithm', 'sha512'),
+                    idTag: 'session_token_algorithm',
+                    translate: true
+                ) }}
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM_HELP')
+                </div>
+            </div>
+        </div>
+
         {{--timezone--}}
         <div class="row mb-3">
             <label for="timezone" class="col-sm-3 col-form-label">

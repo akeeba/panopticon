@@ -47,6 +47,13 @@ The URL Panopticon is installed on. Used when sending emails through a CLI CRON 
 
 Default: (blank)
 
+### `session_token_algorithm`
+**Anti-CSRF Token Algorithm**
+
+The hash algorithm for creating an anti-CSRF token. SHA-512 offers the best security, but may not work on some hosts because it's very long. MD5 offers the least security but is compatible with all hosts. Only change if you have problems when clicking action buttons in Panopticon.
+
+Default: sha512
+
 ### `finished_setup`
 **Have we finished installing up the application?**
 
