@@ -10,12 +10,15 @@ namespace Akeeba\Panopticon\View\Sites;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Mvc\DataView\Html as DataViewHtml;
 use Awf\Text\Text;
 use Awf\Utils\Template;
 
 class Html extends DataViewHtml
 {
+	use TimeAgoTrait;
+
 	protected Site $item;
 
 	protected ?string $connectionError = null;

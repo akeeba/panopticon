@@ -13,7 +13,7 @@ $config = ($this->item->config instanceof Registry) ? $this->item->config : (new
 $lastUpdateTimestamp = function () use ($config): string {
     $timestamp = $config->get('core.lastUpdateTimestamp');
 
-    return $timestamp ? Html::date('@' . $timestamp, Text::_('DATE_FORMAT_LC7')) : '(never)';
+	return $timestamp ? $this->timeAgo($timestamp) : '(never)';
 };
 
 $getJoomlaUpdateTask = function () use ($config): ?object {
@@ -63,7 +63,6 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
             <strong>
                 @lang('PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED')
             </strong>
-            {{-- TODO Relative timestamp? --}}
             {{ $lastUpdateTimestamp() }}
         </p>
 

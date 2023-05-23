@@ -13,7 +13,7 @@ $phpVersion = new PhpVersion();
 $lastUpdateTimestamp = function () use ($config): string {
     $timestamp = $config->get('core.lastUpdateTimestamp');
 
-    return $timestamp ? Html::date('@' . $timestamp, Text::_('DATE_FORMAT_LC7')) : '(never)';
+    return $timestamp ? $this->timeAgo($timestamp) : '(never)';
 };
 
 $php = $config->get('core.php', '0.0.0');
@@ -50,7 +50,6 @@ $isOldestBranch = $phpBranch === $minimumSupportedBranch;
             <strong>
                 @lang('PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED')
             </strong>
-            {{-- TODO Relative timestamp? --}}
             {{ $lastUpdateTimestamp() }}
         </p>
 
