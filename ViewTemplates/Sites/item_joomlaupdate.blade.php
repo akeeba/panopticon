@@ -4,6 +4,7 @@
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Database\Driver;
+use Awf\Html\Html;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 
@@ -12,7 +13,7 @@ $config = ($this->item->config instanceof Registry) ? $this->item->config : (new
 $lastUpdateTimestamp = function () use ($config): string {
     $timestamp = $config->get('core.lastUpdateTimestamp');
 
-    return $timestamp ? \Awf\Html\Html::date('@' . $timestamp, Text::_('DATE_FORMAT_LC7')) : '(never)';
+    return $timestamp ? Html::date('@' . $timestamp, Text::_('DATE_FORMAT_LC7')) : '(never)';
 };
 
 $getJoomlaUpdateTask = function () use ($config): ?object {
@@ -34,8 +35,7 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
 
     $record = $db->setQuery($query)->loadObject() ?: null;
 
-    if (is_object($record))
-    {
+    if (is_object($record)) {
         $record->storage = new Awf\Registry\Registry($record?->storage ?: '{}');
     }
 
@@ -46,7 +46,7 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
 <div class="card">
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
         <span class="fab fa-joomla d-none d-md-inline" aria-hidden="true"></span>
-        <span class="flex-grow-1">Joomla!&trade; Update</span>
+        <span class="flex-grow-1">@lang('PANOPTICON_SITE_LBL_JUPDATE_HEAD')</span>
         <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
            href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d', $this->item->id))"
            data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -54,14 +54,14 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
         >
             <span class="fa fa-refresh" aria-hidden="true"></span>
             <span class="visually-hidden">
-                Reload Joomla!&trade; Update information
+                @lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')
             </span>
         </a>
     </h3>
     <div class="card-body">
         <p class="small text-body-tertiary">
             <strong>
-                Last checked:
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED')
             </strong>
             {{-- TODO Relative timestamp? --}}
             {{ $lastUpdateTimestamp() }}
@@ -73,10 +73,8 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                     <span class="fa fa-xmark-circle" aria-hidden="true"></span>
                     @lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPDATES_BROKEN')
                 </h4>
-                The Joomla! extension record is missing from your site. Joomla! cannot detect whether updates to itself
-                are available.
-
-                Try asking for help on the <a href="https://forum.joomla.org" target="_blank">Joomla! Forum</a>.
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_ERR_JOOMLA_FILES_EXT_MISSING')
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_SEEK_HELP_JFORUM')
             </div>
         @elseif(!$config->get('core.updateSiteAvailable', true))
             <div class="alert alert-danger">
@@ -84,26 +82,23 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                     <span class="fa fa-xmark-circle" aria-hidden="true"></span>
                     @lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPDATES_BROKEN')
                 </h4>
-                The Joomla! Update Site record is missing from your site. Joomla! cannot detect whether updates to
-                itself are available.
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_ERR_UPDATESITE_MISSING')
                 @if(version_compare($config->get('core.current.version', '4.0.0'), '4.0.0', 'ge'))
-                    Go to your site's administrator backend, System, Update, Update Sites, and click on the Rebuild
-                    button.
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J4')
                 @elseif(version_compare($config->get('core.current.version', '4.0.0'), '3.6.0', 'ge'))
-                    Go to your site's administrator backend, Extensions, Manage, Update Sites, and click on the Rebuild
-                    button.
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J3')
                 @else
-                    Try asking for help on the <a href="https://forum.joomla.org" target="_blank">Joomla! Forum</a>.
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_SEEK_HELP_JFORUM')
                 @endif
             </div>
         @elseif ($config->get('core.canUpgrade', false))
             <div class="alert alert-warning">
                 <h4 class="alert alert-heading h5 p-0">
                     <span class="fab fa-joomla d-none d-md-inline" aria-hidden="true"></span>
-                    Joomla! {{ $config->get('core.latest.version') }} is available
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_AVAILABLE_UPDATE', $this->escape($config->get('core.latest.version')))
                 </h4>
                 <p class="mb-1">
-                    Your site is currently using Joomla! {{ $config->get('core.current.version') }}.
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CURRENT_VERSION', $this->escape($config->get('core.current.version')))
                 </p>
                     <?php
                     $versionCurrent = Version::create($config->get('core.current.version'));
@@ -113,43 +108,39 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                 @if ($versionCurrent->versionFamily() === $versionLatest->versionFamily())
                     <p class="text-success-emphasis my-1">
                         <span class="fa fa-check-circle" aria-hidden="true"></span>
-                        This is a patch (point) update which is most always safe.
+                        @@lang('PANOPTICON_SITE_LBL_JUPDATE_IS_PATCH_RELEASE')
                     </p>
                 @elseif ($versionLatest->major() === $versionLatest->major())
                     <p class="text-warning-emphasis fw-medium my-1">
                         <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
-                        This is a minor (version family) update which may affect your template overrides, templates, and
-                        some third party extensions.
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_IS_MINOR_RELEASE')
                     </p>
                     <p class="text-warning-emphasis my-1">
-                        It is a good idea to take a backup of your site, and test this update on a copy of your site
-                        first.
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_MINOR_RELEASE_ADMONISHMENT')
                     </p>
                 @else
                     <p class="text-danger-emphasis fw-bold my-1">
                         <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                        This is a major version update which will most likely affect your template overrides, templates,
-                        and possibly some third party extensions.
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_IS_MAJOR_RELEASE')
                     </p>
                     <p class="text-danger-emphasis my-1">
-                        It is very strongly recommended that you take a backup of your site, and test this update on a
-                        copy of your site first.
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_MAJOR_RELEASE_ADMONISHMENT')
                     </p>
                 @endif
             </div>
         @else
             <div class="alert alert-success">
                 <h4 class="alert alert-heading h5 p-0 m-0">
-                    Joomla! {{ $config->get('core.current.version') }} is up-to-date
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_UP_TO_DATE', $this->escape($config->get('core.current.version')))
                 </h4>
                 {{-- Is there a new version available, which cannot be installed? --}}
                 @if (version_compare($config->get('core.latest.version'), $config->get('core.current.version'), 'lt'))
                     <hr/>
                     <p class="my-2 text-warning-emphasis fw-semibold">
-                        The newer Joomla! version {{ $config->get('core.latest.version') }} is available but cannot be installed because of your site preferences.
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CANNOT_INSTALL', $this->escape($config->get('core.latest.version')))
                     </p>
                     <p class="text-muted">
-                        Go to your site's administrator backend, System, Update, Joomla, click on Options, and change the update channel to Joomla Next. Please check Joomla's requirements, especially the database version and PHP version requirements. Note that your site is currently using PHP {{ $config->get('core.php') }}.
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION', $this->escape($config->get('core.php')))
                     </p>
                 @endif
             </div>
@@ -165,24 +156,20 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
             @if ($config->get('core.lastAutoUpdateVersion') != $config->get('core.latest.version') || $joomlaUpdateTask === null)
                 {{-- Not scheduled --}}
                 <p>
-                    The update is <span class="text-danger fw-semibold">not scheduled</span> to run automatically. You
-                    can run the update manually on your site, or click on the button below.
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
                 </p>
             @elseif ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code === Status::OK->value)
                 {{-- Pretend it's not scheduled (database tomfoolery abound?) --}}
                 <p>
-                    The update is <span class="text-danger fw-semibold">not scheduled</span> to run automatically. You
-                    can run the update manually on your site, or click on the button below.
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
                 </p>
             @elseif ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code === Status::INITIAL_SCHEDULE->value)
                 {{-- Scheduled, will run --}}
                 <p>
                     @if ($joomlaUpdateTask?->next_execution)
-                        The update is <span class="fw-semibold text-success">scheduled</span> to run automatically
-                        after {{ \Awf\Html\Html::date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')) }}
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED', Html::date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')))
                     @else
-                        The update is <span class="fw-semibold text-success">scheduled</span> to run automatically as
-                        soon as possible.
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP')
                     @endif
                 </p>
 
@@ -190,7 +177,7 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
             @elseif ($joomlaUpdateTask->enabled && in_array($joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
                 {{-- Scheduled, running --}}
                 <p>
-                    The update is <span class="fw-semibold text-success">currently taking place</span> automatically.
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_RUNNING')
                 </p>
 
                     <?php $showScheduleButton = false; ?>
@@ -198,18 +185,18 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                 {{-- Task error condition --}}
                     <?php $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE ?>
                 <p class="text-warning-emphasis">
-                    The updated was scheduled to run automatically but ran into an error:
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_ERRORED')
                     {{ $status->forHumans() }}
                 </p>
                 @if ($status->value === Status::EXCEPTION->value)
                     <p>
-                        The error reported was:
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_THE_ERROR_REPORTED_WAS')
                     </p>
                     <p class="text-dark">
                         {{{ $storage->get('error') }}}
                     </p>
                     @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
-                        <p>Error trace (for debugging):</p>
+                        <p>@lang('PANOPTICON_SITE_LBL_JUPDATE_ERROR_TRACE')</p>
                         <pre>
                             {{{ $storage->get('trace') }}}
                         </pre>
@@ -221,26 +208,26 @@ $getJoomlaUpdateTask = function () use ($config): ?object {
                 <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d', $this->item->id))"
                    class="btn btn-outline-warning" role="button">
                     <span class="fa fa-clock" aria-hidden="true"></span>
-                    Schedule Automatic Update to Joomla! {{ $config->get('core.latest.version') }}
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_UPDATE', $this->escape($config->get('core.latest.version')))
                 </a>
             @endif
         @endif
 
         @if (!$config->get('core.canUpgrade', false))
-            <hr class="mt-4" />
+            <hr class="mt-4"/>
             <p class="text-info">
                 <span class="fa fa-info-circle" aria-hidden="true"></span>
-                Site woes? Try refreshing the Joomla! core files.
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_CORE_PROMPT')
             </p>
             <p>
                 <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d', $this->item->id))"
                    class="btn btn-outline-secondary" role="button">
                     <span class="fa fa-clock" aria-hidden="true"></span>
-                    Schedule Joomla! {{ $config->get('core.latest.version') }} Files Refresh
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_BTN_REFRESH_CORE_PROMPT', $this->escape($config->get('core.latest.version')))
                 </a>
             </p>
             <p class="small text-muted">
-                Refreshing the Joomla! core files is <em>always safe</em>. Your site contents will not be changed. Use this to undo changes to the Joomla! core files (“core hacks”), or if you suspect that your site does not work correctly because of a failed update.
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_CORE_NOTE')
             </p>
         @endif
     </div>
