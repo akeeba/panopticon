@@ -110,10 +110,18 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 						// Okay...
 					}
 
-					//email_after
-					if ($storage->get('email_after', true))
+					/**
+					 * Only send emails if we didn't reinstall the same verison AND if we are asked to send emails after
+					 * Joomla! update.
+					 */
+					$vars = $storage->get('email_variables', []);
+					$newVersion = $vars['NEW_VERSION'] ?? null;
+					$oldVersion = $vars['OLD_VERSION'] ?? null;
+
+					if (!empty($newVersion) && !empty($oldVersion) && $newVersion != $oldVersion && $storage->get('email_after', true))
 					{
 						$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
+
 					}
 
 					$this->advanceState();
