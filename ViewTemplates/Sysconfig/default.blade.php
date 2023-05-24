@@ -75,6 +75,7 @@ $router = $this->getContainer()->router;
                 @include('Sysconfig/default_automation')
                 @include('Sysconfig/default_sites')
                 @include('Sysconfig/default_coreupdates')
+                @include('Sysconfig/default_extupdates')
             </div>
         </div>
     </div>

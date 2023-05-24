@@ -4,17 +4,16 @@
 
 ## Extension updates
 
-We need to provide a global default for extension updates PER EXTENSION:
+✅We need to provide a global default for extension updates PER EXTENSION:
 * `none` None. No updates, no emails.
-* `email` Email. No updates, only sends emails
 * `patch` Same Version Family. Only patch versions (e.g. 1.2.3 -> 1.2.4)
 * `minor` Same Major Version. Patch and minor (e.g. 1.2 -> 1.3)
 * `major` Any (Not Recommended). Patch, minor, and major (e.g. 1.2 -> 2.0)
 
-The factory default is `email`.
+The factory default is `none`.
 
 The global default can be overridden in two levels: 
-* Global, per extension. For example, all versions of Akeeba Backup should be set to “Patch, Minor, and Major”. Requires new page, Extensions.
+* ✅Global, per extension. For example, all versions of Akeeba Backup should be set to “Patch, Minor, and Major”. Requires new page, Extensions.
 * Per site, per extension. The default setting will be "Use global". Only extensions deviating from Use Global will have their preference recorded under the site param key `config.extension_update.extensions` which is an array keyed to _the extension ID_.
 
 > **Reasoning**: Typically, extensions which are “safe” to upgrade are safe across _all_ of your sites. For example, Akeeba Backup and JCE can be updated without anything breaking, Akeeba Ticket System can only be expected to do so within the same major version, some other extension may be introducing random breaking changes all the time, therefore you don't want to ever update it automatically. However, you may have a special snowflake of a site where upgrading JCE would break some third party extension for reasons unknown. If you have set JCE to always update to any version it would break that site; hence the need to be able to say "nope, I don't want to even be told that JCE is out of date on that site".

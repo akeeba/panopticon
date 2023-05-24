@@ -15,8 +15,12 @@ defined('AKEEBA') || die;
 
 class Html extends \Awf\Mvc\DataView\Html
 {
+	protected array $extUpdatePreferences = [];
+
 	protected function onBeforeMain(): bool
 	{
+		$this->extUpdatePreferences = $this->getModel()->getExtensionPreferencesAndMeta();
+
 		// Load JavaScript
 		Template::addJs('media://js/showon.js');
 

@@ -253,6 +253,17 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 							{
 								// Ah, shucks.
 							}
+
+							// Finally, clear the cache of known extensions for the specific site
+							$cacheKey = 'site.' . $site->id;
+							$this->logger?->debug(
+								sprintf(
+									'Clearing cache of known extensions for site %d (pool ‘extensions’, item ‘%s’)',
+									$site->id,
+									$cacheKey
+								)
+							);
+							$this->container->cacheFactory->pool('extensions')->delete($cacheKey);
 						},
 						function (RequestException $e) use ($site) {
 							$this->logger?->error(sprintf(
@@ -273,6 +284,10 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 		}
 
 		Utils::settle($promises)->wait(true);
+
+		// After storing all extensions we need to bust the cache of all known extensions
+		$this->logger?->debug('Clearing cache of all known extensions (pool ‘extensions’, item ‘all’)');
+		$this->container->cacheFactory->pool('extensions')->delete('all');
 	}
 
 	private function mapExtensionsList(array $items): array

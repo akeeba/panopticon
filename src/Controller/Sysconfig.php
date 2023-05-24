@@ -51,6 +51,7 @@ class Sysconfig extends Controller
 			$data[$k] ??= 0;
 		}
 
+		// Apply the configuration to the appConfig object
 		$config = $this->container->appConfig;
 
 		foreach ($data as $k => $v)
@@ -59,12 +60,20 @@ class Sysconfig extends Controller
 			$config->set($k, $v);
 		}
 
+		// Save the appConfig to disk
 		$this->container->appConfig->saveConfiguration();
 
+		// Invalidate OPcache for our config.php file, if supported
 		if (function_exists('opcache_invalidate'))
 		{
 			opcache_invalidate($this->container->appConfig->getDefaultPath(), true);
 		}
+
+		// Save the extension update preferences
+		$data = $this->input->get('extupdates', [], 'none');
+		$data = is_array($data) ? $data : [];
+
+		$this->getModel()->saveExtensionPreferences($data);
 
 		$url = $urlRedirect ? base64_decode($urlRedirect) : $this->container->router->route('index.php');
 

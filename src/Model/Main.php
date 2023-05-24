@@ -38,9 +38,9 @@ class Main extends Model
 		$db = $this->container->db;
 		$db->lockTable('#__akeeba_common');
 		$query = $db->getQuery(true)
-			->select($db->quoteName('value'))
-			->from($db->quoteName('#__akeeba_common'))
-			->where($db->quoteName('key') . ' = ' . $db->quote('panopticon.task.last.execution'));
+					->select($db->quoteName('value'))
+					->from($db->quoteName('#__akeeba_common'))
+					->where($db->quoteName('key') . ' = ' . $db->quote('panopticon.task.last.execution'));
 
 		$lastExecution = $db->setQuery($query)->loadResult();
 

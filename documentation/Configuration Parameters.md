@@ -144,6 +144,24 @@ UOM: minutes
 
 Range: 15 to 1440
 
+### `tasks_coreupdate_install`
+**When An Update Is Found (Joomla! Updates)**
+
+Do nothing: no action is taken. Send email: An email is sent, nothing is installed. Patch: Only patch versions (e.g. 1.2.3 to 1.2.4) is installed; an email is sent otherwise. Minor: Only path and minor versions (e.g. 1.2.x to 1.3.x) are installed; an email is sent otherwise. Any version: installs all updates, even if the major version changes (e.g. 1.x to 2.x).
+
+Default: patch
+
+Valid options: none, email, patch, minor, major
+
+### `tasks_extupdate_install`
+**When An Extension Update Is Found**
+
+Same as `tasks_coreupdate_install`, but for extension updates
+
+Default: none
+
+Valid options: none, patch, minor, major
+
 ## Caching
 
 Panopticon uses caching to avoid repeating the same time-consuming operations. These options control how caching works.

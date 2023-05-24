@@ -80,6 +80,7 @@ class Main extends Controller
 		// Make sure the DB tables are installed correctly
 		$model->installDatabase();
 
+		$this->getModel('main')->getKnownExtensions();
 		return true;
 	}
 }
