@@ -18,25 +18,40 @@ The global default can be overridden in two levels:
 
 > **Reasoning**: Typically, extensions which are “safe” to upgrade are safe across _all_ of your sites. For example, Akeeba Backup and JCE can be updated without anything breaking, Akeeba Ticket System can only be expected to do so within the same major version, some other extension may be introducing random breaking changes all the time, therefore you don't want to ever update it automatically. However, you may have a special snowflake of a site where upgrading JCE would break some third party extension for reasons unknown. If you have set JCE to always update to any version it would break that site; hence the need to be able to say "nope, I don't want to even be told that JCE is out of date on that site".
 
-The list of upgradeable extensions will be populated by the extensions discovered in the defined sites and continuously refined every time we update the sites' extensions list.
+✅The list of upgradeable extensions will be populated by the extensions discovered in the defined sites and continuously refined every time we update the sites' extensions list.
 
 What to do
 
-* Create new task type `extensionsupdate` which handles the update of the extensions of one specific site
-* Install one global task of type `extupdateconductor` for automatically setting up extension update installation
-  * Query sites with extension updates (use MySQL's JSON features) which do NOT already have an enabled run-once extension update task.
-  * Create (or re-enable) a "run once" task to update the site's extensions.
-  * Create a queue for the extensions to update on this site
-  * Enqueue email for sending
+Implement site.refreshExtensionsInformation controller task which runs the `RefreshInstalledExtensions` task for a specific site.
 
-The `extensionsupdate` task
-* Loop through the list of extensions to update and tell the site to install the update
-* After all updates have been installed (or failed to install) send an email telling the user how many updates were available, how many were installed, and how many failed to install
+Create new task type `extensionsupdate` which handles the update of the extensions of one specific site
+* Pop the next extension ID from the queue `extensions.SITE_ID`
+* If no item was retrieved
+  * If storage.updateStatus is not empty
+    * Enqueue an email about the status of the updataes
+    * Set storage.updateStatus to null
+  * If the `extensions.SITE_ID` is empty return Status::OK->value
+  * Return Status::WILL_CONTINUE->value (this catches the case where more items were added to the queue while we were sending the email)
+* Tell the site to install the update.
+* Store the extension ID, name, and update status into storage.updateStatus
+* Return Status::WILL_CONTINUE->value
 
-If a user chooses to update an extension with no auto-updates:
-* If a queue for the extensions to update on this site does not exist, create it
-* Add the extension ID to the queue
-* Create (or re-enable) a "run once" task to update the site's extensions.
+Install one global task of type `extupdateconductor` for automatically setting up extension update installation.
+* Pick a slice of sites.
+* If there are no sites, return Status::OK->value
+* For each site:
+  * Find how many and which extensions can be automatically updated
+  * If there are none, continue to the next site
+  * Enqueue the extension IDs to be automatically updated into the `extensions.SITE_ID` queue
+  * Create or reschedule the `extensionsupdate` run-once task for this site
+* Return Status::WILL_CONTINUE->value
+
+If a user chooses to update an extension with no auto-updates (controller task site.enqueueExtensionUpdate)
+* Add the extension ID into the queue `extensions.SITE_ID`
+* If the run-once `extensionsupdate` task exists
+  * If enabled, return
+  * If not enabled, enable and return
+* Create a new `extensionsupdate` run-once task for this site
 
 ## Content-Security-Policy
 
