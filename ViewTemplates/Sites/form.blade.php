@@ -29,6 +29,14 @@ $returnUrl = $this->input->getBase64('returnurl', '');
                 @lang('PANOPTICON_SITE_LBL_TAB_UPDATE')
             </button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button type="button" id="siteTabExtUpdate"
+                    class="nav-link" aria-selected="false"
+                    data-bs-toggle="tab" role="tab"
+                    data-bs-target="#siteTabContentExtUpdate" aria-controls="siteTabContentExtUpdate">
+                @lang('PANOPTICON_SITE_LBL_TAB_EXTUPDATE')
+            </button>
+        </li>
     </ul>
 
     <div class="tab-content container py-3" id="siteTabContent" tabindex="-1">
@@ -41,6 +49,11 @@ $returnUrl = $this->input->getBase64('returnurl', '');
              id="siteTabContentUpdate" role="tabpanel" aria-labelledby="siteTabUpdate" tabindex="-1"
         >
             @include('Sites/form_update')
+        </div>
+        <div class="tab-pane show"
+             id="siteTabContentExtUpdate" role="tabpanel" aria-labelledby="siteTabExtUpdate" tabindex="-1"
+        >
+            @include('Sites/form_extupdate')
         </div>
     </div>
 

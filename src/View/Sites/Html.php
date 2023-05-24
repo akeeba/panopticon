@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\View\Sites;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Model\Sysconfig;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Mvc\DataView\Html as DataViewHtml;
 use Awf\Text\Text;
@@ -26,6 +27,12 @@ class Html extends DataViewHtml
 	protected ?string $curlError = null;
 
 	protected ?int $httpCode;
+
+	protected array $extUpdatePreferences = [];
+
+	protected array $globalExtUpdatePreferences = [];
+
+	protected string $defaultExtUpdatePreference = 'none';
 
 	public function onBeforeBrowse(): bool
 	{
@@ -58,7 +65,8 @@ class Html extends DataViewHtml
 			],
 		];
 
-		array_walk($buttons, function (array $button) {
+		array_walk($buttons, function (array $button)
+		{
 			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition($button);
 		});
 
@@ -92,7 +100,8 @@ class Html extends DataViewHtml
 			],
 		];
 
-		array_walk($buttons, function (array $button) {
+		array_walk($buttons, function (array $button)
+		{
 			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition($button);
 		});
 
@@ -138,7 +147,8 @@ class Html extends DataViewHtml
 			],
 		];
 
-		array_walk($buttons, function (array $button) {
+		array_walk($buttons, function (array $button)
+		{
 			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition($button);
 		});
 
@@ -146,6 +156,12 @@ class Html extends DataViewHtml
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();
+
+		/** @var Sysconfig $sysConfigModel */
+		$sysConfigModel                   = $this->getModel('Sysconfig');
+		$this->extUpdatePreferences       = $sysConfigModel->getExtensionPreferencesAndMeta($this->item->id);
+		$this->globalExtUpdatePreferences = $sysConfigModel->getExtensionPreferencesAndMeta(null);
+		$this->defaultExtUpdatePreference = $this->container->appConfig->get('tasks_extupdate_install', 'none');
 
 		$this->connectionError = $this->container->segment->getFlash('site_connection_error', null);
 		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
@@ -173,7 +189,8 @@ class Html extends DataViewHtml
 			],
 		];
 
-		array_walk($buttons, function (array $button) {
+		array_walk($buttons, function (array $button)
+		{
 			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition($button);
 		});
 
@@ -187,14 +204,14 @@ class Html extends DataViewHtml
 		]);
 		Template::addJs('media://js/remember-tab.js');
 
-        $js = <<< JS
+		$js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     });
 
 JS;
-        $document->addScriptDeclaration($js);
+		$document->addScriptDeclaration($js);
 
 		return true;
 	}

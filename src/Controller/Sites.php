@@ -231,6 +231,14 @@ class Sites extends DataController
 		return parent::onBeforeBrowse();
 	}
 
+	protected function onBeforeEdit(): bool
+	{
+		$sysconfigModel = $this->getModel('Sysconfig');
+		$this->getView()->setModel('Sysconfig', $sysconfigModel);
+
+		return parent::onBeforeEdit();
+	}
+
 	protected function applySave()
 	{
 		$model = $this->getModel();
@@ -312,6 +320,16 @@ class Sites extends DataController
 			if (!empty($id))
 			{
 				$model->unlock();
+			}
+
+			// Save the extension update preferences
+			if ($model->getId())
+			{
+				$data = $this->input->get('extupdates', [], 'none');
+				$data = is_array($data) ? $data : [];
+				/** @var \Akeeba\Panopticon\Model\Sysconfig $sysconfigModel */
+				$sysconfigModel = $this->getModel('Sysconfig');
+				$sysconfigModel->saveExtensionPreferences($data, $model->getId());
 			}
 
 			if (method_exists($this, 'onAfterApplySave'))
