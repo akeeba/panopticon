@@ -103,6 +103,69 @@ class Sites extends DataController
 		$this->setRedirect($returnUri, $message, $type);
 	}
 
+	public function refreshExtensionsInformation(): void
+	{
+		$this->csrfProtection();
+
+		$id   = $this->input->get->getInt('id', 0);
+		$site = $this->getModel('Site', [
+			'modelTemporaryInstance' => true,
+			'modelClearState'        => true,
+			'modelClearInput'        => true,
+		]);
+
+		try
+		{
+			$site->findOrFail($id);
+
+			/** @var RefreshSiteInfo $callback */
+			$callback = $this->container->taskRegistry->get('refreshinstalledextensions');
+			$dummy    = new \stdClass();
+			$registry = new Registry();
+
+			$registry->set('limitStart', 0);
+			$registry->set('limit', 1);
+			$registry->set('force', true);
+			$registry->set('filter.ids', [$id]);
+
+			$callback->setLogger($this->container->logger);
+
+			do
+			{
+				$return = $callback($dummy, $registry);
+			} while ($return === Status::WILL_RESUME->value);
+
+			$type    = 'info';
+			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSIONS_REFRESHED_OK');
+		}
+		catch (\Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_ERR_EXTENSIONS_REFRESHED_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
 	public function scheduleJoomlaUpdate()
 	{
 		$this->csrfProtection();

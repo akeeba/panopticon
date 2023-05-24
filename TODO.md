@@ -22,7 +22,7 @@ The global default can be overridden in two levels:
 
 What to do
 
-Implement site.refreshExtensionsInformation controller task which runs the `RefreshInstalledExtensions` task for a specific site.
+✅ Implement site.refreshExtensionsInformation controller task which runs the `RefreshInstalledExtensions` task for a specific site.
 
 Create new task type `extensionsupdate` which handles the update of the extensions of one specific site
 * Pop the next extension ID from the queue `extensions.SITE_ID`
