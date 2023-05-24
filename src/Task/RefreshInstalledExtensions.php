@@ -331,6 +331,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 				'downloadkey'    => (object) [
 					'supported' => $item?->downloadkey?->supported ?? false,
 					'valid'     => $item?->downloadkey?->valid ?? false,
+					'value'     => $item?->downloadkey?->value ?? '',
 				],
 			],
 			$items

@@ -78,3 +78,21 @@ svg.panopticonLogoColour
     }
   }
 }
+
+.download-key {
+  filter: blur(4px);
+
+  &:hover, &:focus {
+    filter: blur(0);
+  }
+}
+
+@keyframes deblur {
+  0% {
+    filter: blur(4px);
+  }
+
+  100% {
+    filter: blur(0);
+  }
+}
