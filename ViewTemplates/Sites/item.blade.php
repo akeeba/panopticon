@@ -37,20 +37,11 @@ $canEdit = $this->container->userManager->getUser()->getPrivilege('panopticon.ad
         <div class="col-12 col-lg-6 order-0 order-lg-1">
             @include('Sites/item_php')
         </div>
-
     </div>
 
     <div class="row g-3 mb-3">
         <div class="col-12">
-            <div class="card">
-                <h3 class="card-header h4">
-                    <span class="fa fa-cubes" aria-hidden="true"></span>
-                    Extensions
-                </h3>
-                <div class="card-body">
-                    <div class="display-4 text-center text-muted  py-2 rounded-3">TO-DO</div>
-                </div>
-            </div>
+            @include('Sites/item_extensions')
         </div>
     </div>
 

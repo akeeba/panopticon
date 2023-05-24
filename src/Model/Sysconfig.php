@@ -27,6 +27,11 @@ class Sysconfig extends Model
 		'plg_system_shortcut',
 	];
 
+	public function isExcludedShortname(string $shortname): bool
+	{
+		return in_array($shortname, self::EXCLUDED_EXTENSIONS);
+	}
+
 	public function validateValue(string $key, $value): bool
 	{
 		$complexify = new Complexify();
