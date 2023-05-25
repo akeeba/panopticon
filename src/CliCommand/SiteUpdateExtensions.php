@@ -9,39 +9,33 @@ namespace Akeeba\Panopticon\CliCommand;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\CliCommand\Trait\ForkedLoggerAwareTrait;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
-use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\LogRotate as LogRotateTask;
-use Awf\Date\Date;
-use Awf\Mvc\Model;
 use Awf\Registry\Registry;
-use Awf\Timer\Timer;
 use Psr\Log\LoggerAwareInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-	name: 'task:joomlaupdate:director',
-	description: 'Enqueue automatic core updates and send update emails for Joomla! sites',
-	hidden: false,
+	name: "site:update:extensions",
+	description: "Updates Joomla! extensions"
 )]
-#[ConfigAssertion(true)]
-class TaskJoomlaUpdateDirector extends AbstractCommand
+class SiteUpdateExtensions extends AbstractCommand
 {
 	use ForkedLoggerAwareTrait;
 
-	protected function execute(InputInterface $input, OutputInterface $output): int
+	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		/** @var LogRotateTask|CallbackInterface $callback */
 		$container = Factory::getContainer();
-		$callback  = $container->taskRegistry->get('joomlaupdatedirector');
+		$callback  = $container->taskRegistry->get('extensionsupdate');
 
 		if ($callback instanceof LoggerAwareInterface)
 		{
@@ -49,7 +43,7 @@ class TaskJoomlaUpdateDirector extends AbstractCommand
 				$this->getForkedLogger(
 					$output,
 					[
-						$container->loggerFactory->get('joomla_update_director'),
+						$container->loggerFactory->get('extensions_update'),
 					]
 				)
 			);
@@ -58,10 +52,7 @@ class TaskJoomlaUpdateDirector extends AbstractCommand
 		$dummy    = new \stdClass();
 		$registry = new Registry();
 
-		$registry->set('limitStart', 0);
-		$registry->set('limit', $input->getOption('batchSize'));
-		$registry->set('force', $input->getOption('force'));
-		$registry->set('filter.ids', $input->getOption('id'));
+		$dummy->site_id = $input->getArgument('id');
 
 		do
 		{
@@ -74,9 +65,7 @@ class TaskJoomlaUpdateDirector extends AbstractCommand
 	protected function configure(): void
 	{
 		$this
-			->addOption('force', 'f', InputOption::VALUE_NEGATABLE, 'Force processing sites, regardless of when we last did that', false)
-			->addOption('batchSize', null, InputOption::VALUE_OPTIONAL, 'Number of sites to process at once', 10)
-			->addOption('id', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, 'Site IDs to update. Omit for all.', []);
+			->addArgument('id', InputArgument::REQUIRED, 'Site ID to update');
 	}
 
 }

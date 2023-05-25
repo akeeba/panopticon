@@ -34,6 +34,7 @@ class Setup extends Model
 		'refreshsiteinfo'            => '*/15 * * * *',
 		'refreshinstalledextensions' => '*/15 * * * *',
 		'joomlaupdatedirector'       => '*/3 * * * *',
+		'extensionupdatesdirector'   => '*/10 * * * *',
 		'sendmail'                   => '* * * * *',
 	];
 
@@ -52,7 +53,8 @@ class Setup extends Model
 
 		self::$isRequiredMet = array_reduce(
 			$required,
-			fn(bool $carry, array $setting) => $carry && (($setting['warning'] ?? false) || ($setting['current'] ?? false)),
+			fn(bool $carry, array $setting
+			) => $carry && (($setting['warning'] ?? false) || ($setting['current'] ?? false)),
 			true
 		);
 
@@ -113,8 +115,8 @@ class Setup extends Model
 				'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_DATABASE'),
 				'current' => (
 					// MySQLi functions
-					function_exists('mysqli_connect') ||
-					// PDO MySQL
+					function_exists('mysqli_connect')
+					|| // PDO MySQL
 					(class_exists('\\PDO') && in_array('mysql', PDO::getAvailableDrivers()))
 				),
 				'warning' => false,
@@ -174,19 +176,19 @@ class Setup extends Model
 		{
 			$phpOptions[] = [
 				'label'       => Text::_('PANOPTICON_SETUP_LBL_REC_DISPERRORS'),
-				'current'     => (bool) ini_get('display_errors'),
+				'current'     => (bool)ini_get('display_errors'),
 				'recommended' => false,
 			];
 
 			$phpOptions[] = [
 				'label'       => Text::_('PANOPTICON_SETUP_LBL_REC_OUTBUF'),
-				'current'     => (bool) ini_get('output_buffering'),
+				'current'     => (bool)ini_get('output_buffering'),
 				'recommended' => false,
 			];
 
 			$phpOptions[] = [
 				'label'       => Text::_('PANOPTICON_SETUP_LBL_REC_SESSIONAUTO'),
-				'current'     => (bool) ini_get('session.auto_start'),
+				'current'     => (bool)ini_get('session.auto_start'),
 				'recommended' => false,
 			];
 
@@ -229,13 +231,13 @@ class Setup extends Model
 			'name'   => $this->input->get('name', null, 'raw'),
 			'prefix' => $this->input->get('prefix', null, 'raw'),
 			'ssl'    => [
-				'enable'             => (bool) $this->input->getInt('dbencryption', 0),
+				'enable'             => (bool)$this->input->getInt('dbencryption', 0),
 				'cipher'             => $this->input->get('dbsslcipher', '', 'raw'),
 				'ca'                 => $this->input->get('dbsslca', '', 'raw'),
 				'capath'             => '',
 				'key'                => $this->input->get('dbsslkey', '', 'raw'),
 				'cert'               => $this->input->get('dbsslcert', '', 'raw'),
-				'verify_server_cert' => (bool) $this->input->getInt('dbsslverifyservercert', 0),
+				'verify_server_cert' => (bool)$this->input->getInt('dbsslverifyservercert', 0),
 			],
 		];
 
@@ -302,7 +304,8 @@ class Setup extends Model
 		 * stored in it.
 		 */
 		$this->container->offsetUnset('db');
-		$this->container->offsetSet('db', function (Container $c) {
+		$this->container->offsetSet('db', function (Container $c)
+		{
 			return Driver::getInstance($c);
 		});
 	}
@@ -455,16 +458,16 @@ class Setup extends Model
 
 		// Delete any existing task
 		$query = $db->getQuery(true)
-			->delete($db->quoteName('#__tasks'))
-			->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
+					->delete($db->quoteName('#__tasks'))
+					->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
 		$db->setQuery($query)->execute();
 
 		$query = $db->getQuery(true)
-			->delete($db->quoteName('#__akeeba_common'))
-			->where($db->quoteName('key') . ' LIKE ' . $db->quote('maxexec.%'));
+					->delete($db->quoteName('#__akeeba_common'))
+					->where($db->quoteName('key') . ' LIKE ' . $db->quote('maxexec.%'));
 		$db->setQuery($query)->execute();
 
-		$newTask = (object) [
+		$newTask = (object)[
 			'id'              => null,
 			'site_id'         => null,
 			'type'            => 'maxexec',
@@ -489,9 +492,9 @@ class Setup extends Model
 		$db = $this->container->db;
 
 		$query = $db->getQuery(true)
-			->select('*')
-			->from($db->quoteName('#__tasks'))
-			->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
+					->select('*')
+					->from($db->quoteName('#__tasks'))
+					->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
 		try
 		{
 			$taskObject = $db->setQuery($query, 0, 1)->loadObject();
@@ -508,9 +511,9 @@ class Setup extends Model
 		try
 		{
 			$query      = $db->getQuery(true)
-				->select('*')
-				->from($db->quoteName('#__akeeba_common'))
-				->where($db->quoteName('key') . ' LIKE ' . $db->quote('maxexec.%'));
+							 ->select('*')
+							 ->from($db->quoteName('#__akeeba_common'))
+							 ->where($db->quoteName('key') . ' LIKE ' . $db->quote('maxexec.%'));
 			$tempValues = $db->setQuery($query)->loadAssocList('key', 'value');
 		}
 		catch (Exception $e)
@@ -522,7 +525,7 @@ class Setup extends Model
 
 		$ret->started  = ($tempValues['maxexec.lasttick'] ?? 0) !== 0;
 		$ret->finished = ($tempValues['maxexec.done'] ?? 0) == 1;
-		$ret->elapsed  = (int) $tempValues['maxexec.lasttick'] ?? 0;
+		$ret->elapsed  = (int)$tempValues['maxexec.lasttick'] ?? 0;
 
 		return $ret;
 	}
@@ -531,8 +534,8 @@ class Setup extends Model
 	{
 		$db    = $this->container->db;
 		$query = $db->getQuery(true)
-			->delete($db->quoteName('#__tasks'))
-			->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
+					->delete($db->quoteName('#__tasks'))
+					->where($db->quoteName('type') . ' = ' . $db->quote('maxexec'));
 
 		try
 		{
@@ -567,19 +570,19 @@ class Setup extends Model
 		$db = $this->container->db;
 
 		$query = $db->getQuery(true)
-			->select([
-				$db->quoteName('type'),
-				$db->quoteName('cron_expression'),
-			])
-			->from($db->quoteName('#__tasks'))
-			->where(
-				[
-					$db->quoteName('site_id') . ' IS NULL',
-					$db->quoteName('type') . 'IN(' . implode(',', array_map([
-						$db, 'quote',
-					], array_keys(self::DEFAULT_TASKS))) . ')',
-				]
-			);
+					->select([
+						$db->quoteName('type'),
+						$db->quoteName('cron_expression'),
+					])
+					->from($db->quoteName('#__tasks'))
+					->where(
+						[
+							$db->quoteName('site_id') . ' IS NULL',
+							$db->quoteName('type') . 'IN(' . implode(',', array_map([
+								$db, 'quote',
+							], array_keys(self::DEFAULT_TASKS))) . ')',
+						]
+					);
 
 		$installedTypes = $db->setQuery($query)->loadObjectList('type');
 		$dirty          = false;
@@ -616,11 +619,11 @@ class Setup extends Model
 		$db = $this->container->db;
 
 		$query = $db->getQuery(true)
-			->delete($db->quoteName('#__tasks'))
-			->where([
-				$db->quoteName('type') . ' = ' . $db->quote($type),
-				$db->quoteName('site_id') . ' IS NULL',
-			]);
+					->delete($db->quoteName('#__tasks'))
+					->where([
+						$db->quoteName('type') . ' = ' . $db->quote($type),
+						$db->quoteName('site_id') . ' IS NULL',
+					]);
 
 		$db->setQuery($query)->execute();
 	}

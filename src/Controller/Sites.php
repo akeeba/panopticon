@@ -126,6 +126,7 @@ class Sites extends DataController
 			$registry->set('limitStart', 0);
 			$registry->set('limit', 1);
 			$registry->set('force', true);
+			$registry->set('forceUpdates', true);
 			$registry->set('filter.ids', [$id]);
 
 			$callback->setLogger($this->container->logger);

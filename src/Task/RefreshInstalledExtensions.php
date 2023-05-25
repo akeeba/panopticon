@@ -42,10 +42,11 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 			$params = new Registry();
 		}
 
-		$limitStart = (int) $storage->get('limitStart', 0);
-		$limit      = (int) $storage->get('limit', $params->get('limit', 10));
-		$force      = (bool) $storage->get('force', $params->get('force', false));
-		$filterIDs  = $storage->get('filter.ids', $params->get('ids', []));
+		$limitStart   = (int)$storage->get('limitStart', 0);
+		$limit        = (int)$storage->get('limit', $params->get('limit', 10));
+		$force        = (bool)$storage->get('force', $params->get('force', false));
+		$forceUpdates = (bool)$storage->get('forceUpdates', $params->get('forceUpdates', false));
+		$filterIDs    = $storage->get('filter.ids', $params->get('ids', []));
 
 		$siteIDs = $this->getSiteIDsForExtensionsRefresh(
 			limitStart: $limitStart,
@@ -66,14 +67,16 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 			count($siteIDs)
 		));
 
-		$this->fetchExtensionsForSiteIDs($siteIDs);
+		$this->fetchExtensionsForSiteIDs($siteIDs, $forceUpdates);
 
 		$storage->set('limitStart', $limitStart + $limit);
 
 		return Status::WILL_RESUME->value;
 	}
 
-	private function getSiteIDsForExtensionsRefresh(int $limitStart = 0, int $limit = 10, bool $force = false, array $onlyTheseIDs = []): array
+	private function getSiteIDsForExtensionsRefresh(
+		int $limitStart = 0, int $limit = 10, bool $force = false, array $onlyTheseIDs = []
+	): array
 	{
 		$db = $this->container->db;
 
@@ -92,13 +95,13 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 		$db->lockTable('#__sites');
 
 		$query = $db->getQuery(true)
-			->select($db->quoteName('id'))
-			->from($db->quoteName('#__sites'))
-			->where($db->quoteName('enabled') . ' = 1');
+					->select($db->quoteName('id'))
+					->from($db->quoteName('#__sites'))
+					->where($db->quoteName('enabled') . ' = 1');
 
 		if (!$force)
 		{
-			$frequency = (int) $this->container->appConfig->get('siteinfo_freq', 60);
+			$frequency = (int)$this->container->appConfig->get('siteinfo_freq', 60);
 			$frequency = min(1440, max(15, $frequency));
 
 			$query->andWhere([
@@ -148,12 +151,12 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 		if (!empty($siteIDs))
 		{
 			$updateQuery = $db->getQuery(true)
-					->update($db->quoteName('#__sites'))
-					->set(
-						$db->quoteName('config') . ' = JSON_SET(' . $db->quoteName('config') . ', ' .
-						$db->quote('$.extensions.lastAttempt') . ', UNIX_TIMESTAMP(NOW()))'
-					)
-					->where($db->quoteName('id')) . 'IN(' . implode(',', $siteIDs) . ')';
+							  ->update($db->quoteName('#__sites'))
+							  ->set(
+								  $db->quoteName('config') . ' = JSON_SET(' . $db->quoteName('config') . ', ' .
+								  $db->quote('$.extensions.lastAttempt') . ', UNIX_TIMESTAMP(NOW()))'
+							  )
+							  ->where($db->quoteName('id')) . 'IN(' . implode(',', $siteIDs) . ')';
 			$db->setQuery($updateQuery)->execute();
 		}
 
@@ -165,7 +168,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 		return $siteIDs;
 	}
 
-	private function fetchExtensionsForSiteIDs(array $siteIDs): void
+	private function fetchExtensionsForSiteIDs(array $siteIDs, bool $forceUpdates = false): void
 	{
 		$siteIDs = ArrayHelper::toInteger($siteIDs, []);
 
@@ -177,7 +180,8 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$promises = array_map(
-			function (int $id) use ($httpClient) {
+			function (int $id) use ($httpClient, $forceUpdates)
+			{
 				$site = new Site($this->container);
 
 				try
@@ -194,15 +198,21 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 					$site->id, $site->name
 				));
 
-				[
-					$url, $options,
-				] = $this->getRequestOptions($site, '/index.php/v1/panopticon/extensions?page[limit]=10000');
+				$uriPath = '/index.php/v1/panopticon/extensions?page[limit]=10000';
+
+				if ($forceUpdates)
+				{
+					$uriPath .= '&force=1';
+				}
+
+				[$url, $options] = $this->getRequestOptions($site, $uriPath);
 
 				return $httpClient
 					// See https://docs.guzzlephp.org/en/stable/quickstart.html#async-requests and https://docs.guzzlephp.org/en/stable/request-options.html
 					->getAsync($url, $options)
 					->then(
-						function (ResponseInterface $response) use ($site) {
+						function (ResponseInterface $response) use ($site)
+						{
 							try
 							{
 								$document = @json_decode($response->getBody()->getContents());
@@ -265,7 +275,8 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 							);
 							$this->container->cacheFactory->pool('extensions')->delete($cacheKey);
 						},
-						function (RequestException $e) use ($site) {
+						function (RequestException $e) use ($site)
+						{
 							$this->logger?->error(sprintf(
 								'Could not retrieve extensions information for site #%d (%s). The server replied with the following error: %s',
 								$site->id, $site->name, $e->getMessage()
@@ -306,7 +317,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 		);
 
 		return array_map(
-			fn($item) => (object) [
+			fn($item) => (object)[
 				'extension_id'   => $item?->extension_id,
 				'name'           => $item?->name,
 				'description'    => $item?->description,
@@ -320,7 +331,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 				'enabled'        => $item?->enabled,
 				'protected'      => $item?->protected,
 				'locked'         => $item?->locked,
-				'version'        => (object) [
+				'version'        => (object)[
 					'current' => $item?->version,
 					'new'     => $item?->new_version,
 				],
@@ -328,7 +339,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 				'authorUrl'      => $item?->authorUrl,
 				'authorEmail'    => $item?->authorEmail,
 				'hasUpdateSites' => !empty($item?->updatesites),
-				'downloadkey'    => (object) [
+				'downloadkey'    => (object)[
 					'supported' => $item?->downloadkey?->supported ?? false,
 					'valid'     => $item?->downloadkey?->valid ?? false,
 					'value'     => $item?->downloadkey?->value ?? '',

@@ -107,8 +107,8 @@ class Sysconfig extends Model
 	 * @param   int|null  $siteId
 	 * @param   bool      $force
 	 *
-	 * @return array
-	 * @throws InvalidArgumentException
+	 * @return  array
+	 * @throws  InvalidArgumentException
 	 */
 	public function getExtensionPreferencesAndMeta(?int $siteId = null, bool $force = false): array
 	{

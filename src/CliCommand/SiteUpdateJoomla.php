@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
 	name: "site:update:joomla",
-	description: "Updates Joomla core"
+	description: "Updates Joomla! core"
 )]
 class SiteUpdateJoomla extends AbstractCommand
 {
@@ -65,9 +65,7 @@ class SiteUpdateJoomla extends AbstractCommand
 	protected function configure(): void
 	{
 		$this
-			->addArgument('id', InputArgument::REQUIRED, 'Site ID to update')
-			->addOption('force', 'f', InputOption::VALUE_NEGATABLE, 'Force update, regardless of last update time', false)
-			->addOption('batchSize', null, InputOption::VALUE_OPTIONAL, 'Number of sites to retrieve concurrently', 10);
+			->addArgument('id', InputArgument::REQUIRED, 'Site ID to update');
 	}
 
 }

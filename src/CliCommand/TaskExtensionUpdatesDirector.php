@@ -28,12 +28,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-	name: 'task:joomlaupdate:director',
-	description: 'Enqueue automatic core updates and send update emails for Joomla! sites',
+	name: 'task:extensionupdates:director',
+	description: 'Enqueue automatic extension updates for Joomla! sites',
 	hidden: false,
 )]
 #[ConfigAssertion(true)]
-class TaskJoomlaUpdateDirector extends AbstractCommand
+class TaskExtensionUpdatesDirector extends AbstractCommand
 {
 	use ForkedLoggerAwareTrait;
 
@@ -41,7 +41,7 @@ class TaskJoomlaUpdateDirector extends AbstractCommand
 	{
 		/** @var LogRotateTask|CallbackInterface $callback */
 		$container = Factory::getContainer();
-		$callback  = $container->taskRegistry->get('joomlaupdatedirector');
+		$callback  = $container->taskRegistry->get('extensionupdatesdirector');
 
 		if ($callback instanceof LoggerAwareInterface)
 		{
@@ -49,7 +49,7 @@ class TaskJoomlaUpdateDirector extends AbstractCommand
 				$this->getForkedLogger(
 					$output,
 					[
-						$container->loggerFactory->get('joomla_update_director'),
+						$container->loggerFactory->get('extension_updates_director'),
 					]
 				)
 			);

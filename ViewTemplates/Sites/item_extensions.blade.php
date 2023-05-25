@@ -187,7 +187,6 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
                                 @endif
                             </div>
                         @elseif (($item->downloadkey?->supported ?? false) && !empty($item->downloadkey?->value ?? '') && $this->container->userManager->getUser()->getPrivilege('panopticon.admin'))
-                            {{-- TODO Download Key --}}
                             <span class="fa fa-key text-muted" ></span>
                             <span class="visually-hidden">Download Key: </span>
                             <code class="download-key" tabindex="0">{{ $item->downloadkey?->value ?? '' }}</code>

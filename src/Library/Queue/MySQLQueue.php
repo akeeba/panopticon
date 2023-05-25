@@ -157,7 +157,7 @@ class MySQLQueue implements QueueInterface
 			->from($db->quoteName($this->tableName))
 			->where('JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote($this->queueIdentifier));
 
-		return $db->setQuery($query)->loadColumn() ?: 0;
+		return $db->setQuery($query)->loadResult() ?: 0;
 	}
 
 	public function countByCondition(array $conditions = []): int
@@ -190,7 +190,7 @@ class MySQLQueue implements QueueInterface
 			);
 		}
 
-		return $db->setQuery($query)->loadColumn() ?: 0;
+		return $db->setQuery($query)->loadResult() ?: 0;
 	}
 
 	private function normaliseTime(DateTime|int|string|null $time): Date

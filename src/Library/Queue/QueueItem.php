@@ -67,7 +67,7 @@ class QueueItem implements JsonSerializable
 				break;
 
 			default:
-				if (class_exists($dataType) && is_callable([$dataType, 'fromJson']))
+				if (!empty($dataType) && class_exists($dataType) && is_callable([$dataType, 'fromJson']))
 				{
 					$data = call_user_func([$dataType, 'fromJson'], json_encode($data));
 				}

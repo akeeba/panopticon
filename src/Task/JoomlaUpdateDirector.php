@@ -66,7 +66,7 @@ class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterf
 
 		if (empty($siteIDs))
 		{
-			$this->logger->info('No more sites in need of automatic updates / update notifications.');
+			$this->logger->info('No more sites in need of automatic Joomla! core updates / update notifications.');
 
 			$db->unlockTables();
 			$db->setQuery('SET autocommit = 1')->execute();
@@ -75,7 +75,7 @@ class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterf
 		}
 
 		$this->logger->info(sprintf(
-			'Found a further %d site(s) to process for automatic updates / update notifications.',
+			'Found a further %d site(s) to process for automatic Joomla! core updates / update notifications.',
 			count($siteIDs)
 		));
 

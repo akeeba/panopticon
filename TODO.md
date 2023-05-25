@@ -24,7 +24,7 @@ What to do
 
 ✅ Implement site.refreshExtensionsInformation controller task which runs the `RefreshInstalledExtensions` task for a specific site.
 
-Create new task type `extensionsupdate` which handles the update of the extensions of one specific site
+✅ Create new task type `extensionsupdate` which handles the update of the extensions of one specific site
 * Pop the next extension ID from the queue `extensions.SITE_ID`
 * If no item was retrieved
   * If storage.updateStatus is not empty
@@ -36,7 +36,7 @@ Create new task type `extensionsupdate` which handles the update of the extensio
 * Store the extension ID, name, and update status into storage.updateStatus
 * Return Status::WILL_CONTINUE->value
 
-Install one global task of type `extupdateconductor` for automatically setting up extension update installation.
+✅ Install one global task of type `extensionupdatesdirector` for automatically setting up extension update installation.
 * Pick a slice of sites.
 * If there are no sites, return Status::OK->value
 * For each site:
