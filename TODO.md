@@ -46,12 +46,18 @@ What to do
   * Create or reschedule the `extensionsupdate` run-once task for this site
 * Return Status::WILL_CONTINUE->value
 
-If a user chooses to update an extension with no auto-updates (controller task site.enqueueExtensionUpdate)
+✅ If a user chooses to update an extension with no auto-updates (controller task site.scheduleExtensionUpdate)
 * Add the extension ID into the queue `extensions.SITE_ID`
 * If the run-once `extensionsupdate` task exists
   * If enabled, return
   * If not enabled, enable and return
 * Create a new `extensionsupdate` run-once task for this site
+
+Provide an interface for editing the Download Keys.
+
+## Re-apply Joomla Update core update site
+
+POST {{endpoint}}/v1/panopticon/core/update
 
 ## Content-Security-Policy
 

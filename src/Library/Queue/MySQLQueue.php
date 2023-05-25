@@ -180,12 +180,25 @@ class MySQLQueue implements QueueInterface
 
 		foreach ($conditions as $key => $value)
 		{
+			if (is_integer($value))
+			{
+				$value = intval($value);
+			}
+			elseif (is_numeric($value))
+			{
+				$value = floatval($value);
+			}
+			else
+			{
+				$value = $db->quote($value);
+			}
+
 			$query->where(
 				sprintf(
 					"JSON_EXTRACT(%s, %s) = %s",
 					$db->quoteName('item'),
 					$db->quote('$.' . $key),
-					$db->quote($value)
+					$value
 				)
 			);
 		}

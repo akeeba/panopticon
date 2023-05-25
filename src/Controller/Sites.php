@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
+use Akeeba\Panopticon\Task\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\EnqueueJoomlaUpdateTrait;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Awf\Date\Date;
@@ -27,6 +28,7 @@ class Sites extends DataController
 {
 	use ACLTrait;
 	use EnqueueJoomlaUpdateTrait;
+	use EnqueueExtensionUpdateTrait;
 
 	private const CHECKBOX_KEYS = [
 		'config.core_update.email_error',
@@ -279,6 +281,121 @@ class Sites extends DataController
 		{
 			$returnUri = $this->container->router->route(
 				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
+	public function clearExtensionUpdatesScheduleError()
+	{
+		$this->csrfProtection();
+
+		$id = $this->input->get->getInt('id', 0);
+
+		/** @var Site $site */
+		$tempConfig = [
+			'modelTemporaryInstance' => true,
+			'modelClearState'        => true,
+			'modelClearInput'        => true,
+		];
+		$site       = $this->getModel('Site', $tempConfig);
+
+		$site->findOrFail($id);
+
+		try
+		{
+			/** @var Task $task */
+			$task = $this->getModel('Task', $tempConfig);
+
+			$task->findOrFail([
+				'site_id' => (int)$id,
+				'type'    => 'extensionsupdate',
+			]);
+
+			$task->delete();
+
+			$type    = 'info';
+			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_CLEARED');
+		}
+		catch (\Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
+	public function scheduleExtensionUpdate()
+	{
+		$this->csrfProtection();
+
+		$id     = $this->input->get->getInt('id', 0);
+		$siteId = $this->input->get->getInt('site_id', 0);
+
+		/** @var Site $site */
+		$site = $this->getModel('Site', [
+			'modelTemporaryInstance' => true,
+			'modelClearState'        => true,
+			'modelClearInput'        => true,
+		]);
+
+		$site->findOrFail($siteId);
+
+		try
+		{
+			/** @noinspection PhpParamsInspection */
+			if ($this->enqueueExtensionUpdate($site, $id))
+			{
+				/** @noinspection PhpParamsInspection */
+				$this->scheduleExtensionsUpdateForSite($site, $this->container);
+			}
+
+			$type    = 'info';
+			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_OK');
+		}
+		catch (\Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $siteId)
 			);
 		}
 

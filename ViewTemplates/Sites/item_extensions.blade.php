@@ -1,6 +1,7 @@
 <?php
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
+use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
 
@@ -44,8 +45,35 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
 		'minor' => $vOld->major() === $vNew->major(),
 		'patch' => $vOld->versionFamily() === $vNew->versionFamily(),
 	};
-}
+};
 
+$extensionsUpdateTask = call_user_func(function () use ($config): ?object
+{
+	/** @var \Awf\Database\Driver $db */
+	$db    = $this->container->db;
+	$query = $db->getQuery(true)
+				->select([
+					$db->quoteName('enabled'),
+					$db->quoteName('last_exit_code'),
+					$db->quoteName('last_execution'),
+					$db->quoteName('next_execution'),
+					$db->quoteName('storage'),
+				])
+				->from($db->quoteName('#__tasks'))
+				->where([
+					$db->quoteName('site_id') . ' = ' . (int)$this->item->id,
+					$db->quoteName('type') . ' = ' . $db->quote('extensionsupdate'),
+				]);
+
+	$record = $db->setQuery($query)->loadObject() ?: null;
+
+	if (is_object($record))
+	{
+		$record->storage = new Awf\Registry\Registry($record?->storage ?: '{}');
+	}
+
+	return $record;
+});
 
 ?>
 <div class="card">
@@ -71,11 +99,59 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
             {{ $lastUpdateTimestamp() }}
         </p>
 
-        {{-- TODO Show Update Schedule Information --}}
-        <div class="my-3 py-5 px-2 text-center bg-body-secondary rounded-3 display-6">
-            <span class="badge bg-info">TO–DO</span>
-            Show Update Schedule Information
-        </div>
+        {{-- Show Update Schedule Information --}}
+        @if(!is_null($extensionsUpdateTask))
+            @if($extensionsUpdateTask->enabled && $extensionsUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
+                <div class="alert alert-info">
+                    <div class="text-center fs-5">
+                        <span class="fa fa-clock" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_WILL_RUN')
+                    </div>
+                </div>
+            @elseif ($extensionsUpdateTask->enabled && in_array($extensionsUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
+                <div class="alert alert-info">
+                    <div class="text-center fs-5">
+                        <span class="fa fa-play" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_RUNNING')
+                    </div>
+                </div>
+            @else
+                {{-- Task error condition --}}
+                <?php
+                $status = Status::tryFrom($extensionsUpdateTask->last_exit_code) ?? Status::NO_ROUTINE
+                ?>
+                <div class="alert alert-danger">
+                    <h4 class="h5 alert-heading text-center{{ $status->value === Status::EXCEPTION->value ? ' border-bottom border-danger' : ''  }}">
+                        <span class="fa fa-xmark-circle" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_ERRORED')
+                        {{ $status->forHumans() }}
+                    </h4>
+
+                    @if ($status->value === Status::EXCEPTION->value)
+                        <?php
+                        $storage = ($extensionsUpdateTask->storage instanceof Registry) ? $extensionsUpdateTask->storage : (new Registry($extensionsUpdateTask->storage));
+                        ?>
+                        <p>
+                            @lang('PANOPTICON_SITE_LBL_JUPDATE_THE_ERROR_REPORTED_WAS')
+                        </p>
+                        <p class="text-dark">
+                            {{{ $storage->get('error') }}}
+                        </p>
+                        @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
+                            <p>@lang('PANOPTICON_SITE_LBL_JUPDATE_ERROR_TRACE')</p>
+                            <pre>{{{ $storage->get('trace') }}}</pre>
+                        @endif
+                    @endif
+
+                    {{-- Button to reset the error (by removing the failed task) --}}
+                    <a href="@route(sprintf('index.php?view=site&task=clearExtensionUpdatesScheduleError&id=%d&%s=1', $this->item->id, $token))"
+                       class="btn btn-primary mt-3" role="button">
+                        <span class="fa fa-eraser" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_CLEAR_ERROR')
+                    </a>
+                </div>
+            @endif
+        @endif
 
         <table class="table table-striped table-responsive">
             <thead class="table-dark">
@@ -234,7 +310,17 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
                                 </span>
                             </div>
 
-                            {{-- TODO Button to install the update (if not scheduled, or if schedule failed) --}}
+                            {{-- Button to install the update (if not scheduled, or if schedule failed) --}}
+                            @if ($hasUpdate && !$error && !$willAutoUpdate($key, $currentVersion, $latestVersion))
+                                <a class="btn btn-sm btn-outline-primary" role="button"
+                                   title="@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))"
+                                   href="@route(sprintf('index.php?view=site&task=scheduleExtensionUpdate&site_id=%d&id=%d&%s=1', $this->item->id, $item->extension_id, $token))">
+                                    <span class="fa fa-paper-plane" aria-hidden="true"></span>
+                                    <span class="visually-hidden">@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))</span>
+                                </a>
+                            @endif
+
+
                         @else
                             {{ $item->version->current }}
                         @endif
