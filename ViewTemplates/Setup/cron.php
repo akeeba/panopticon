@@ -220,23 +220,7 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 							<?= Text::_('PANOPTICON_SETUP_LBL_CRON_LBL_EVERY_MINUTE_ALERT_BODY') ?>
 						</p>
 					</div>
-
-					<!-- TODO -->
-					<!--
-					<h4 class="h5 mb-2 pb-1 border-bottom">
-						<?= Text::_('PANOPTICON_SETUP_LBL_CRON_LBL_TROUBLESHOOTING') ?>
-					</h4>
-
-					<details class="mb-3">
-						<summary class="h6 fw-bold">
-							Problem
-						</summary>
-						<p>
-							Solution
-						</p>
-					</details>
-					-->
-				</div>
+                </div>
 
 				<div class="col-12 col-lg-4 bg-light-subtle order-0 order-lg-1 py-1">
 					<h3 class="mb-4">

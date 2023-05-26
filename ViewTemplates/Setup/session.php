@@ -102,7 +102,7 @@ $sessionPath = $this->getContainer()->session->getSavePath();
 			<a href="<?= $this->container->router->route('index.php?view=setup&task=precheck') ?>"
 			   class="btn btn-secondary btn-sm">
 				<span class="fa fa-refresh" aria-hidden="true"></span>
-				I fixed it myself; check again
+				<?= Text::_('PANOPTICON_SETUP_BTN_SESSION_FIXED_IT') ?>
 			</a>
 		</div>
 	</div>
