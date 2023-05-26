@@ -59,6 +59,7 @@
 	},
 	"archive": {
 		"exclude": [
+			"/.github",
 			"/.idea",
 			"/assets",
 			"/build",
