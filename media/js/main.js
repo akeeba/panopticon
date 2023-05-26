@@ -47,7 +47,7 @@
         );
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    const onDOMContentLoaded = () => {
         // Set up the CRON heartbeat check
         window.setInterval(heartBeatCheck, 30000);
 
@@ -56,5 +56,11 @@
         // Enable BS tooltips
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    })
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+    } else {
+        onDOMContentLoaded();
+    }
 })()

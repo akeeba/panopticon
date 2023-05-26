@@ -14,8 +14,7 @@
 		window.localStorage.setItem(itemName, e.target.id || "");
 	};
 
-	document.addEventListener("DOMContentLoaded", () =>
-	{
+	const onDOMContentLoaded = () => {
 		document.querySelectorAll("button[data-bs-toggle=\"tab\"]").forEach((el) =>
 		{
 			el.addEventListener("click", onTabClick);
@@ -35,5 +34,11 @@
 		{
 			activeItem.click();
 		}
-	});
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+	} else {
+		onDOMContentLoaded();
+	}
 })();
