@@ -54,17 +54,12 @@ Delete backup record
 
 ## Admin Tools
 
-Run PHP File Change Scanner
-
-List PHP File Change Scanner results
-
-Show PHP File Change Scanner result details
-
-Unblock an IP
-
-Temporarily disable and re-enable Admin Tools
-
-Create temporary Super User
+* [ ] Run PHP File Change Scanner
+* [ ] List PHP File Change Scanner results
+* [ ] Show PHP File Change Scanner result details
+* [ ] Unblock an IP
+* [ ] Temporarily disable and re-enable Admin Tools
+* [ ] Create temporary Super User
 
 # User management
 
@@ -81,11 +76,11 @@ Only users with the super privilege can manage application-level configuration:
 
 # 🤔 Maybe
 
+## Check integrity of Joomla core files
+
 ## Number of changed templates
 
 When fetching site info, get the number of changed template files and show that in the main page and the site info page.
-
-## Buttons to reset email templates to default (all, or specific ones)
 
 ## Chunked Joomla update package uploads
 
