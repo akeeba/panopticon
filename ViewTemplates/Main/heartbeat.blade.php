@@ -1,3 +1,13 @@
+<?php
+/**
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+defined('AKEEBA') || die;
+
+?>
 <div class="alert alert-danger my-3 d-none" id="heartbeatWarning">
     <h3 class="alert-heading">
         <span class="fa fa-heart-broken" aria-hidden="true"></span>

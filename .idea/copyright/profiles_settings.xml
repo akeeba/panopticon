@@ -2,7 +2,6 @@
   <settings>
     <module2copyright>
       <element module="App Files" copyright="Akeeba" />
-      <element module="Connector" copyright="Akeeba" />
     </module2copyright>
     <LanguageOptions name="PHP">
       <option name="fileTypeOverride" value="3" />

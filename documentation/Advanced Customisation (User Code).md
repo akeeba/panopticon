@@ -141,3 +141,59 @@ require_once APATH_USER_CODE . '/vendor/autoload.php';
 ```
 
 As you can see, we overwrote the `$logger` variable passed to our callback with a new logger. This will still work fine with Akeeba Panopticon because all of its log consumers expect a PSR-3 object, _not_ a Monolog object.
+
+## Overriding the output
+
+The output of the application is generated similarly to Joomla! itself: using view templates. Unlike Joomla, the view templates are not plain .php file. They use a template language called Blade. These files are “compiled” into regular `.php` files, therefore you can add normal PHP code as well.
+
+The original files can be found in the `ViewTemplates` folder. Each subfolder in there corresponds to the `view=...` part of a URL.
+
+You can create your won `ViewTemplates` folder inside the `user_code` folder to _override_ the view templates shipped with Panopticon. For example, you can copy `ViewTemplates/main/default.blade.php` into `user_code/ViewTemplates/main/default.blade.php` to customise Panopticon's main page.
+
+**Tip**: If you do not see your changes taking effect immediately, delete the contents of the `tmp/compiled_templates` folder.
+
+## Overriding core code (NOT RECOMMENDED — DANGER)
+
+The `user_code` folder acts as a secondary root for the `Akeeba\Panopticon` namespace, the primary location being the `src` folder. If you need to modify the core code in Panopticon you can copy the respective file from its location under the `src` folder into the same location under the `user_code` folder and modify your copy.
+
+For example, let's say you want to modify the `\Akeeba\Panopticon\Application\Configuration` class to use [DotEnv](https://github.com/vlucas/phpdotenv) to load configuration overrides from a `.env` file. To do so, copy the file `src/Application/Configuration.php` into `user_code/Application/Configuration.php`. You can now edit your `user_code/Application/Configuration.php` file to accomplish your goal.
+
+**MAJOR DANGER! IT IS YOUR RESPONSIBILITY TO UPDATE YOUR CORE CODE OVERRIDES WITH EVERY RELEASE OF AKEEBA PANOPTICON. FAILURE TO DO SO WILL MOST DEFINITELY RESULT IN A BROKEN INSTALLATION. YOU HAVE BEEN WARNED.**
+
+The real purpose of this feature is to allow you to create your own, new MVC views to add bespoke features to Panopticon.
+
+In the vast majority of use cases where you need to make small modifications you don't really want to override core classes. You just need to hook into plugin events.
+
+### Mind the license!
+
+Akeeba Panopticon is released under the GNU Affero General Public License, version 3 of the license or, at your option, any later version of the license published by the Free Software Foundation.
+
+Unlike the plain old GNU General Public License (GPL), the GNU Affero General Public License (AGPL) **requires** you to publish any and all code making use of AGPL software —including modifications to the software itself— under the AGPL license, for free, to anyone using your software. That's spelled out in article 13 of the license. In other words, if you try to create a custom site monitoring service using Panopticon you will need to provide the full source code of your service free of charge to anyone interacting with your service. Do remember that even the act of logging in is an interaction. Anything else violates the software license, and constitutes copyright infringement.
+
+## Plugin events
+
+Panopticon's container (which you can get by calling `\Akeeba\Panopticon\Factory::getContainer()`) has an _event dispatcher_ object: `$dispatcher = \Akeeba\Panopticon\Factory::getContainer()->eventDispatcher;`.
+
+The event dispatcher is an object instance of the `\Awf\Event\Dispatcher` class. This is used throughout Panopticon and the framework it's using (Akeeba Web Framework, a.k.a. AWF — the very same framework we are using for Akeeba Solo and Akeeba Backup for WordPress since 2013). The various MVC classes raise events which can be handled by _observers_ known to the event dispatcher. This is the same as Joomla plugins, really. An “observer” is, essentially, a plugin.
+
+The observer object must be a class extending from the `\Awf\Event\Observer` superclass. All public methods of the class are event handlers. 
+
+You can define and register observers (plugins) like so:
+
+```php
+class MyPlugin extends \Awf\Event\Observer
+{
+    public onControllerBeforeBrowse(string $controllerName, Controller $controller): bool
+    {
+        if ($controllerName !== 'sites') {
+            return true;
+        }
+        
+        $controller->getView()->fooBar = 'Hello from the plugin event';
+    }
+}
+
+\Akeeba\Panopticon\Factory::getContainer()
+   ->eventDispatcher
+   ->attach($observer);
+```

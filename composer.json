@@ -54,7 +54,7 @@
 	},
 	"autoload" : {
 		"psr-4": {
-			"Akeeba\\Panopticon\\": "src"
+			"Akeeba\\Panopticon\\": ["src", "user_code"]
 		}
 	},
 	"archive": {
