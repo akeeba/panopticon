@@ -93,7 +93,7 @@
                 <h1 class="logo"><?= $this->include(APATH_MEDIA . '/images/logo_colour.svg') ?> Panopticon Exception</h1>
 
                 <div class="help-link">
-                    <a href="https://www.akeeba.com/documentation/panopticon.html">
+                    <a href="https://github.com/akeeba/panopticon/wiki">
                         <span class="icon"><?= $this->include('assets/images/icon-book.svg'); ?></span>
                         <span class="hidden-xs-down">Panopticon</span> Docs
                     </a>
