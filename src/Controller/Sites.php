@@ -42,6 +42,56 @@ class Sites extends DataController
 		return parent::execute($task);
 	}
 
+	public function fixJoomlaCoreUpdateSite(): void
+	{
+		$this->csrfProtection();
+
+		$id   = $this->input->get->getInt('id', 0);
+		/** @var Site $site */
+		$site = $this->getModel('Site', [
+			'modelTemporaryInstance' => true,
+			'modelClearState'        => true,
+			'modelClearInput'        => true,
+		]);
+
+		try
+		{
+			$site->findOrFail($id);
+
+			$site->fixCoreUpdateSite();
+
+			$this->refreshSiteInformation();
+
+			return;
+		}
+		catch (\Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_ERR_COREUPDATESITEFIX_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
 	public function refreshSiteInformation(): void
 	{
 		$this->csrfProtection();

@@ -101,6 +101,14 @@ $joomlaUpdateTask = call_user_func(function () use ($config): ?object
                 @else
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_SEEK_HELP_JFORUM')
                 @endif
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_ALT_FIX')
+                <div class="mt-3 mb-1 px-3">
+                    <a class="btn btn-success w-100" role="button"
+                       href="@route(sprintf('index.php?view=site&task=fixJoomlaCoreUpdateSite&id=%d&%s=1', $this->item->id, $token))">
+                        <span class="fa fa-wrench" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_COREUPDATESITEFIX_BTN')
+                    </a>
+                </div>
             </div>
         @elseif ($config->get('core.canUpgrade', false))
             <div class="alert alert-warning">
@@ -235,7 +243,7 @@ $joomlaUpdateTask = call_user_func(function () use ($config): ?object
             @endif
         @endif
 
-        @if (!$config->get('core.canUpgrade', false))
+        @if (!$config->get('core.canUpgrade', false) && $config->get('core.extensionAvailable', true) && $config->get('core.updateSiteAvailable', true))
             <hr class="mt-4"/>
 
             <details>

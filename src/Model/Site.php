@@ -261,6 +261,17 @@ class Site extends DataModel
 		return $url;
 	}
 
+	public function fixCoreUpdateSite(): void
+	{
+		/** @var \Akeeba\Panopticon\Container $container */
+		$container = $this->container;
+		$client = $container->httpFactory->makeClient(cache: false, singleton: false);
+
+		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/core/update');
+
+		$client->post($url, $options);
+	}
+
 	private function cleanUrl(?string $url): string
 	{
 		$url = trim($url ?? '');
