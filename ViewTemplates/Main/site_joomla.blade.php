@@ -22,7 +22,10 @@ $stability           = $config->get('core.current.stability');
 $canUpgrade          = $config->get('core.canUpgrade');
 $latestJoomlaVersion = $config->get('core.latest.version');
 $jUpdateFailure      = !$config->get('core.extensionAvailable') || !$config->get('core.updateSiteAvailable');
+$token               = $this->container->session->getCsrfToken()->getValue();
+$returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
 ?>
+
 @repeatable('joomlaVersion', $jVersion)
     {{{ $jVersion }}}
    <?php $version = Version::create($jVersion) ?>
@@ -60,6 +63,14 @@ $jUpdateFailure      = !$config->get('core.extensionAvailable') || !$config->get
 @endrepeatable
 
 <div class="d-flex flex-row gap-2">
+    <a class="btn btn-sm btn-outline-secondary" role="button"
+       href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d&return=%s&%s=1', $item->id, $returnUrl, $token))"
+       data-bs-toggle="tooltip" data-bs-placement="bottom"
+       data-bs-title="@lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')"
+    >
+        <span class="fa fa-refresh" aria-hidden="true"></span>
+        <span class="visually-hidden">@lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')</span>
+    </a>
     {{-- Is Joomla Update working at all? --}}
     @if($jUpdateFailure)
         <div>

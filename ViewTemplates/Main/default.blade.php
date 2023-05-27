@@ -51,7 +51,7 @@ defined('AKEEBA') || die;
                     <th>
                         <span class="fa fa-cubes fs-3" aria-hidden="true"
                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                              data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')"
+                              data-bs-title="@lang(  'PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')"
                         ></span>
                         <span class="visually-hidden">
                         @lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')
