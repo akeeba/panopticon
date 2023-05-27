@@ -117,8 +117,6 @@ class Sites extends DataController
 			$registry->set('force', true);
 			$registry->set('filter.ids', [$id]);
 
-			$callback->setLogger($this->container->logger);
-
 			do
 			{
 				$return = $callback($dummy, $registry);
@@ -180,8 +178,6 @@ class Sites extends DataController
 			$registry->set('force', true);
 			$registry->set('forceUpdates', true);
 			$registry->set('filter.ids', [$id]);
-
-			$callback->setLogger($this->container->logger);
 
 			do
 			{

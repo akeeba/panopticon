@@ -9,10 +9,12 @@ namespace Akeeba\Panopticon\Library\Logger;
 
 
 use Akeeba\Panopticon\Container;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 defined('AKEEBA') || die;
 
@@ -22,11 +24,11 @@ class LoggerFactoryService
 
 	private array $callbacks = [];
 
-	public function __construct(private readonly Container $container)
-	{
-	}
+	public const LOG_FORMAT = "%datetime% | %level_name% | %message% | %context% | %extra%\n";
 
-	public function get(string $logIdentifier, null|int|string|Level $levelOverride = null): LoggerInterface
+	public function __construct(private readonly Container $container) {}
+
+	public function get(string $logIdentifier, null|int|string|Level $logLevel = null, string $format = self::LOG_FORMAT): LoggerInterface
 	{
 		if (isset($this->loggers[$logIdentifier]))
 		{
@@ -35,14 +37,32 @@ class LoggerFactoryService
 
 		$logger = new Logger($logIdentifier);
 
-		$appConfig = $this->container->appConfig;
-		$logLevel  ??= $appConfig->get('debug', false)
-			? Level::Debug
-			: $appConfig->get('log_level', 'warning');
+		$appConfig     = $this->container->appConfig;
+		$logLevel      ??= $appConfig->get('log_level', 'warning');
+		$isGlobalDebug = $appConfig->get('debug', false);
 
-		$logger->pushHandler(
-			new StreamHandler(APATH_LOG . '/' . $logIdentifier . '.log', $logLevel)
+		$streamHandler = new StreamHandler(APATH_LOG . '/' . $logIdentifier . '.log', $logLevel);
+		$formatter     = new LineFormatter(
+			format: $format,
+			dateFormat: 'Y-m-d H:i:s.v T'
 		);
+
+		$streamHandler->setFormatter($formatter);
+		$logger->pushHandler($streamHandler);
+
+		// When global Debug is on, we also fork the output to a global log with its log level set to Debug
+		if ($isGlobalDebug)
+		{
+			$debugStreamHandler = new StreamHandler(APATH_LOG . '/' . 'debug.log', Level::Debug);
+			$debugFormatter     = new LineFormatter(
+				format: "%datetime% | %level_name% | %channel% | %message% | %context% | %extra%\n",
+				dateFormat: 'Y-m-d H:i:s.v T',
+				includeStacktraces: true
+			);
+			$debugStreamHandler->setFormatter($debugFormatter);
+
+			$logger->pushHandler($debugStreamHandler);
+		}
 
 		$this->applyCallbacks($logger);
 

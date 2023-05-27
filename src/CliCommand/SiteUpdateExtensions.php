@@ -9,18 +9,17 @@ namespace Akeeba\Panopticon\CliCommand;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\CliCommand\Trait\ForkedLoggerAwareTrait;
+use Akeeba\Panopticon\CliCommand\Trait\ConsoleLoggerTrait;
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Task\LogRotate as LogRotateTask;
 use Awf\Registry\Registry;
-use Psr\Log\LoggerAwareInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
@@ -29,7 +28,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class SiteUpdateExtensions extends AbstractCommand
 {
-	use ForkedLoggerAwareTrait;
+	use ConsoleLoggerTrait;
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
@@ -37,16 +36,9 @@ class SiteUpdateExtensions extends AbstractCommand
 		$container = Factory::getContainer();
 		$callback  = $container->taskRegistry->get('extensionsupdate');
 
-		if ($callback instanceof LoggerAwareInterface)
+		if ($callback instanceof AbstractCallback)
 		{
-			$callback->setLogger(
-				$this->getForkedLogger(
-					$output,
-					[
-						$container->loggerFactory->get('extensions_update'),
-					]
-				)
-			);
+			$callback->setLogger($this->getConsoleLogger($output));
 		}
 
 		$dummy    = new \stdClass();

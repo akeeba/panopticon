@@ -21,13 +21,11 @@ use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 use GuzzleHttp\Exception\GuzzleException;
-use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(name: 'extensionsupdate', description: 'PANOPTICON_TASKTYPE_EXTENSIONSUPDATE')]
 class ExtensionsUpdate extends AbstractCallback
 {
-	use LoggerAwareTrait;
 	use ApiRequestTrait;
 
 	public function __invoke(object $task, Registry $storage): int
@@ -37,6 +35,8 @@ class ExtensionsUpdate extends AbstractCallback
 		$site = Model::getTmpInstance(null, 'Site', $this->container);
 		$site->findOrFail($task->site_id);
 
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
 		// Get the queue
 		$queueKey = sprintf('extensions.%d', $task->site_id);
 		$queue    = $this->container->queueFactory->makeQueue($queueKey);
@@ -45,7 +45,7 @@ class ExtensionsUpdate extends AbstractCallback
 		// It is possible for this to happen if another process snatched the last item of the queue before we did.
 		if ($item === null)
 		{
-			$this->logger?->info(
+			$this->logger->info(
 				sprintf(
 					'Extension updates for site #%d (%s): Queue empty, done installing updates',
 					$site->id, $site->name
@@ -70,7 +70,7 @@ class ExtensionsUpdate extends AbstractCallback
 				return Status::OK->value;
 			}
 
-			$this->logger?->info(
+			$this->logger->info(
 				sprintf(
 					'Extension updates for site #%d (%s): Queue item added before marking ourselves done; will resume installing updates later.',
 					$site->id, $site->name
@@ -95,7 +95,7 @@ class ExtensionsUpdate extends AbstractCallback
 
 		if (empty($extensionId) || $extensionId <= 0)
 		{
-			$this->logger?->warning(
+			$this->logger->warning(
 				sprintf(
 					'Extension updates for site #%d (%s): invalid extension ID “%d” will be ignored',
 					$site->id, $site->name, $extensionId
@@ -113,7 +113,7 @@ class ExtensionsUpdate extends AbstractCallback
 
 		if (!isset($extensions[$extensionId]))
 		{
-			$this->logger?->warning(
+			$this->logger->warning(
 				sprintf(
 					'Extension updates for site #%d (%s): extension ID “%d” does not exist and will be ignored',
 					$site->id, $site->name, $extensionId
@@ -124,7 +124,7 @@ class ExtensionsUpdate extends AbstractCallback
 		}
 
 		// Log that we are about to install an update
-		$this->logger?->info(
+		$this->logger->info(
 			sprintf(
 				'Extension updates for site #%d (%s): attempting to install update for %s “%s” (EID: %d)',
 				$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name, $extensionId
@@ -146,7 +146,7 @@ class ExtensionsUpdate extends AbstractCallback
 		}
 		catch (GuzzleException $e)
 		{
-			$this->logger?->error(
+			$this->logger->error(
 				sprintf(
 					'Extension updates for site #%d (%s): failed installing update for %s “%s”. Guzzle error: %s',
 					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name,
@@ -171,7 +171,7 @@ class ExtensionsUpdate extends AbstractCallback
 		}
 		catch (\Exception $e)
 		{
-			$this->logger?->error(
+			$this->logger->error(
 				sprintf(
 					'Extension updates for site #%d (%s): failed installing update for %s “%s”. Invalid JSON reply: %s',
 					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name,
@@ -192,7 +192,7 @@ class ExtensionsUpdate extends AbstractCallback
 
 		if (!$status->attributes?->status ?? 1)
 		{
-			$this->logger?->error(
+			$this->logger->error(
 				sprintf(
 					'Extension updates for site #%d (%s): failed installing update for %s “%s”. Joomla! reported an error: %s',
 					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name,
@@ -212,7 +212,7 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
-		$this->logger?->debug(
+		$this->logger->debug(
 			sprintf(
 				'Extension updates for site #%d (%s): installed update for %s “%s”',
 				$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name
@@ -354,11 +354,6 @@ class ExtensionsUpdate extends AbstractCallback
 		));
 
 		$callback = $this->container->taskRegistry->get('refreshinstalledextensions');
-
-		if ($callback instanceof LoggerAwareInterface)
-		{
-			$callback->setLogger($this->logger);
-		}
 
 		$dummy         = new \stdClass();
 		$dummyRegistry = new Registry();

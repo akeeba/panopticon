@@ -23,10 +23,8 @@ use Psr\Log\LoggerAwareTrait;
 	name: 'sendmail',
 	description: 'PANOPTICON_TASKTYPE_SENDMAIL'
 )]
-class SendMail extends AbstractCallback implements LoggerAwareInterface
+class SendMail extends AbstractCallback
 {
-	use LoggerAwareTrait;
-
 	public function __invoke(object $task, Registry $storage): int
 	{
 		$task->params ??= new Registry();

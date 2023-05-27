@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\CliCommand;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
-use Akeeba\Panopticon\CliCommand\Trait\ForkedLoggerAwareTrait;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Setup;
 use Awf\Mvc\Model;
@@ -27,8 +26,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[ConfigAssertion(true)]
 class ConfigTasksInstall extends AbstractCommand
 {
-	use ForkedLoggerAwareTrait;
-
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$container = Factory::getContainer();

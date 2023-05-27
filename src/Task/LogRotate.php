@@ -19,21 +19,18 @@ use Cesargb\Log\Rotation;
 use DirectoryIterator;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\NullLogger;
 
 #[AsTask(
 	name: 'logrotate',
 	description: 'PANOPTICON_TASKTYPE_LOGROTATE'
 )]
-class LogRotate extends AbstractCallback implements LoggerAwareInterface
+class LogRotate extends AbstractCallback
 {
-	use LoggerAwareTrait;
-
 	public function __construct(Container $container)
 	{
 		parent::__construct($container);
 
-		$this->logger = new NullLogger();
+		$this->logger->clearLoggers();
 	}
 
 	public function __invoke(object $task, Registry $storage): int

@@ -16,8 +16,6 @@ use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Site;
-use Akeeba\Panopticon\Model\Task;
-use Awf\Date\Date;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
@@ -28,9 +26,8 @@ use Psr\Log\LoggerAwareTrait;
 	name: 'joomlaupdatedirector',
 	description: 'PANOPTICON_TASKTYPE_JOOMLAUPDATEDIRECTOR'
 )]
-class JoomlaUpdateDirector extends AbstractCallback implements LoggerAwareInterface
+class JoomlaUpdateDirector extends AbstractCallback
 {
-	use LoggerAwareTrait;
 	use EnqueueJoomlaUpdateTrait;
 
 	public function __invoke(object $task, Registry $storage): int

@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 use Akeeba\Panopticon\Exception\InvalidTaskType;
 use Akeeba\Panopticon\Helper\TaskUtils;
+use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Task\SymfonyStyleAwareInterface;
@@ -172,7 +173,7 @@ class Task extends DataModel
 		{
 			$logger->error(
 				sprintf(
-					'Task retrieval failed [%s:%d]: %s',
+					'Task retrieval failed %s:%d: %s',
 					$e->getFile(),
 					$e->getLine(),
 					$e->getMessage()
@@ -282,7 +283,7 @@ class Task extends DataModel
 				throw new InvalidTaskType;
 			}
 
-			if ($callback instanceof LoggerAwareInterface)
+			if ($callback instanceof LoggerAwareInterface && !($callback instanceof AbstractCallback))
 			{
 				$callback->setLogger($logger);
 			}

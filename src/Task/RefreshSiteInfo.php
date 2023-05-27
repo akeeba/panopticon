@@ -25,9 +25,8 @@ use Psr\Log\LoggerAwareTrait;
 	name: 'refreshsiteinfo',
 	description: 'PANOPTICON_TASKTYPE_REFRESHSITEINFO'
 )]
-class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
+class RefreshSiteInfo extends AbstractCallback
 {
-	use LoggerAwareTrait;
 	use ApiRequestTrait;
 
 	public function __invoke(object $task, Registry $storage): int
@@ -49,12 +48,12 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 
 		if (empty($siteIDs))
 		{
-			$this->logger?->info('No sites in need to retrieve updated information for.');
+			$this->logger->info('No sites in need to retrieve updated information for.');
 
 			return Status::OK->value;
 		}
 
-		$this->logger?->info(sprintf(
+		$this->logger->info(sprintf(
 			'Found a further %d site(s) to retrieve updated information for.',
 			count($siteIDs)
 		));
@@ -181,7 +180,7 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 					return null;
 				}
 
-				$this->logger?->debug(sprintf(
+				$this->logger->debug(sprintf(
 					'Enqueueing site #%d (%s) for information update.',
 					$site->id, $site->name
 				));
@@ -206,7 +205,7 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 
 							if (empty($attributes))
 							{
-								$this->logger?->notice(sprintf(
+								$this->logger->notice(sprintf(
 									'Could not retrieve information for site #%d (%s). Invalid data returned from API call.',
 									$site->id, $site->name
 								));
@@ -214,7 +213,7 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 								return;
 							}
 
-							$this->logger?->debug(
+							$this->logger->debug(
 								sprintf(
 									'Retrieved information for site #%d (%s).',
 									$site->id,
@@ -273,14 +272,14 @@ class RefreshSiteInfo extends AbstractCallback implements LoggerAwareInterface
 							}
 							catch (\Exception $e)
 							{
-								$this->logger?->error(sprintf(
+								$this->logger->error(sprintf(
 									'Error saving the information for site #%d (%s): %s',
 									$site->id, $site->name, $e->getMessage()
 								));
 							}
 						},
 						function (RequestException $e) use ($site) {
-							$this->logger?->error(sprintf(
+							$this->logger->error(sprintf(
 								'Could not retrieve information for site #%d (%s). The server replied with the following error: %s',
 								$site->id, $site->name, $e->getMessage()
 							));

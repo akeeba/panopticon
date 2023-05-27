@@ -9,7 +9,6 @@ namespace Akeeba\Panopticon\Task;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Aes\Ctr;
 use Akeeba\Panopticon\Library\Queue\QueueItem;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
@@ -25,7 +24,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use LogicException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\NullLogger;
 use RuntimeException;
 use Throwable;
 
@@ -33,19 +31,11 @@ use Throwable;
 	name: 'joomlaupdate',
 	description: 'PANOPTICON_TASKTYPE_JOOMLAUPDATE'
 )]
-class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
+class JoomlaUpdate extends AbstractCallback
 {
-	use LoggerAwareTrait;
 	use ApiRequestTrait;
 
 	protected string $currentState;
-
-	public function __construct(Container $container)
-	{
-		parent::__construct($container);
-
-		$this->logger = new NullLogger();
-	}
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -89,6 +79,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					break;
 
 				case 'siteInfo':
+					$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->getSite($task)->id));
+
 					// I have to wrap this in a transaction for saving the new information to work.
 					$this->container->db->transactionStart();
 					$this->runSiteInfo($task, $storage);
@@ -100,6 +92,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					break;
 
 				case 'email':
+					$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->getSite($task)->id));
+
 					// Ensure there are not stray transactions
 					try
 					{
@@ -114,11 +108,12 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 					 * Only send emails if we didn't reinstall the same verison AND if we are asked to send emails after
 					 * Joomla! update.
 					 */
-					$vars = $storage->get('email_variables', []);
+					$vars       = $storage->get('email_variables', []);
 					$newVersion = $vars['NEW_VERSION'] ?? null;
 					$oldVersion = $vars['OLD_VERSION'] ?? null;
 
-					if (!empty($newVersion) && !empty($oldVersion) && $newVersion != $oldVersion && $storage->get('email_after', true))
+					if (!empty($newVersion) && !empty($oldVersion) && $newVersion != $oldVersion
+						&& $storage->get('email_after', true))
 					{
 						$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
 
@@ -138,7 +133,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			]);
 
 			// Send email about the failed update
-			if ($storage->get('email_errir', true))
+			if ($storage->get('email_error', true))
 			{
 				$this->sendEmail('joomlaupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
 					'MESSAGE' => $e->getMessage(),
@@ -162,10 +157,102 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	}
 
 	/**
+	 * Implements a simplistic finite-state machine.
+	 *
+	 * The states are:
+	 * - init: Initial state, performs sanity self-checks
+	 * - download: Downloads the update package
+	 * - beforeEvents: Executes any events which need to precede the update
+	 * - enable: Enables the restore.php / extract.php file which extracts the update
+	 * - extract: Performs the archive extraction
+	 * - postExtract: Executes the finalisation code in restore.php / extract.php itself (file cleanup)
+	 * - finalize: Executes the Joomla Update model's finalisation (database tasks, ...)
+	 * - afterEvents: Executes any events which need to run after the update
+	 * - email: Send the success email
+	 * - finish: Signals the need to return successfully
+	 *
+	 * @return  void
+	 */
+	protected function advanceState(): void
+	{
+		$this->currentState = match ($this->currentState)
+		{
+			default         => 'download',
+			'download'      => 'beforeEvents',
+			'beforeEvents'  => 'enable',
+			'enable'        => 'extract',
+			'extract'       => 'postExtract',
+			'postExtract'   => 'finalise',
+			'finalise'      => 'reloadUpdates',
+			'reloadUpdates' => 'siteInfo',
+			'siteInfo'      => 'afterEvents',
+			'afterEvents'   => 'email',
+			'email'         => 'finish',
+		};
+	}
+
+	/**
+	 * Runs the events and returns a singular result.
+	 *
+	 * Event handlers are responsible for executing themselves one after the other. This is done with the following
+	 * mechanism.
+	 *
+	 * Let's say $event="onFoobar" and the event handler assigns itself the internal name "com.example.test".
+	 *
+	 * The event handler gets the following variables:
+	 * $amIDone = $storage->get("onFoobar.com.example.test", false);
+	 * $activeHandler = $storage->get("onFoobar.activeHandler");
+	 *
+	 * If $amIDone === true the handler returns Status::OK->value.
+	 *
+	 * If $activeHandler is not empty AND is not 'com.example.test' the handler returns
+	 * Status::INITIAL_SCHEDULE->value.
+	 *
+	 * In any other case, the handler sets itself as the active handler:
+	 * $activeHandler = $storage->get("onFoobar.activeHandler", 'com.example.test');
+	 *
+	 * It will then execute some work.
+	 *
+	 * If the work is complete it will do:
+	 * $activeHandler = $storage->get("onFoobar.activeHandler", null);
+	 * $storage->get("onFoobar.com.example.test", true);
+	 * and returns Status::OK->value.
+	 *
+	 * No other return values are considered valid.
+	 *
+	 * @param   string    $event
+	 * @param   object    $task
+	 * @param   Registry  $storage
+	 *
+	 * @return  bool True if all handlers have executed successfully.
+	 */
+	protected function runEvent(string $event, object $task, Registry $storage): bool
+	{
+		$results = $this->container->eventDispatcher->trigger('onTaskBeforeJoomlaUpdate', [$task, $storage]);
+
+		// No handlers executed. We are done!
+		if (empty($results))
+		{
+			return true;
+		}
+
+		// We are done if all values are Status::OK, or they are unexpected.
+		return array_reduce(
+			$results,
+			fn(bool $carry, $result) => $carry
+				&& (
+					$result === Status::OK->value
+					|| !in_array($result, [Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value])
+				),
+			true
+		);
+	}
+
+	/**
 	 * Initialise the update
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 */
@@ -180,6 +267,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 
 		// Try to get the site
 		$site = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		// Is the site enabled?
 		if (!$site->enabled)
@@ -269,7 +358,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Get the site object corresponding to the task we are currently handling
 	 *
-	 * @param object $task
+	 * @param   object  $task
 	 *
 	 * @return  Site
 	 */
@@ -296,52 +385,20 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	}
 
 	/**
-	 * Implements a simplistic finite-state machine.
-	 *
-	 * The states are:
-	 * - init: Initial state, performs sanity self-checks
-	 * - download: Downloads the update package
-	 * - beforeEvents: Executes any events which need to precede the update
-	 * - enable: Enables the restore.php / extract.php file which extracts the update
-	 * - extract: Performs the archive extraction
-	 * - postExtract: Executes the finalisation code in restore.php / extract.php itself (file cleanup)
-	 * - finalize: Executes the Joomla Update model's finalisation (database tasks, ...)
-	 * - afterEvents: Executes any events which need to run after the update
-	 * - email: Send the success email
-	 * - finish: Signals the need to return successfully
-	 *
-	 * @return  void
-	 */
-	protected function advanceState(): void
-	{
-		$this->currentState = match ($this->currentState)
-		{
-			default         => 'download',
-			'download'      => 'beforeEvents',
-			'beforeEvents'  => 'enable',
-			'enable'        => 'extract',
-			'extract'       => 'postExtract',
-			'postExtract'   => 'finalise',
-			'finalise'      => 'reloadUpdates',
-			'reloadUpdates' => 'siteInfo',
-			'siteInfo'      => 'afterEvents',
-			'afterEvents'   => 'email',
-			'email'         => 'finish',
-		};
-	}
-
-	/**
 	 * Download the update to the remote site
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
 	 */
 	private function runDownload(object $task, Registry $storage): void
 	{
-		$site       = $this->getSite($task);
+		$site = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$this->logger->info(Text::sprintf(
@@ -385,14 +442,16 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Executes the event which take place BEFORE the update itself
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 */
 	private function runBeforeEvents(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		$this->logger->info(Text::sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_EVENTS',
@@ -419,74 +478,20 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	}
 
 	/**
-	 * Runs the events and returns a singular result.
-	 *
-	 * Event handlers are responsible for executing themselves one after the other. This is done with the following
-	 * mechanism.
-	 *
-	 * Let's say $event="onFoobar" and the event handler assigns itself the internal name "com.example.test".
-	 *
-	 * The event handler gets the following variables:
-	 * $amIDone = $storage->get("onFoobar.com.example.test", false);
-	 * $activeHandler = $storage->get("onFoobar.activeHandler");
-	 *
-	 * If $amIDone === true the handler returns Status::OK->value.
-	 *
-	 * If $activeHandler is not empty AND is not 'com.example.test' the handler returns
-	 * Status::INITIAL_SCHEDULE->value.
-	 *
-	 * In any other case, the handler sets itself as the active handler:
-	 * $activeHandler = $storage->get("onFoobar.activeHandler", 'com.example.test');
-	 *
-	 * It will then execute some work.
-	 *
-	 * If the work is complete it will do:
-	 * $activeHandler = $storage->get("onFoobar.activeHandler", null);
-	 * $storage->get("onFoobar.com.example.test", true);
-	 * and returns Status::OK->value.
-	 *
-	 * No other return values are considered valid.
-	 *
-	 * @param string   $event
-	 * @param object   $task
-	 * @param Registry $storage
-	 *
-	 * @return  bool True if all handlers have executed successfully.
-	 */
-	protected function runEvent(string $event, object $task, Registry $storage): bool
-	{
-		$results = $this->container->eventDispatcher->trigger('onTaskBeforeJoomlaUpdate', [$task, $storage]);
-
-		// No handlers executed. We are done!
-		if (empty($results))
-		{
-			return true;
-		}
-
-		// We are done if all values are Status::OK, or they are unexpected.
-		return array_reduce(
-			$results,
-			fn(bool $carry, $result) => $carry
-				&& (
-					$result === Status::OK->value
-					|| !in_array($result, [Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value])
-				),
-			true
-		);
-	}
-
-	/**
 	 * Enable the Joomla Update extraction script
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
 	 */
 	private function runEnable(object $task, Registry $storage): void
 	{
-		$site       = $this->getSite($task);
+		$site = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$this->logger->info(Text::sprintf(
@@ -542,16 +547,19 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * The extract.php file is used by Joomla 4.0.4 and later. It is a rewritten and refactored version of the
 	 * extraction script which I contributed to Joomla: https://github.com/joomla/joomla-cms/pull/35388
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
 	 */
 	private function runExtract(object $task, Registry $storage): void
 	{
-		$step = $storage->get('restore.step', 'start');
 		$site = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
+		$step = $storage->get('restore.step', 'start');
 		$url  = $this->getExtractUrl($site);
 
 		if (str_ends_with($url, 'restore.php'))
@@ -623,7 +631,7 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Returns the URL to Joomla Update's restore.php (Joomla 4.0.0 to 4.0.3) or extract.php (Joomla 4.0.4 and later).
 	 *
-	 * @param Site $site The site we're working on
+	 * @param   Site  $site  The site we're working on
 	 *
 	 * @return  string  The absolute URL to the restore.php or extract.php
 	 */
@@ -642,8 +650,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Starts the update extraction on Joomla 4.0.0–4.0.3
 	 *
-	 * @param Site     $site    The site we are working on
-	 * @param Registry $storage The temporary storage for the update task
+	 * @param   Site      $site     The site we are working on
+	 * @param   Registry  $storage  The temporary storage for the update task
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
@@ -689,9 +697,9 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Perform an encrypted POST request to Joomla Update's restore.php (Joomla 4.0.0 to 4.0.3 inclusive)
 	 *
-	 * @param Site         $site    The site we're working on
-	 * @param Registry     $storage The temporary storage of the task
-	 * @param array|object $data    The data to POST to restore.php
+	 * @param   Site          $site     The site we're working on
+	 * @param   Registry      $storage  The temporary storage of the task
+	 * @param   array|object  $data     The data to POST to restore.php
 	 *
 	 * @return  mixed
 	 * @throws  GuzzleException
@@ -794,8 +802,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Steps through the update extraction on Joomla 4.0.0–4.0.3
 	 *
-	 * @param Site     $site    The site we are working on
-	 * @param Registry $storage The temporary storage for the update task
+	 * @param   Site      $site     The site we are working on
+	 * @param   Registry  $storage  The temporary storage for the update task
 	 *
 	 * @return  bool  True when the extraction is done; false otherwise.
 	 * @throws  GuzzleException
@@ -863,8 +871,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Starts the update extraction on Joomla 4.0.4 or later
 	 *
-	 * @param Site     $site    The site we are working on
-	 * @param Registry $storage The temporary storage for the update task
+	 * @param   Site      $site     The site we are working on
+	 * @param   Registry  $storage  The temporary storage for the update task
 	 *
 	 * @return  bool  True if we're done extracting, false otherwise
 	 * @throws  GuzzleException
@@ -879,9 +887,9 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Perform a password-protected POST request to Joomla Update's extract.php (Joomla 4.0.4 and later)
 	 *
-	 * @param Site         $site    The site we're working on
-	 * @param Registry     $storage The temporary storage of the task
-	 * @param array|object $data    The data to POST to restore.php
+	 * @param   Site          $site     The site we're working on
+	 * @param   Registry      $storage  The temporary storage of the task
+	 * @param   array|object  $data     The data to POST to restore.php
 	 *
 	 * @return  mixed
 	 * @throws  GuzzleException
@@ -897,8 +905,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J404'));
 		}
 
-		$postData             = (array)$data;
-		$postData['password'] = $storage->get('update.password', '');
+		$postData                = (array)$data;
+		$postData['password']    = $storage->get('update.password', '');
 		$postData['_randomJunk'] = sha1(random_bytes(32));
 
 		[, $options] = $this->getRequestOptions($site, '/foobar');
@@ -944,8 +952,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Handles the Joomla Update's extract.php response to an extraction step
 	 *
-	 * @param mixed    $data    The response data (decoded from JSON)
-	 * @param Registry $storage The temporary storage for the update task
+	 * @param   mixed     $data     The response data (decoded from JSON)
+	 * @param   Registry  $storage  The temporary storage for the update task
 	 *
 	 * @return  bool  True if we're done extracting, false otherwise
 	 */
@@ -1000,8 +1008,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Steps through the update extraction on Joomla 4.0.4 or later
 	 *
-	 * @param Site     $site    The site we are working on
-	 * @param Registry $storage The temporary storage for the update task
+	 * @param   Site      $site     The site we are working on
+	 * @param   Registry  $storage  The temporary storage for the update task
 	 *
 	 * @return  bool  True if we're done extracting, false otherwise
 	 * @throws  GuzzleException
@@ -1032,8 +1040,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * The extract.php file is used by Joomla 4.0.4 and later. It is a rewritten and refactored version of the
 	 * extraction script which I contributed to Joomla: https://github.com/joomla/joomla-cms/pull/35388
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
@@ -1041,6 +1049,9 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	private function runPostExtract(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
 		$url  = $this->getExtractUrl($site);
 
 		$this->logger->info(Text::sprintf(
@@ -1064,8 +1075,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Finalise the update extraction on Joomla 4.0.0–4.0.3
 	 *
-	 * @param Site     $site    The site we are working on
-	 * @param Registry $storage The temporary storage for the update task
+	 * @param   Site      $site     The site we are working on
+	 * @param   Registry  $storage  The temporary storage for the update task
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
@@ -1092,8 +1103,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Finalise the update extraction on Joomla 4.0.4 or later
 	 *
-	 * @param Site     $site    The site we are working on
-	 * @param Registry $storage The temporary storage for the update task
+	 * @param   Site      $site     The site we are working on
+	 * @param   Registry  $storage  The temporary storage for the update task
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
@@ -1124,8 +1135,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * responsible for upgrading the database schema, add records for new core extensions, remove records for removed
 	 * core extensions, and perform any database (data) migrations which need to take place.
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 * @throws  GuzzleException
@@ -1133,6 +1144,9 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	private function runFinalise(object $task, Registry $storage): void
 	{
 		$site       = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$this->logger->info(Text::sprintf(
@@ -1160,14 +1174,17 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	 * these "stepped" updates to become discovered faster than relying on the natural update information timeout in
 	 * Joomla and Panopticon alone.
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 */
 	private function runReloadUpdates(object $task, Registry $storage): void
 	{
 		$site       = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$this->logger->info(Text::sprintf(
@@ -1190,8 +1207,8 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Forcibly reload the site information after updating it
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 */
@@ -1206,11 +1223,6 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 		));
 
 		$callback = $this->container->taskRegistry->get('refreshsiteinfo');
-
-		if ($callback instanceof LoggerAwareInterface)
-		{
-			$callback->setLogger($this->logger);
-		}
 
 		$dummy         = new \stdClass();
 		$dummyRegistry = new Registry();
@@ -1228,14 +1240,16 @@ class JoomlaUpdate extends AbstractCallback implements LoggerAwareInterface
 	/**
 	 * Executes the event which take place AFTER the update itself
 	 *
-	 * @param object   $task    The current task object
-	 * @param Registry $storage The task's temporary storage
+	 * @param   object    $task     The current task object
+	 * @param   Registry  $storage  The task's temporary storage
 	 *
 	 * @return  void
 	 */
 	private function runAfterEvents(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		$this->logger->info(Text::sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_EVENTS',

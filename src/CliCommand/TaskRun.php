@@ -10,8 +10,9 @@ namespace Akeeba\Panopticon\CliCommand;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
-use Akeeba\Panopticon\CliCommand\Trait\ForkedLoggerAwareTrait;
+use Akeeba\Panopticon\CliCommand\Trait\ConsoleLoggerTrait;
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Logger\ForkedLogger;
 use Akeeba\Panopticon\Model\Task;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
@@ -29,7 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[ConfigAssertion(true)]
 class TaskRun extends AbstractCommand
 {
-	use ForkedLoggerAwareTrait;
+	use ConsoleLoggerTrait;
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
@@ -38,7 +39,8 @@ class TaskRun extends AbstractCommand
 		// Mark our last execution time
 		$db = $container->db;
 		$db->lockTable('#__akeeba_common');
-		$query = $db->getQuery(true)
+		$query = $db
+			->getQuery(true)
 			->replace($db->quoteName('#__akeeba_common'))
 			->values(implode(',', [
 				$db->quote('panopticon.task.last.execution'),
@@ -62,7 +64,10 @@ class TaskRun extends AbstractCommand
 			$container->appConfig->get('execution_bias', 75)
 		);
 
-		$logger = $this->getForkedLogger($output);
+		$logger = new ForkedLogger([
+			$this->getConsoleLogger($output),
+			$container->loggerFactory->get('task_runner'),
+		]);
 
 		while ($timer->getTimeLeft() > 0.01)
 		{

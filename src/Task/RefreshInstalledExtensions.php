@@ -26,9 +26,8 @@ use Psr\Log\LoggerAwareTrait;
 	name: 'refreshinstalledextensions',
 	description: 'PANOPTICON_TASKTYPE_REFRESHINSTALLEDEXTENSIONS'
 )]
-class RefreshInstalledExtensions extends AbstractCallback implements LoggerAwareInterface
+class RefreshInstalledExtensions extends AbstractCallback
 {
-	use LoggerAwareTrait;
 	use ApiRequestTrait;
 
 	public function __invoke(object $task, Registry $storage): int
@@ -193,7 +192,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 					return null;
 				}
 
-				$this->logger?->debug(sprintf(
+				$this->logger->debug(sprintf(
 					'Enqueueing site #%d (%s) for extensions list update.',
 					$site->id, $site->name
 				));
@@ -226,7 +225,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 
 							if (empty($data))
 							{
-								$this->logger?->notice(sprintf(
+								$this->logger->notice(sprintf(
 									'Could not retrieve information for site #%d (%s). Invalid data returned from API call.',
 									$site->id, $site->name
 								));
@@ -234,7 +233,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 								return;
 							}
 
-							$this->logger?->debug(
+							$this->logger->debug(
 								sprintf(
 									'Retrieved information for site #%d (%s).',
 									$site->id,
@@ -266,7 +265,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 
 							// Finally, clear the cache of known extensions for the specific site
 							$cacheKey = 'site.' . $site->id;
-							$this->logger?->debug(
+							$this->logger->debug(
 								sprintf(
 									'Clearing cache of known extensions for site %d (pool ‘extensions’, item ‘%s’)',
 									$site->id,
@@ -277,7 +276,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 						},
 						function (RequestException $e) use ($site)
 						{
-							$this->logger?->error(sprintf(
+							$this->logger->error(sprintf(
 								'Could not retrieve extensions information for site #%d (%s). The server replied with the following error: %s',
 								$site->id, $site->name, $e->getMessage()
 							));
@@ -297,7 +296,7 @@ class RefreshInstalledExtensions extends AbstractCallback implements LoggerAware
 		Utils::settle($promises)->wait(true);
 
 		// After storing all extensions we need to bust the cache of all known extensions
-		$this->logger?->debug('Clearing cache of all known extensions (pool ‘extensions’, item ‘all’)');
+		$this->logger->debug('Clearing cache of all known extensions (pool ‘extensions’, item ‘all’)');
 		$this->container->cacheFactory->pool('extensions')->delete('all');
 	}
 

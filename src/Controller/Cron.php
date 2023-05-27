@@ -22,6 +22,8 @@ class Cron extends Controller
 
 	public function main(): void
 	{
+		$logger = $this->container->loggerFactory->get('webcron');
+
 		$httpCode = 200;
 		$message  = null;
 
@@ -66,7 +68,7 @@ class Cron extends Controller
 
 			while ($timer->getTimeLeft() > 0.01)
 			{
-				if (!$model->runNextTask($this->container->logger))
+				if (!$model->runNextTask($logger))
 				{
 					break;
 				}

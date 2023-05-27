@@ -25,9 +25,8 @@ use Psr\Log\LoggerAwareTrait;
 	name: 'extensionupdatesdirector',
 	description: 'PANOPTICON_TASKTYPE_EXTENSIONUPDATESDIRECTOR'
 )]
-class ExtensionUpdatesDirector extends AbstractCallback implements LoggerAwareInterface
+class ExtensionUpdatesDirector extends AbstractCallback
 {
-	use LoggerAwareTrait;
 	use EnqueueExtensionUpdateTrait;
 
 	public function __invoke(object $task, Registry $storage): int

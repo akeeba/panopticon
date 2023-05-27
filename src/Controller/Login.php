@@ -12,12 +12,16 @@ defined('AKEEBA') || die;
 use Awf\Mvc\Controller;
 use Awf\Uri\Uri;
 use Exception;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 class Login extends Controller
 {
 	public function login(): bool
 	{
+		/** @var LoggerInterface $logger */
+		$logger = $this->container->loggerFactory->get('login');
+
 		try
 		{
 			$this->csrfProtection();
@@ -30,6 +34,8 @@ class Login extends Controller
 			// Try to    log in the user
 			$manager = $this->container->userManager;
 			$manager->loginUser($username, $password, ['secret' => $secret]);
+
+			$logger->info('Successful login', ['username' => $username]);
 
 			// Redirect to the saved return_url or, if none specified, to the application's main page
 			$url    = $this->getReturnUrl();
@@ -44,6 +50,10 @@ class Login extends Controller
 		}
 		catch (Exception $e)
 		{
+			$logger->error('Failed login', [
+				'username' => $username, 'error' => $e->getMessage(), 'source' => $e->getFile() . ':' . $e->getLine(),
+			]);
+
 			$router = $this->container->router;
 
 			// Login failed. Go back to the login page and show the error message
@@ -55,9 +65,14 @@ class Login extends Controller
 
 	public function logout(): bool
 	{
-		$router  = $this->container->router;
-		$manager = $this->container->userManager;
+		/** @var LoggerInterface $logger */
+		$logger   = $this->container->loggerFactory->get('login');
+		$manager  = $this->container->userManager;
+		$username = $manager->getUser()->getUsername();
+		$router   = $this->container->router;
+
 		$manager->logoutUser();
+		$logger->info('Logged out', ['username' => $username]);
 
 		$this->setRedirect($router->route('index.php?view=login'));
 
@@ -86,7 +101,7 @@ class Login extends Controller
 		{
 			$url = base64_decode($url) ?: null;
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			$url = null;
 		}

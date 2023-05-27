@@ -32,6 +32,11 @@ class ForkedLogger extends AbstractLogger implements LoggerInterface
 		$this->loggers[] = $logger;
 	}
 
+	public function clearLoggers()
+	{
+		$this->loggers = [];
+	}
+
 	public function log($level, \Stringable|string $message, array $context = []): void
 	{
 		foreach ($this->loggers as $logger)

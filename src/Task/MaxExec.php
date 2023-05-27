@@ -16,7 +16,6 @@ use Akeeba\Panopticon\Library\Task\SymfonyStyleAwareTrait;
 use Awf\Registry\Registry;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 defined('AKEEBA') || die;
 
@@ -24,9 +23,8 @@ defined('AKEEBA') || die;
 	name: "maxexec",
 	description: "PANOPTICON_TASKTYPE_MAXEXEC"
 )]
-class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyStyleAwareInterface
+class MaxExec extends AbstractCallback implements SymfonyStyleAwareInterface
 {
-	use LoggerAwareTrait;
 	use SymfonyStyleAwareTrait;
 
 	private const TICK_KEY = 'maxexec.lasttick';
@@ -50,14 +48,14 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 					"We are now going to exit gracefully",
 				]
 			);
-			$this->logger?->debug('Last execution had timed out; this task has served its purpose.');
+			$this->logger->debug('Last execution had timed out; this task has served its purpose.');
 
 			return Status::OK->value;
 		}
 
 		// Clear the maxexec.lasttick indicator
 		$this->ioStyle->info('Clearing previous execution information');
-		$this->logger?->debug('Clearing the last tick indicator in the database');
+		$this->logger->debug('Clearing the last tick indicator in the database');
 
 		$db    = $this->container->db;
 		$db->lockTable('#__akeeba_common');
@@ -80,13 +78,13 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 
 		// Get the recommended max execution time and cap it to 185 seconds
 		$this->ioStyle?->info('Getting maximum execution time information from the system');
-		$this->logger?->debug('Getting maximum execution time information from the system');
+		$this->logger->debug('Getting maximum execution time information from the system');
 
 		// There is no point running for under 15 seconds...
 		$maxExecution = max(15, MaxExecutionTime::getBestLimit(185));
 
 		$this->ioStyle?->writeln(sprintf('This script will run for up to %d seconds', $maxExecution));
-		$this->logger?->info(sprintf('This task will run for up to %d seconds', $maxExecution));
+		$this->logger->info(sprintf('This task will run for up to %d seconds', $maxExecution));
 
 		$this->ioStyle?->writeln([
 			"<comment>We are now going to test the maximum execution time available to CLI scripts.  ",
@@ -114,7 +112,7 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 			}
 
 			// Mark maxexec.lasttick
-			$this->logger?->debug(sprintf('Marking execution tick at %d seconds', $integerSeconds));
+			$this->logger->debug(sprintf('Marking execution tick at %d seconds', $integerSeconds));
 
 			$db->lockTable('#__akeeba_common');
 			$query = $db->getQuery(true)
@@ -141,7 +139,7 @@ class MaxExec extends AbstractCallback implements LoggerAwareInterface, SymfonyS
 			{
 				$bestExec = max(10, $integerSeconds - 5);
 
-				$this->logger?->debug(sprintf('Marking maximum execution as %d seconds', $bestExec));
+				$this->logger->debug(sprintf('Marking maximum execution as %d seconds', $bestExec));
 
 				$appConfig->set('max_execution', $bestExec);
 
