@@ -88,7 +88,7 @@ class ExtensionsUpdate extends AbstractCallback
 
 	private function installUpdate(Site $site, QueueItem $item, Registry $storage): void
 	{
-		$updateStatus = $storage->get('updateStatus', []);
+		$updateStatus = (array) $storage->get('updateStatus', []);
 
 		// This is the extension ID we are asked to install
 		$extensionId = (int)$item->getData();
@@ -232,7 +232,7 @@ class ExtensionsUpdate extends AbstractCallback
 	private function enqueueEmail(Site $site, Registry $storage): void
 	{
 		// Render the messages as HTML
-		$updateStatus            = $storage->get('updateStatus', []);
+		$updateStatus            = (array) $storage->get('updateStatus', []);
 
 		if (empty($updateStatus))
 		{

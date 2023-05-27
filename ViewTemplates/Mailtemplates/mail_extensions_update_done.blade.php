@@ -6,9 +6,9 @@
  */
 
 /**
- * @var \Akeeba\Panopticon\View\Main\Html $this
- * @var array                             $updateStatus
- * @var \Akeeba\Panopticon\Model\Site     $site
+ * @var \Akeeba\Panopticon\View\Mailtemplates\Html $this
+ * @var array                                      $updateStatus
+ * @var \Akeeba\Panopticon\Model\Site              $site
  */
 
 defined('AKEEBA') || die;
