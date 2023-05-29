@@ -27,6 +27,7 @@
 		"ext-curl": "*",
 		"ext-mbstring": "*",
 		"ext-json": "*",
+		"ext-zip": "*",
 		"akeeba/awf": "dev-development",
 		"akeeba/remotecli": "^3.0.0",
 		"cesargb/php-log-rotation": "^2.7.1",
@@ -35,12 +36,13 @@
 		"dragonmantank/cron-expression": "^3.3.2",
 		"guzzlehttp/guzzle": "^7.5",
 		"kevinrob/guzzle-cache-middleware": "^4.0",
+		"league/commonmark": "^2.4",
 		"mcrumley/php-complexify": "^0.4.1",
 		"monolog/monolog": "^3.3.1",
 		"symfony/cache": "^6.2",
 		"symfony/console": "^6.2.7",
 		"symfony/error-handler": "^6.2"
-	},
+    },
 	"suggest": {
 		"ext-pdo": "*",
 		"ext-simplexml": "*",

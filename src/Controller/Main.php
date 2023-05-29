@@ -81,6 +81,11 @@ class Main extends Controller
 		$model->installDatabase();
 
 		$this->getModel('main')->getKnownExtensions();
+
+		// Pass the Selfupdate model to the view
+		$selfUpdateModel = $this->getModel('selfupdate');
+		$this->getView()->setModel('selfupdate', $selfUpdateModel);
+
 		return true;
 	}
 }

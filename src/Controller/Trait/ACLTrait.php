@@ -36,6 +36,9 @@ trait ACLTrait
 		'sites'     => [
 			'*' => ['admin'],
 		],
+		'selfupdate' => [
+			'*' => ['super'],
+		],
 		'sysconfig' => [
 			'*' => ['super'],
 		],
