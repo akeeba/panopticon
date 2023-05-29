@@ -63,6 +63,7 @@
 		"exclude": [
 			"/.github",
 			"/.idea",
+			"/.htaccess",
 			"/assets",
 			"/build",
 			"/documentation",
@@ -74,7 +75,9 @@
 			"/build.xml",
 			"/CHANGELOG",
 			"/package*.json",
-			"README.md"
+			"README.md",
+			"RELEASENOTES.md",
+			"TODO.md"
 		]
 	}
 }

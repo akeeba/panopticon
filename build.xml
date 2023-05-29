@@ -46,6 +46,7 @@
 
         <exclude name=".gitattributes" />
         <exclude name=".gitignore" />
+        <exclude name=".htaccess" />
         <exclude name="build.xml" />
         <exclude name="CHANGELOG" />
         <exclude name="composer.json" />

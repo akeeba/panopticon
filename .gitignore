@@ -10,6 +10,7 @@ config.php
 !/log/.htaccess
 !/log/web.config
 /version.php
+/.htaccess
 
 ### User code dir
 /user_code/*

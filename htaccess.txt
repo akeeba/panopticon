@@ -1,0 +1,209 @@
+################################################################################
+### @package   panopticon
+### @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+### @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+################################################################################
+### Rename this file to .htaccess if you're using Apache or LiteSpeed.
+###
+### DO NOT USE IF YOUR SERVER IS USING OpenLiteSpeed.
+###
+### Unlike the full LiteSpeed server, OpenLiteSpeed does NOT understand most of
+### the configuration directives below and will result in a broken installation.
+################################################################################
+
+### ============================================================================
+### Enable mod_rewrite
+### ============================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    ## Uncomment and set to the path of your installation if necessary
+    # RewriteBase /
+</IfModule>
+
+### ============================================================================
+### Disable directory auto-index and use index.php as the only default file
+### ============================================================================
+<IfModule mod_autoindex.c>
+    IndexIgnore *
+</IfModule>
+
+<IfModule mod_dir.c>
+    DirectoryIndex index.php
+</IfModule>
+
+### ============================================================================
+### Content Security Policy
+### ============================================================================
+<IfModule mod_headers.c>
+    ## Default policy
+    Header set Content-Security-Policy "default-src 'self'; img-src 'self' data:; form-action 'self'; frame-ancestors 'self'; frame-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+
+    ## Disable scripts for SVG and HTML files
+    <FilesMatch "\.(svg|SVG|html|HTML|htm|HTM)$">
+        Header always set Content-Security-Policy "default-src 'self'; script-src 'none'"
+    </FilesMatch>
+</IfModule>
+
+
+### ============================================================================
+### Automatic compression of static resources
+### ============================================================================
+<IfModule mod_brotli.c>
+	AddOutputFilterByType BROTLI_COMPRESS text/plain text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript text/javascript image/svg+xml
+</IfModule>
+
+<IfModule !mod_brotli.c>
+    <IfModule mod_deflate.c>
+        AddOutputFilterByType DEFLATE text/plain text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript text/javascript image/svg+xml
+    </IfModule>
+</IfModule>
+
+<IfModule !mod_brotli.c>
+	<IfModule !mod_deflate.c>
+		<IfModule mod_gzip.c>
+			mod_gzip_on Yes
+			mod_gzip_dechunk Yes
+			mod_gzip_keep_workfiles No
+			mod_gzip_can_negotiate Yes
+			mod_gzip_add_header_count Yes
+			mod_gzip_send_vary Yes
+			mod_gzip_min_http 1000
+			mod_gzip_minimum_file_size 300
+			mod_gzip_maximum_file_size 512000
+			mod_gzip_maximum_inmem_size 60000
+			mod_gzip_handle_methods GET
+			mod_gzip_item_include file \.(html?|txt|css|js|php|pl|xml|rb|py|svg|scgz)$
+			mod_gzip_item_include mime ^text/javascript$
+			mod_gzip_item_include mime ^text/plain$
+			mod_gzip_item_include mime ^text/xml$
+			mod_gzip_item_include mime ^text/css$
+			mod_gzip_item_include mime ^application/xml$
+			mod_gzip_item_include mime ^application/xhtml+xml$
+			mod_gzip_item_include mime ^application/rss+xml$
+			mod_gzip_item_include mime ^application/javascript$
+			mod_gzip_item_include mime ^application/x-javascript$
+			mod_gzip_item_include mime ^image/svg+xml$
+			mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+			mod_gzip_item_include handler ^cgi-script$
+			mod_gzip_item_include handler ^server-status$
+			mod_gzip_item_include handler ^server-info$
+			mod_gzip_item_include handler ^application/x-httpd-php
+			mod_gzip_item_exclude mime ^image/.*
+		</IfModule>
+	</IfModule>
+</IfModule>
+
+### ============================================================================
+### Forbid direct access to arbitrary files
+### ============================================================================
+<IfModule mod_rewrite.c>
+    ## -------------------------------------------------------------------------
+    ## Exempt directories
+    ## -------------------------------------------------------------------------
+    RewriteRule ^\.well-known/ - [L]
+
+    ## -------------------------------------------------------------------------
+    ## Tight control over static files
+    ## -------------------------------------------------------------------------
+    ## Allow limited access to static files in the media ans user_code folders
+   RewriteRule ^(media|user_code)/.*\.(7z|bmp|bz2|css|eot|gif|gz|ico|jpe|jpeg|jpg|js|json|map|mov|mp3|mp4|mpeg|mpg|ogg|ogv|pdf|png|rar|svg|tar|tbz|tgz|ttf|txt|tz|wav|webp|woff|woff2|xml|xsl|zip)$ - [L,NC]
+   RewriteRule ^(media|user_code)/ - [F]
+   ## Disallow front-end access for system folders and files
+   RewriteRule ^(.idea|.github|assets|build|cache|cli|includes|languages|log|node_modules|release|src|templates|tmp|vendor|ViewTemplates)/ - [F]
+   RewriteRule ^(.gitattributes|.gitignore|.htaccess|htaccess.txt|build.xml|CHANGELOG|composer|config\.php|version\.php|defines\.php|LICENSE|package|README|RELEASENOTES|TODO|php\.ini|.user\.ini) - [F]
+
+
+    ## -------------------------------------------------------------------------
+    ## No arbitrary .php file execution
+    ## -------------------------------------------------------------------------
+    ## Explicitly allow access to the site's index.php main entry point file
+    RewriteRule ^index.php(/.*){0,1}$ - [L]
+    ## Explicitly allow access to the site's robots.txt file
+    RewriteRule ^robots.txt$ - [L]
+    ## Disallow access to all other PHP files throughout the site, unless they are explicitly allowed
+    RewriteCond %{REQUEST_FILENAME} (\.php)$
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule (.*\.php)$ - [F]
+
+    # Disallow access to all other front-end folders
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_URI} !^/
+    RewriteRule .* - [F]
+
+    # Disallow access to all other front-end files
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule !^index.php$ - [F]
+</IfModule>
+
+### ============================================================================
+### Basic protections through HTTP headers
+### ============================================================================
+<IfModule mod_headers.c>
+    <FilesMatch "\.(php|htm|html|HTM|HTML)">
+        ## Protect against clickjacking
+	    Header always set X-Frame-Options SAMEORIGIN
+
+	    ## Reflected XSS prevention
+        Header set X-XSS-Protection "1; mode=block"
+	</FilesMatch>
+</IfModule>
+
+## Reduce MIME type security risks
+<IfModule mod_headers.c>
+	Header set X-Content-Type-Options "nosniff"
+</IfModule>
+
+## Referrer-policy
+<IfModule mod_headers.c>
+	Header always set Referrer-Policy "same-origin"
+</IfModule>
+
+
+### ============================================================================
+### Server information obfuscation
+### ============================================================================
+<IfModule mod_headers.c>
+	Header always unset X-Powered-By
+	Header always unset X-Content-Powered-By
+</IfModule>
+
+ServerSignature Off
+
+### ============================================================================
+### HSTS — For HTTPS–only sites
+### ============================================================================
+## Remove if your server does not run under HTTPS (WHY?!!!!)
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+</IfModule>
+
+### ============================================================================
+### Disable TRACK and TRACE (XST prevention)
+###
+### See https://owasp.org/www-community/attacks/Cross_Site_Tracing
+### ============================================================================
+## Disable HTTP methods TRACE and TRACK (protect against XST)
+RewriteCond %{REQUEST_METHOD} ^TRACE
+RewriteRule ^ - [R=405,L]
+
+### ============================================================================
+### Set default character set to UTF-8
+### ============================================================================
+# Serves all resources labeled as `text/html` or `text/plain` with the media
+# type `charset` parameter set to `UTF-8`.
+AddDefaultCharset utf-8
+
+
+# Serve the following file types with the media type `charset` parameter set to `UTF-8`.
+#
+# https://httpd.apache.org/docs/current/mod/mod_mime.html#addcharset
+<IfModule mod_mime.c>
+	AddCharset utf-8 .css \
+					 .js \
+					 .json \
+					 .jsonld \
+					 .webapp \
+					 .xml
+</IfModule>
