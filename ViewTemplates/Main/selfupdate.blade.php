@@ -19,15 +19,17 @@ $latestVersion     = $model->getLatestVersion();
 ?>
 @if ($updateInformation->stuck)
     <div class="alert alert-danger d-flex flex-row justify-content-between align-items-center">
-        <span class="fa fa-xmark-circle" aria-hidden="true"></span>
-        @lang('PANOPTICON_SELFUPDATE_LBL_STUCK_HEAD')
-    </div>
-    <div>
-        <a class="btn btn-info btn-sm" role="button"
-           href="@route('index.php?view=selfupdate')">
-            <span class="fa fa-info-circle" aria-hidden="true"></span>
-            @lang('PANOPTICON_SELFUPDATE_LBL_MAIN_MORE_INFO')
-        </a>
+        <div>
+            <span class="fa fa-xmark-circle" aria-hidden="true"></span>
+            @lang('PANOPTICON_SELFUPDATE_LBL_STUCK_HEAD')
+        </div>
+        <div>
+            <a class="btn btn-info btn-sm" role="button"
+               href="@route('index.php?view=selfupdate')">
+                <span class="fa fa-info-circle" aria-hidden="true"></span>
+                @lang('PANOPTICON_SELFUPDATE_LBL_MAIN_MORE_INFO')
+            </a>
+        </div>
     </div>
 @elseif (!$updateInformation->loadedUpdate)
     <div class="alert alert-warning d-flex flex-row justify-content-between align-items-center">
