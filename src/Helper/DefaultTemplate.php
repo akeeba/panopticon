@@ -86,6 +86,20 @@ abstract class DefaultTemplate
 		Factory::getApplication()->getDocument()->addScript(Uri::base() . 'media/js/darkmode.min.js', async: true);
 	}
 
+	private static function isSubmenuActive(Item $item): bool
+	{
+		if (count($item->getChildren()) === 0)
+		{
+			return $item->isActive();
+		}
+
+		return array_reduce(
+			$item->getChildren(),
+			fn(bool $carry, Item $item) => $carry || self::isSubmenuActive($item),
+			false
+		);
+	}
+
 	public static function getRenderedMenuItem(Item $item, string $listItemClass = 'nav-item', $anchorClass = 'nav-link', bool $onlyChildren = false): string
 	{
 		// If it's the root menu item render its children without wrapping in a dropdown
@@ -101,33 +115,63 @@ abstract class DefaultTemplate
 		$html        = '';
 		$hasChildren = count($item->getChildren()) > 0;
 
+		$isActiveItem = self::isSubmenuActive($item);
+
 		$liClass = $listItemClass . ($hasChildren ? ' dropdown' : '');
-		$liClass .= $item->isActive() ? ' active' : '';
+		$liClass .= $isActiveItem ? ' active' : '';
 		$html    .= sprintf("<li class=\"%s\">", $liClass);
+
+		$icon = $item->getIcon();
+
+		if (!empty($icon))
+		{
+			$icon = sprintf('<span class="%s me-1" aria-hidden="true"></span>', $icon);
+		}
 
 		if (!$hasChildren)
 		{
-			$aClass = $anchorClass . ($item->isActive() ? ' active' : '');
-			$aria   = $item->isActive() ? ' aria-current="page"' : '';
+			$aClass = $anchorClass . ($isActiveItem ? ' active' : '');
 
-			$html .= sprintf(
-				'<a class="%s%s" href="%s">%s</a>',
-				$aClass,
-				$aria,
-				$item->getUrl(),
-				$item->getTitle()
-			);
+			if (str_ends_with($item->getUrl(), '#!disabled!'))
+			{
+				$aClass .= ' disabled';
+			}
+
+			$aria   = $isActiveItem ? ' aria-current="page"' : '';
+
+			if ($item->getTitle() === '---')
+			{
+				$html .= '<hr class="dropdown-divider" />';
+			}
+			else
+			{
+				$html .= sprintf(
+					'<a class="%s%s" href="%s">%s%s</a>',
+					$aClass,
+					$aria,
+					$item->getUrl(),
+					$icon,
+					$item->getTitle()
+				);
+			}
 		}
 		else
 		{
+			$aClass = $anchorClass . ($isActiveItem ? ' active' : '');
+			$aria   = $isActiveItem ? ' aria-current="page"' : '';
+
 			$html .= sprintf(
-				'<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">%s</a>',
+				'<a class="nav-link dropdown-toggle %s" href="#" role="button" data-bs-toggle="dropdown"%s>%s%s</a>',
+				$aClass,
+				$aria,
+				$icon,
 				$item->getTitle()
 			);
-			$html .= '<ul class="dropdown-menu">';
+			$html .= '<ul class="dropdown-menu dropdown-menu-end">';
 			$html .= array_reduce(
 				$item->getChildren(),
-				fn(string $carry, Item $item) => $carry . self::getRenderedMenuItem($item, '', 'dropdown-item')
+				fn(string $carry, Item $item) => $carry . self::getRenderedMenuItem($item, '', 'dropdown-item'),
+				''
 			);
 			$html .= '</ul>';
 		}

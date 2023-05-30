@@ -34,32 +34,95 @@ class Application extends AWFApplication
 
 	private const MAIN_MENU = [
 		[
-			'view' => 'main',
+			'view'        => 'main',
 			'permissions' => [],
+			'icon'        => 'fa fa-eye',
 		],
 		[
-			'view' => 'sites',
-			'permissions' => ['panopticon.admin'],
-		],
-		[
-			'view' => 'tasks',
+			'url'         => null,
 			'permissions' => ['panopticon.super'],
+			'name'        => 'administrator',
+			'title'       => 'PANOPTICON_APP_MENU_TITLE_ADMINISTRATION',
+			'icon'        => 'fa fa-screwdriver-wrench',
+			'submenu'     => [
+				[
+					'view'        => 'sysconfig',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-gears',
+				],
+				[
+					'url'         => null,
+					'name'        => 'separator01',
+					'title'       => '---',
+					'permissions' => ['panopticon.super'],
+				],
+				[
+					'view'        => 'sites',
+					'permissions' => ['panopticon.admin'],
+					'icon'        => 'fa fa-globe',
+				],
+				[
+					'view'        => 'mailtemplates',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-envelope',
+				],
+				[
+					'url'         => null,
+					'name'        => 'separator02',
+					'title'       => '---',
+					'permissions' => ['panopticon.super'],
+				],
+				[
+					'view'        => 'tasks',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-list-check',
+				],
+			],
 		],
 		[
-			'view' => 'mailtemplates',
-			'permissions' => ['panopticon.super'],
-		],
-		[
-			'view' => 'sysconfig',
-			'permissions' => ['panopticon.super'],
-		],
-		[
-			'view' => 'login',
-			'task' => 'logout',
-			'title' => 'PANOPTICON_APP_LBL_LOGOUT',
-			'permissions' => [],
+			'url'          => null,
+			'permissions'  => [],
+			'name'         => 'user_submenu',
+			'icon'         => 'fa fa-user',
+			'title'        => '',
+			'titleHandler' => [self::class, 'getUserMenuTitle'],
+			'submenu'      => [
+				[
+					'url'          => '#!disabled!',
+					'name'         => 'user_username',
+					'title'        => '',
+					'permissions'  => [],
+					'titleHandler' => [self::class, 'getUserNameTitle'],
+				],
+				[
+					'url'         => null,
+					'name'        => 'user_separator01',
+					'title'       => '---',
+					'permissions' => [],
+				],
+				[
+					'view'        => 'login',
+					'task'        => 'logout',
+					'title'       => 'PANOPTICON_APP_LBL_LOGOUT',
+					'permissions' => [],
+					'icon'        => 'fa fa-right-from-bracket',
+				],
+			],
 		],
 	];
+
+	public static function getUserMenuTitle(): string
+	{
+		return Factory::getContainer()->userManager->getUser()->getUsername();
+	}
+
+	public static function getUserNameTitle(): string
+	{
+		return sprintf(
+			'<span class="small text-muted">%s</span>',
+			Factory::getContainer()->userManager->getUser()->getName()
+		);
+	}
 
 	public function initialise()
 	{
@@ -159,13 +222,13 @@ class Application extends AWFApplication
 		}
 	}
 
-	private function initialiseMenu(): void
+	private function initialiseMenu(array $items = self::MAIN_MENU, ?Item $parent = null): void
 	{
 		$menu  = $this->getDocument()->getMenu();
 		$user  = $this->container->userManager->getUser();
 		$order = 0;
 
-		foreach (self::MAIN_MENU as $params)
+		foreach ($items as $params)
 		{
 			$allowed = array_reduce(
 				$params['permissions'] ?? [],
@@ -184,17 +247,47 @@ class Application extends AWFApplication
 			}
 
 			$order += 10;
+
 			$options = [
-				'show'   => $params['show'] ?? ['main'],
-				'params' => $params,
-				'name'   => $params['name'] ?? $params['view'],
-				'title'  => Text::_(
+				'show'         => $params['show'] ?? ['main'],
+				'name'         => $params['name'] ?? $params['view'],
+				'title'        => Text::_(
 					$params['title'] ?? sprintf('%s_%s_TITLE', $this->getName(), $params['view'])
 				),
-				'order'  => $params['order'] ?? $order,
+				'order'        => $params['order'] ?? $order,
+				'titleHandler' => $params['titleHandler'] ?? null,
+				'icon'         => $params['icon'] ?? null,
 			];
 
+			if (isset($params['url']))
+			{
+				$options['url'] = $params['url'];
+			}
+			elseif (isset($params['view']))
+			{
+				$options['params'] = [
+					'view' => $params['view'],
+				];
+			}
+			elseif (isset($params['params']))
+			{
+				$options['params'] = $params['params'];
+			}
+
 			$item = new Item($options, $this->container);
+
+			if ($parent !== null)
+			{
+				$parent->addChild($item);
+
+				continue;
+			}
+
+			if ($params['submenu'] ?? null)
+			{
+				$this->initialiseMenu($params['submenu'], $item);
+			}
+
 			$menu->addItem($item);
 		}
 	}
