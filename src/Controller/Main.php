@@ -73,14 +73,16 @@ class Main extends Controller
 			$this->input->set('savestate', true);
 		}
 
-		/** @var \Akeeba\Panopticon\Model\Setup $model */
-		$model = $this->getModel('Setup');
-		// Check the installed default tasks
-		$model->checkDefaultTasks();
-		// Make sure the DB tables are installed correctly
-		$model->installDatabase();
-
-		$this->getModel('main')->getKnownExtensions();
+		// If the current user has the Super privilege we're going to do some housekeeping
+		if ($this->container->userManager->getUser()->getPrivilege('panopticon.super'))
+		{
+			/** @var \Akeeba\Panopticon\Model\Setup $model */
+			$model = $this->getModel('Setup');
+			// Check the installed default tasks
+			$model->checkDefaultTasks();
+			// Make sure the DB tables are installed correctly
+			$model->installDatabase();
+		}
 
 		// Pass the Selfupdate model to the view
 		$selfUpdateModel = $this->getModel('selfupdate');
