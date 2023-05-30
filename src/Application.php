@@ -9,10 +9,9 @@ namespace Akeeba\Panopticon;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Application\UserAuthenticationGoogle;
 use Akeeba\Panopticon\Application\UserAuthenticationPassword;
-use Akeeba\Panopticon\Application\UserAuthenticationYubikey;
 use Akeeba\Panopticon\Application\UserPrivileges;
+use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Application\Application as AWFApplication;
 use Awf\Application\TransparentAuthentication;
@@ -26,6 +25,8 @@ use Exception;
 
 class Application extends AWFApplication
 {
+	use MFATrait;
+
 	/**
 	 * LIst of view names we're allowed to access directly, without a login, and without redirection to the setup view
 	 */
@@ -68,6 +69,11 @@ class Application extends AWFApplication
 		$this->setTemplate('default');
 		$this->loadLanguages();
 
+		// Attach the user privileges to the user manager
+		$manager = $this->container->userManager;
+
+		$this->attachPrivileges($manager);
+
 		if (!$this->redirectToSetup())
 		{
 			$this->container->appConfig->loadConfiguration();
@@ -78,18 +84,18 @@ class Application extends AWFApplication
 
 			$this->applyTimezonePreference();
 			$this->applySessionTimeout();
-			$this->conditionalRedirectToCronSetup();
+
+			if (!$this->needsMFA())
+			{
+				$this->conditionalRedirectToCronSetup();
+			}
+			else
+			{
+				$this->conditionalRedirectToCaptive();
+			}
 		}
 
 		$this->loadRoutes();
-
-		// Attach the user privileges to the user manager
-		$manager = $this->container->userManager;
-
-		$this->attachPrivileges($manager);
-
-		// Only apply TFA when debug mode has not been enabled
-		$this->applyTwoFactorAuthentication($manager);
 
 		// Show the login page when necessary
 		$this->redirectToLogin();
@@ -365,18 +371,6 @@ class Application extends AWFApplication
 		$manager->registerAuthenticationPlugin('password', UserAuthenticationPassword::class);
 	}
 
-	private function applyTwoFactorAuthentication(ManagerInterface $manager): void
-	{
-		// Turn off TFA when debugging
-		if (defined('AKEEBADEBUG'))
-		{
-			return;
-		}
-
-		$manager->registerAuthenticationPlugin('yubikey', UserAuthenticationYubikey::class);
-		$manager->registerAuthenticationPlugin('google', UserAuthenticationGoogle::class);
-	}
-
 	private function redirectToLogin(): void
 	{
 		// Get the view. Necessary to go through $this->getContainer()->input as it may have already changed
@@ -472,5 +466,17 @@ class Application extends AWFApplication
 
 		// Let the user finish the installation at their own time
 		$this->redirect(Uri::rebase('index.php?view=setup&task=cron', $this->container));
+	}
+
+	private function conditionalRedirectToCaptive(): void
+	{
+		if (!$this->needsRedirectToCaptive())
+		{
+			return;
+		}
+
+		$captiveUrl = $this->container->router->route('index.php?view=captive');
+
+		$this->redirect($captiveUrl);
 	}
 }

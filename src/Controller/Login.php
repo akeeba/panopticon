@@ -31,7 +31,7 @@ class Login extends Controller
 			$password = $this->input->get('password', '', 'raw');
 			$secret   = $this->input->get('secret', '', 'raw');
 
-			// Try to    log in the user
+			// Try to log in the user
 			$manager = $this->container->userManager;
 			$manager->loginUser($username, $password, ['secret' => $secret]);
 

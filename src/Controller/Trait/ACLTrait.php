@@ -14,6 +14,9 @@ defined('AKEEBA') || die;
 trait ACLTrait
 {
 	protected array $aclChecks = [
+		'captive'      => [
+			'*' => ['*'],
+		],
 		'cron'      => [
 			'*' => ['*'],
 		],
@@ -28,6 +31,12 @@ trait ACLTrait
 		],
 		'main'      => [
 			'*' => ['view'],
+		],
+		'mfamethod' => [
+			'*' => ['super', 'admin', 'view', 'run']
+		],
+		'mfamethods' => [
+			'*' => ['super', 'admin', 'view', 'run']
 		],
 		'setup'     => [
 			'cron' => ['super'],

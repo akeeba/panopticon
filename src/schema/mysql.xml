@@ -132,6 +132,26 @@ CREATE TABLE IF NOT EXISTS `#__mailtemplates`
             ]]></query>
         </action>
 
+        <action table="#__mfa" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__mfa`
+(
+    `id`         SERIAL,
+    `user_id`    BIGINT UNSIGNED NOT NULL,
+    `title`      VARCHAR(255)    NOT NULL,
+    `method`     VARCHAR(100)    NOT NULL,
+    `default`    TINYINT(1)      NOT NULL DEFAULT 0,
+    `options`    LONGTEXT        null,
+    `created_on` DATETIME        NULL,
+    `last_used`  DATETIME        NULL,
+    INDEX `#__mfa_user` (`user_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  DEFAULT COLLATE = utf8mb4_unicode_ci;
+            ]]></query>
+        </action>
+
         <!-- Install the common SQL -->
         <action table="#__akeeba_common" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[
