@@ -46,7 +46,7 @@ class Container extends AWFContainer
 		};
 
 		$values['httpFactory'] ??= function (Container $c) {
-			return new HttpFactory();
+			return new HttpFactory($c);
 		};
 
 		$values['mailer'] ??= function (Container $c) {

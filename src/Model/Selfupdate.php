@@ -17,6 +17,7 @@ use Awf\Mvc\Model;
 use DateInterval;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use RuntimeException;
 
 class Selfupdate extends Model
@@ -64,17 +65,14 @@ class Selfupdate extends Model
 		return $cacheController->get(function () use ($force): UpdateInformation {
 			/** @var Client $httpClient */
 			$httpClient = $this->container->httpFactory->makeClient(cache: !$force, cacheTTL: 21600);
-			$options    = ['timeout' => 5.0];
+			$options    = $this->container->httpFactory->getDefaultRequestOptions();
 
-			if (defined('AKEEBA_CACERT_PEM'))
-			{
-				$options['verify'] = AKEEBA_CACERT_PEM;
-			}
+			$options[RequestOptions::TIMEOUT] = 5.0;
 
 			if (str_contains($this->updateStreamUrl, 'api.github.com'))
 			{
-				$options['headers'] = array_merge(
-					$options['headers'] ?? [],
+				$options[RequestOptions::HEADERS] = array_merge(
+					$options[RequestOptions::HEADERS] ?? [],
 					[
 						'Accept'     => 'application/vnd.github+json', 'X-GitHub-Api-Version' => '2022-11-28',
 						'User-Agent' => 'panopticon/' . $this->currentVersion,
@@ -134,11 +132,11 @@ class Selfupdate extends Model
 			return null;
 		}
 
-		$versions = array_keys($updateInfo->versions);
+		$versions    = array_keys($updateInfo->versions);
 		$bestVersion = array_reduce(
 			$versions,
 			fn($carry, $someVersion) => empty($carry) ? $someVersion : (
-				version_compare($carry, $someVersion, 'lt') ? $someVersion : $carry
+			version_compare($carry, $someVersion, 'lt') ? $someVersion : $carry
 			),
 			null
 		);
@@ -221,12 +219,9 @@ class Selfupdate extends Model
 
 		/** @var Client $httpClient */
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
-		$options    = ['timeout' => 5.0];
+		$options = $this->container->httpFactory->getDefaultRequestOptions();
 
-		if (defined('AKEEBA_CACERT_PEM'))
-		{
-			$options['verify'] = AKEEBA_CACERT_PEM;
-		}
+		$options[RequestOptions::TIMEOUT] = 5.0;
 
 		// If the file already exists do a HEAD to see if we have already downloaded it.
 		try
@@ -258,7 +253,7 @@ class Selfupdate extends Model
 
 		// Download the file
 		$options['sink'] = $targetLocation;
-		$response = $httpClient->get($url, $options);
+		$response        = $httpClient->get($url, $options);
 
 		return $targetLocation;
 	}

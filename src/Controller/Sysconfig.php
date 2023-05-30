@@ -18,7 +18,7 @@ class Sysconfig extends Controller
 	use ACLTrait;
 
 	private const CHECKBOX_KEYS = [
-		'debug', 'log_rotate_compress', 'phpwarnings', 'mail_online', 'smtpauth',
+		'debug', 'log_rotate_compress', 'phpwarnings', 'mail_online', 'smtpauth', 'proxy_enabled,'
 	];
 
 	public function execute($task)

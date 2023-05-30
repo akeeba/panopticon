@@ -9,9 +9,11 @@ namespace Akeeba\Panopticon\Library\Http;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Container;
+use Awf\Uri\Uri;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\RequestOptions;
 use Kevinrob\GuzzleCache\CacheMiddleware;
 use Kevinrob\GuzzleCache\KeyValueHttpHeader;
 use Kevinrob\GuzzleCache\Storage\Psr6CacheStorage;
@@ -21,6 +23,8 @@ use Kevinrob\GuzzleCache\Strategy\PrivateCacheStrategy;
 class HttpFactory
 {
 	private static $instances = [];
+
+	public function __construct(private Container $container) {}
 
 	/**
 	 * Makes a new Guzzle HTTP client instance. All parameters are options.
@@ -59,7 +63,7 @@ class HttpFactory
 		if ($cache)
 		{
 			$cachePool = new Psr6CacheStorage(
-				Factory::getContainer()->cacheFactory->pool('http')
+				$this->container->cacheFactory->pool('http')
 			);
 
 			if ($cacheTTL !== null && $cacheTTL > 0)
@@ -94,5 +98,92 @@ class HttpFactory
 		}
 
 		return $client;
+	}
+
+	/**
+	 * Get the default request options.
+	 *
+	 * This currently takes into account the following:
+	 * - **Proxy settings** defined in the application configuration
+	 * - **SSL CA bundle** defined in the AKEEBA_CACERT_PEM constant in the bootstrap.php file
+	 *
+	 * @return array
+	 */
+	public function getDefaultRequestOptions(): array
+	{
+		$options = [];
+
+		$proxySettings = $this->getProxySettings();
+
+		if (!empty($proxySettings))
+		{
+			$options[RequestOptions::PROXY] = $proxySettings;
+		}
+
+		if (defined('AKEEBA_CACERT_PEM'))
+		{
+			$options[RequestOptions::VERIFY] = AKEEBA_CACERT_PEM;
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Construct the Guzzle proxy settings based on the application configuration.
+	 *
+	 * @return array|null The proxy settings; NULL if no proxy is defined and/or requested.
+	 * @see https://docs.guzzlephp.org/en/stable/request-options.html#proxy
+	 */
+	private function getProxySettings(): ?array
+	{
+		// Get the application configuration variables
+		$config  = $this->container->appConfig;
+		$enabled = $config->get('proxy_enabled', '');
+		$host    = trim($config->get('proxy_host', ''));
+		$port    = (int) $config->get('proxy_port', 0);
+		$user    = $config->get('proxy_user', '');
+		$pass    = $config->get('proxy_pass', '');
+		$noProxy = $config->get('proxy_no', '');
+
+		// Are we really enabled and ready to use a proxy server?
+		$enabled = $enabled && !empty($host) && is_int($port) && $port > 0 && $port < 65536;
+
+		if (!$enabled)
+		{
+			return null;
+		}
+
+		// Construct the proxy URL out of the individual components
+		$proxyUri = new Uri('http://' . $host);
+		$proxyUri->setPort($port);
+
+		if (!empty($user) && !empty($pass))
+		{
+			$proxyUri->setUser($user);
+			$proxyUri->setPass($pass);
+		}
+
+		$proxyUrl = $proxyUri->toString(['scheme', 'user', 'pass', 'host', 'port']);
+
+		// Get the no proxy domain names
+		if (!is_array($noProxy))
+		{
+			$noProxy = explode(',', $noProxy);
+			$noProxy = array_map('trim', $noProxy);
+			$noProxy = array_filter($noProxy);
+		}
+
+		// Construct and return the Guzzle proxy settings
+		$proxySettings = [
+			'http'  => $proxyUrl,
+			'https' => $proxyUrl,
+		];
+
+		if (!empty($noProxy))
+		{
+			$proxySettings['no'] = $noProxy;
+		}
+
+		return $proxySettings;
 	}
 }

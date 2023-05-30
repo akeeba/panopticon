@@ -21,6 +21,7 @@ use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(name: 'extensionsupdate', description: 'PANOPTICON_TASKTYPE_EXTENSIONSUPDATE')]
@@ -136,7 +137,7 @@ class ExtensionsUpdate extends AbstractCallback
 		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/update');
 
 		$options = array_merge($options, [
-			'form_params' => [
+			RequestOptions::FORM_PARAMS => [
 				'eid' => [$extensionId],
 			],
 		]);

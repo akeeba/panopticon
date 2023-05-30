@@ -92,12 +92,12 @@ class PhpVersion
 		return array_keys($phpInfo)[1];
 	}
 
-    public function getLatestBranch(): string
-    {
-        $phpInfo = $this->getPhpEolInformation();
+	public function getLatestBranch(): string
+	{
+		$phpInfo = $this->getPhpEolInformation();
 
-        return array_keys($phpInfo)[0];
-    }
+		return array_keys($phpInfo)[0];
+	}
 
 	public function isEOL(string $version): bool
 	{
@@ -122,7 +122,8 @@ class PhpVersion
 
 		return $cacheController->get(
 			function () {
-				$json = $this->httpClient->get(self::API_ENDPOINT)?->getBody()?->getContents() ?: [];
+				$options = $this->container->httpFactory->getDefaultRequestOptions();
+				$json    = $this->httpClient->get(self::API_ENDPOINT, $options)?->getBody()?->getContents() ?: [];
 
 				try
 				{
@@ -133,7 +134,7 @@ class PhpVersion
 					$rawData = [];
 				}
 
-				$ret      = [];
+				$ret = [];
 
 				try
 				{

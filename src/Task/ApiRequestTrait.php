@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Task;
 
 use Akeeba\Panopticon\Model\Site;
 use Awf\Registry\Registry;
+use GuzzleHttp\RequestOptions;
 
 defined('AKEEBA') || die;
 
@@ -17,25 +18,31 @@ trait ApiRequestTrait
 {
 	protected function getRequestOptions(Site $site, string $path)
 	{
-		$url            = $site->url . $path;
-		$totalTimeout   = max(30, $this->container->appConfig->get('max_execution', 60) / 2);
-		$connectTimeout = max(5, $totalTimeout / 5);
+		// Get the default options
+		$options = $this->container->httpFactory->getDefaultRequestOptions();
 
-		$authHeaders = $this->getAuthenticationHeaders($site);
-		$options     = [
-			'headers'         => array_merge($authHeaders, [
+		// Add the authentication options
+		$authHeaders                      = $this->getAuthenticationHeaders($site);
+		$options[RequestOptions::HEADERS] = array_merge(
+			$authHeaders,
+			[
 				'Accept'     => 'application/vnd.api+json',
 				'User-Agent' => 'panopticon/' . AKEEBA_PANOPTICON_VERSION,
-			]),
-			'connect_timeout' => $connectTimeout,
-			'timeout'         => $totalTimeout,
-		];
+			]
+		);
 
-		if (defined('AKEEBA_CACERT_PEM'))
-		{
-			$options['verify'] = AKEEBA_CACERT_PEM;
-		}
+		// Add timeout setting
+		$totalTimeout                     = max(30, $this->container->appConfig->get('max_execution', 60) / 2);
+		$options[RequestOptions::TIMEOUT] = $totalTimeout;
 
+		// Add connection timeout setting
+		$connectTimeout                           = max(5, $totalTimeout / 5);
+		$options[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout;
+
+		// Construct the API URL
+		$url = $site->url . $path;
+
+		// Return the results
 		return [$url, $options];
 	}
 

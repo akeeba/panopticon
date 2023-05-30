@@ -27,6 +27,7 @@ use Awf\Registry\Registry;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use RuntimeException;
 
 /**
@@ -94,20 +95,15 @@ class Site extends DataModel
 		{
 			$totalTimeout   = max(30, $this->container->appConfig->get('max_execution', 60) / 2);
 			$connectTimeout = max(5, $totalTimeout / 5);
-			$options     = [
-				'headers'         => [
-					'Accept'     => 'application/vnd.api+json',
-					'User-Agent' => 'panopticon/' . AKEEBA_PANOPTICON_VERSION,
-				],
-				'connect_timeout' => $connectTimeout,
-				'timeout'         => $totalTimeout,
-				'http_errors'     => false,
-			];
 
-			if (defined('AKEEBA_CACERT_PEM'))
-			{
-				$options['verify'] = AKEEBA_CACERT_PEM;
-			}
+			$options = $container->httpFactory->getDefaultRequestOptions();
+			$options[RequestOptions::HEADERS] = [
+				'Accept'     => 'application/vnd.api+json',
+				'User-Agent' => 'panopticon/' . AKEEBA_PANOPTICON_VERSION,
+			];
+			$options[RequestOptions::HTTP_ERRORS] = false;
+			$options[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout;
+			$options[RequestOptions::TIMEOUT] = $totalTimeout;
 
 			$response = $client->get($this->url . '/index.php/v1/extensions', $options);
 		}
@@ -157,7 +153,7 @@ class Site extends DataModel
 
 		// Try to access index.php/v1/extensions **authenticated**
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/extensions?page[limit]=2000');
-		$options['http_errors'] = false;
+		$options[RequestOptions::HTTP_ERRORS] = false;
 
 		$response = $client->get($url, $options);
 
