@@ -38,15 +38,6 @@ use Awf\Text\Text;
             <label for="password">@lang('PANOPTICON_LOGIN_LBL_PASSWORD')</label>
         </div>
 
-        @if (!defined('AKEEBADEBUG'))
-            <div class="form-floating mb-3">
-                <input type="text" name="secret" id="secret" class="form-control"
-                       placeholder="@lang('PANOPTICON_LOGIN_LBL_SECRETCODE')"
-                       value="{{{ $this->secret ?? '' }}}">
-                <label for="secret">@lang('PANOPTICON_LOGIN_LBL_SECRETCODE')</label>
-            </div>
-        @endif
-
         <button type="submit" class="w-100 btn btn-primary btn-lg"
                 id="btnLoginSubmit">
             <span class="fa fa-user-check" aria-hidden="true"></span>

@@ -199,7 +199,7 @@ class ExtensionsUpdate extends AbstractCallback
 					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name,
 					implode(' • ', $status->attributes?->messages ?? [])
 				),
-				$status
+				(array) $status
 			);
 
 			$updateStatus[$extensionId] = [
@@ -218,7 +218,7 @@ class ExtensionsUpdate extends AbstractCallback
 				'Extension updates for site #%d (%s): installed update for %s “%s”',
 				$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name
 			),
-			$status
+			(array) $status
 		);
 
 		$updateStatus[$extensionId] = [
