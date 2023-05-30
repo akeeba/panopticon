@@ -12,12 +12,19 @@ use Awf\Text\Text;
 // Used for type hinting
 /** @var  \Akeeba\Panopticon\View\Login\Html  $this */
 
+$css = <<< CSS
+svg.panopticonLogoColour {height: 6em;margin-bottom: 1em;}
+CSS;
+
 ?>
+@inlinecss($css)
+
 <form role="form" action="@route('index.php?view=login&task=login')"
       class="vh-100 d-flex flex-column justify-content-center align-items-center m-0 p-0"
       method="POST" id="loginForm">
 
-    <header class="mb-4">
+    <header class="mb-4 text-center">
+	    {{ file_get_contents(APATH_MEDIA . '/images/logo_colour.svg') }}
         <h3 class="h2 text-center text-primary-emphasis">
             @lang('PANOPTICON_LOGIN_LBL_PLEASELOGIN')
         </h3>
@@ -40,7 +47,7 @@ use Awf\Text\Text;
 
         <button type="submit" class="w-100 btn btn-primary btn-lg"
                 id="btnLoginSubmit">
-            <span class="fa fa-user-check" aria-hidden="true"></span>
+            <span class="fa fa-user-check me-1" aria-hidden="true"></span>
             @lang('PANOPTICON_LOGIN_LBL_LOGIN')
         </button>
 
