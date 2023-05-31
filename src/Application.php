@@ -305,6 +305,11 @@ class Application extends AWFApplication
 				$options['params'] = [
 					'view' => $params['view'],
 				];
+
+				if (isset($params['task']))
+				{
+					$options['params']['task'] = $params['task'];
+				}
 			}
 			elseif (isset($params['params']))
 			{
