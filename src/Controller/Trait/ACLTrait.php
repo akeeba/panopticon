@@ -8,60 +8,83 @@
 namespace Akeeba\Panopticon\Controller\Trait;
 
 use Akeeba\Panopticon\Exception\AccessDenied;
+use Awf\Utils\ArrayHelper;
 
 defined('AKEEBA') || die;
 
 trait ACLTrait
 {
+	/**
+	 * Per-view and per-task privileges.
+	 *
+	 * The possible privileges are:
+	 * - #      : Public access (even when logged out)
+	 * - *      : Any logged-in access, even without any other explicit privileges
+	 * - super  : Superusers
+	 * - admin  : Administrator access
+	 * - view   : View access
+	 * - run    : Execute access
+	 */
 	protected array $aclChecks = [
-		'captive'      => [
+		'captive'       => [
 			'*' => ['*'],
 		],
-		'cron'      => [
-			'*' => ['*'],
+		'cron'          => [
+			'*' => ['#'],
 		],
-		'emails'    => [
+		'emails'        => [
 			'*' => ['super'],
 		],
-		'groups'    => [
+		'groups'        => [
 			'*' => ['super'],
 		],
-		'login'     => [
-			'*' => ['*'],
+		'login'         => [
+			'*' => ['#'],
 		],
 		'mailtemplates' => [
 			'*' => ['super'],
 		],
-		'main'      => [
-			'*' => ['view'],
+		'main'          => [
+			'*' => ['*'],
 		],
-		'mfamethod' => [
-			'*' => ['super', 'admin', 'view', 'run']
+		'mfamethod'     => [
+			'*' => ['*'],
 		],
-		'mfamethods' => [
-			'*' => ['super', 'admin', 'view', 'run']
+		'mfamethods'    => [
+			'*' => ['*'],
 		],
-		'setup'     => [
+		'setup'         => [
 			'cron' => ['super'],
 			'*'    => ['*'],
 		],
-		'sites'     => [
-			'*' => ['admin'],
+		'sites'         => [
+			'browse'                             => ['*'],
+			'read'                               => ['read'],
+			'fixJoomlaCoreUpdateSite'            => ['run'],
+			'refreshSiteInformation'             => ['read'],
+			'refreshExtensionsInformation'       => ['read'],
+			'scheduleJoomlaUpdate'               => ['run'],
+			'clearUpdateScheduleError'           => ['run'],
+			'clearExtensionUpdatesScheduleError' => ['run'],
+			'scheduleExtensionUpdate'            => ['run'],
+			'*'                                  => ['admin'],
 		],
-		'selfupdate' => [
+		'selfupdate'    => [
 			'*' => ['super'],
 		],
-		'sysconfig' => [
+		'sysconfig'     => [
 			'*' => ['super'],
 		],
-		'tasks'     => [
+		'tasks'         => [
 			'*' => ['super'],
 		],
-		'users'    => [
-			'*' => ['super'],
+		'users'         => [
+			'*'     => ['super'],
 			// User read (profile view) and edit has its own privilege management as users can edit their own account
-			'edit' => ['*'],
-			'read' => ['*'],
+			'edit'  => ['*'],
+			'read'  => ['*'],
+			'save'  => ['*'],
+			'apply' => ['*'],
 		],
 	];
 
@@ -104,9 +127,36 @@ trait ACLTrait
 
 		$user = $this->container->userManager->getUser();
 
+		// Special case: public access. Requires the '#' privilege.
+		if (!$user->getId())
+		{
+			return array_reduce(
+				$requiredPrivileges,
+				fn($carry, $privilege) => $carry && $privilege === '#',
+				true
+			);
+		}
+
+		$id = $this->input->getInt('id', $this->input->get('cid', []));
+		$id = is_array($id) ? ArrayHelper::toInteger($id) : [(int) $id];
+		$id = (empty($id) ? 0 : array_pop($id)) ?: 0;
+
+		// Per-site privileges for the Site view
+		if (in_array(strtolower($view), ['sites', 'site']) && !empty($id))
+		{
+			return array_reduce(
+				$requiredPrivileges,
+				fn($carry,
+				   $privilege) => $carry && (($privilege === '*') || ($privilege === '#') || $user->authorise('panopticon.' . $privilege, $id)),
+				true
+			);
+		}
+
+		// Global privileges for everything else
 		return array_reduce(
 			$requiredPrivileges,
-			fn($carry, $privilege) => $carry && (($privilege === '*') || $user->getPrivilege('panopticon.' . $privilege)),
+			fn($carry,
+			   $privilege) => $carry && (($privilege === '*') || $user->getPrivilege('panopticon.' . $privilege)),
 			true
 		);
 	}
