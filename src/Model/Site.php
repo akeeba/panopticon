@@ -21,6 +21,7 @@ use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
 use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
 use Akeeba\Panopticon\Task\ApiRequestTrait;
 use Awf\Container\Container;
+use Awf\Database\Query;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
@@ -61,6 +62,57 @@ class Site extends DataModel
 		$this->fieldsSkipChecks[] = 'enabled';
 
 		$this->addBehaviour('filters');
+	}
+
+	public function buildQuery($overrideLimits = false)
+	{
+		$query = parent::buildQuery($overrideLimits);
+
+		$this->applyUserGroupsToQuery($query);
+
+		return $query;
+	}
+
+	private function applyUserGroupsToQuery(Query $query): void
+	{
+		// Get the user, so we can apply per group privilege checks
+		$user = $this->container->userManager->getUser();
+
+		// If the user is a Super User, or has a global view privilege, we have no checks to make
+		if ($user->getPrivilege('panopticon.view'))
+		{
+			return;
+		}
+
+		// In any other case, get the list of groups for the user and limit listing sites visible to these groups
+		$groupPrivileges = $user->getGroupPrivileges();
+
+		if (empty($groupPrivileges))
+		{
+			return;
+		}
+
+		// Filter out groups with read privileges
+		$groupPrivileges = array_filter(
+			$groupPrivileges,
+			fn($privileges) => in_array('panopticon.read', $privileges)
+		);
+
+		if (empty($groupPrivileges))
+		{
+			// There are no groups with read privileges. So, we have to return no results.
+			$query->where('FALSE');
+
+			return;
+		}
+
+		// Basically: a bunch of JSON_CONTAINS(`config`, '1', '$.config.groups') with ORs between them
+		$where = array_map(
+			fn($gid) => $query->jsonContains($query->quoteName('config'), $query->quote($gid), $query->quote('$.config.groups')),
+			array_keys($groupPrivileges)
+		);
+
+		$query->extendWhere('AND', $where,'OR');
 	}
 
 	public function check()

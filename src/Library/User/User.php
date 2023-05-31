@@ -22,7 +22,7 @@ class User extends \Awf\User\User
 	{
 		parent::bind($data);
 
-		$this->groupPrivileges = $this->getGroupPrivileges();
+		$this->groupPrivileges = $this->loadGroupPrivileges();
 	}
 
 	public function getPrivilege($privilege, $default = false)
@@ -71,7 +71,7 @@ class User extends \Awf\User\User
 			return false;
 		}
 
-		// TODO Evaluate user group privileges
+		// Evaluate user group privileges
 		foreach ($groupIDs as $gid)
 		{
 			if (!isset($this->groupPrivileges[$gid]))
@@ -88,7 +88,12 @@ class User extends \Awf\User\User
 		return false;
 	}
 
-	private function getGroupPrivileges(): array
+	public function getGroupPrivileges(): array
+	{
+		return $this->groupPrivileges;
+	}
+
+	private function loadGroupPrivileges(): array
 	{
 		$db       = Factory::getContainer()->db;
 		$groupIDs = implode(
