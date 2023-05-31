@@ -98,7 +98,6 @@ class ExtensionUpdatesDirector extends AbstractCallback
 		$globalExtUpdatePreferences = $sysConfigModel->getExtensionPreferencesAndMeta(null);
 		$defaultExtUpdatePreference = $this->container->appConfig->get('tasks_extupdate_install', 'none');
 
-
 		foreach ($siteIDs as $id)
 		{
 			$site->reset();
@@ -222,7 +221,17 @@ class ExtensionUpdatesDirector extends AbstractCallback
 				}
 			}
 
-			// Add/enable joomlaupdate task for this site if any updates were necessary
+			/**
+			 * If I am here there is at least one extension which needs automatic updates. Therefore, I need to make
+			 * sure that there is an extensions update task scheduled for this site.
+			 */
+			$this->scheduleExtensionsUpdateForSite($site, $this->container);
+
+			/**
+			 * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			 * LOGGING ONLY BELOW THIS LINE
+			 * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			 */
 			if ($numExtensions > 0)
 			{
 				if ($numExtensions === 1)
@@ -243,8 +252,6 @@ class ExtensionUpdatesDirector extends AbstractCallback
 						)
 					);
 				}
-
-				$this->scheduleExtensionsUpdateForSite($site, $this->container);
 
 				continue;
 			}
