@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Application\UserAuthenticationPassword;
 use Akeeba\Panopticon\Application\UserPrivileges;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
+use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Application\Application as AWFApplication;
 use Awf\Application\TransparentAuthentication;
@@ -132,15 +133,28 @@ class Application extends AWFApplication
 		$this->setTemplate('default');
 		$this->loadLanguages();
 
-		// Attach the user privileges to the user manager
-		$manager = $this->container->userManager;
+		// Will I have to redirect to the setup page?
+		$redirectToSetup = $this->redirectToSetup();
 
-		$this->attachPrivileges($manager);
-
-		if (!$this->redirectToSetup())
+		/**
+		 * DO NOT MOVE BELOW THE USER MANAGER INSTANTIATION.
+		 *
+		 * I need to tell the user manager to use a custom User class. The only way to do that is through the
+		 * application configuration. Therefore, I need to load the application configuration, if it exists, before
+		 * instantiating the user manager object.
+		 */
+		if (!$redirectToSetup)
 		{
 			$this->container->appConfig->loadConfiguration();
+		}
 
+		// Configure the user manager
+		$this->container->appConfig->set('user_class', User::class);
+		$manager = $this->container->userManager;
+		$this->attachUserManagerPlugins($manager);
+
+		if (!$redirectToSetup)
+		{
 			$this->container->session->setCsrfTokenAlgorithm(
 				$this->container->appConfig->get('session_token_algorithm', 'sha512')
 			);
@@ -458,7 +472,7 @@ class Application extends AWFApplication
 		}
 	}
 
-	private function attachPrivileges(ManagerInterface $manager): void
+	private function attachUserManagerPlugins(ManagerInterface $manager): void
 	{
 		$manager->registerPrivilegePlugin('panopticon', UserPrivileges::class);
 		$manager->registerAuthenticationPlugin('password', UserAuthenticationPassword::class);
