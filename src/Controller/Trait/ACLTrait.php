@@ -23,6 +23,9 @@ trait ACLTrait
 		'emails'    => [
 			'*' => ['super'],
 		],
+		'groups'    => [
+			'*' => ['super'],
+		],
 		'login'     => [
 			'*' => ['*'],
 		],
@@ -53,6 +56,12 @@ trait ACLTrait
 		],
 		'tasks'     => [
 			'*' => ['super'],
+		],
+		'users'    => [
+			'*' => ['super'],
+			// User read (profile view) and edit has its own privilege management as users can edit their own account
+			'edit' => ['*'],
+			'read' => ['*'],
 		],
 	];
 

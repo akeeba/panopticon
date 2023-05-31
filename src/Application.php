@@ -74,6 +74,22 @@ class Application extends AWFApplication
 					'permissions' => ['panopticon.super'],
 				],
 				[
+					'view'        => 'users',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-users',
+				],
+				[
+					'view'        => 'groups',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-users-between-lines',
+				],
+				[
+					'url'         => null,
+					'name'        => 'separator03',
+					'title'       => '---',
+					'permissions' => ['panopticon.super'],
+				],
+				[
 					'view'        => 'tasks',
 					'permissions' => ['panopticon.super'],
 					'icon'        => 'fa fa-list-check',
@@ -100,6 +116,13 @@ class Application extends AWFApplication
 					'name'        => 'user_separator01',
 					'title'       => '---',
 					'permissions' => [],
+				],
+				[
+					'view'        => 'user',
+					'task'        => 'read',
+					'title'       => 'PANOPTICON_USERS_TITLE_EDIT_MENU',
+					'permissions' => [],
+					'icon'        => 'fa fa-user-gear',
 				],
 				[
 					'view'        => 'login',

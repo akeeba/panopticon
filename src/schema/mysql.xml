@@ -152,6 +152,20 @@ CREATE TABLE IF NOT EXISTS `#__mfa`
             ]]></query>
         </action>
 
+        <action table="#__groups" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__groups`
+(
+    `id`         SERIAL,
+    `title`      VARCHAR(255) NOT NULL,
+    `privileges` JSON         NOT NULL DEFAULT ('{}')
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  DEFAULT COLLATE = utf8mb4_unicode_ci;
+            ]]></query>
+        </action>
+
         <!-- Install the common SQL -->
         <action table="#__akeeba_common" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[
