@@ -22,8 +22,6 @@ use Awf\Text\Text;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use LogicException;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 use RuntimeException;
 use Throwable;
 
@@ -109,11 +107,14 @@ class JoomlaUpdate extends AbstractCallback
 					 * Joomla! update.
 					 */
 					$vars       = $storage->get('email_variables', []);
+					$vars       = (array) $vars;
 					$newVersion = $vars['NEW_VERSION'] ?? null;
 					$oldVersion = $vars['OLD_VERSION'] ?? null;
 
-					if (!empty($newVersion) && !empty($oldVersion) && $newVersion != $oldVersion
-						&& $storage->get('email_after', true))
+					if (
+						!empty($newVersion) && !empty($oldVersion) && $newVersion != $oldVersion
+						&& $storage->get('email_after', true)
+					)
 					{
 						$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
 
@@ -177,17 +178,17 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$this->currentState = match ($this->currentState)
 		{
-			default         => 'download',
-			'download'      => 'beforeEvents',
-			'beforeEvents'  => 'enable',
-			'enable'        => 'extract',
-			'extract'       => 'postExtract',
-			'postExtract'   => 'finalise',
-			'finalise'      => 'reloadUpdates',
+			default => 'download',
+			'download' => 'beforeEvents',
+			'beforeEvents' => 'enable',
+			'enable' => 'extract',
+			'extract' => 'postExtract',
+			'postExtract' => 'finalise',
+			'finalise' => 'reloadUpdates',
 			'reloadUpdates' => 'siteInfo',
-			'siteInfo'      => 'afterEvents',
-			'afterEvents'   => 'email',
-			'email'         => 'finish',
+			'siteInfo' => 'afterEvents',
+			'afterEvents' => 'email',
+			'email' => 'finish',
 		};
 	}
 
@@ -299,8 +300,10 @@ class JoomlaUpdate extends AbstractCallback
 		$params         = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
 		$force          = $params->get('force', false);
 
-		if (!$force && !empty($currentVersion) && !empty($latestVersion)
-			&& version_compare($currentVersion, $latestVersion, 'ge'))
+		if (
+			!$force && !empty($currentVersion) && !empty($latestVersion)
+			&& version_compare($currentVersion, $latestVersion, 'ge')
+		)
 		{
 			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_UPDATE_AVAILABLE', $site->id,
 				$site->name, $currentVersion, $latestVersion));
@@ -324,8 +327,7 @@ class JoomlaUpdate extends AbstractCallback
 		$storage->set('site_id', $site->id);
 
 		$cc = array_map(
-			function (string $item)
-			{
+			function (string $item) {
 				$item = trim($item);
 
 				if (!str_contains($item, '<'))
@@ -347,8 +349,8 @@ class JoomlaUpdate extends AbstractCallback
 		);
 		$storage->set('email_cc', $cc);
 
-		$storage->set('email_after', (bool)($config?->config?->core_update?->email_after ?? true));
-		$storage->set('email_error', (bool)($config?->config?->core_update?->email_error ?? true));
+		$storage->set('email_after', (bool) ($config?->config?->core_update?->email_after ?? true));
+		$storage->set('email_error', (bool) ($config?->config?->core_update?->email_error ?? true));
 
 
 		// Finally, advance the state
@@ -727,9 +729,9 @@ class JoomlaUpdate extends AbstractCallback
 
 		// Send the request
 		$response = $this->container->httpFactory->makeClient(cache: false)
-												 ->post($url, array_merge($options, [
-													 'form_params' => $postData,
-												 ]));
+			->post($url, array_merge($options, [
+				'form_params' => $postData,
+			]));
 
 		// We must always get HTTP 200
 		if ($response->getStatusCode() !== 200)
@@ -905,7 +907,7 @@ class JoomlaUpdate extends AbstractCallback
 			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J404'));
 		}
 
-		$postData                = (array)$data;
+		$postData                = (array) $data;
 		$postData['password']    = $storage->get('update.password', '');
 		$postData['_randomJunk'] = sha1(random_bytes(32));
 
@@ -1052,7 +1054,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
-		$url  = $this->getExtractUrl($site);
+		$url = $this->getExtractUrl($site);
 
 		$this->logger->info(Text::sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTEXTRACT',
@@ -1143,7 +1145,7 @@ class JoomlaUpdate extends AbstractCallback
 	 */
 	private function runFinalise(object $task, Registry $storage): void
 	{
-		$site       = $this->getSite($task);
+		$site = $this->getSite($task);
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
@@ -1181,7 +1183,7 @@ class JoomlaUpdate extends AbstractCallback
 	 */
 	private function runReloadUpdates(object $task, Registry $storage): void
 	{
-		$site       = $this->getSite($task);
+		$site = $this->getSite($task);
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
@@ -1276,7 +1278,10 @@ class JoomlaUpdate extends AbstractCallback
 	}
 
 	private function sendEmail(
-		string $emailKey, Registry $storage, array $permissions = ['panopticon.super'], array $additionalVariables = []
+		string   $emailKey,
+		Registry $storage,
+		array    $permissions = ['panopticon.super'],
+		array    $additionalVariables = []
 	)
 	{
 		$this->logger->debug(
@@ -1288,7 +1293,7 @@ class JoomlaUpdate extends AbstractCallback
 		);
 
 		$variables = $storage->get('email_variables', []);
-		$variables = (array)$variables;
+		$variables = (array) $variables;
 		$variables = array_merge($variables, $additionalVariables);
 
 		$data = new Registry();
