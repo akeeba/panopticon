@@ -13,6 +13,8 @@
 
 defined('AKEEBA') || die;
 
+$updateStatus = array_map(fn($x) => (array)$x, $updateStatus);
+
 $hasFailed = array_reduce(
 	$updateStatus,
 	fn(bool $carry, array $item) => $carry || $item['status'] !== 'success',
