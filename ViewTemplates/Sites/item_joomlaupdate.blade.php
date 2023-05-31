@@ -127,7 +127,7 @@ $joomlaUpdateTask = call_user_func(function () use ($config): ?object
                 @if ($versionCurrent->versionFamily() === $versionLatest->versionFamily())
                     <p class="text-success-emphasis my-1">
                         <span class="fa fa-check-circle" aria-hidden="true"></span>
-                        @@lang('PANOPTICON_SITE_LBL_JUPDATE_IS_PATCH_RELEASE')
+                        @lang('PANOPTICON_SITE_LBL_JUPDATE_IS_PATCH_RELEASE')
                     </p>
                 @elseif ($versionLatest->major() === $versionLatest->major())
                     <p class="text-warning-emphasis fw-medium my-1">
