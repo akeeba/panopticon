@@ -276,6 +276,15 @@
             </fileset>
         </copy>
 
+        <!-- Choices.js (https://github.com/Choices-js/Choices) -->
+        <echo>Copying Choices.js files</echo>
+        <copy todir="${dirs.phpapp}/media/choices">
+            <fileset dir="${dirs.root}/node_modules/choices.js/public/assets/scripts">
+                <include name="choices.js" />
+                <include name="choices.min.js" />
+            </fileset>
+        </copy>
+
         <echo>Removing .DS_Store files</echo>
         <exec command="find . -name .DS_Store -delete" dir="${dirs.root}"/>
     </target>

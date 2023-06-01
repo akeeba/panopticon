@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
+use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Mvc\DataView\Html as DataViewHtml;
 use Awf\Text\Text;
@@ -19,6 +20,7 @@ use Awf\Utils\Template;
 class Html extends DataViewHtml
 {
 	use TimeAgoTrait;
+	use ShowOnTrait;
 
 	protected Site $item;
 
@@ -77,6 +79,8 @@ class Html extends DataViewHtml
 
 	protected function onBeforeAdd()
 	{
+		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
+
 		$document = $this->container->application->getDocument();
 		$toolbar  = $document->getToolbar();
 		$buttons  = [
@@ -124,6 +128,8 @@ class Html extends DataViewHtml
 
 	protected function onBeforeEdit()
 	{
+		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
+
 		$document = $this->container->application->getDocument();
 		$toolbar  = $document->getToolbar();
 		$buttons  = [

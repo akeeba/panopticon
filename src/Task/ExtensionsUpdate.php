@@ -348,7 +348,7 @@ class ExtensionsUpdate extends AbstractCallback
 
 	private function reloadExtensionInformation(Site $site): void
 	{
-		$this->logger->info(Text::sprintf(
+		$this->logger->info(sprintf(
 			'Refreshing the extension update information for site #%d (%s)',
 			$site->id,
 			$site->name

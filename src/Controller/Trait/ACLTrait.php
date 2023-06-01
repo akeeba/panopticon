@@ -58,15 +58,25 @@ trait ACLTrait
 			'*'    => ['*'],
 		],
 		'sites'         => [
+			// Anyone can browse; their view will be limited to the sites they have a view privilege on
 			'browse'                             => ['*'],
+			// To add a new site you need to have the addown or admin privilege
+			'add'                                => ['addown', 'admin'],
+			// To edit, apply, or save you need editown or admin (these are finely checked in the controller)
+			'edit'                               => ['editown', 'admin'],
+			'apply'                              => ['editown', 'admin'],
+			'save'                               => ['editown', 'admin'],
+			// Seeing the overview of a specific site and reloading its information requires the read privilege on it
 			'read'                               => ['read'],
-			'fixJoomlaCoreUpdateSite'            => ['run'],
 			'refreshSiteInformation'             => ['read'],
 			'refreshExtensionsInformation'       => ['read'],
+			// Actions which modify the site need the run privilege
+			'fixJoomlaCoreUpdateSite'            => ['run'],
 			'scheduleJoomlaUpdate'               => ['run'],
 			'clearUpdateScheduleError'           => ['run'],
 			'clearExtensionUpdatesScheduleError' => ['run'],
 			'scheduleExtensionUpdate'            => ['run'],
+			// Anything else (like publish / unpublish), we automatically restrict to the admin privilege
 			'*'                                  => ['admin'],
 		],
 		'selfupdate'    => [

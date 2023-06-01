@@ -29,6 +29,11 @@ $dark: #373637;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+$choices-icon-cross: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjRkZGIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0yLjU5Mi4wNDRsMTguMzY0IDE4LjM2NC0yLjU0OCAyLjU0OEwuMDQ0IDIuNTkyeiIvPjxwYXRoIGQ9Ik0wIDE4LjM2NEwxOC4zNjQgMGwyLjU0OCAyLjU0OEwyLjU0OCAyMC45MTJ6Ii8+PC9nPjwvc3ZnPg==") !default;
+$choices-icon-cross-inverse: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJ2YXIoLS1icy1saWdodCkiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PHBhdGggZD0iTTIuNTkyLjA0NGwxOC4zNjQgMTguMzY0LTIuNTQ4IDIuNTQ4TC4wNDQgMi41OTJ6Ii8+PHBhdGggZD0iTTAgMTguMzY0TDE4LjM2NCAwbDIuNTQ4IDIuNTQ4TDIuNTQ4IDIwLjkxMnoiLz48L2c+PC9zdmc+") !default;
+
+@import "choices";
+
 .ace_editor {
   height: min(400px, 30vh);
 }

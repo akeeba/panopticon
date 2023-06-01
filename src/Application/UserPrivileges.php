@@ -17,10 +17,12 @@ class UserPrivileges extends Privilege
 	{
 		$this->name       = 'panopticon';
 		$this->privileges = [
-			'super' => false,
-			'admin' => false,
-			'run'   => false,
-			'view'  => false,
+			'super'   => false,
+			'admin'   => false,
+			'run'     => false,
+			'view'    => false,
+			'addown'  => false,
+			'editown' => false,
 		];
 	}
 

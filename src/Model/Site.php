@@ -27,9 +27,12 @@ use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
+use Awf\User\User;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use RuntimeException;
+use stdClass;
+use Throwable;
 
 /**
  * Defines a site known to Panopticon
@@ -73,48 +76,6 @@ class Site extends DataModel
 		return $query;
 	}
 
-	private function applyUserGroupsToQuery(Query $query): void
-	{
-		// Get the user, so we can apply per group privilege checks
-		$user = $this->container->userManager->getUser();
-
-		// If the user is a Super User, or has a global view privilege, we have no checks to make
-		if ($user->getPrivilege('panopticon.view'))
-		{
-			return;
-		}
-
-		// In any other case, get the list of groups for the user and limit listing sites visible to these groups
-		$groupPrivileges = $user->getGroupPrivileges();
-
-		if (empty($groupPrivileges))
-		{
-			return;
-		}
-
-		// Filter out groups with read privileges
-		$groupPrivileges = array_filter(
-			$groupPrivileges,
-			fn($privileges) => in_array('panopticon.read', $privileges)
-		);
-
-		if (empty($groupPrivileges))
-		{
-			// There are no groups with read privileges. So, we have to return no results.
-			$query->where('FALSE');
-
-			return;
-		}
-
-		// Basically: a bunch of JSON_CONTAINS(`config`, '1', '$.config.groups') with ORs between them
-		$where = array_map(
-			fn($gid) => $query->jsonContains($query->quoteName('config'), $query->quote($gid), $query->quote('$.config.groups')),
-			array_keys($groupPrivileges)
-		);
-
-		$query->extendWhere('AND', $where,'OR');
-	}
-
 	public function check()
 	{
 		$this->name = trim($this->name ?? '');
@@ -148,14 +109,14 @@ class Site extends DataModel
 			$totalTimeout   = max(30, $this->container->appConfig->get('max_execution', 60) / 2);
 			$connectTimeout = max(5, $totalTimeout / 5);
 
-			$options = $container->httpFactory->getDefaultRequestOptions();
-			$options[RequestOptions::HEADERS] = [
+			$options                                  = $container->httpFactory->getDefaultRequestOptions();
+			$options[RequestOptions::HEADERS]         = [
 				'Accept'     => 'application/vnd.api+json',
 				'User-Agent' => 'panopticon/' . AKEEBA_PANOPTICON_VERSION,
 			];
-			$options[RequestOptions::HTTP_ERRORS] = false;
+			$options[RequestOptions::HTTP_ERRORS]     = false;
 			$options[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout;
-			$options[RequestOptions::TIMEOUT] = $totalTimeout;
+			$options[RequestOptions::TIMEOUT]         = $totalTimeout;
 
 			$response = $client->get($this->url . '/index.php/v1/extensions', $options);
 		}
@@ -173,7 +134,7 @@ class Site extends DataModel
 				throw new SSLCertificateProblem('SSL certificate problem', previous: $e);
 			}
 
-			if (str_contains($message,'Could not resolve host'))
+			if (str_contains($message, 'Could not resolve host'))
 			{
 				$hostname = empty($this->url) ? '(no host provided)' : (new Uri($this->url))->getHost();
 				throw new InvalidHostName(sprintf('Invalid hostname %s', $hostname));
@@ -232,9 +193,9 @@ class Site extends DataModel
 		{
 			$results = @json_decode($response->getBody()->getContents() ?? '{}');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
-			$results = new \stdClass();
+			$results = new stdClass();
 		}
 
 		if (empty($results?->data))
@@ -246,12 +207,12 @@ class Site extends DataModel
 		$allEnabled = array_reduce(
 			array_filter(
 				$results->data,
-				fn (object $data) => str_contains($data->attributes?->name ?? '', 'Panopticon')
+				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Panopticon')
 			),
 			fn(bool $carry, object $data) => $carry && $data->attributes?->status == 1,
 			true
 		);
-		
+
 		if (!$allEnabled)
 		{
 			throw new PanopticonConnectorNotEnabled('The Panopticon Connector component or plugin is not enabled');
@@ -268,7 +229,7 @@ class Site extends DataModel
 		$allEnabled = array_reduce(
 			array_filter(
 				$results->data,
-				fn (object $data) => str_contains($data->attributes?->name ?? '', 'Akeeba Backup') &&
+				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Akeeba Backup') &&
 					(
 						$data->attributes?->type === 'component' ||
 						($data->attributes?->type === 'plugin' && $data->attributes?->folder === 'webservices')
@@ -299,7 +260,7 @@ class Site extends DataModel
 	 */
 	public function getBaseUrl(): string
 	{
-		$url            = rtrim($this->url, "/ \t\n\r\0\x0B");
+		$url = rtrim($this->url, "/ \t\n\r\0\x0B");
 
 		if (str_ends_with($url, '/api'))
 		{
@@ -313,11 +274,99 @@ class Site extends DataModel
 	{
 		/** @var \Akeeba\Panopticon\Container $container */
 		$container = $this->container;
-		$client = $container->httpFactory->makeClient(cache: false, singleton: false);
+		$client    = $container->httpFactory->makeClient(cache: false, singleton: false);
 
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/core/update');
 
 		$client->post($url, $options);
+	}
+
+	/**
+	 * Get the user groups which can be applied by the given user to this site
+	 *
+	 * @param   User|null  $user  The user. NULL for currently logged in user.
+	 *
+	 * @return  array Keyed array of id=>title, i.e. [id=>title, ...]
+	 */
+	public function getGroupsForSelect(?User $user = null): array
+	{
+		$user        ??= $this->container->userManager->getUser();
+		$groupFilter = [];
+
+		// If it's not a Super User I need to filter which user groups I am going to present.
+		if (!$user->getPrivilege('panopticon.super'))
+		{
+			$groupFilter = array_keys($user->getGroupPrivileges());
+
+			if (empty($groupFilter))
+			{
+				return [];
+			}
+		}
+
+		$db    = $this->getDbo();
+		$query = $db
+			->getQuery(true)
+			->select([
+				$db->quoteName('id'),
+				$db->quoteName('title'),
+			])
+			->from($db->quoteName('#__groups'));
+
+		if (!empty($groupFilter))
+		{
+			$query->where($db->quoteName('id') . ' IN(' . implode(',', array_map([$db, 'quote'], $groupFilter)) . ')');
+		}
+
+		return array_map(fn($x) => $x->title, $db->setQuery($query)->loadObjectList('id') ?: []);
+	}
+
+	private function applyUserGroupsToQuery(Query $query): void
+	{
+		// Get the user, so we can apply per group privilege checks
+		$user = $this->container->userManager->getUser();
+
+		// If the user is a Super User, or has a global view privilege, we have no checks to make
+		if ($user->getPrivilege('panopticon.view'))
+		{
+			return;
+		}
+
+		// In any other case, get the list of groups for the user and limit listing sites visible to these groups
+		$groupPrivileges = $user->getGroupPrivileges();
+
+		if (empty($groupPrivileges))
+		{
+			// There are no groups the user belongs to. Therefore, the user can only see their own sites.
+			$query->where($query->quoteName('created_by') . ' = ' . $query->quote($user->getId()));
+
+			return;
+		}
+
+		// Filter out groups with read privileges
+		$groupPrivileges = array_filter(
+			$groupPrivileges,
+			fn($privileges) => in_array('panopticon.read', $privileges)
+		);
+
+		if (empty($groupPrivileges))
+		{
+			// There are no groups with read privileges the user belongs to. Therefore, the user can only see their own sites.
+			$query->where($query->quoteName('created_by') . ' = ' . $query->quote($user->getId()));
+
+			return;
+		}
+
+		// Basically: a bunch of JSON_CONTAINS(`config`, '1', '$.config.groups') with ORs between them
+		$where = array_map(
+			fn($gid) => $query->jsonContains($query->quoteName('config'), $query->quote($gid), $query->quote('$.config.groups')),
+			array_keys($groupPrivileges)
+		);
+
+		// Finally, we allow the user to view their own sites
+		array_unshift($where, $query->quoteName('created_by') . ' = ' . $query->quote($user->getId()));
+
+		$query->extendWhere('AND', $where, 'OR');
 	}
 
 	private function cleanUrl(?string $url): string
@@ -353,5 +402,4 @@ class Site extends DataModel
 
 		return $uri->toString();
 	}
-
 }

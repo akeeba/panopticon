@@ -10,11 +10,9 @@ namespace Akeeba\Panopticon\Helper;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Library\Task\Status;
-use Akeeba\Panopticon\Model\Task;
 use Awf\Database\Driver;
 use Awf\Html\Select;
-use Awf\Mvc\DataModel;
+use Awf\Text\Text;
 use DateTimeZone;
 
 abstract class Setup
@@ -82,7 +80,10 @@ abstract class Setup
 		);
 	}
 
-	public static function timezoneSelect(string $selected = '', string $name = 'timezone', $disabled = false, ?string $id = null): string
+	public static function timezoneSelect(string  $selected = '',
+	                                      string  $name = 'timezone',
+	                                              $disabled = false,
+	                                      ?string $id = null): string
 	{
 		$groups      = [];
 		$zoneHeaders = [
@@ -268,5 +269,34 @@ abstract class Setup
 			idTag: $name,
 			translate: true
 		);
+	}
+
+	public static function userSelect(int $selected, string $name, ?string $id = null, array $attribs = [], bool $emptyOption = false): string
+	{
+		static $users = null;
+
+		$users ??= call_user_func(function () {
+			$db    = Factory::getContainer()->db;
+			$query = $db
+				->getQuery(true)
+				->select([
+					$db->quoteName('id', 'value'),
+					$db->quoteName('username', 'text'),
+				])
+				->from($db->quoteName('#__users'))
+				->order($db->quoteName('username') . ' ASC');
+
+			return $db->setQuery($query)->loadObjectList();
+		});
+
+		if ($emptyOption)
+		{
+			array_unshift($users, (object) [
+				'value' => 0,
+				'text' => Text::_('PANOPTICON_LBL_SELECT_USER')
+			]);
+		}
+
+		return Select::genericList($users, $name, $attribs, selected: $selected, idTag: $id ?? $name, translate: false);
 	}
 }

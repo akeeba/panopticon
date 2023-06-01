@@ -14,17 +14,6 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 
 ?>
 <div class="row mb-3">
-	<label for="name" class="col-sm-3 col-form-label">
-		@lang('PANOPTICON_SITES_FIELD_NAME')
-	</label>
-	<div class="col-sm-9">
-		<input type="text" class="form-control" name="name" id="name"
-		       value="{{{ $this->item->name ?? '' }}}" required
-		>
-	</div>
-</div>
-
-<div class="row mb-3">
 	<div class="col-sm-9 offset-sm-3">
 		<div class="form-check form-switch">
 			<input class="form-check-input" type="checkbox" id="enabled" name="enabled"

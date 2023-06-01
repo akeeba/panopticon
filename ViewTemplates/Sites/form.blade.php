@@ -20,6 +20,17 @@ $returnUrl = $this->input->getBase64('returnurl', '');
 
 <form action="@route('index.php?view=sites')" method="post" name="adminForm" id="adminForm" role="form">
 
+    <div class="row mt-3 mb-4">
+        <label for="name" class="col-sm-3 col-form-label fs-5 fw-bold">
+            @lang('PANOPTICON_SITES_FIELD_NAME')
+        </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control fs-5 fw-medium" name="name" id="name"
+                   value="{{{ $this->item->name ?? '' }}}" required
+            >
+        </div>
+    </div>
+
     <ul class="nav nav-tabs" id="siteTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button type="button" id="siteTabConnection"
@@ -27,6 +38,14 @@ $returnUrl = $this->input->getBase64('returnurl', '');
                     data-bs-toggle="tab" role="tab"
                     data-bs-target="#siteTabContentConnection" aria-controls="siteTabContentConnection">
                 @lang('PANOPTICON_SITE_LBL_TAB_CONNECTION')
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button type="button" id="siteTabProperties"
+                    class="nav-link" aria-selected="true"
+                    data-bs-toggle="tab" role="tab"
+                    data-bs-target="#siteTabContentProperties" aria-controls="siteTabContentProperties">
+                @lang('PANOPTICON_SITE_LBL_TAB_PROPERTIES')
             </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -52,6 +71,11 @@ $returnUrl = $this->input->getBase64('returnurl', '');
              id="siteTabContentConnection" role="tabpanel" aria-labelledby="siteTabConnection" tabindex="-1"
         >
             @include('Sites/form_connection')
+        </div>
+        <div class="tab-pane show"
+             id="siteTabContentProperties" role="tabpanel" aria-labelledby="siteTabProperties" tabindex="-1"
+        >
+            @include('Sites/form_properties')
         </div>
         <div class="tab-pane show"
              id="siteTabContentUpdate" role="tabpanel" aria-labelledby="siteTabUpdate" tabindex="-1"

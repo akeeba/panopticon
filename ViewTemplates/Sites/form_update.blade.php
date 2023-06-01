@@ -42,7 +42,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
     </div>
 </div>
 
-<div class="row mb-3">
+<div class="row mb-3" {{ $this->showOn('config[config.core_update.install]!:none[AND]config[config.core_update.install]!:email') }}>
     <label for="config_core_update_when" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_WHEN')
     </label>
@@ -64,7 +64,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
     </div>
 </div>
 
-<div class="row mb-3">
+<div class="row mb-3" {{ $this->showOn('config[config.core_update.install]!:none[AND]config[config.core_update.install]!:email[AND]config[config.core_update.when]:time') }}>
     <label for="config_core_update_time_hour" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME')
     </label>

@@ -12,7 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Akeeba\Panopticon\Library\Task\Status;
-use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Model\Site as SiteModel;
 use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\EnqueueJoomlaUpdateTrait;
@@ -46,8 +46,8 @@ class Sites extends DataController
 	{
 		$this->csrfProtection();
 
-		$id   = $this->input->get->getInt('id', 0);
-		/** @var Site $site */
+		$id = $this->input->get->getInt('id', 0);
+		/** @var SiteModel $site */
 		$site = $this->getModel('Site', [
 			'modelTemporaryInstance' => true,
 			'modelClearState'        => true,
@@ -222,7 +222,7 @@ class Sites extends DataController
 		$id    = $this->input->get->getInt('id', 0);
 		$force = $this->input->get->getBool('force', false);
 
-		/** @var Site $site */
+		/** @var SiteModel $site */
 		$site = $this->getModel('Site', [
 			'modelTemporaryInstance' => true,
 			'modelClearState'        => true,
@@ -280,7 +280,7 @@ class Sites extends DataController
 
 		$id = $this->input->get->getInt('id', 0);
 
-		/** @var Site $site */
+		/** @var SiteModel $site */
 		$tempConfig = [
 			'modelTemporaryInstance' => true,
 			'modelClearState'        => true,
@@ -296,7 +296,7 @@ class Sites extends DataController
 			$task = $this->getModel('Task', $tempConfig);
 
 			$task->findOrFail([
-				'site_id' => (int)$id,
+				'site_id' => (int) $id,
 				'type'    => 'joomlaupdate',
 			]);
 
@@ -339,7 +339,7 @@ class Sites extends DataController
 
 		$id = $this->input->get->getInt('id', 0);
 
-		/** @var Site $site */
+		/** @var SiteModel $site */
 		$tempConfig = [
 			'modelTemporaryInstance' => true,
 			'modelClearState'        => true,
@@ -355,7 +355,7 @@ class Sites extends DataController
 			$task = $this->getModel('Task', $tempConfig);
 
 			$task->findOrFail([
-				'site_id' => (int)$id,
+				'site_id' => (int) $id,
 				'type'    => 'extensionsupdate',
 			]);
 
@@ -399,7 +399,7 @@ class Sites extends DataController
 		$id     = $this->input->get->getInt('id', 0);
 		$siteId = $this->input->get->getInt('site_id', 0);
 
-		/** @var Site $site */
+		/** @var SiteModel $site */
 		$site = $this->getModel('Site', [
 			'modelTemporaryInstance' => true,
 			'modelClearState'        => true,
@@ -458,22 +458,296 @@ class Sites extends DataController
 		return parent::onBeforeBrowse();
 	}
 
-	protected function onBeforeEdit(): bool
+	protected function onBeforeAdd()
 	{
-		$sysconfigModel = $this->getModel('Sysconfig');
-		$this->getView()->setModel('Sysconfig', $sysconfigModel);
+		$user = $this->container->userManager->getUser();
 
-		return parent::onBeforeEdit();
+		// Can't add sites as a guest.
+		if ($user->getId() <= 0)
+		{
+			return false;
+		}
+
+		// To add a site I need one of the super (implied), admin, or addown privileges
+		if (!$user->getPrivilege('panopticon.admin') && !$user->getPrivilege('panopticon.addown'))
+		{
+			return false;
+		}
+
+		return parent::onBeforeAdd();
 	}
 
-	protected function applySave()
+	protected function onBeforeEdit(): bool
 	{
+		/** @var SiteModel $model */
 		$model = $this->getModel();
 
 		if (!$model->getId())
 		{
 			$this->getIDsFromRequest($model, true);
 		}
+
+		if (!$this->canAddEditOrSave($model, null))
+		{
+			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
+		$sysconfigModel = $this->getModel('Sysconfig');
+		$this->getView()->setModel('Sysconfig', $sysconfigModel);
+
+		return parent::onBeforeEdit();
+	}
+
+	protected function onBeforeApply()
+	{
+		/** @var SiteModel $model */
+		$model = $this->getModel();
+
+		if (!$model->getId())
+		{
+			$this->getIDsFromRequest($model, true);
+		}
+
+		$groups = $this->input->get('groups', [], 'array');
+		$groups = is_array($groups) ? $groups : [$groups];
+
+		if (!$this->canAddEditOrSave($model, $groups, true))
+		{
+			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
+		return parent::onBeforeApply();
+	}
+
+	protected function onBeforeSave()
+	{
+		/** @var SiteModel $model */
+		$model = $this->getModel();
+
+		if (!$model->getId())
+		{
+			$this->getIDsFromRequest($model, true);
+		}
+
+		$groups = $this->input->get('groups', [], 'array');
+		$groups = is_array($groups) ? $groups : [$groups];
+
+		if (!$this->canAddEditOrSave($model, $groups, true))
+		{
+			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
+		return parent::onBeforeSave();
+	}
+
+	protected function onBeforeSavenew()
+	{
+		return false;
+	}
+
+	protected function onBeforeCopy()
+	{
+		return false;
+	}
+
+	protected function onBeforeArchive()
+	{
+		return false;
+	}
+
+	protected function onBeforeTrash()
+	{
+		return false;
+	}
+
+	protected function onBeforeOrderdown()
+	{
+		return false;
+	}
+
+	protected function onBeforeOrderup()
+	{
+		return false;
+	}
+
+	protected function onBeforeSaveorder()
+	{
+		return false;
+	}
+
+	/**
+	 * Can I edit or save a site?
+	 *
+	 * @param   SiteModel|null  $site       The site object
+	 * @param   array|null      $newGroups  The groups we want to assign the site to (only applies to saving)
+	 * @param   bool            $isSaving   Is this about saving a site? FALSE for adding / editing a site.
+	 *
+	 * @return  bool
+	 */
+	protected function canAddEditOrSave(?SiteModel $site, ?array $newGroups, bool $isSaving = false): bool
+	{
+		$user = $this->container->userManager->getUser();
+
+		// Can't edit/save sites as a guest.
+		if ($user->getId() <= 0)
+		{
+			return false;
+		}
+
+		// Can't edit sites without an ID
+		if (empty($site->getId()) && !$isSaving)
+		{
+			return false;
+		}
+
+		// If I am a superuser I can edit/save any site without any restrictions.
+		if ($user->getPrivilege('panopticon.super'))
+		{
+			return true;
+		}
+
+		/**
+		 * EXISTING SITE
+		 *
+		 * If I am here, I have an existing site and I want to know if I can view it for editing, or save changes to it.
+		 */
+
+		/**
+		 * To edit/save a site I must either have the admin privilege, or it must be my site and I have the editown
+		 * privilege. Either way, I also need the view privilege to actually be able to see the site to begin with!
+		 */
+		$canAdmin   = $user->authorise('panopticon.admin', $site);
+		$canSee     = $user->authorise('panopticon.view', $site);
+		$canEditOwn = $user->authorise('panopticon.editown', $site) && ($user->getId() === $site->created_by);
+
+		if (!$canSee || !($canAdmin || $canEditOwn))
+		{
+			return false;
+		}
+
+		/**
+		 * If the site already has groups attached, the user needs to belong to all of them.
+		 *
+		 * Otherwise, saving the site would require dropping some groups the user does not belong to.
+		 */
+		$config = $site->getFieldValue('config') instanceof Registry
+			? $site->getFieldValue('config')
+			: new Registry($site->getFieldValue('config') ?: '{}');
+		$groups = $config->get('config.groups', []) ?: [];
+		$groups = is_array($groups) ? $groups : [];
+
+		if (empty($groups))
+		{
+			// The site had no groups. I can edit it.
+			return true;
+		}
+
+		// Get the group IDs the user belongs to
+		$groupPrivileges = $user->getGroupPrivileges();
+		$possibleGroups  = array_keys($groupPrivileges);
+
+		if (empty($possibleGroups))
+		{
+			// The user has no access to any groups, but the site belongs to some groups. Cannot edit/save.
+			return false;
+		}
+
+		// If the user does not have access to all groups the site is already assigned to we can't edit/save.
+		if (array_values(array_intersect($groups, $possibleGroups)) !== array_values($groups))
+		{
+			return false;
+		}
+
+		// If we are not saving there is nothing else to check.
+		if (!$isSaving)
+		{
+			return true;
+		}
+
+		// If we are asked to reassign the site to new groups, make sure the user has access to them
+		if (!empty($newGroups) && array_values(array_intersect($newGroups, $possibleGroups)) !== array_values($newGroups))
+		{
+			return false;
+		}
+
+		/**
+		 * Make sure that the new group selection won't make the user lose their current access to the site.
+		 *
+		 * We only check for privileges the user does not have globally, but which are only granted per-site by the
+		 * user's group membership.
+		 *
+		 * Reasoning: if I have a global privilege I don't care if I remove the site from a group I belong to which also
+		 * grants me the same privilege. Since I have it globally, I will retain it. If, however, I don't have a global
+		 * privilege then the only thing which allows me to interact with the site is the per-site privilege granted
+		 * to me by group membership. If I remove the site from this group, I lose my privilege to the site. This would
+		 * make the site inaccessible to me, and I'd have to call an admin or superuser to get me out of the mess I
+		 * created for myself. So, we have to prevent that!
+		 */
+
+		// Which is the current user's access to the site?
+		$currentPrivileges = [];
+
+		if ($user->authorise('panopticon.admin', $site) && !$user->getPrivilege('panopticon.admin'))
+		{
+			$currentPrivileges[] = 'panopticon.admin';
+		}
+
+		if ($user->authorise('panopticon.view', $site) && !$user->getPrivilege('panopticon.view'))
+		{
+			$currentPrivileges[] = 'panopticon.view';
+		}
+
+		if ($user->authorise('panopticon.run', $site) && !$user->getPrivilege('panopticon.view'))
+		{
+			$currentPrivileges[] = 'panopticon.run';
+		}
+
+		// No per-site privileges needed. Okay then. Nothing to do here.
+		if (empty($currentPrivileges))
+		{
+			return true;
+		}
+
+		// Let's keep the privileges for the groups the user has access to, and they selected this site should belong to.
+		$groupPrivileges = array_filter(
+			$groupPrivileges,
+			fn(int $id) => in_array($id, $newGroups),
+			ARRAY_FILTER_USE_KEY
+		);
+
+		// Do these groups give us all the privileges we need? Loop for each necessary privilege.
+		foreach ($currentPrivileges as $privName)
+		{
+			// For each privilege we check if at least one group grants it to us. If not, we can't proceed with save.
+			if (
+				!array_reduce(
+					$groupPrivileges,
+					fn(bool $carry, array $item) => $carry || in_array($privName, $item),
+					false
+				)
+			)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	protected function applySave()
+	{
+		/** @var SiteModel $model */
+		$model = $this->getModel();
+
+		if (!$model->getId())
+		{
+			$this->getIDsFromRequest($model, true);
+		}
+
+		$user = $this->container->userManager->getUser();
+		$canAdmin   = $user->authorise('panopticon.admin', $model);
+		$canEditOwn = $user->authorise('panopticon.editown', $model) && ($user->getId() !== $model->created_by);
+		$canAddOwn = $user->authorise('panopticon.addown', $model);
 
 		$id     = $model->getId() ?: 0;
 		$status = true;
@@ -490,6 +764,14 @@ class Sites extends DataController
 
 			$config = new \Awf\Registry\Registry($model?->config ?? '{}');
 			$config->set('config.apiKey', $token);
+
+			// Get the connection-relevant information BEFORE making any changes to the site
+			$currentConnectionInfo = [
+				'url'      => $model->url,
+				'apiKey'   => $config->get('config.apiKey', ''),
+				'username' => $config->get('config.username', ''),
+				'password' => $config->get('config.password', ''),
+			];
 
 			// Get all the data
 			$data = $this->input->getData();
@@ -517,6 +799,11 @@ class Sites extends DataController
 				}
 			}
 
+			// Handle the group assignments
+			$groups = $this->input->get('groups', [], 'array');
+			$groups = is_array($groups) ? $groups : [$groups];
+			$config->set('config.groups', $groups);
+
 			// Apply the config parameters
 			$data['config'] = $config->toString('JSON');
 
@@ -536,10 +823,39 @@ class Sites extends DataController
 				$this->onBeforeApplySave($data);
 			}
 
-			// Make sure we can successfully connect to the site
+			// Bind the new data
 			$model->bind($data);
 			$model->check();
-			$model->testConnection(false);
+
+			/**
+			 * If the user does not have the admin privilege but is saving the site because of the editown or addown
+			 * privilege we must make sure that the site is in owned by the current user.
+			 */
+			if (!$canAdmin && ($canEditOwn || $canAddOwn) && ($user->getId() !== $model->created_by))
+			{
+				throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			}
+
+			// Get the connection-relevant information AFTER making changes to the site
+			$newConnectionInfo = [
+				'url'      => $model->url,
+				'apiKey'   => $config->get('config.apiKey', ''),
+				'username' => $config->get('config.username', ''),
+				'password' => $config->get('config.password', ''),
+			];
+
+			// I have to check the connection to the site only if I changed any of its connection-relevant settings
+			$mustCheckConnection = false;
+
+			foreach ($currentConnectionInfo as $k => $v)
+			{
+				$mustCheckConnection = $mustCheckConnection || ($newConnectionInfo[$k] != $v);
+			}
+
+			if ($mustCheckConnection)
+			{
+				$model->testConnection(false);
+			}
 
 			// Save the data
 			$model->save();
