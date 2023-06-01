@@ -83,11 +83,84 @@ $extensionsUpdateTask = call_user_func(function () use ($config): ?object
 	return $record;
 });
 
+$extensionsQuickInfo = call_user_func(function () use ($extensions): object {
+	$ret = (object) [
+		'update' => 0,
+		'key'    => 0,
+		'site'   => 0,
+	];
+
+	foreach ($extensions as $item)
+	{
+		$currentVersion    = $item->version?->current;
+		$latestVersion     = $item->version?->new;
+		$noUpdateSite      = !($item->hasUpdateSites ?? false);
+		$missingDownloadID = ($item->downloadkey?->supported ?? false)
+			&& !($item->downloadkey?->valid ?? false);
+		$hasUpdate         = !empty($currentVersion) && !empty($latestVersion)
+			&& ($currentVersion != $latestVersion)
+			&& version_compare($currentVersion, $latestVersion, 'lt');
+
+		if ($noUpdateSite) {
+			$ret->site++;
+        }
+
+		if ($missingDownloadID) {
+			$ret->key++;
+        }
+
+		if ($hasUpdate) {
+			$ret->update++;
+        }
+	}
+
+    return $ret;
+});
+
 ?>
 <div class="card">
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
         <span class="fa fa-cubes" aria-hidden="true"></span>
-        <span class="flex-grow-1">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD')</span>
+        <span class="flex-grow-1">
+            @lang('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD')
+            @if ($extensionsQuickInfo->update > 0)
+                <sup>
+                    <span class="badge bg-warning" style="font-size: small"
+                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                          data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATES_N', $extensionsQuickInfo->update)"
+                    >
+                        <span class="fa fa-box-open" aria-hidden="true"></span>
+                        <span aria-hidden="true">{{  $extensionsQuickInfo->update }}</span>
+                        <span class="visually-hidden">@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATES_N', $extensionsQuickInfo->update)</span>
+                    </span>
+                </sup>
+            @endif
+            @if ($extensionsQuickInfo->site > 0)
+                <sup>
+                    <span class="badge bg-warning-subtle" style="font-size: small"
+                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                          data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATESITES_N', $extensionsQuickInfo->site)"
+                    >
+                        <span class="fa fa-globe" aria-hidden="true"></span>
+                        <span aria-hidden="true">{{  $extensionsQuickInfo->site }}</span>
+                        <span class="visually-hidden">@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATESITES_N', $extensionsQuickInfo->site)</span>
+                    </span>
+                </sup>
+            @endif
+            @if ($extensionsQuickInfo->key > 0)
+                <sup>
+                    <span class="badge bg-danger" style="font-size: small"
+                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                          data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_NOKEY_N', $extensionsQuickInfo->key)"
+                    >
+                        <span class="fa fa-key" aria-hidden="true"></span>
+                        <span aria-hidden="true">{{  $extensionsQuickInfo->key }}</span>
+                        <span class="visually-hidden">@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_NOKEY_N', $extensionsQuickInfo->key)</span>
+                    </span>
+                </sup>
+            @endif
+
+        </span>
         <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
            href="@route(sprintf('index.php?view=site&task=refreshExtensionsInformation&id=%d&%s=1', $this->item->id, $token))"
            data-bs-toggle="tooltip" data-bs-placement="bottom"
