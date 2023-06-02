@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\Controller\Trait;
 
 use Akeeba\Panopticon\Exception\AccessDenied;
+use Awf\Inflector\Inflector;
 use Awf\Utils\ArrayHelper;
 
 defined('AKEEBA') || die;
@@ -58,16 +59,18 @@ trait ACLTrait
 			'*'    => ['*'],
 		],
 		'sites'         => [
-			// Anyone can browse; their view will be limited to the sites they have a view privilege on
+			// Anyone can browse; their view will be limited to the sites they have a view privilege on.
+			// IMPORTANT: `default` is necessary, it's used when we do not pass a task to the view.
+			'default'                            => ['*'],
 			'browse'                             => ['*'],
+			'read'                               => ['*'],
 			// To add a new site you need to have the addown or admin privilege
 			'add'                                => ['addown', 'admin'],
 			// To edit, apply, or save you need editown or admin (these are finely checked in the controller)
-			'edit'                               => ['editown', 'admin'],
-			'apply'                              => ['editown', 'admin'],
-			'save'                               => ['editown', 'admin'],
-			// Seeing the overview of a specific site and reloading its information requires the read privilege on it
-			'read'                               => ['read'],
+			'edit'                               => ['*'],
+			'apply'                              => ['*'],
+			'save'                               => ['*'],
+			// Reloading a site's information requires the read privilege on it
 			'refreshSiteInformation'             => ['read'],
 			'refreshExtensionsInformation'       => ['read'],
 			// Actions which modify the site need the run privilege
@@ -100,7 +103,9 @@ trait ACLTrait
 
 	protected function aclCheck(string $task): void
 	{
-		if ($this->hasAccess($task, $this->getName()))
+		$altView = Inflector::isSingular($this->getName()) ? Inflector::pluralize($this->getName()) : Inflector::singularize($this->getName());
+
+		if ($this->hasAccess($task, $this->getName()) || $this->hasAccess($task, $altView))
 		{
 			return;
 		}

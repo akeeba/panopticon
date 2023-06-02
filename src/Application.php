@@ -41,7 +41,7 @@ class Application extends AWFApplication
 		],
 		[
 			'url'         => null,
-			'permissions' => ['panopticon.super'],
+			'permissions' => ['panopticon.super', 'panopticon.addown', 'panopticon.editown'],
 			'name'        => 'administrator',
 			'title'       => 'PANOPTICON_APP_MENU_TITLE_ADMINISTRATION',
 			'icon'        => 'fa fa-screwdriver-wrench',
@@ -59,7 +59,7 @@ class Application extends AWFApplication
 				],
 				[
 					'view'        => 'sites',
-					'permissions' => ['panopticon.admin'],
+					'permissions' => ['panopticon.admin', 'panopticon.addown', 'panopticon.editown'],
 					'icon'        => 'fa fa-globe',
 				],
 				[
@@ -100,7 +100,7 @@ class Application extends AWFApplication
 			'url'          => null,
 			'permissions'  => [],
 			'name'         => 'user_submenu',
-			'icon'         => 'fa fa-user',
+			//'icon'         => 'fa fa-user',
 			'title'        => '',
 			'titleHandler' => [self::class, 'getUserMenuTitle'],
 			'submenu'      => [
@@ -137,7 +137,11 @@ class Application extends AWFApplication
 
 	public static function getUserMenuTitle(): string
 	{
-		return Factory::getContainer()->userManager->getUser()->getUsername();
+		$user = Factory::getContainer()->userManager->getUser();
+
+		$avatar = $user->getAvatar(64);
+
+		return "<img src=\"$avatar\" class=\"me-1\" style=\"width: 1.25em; border-radius: 0.625em \" >" . $user->getUsername();
 	}
 
 	public static function getUserNameTitle(): string

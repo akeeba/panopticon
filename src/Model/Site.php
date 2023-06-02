@@ -346,7 +346,7 @@ class Site extends DataModel
 		// Filter out groups with read privileges
 		$groupPrivileges = array_filter(
 			$groupPrivileges,
-			fn($privileges) => in_array('panopticon.read', $privileges)
+			fn($privileges) => in_array('panopticon.view', $privileges)
 		);
 
 		if (empty($groupPrivileges))
@@ -357,16 +357,19 @@ class Site extends DataModel
 			return;
 		}
 
+		// We allow the user to view their own sites
+		$clauses = [
+			$query->quoteName('created_by') . ' = ' . $query->quote($user->getId())
+		];
+
 		// Basically: a bunch of JSON_CONTAINS(`config`, '1', '$.config.groups') with ORs between them
-		$where = array_map(
-			fn($gid) => $query->jsonContains($query->quoteName('config'), $query->quote($gid), $query->quote('$.config.groups')),
-			array_keys($groupPrivileges)
-		);
+		foreach (array_keys($groupPrivileges) as $gid)
+		{
+			$clauses[] = $query->jsonContains($query->quoteName('config'), $query->quote('"' . (int) $gid . '"'), $query->quote('$.config.groups'));
+			$clauses[] = $query->jsonContains($query->quoteName('config'), $query->quote((int) $gid), $query->quote('$.config.groups'));
+		}
 
-		// Finally, we allow the user to view their own sites
-		array_unshift($where, $query->quoteName('created_by') . ' = ' . $query->quote($user->getId()));
-
-		$query->extendWhere('AND', $where, 'OR');
+		$query->extendWhere('AND', $clauses, 'OR');
 	}
 
 	private function cleanUrl(?string $url): string

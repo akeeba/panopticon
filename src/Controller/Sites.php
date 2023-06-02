@@ -487,7 +487,7 @@ class Sites extends DataController
 			$this->getIDsFromRequest($model, true);
 		}
 
-		if (!$this->canAddEditOrSave($model, null))
+		if (!$this->canAddEditOrSave($model))
 		{
 			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
@@ -508,10 +508,7 @@ class Sites extends DataController
 			$this->getIDsFromRequest($model, true);
 		}
 
-		$groups = $this->input->get('groups', [], 'array');
-		$groups = is_array($groups) ? $groups : [$groups];
-
-		if (!$this->canAddEditOrSave($model, $groups, true))
+		if (!$this->canAddEditOrSave($model, true))
 		{
 			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
@@ -529,10 +526,7 @@ class Sites extends DataController
 			$this->getIDsFromRequest($model, true);
 		}
 
-		$groups = $this->input->get('groups', [], 'array');
-		$groups = is_array($groups) ? $groups : [$groups];
-
-		if (!$this->canAddEditOrSave($model, $groups, true))
+		if (!$this->canAddEditOrSave($model, true))
 		{
 			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
@@ -578,13 +572,12 @@ class Sites extends DataController
 	/**
 	 * Can I edit or save a site?
 	 *
-	 * @param   SiteModel|null  $site       The site object
-	 * @param   array|null      $newGroups  The groups we want to assign the site to (only applies to saving)
-	 * @param   bool            $isSaving   Is this about saving a site? FALSE for adding / editing a site.
+	 * @param   SiteModel|null  $site      The site object
+	 * @param   bool            $isSaving  Is this about saving a site? FALSE for adding / editing a site.
 	 *
 	 * @return  bool
 	 */
-	protected function canAddEditOrSave(?SiteModel $site, ?array $newGroups, bool $isSaving = false): bool
+	protected function canAddEditOrSave(?SiteModel $site, bool $isSaving = false): bool
 	{
 		$user = $this->container->userManager->getUser();
 
@@ -625,112 +618,6 @@ class Sites extends DataController
 			return false;
 		}
 
-		/**
-		 * If the site already has groups attached, the user needs to belong to all of them.
-		 *
-		 * Otherwise, saving the site would require dropping some groups the user does not belong to.
-		 */
-		$config = $site->getFieldValue('config') instanceof Registry
-			? $site->getFieldValue('config')
-			: new Registry($site->getFieldValue('config') ?: '{}');
-		$groups = $config->get('config.groups', []) ?: [];
-		$groups = is_array($groups) ? $groups : [];
-
-		if (empty($groups))
-		{
-			// The site had no groups. I can edit it.
-			return true;
-		}
-
-		// Get the group IDs the user belongs to
-		$groupPrivileges = $user->getGroupPrivileges();
-		$possibleGroups  = array_keys($groupPrivileges);
-
-		if (empty($possibleGroups))
-		{
-			// The user has no access to any groups, but the site belongs to some groups. Cannot edit/save.
-			return false;
-		}
-
-		// If the user does not have access to all groups the site is already assigned to we can't edit/save.
-		if (array_values(array_intersect($groups, $possibleGroups)) !== array_values($groups))
-		{
-			return false;
-		}
-
-		// If we are not saving there is nothing else to check.
-		if (!$isSaving)
-		{
-			return true;
-		}
-
-		// If we are asked to reassign the site to new groups, make sure the user has access to them
-		if (!empty($newGroups) && array_values(array_intersect($newGroups, $possibleGroups)) !== array_values($newGroups))
-		{
-			return false;
-		}
-
-		/**
-		 * Make sure that the new group selection won't make the user lose their current access to the site.
-		 *
-		 * We only check for privileges the user does not have globally, but which are only granted per-site by the
-		 * user's group membership.
-		 *
-		 * Reasoning: if I have a global privilege I don't care if I remove the site from a group I belong to which also
-		 * grants me the same privilege. Since I have it globally, I will retain it. If, however, I don't have a global
-		 * privilege then the only thing which allows me to interact with the site is the per-site privilege granted
-		 * to me by group membership. If I remove the site from this group, I lose my privilege to the site. This would
-		 * make the site inaccessible to me, and I'd have to call an admin or superuser to get me out of the mess I
-		 * created for myself. So, we have to prevent that!
-		 */
-
-		// Which is the current user's access to the site?
-		$currentPrivileges = [];
-
-		if ($user->authorise('panopticon.admin', $site) && !$user->getPrivilege('panopticon.admin'))
-		{
-			$currentPrivileges[] = 'panopticon.admin';
-		}
-
-		if ($user->authorise('panopticon.view', $site) && !$user->getPrivilege('panopticon.view'))
-		{
-			$currentPrivileges[] = 'panopticon.view';
-		}
-
-		if ($user->authorise('panopticon.run', $site) && !$user->getPrivilege('panopticon.view'))
-		{
-			$currentPrivileges[] = 'panopticon.run';
-		}
-
-		// No per-site privileges needed. Okay then. Nothing to do here.
-		if (empty($currentPrivileges))
-		{
-			return true;
-		}
-
-		// Let's keep the privileges for the groups the user has access to, and they selected this site should belong to.
-		$groupPrivileges = array_filter(
-			$groupPrivileges,
-			fn(int $id) => in_array($id, $newGroups),
-			ARRAY_FILTER_USE_KEY
-		);
-
-		// Do these groups give us all the privileges we need? Loop for each necessary privilege.
-		foreach ($currentPrivileges as $privName)
-		{
-			// For each privilege we check if at least one group grants it to us. If not, we can't proceed with save.
-			if (
-				!array_reduce(
-					$groupPrivileges,
-					fn(bool $carry, array $item) => $carry || in_array($privName, $item),
-					false
-				)
-			)
-			{
-				return false;
-			}
-		}
-
 		return true;
 	}
 
@@ -744,10 +631,10 @@ class Sites extends DataController
 			$this->getIDsFromRequest($model, true);
 		}
 
-		$user = $this->container->userManager->getUser();
+		$user       = $this->container->userManager->getUser();
 		$canAdmin   = $user->authorise('panopticon.admin', $model);
 		$canEditOwn = $user->authorise('panopticon.editown', $model) && ($user->getId() !== $model->created_by);
-		$canAddOwn = $user->authorise('panopticon.addown', $model);
+		$canAddOwn  = $user->authorise('panopticon.addown', $model);
 
 		$id     = $model->getId() ?: 0;
 		$status = true;
@@ -799,18 +686,33 @@ class Sites extends DataController
 				}
 			}
 
-			// Handle the group assignments
-			$groups = $this->input->get('groups', [], 'array');
-			$groups = is_array($groups) ? $groups : [$groups];
-			$config->set('config.groups', $groups);
+			// Handle the group assignments, ONLY if I am a superuser or global admin
+			if ($user->getPrivilege('panopticon.admin'))
+			{
+				$groups = $this->input->get('groups', [], 'array');
+				$groups = is_array($groups) ? $groups : [$groups];
+				$config->set('config.groups', $groups);
+			}
 
 			// Apply the config parameters
 			$data['config'] = $config->toString('JSON');
 
-			$data = array_merge([
-				'created_by' => $this->container->userManager->getUser()->getId(),
-				'created_on' => (new Date())->toSql(),
-			], $data);
+			// If I do not have global admin permissions I must not save incoming ownership information
+			if (!$user->getPrivilege('panopticon.admin'))
+			{
+				unset($data['created_by']);
+				unset($data['created_on']);
+				unset($data['modified_by']);
+				unset($data['modified_on']);
+			}
+			// If this is a new record the owner is the current user
+			elseif (empty($model->getId()))
+			{
+				$data = array_merge([
+					'created_by' => $this->container->userManager->getUser()->getId(),
+					'created_on' => (new Date())->toSql(),
+				], $data);
+			}
 
 			// Set the layout to form, if it's not set in the URL
 			if (is_null($this->layout))

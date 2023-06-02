@@ -41,31 +41,45 @@ class Html extends DataViewHtml
 		$document = $this->container->application->getDocument();
 		$toolbar  = $document->getToolbar();
 		$buttons  = [
-			[
+			'add' => [
 				'title'   => Text::_('PANOPTICON_BTN_ADD'),
 				'class'   => 'btn btn-success',
 				'onClick' => 'akeeba.System.submitForm(\'add\')',
 				'icon'    => 'fa fa-plus',
 			],
-			[
+			'edit' => [
 				'title'   => Text::_('PANOPTICON_BTN_EDIT'),
 				'class'   => 'btn btn-secondary border-light',
 				'onClick' => 'akeeba.System.submitForm(\'edit\')',
 				'icon'    => 'fa fa-pen-to-square',
 			],
-			[
-				'title'   => Text::_('PANOPTICON_BTN_COPY'),
-				'class'   => 'btn btn-secondary border-light',
-				'onClick' => 'akeeba.System.submitForm(\'copy\')',
-				'icon'    => 'fa fa-clone',
-			],
-			[
+			'delete' => [
 				'title'   => Text::_('PANOPTICON_BTN_DELETE'),
 				'class'   => 'btn btn-danger',
 				'onClick' => 'akeeba.System.submitForm(\'remove\')',
 				'icon'    => 'fa fa-trash-can',
 			],
 		];
+
+		$user = $this->container->userManager->getUser();
+		$canAdd = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.addown');
+		$canEdit = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.editown');
+		$canDelete = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.editown');
+
+		if (!$canAdd)
+		{
+			unset($buttons['add']);
+		}
+
+		if (!$canEdit)
+		{
+			unset($buttons['edit']);
+		}
+
+		if (!$canDelete)
+		{
+			unset($buttons['delete']);
+		}
 
 		array_walk($buttons, function (array $button)
 		{

@@ -11,11 +11,14 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Model\UserAvatarTrait;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
 
 class User extends \Awf\User\User
 {
+	use UserAvatarTrait;
+
 	private array $groupPrivileges = [];
 
 	public function bind(&$data)
