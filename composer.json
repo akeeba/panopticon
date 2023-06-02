@@ -91,5 +91,28 @@
 			"RELEASENOTES.md",
 			"TODO.md"
 		]
+	},
+	"process-timeout": 600,
+	"scripts": {
+		"npm-deps": [
+			"npm install",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyNodeDependencies"
+		],
+		"post-install-cmd": [
+			"@npm-deps",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate"
+		],
+		"post-update-cmd": [
+			"@npm-deps",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate"
+		],
+		"pre-archive-cmd": [
+			"@npm-deps"
+		],
+		"post-create-project-cmd": [
+			"@composer dump-autoload -a",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate",
+			"@npm-deps"
+		]
 	}
 }
