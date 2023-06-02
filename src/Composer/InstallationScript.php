@@ -187,7 +187,7 @@ abstract class InstallationScript
 			[
 				'ace*.js',
 				'ext-searchbox.js',
-				'ext-languagetools.js',
+				'ext-language_tools.js',
 				'mode-css.*',
 				'mode-html.*',
 				'mode-plain_text.*',
@@ -249,7 +249,6 @@ abstract class InstallationScript
 
 		if (!$finder->hasResults())
 		{
-			echo "Bollocks";
 			return;
 		}
 
@@ -289,7 +288,12 @@ abstract class InstallationScript
 		{
 			$target = rtrim($to, '/') . '/' . $file->getRelativePathname();
 
-			//echo "{$file->getPathname()} => $target\n";
+			$targetPath = dirname($target);
+
+			if (!file_exists($targetPath))
+			{
+				$container->fileSystem->mkdir($targetPath);
+			}
 
 			$container->fileSystem->copy($file->getPathname(), $target);
 		}

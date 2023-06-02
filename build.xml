@@ -261,7 +261,7 @@
             <fileset dir="${dirs.root}/node_modules/ace-builds/src">
                 <include name="ace*.js" />
                 <include name="ext-searchbox.js" />
-                <include name="ext-languagetools.js" />
+                <include name="ext-language_tools.js" />
                 <include name="mode-css.*" />
                 <include name="mode-html.*" />
                 <include name="mode-plain_text.*" />
