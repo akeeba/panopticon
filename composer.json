@@ -49,7 +49,6 @@
 		"ext-zend-opcache": "*"
 	},
 	"config": {
-		"optimize-autoloader": true,
 		"platform": {
 			"php": "8.1.0"
 		}
@@ -64,12 +63,25 @@
 			"/.github",
 			"/.idea",
 			"/.htaccess",
+			"/1",
 			"/assets",
 			"/build",
+			"/cache",
+			"!/cache/.htaccess",
+			"!/cache/web.config",
+			"/config.php",
 			"/documentation",
+			"/log",
+			"!/log/.htaccess",
+			"!/log/web.config",
 			"/node_modules",
 			"/release",
+			"/tmp",
+			"!/tmp/.htaccess",
+			"!/tmp/web.config",
 			"/vendor",
+			"/user_code",
+			"!/user_code/.gitkeep",
 			"/.gitattributes",
 			"/.gitignore",
 			"/build.xml",
