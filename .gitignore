@@ -12,6 +12,16 @@ config.php
 /version.php
 /.htaccess
 
+### Automatically installed NPM dependencies
+/media/ace/**
+/media/choices/**
+/media/css/fontawesome.*
+/media/js/bootstrap.bundle.*
+/media/tinymce
+!/media/tinymce/skins/content/akeeba
+!/media/tinymce/skins/ui/akeeba
+/media/webfonts/fa-*
+
 ### User code dir
 /user_code/*
 !/user_code/.gitkeep
