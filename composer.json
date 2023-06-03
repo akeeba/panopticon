@@ -18,7 +18,7 @@
 		}
 	],
 	"support": {
-		"email": "https://github.com/akeeba/panopticon/issues",
+		"issues": "https://github.com/akeeba/panopticon/issues",
 		"wiki": "https://github.com/akeeba/panopticon/wiki",
 		"security": "https://github.com/akeeba/panopticon/security/policy",
 		"source": "https://github.com/akeeba/panopticon"
@@ -114,6 +114,128 @@
 		]
 	},
 	"process-timeout": 600,
+	"extra": {
+		"copy-static": [
+			{
+				"from": "src/.htaccess",
+				"to": "vendor/.htaccess"
+			},
+			{
+				"from": "src/web.config",
+				"to": "vendor/web.config"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/bootstrap/dist/js",
+				"to": "media/js",
+				"names": [
+					"bootstrap.bundle.*"
+				]
+			},
+			{
+				"from": "node_modules/@fortawesome/fontawesome-free/css/all.css",
+				"to": "media/css/fontawesome.css"
+			},
+			{
+				"from": "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+				"to": "media/css/fontawesome.min.css"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/@fortawesome/fontawesome-free/webfonts",
+				"to": "media/webfonts",
+				"names": [
+					"*.woff2"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/icons",
+				"to": "media/tinymce/icons"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/models",
+				"to": "media/tinymce/models"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/plugins",
+				"to": "media/tinymce/plugins"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/skins",
+				"to": "media/tinymce/skins"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/themes",
+				"to": "media/tinymce/themes"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce",
+				"to": "media/tinymce",
+				"names": [
+					"tinymce.js",
+					"tinymce.min.js"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/ace-builds/css",
+				"to": "media/ace/css",
+				"names": [
+					"ace.css",
+					"dracula*.png",
+					"github*.png",
+					"main*.png"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/ace-builds/css/theme",
+				"to": "media/ace/css/theme",
+				"names": [
+					"dracula.css",
+					"github.css"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/ace-builds/src",
+				"to": "media/ace",
+				"names": [
+					"ace*.js",
+					"ext-searchbox.js",
+					"ext-language_tools.js",
+					"mode-css.*",
+					"mode-html.*",
+					"mode-plain_text.*",
+					"theme-dracula.*",
+					"theme-github.*",
+					"worker-base.*",
+					"worker-css.*",
+					"worker-html.*"
+				],
+				"__x__names": [
+					"mode-php.*",
+					"mode-php_laravel_blade.*",
+					"worker-php.*"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/choices.js/public/assets/scripts",
+				"to": "media/choices",
+				"names": [
+					"choices.js",
+					"choices.min.js"
+				]
+			}
+		]
+	},
 	"scripts": {
 		"npm-deps": [
 			"npm install",

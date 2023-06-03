@@ -14,7 +14,15 @@ use Symfony\Component\Finder\Finder;
 
 abstract class InstallationScript
 {
-	public static function postComposerUpdate(Event $event)
+	/**
+	 * Run actions after Composer Update
+	 *
+	 * @param   Event  $event
+	 *
+	 * @return  void
+	 * @noinspection PhpUnused
+	 */
+	public static function postComposerUpdate(Event $event): void
 	{
 		self::emptyReleaseDirectory($event);
 		self::copyHtaccessIntoVendor($event);
@@ -27,16 +35,48 @@ abstract class InstallationScript
 	 * @param   Event  $event
 	 *
 	 * @return  void
+	 * @noinspection PhpUnused
 	 */
-	public static function copyNodeDependencies(Event $event)
+	public static function copyNodeDependencies(Event $event): void
 	{
-		self::copyBootstrapJavaScript($event);
-		self::copyFontAwesome($event);
-		self::copyTinyMCE($event);
-		self::copyACEEditor($event);
-		self::copyChoicesJS($event);
+		$io = $event->getIO();
+		$io->debug('Copying static files');
+
+		$container = self::getAWFContainer();
+
+		$extras = $event->getComposer()->getPackage()->getExtra();
+
+		foreach ($extras['copy-static'] ?? [] as $copyDef)
+		{
+			$type  = $copyDef['type'] ?? 'file';
+			$from  = $copyDef['from'] ?? '';
+			$to    = $copyDef['to'] ?? '';
+			$names = $copyDef['names'] ?? null;
+
+			$from = $container->basePath . '/' . trim($from, '/');
+			$to   = $container->basePath . '/' . trim($to, '/');
+
+			if (empty($from) || empty($to))
+			{
+				continue;
+			}
+
+			if ($type === 'file')
+			{
+				$container->fileSystem->copy($from, $to);
+
+				continue;
+			}
+
+			self::copyFiles($from, $to, $names);
+		}
 	}
 
+	/**
+	 * Get the Container object of the application
+	 *
+	 * @return  Container
+	 */
 	private static function getAWFContainer(): Container
 	{
 		defined('AKEEBA') || define('AKEEBA', 1);
@@ -77,145 +117,6 @@ abstract class InstallationScript
 		$container->fileSystem->copy(
 			$container->basePath . '/src/web.config',
 			$container->basePath . '/vendor/web.config'
-		);
-	}
-
-	private static function copyBootstrapJavaScript(Event $event)
-	{
-		$io = $event->getIO();
-		$io->debug('Copying Bootstrap JavaScript files');
-
-		$container = self::getAWFContainer();
-
-		self::copyFiles(
-			$container->basePath . '/node_modules/bootstrap/dist/js',
-			$container->basePath . '/media/js/',
-			[
-				'bootstrap.bundle.*'
-			]
-		);
-	}
-
-	private static function copyFontAwesome(Event $event) {
-		$io = $event->getIO();
-		$io->debug('Copying FontAwesome files');
-
-		$container = self::getAWFContainer();
-
-		$container->fileSystem->copy(
-			$container->basePath . '/node_modules/@fortawesome/fontawesome-free/css/all.css',
-			$container->basePath . '/media/css/fontawesome.css',
-		);
-		$container->fileSystem->copy(
-			$container->basePath . '/node_modules/@fortawesome/fontawesome-free/css/all.min.css',
-			$container->basePath . '/media/css/fontawesome.min.css',
-		);
-
-		self::copyFiles(
-			$container->basePath . '/node_modules/@fortawesome/fontawesome-free/webfonts',
-			$container->basePath . '/media/webfonts',
-			[
-				'*.woff2'
-			]
-		);
-	}
-
-	private static function copyTinyMCE(Event $event)
-	{
-		$io = $event->getIO();
-		$io->debug('Copying TinyMCE files');
-
-		$container = self::getAWFContainer();
-
-		self::copyFiles(
-			$container->basePath . '/node_modules/tinymce/icons',
-			$container->basePath . '/media/tinymce/icons'
-		);
-		self::copyFiles(
-			$container->basePath . '/node_modules/tinymce/models',
-			$container->basePath . '/media/tinymce/models'
-		);
-		self::copyFiles(
-			$container->basePath . '/node_modules/tinymce/plugins',
-			$container->basePath . '/media/tinymce/plugins'
-		);
-		self::copyFiles(
-			$container->basePath . '/node_modules/tinymce/skins',
-			$container->basePath . '/media/tinymce/skins'
-		);
-		self::copyFiles(
-			$container->basePath . '/node_modules/tinymce/themes',
-			$container->basePath . '/media/tinymce/themes'
-		);
-		self::copyFiles(
-			$container->basePath . '/node_modules/tinymce',
-			$container->basePath . '/media/tinymce',
-			[
-				'tinymce.js',
-				'tinymce.min.js',
-			]
-		);
-	}
-
-	private static function copyACEEditor(Event $event) {
-		$io = $event->getIO();
-		$io->debug('Copying Cloud9 ACE editor files');
-
-		$container = self::getAWFContainer();
-
-		self::copyFiles(
-			$container->basePath . '/node_modules/ace-builds/css',
-			$container->basePath . '/media/ace/css',
-			[
-				'ace.css',
-				'dracula*.png',
-				'github*.png',
-				'main*.png'
-			]
-		);
-		self::copyFiles(
-			$container->basePath . '/node_modules/ace-builds/css/theme',
-			$container->basePath . '/media/ace/css/theme',
-			[
-				'dracula.css',
-				'github.css',
-			]
-		);
-		self::copyFiles(
-			$container->basePath . '/node_modules/ace-builds/src',
-			$container->basePath . '/media/ace',
-			[
-				'ace*.js',
-				'ext-searchbox.js',
-				'ext-language_tools.js',
-				'mode-css.*',
-				'mode-html.*',
-				'mode-plain_text.*',
-				// 'mode-php.*',
-				// 'mode-php_laravel_blade.*',
-				'theme-dracula.*',
-				'theme-github.*',
-				'worker-base.*',
-				'worker-css.*',
-				'worker-html.*',
-				//'worker-php.*',
-			]
-		);
-	}
-
-	private static function copyChoicesJS(Event $event) {
-		$io = $event->getIO();
-		$io->debug('Copying Choices.js files');
-
-		$container = self::getAWFContainer();
-
-		self::copyFiles(
-			$container->basePath . '/node_modules/choices.js/public/assets/scripts',
-			$container->basePath . '/media/choices',
-			[
-				'choices.js',
-				'choices.min.js',
-			]
 		);
 	}
 
