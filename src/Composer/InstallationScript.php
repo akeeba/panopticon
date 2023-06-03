@@ -11,6 +11,7 @@ use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
 use Composer\Script\Event;
 use Symfony\Component\Finder\Finder;
+use function Symfony\Component\VarDumper\Dumper\esc;
 
 abstract class InstallationScript
 {
@@ -71,6 +72,135 @@ abstract class InstallationScript
 			self::copyFiles($from, $to, $names);
 		}
 	}
+
+	public static function babel(Event $event): void
+	{
+		$io = $event->getIO();
+		$io->debug('Compiling JavaScript files');
+
+		$container = self::getAWFContainer();
+		$extras    = $event->getComposer()->getPackage()->getExtra();
+
+		foreach ($extras['babel'] ?? [] as $definition)
+		{
+			$folder  = trim($definition['folder'], '/');
+			$outdir  = trim($definition['outdir'], '/');
+			$names   = $definition['names'] ?? ['*.js'];
+			$exclude = $definition['exclude'] ?? null;
+
+			if (empty($folder) || empty($outdir))
+			{
+				continue;
+			}
+
+			$folder = $container->basePath . '/' . $folder;
+			$outdir = $container->basePath . '/' . $outdir;
+
+			$finder = new Finder();
+			$finder->ignoreDotFiles(true)
+				->ignoreVCS(true)
+				->ignoreVCSIgnored(true)
+				->in($folder)
+				->name($names)
+				->files();
+
+			if ($exclude)
+			{
+				$finder->notName($exclude);
+			}
+
+			if (!$finder->hasResults())
+			{
+				continue;
+			}
+
+			foreach ($finder as $file)
+			{
+				$inFile  = $file->getPathname();
+				$outFile = $file->getPath() . '/' . $file->getBasename('.js') . '.min.js';
+
+				if (file_exists($outFile) && filemtime($outFile) >= filemtime($inFile))
+				{
+					continue;
+				}
+
+				$cwd = getcwd();
+				chdir($container->basePath);
+
+				$command = 'npx babel ' . escapeshellarg($inFile) . ' --out-dir ' . escapeshellarg($outdir)
+					. ' --out-file-extension ' . escapeshellarg('.min.js') . ' --source-maps';
+
+				passthru($command);
+
+				chdir($cwd);
+			}
+		}
+	}
+
+	public static function sass(Event $event): void
+	{
+		$io = $event->getIO();
+		$io->debug('Compiling SCSS files');
+
+		$container = self::getAWFContainer();
+		$extras    = $event->getComposer()->getPackage()->getExtra();
+
+		foreach ($extras['scss'] ?? [] as $definition)
+		{
+			$folder  = trim($definition['folder'], '/');
+			$outdir  = trim($definition['outdir'], '/');
+			$names   = $definition['names'] ?? ['*.js'];
+			$exclude = $definition['exclude'] ?? null;
+
+			if (empty($folder) || empty($outdir))
+			{
+				continue;
+			}
+
+			$folder = $container->basePath . '/' . $folder;
+			$outdir = $container->basePath . '/' . $outdir;
+
+			$finder = new Finder();
+			$finder->ignoreDotFiles(true)
+				->ignoreVCS(true)
+				->ignoreVCSIgnored(true)
+				->in($folder)
+				->name($names)
+				->files();
+
+			if ($exclude)
+			{
+				$finder->notName($exclude);
+			}
+
+			if (!$finder->hasResults())
+			{
+				continue;
+			}
+
+			foreach ($finder as $file)
+			{
+				$inFile  = $file->getPathname();
+				$outFile = $file->getPath() . '/' . $file->getBasename('.js') . '.min.js';
+
+				if (file_exists($outFile) && filemtime($outFile) >= filemtime($inFile))
+				{
+					continue;
+				}
+
+				$cwd = getcwd();
+				chdir($container->basePath);
+
+				$command = 'sass ' . escapeshellarg($inFile . ':' . $outFile) .
+					' -s compressed --update';
+
+				passthru($command);
+
+				chdir($cwd);
+			}
+		}
+	}
+
 
 	/**
 	 * Get the Container object of the application

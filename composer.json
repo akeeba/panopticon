@@ -234,12 +234,40 @@
 					"choices.min.js"
 				]
 			}
+		],
+		"babel": [
+			{
+				"folder": "media/js",
+				"outdir": "media/js",
+				"names": [
+					"*.js"
+				],
+				"exclude": [
+					"*.min.js",
+					"bootstrap.*"
+				]
+			}
+		],
+		"sass": [
+			{
+				"folder": "media/scss",
+				"outdir": "media/css",
+				"names": [
+					"*.scss"
+				],
+				"exclude": [
+					"_*.scss"
+				]
+			}
 		]
+
 	},
 	"scripts": {
 		"npm-deps": [
 			"npm install",
-			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyNodeDependencies"
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyNodeDependencies",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::babel",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::sass"
 		],
 		"post-install-cmd": [
 			"@npm-deps",
