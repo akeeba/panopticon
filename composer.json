@@ -1,15 +1,32 @@
 {
 	"name": "akeeba/panopticon",
 	"type": "project",
-	"description": "Akeeba Panopticon — Site monitoring",
+	"description": "Self-hosted site monitoring and management",
+	"keywords": [
+		"monitoring",
+		"joomla",
+		"updates"
+	],
 	"homepage": "https://github.com/akeeba/panopticon",
-	"license": "GPL-3.0+",
+	"license": "AGPL-3.0-or-later",
 	"authors": [
 		{
 			"name": "Nicholas K. Dionysopoulos",
 			"email": "nicholas_NO_SPAM_PLEASE@akeeba.com",
 			"homepage": "http://www.dionysopoulos.me",
 			"role": "Lead Developer"
+		}
+	],
+	"support": {
+		"email": "https://github.com/akeeba/panopticon/issues",
+		"wiki": "https://github.com/akeeba/panopticon/wiki",
+		"security": "https://github.com/akeeba/panopticon/security/policy",
+		"source": "https://github.com/akeeba/panopticon"
+	},
+	"funding": [
+		{
+			"type": "paypal",
+			"url": "https://www.paypal.com/donate/?hosted_button_id=NFUWUURA6X3TS"
 		}
 	],
 	"repositories": [
@@ -42,20 +59,24 @@
 		"symfony/cache": "^6.2",
 		"symfony/console": "^6.2.7",
 		"symfony/error-handler": "^6.2"
-    },
+	},
 	"suggest": {
 		"ext-pdo": "*",
 		"ext-simplexml": "*",
 		"ext-zend-opcache": "*"
 	},
 	"config": {
+		"optimize-autoloader": true,
 		"platform": {
 			"php": "8.1.0"
 		}
 	},
-	"autoload" : {
+	"autoload": {
 		"psr-4": {
-			"Akeeba\\Panopticon\\": ["src", "user_code"]
+			"Akeeba\\Panopticon\\": [
+				"src",
+				"user_code"
+			]
 		}
 	},
 	"archive": {
