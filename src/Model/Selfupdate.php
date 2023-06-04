@@ -434,6 +434,8 @@ class Selfupdate extends Model
 			$this->container->fileSystem->rmdir($folder);
 		}
 
+		// Finally, force–reload the update information
+		$this->getUpdateInformation(true);
 	}
 
 	/**
