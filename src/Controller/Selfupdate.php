@@ -69,7 +69,7 @@ class Selfupdate extends Controller
 		{
 			$sourceFile = $this->container->segment->getFlash('selfupdate.localfile');
 
-			$targetFile = $model->extract($sourceFile);
+			$didExtract = $model->extract($sourceFile);
 		}
 		catch (\Exception $e)
 		{

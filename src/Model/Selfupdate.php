@@ -23,14 +23,47 @@ use RuntimeException;
 class Selfupdate extends Model
 {
 	/**
+	 * Third-party dependency files which need to be removed before extracting the update package.
+	 *
+	 * This can also be used to remove files which, when present after the update file's extraction, would cause the
+	 * application to fail.
+	 */
+	private const DEPS_FILES = [];
+
+	/**
+	 * Folders with third-party dependencies which need to be removed before extracting the update package.
+	 *
+	 * The idea is that the contents of these folders may vary wildly from one version of Panopticon to the next, and we
+	 * do not want to have to figure out how to track the individual files and folders which need to be deleted.
+	 *
+	 * This can also be used to remove folders which, when present after the update file's extraction, would cause the
+	 * application to fail.
+	 */
+	private const DEPS_FOLDERS = [
+		'vendor',
+		'media/ace',
+		'media/choices',
+		'media/tinymce',
+	];
+
+	/**
+	 * Old files to delete AFTER the update is finished.
+	 *
+	 * The application must not break when these files are present.
+	 */
+	private const REMOVE_FILES = [];
+
+	/**
+	 * Old folders to delete AFTER the update is finished.
+	 *
+	 * The application must not break when these folders are present.
+	 */
+	private const REMOVE_FOLDERS = [];
+
+	/**
 	 * @var string The currently installed version
 	 */
 	private string $currentVersion;
-
-	/**
-	 * @var string The minimum stability supported
-	 */
-	private string $minStability;
 
 	/**
 	 * @var string The URL of the update stream for this software
@@ -42,7 +75,6 @@ class Selfupdate extends Model
 		parent::__construct($container);
 
 		$this->currentVersion  = defined('AKEEBA_PANOPTICON_VERSION') ? AKEEBA_PANOPTICON_VERSION : 'dev';
-		$this->minStability    = $this->container->appConfig->get('selfupdate_min_stability', 'stable');
 		$this->updateStreamUrl = $this->container['updateStreamUrl'] ?? 'https://api.github.com/repos/akeeba/panopticon/releases';
 	}
 
@@ -219,7 +251,7 @@ class Selfupdate extends Model
 
 		/** @var Client $httpClient */
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
-		$options = $this->container->httpFactory->getDefaultRequestOptions();
+		$options    = $this->container->httpFactory->getDefaultRequestOptions();
 
 		$options[RequestOptions::TIMEOUT] = 5.0;
 
@@ -258,7 +290,16 @@ class Selfupdate extends Model
 		return $targetLocation;
 	}
 
-	public function extract(?string $sourceFile = null, ?string $targetPath = null): bool
+	/**
+	 * Extracts an update package
+	 *
+	 * @param   string|null  $sourceFile  The update package. Default: <temp_folder>/update.zip
+	 * @param   string       $targetPath  The path to extract the update to. Default: APATH_ROOT
+	 *
+	 * @return  bool
+	 * @since   1.0.0
+	 */
+	public function extract(?string $sourceFile = null, string $targetPath = APATH_ROOT): bool
 	{
 		if (empty($sourceFile))
 		{
@@ -272,9 +313,15 @@ class Selfupdate extends Model
 			}
 		}
 
-		$targetPath ??= APATH_ROOT;
+		// Set obscenely large limits to prevent timeout or memory exhaustion from breaking the update
+		if (function_exists('ini_set'))
+		{
+			ini_set('max_execution_time', 3600);
+			ini_set('memory_limit', '1024M');
+		}
 
 		$zip = new \ZipArchive();
+
 		switch ($zip->open($sourceFile))
 		{
 			case \ZipArchive::ER_INCONS:
@@ -307,10 +354,90 @@ class Selfupdate extends Model
 				break;
 		}
 
-		return $zip->extractTo($targetPath);
+		/**
+		 * Before extracting, delete the third party dependency and critical folders and files (if they exist).
+		 */
+		foreach (self::DEPS_FILES as $file)
+		{
+			$file = $this->container->basePath . '/' . $file;
+
+			if (!file_exists($file))
+			{
+				continue;
+			}
+
+			$this->container->fileSystem->delete($file);
+		}
+
+		foreach (self::DEPS_FOLDERS as $folder)
+		{
+			$folder = $this->container->basePath . '/' . $folder;
+
+			if (!file_exists($folder) || !is_dir($folder))
+			{
+				continue;
+			}
+
+			$this->container->fileSystem->rmdir($folder);
+		}
+
+		/**
+		 * Extract the ZIP file.
+		 *
+		 * Setting the umask is recommended in the PHP documentation.
+		 */
+		$oldUmask = umask(0755);
+
+		$result = $zip->extractTo($targetPath);
+
+		umask($oldUmask);
+
+		$zip->close();
+
+		return $result;
 	}
 
-	// TODO Post-update code
+	/**
+	 * Executes after an update package has been extracted
+	 *
+	 * @return  void
+	 * @since   1.0.0
+	 */
+	public function postUpdate()
+	{
+		/** @var \Akeeba\Panopticon\Model\Setup $model */
+		$model = $this->getModel('Setup');
+		// Check the installed default tasks
+		$model->checkDefaultTasks();
+		// Make sure the DB tables are installed correctly
+		$model->installDatabase();
+
+		// Remove old files and folders
+		foreach (self::REMOVE_FILES as $file)
+		{
+			$file = $this->container->basePath . '/' . $file;
+
+			if (!file_exists($file))
+			{
+				continue;
+			}
+
+			$this->container->fileSystem->delete($file);
+		}
+
+		foreach (self::REMOVE_FOLDERS as $folder)
+		{
+			$folder = $this->container->basePath . '/' . $folder;
+
+			if (!file_exists($folder) || !is_dir($folder))
+			{
+				continue;
+			}
+
+			$this->container->fileSystem->rmdir($folder);
+		}
+
+	}
 
 	/**
 	 * @return string
