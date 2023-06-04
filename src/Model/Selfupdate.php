@@ -325,32 +325,32 @@ class Selfupdate extends Model
 		switch ($zip->open($sourceFile))
 		{
 			case \ZipArchive::ER_INCONS:
-				throw new RuntimeException(sprintf('Update file %s is inconsistent.', $targetPath));
+				throw new RuntimeException(sprintf('Update file %s is inconsistent.', $sourceFile));
 				break;
 
 			case \ZipArchive::ER_INVAL:
 			case \ZipArchive::ER_MEMORY:
-				throw new RuntimeException(sprintf('Cannot open update file %s: internal error in PHP', $targetPath));
+				throw new RuntimeException(sprintf('Cannot open update file %s: internal error in PHP', $sourceFile));
 				break;
 
 			case \ZipArchive::ER_NOENT:
-				throw new RuntimeException(sprintf('Update file %s does not exist.', $targetPath));
+				throw new RuntimeException(sprintf('Update file %s does not exist.', $sourceFile));
 				break;
 
 			case \ZipArchive::ER_NOZIP:
-				throw new RuntimeException(sprintf('Update file %s is not a ZIP archive.', $targetPath));
+				throw new RuntimeException(sprintf('Update file %s is not a ZIP archive.', $sourceFile));
 				break;
 
 			case \ZipArchive::ER_OPEN:
-				throw new RuntimeException(sprintf('Update file %s cannot be opened.', $targetPath));
+				throw new RuntimeException(sprintf('Update file %s cannot be opened.', $sourceFile));
 				break;
 
 			case \ZipArchive::ER_READ:
-				throw new RuntimeException(sprintf('Update file %s cannot be read from.', $targetPath));
+				throw new RuntimeException(sprintf('Update file %s cannot be read from.', $sourceFile));
 				break;
 
 			case \ZipArchive::ER_SEEK:
-				throw new RuntimeException(sprintf('Update file %s cannot be skipped forward.', $targetPath));
+				throw new RuntimeException(sprintf('Update file %s cannot be skipped forward.', $sourceFile));
 				break;
 		}
 
