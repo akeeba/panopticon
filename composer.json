@@ -271,19 +271,19 @@
 		],
 		"post-install-cmd": [
 			"@npm-deps",
-			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate"
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::schemaUpdate"
 		],
 		"post-update-cmd": [
 			"@npm-deps",
-			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate"
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::schemaUpdate"
 		],
 		"pre-archive-cmd": [
 			"@npm-deps"
 		],
 		"post-create-project-cmd": [
-			"@composer dump-autoload -a",
-			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate",
-			"@npm-deps"
+			"@composer dump-autoload -a"
 		]
 	}
 }

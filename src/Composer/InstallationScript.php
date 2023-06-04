@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Composer;
 
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
+use Awf\Mvc\Model;
 use Composer\Script\Event;
 use Symfony\Component\Finder\Finder;
 use function Symfony\Component\VarDumper\Dumper\esc;
@@ -21,6 +22,8 @@ abstract class InstallationScript
 	 * @param   Event  $event
 	 *
 	 * @return  void
+	 *
+	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
 	public static function postComposerUpdate(Event $event): void
@@ -36,6 +39,8 @@ abstract class InstallationScript
 	 * @param   Event  $event
 	 *
 	 * @return  void
+	 *
+	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
 	public static function copyNodeDependencies(Event $event): void
@@ -73,6 +78,16 @@ abstract class InstallationScript
 		}
 	}
 
+	/**
+	 * Compiles and minifies the JavaScript files
+	 *
+	 * @param   Event  $event
+	 *
+	 * @return  void
+	 *
+	 * @since        1.0.0
+	 * @noinspection PhpUnused
+	 */
 	public static function babel(Event $event): void
 	{
 		$io = $event->getIO();
@@ -137,6 +152,16 @@ abstract class InstallationScript
 		}
 	}
 
+	/**
+	 * Compiles SCSS into minified CSS
+	 *
+	 * @param   Event  $event
+	 *
+	 * @return  void
+	 *
+	 * @since        1.0.0
+	 * @noinspection PhpUnused
+	 */
 	public static function sass(Event $event): void
 	{
 		$io = $event->getIO();
@@ -201,6 +226,25 @@ abstract class InstallationScript
 		}
 	}
 
+	public static function schemaUpdate(Event $event): void
+	{
+		$container = self::getAWFContainer();
+		$appConfig = $container->appConfig;
+
+		if (!file_exists($appConfig->getDefaultPath()))
+		{
+			return;
+		}
+
+		$appConfig->loadConfiguration();
+
+		/** @var \Akeeba\Panopticon\Model\Setup $model */
+		$model = Model::getTmpInstance('Setup');
+		// Check the installed default tasks
+		$model->checkDefaultTasks();
+		// Make sure the DB tables are installed correctly
+		$model->installDatabase();
+	}
 
 	/**
 	 * Get the Container object of the application
