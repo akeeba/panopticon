@@ -322,7 +322,7 @@ class Selfupdate extends Model
 
 		$zip = new \ZipArchive();
 
-		switch ($zip->open($sourceFile))
+		switch ($zip->open($sourceFile, \ZipArchive::RDONLY))
 		{
 			case \ZipArchive::ER_INCONS:
 				throw new RuntimeException(sprintf('Update file %s is inconsistent.', $sourceFile));
