@@ -325,7 +325,10 @@ class Selfupdate extends Model
 		switch ($zip->open($sourceFile, \ZipArchive::RDONLY))
 		{
 			case \ZipArchive::ER_INCONS:
-				throw new RuntimeException(sprintf('Update file %s is inconsistent.', $sourceFile));
+				/**
+				 * Ignore this. Despite open() returning this error it can still open and extract the archive. Yeah.
+				 */
+				// throw new RuntimeException(sprintf('Update file %s is inconsistent.', $sourceFile));
 				break;
 
 			case \ZipArchive::ER_INVAL:
@@ -383,14 +386,8 @@ class Selfupdate extends Model
 
 		/**
 		 * Extract the ZIP file.
-		 *
-		 * Setting the umask is recommended in the PHP documentation.
 		 */
-		$oldUmask = umask(0755);
-
 		$result = $zip->extractTo($targetPath);
-
-		umask($oldUmask);
 
 		$zip->close();
 
