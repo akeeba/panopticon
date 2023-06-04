@@ -192,101 +192,11 @@
     ====================================================================================================
     -->
     <target name="git" description="Makes only packages, not the documentation"
-            depends="new-release,setup-properties,compile-css,compile-javascript,app-package">
+            depends="new-release,setup-properties,app-package">
     </target>
 
     <target name="git-app" description="Makes only the application package"
-            depends="new-release,setup-properties,compile-css,compile-javascript,app-package">
-    </target>
-
-    <target name="new-release" depends="composer-install,npm-install,link">
-        <echo>Emptying release directory</echo>
-        <delete dir="${dirs.release}" quiet="true" includeemptydirs="true"/>
-        <mkdir dir="${dirs.release}"/>
-
-        <!-- The vendor folder may have been created afresh; copy the .htaccess and web.config files into it -->
-        <echo>Copying .htaccess and web.config into the vendor folder</echo>
-        <copy todir="${dirs.phpapp}/vendor">
-            <fileset dir="${dirs.phpapp}/src">
-                <include name=".htaccess" />
-                <include name="web.config" />
-            </fileset>
-        </copy>
-
-        <!-- Bootstrap may have been updated. Copy its JS files. Bootstrap's SCSS is handled by compile-css. -->
-        <echo>Copying Bootstrap JavaScript files</echo>
-        <copy todir="${dirs.phpapp}/media/js">
-            <fileset dir="${dirs.root}/node_modules/bootstrap/dist/js">
-                <include name="bootstrap.bundle.*" />
-            </fileset>
-        </copy>
-
-        <!-- FontAwesome -->
-        <echo>Copying FontAwesome files</echo>
-        <copy file="${dirs.root}/node_modules/@fortawesome/fontawesome-free/css/all.css" tofile="${dirs.phpapp}/media/css/fontawesome.css" />
-        <copy file="${dirs.root}/node_modules/@fortawesome/fontawesome-free/css/all.min.css" tofile="${dirs.phpapp}/media/css/fontawesome.min.css" />
-        <copy todir="${dirs.phpapp}/media/webfonts">
-            <fileset dir="${dirs.root}/node_modules/@fortawesome/fontawesome-free/webfonts">
-                <include name="*.woff2" />
-            </fileset>
-        </copy>
-
-        <!-- TinyMCE -->
-        <echo>Copying TinyMCE files</echo>
-        <copy todir="${dirs.phpapp}/media/tinymce">
-            <fileset dir="${dirs.root}/node_modules/tinymce">
-                <include name="icons/**" />
-                <include name="models/**" />
-                <include name="plugins/**" />
-                <include name="skins/**" />
-                <include name="themes/**" />
-                <include name="tinymce.js" />
-                <include name="tinymce.min.js" />
-            </fileset>
-        </copy>
-
-        <!-- ACE (https://ace.c9.io/#nav=embedding) -->
-        <echo>Copying ACE files</echo>
-        <copy todir="${dirs.phpapp}/media/ace/css">
-            <fileset dir="${dirs.root}/node_modules/ace-builds/css">
-                <include name="ace.css" />
-                <include name="dracula*.png" />
-                <include name="github*.png" />
-                <include name="main*.png" />
-                <include name="theme/dracula.css" />
-                <include name="theme/github.css" />
-            </fileset>
-        </copy>
-        <copy todir="${dirs.phpapp}/media/ace">
-            <fileset dir="${dirs.root}/node_modules/ace-builds/src">
-                <include name="ace*.js" />
-                <include name="ext-searchbox.js" />
-                <include name="ext-languagetools.js" />
-                <include name="mode-css.*" />
-                <include name="mode-html.*" />
-                <include name="mode-plain_text.*" />
-                <!--<include name="mode-php.*" />-->
-                <!--<include name="mode-php_laravel_blade.*" />-->
-                <include name="theme-dracula.*" />
-                <include name="theme-github.*" />
-                <include name="worker-base.*" />
-                <include name="worker-css.*" />
-                <include name="worker-html.*" />
-                <!--<include name="worker-php.*" />-->
-            </fileset>
-        </copy>
-
-        <!-- Choices.js (https://github.com/Choices-js/Choices) -->
-        <echo>Copying Choices.js files</echo>
-        <copy todir="${dirs.phpapp}/media/choices">
-            <fileset dir="${dirs.root}/node_modules/choices.js/public/assets/scripts">
-                <include name="choices.js" />
-                <include name="choices.min.js" />
-            </fileset>
-        </copy>
-
-        <echo>Removing .DS_Store files</echo>
-        <exec command="find . -name .DS_Store -delete" dir="${dirs.root}"/>
+            depends="new-release,setup-properties,app-package">
     </target>
 
     <target name="setup-properties" description="Set up version and build properties">
@@ -310,68 +220,6 @@
                 <token key="PRO" value="1"/>
             </replacetokens>
         </filterchain>
-    </target>
-
-    <target name="npm-install" description="Install the NPM dev dependencies">
-        <echo>Installing NPM dev dependencies</echo>
-        <exec executable="npm" dir="${dirs.root}" checkreturn="true">
-            <arg value="install" />
-        </exec>
-    </target>
-
-    <target name="compile-javascript" description="Transpile and minify JavaScript files">
-        <echo>Minifying JavaScript files</echo>
-
-        <!--
-        Babel sucks. It will NEVER ignore files you tell it to ignore.
-        -->
-        <foreach param="filename" target="really-compile-javascript">
-            <fileset dir="${dirs.phpapp}/media/js">
-                <include name="*.js" />
-                <exclude name="*.min.js" />
-                <exclude name="bootstrap.*" />
-            </fileset>
-        </foreach>
-    </target>
-
-    <target name="really-compile-javascript">
-        <basename property="basename" file="${filename}" suffix=".js" />
-        <exec executable="npx" dir="${dirs.root}" checkreturn="true" output="true">
-            <arg value="babel" />
-
-            <arg value="${dirs.phpapp}/media/js/${basename}.js" />
-
-            <arg value="--out-dir" />
-            <arg value="${dirs.phpapp}/media/js" />
-
-            <arg value="--out-file-extension" />
-            <arg value=".min.js" />
-
-            <arg value="--source-maps" />
-        </exec>
-    </target>
-
-    <target name="compile-css" description="Compile SCSS to minified CSS">
-        <echo>Compiling SCSS into CSS</echo>
-        <foreach param="filename" target="sass-apply">
-            <fileset dir="${dirs.phpapp}/media/scss">
-                <include name="*.scss" />
-                <exclude name="_*.scss" />
-            </fileset>
-        </foreach>
-    </target>
-
-    <target name="sass-apply">
-        <basename property="basename" file="${filename}" suffix=".scss" />
-
-        <exec executable="sass" dir="${phing.dir}" checkreturn="true" passthru="true">
-            <arg value="${dirs.phpapp}/media/scss/${filename}:${dirs.phpapp}/media/css/${basename}.min.css" />
-
-            <arg value="-s" />
-            <arg value="compressed" />
-
-            <arg value="--update" />
-        </exec>
     </target>
 
     <!--

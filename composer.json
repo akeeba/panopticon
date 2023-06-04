@@ -1,15 +1,32 @@
 {
 	"name": "akeeba/panopticon",
 	"type": "project",
-	"description": "Akeeba Panopticon — Site monitoring",
+	"description": "Self-hosted site monitoring and management",
+	"keywords": [
+		"monitoring",
+		"joomla",
+		"updates"
+	],
 	"homepage": "https://github.com/akeeba/panopticon",
-	"license": "GPL-3.0+",
+	"license": "AGPL-3.0-or-later",
 	"authors": [
 		{
 			"name": "Nicholas K. Dionysopoulos",
 			"email": "nicholas_NO_SPAM_PLEASE@akeeba.com",
 			"homepage": "http://www.dionysopoulos.me",
 			"role": "Lead Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/akeeba/panopticon/issues",
+		"wiki": "https://github.com/akeeba/panopticon/wiki",
+		"security": "https://github.com/akeeba/panopticon/security/policy",
+		"source": "https://github.com/akeeba/panopticon"
+	},
+	"funding": [
+		{
+			"type": "paypal",
+			"url": "https://www.paypal.com/donate/?hosted_button_id=NFUWUURA6X3TS"
 		}
 	],
 	"repositories": [
@@ -42,20 +59,24 @@
 		"symfony/cache": "^6.2",
 		"symfony/console": "^6.2.7",
 		"symfony/error-handler": "^6.2"
-    },
+	},
 	"suggest": {
 		"ext-pdo": "*",
 		"ext-simplexml": "*",
 		"ext-zend-opcache": "*"
 	},
 	"config": {
+		"optimize-autoloader": true,
 		"platform": {
 			"php": "8.1.0"
 		}
 	},
-	"autoload" : {
+	"autoload": {
 		"psr-4": {
-			"Akeeba\\Panopticon\\": ["src", "user_code"]
+			"Akeeba\\Panopticon\\": [
+				"src",
+				"user_code"
+			]
 		}
 	},
 	"archive": {
@@ -90,6 +111,179 @@
 			"README.md",
 			"RELEASENOTES.md",
 			"TODO.md"
+		]
+	},
+	"process-timeout": 600,
+	"extra": {
+		"copy-static": [
+			{
+				"from": "src/.htaccess",
+				"to": "vendor/.htaccess"
+			},
+			{
+				"from": "src/web.config",
+				"to": "vendor/web.config"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/bootstrap/dist/js",
+				"to": "media/js",
+				"names": [
+					"bootstrap.bundle.*"
+				]
+			},
+			{
+				"from": "node_modules/@fortawesome/fontawesome-free/css/all.css",
+				"to": "media/css/fontawesome.css"
+			},
+			{
+				"from": "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+				"to": "media/css/fontawesome.min.css"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/@fortawesome/fontawesome-free/webfonts",
+				"to": "media/webfonts",
+				"names": [
+					"*.woff2"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/icons",
+				"to": "media/tinymce/icons"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/models",
+				"to": "media/tinymce/models"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/plugins",
+				"to": "media/tinymce/plugins"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/skins",
+				"to": "media/tinymce/skins"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce/themes",
+				"to": "media/tinymce/themes"
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/tinymce",
+				"to": "media/tinymce",
+				"names": [
+					"tinymce.js",
+					"tinymce.min.js"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/ace-builds/css",
+				"to": "media/ace/css",
+				"names": [
+					"ace.css",
+					"dracula*.png",
+					"github*.png",
+					"main*.png"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/ace-builds/css/theme",
+				"to": "media/ace/css/theme",
+				"names": [
+					"dracula.css",
+					"github.css"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/ace-builds/src",
+				"to": "media/ace",
+				"names": [
+					"ace*.js",
+					"ext-searchbox.js",
+					"ext-language_tools.js",
+					"mode-css.*",
+					"mode-html.*",
+					"mode-plain_text.*",
+					"theme-dracula.*",
+					"theme-github.*",
+					"worker-base.*",
+					"worker-css.*",
+					"worker-html.*"
+				],
+				"__x__names": [
+					"mode-php.*",
+					"mode-php_laravel_blade.*",
+					"worker-php.*"
+				]
+			},
+			{
+				"type": "folder",
+				"from": "node_modules/choices.js/public/assets/scripts",
+				"to": "media/choices",
+				"names": [
+					"choices.js",
+					"choices.min.js"
+				]
+			}
+		],
+		"babel": [
+			{
+				"folder": "media/js",
+				"outdir": "media/js",
+				"names": [
+					"*.js"
+				],
+				"exclude": [
+					"*.min.js",
+					"bootstrap.*"
+				]
+			}
+		],
+		"sass": [
+			{
+				"folder": "media/scss",
+				"outdir": "media/css",
+				"names": [
+					"*.scss"
+				],
+				"exclude": [
+					"_*.scss"
+				]
+			}
+		]
+
+	},
+	"scripts": {
+		"npm-deps": [
+			"npm install",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyNodeDependencies",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::babel",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::sass"
+		],
+		"post-install-cmd": [
+			"@npm-deps",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate"
+		],
+		"post-update-cmd": [
+			"@npm-deps",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate"
+		],
+		"pre-archive-cmd": [
+			"@npm-deps"
+		],
+		"post-create-project-cmd": [
+			"@composer dump-autoload -a",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate",
+			"@npm-deps"
 		]
 	}
 }
