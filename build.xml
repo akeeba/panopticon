@@ -209,7 +209,7 @@
         <if>
             <equals arg1="${version}" arg2="git" />
             <then>
-                <autoversion workingCopy="${dirs.root}" propertyName="version" />
+                <autoversion workingCopy="${dirs.root}" propertyName="version" useCommitHash="false" />
             </then>
         </if>
 
