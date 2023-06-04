@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CLI selfupdate:cleanup" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="selfupdate:cleanup -vvv">
+    <method v="2" />
+  </configuration>
+</component>
