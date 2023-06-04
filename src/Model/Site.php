@@ -270,6 +270,13 @@ class Site extends DataModel
 		return $url;
 	}
 
+	public function getAPIEndpointURL(): string
+	{
+		$url = rtrim($this->url, "/ \t\n\r\0\x0B");
+
+		return $this->url;
+	}
+
 	public function fixCoreUpdateSite(): void
 	{
 		/** @var \Akeeba\Panopticon\Container $container */

@@ -40,7 +40,7 @@ trait ApiRequestTrait
 		$options[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout;
 
 		// Construct the API URL
-		$url = $site->url . $path;
+		$url = $site->getAPIEndpointURL() . $path;
 
 		// Return the results
 		return [$url, $options];
