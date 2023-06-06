@@ -19,6 +19,7 @@ trait ACLTrait
 	 * Per-view and per-task privileges.
 	 *
 	 * The possible privileges are:
+	 * - ø      : Forbidden (even to superusers)
 	 * - #      : Public access (even when logged out)
 	 * - *      : Any logged-in access, even without any other explicit privileges
 	 * - super  : Superusers
@@ -86,14 +87,22 @@ trait ACLTrait
 			'*' => ['super'],
 		],
 		'sysconfig'     => [
-			'*' => ['super'],
+			'default'   => ['super'],
+			'browse'    => ['super'],
+			'save'      => ['super'],
+			'apply'     => ['super'],
+			'testemail' => ['super'],
 		],
 		'tasks'         => [
-			'*' => ['super'],
+			// Explicitly allowed tasks. Not adding other tasks means they are implicitly disallowed, even to superusers.
+			'default'   => ['super'],
+			'browse'    => ['super'],
+			'publish'   => ['super'],
+			'unpublish' => ['super'],
 		],
 		'users'         => [
-			'*'     => ['super'],
-			// User read (profile view) and edit has its own privilege management as users can edit their own account
+			// Explicitly allowed tasks. Using * because they have their own access control (I can view / edit myself).
+			// Not adding other tasks means they are implicitly disallowed, even to superusers.
 			'edit'  => ['*'],
 			'read'  => ['*'],
 			'save'  => ['*'],
@@ -141,6 +150,18 @@ trait ACLTrait
 		}
 
 		$user = $this->container->userManager->getUser();
+
+		// Special case: explicitly forbidden. Uses the 'ø' privilege.
+		$isExplicitlyForbidden = array_reduce(
+			$requiredPrivileges,
+			fn($carry, $privilege) => $carry || $privilege === 'ø',
+			false
+		);
+
+		if (!$isExplicitlyForbidden)
+		{
+			return true;
+		}
 
 		// Special case: public access. Requires the '#' privilege.
 		if (!$user->getId())
