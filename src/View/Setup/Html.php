@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\Setup;
 
 
 use Akeeba\Panopticon\Model\Setup;
+use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Awf\Text\Text;
 use Awf\Utils\Template;
@@ -18,6 +19,7 @@ defined('AKEEBA') || die;
 class Html extends \Awf\Mvc\DataView\Html
 {
 	use ShowOnTrait;
+	use CrudTasksTrait;
 
 	public array $reqSettings;
 
@@ -54,18 +56,9 @@ class Html extends \Awf\Mvc\DataView\Html
 	{
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
 
-		$buttons = [
-			[
-				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
-				'class'   => 'btn-info',
-				'onClick' => json_encode([
-					'data-bs-toggle' => "collapse", 'data-bs-target' => ".form-text", 'aria-expanded' => "false",
-				]),
-				'icon'    => 'fa fa-question-circle me-1',
-			],
-		];
+		$this->addButton('inlineHelp');
 
-		$this->setupPageHeader($buttons, subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_DATABASE'));
+		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_DATABASE'));
 
 		$this->connectionParameters = $this->getModel()->getDatabaseParameters();
 
@@ -85,18 +78,9 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public function onBeforeSetup()
 	{
-		$buttons = [
-			[
-				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
-				'class'   => 'btn-info',
-				'onClick' => json_encode([
-					'data-bs-toggle' => "collapse", 'data-bs-target' => ".form-text", 'aria-expanded' => "false",
-				]),
-				'icon'    => 'fa fa-question-circle me-1',
-			],
-		];
+		$this->addButton('inlineHelp');
 
-		$this->setupPageHeader($buttons, subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_SETUP'));
+		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_SETUP'));
 
 		$this->params = $this->getModel()->getSetupParameters();
 
@@ -144,12 +128,7 @@ class Html extends \Awf\Mvc\DataView\Html
 			);
 		}
 
-		$toolbar = $this->container->application->getDocument()->getToolbar();
-		$toolbar->setTitle($title);
-
-		foreach ($buttons as $button)
-		{
-			$toolbar->addButtonFromDefinition($button);
-		}
+		$this->setTitle($title);
+		$this->addButtons($buttons);
 	}
 }

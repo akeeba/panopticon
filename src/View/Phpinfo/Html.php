@@ -7,22 +7,19 @@
 
 namespace Akeeba\Panopticon\View\Phpinfo;
 
-use Awf\Text\Text;
+use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 
 defined('AKEEBA') || die;
 
 class Html extends \Awf\Mvc\DataView\Html
 {
+	use CrudTasksTrait;
+
 	public ?string $phpInfo;
 
 	public function onBeforeMain(): bool
 	{
-		$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition([
-			'title'   => Text::_('PANOPTICON_BTN_PREV'),
-			'class'   => 'btn btn-secondary border-light',
-			'url' => $this->container->router->route('index.php?view=sysconfig'),
-			'icon'    => 'fa fa-chevron-left',
-		]);
+		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=sysconfig')]);
 
 		$this->phpInfo = $this->getModel()->getPhpInfo();
 

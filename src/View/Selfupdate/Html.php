@@ -12,11 +12,14 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\SelfUpdate\UpdateInformation;
 use Akeeba\Panopticon\Library\SelfUpdate\VersionInformation;
 use Akeeba\Panopticon\Model\Selfupdate;
+use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
 use Awf\Text\Text;
 
 class Html extends BaseHtmlView
 {
+	use CrudTasksTrait;
+
 	public bool $force = false;
 
 	public ?UpdateInformation $updateInformation = null;
@@ -34,15 +37,9 @@ class Html extends BaseHtmlView
 		$this->latestversion     = $model->getLatestVersion();
 		$this->hasUpdate         = $model->hasUpdate();
 
-		$toolbar = $this->container->application->getDocument()->getToolbar();
-		$toolbar->addButtonFromDefinition([
-			'title' => Text::_('PANOPTICON_BTN_PREV'),
-			'class' => 'btn btn-secondary border-light',
-			'url'   => $this->container->router->route('index.php?view=main'),
-			'icon'  => 'fa fa-chevron-left',
-		]);
+		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=main')]);
 
-		$toolbar->setTitle(Text::_('PANOPTICON_SELFUPDATE_TITLE'));
+		$this->setTitle(Text::_('PANOPTICON_SELFUPDATE_TITLE'));
 
 		return true;
 	}

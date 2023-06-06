@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\DataController;
 use Awf\Text\Text;
 use Awf\Utils\ArrayHelper;
@@ -16,49 +17,13 @@ use RuntimeException;
 
 class Users extends DataController
 {
-	protected function onBeforeOrderdown()
-	{
-		return false;
-	}
+	use ACLTrait;
 
-	protected function onBeforeOrderup()
+	public function execute($task)
 	{
-		return false;
-	}
+		$this->aclCheck($task);
 
-	protected function onBeforeSaveorder()
-	{
-		return false;
-	}
-
-	protected function onBeforeUnpublish()
-	{
-		return false;
-	}
-
-	protected function onBeforeTrash()
-	{
-		return false;
-	}
-
-	protected function onBeforeArchive()
-	{
-		return false;
-	}
-
-	protected function onBeforePublish()
-	{
-		return false;
-	}
-
-	protected function onBeforeSavenew()
-	{
-		return false;
-	}
-
-	protected function onBeforeCopy()
-	{
-		return false;
+		return parent::execute($task);
 	}
 
 	protected function onBeforeRead()
@@ -110,8 +75,7 @@ class Users extends DataController
 
 		// Get the applicable data
 		$data = [
-			'id'          => $id,
-			'username'    => trim($this->input->post->getUsername('username', '')),
+			'id'          => $id, 'username' => trim($this->input->post->getUsername('username', '')),
 			'name'        => trim($this->input->post->getString('name', '')),
 			'email'       => trim($this->input->post->get('email', '', 'raw')),
 			'password'    => $this->input->post->get('password', '', 'raw'),
