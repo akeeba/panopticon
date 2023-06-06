@@ -130,7 +130,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATES_N', $extensionsQuickInfo->update)"
                     >
                         <span class="fa fa-box-open" aria-hidden="true"></span>
-                        <span aria-hidden="true">{{  $extensionsQuickInfo->update }}</span>
+                        <span aria-hidden="true">{{{ $extensionsQuickInfo->update  }}}</span>
                         <span class="visually-hidden">@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATES_N', $extensionsQuickInfo->update)</span>
                     </span>
                 </sup>
@@ -142,7 +142,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATESITES_N', $extensionsQuickInfo->site)"
                     >
                         <span class="fa fa-globe" aria-hidden="true"></span>
-                        <span aria-hidden="true">{{  $extensionsQuickInfo->site }}</span>
+                        <span aria-hidden="true">{{{ $extensionsQuickInfo->site }}}</span>
                         <span class="visually-hidden">@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATESITES_N', $extensionsQuickInfo->site)</span>
                     </span>
                 </sup>
@@ -154,7 +154,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_NOKEY_N', $extensionsQuickInfo->key)"
                     >
                         <span class="fa fa-key" aria-hidden="true"></span>
-                        <span aria-hidden="true">{{  $extensionsQuickInfo->key }}</span>
+                        <span aria-hidden="true">{{{ $extensionsQuickInfo->key }}}</span>
                         <span class="visually-hidden">@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_NOKEY_N', $extensionsQuickInfo->key)</span>
                     </span>
                 </sup>
@@ -308,14 +308,14 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                             </span>
                             @if ($error)
                                 <span class="text-danger fw-medium">
-                                    {{ $item->name }}
+                                    {{{ $item->name }}}
                                 </span>
                             @elseif ($hasUpdate)
                                 <span class="text-warning-emphasis fw-bold">
-                                    {{ $item->name }}
+                                    {{{ $item->name }}}
                                 </span>
                             @else
-                                {{ $item->name }}
+                                {{{ $item->name }}}
                             @endif
 
                             @if ($hasUpdate && !$error && $willAutoUpdate($key, $currentVersion, $latestVersion))
@@ -328,7 +328,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_NOT_AUTOUPDATE')</span>
                             @endif
                         </div>
-                        <div class="small text-muted font-monospace">{{ ltrim($key, 'a') }}</div>
+                        <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}}</div>
                         @if ($error)
                             <div>
                                 @if ($noUpdateSite)
@@ -346,48 +346,48 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                         @elseif (($item->downloadkey?->supported ?? false) && !empty($item->downloadkey?->value ?? '') && $this->container->userManager->getUser()->getPrivilege('panopticon.admin'))
                             <span class="fa fa-key text-muted" ></span>
                             <span class="visually-hidden">Download Key: </span>
-                            <code class="download-key" tabindex="0">{{ $item->downloadkey?->value ?? '' }}</code>
+                            <code class="download-key" tabindex="0">{{{ $item->downloadkey?->value ?? '' }}}}</code>
 
                         @endif
                     </td>
                     <td class="small">
                         <div>
                             @if ($item->authorUrl)
-                                <a href="{{ $item->authorUrl }}" target="_blank">
-                                    {{ $item->author }}
+                                <a href="{{{ $item->authorUrl }}}}" target="_blank">
+                                    {{{ $item->author }}}
                                 </a>
                             @else
-                                {{ $item->author }}
+                                {{{ $item->author }}}
                             @endif
                         </div>
                         @if ($item->authorEmail)
                             <div class="text-muted">
-                                {{ $item->authorEmail }}
+                                {{{ $item->authorEmail }}}
                             </div>
                         @endif
                     </td>
                     <td>
                         @if ($hasUpdate && $error)
                             <strong class="text-danger-emphasis">
-                                {{ $item->version->current }}
+                                {{{ $item->version->current }}}
                             </strong>
                             <div class="ps-4 text-body-tertiary">
                                 <span class="fa fa-arrow-right small" aria-hidden="true"></span>
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_NEWVERSION_CANNOTINSTALL_SR')</span>
                                 <span class="fw-medium small">
-                                    {{ $item->version->new }}
+                                    {{{ $item->version->new }}}
                                 </span>
                                 <span class="fa fa-lock text-danger"></span>
                             </div>
                         @elseif ($hasUpdate)
                             <strong class="text-danger-emphasis">
-                                {{ $item->version->current }}
+                                {{{ $item->version->current }}}
                             </strong>
                             <div class="ps-4">
                                 <span class="fa fa-arrow-right text-body-tertiary small" aria-hidden="true"></span>
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_NEWVERSION_CANINSTALL_SR')</span>
                                 <span class="fw-medium text-info small">
-                                    {{ $item->version->new }}
+                                    {{{ $item->version->new }}}
                                 </span>
                             </div>
 
@@ -403,7 +403,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
 
 
                         @else
-                            {{ $item->version->current }}
+                            {{{ $item->version->current }}}
                         @endif
                     </td>
                 </tr>

@@ -100,22 +100,22 @@ $config = $this->container->appConfig;
                             <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE')</span>
                         @endif
                     </span>
-                    {{ $item->name }}
-                    <div class="small text-muted font-monospace">{{ ltrim($key, 'a') }}</div>
+                    {{{ $item->name }}}
+                    <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
                 </td>
                 <td class="d-none d-lg-table-cell">
                     <div class="small">
                         @if ($item->authorUrl)
-                            <a href="{{ $item->authorUrl }}" target="_blank">
-                                {{ $item->author }}
+                            <a href="{{{ $item->authorUrl }}}" target="_blank">
+                                {{{ $item->author }}}
                             </a>
                         @else
-                            {{ $item->author }}
+                            {{{ $item->author }}}
                         @endif
                     </div>
                     @if ($item->authorEmail)
                     <div class="small text-muted">
-                        {{ $item->authorEmail }}
+                        {{{ $item->authorEmail }}}
                     </div>
                     @endif
                 </td>

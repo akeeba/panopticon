@@ -31,7 +31,7 @@ $phpVersion = new PhpVersion;
     $isLatest    = version_compare($php, $latestVersion, 'ge');
     ?>
     @if($isLatest)
-        {{ $php }}
+        {{{ $php }}}}
     @else
         <div class="d-inline-block"
              @if($colorizePhp)
@@ -41,15 +41,15 @@ $phpVersion = new PhpVersion;
         >
             @if($colorizePhp)
             <div class="text-warning fw-bold d-inline-block">
-                {{ $php }}
+                {{{ $php }}}}
             </div>
             @else
-                {{ $php }}
+                {{{ $php }}}}
             @endif
             <div class="small text-success-emphasis d-inline-block">
                 <span class="fa fa-arrow-right" aria-hidden="true"></span>
                 <span class="visually-hidden">@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_SHOULD_UPGRADE', $latestVersion)</span>
-                {{ $latestVersion }}
+                {{{ $latestVersion }}}
             </div>
         </div>
 
@@ -66,7 +66,7 @@ $phpVersion = new PhpVersion;
          data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE', $eolDate)
     >
         <span class="fa fa-circle-xmark" aria-hidden="true"></span>
-        {{ $php }}
+        {{{ $php }}}
         <span class="visually-hidden">@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE', $eolDate)</span>
     </div>
 @elseif ($phpVersion->isSecurity($php))
@@ -83,7 +83,7 @@ $phpVersion = new PhpVersion;
         </span>
     </div>
 @elseif($phpVersion->getVersionInformation($php)->unknown)
-    <span class="text-body">{{ $php }}</span>
+    <span class="text-body">{{{ $php }}}}</span>
 @else
     @yieldRepeatable('phpVersion', $php)
 @endif

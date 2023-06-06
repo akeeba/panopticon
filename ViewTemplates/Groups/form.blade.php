@@ -63,7 +63,7 @@ $token      = $this->container->session->getCsrfToken()->getValue();
         </div>
     </div>
 
-    <input type="hidden" name="id" value="{{ $model->id ?? 0 }}">
+    <input type="hidden" name="id" value="{{ (int) $model->id ?? 0 }}">
     <input type="hidden" name="token" value="@token()">
     <input type="hidden" name="task" id="task" value="browse">
 </form>

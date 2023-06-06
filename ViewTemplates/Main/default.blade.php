@@ -85,7 +85,7 @@ defined('AKEEBA') || die;
                         <td>
                             <a class="fw-medium"
                                href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
-                                {{ $item->name }}
+                                {{{ $item->name }}}
                             </a>
                             <div class="small mt-1">
                                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>

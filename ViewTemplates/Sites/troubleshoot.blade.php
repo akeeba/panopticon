@@ -38,11 +38,11 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             </ul>
         @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBroken::class)
             <p class="fw-semibold">
-                The Joomla! API Application responded with an unexpected HTTP status code ({{ $this->httpCode }})
+                The Joomla! API Application responded with an unexpected HTTP status code ({{{ $this->httpCode }}})
             </p>
             @if ($this->httpCode > 500)
                 <p>
-                    The HTTP status code {{ $this->httpCode }} means there has been a server error. Check if there are any third party plugins, especially system plugins, which may be accidentally breaking the Joomla! API Application and contact their author.
+                    The HTTP status code {{{ $this->httpCode }}} means there has been a server error. Check if there are any third party plugins, especially system plugins, which may be accidentally breaking the Joomla! API Application and contact their author.
                 </p>
             @elseif($this->httpCode === 400)
                 <p>

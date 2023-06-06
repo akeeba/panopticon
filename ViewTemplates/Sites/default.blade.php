@@ -71,7 +71,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 <td>
                     <div class="fw-medium">
                         <a href="@route(sprintf('index.php?view=site&task=edit&id=%d', $site->id))">
-                            {{ $site->name }}
+                            {{{ $site->name }}}
                         </a>
                     </div>
                     <div class="small mt-1">
@@ -85,19 +85,25 @@ $token = $this->container->session->getCsrfToken()->getValue();
                     @if ($site->enabled)
                         <a class="text-decoration-none text-success"
                            href="@route(sprintf('index.php?view=sites&task=unpublish&id=%d&%s=1', $site->id, $token))"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-title="@lang('PANOPTICON_LBL_PUBLISHED')"
                         >
                             <span class="fa fa-circle-check" aria-hidden="true"></span>
+                            <span class="visually-hidden">@lang('PANOPTICON_LBL_PUBLISHED')</span>
                         </a>
                     @else
                         <a class="text-decoration-none text-danger"
                            href="@route(sprintf('index.php?view=sites&task=publish&id=%d&%s=1', $site->id, $token))"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-title="@lang('PANOPTICON_LBL_UNPUBLISHED')"
                         >
                             <span class="fa fa-circle-xmark" aria-hidden="true"></span>
+                            <span class="visually-hidden">@lang('PANOPTICON_LBL_UNPUBLISHED')</span>
                         </a>
                     @endif
                 </td>
                 <td>
-                    {{ $site->id }}
+                    {{ (int) $site->id }}
                 </td>
 
             </tr>
@@ -121,7 +127,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 
     <input type="hidden" name="boxchecked" id="boxchecked" value="0">
     <input type="hidden" name="task" id="task" value="browse">
-    <input type="hidden" name="filter_order" id="filter_order" value="{{ $this->lists->order }}">
-    <input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="{{ $this->lists->order_Dir }}">
+    <input type="hidden" name="filter_order" id="filter_order" value="{{{ $this->lists->order }}}">
+    <input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="{{{ $this->lists->order_Dir }}}">
     <input type="hidden" name="token" value="@token()">
 </form>

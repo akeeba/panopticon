@@ -32,17 +32,17 @@ $moreThanOne = count($updateStatus) > 1;
 ?>
 @if ($hasFailed && !$hasSuccess)
 @if($moreThanOne)
-The extension updates for {{ $site->name }} have failed.
+The extension updates for {{{ $site->name }}} have failed.
 @else
-The extension update for {{ $site->name }} has failed.
+The extension update for {{{ $site->name }}} has failed.
 @endif
 @elseif ($hasFailed)
-Some extension updates for {{ $site->name }} have failed.
+Some extension updates for {{{ $site->name }}} have failed.
 @else
 @if($moreThanOne)
-The extension updates for {{ $site->name }} were successful.
+The extension updates for {{{ $site->name }}} were successful.
 @else
-The extension update for {{ $site->name }} was successful.
+The extension update for {{{ $site->name }}} was successful.
 @endif
 @endif
 
@@ -55,7 +55,7 @@ The following extensions have been updated successfully:
 
 @foreach($updateStatus as $info)
 <?php if ($info['status'] !== 'success') continue ?>
-@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{ $info['name'] }}”.
+@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”.
 
 @if (!empty($info['messages']))
   Update messages:
@@ -71,7 +71,7 @@ The following extensions have failed to update:
 
 @foreach($updateStatus as $info)
 <?php if ($info['status'] === 'success') continue ?>
-@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{ $info['name'] }}”.
+@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”.
 
 @if ($info['status'] === 'exception')
   An application or network error occurred.

@@ -23,15 +23,15 @@ defined('AKEEBA') || die;
         @lang('PANOPTICON_SELFUPDATE_LBL_STUCK_LAST_ERROR')
     </p>
     <p class="font-monospace">
-        {{ $this->updateInformation->error }}
+        {{{ $this->updateInformation->error }}}
     </p>
 
     @if ($this->container->appConfig->get('debug', false))
         <details>
             <summary class="fw-medium">@lang('PANOPTICON_SELFUPDATE_LBL_STUCK_DEBUG_TRACE')</summary>
-            <pre>{{ $this->updateInformation->errorLocation }}
+            <pre>{{{ $this->updateInformation->errorLocation }}}
 
-{{ $this->updateInformation->errorTraceString }}</pre>
+{{{ $this->updateInformation->errorTraceString }}}</pre>
         </details>
     @endif
 </div>

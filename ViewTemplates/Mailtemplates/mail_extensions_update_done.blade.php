@@ -35,17 +35,17 @@ $moreThanOne = count($updateStatus) > 1;
     <p>
         @if ($hasFailed && !$hasSuccess)
             @if($moreThanOne)
-                The extension updates for {{ $site->name }} have failed.
+                The extension updates for {{{ $site->name }}} have failed.
             @else
-                The extension update for {{ $site->name }} has failed.
+                The extension update for {{{ $site->name }}} has failed.
             @endif
         @elseif ($hasFailed)
-            Some extension updates for {{ $site->name }} have failed.
+            Some extension updates for {{{ $site->name }}} have failed.
         @else
             @if($moreThanOne)
-                The extension updates for {{ $site->name }} were successful.
+                The extension updates for {{{ $site->name }}} were successful.
             @else
-                The extension update for {{ $site->name }} was successful.
+                The extension update for {{{ $site->name }}} was successful.
             @endif
         @endif
     </p>
@@ -57,7 +57,7 @@ $moreThanOne = count($updateStatus) > 1;
         @foreach($updateStatus as $info)
             <?php if ($info['status'] !== 'success') continue ?>
             <p>
-                <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{ $info['name'] }}”</strong>.
+                <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”</strong>.
                 @if (!empty($info['messages']))
                     Update messages:
                     <br />
@@ -71,7 +71,7 @@ $moreThanOne = count($updateStatus) > 1;
         @foreach($updateStatus as $info)
             <?php if ($info['status'] === 'success') continue ?>
             <p>
-                <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{ $info['name'] }}”</strong>.
+                <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”</strong>.
                 @if ($info['status'] === 'exception')
                     An application or network error occurred.
                 @elseif ($info['status'] === 'invalid_json')

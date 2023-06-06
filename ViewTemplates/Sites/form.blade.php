@@ -89,11 +89,11 @@ $returnUrl = $this->input->getBase64('returnurl', '');
         </div>
     </div>
 
-    <input type="hidden" name="id" value="{{ $this->item->id ?? 0 }}">
+    <input type="hidden" name="id" value="{{{ $this->item->id ?? 0 }}}">
     <input type="hidden" name="token" value="@token()">
     <input type="hidden" name="task" id="task" value="browse">
     @if (!empty($returnUrl))
-    <input type="hidden" name="returnurl" value="{{ $returnUrl }}">
+    <input type="hidden" name="returnurl" value="{{{ $returnUrl }}}">
     @endif
 
 </form>

@@ -80,11 +80,11 @@ $token = $this->container->session->getCsrfToken()->getValue();
                             <a href="@route(sprintf('index.php?view=users&task=edit&id=%d', $user->id))"
                                class="text-primary"
                             >
-                                {{ $user->username }}
+                                {{{ $user->username }}}
                             </a>
                         </div>
                         <div class="text-body-tertiary">
-                            {{ $user->email }}
+                            {{{ $user->email }}}
                         </div>
                     </div>
                 </div>
@@ -94,12 +94,12 @@ $token = $this->container->session->getCsrfToken()->getValue();
                     <a href="@route(sprintf('index.php?view=users&task=edit&id=%d', $user->id))"
                        class="text-body fw-bold"
                     >
-                        {{ $user->name }}
+                        {{{ $user->name }}}
                     </a>
                 </div>
             </td>
             <td>
-                {{ $user->id }}
+                {{ (int) $user->id }}
             </td>
         </tr>
         @endforeach
@@ -122,8 +122,8 @@ $token = $this->container->session->getCsrfToken()->getValue();
 
     <input type="hidden" name="boxchecked" id="boxchecked" value="0">
     <input type="hidden" name="task" id="task" value="browse">
-    <input type="hidden" name="filter_order" id="filter_order" value="{{ $this->lists->order }}">
-    <input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="{{ $this->lists->order_Dir }}">
+    <input type="hidden" name="filter_order" id="filter_order" value="{{{ $this->lists->order }}}">
+    <input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="{{{ $this->lists->order_Dir }}}">
     <input type="hidden" name="token" value="@token()">
 
 </form>
