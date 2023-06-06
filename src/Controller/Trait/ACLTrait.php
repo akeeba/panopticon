@@ -91,6 +91,7 @@ trait ACLTrait
 			'browse'    => ['super'],
 			'save'      => ['super'],
 			'apply'     => ['super'],
+			'cancel'    => ['super'],
 			'testemail' => ['super'],
 		],
 		'tasks'         => [
@@ -103,10 +104,11 @@ trait ACLTrait
 		'users'         => [
 			// Explicitly allowed tasks. Using * because they have their own access control (I can view / edit myself).
 			// Not adding other tasks means they are implicitly disallowed, even to superusers.
-			'edit'  => ['*'],
-			'read'  => ['*'],
-			'save'  => ['*'],
-			'apply' => ['*'],
+			'edit'   => ['*'],
+			'read'   => ['*'],
+			'save'   => ['*'],
+			'apply'  => ['*'],
+			'cancel' => ['*'],
 		],
 	];
 

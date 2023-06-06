@@ -89,5 +89,12 @@ class Sysconfig extends Controller
 		$this->setRedirect($url, Text::_('PANOPTICON_SYSCONFIG_MSG_SAVED'));
 	}
 
+	public function cancel()
+	{
+		$url = $this->container->router->route('index.php?view=main');
+
+		$this->setRedirect($url);
+	}
+
 	// TODO Implement testemail()
 }
