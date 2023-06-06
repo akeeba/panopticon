@@ -77,6 +77,18 @@ trait CrudTasksTrait
 				'onClick' => 'akeeba.System.submitForm(\'remove\')',
 				'icon'    => 'fa fa-trash-can',
 			],
+			'publish' => [
+				'title'   => Text::_('PANOPTICON_BTN_ENABLE'),
+				'class'   => 'btn btn-dark',
+				'onClick' => 'akeeba.System.submitForm(\'publish\')',
+				'icon'    => 'fa fa-circle-check',
+			],
+			'unpublish' => [
+				'title'   => Text::_('PANOPTICON_BTN_DISABLE'),
+				'class'   => 'btn btn-dark',
+				'onClick' => 'akeeba.System.submitForm(\'unpublish\')',
+				'icon'    => 'fa fa-circle-xmark',
+			],
 			'save' => [
 				'title'   => Text::_('PANOPTICON_BTN_SAVE'),
 				'class'   => 'btn btn-primary',

@@ -64,6 +64,14 @@ class Task extends DataModel
 		$this->addBehaviour('filters');
 	}
 
+	public function buildQuery($overrideLimits = false)
+	{
+		$query = parent::buildQuery($overrideLimits);
+
+		return $query;
+	}
+
+
 	public function check(): self
 	{
 		parent::check();

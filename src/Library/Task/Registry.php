@@ -18,9 +18,9 @@ defined('AKEEBA') || die;
 
 class Registry
 {
-	public function __construct(private readonly Container $container, private array $registry = [], private readonly bool $autoPopulate = true)
-	{
-	}
+	public function __construct(private readonly Container $container,
+	                            private array              $registry = [],
+	                            private readonly bool      $autoPopulate = true) {}
 
 	public function add(string $type, CallbackInterface $callback): void
 	{
@@ -79,7 +79,8 @@ class Registry
 			throw new DomainException('Adding task types to the Task Registry by class name requires a non-empty class name', 500);
 		}
 
-		if (!class_exists($classname)) {
+		if (!class_exists($classname))
+		{
 			throw new DomainException(
 				sprintf('Cannot add non-existent class ‘%s’ to the Task Registry.', $classname),
 				500
@@ -108,6 +109,19 @@ class Registry
 		}
 
 		$this->add($o->getTaskType(), $o);
+	}
+
+	public function getIterator(): \Iterator
+	{
+		if (empty($this->registry))
+		{
+			$this->populate();
+		}
+
+		foreach ($this->registry as $k => $v)
+		{
+			yield $k => $v;
+		}
 	}
 
 	private function populate(): void
