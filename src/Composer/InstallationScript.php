@@ -246,6 +246,20 @@ abstract class InstallationScript
 		$model->installDatabase();
 	}
 
+	public static function copyPackageLock(Event $event)
+	{
+		$io = $event->getIO();
+		$io->debug('Copying package-lock.json');
+
+		$container = self::getAWFContainer();
+
+		$container->fileSystem->copy(
+			$container->basePath . '/package-lock.json',
+			$container->basePath . '/vendor/composer/package-lock.json'
+		);
+
+	}
+
 	/**
 	 * Get the Container object of the application
 	 *

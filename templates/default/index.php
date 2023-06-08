@@ -173,8 +173,20 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 			<p class="m-0">
 				<?= Text::sprintf('PANOPTICON_APP_LBL_LICENSE', Text::_('PANOPTICON_APP_TITLE')) ?>
 			</p>
-			<?php if (defined('AKEEBADEBUG') && AKEEBADEBUG): ?>
 				<div class="mt-0 mb-0 text-muted d-flex flex-row gap-2">
+					<div>
+						<span class="fab fa-github text-white" aria-hidden="true"></span>
+						<a href="https://github.com/akeeba/panopticon" target="_blank">
+							<?= Text::_('PANOPTICON_APP_LBL_SOURCE_CODE') ?>
+						</a>
+					</div
+					><div>
+						<span class="fa fa-address-card" aria-hidden="true"></span>
+						<a href="<?= $this->container->router->route('index.php?view=about') ?>" target="_blank">
+							About
+						</a>
+					</div>
+					<?php if (defined('AKEEBADEBUG') && AKEEBADEBUG): ?>
 					<div>
 						<span class="fa fa-clock" title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?>"
 						      aria-hidden="true"></span>
@@ -191,9 +203,9 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 						<?= sprintf('%0.1f', memory_get_peak_usage() / 1048576) ?> <abbr
 							title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_MEGABYTES') ?>">MiB</abbr>
 					</div>
+					<?php endif; ?>
 				</div>
 				<div class="clearfix"></div>
-			<?php endif; ?>
 		</div>
 	</footer>
 

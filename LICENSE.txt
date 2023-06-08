@@ -659,3 +659,38 @@ specific requirements.
 if any, to sign a "copyright disclaimer" for the program, if necessary.
 For more information on this, and how to apply and follow the GNU AGPL, see
 <https://www.gnu.org/licenses/>.
+
+
+                   ADDITIONAL TERMS AND CONDITIONS
+
+The following Additional Terms And Conditions are supplementary to the License, as per Article 7 of the license. As such, they must be understood to be an integral part of the software license.
+
+1. Preservation of legal notices
+
+You are required to preserve all legal notices present in source code files, the About page of the software, and the LICENSE.txt file, as well as any author attributions in the same. You are required to preserve all legal notices and author attributions in all files contained under the vendor directory, in accordance with the software license of each dependency contained therein. This applies to the original work, as well as any copies verbatim, or modified, and any derivative works. While Article 7 of the License allows you to remove this clause, this will most likely violate the software license of the software and / or its dependencies, therefore removing the legal grounds under which you can use and / or convey the software and its dependencies.
+
+2. Identification of modified copies
+
+Modified versions must bear prominent notices in both the source code files, README.md file, and the user interface which clearly state that this is no longer the original work and must not be misconstrued as such.
+
+3. No rights to names, logos, and wordmarks
+
+Notwithstanding your rights under the fair use doctrine or equivalent laws, the license of this material does <em>not</em> grant you any rights to use the “Akeeba” name, logo, and wordmark, the “Akeeba Panopticon” name, and logo, and the “Panopticon” name.
+
+4. Restrictions on advertising and commercial usage of the names, logos, and wordmarks
+
+You are disallowed from using the “Akeeba” name, logo, and wordmark, the “Akeeba Panopticon” name, and logo, and the “Panopticon” name for advertising and commercial purposes —including but not limited to advertising campaigns (printed, electronic, or otherwise), web site banners, web site copy, and social media posts— in a way which asserts, implies, or could reasonably be misconstrued as endorsement of your person, business, or product by the licensors and authors of this material. You are permitted to use the aforementioned copyrighted items under the fair use doctrine for factual statements such as “This service makes use of Akeeba Panopticon, a self-hosted site monitoring software created and distributed by Akeeba Ltd”.
+
+5. Non-transferability of liability and indemnification
+
+Anyone who this material (or modified versions of it) is conveyed to with contractual or legal assumptions of liability are required to explicitly indemnify the licensors and authors of this software for any liability that these contractual or legal assumptions directly impose on those licensors and authors. A recipient of the software may only remove this clause for the copies they convey to others by assuming the FULL and SOLE LEGAL RESPONSIBILITY and LIABILITY for all copies of this material (or modified versions of it) which have originated directly or indirectly from the copy they conveyed to others.
+
+6. Support
+
+The license of the software does not entitle you to any kind of support, or consultancy by the licensor and authors of this software.
+
+7. Access to services and software
+
+The license of the software does not entitle you to access of any additional services or software which may be used in conjunction with this software, or required to use this software.
+
+               END OF ADDITIONAL TERMS AND CONDITIONS
