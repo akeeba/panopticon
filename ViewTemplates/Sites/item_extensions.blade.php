@@ -328,7 +328,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_NOT_AUTOUPDATE')</span>
                             @endif
                         </div>
-                        <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}}</div>
+                        <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
                         @if ($error)
                             <div>
                                 @if ($noUpdateSite)
@@ -346,14 +346,14 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                         @elseif (($item->downloadkey?->supported ?? false) && !empty($item->downloadkey?->value ?? '') && $this->container->userManager->getUser()->getPrivilege('panopticon.admin'))
                             <span class="fa fa-key text-muted" ></span>
                             <span class="visually-hidden">Download Key: </span>
-                            <code class="download-key" tabindex="0">{{{ $item->downloadkey?->value ?? '' }}}}</code>
+                            <code class="download-key" tabindex="0">{{{ $item->downloadkey?->value ?? '' }}}</code>
 
                         @endif
                     </td>
                     <td class="small">
                         <div>
                             @if ($item->authorUrl)
-                                <a href="{{{ $item->authorUrl }}}}" target="_blank">
+                                <a href="{{{ $item->authorUrl }}}" target="_blank">
                                     {{{ $item->author }}}
                                 </a>
                             @else

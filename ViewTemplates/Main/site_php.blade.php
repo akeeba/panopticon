@@ -31,7 +31,7 @@ $phpVersion = new PhpVersion;
     $isLatest    = version_compare($php, $latestVersion, 'ge');
     ?>
     @if($isLatest)
-        {{{ $php }}}}
+        {{{ $php }}}
     @else
         <div class="d-inline-block"
              @if($colorizePhp)
@@ -41,10 +41,10 @@ $phpVersion = new PhpVersion;
         >
             @if($colorizePhp)
             <div class="text-warning fw-bold d-inline-block">
-                {{{ $php }}}}
+                {{{ $php }}}
             </div>
             @else
-                {{{ $php }}}}
+                {{{ $php }}}
             @endif
             <div class="small text-success-emphasis d-inline-block">
                 <span class="fa fa-arrow-right" aria-hidden="true"></span>
@@ -83,7 +83,7 @@ $phpVersion = new PhpVersion;
         </span>
     </div>
 @elseif($phpVersion->getVersionInformation($php)->unknown)
-    <span class="text-body">{{{ $php }}}}</span>
+    <span class="text-body">{{{ $php }}}</span>
 @else
     @yieldRepeatable('phpVersion', $php)
 @endif
