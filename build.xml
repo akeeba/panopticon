@@ -92,22 +92,14 @@
         <exclude name="vendor/akeeba/awf/src/Database/Query/Sqlite.php" />
         <exclude name="vendor/akeeba/awf/src/Database/Query/Sqlsrv.php" />
         <exclude name="vendor/akeeba/awf/src/Encrypt/AesAdapter/Mcrypt.php" />
-        <exclude name="vendor/akeeba/awf/tests/**" />
+        <exclude name="vendor/akeeba/awf/.idea/**" />
         <exclude name="vendor/akeeba/awf/.gitattributes" />
         <exclude name="vendor/akeeba/awf/.gitignore" />
         <exclude name="vendor/akeeba/awf/.travis.yml" />
         <exclude name="vendor/akeeba/awf/composer.lock" />
         <exclude name="vendor/akeeba/awf/phpunit*" />
 
-        <exclude name="vendor/akeeba/remotecli/build/**" />
-        <exclude name="vendor/akeeba/remotecli/documentation/**" />
-        <exclude name="vendor/akeeba/remotecli/.gitattributes" />
-        <exclude name="vendor/akeeba/remotecli/.gitignore" />
-        <exclude name="vendor/akeeba/remotecli/CHANGELOG" />
-        <exclude name="vendor/akeeba/remotecli/composer.lock" />
-        <exclude name="vendor/akeeba/remotecli/DESCRIPTION*" />
-        <exclude name="vendor/akeeba/remotecli/Dockerfile" />
-        <exclude name="vendor/akeeba/remotecli/RELEASENOTES*" />
+        <exclude name="vendor/akeeba/json-backup-api/.idea/**" />
 
         <exclude name="vendor/bin/**" />
 

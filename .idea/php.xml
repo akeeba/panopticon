@@ -15,7 +15,6 @@
       <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
       <path value="$PROJECT_DIR$/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/vendor/psr/http-message" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-diactoros" />
       <path value="$PROJECT_DIR$/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/vendor/psr/container" />
@@ -38,15 +37,8 @@
       <path value="$PROJECT_DIR$/vendor/symfony/cache" />
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/vendor/symfony/console" />
-      <path value="$PROJECT_DIR$/vendor/joomla/filesystem" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
-      <path value="$PROJECT_DIR$/vendor/joomla/utilities" />
-      <path value="$PROJECT_DIR$/vendor/joomla/uri" />
-      <path value="$PROJECT_DIR$/vendor/joomla/string" />
-      <path value="$PROJECT_DIR$/vendor/joomla/http" />
-      <path value="$PROJECT_DIR$/vendor/joomla/registry" />
       <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
-      <path value="$PROJECT_DIR$/vendor/joomla/data" />
       <path value="$PROJECT_DIR$/vendor/cesargb/php-log-rotation" />
       <path value="$PROJECT_DIR$/vendor/mcrumley/php-complexify" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
@@ -54,7 +46,6 @@
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/vendor/psr/log" />
       <path value="$PROJECT_DIR$/vendor/akeeba/awf" />
-      <path value="$PROJECT_DIR$/vendor/akeeba/remotecli" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/nette/utils" />
@@ -63,6 +54,7 @@
       <path value="$PROJECT_DIR$/vendor/league/config" />
       <path value="$PROJECT_DIR$/vendor/dflydev/dot-access-data" />
       <path value="$PROJECT_DIR$/../../3rdparty/composer" />
+      <path value="$PROJECT_DIR$/vendor/akeeba/json-backup-api" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

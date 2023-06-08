@@ -9,7 +9,6 @@
       <excludeFolder url="file://$MODULE_DIR$/media/ace" />
       <excludeFolder url="file://$MODULE_DIR$/media/tinymce" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/akeeba/awf" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/akeeba/remotecli" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cesargb/php-log-rotation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/delight-im/alphabets" />
@@ -18,15 +17,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/joomla/data" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/joomla/filesystem" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/joomla/http" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/joomla/registry" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/joomla/string" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/joomla/uri" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/joomla/utilities" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kevinrob/guzzle-cache-middleware" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-diactoros" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mcrumley/php-complexify" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpmailer/phpmailer" />
@@ -59,6 +50,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/nette/utils" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php80" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/akeeba/json-backup-api" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
