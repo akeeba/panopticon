@@ -41,7 +41,7 @@ defined('AKEEBA') || die;
  * @property Registry       $storage         Transient data storage
  * @property CronExpression $cron_expression The CRON expression for task execution
  * @property bool           $enabled         Is it enabled?
- * @property Status         $last_exit_code  Last execution's exit code
+ * @property int            $last_exit_code  Last execution's exit code
  * @property Date           $last_execution  Last execution started date and time (UTC)
  * @property Date           $last_run_end    Last execution ended date and time (UTC)
  * @property Date|null      $next_execution  Next execution date and time (UTC)

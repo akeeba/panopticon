@@ -82,6 +82,16 @@ $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
                 @lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPDATES_BROKEN')
             </span>
         </div>
+    @elseif ($item->isJoomlaUpdateTaskStuck())
+        <div>
+            <div class="badge bg-light text-dark"
+                 data-bs-toggle="tooltip" data-bs-placement="bottom"
+                 data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE')"
+            >
+                <span class="fa fa-bell" aria-hidden="true"></span>
+                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE')</span>
+            </div>
+        </div>
     @endif
 
     @if (empty($jVersion))

@@ -50,10 +50,21 @@ $numKeyMissing = array_reduce(
 			<span class="visually-hidden">@lang('PANOPTICON_SITE_BTN_PHP_RELOAD')</span>
 		</a>
 	</div>
-	<div>
+	<div class="d-flex flex-column flex-md-row gap-2">
 		@if (empty($extensions))
 			<span class="badge bg-secondary-subtle">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UNKNOWN')</span>
 		@else
+			@if ($item->isExtensionsUpdateTaskStuck())
+				<div>
+					<div class="badge bg-light text-dark"
+						 data-bs-toggle="tooltip" data-bs-placement="bottom"
+						 data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_EXT_STUCK_UPDATE')"
+					>
+						<span class="fa fa-bell" aria-hidden="true"></span>
+						<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_STUCK_UPDATE')</span>
+					</div>
+				</div>
+			@endif
 			@if ($numUpdates)
 				<div class="text-warning fw-bold"
 					 data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -74,13 +85,15 @@ $numKeyMissing = array_reduce(
 			@endif
 
 			@if ($numKeyMissing)
-				<div class="badge bg-danger"
-					 data-bs-toggle="tooltip" data-bs-placement="bottom"
-					 data-bs-title="@plural('PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING_N', $numKeyMissing)"
-				>
-					<span class="fa fa-key" aria-hidden="true"></span>
-					<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING')</span>
-					{{ $numKeyMissing }}
+				<div>
+					<div class="badge bg-danger"
+						 data-bs-toggle="tooltip" data-bs-placement="bottom"
+						 data-bs-title="@plural('PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING_N', $numKeyMissing)"
+					>
+						<span class="fa fa-key" aria-hidden="true"></span>
+						<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING')</span>
+						{{ $numKeyMissing }}
+					</div>
 				</div>
 			@endif
 		@endif

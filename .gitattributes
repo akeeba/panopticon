@@ -46,3 +46,35 @@ RELEASENOTES text eol=lf
 *.eot binary
 *.woff binary
 *.woff2 binary
+
+# Git archive exclusions
+/.github export-ignore
+/.idea export-ignore
+/.htaccess export-ignore
+/1 export-ignore
+/assets export-ignore
+/build export-ignore
+/cache/extensions export-ignore
+/cache/http export-ignore
+/cache/php_versions export-ignore
+/cache/self_update export-ignore
+/config.php export-ignore
+/documentation export-ignore
+/log/*.log export-ignore
+/log/*.gz export-ignore
+/log/*.php export-ignore
+/node_modules export-ignore
+/release export-ignore
+/tmp/*.zip export-ignore
+/tmp/compiled-templates export-ignore
+/vendor export-ignore
+/user_code/bootstrap.php export-ignore
+/user_code/cacert.pem export-ignore
+/user_code/updates.json export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/build.xml export-ignore
+/CHANGELOG export-ignore
+/README.md export-ignore
+/RELEASENOTES.md export-ignore
+/TODO.md export-ignore

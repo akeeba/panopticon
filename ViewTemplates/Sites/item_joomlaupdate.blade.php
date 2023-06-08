@@ -16,8 +16,9 @@ use Awf\Html\Html;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 
-$config = ($this->item->config instanceof Registry) ? $this->item->config : (new Registry($this->item->config));
-$token  = $this->container->session->getCsrfToken()->getValue();
+$config           = $this->item->getConfig();
+$token            = $this->container->session->getCsrfToken()->getValue();
+$joomlaUpdateTask = $this->item->getJoomlaUpdateTask();
 
 $lastUpdateTimestamp = function () use ($config): string
 {
@@ -25,34 +26,6 @@ $lastUpdateTimestamp = function () use ($config): string
 
 	return $timestamp ? $this->timeAgo($timestamp) : '(never)';
 };
-
-$joomlaUpdateTask = call_user_func(function () use ($config): ?object
-{
-	/** @var Driver $db */
-	$db    = $this->container->db;
-	$query = $db->getQuery(true)
-				->select([
-					$db->quoteName('enabled'),
-					$db->quoteName('last_exit_code'),
-					$db->quoteName('last_execution'),
-					$db->quoteName('next_execution'),
-					$db->quoteName('storage'),
-				])
-				->from($db->quoteName('#__tasks'))
-				->where([
-					$db->quoteName('site_id') . ' = ' . (int)$this->item->id,
-					$db->quoteName('type') . ' = ' . $db->quote('joomlaupdate'),
-				]);
-
-	$record = $db->setQuery($query)->loadObject() ?: null;
-
-	if (is_object($record))
-	{
-		$record->storage = new Awf\Registry\Registry($record?->storage ?: '{}');
-	}
-
-	return $record;
-});
 
 ?>
 <div class="card">
@@ -171,13 +144,13 @@ $joomlaUpdateTask = call_user_func(function () use ($config): ?object
 				$showScheduleButton = true;
 				?>
 
-            @if ($config->get('core.lastAutoUpdateVersion') != $config->get('core.latest.version') || $joomlaUpdateTask === null)
+            @if ($config->get('core.lastAutoUpdateVersion') == $config->get('core.latest.version') || $joomlaUpdateTask === null)
                 {{-- Not scheduled --}}
                 <p>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
                 </p>
             @elseif ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::OK->value)
-                {{-- Pretend it's not scheduled (database tomfoolery abound?) --}}
+                {{-- Pretend it's not scheduled (database was messed with?) --}}
                 <p>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
                 </p>
@@ -201,7 +174,7 @@ $joomlaUpdateTask = call_user_func(function () use ($config): ?object
 
 					<?php
 					$showScheduleButton = false; ?>
-            @else
+            @elseif ($joomlaUpdateTask->last_exit_code != Status::OK->value)
                 {{-- Task error condition --}}
                 <?php
                 $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE

@@ -19,6 +19,7 @@ use Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled;
 use Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL;
 use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
 use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
+use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Task\ApiRequestTrait;
 use Awf\Container\Container;
 use Awf\Database\Query;
@@ -328,6 +329,99 @@ class Site extends DataModel
 		return array_map(fn($x) => $x->title, $db->setQuery($query)->loadObjectList('id') ?: []);
 	}
 
+	public function getExtensionsUpdateTask(): ?Task
+	{
+		$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
+		/** @var DataModel\Collection $taskCollection */
+		$taskCollection = $taskModel
+			->site_id($this->id)
+			->type('extensionsupdate')
+			->get(0, 100);
+
+		if ($taskCollection->isEmpty())
+		{
+			return null;
+		}
+
+		/** @var Task $task */
+		$task          = $taskCollection->first();
+		$task->storage = $task->storage instanceof Registry ? $task->storage : new Registry($task->storage ?: '{}');
+
+		return $task;
+	}
+
+	public function getJoomlaUpdateTask(): ?Task
+	{
+		$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
+		/** @var DataModel\Collection $taskCollection */
+		$taskCollection = $taskModel
+			->site_id($this->id)
+			->type('joomlaupdate')
+			->get(0, 100);
+
+		if ($taskCollection->isEmpty())
+		{
+			return null;
+		}
+
+		/** @var Task $task */
+		$task          = $taskCollection->first();
+		$task->storage = $task->storage instanceof Registry ? $task->storage : new Registry($task->storage ?: '{}');
+
+		return $task;
+	}
+
+	public function isExtensionsUpdateTaskStuck(): bool
+	{
+		$task = $this->getExtensionsUpdateTask();
+
+		if (empty($task))
+		{
+			return false;
+		}
+
+		return !in_array($task->last_exit_code, [
+			Status::INITIAL_SCHEDULE->value, Status::OK->value,
+			Status::RUNNING->value, Status::WILL_RESUME->value,
+		]);
+	}
+
+	public function isJoomlaUpdateTaskStuck(): bool
+	{
+		$task = $this->getJoomlaUpdateTask();
+
+		if (empty($task))
+		{
+			return false;
+		}
+
+		return !in_array($task->last_exit_code, [
+			Status::INITIAL_SCHEDULE->value, Status::OK->value,
+			Status::RUNNING->value, Status::WILL_RESUME->value,
+		]);
+	}
+
+	public function getExtensionsList(bool $sortByName = true): array
+	{
+		$config     = $this->getConfig();
+		$extensions = (array) $config->get('extensions.list', []);
+		$extensions = $extensions ?: [];
+
+		if ($sortByName)
+		{
+			uasort($extensions, fn($a, $b) => $a->name <=> $b->name);
+		}
+
+		return $extensions;
+	}
+
+	public function getConfig(): Registry
+	{
+		$config = $this->getFieldValue('config');
+
+		return ($config instanceof Registry) ? $config : (new Registry($config));
+	}
+
 	private function applyUserGroupsToQuery(Query $query): void
 	{
 		// Get the user, so we can apply per group privilege checks
@@ -366,7 +460,7 @@ class Site extends DataModel
 
 		// We allow the user to view their own sites
 		$clauses = [
-			$query->quoteName('created_by') . ' = ' . $query->quote($user->getId())
+			$query->quoteName('created_by') . ' = ' . $query->quote($user->getId()),
 		];
 
 		// Basically: a bunch of JSON_CONTAINS(`config`, '1', '$.config.groups') with ORs between them

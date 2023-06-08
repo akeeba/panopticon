@@ -13,11 +13,10 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
 
-$config     = ($this->item->config instanceof Registry) ? $this->item->config : (new Registry($this->item->config));
-$extensions = (array) $config->get('extensions.list', []);
-$token      = $this->container->session->getCsrfToken()->getValue();
-
-uasort($extensions, fn($a, $b) => $a->name <=> $b->name);
+$config               = $this->item->getConfig();
+$token                = $this->container->session->getCsrfToken()->getValue();
+$extensions           = $this->item->getExtensionsList();
+$extensionsUpdateTask = $this->item->getExtensionsUpdateTask();
 
 $lastUpdateTimestamp = function () use ($config): string
 {
@@ -55,33 +54,6 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
 	};
 };
 
-$extensionsUpdateTask = call_user_func(function () use ($config): ?object
-{
-	/** @var \Awf\Database\Driver $db */
-	$db    = $this->container->db;
-	$query = $db->getQuery(true)
-				->select([
-					$db->quoteName('enabled'),
-					$db->quoteName('last_exit_code'),
-					$db->quoteName('last_execution'),
-					$db->quoteName('next_execution'),
-					$db->quoteName('storage'),
-				])
-				->from($db->quoteName('#__tasks'))
-				->where([
-					$db->quoteName('site_id') . ' = ' . (int)$this->item->id,
-					$db->quoteName('type') . ' = ' . $db->quote('extensionsupdate'),
-				]);
-
-	$record = $db->setQuery($query)->loadObject() ?: null;
-
-	if (is_object($record))
-	{
-		$record->storage = new Awf\Registry\Registry($record?->storage ?: '{}');
-	}
-
-	return $record;
-});
 
 $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
 	$ret = (object) [
@@ -196,7 +168,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                         @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_RUNNING')
                     </div>
                 </div>
-            @else
+            @elseif ($extensionsUpdateTask->last_exit_code != Status::OK->value)
                 {{-- Task error condition --}}
                 <?php
                 $status = Status::tryFrom($extensionsUpdateTask->last_exit_code) ?? Status::NO_ROUTINE
