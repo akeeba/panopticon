@@ -21,6 +21,10 @@ trait CrudTasksTrait
 
 		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
 
+		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
+		$limit = $this->getModel()->getState('limit', 50, 'int');
+		$this->getModel()->setState('limit', $limit);
+
 		return parent::onBeforeBrowse();
 	}
 
@@ -113,7 +117,7 @@ trait CrudTasksTrait
 				'url'   => $params['url'],
 				'icon'  => 'fa fa-chevron-left',
 			],
-			'inlineHelp' => 			[
+			'inlineHelp' => [
 				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
 				'class'   => 'btn-info',
 				'onClick' => json_encode([
