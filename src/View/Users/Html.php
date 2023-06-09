@@ -36,4 +36,16 @@ class Html extends BaseHtmlView
 		return $this->onBeforeEditCrud();
 	}
 
+	protected function onBeforeRead()
+	{
+		$this->setStrictLayout(true);
+		$this->setStrictTpl(true);
+
+		$this->viewFinder->setStrictLayout(true);
+		$this->viewFinder->setStrictTpl(true);
+		$this->viewFinder->setStrictView(true);
+		$this->addButton('back', ['url' => 'javascript:history.back()']);
+
+		return parent::onBeforeRead();
+	}
 }

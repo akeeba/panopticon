@@ -18,6 +18,9 @@ class Html extends \Awf\Mvc\DataView\Html
 {
 	protected function onBeforeMain()
 	{
+		$this->setStrictLayout(true);
+		$this->setStrictTpl(true);
+
 		// Create the lists object
 		$this->lists = new \stdClass();
 

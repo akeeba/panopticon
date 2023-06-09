@@ -30,6 +30,9 @@ trait CrudTasksTrait
 
 	protected function onBeforeAdd()
 	{
+		$this->setStrictLayout(true);
+		$this->setStrictTpl(true);
+
 		$this->addButtons(['save', 'apply', 'cancel']);
 
 		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_NEW'));
@@ -39,6 +42,9 @@ trait CrudTasksTrait
 
 	protected function onBeforeEdit()
 	{
+		$this->setStrictLayout(true);
+		$this->setStrictTpl(true);
+
 		$this->addButtons(['save', 'apply', 'cancel']);
 
 		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_EDIT'));
