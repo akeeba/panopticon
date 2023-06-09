@@ -64,6 +64,16 @@ $numKeyMissing = array_reduce(
 						<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_STUCK_UPDATE')</span>
 					</div>
 				</div>
+			@elseif ($item->isExtensionsUpdateTaskScheduled())
+				<div>
+					<div class="badge bg-info-subtle text-info"
+						 data-bs-toggle="tooltip" data-bs-placement="bottom"
+						 data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_EXT_SCHEDULED_UPDATE')"
+					>
+						<span class="fa fa-clock" aria-hidden="true"></span>
+						<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_SCHEDULED_UPDATE')</span>
+					</div>
+				</div>
 			@endif
 			@if ($numUpdates)
 				<div class="text-warning fw-bold"

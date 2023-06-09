@@ -92,6 +92,16 @@ $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE')</span>
             </div>
         </div>
+    @elseif ($item->isJoomlaUpdateTaskScheduled())
+        <div>
+            <div class="badge bg-info-subtle text-info"
+                 data-bs-toggle="tooltip" data-bs-placement="bottom"
+                 data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_CORE_SCHEDULED_UPDATE')"
+            >
+                <span class="fa fa-clock" aria-hidden="true"></span>
+                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_CORE_SCHEDULED_UPDATE')</span>
+            </div>
+        </div>
     @endif
 
     @if (empty($jVersion))

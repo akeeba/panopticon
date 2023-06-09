@@ -29,6 +29,7 @@ use Awf\Registry\Registry;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\User\User;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use RuntimeException;
@@ -331,74 +332,32 @@ class Site extends DataModel
 
 	public function getExtensionsUpdateTask(): ?Task
 	{
-		$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
-		/** @var DataModel\Collection $taskCollection */
-		$taskCollection = $taskModel
-			->site_id($this->id)
-			->type('extensionsupdate')
-			->get(0, 100);
-
-		if ($taskCollection->isEmpty())
-		{
-			return null;
-		}
-
-		/** @var Task $task */
-		$task          = $taskCollection->first();
-		$task->storage = $task->storage instanceof Registry ? $task->storage : new Registry($task->storage ?: '{}');
-
-		return $task;
+		return $this->getSiteSpecificTask('extensionsupdate');
 	}
 
 	public function getJoomlaUpdateTask(): ?Task
 	{
-		$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
-		/** @var DataModel\Collection $taskCollection */
-		$taskCollection = $taskModel
-			->site_id($this->id)
-			->type('joomlaupdate')
-			->get(0, 100);
-
-		if ($taskCollection->isEmpty())
-		{
-			return null;
-		}
-
-		/** @var Task $task */
-		$task          = $taskCollection->first();
-		$task->storage = $task->storage instanceof Registry ? $task->storage : new Registry($task->storage ?: '{}');
-
-		return $task;
+		return $this->getSiteSpecificTask('joomlaupdate');
 	}
 
 	public function isExtensionsUpdateTaskStuck(): bool
 	{
-		$task = $this->getExtensionsUpdateTask();
-
-		if (empty($task))
-		{
-			return false;
-		}
-
-		return !in_array($task->last_exit_code, [
-			Status::INITIAL_SCHEDULE->value, Status::OK->value,
-			Status::RUNNING->value, Status::WILL_RESUME->value,
-		]);
+		return $this->isSiteSpecificTaskStuck('extensionsupdate');
 	}
 
 	public function isJoomlaUpdateTaskStuck(): bool
 	{
-		$task = $this->getJoomlaUpdateTask();
+		return $this->isSiteSpecificTaskStuck('joomlaupdate');
+	}
 
-		if (empty($task))
-		{
-			return false;
-		}
+	public function isExtensionsUpdateTaskScheduled(): bool
+	{
+		return $this->isSiteSpecificTaskScheduled('extensionsupdate');
+	}
 
-		return !in_array($task->last_exit_code, [
-			Status::INITIAL_SCHEDULE->value, Status::OK->value,
-			Status::RUNNING->value, Status::WILL_RESUME->value,
-		]);
+	public function isJoomlaUpdateTaskScheduled(): bool
+	{
+		return $this->isSiteSpecificTaskScheduled('joomlaupdate');
 	}
 
 	public function getExtensionsList(bool $sortByName = true): array
@@ -420,6 +379,83 @@ class Site extends DataModel
 		$config = $this->getFieldValue('config');
 
 		return ($config instanceof Registry) ? $config : (new Registry($config));
+	}
+
+	protected function getSiteSpecificTask(string $type): ?Task
+	{
+		static $tasks = [];
+
+		if (!array_key_exists($type, $tasks))
+		{
+			$tasks[$type] = null;
+
+			$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
+			/** @var DataModel\Collection $taskCollection */
+			$taskCollection = $taskModel
+				->site_id($this->id)
+				->type('extensionsupdate')
+				->get(0, 100);
+
+			if ($taskCollection->isEmpty())
+			{
+				return null;
+			}
+
+			/** @var Task $task */
+			$task          = $taskCollection->first();
+			$task->storage = $task->storage instanceof Registry ? $task->storage : new Registry($task->storage ?: '{}');
+
+			$tasks[$type] = $task;
+		}
+
+		return $tasks[$type];
+	}
+
+	protected function isSiteSpecificTaskStuck(string $type): bool
+	{
+		$task = $this->getSiteSpecificTask($type);
+
+		if (empty($task))
+		{
+			return false;
+		}
+
+		return !in_array($task->last_exit_code, [
+			Status::INITIAL_SCHEDULE->value, Status::OK->value,
+			Status::RUNNING->value, Status::WILL_RESUME->value,
+		]);
+	}
+
+	protected function isSiteSpecificTaskScheduled(string $type): bool
+	{
+		$task = $this->getExtensionsUpdateTask($type);
+
+		if (empty($task) || !$task->enabled || empty($task->next_execution))
+		{
+			return false;
+		}
+
+		if (!$task->next_execution instanceof Date)
+		{
+			try
+			{
+				$task->next_execution = new Date($task->next_execution);
+			}
+			catch (Exception $e)
+			{
+				return false;
+			}
+		}
+
+		if ($task->next_execution < (new Date()))
+		{
+			return false;
+		}
+
+		return in_array($task->last_exit_code, [
+			Status::INITIAL_SCHEDULE->value,
+			Status::RUNNING->value, Status::WILL_RESUME->value,
+		]);
 	}
 
 	private function applyUserGroupsToQuery(Query $query): void
