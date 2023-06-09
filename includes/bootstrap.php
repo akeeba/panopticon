@@ -6,6 +6,8 @@
  */
 
 // Check the minimum PHP version
+use Akeeba\Panopticon\Factory;
+
 if (version_compare(
 	PHP_VERSION,
 	defined('AKEEBA_PANOPTICON_MINPHP') ? AKEEBA_PANOPTICON_MINPHP : '8.1.0',
@@ -244,6 +246,15 @@ call_user_func(function () use (&$tempCaCert) {
 if (file_exists(APATH_USER_CODE . '/bootstrap.php'))
 {
 	require_once APATH_USER_CODE . '/bootstrap.php';
+}
+
+// If debug is enabled force recompilation of Blade templates on every page load
+if (AKEEBADEBUG)
+{
+	$refBlade = new ReflectionObject(Factory::getContainer()->blade);
+	$refProp = $refBlade->getProperty('isCacheable');
+	$refProp->setAccessible(true);
+	$refProp->setValue(Factory::getContainer()->blade, false);
 }
 
 unset($config);
