@@ -271,7 +271,7 @@ abstract class Setup
 		);
 	}
 
-	public static function userSelect(int $selected, string $name, ?string $id = null, array $attribs = [], bool $emptyOption = false): string
+	public static function userSelect(?int $selected, string $name, ?string $id = null, array $attribs = [], bool $emptyOption = false): string
 	{
 		static $users = null;
 
@@ -297,6 +297,6 @@ abstract class Setup
 			]);
 		}
 
-		return Select::genericList($users, $name, $attribs, selected: $selected, idTag: $id ?? $name, translate: false);
+		return Select::genericList($users, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false);
 	}
 }

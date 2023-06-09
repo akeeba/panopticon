@@ -75,6 +75,59 @@ class Site extends DataModel
 
 		$this->applyUserGroupsToQuery($query);
 
+		$db = $this->container->db;
+
+		// Filter: search
+		$fltSearch = $this->getState('search', null, 'string');
+
+		if (!empty(trim($fltSearch ?? '')))
+		{
+			$fltSearch = trim($fltSearch ?? '');
+
+			$query->andWhere([
+				$db->quoteName('name') . ' LIKE ' . $db->quote('%' . $fltSearch . '%'),
+				$db->quoteName('url') . ' LIKE ' . $db->quote('%' . $fltSearch . '%'),
+			]);
+		}
+
+		// Filter: has potential core updates
+		$fltCoreUpdates = $this->getState('coreUpdates', null, 'bool');
+
+		if ($fltCoreUpdates)
+		{
+			$query->where([
+				$query->jsonPointer('config', '$.core.canUpgrade') . ' = TRUE',
+				$query->jsonPointer('config', '$.latest.version') . ' != ' . $query->jsonPointer('config', '$.current.version'),
+			]);
+		}
+		elseif (!$fltCoreUpdates && $fltCoreUpdates !== null)
+		{
+			$query->andWhere([
+				$query->jsonPointer('config', '$.core.canUpgrade') . ' = FALSE',
+				$query->jsonPointer('config', '$.core.latest.version') . ' = ' . $query->jsonPointer('config', '$.core.current.version'),
+			]);
+		}
+
+		// Filter: cmsFamily
+		$fltCmsFamily = $this->getState('cmsFamily', null, 'cmd');
+
+		if ($fltCmsFamily)
+		{
+			$query->where(
+				$query->jsonPointer('config', '$.core.current.version') . ' LIKE ' . $query->quote('"' . $fltCmsFamily . '.%')
+			);
+		}
+
+		// Filter: phpFamily
+		$fltPHPFamily = $this->getState('phpFamily', null, 'cmd');
+
+		if ($fltPHPFamily)
+		{
+			$query->where(
+				$query->jsonPointer('config', '$.core.php') . ' LIKE ' . $query->quote('"' . $fltPHPFamily . '.%')
+			);
+		}
+
 		return $query;
 	}
 

@@ -9,6 +9,9 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Container;
+use Akeeba\Panopticon\Library\Cache\CallbackController;
+use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
 
@@ -38,9 +41,9 @@ class Main extends Model
 		$db = $this->container->db;
 		$db->lockTable('#__akeeba_common');
 		$query = $db->getQuery(true)
-					->select($db->quoteName('value'))
-					->from($db->quoteName('#__akeeba_common'))
-					->where($db->quoteName('key') . ' = ' . $db->quote('panopticon.task.last.execution'));
+			->select($db->quoteName('value'))
+			->from($db->quoteName('#__akeeba_common'))
+			->where($db->quoteName('key') . ' = ' . $db->quote('panopticon.task.last.execution'));
 
 		$lastExecution = $db->setQuery($query)->loadResult();
 
@@ -59,5 +62,53 @@ class Main extends Model
 		{
 			return null;
 		}
+	}
+
+	public function getKnownJoomlaVersions(): array
+	{
+		/** @var Container $container */
+		$container = $this->container;
+
+		$cacheController = new CallbackController(
+			container: $container,
+			pool: $container->cacheFactory->pool('system'),
+		);
+
+		return $cacheController->get(
+			callback: function (): array {
+				$db       = $this->container->db;
+				$query    = $db->getQuery(true)
+					// SELECT DISTINCT SUBSTR(SUBSTRING_INDEX(`config`->'$.core.current.version', '.', 2) FROM 2) AS `joomla`
+					->select(
+						'DISTINCT SUBSTR(SUBSTRING_INDEX(' . $db->quoteName('config') . '->' .
+						$db->quote('$.core.current.version') . ', ' . $db->quote('.') . ', 2) FROM 2) AS ' .
+						$db->quoteName('version')
+					)
+					->from($db->quoteName('#__sites'))
+					->where($db->quoteName('enabled') . ' = 1')
+					->order($db->quoteName('version') . ' DESC');
+				$versions = $db->setQuery($query)->loadColumn();
+
+				if (empty($versions))
+				{
+					return [];
+				}
+
+				uasort($versions, fn($a, $b) => version_compare($a, $b));
+
+				return array_combine($versions, $versions);
+			},
+			id: 'known_joomla_versions',
+			expiration: 60
+		);
+	}
+
+	public function getKnownPHPVersions(): array
+	{
+		$phpVersion = new PhpVersion($this->container);
+
+		$versions = array_keys($phpVersion->getPhpEolInformation());
+
+		return array_combine($versions, $versions);
 	}
 }

@@ -25,6 +25,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 JS;
 
+// This is an unwanted effect of how AWF parses the default value on timestamp columns.
+if ($this->item->created_on === 'CURRENT_TIMESTAMP')
+{
+	$this->item->created_on = null;
+}
+
 ?>
 @js('choices/choices.min.js')
 @inlinejs($js)
@@ -102,7 +108,7 @@ JS;
             <input type="datetime-local" name="created_on" id="created_on"
                    class="form-control"
                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-                   value="{{ Awf\Html\Html::date($this->item->created_on, 'Y-m-d\TH:i:s', 'UTC', $this->container->application) }}"
+                   value="{{ Awf\Html\Html::date($this->item->created_on ?? 'now', 'Y-m-d\TH:i:s', 'UTC', $this->container->application) }}"
                    {{ $isSuper ? '' : 'disabled="disabled"' }}
             >
             <span class="input-group-text">GMT</span>
@@ -130,7 +136,7 @@ JS;
             <input type="datetime-local" name="modified_on" id="modified_on"
                    class="form-control"
                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-                   value="{{ Awf\Html\Html::date($this->item->modified_on, 'Y-m-d\TH:i:s', 'UTC', $this->container->application) }}"
+                   value="{{ Awf\Html\Html::date($this->item->modified_on ?? 'now', 'Y-m-d\TH:i:s', 'UTC', $this->container->application) }}"
                     {{ $isSuper ? '' : 'disabled="disabled"' }}
             >
             <span class="input-group-text">GMT</span>

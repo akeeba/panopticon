@@ -9,7 +9,19 @@ defined('AKEEBA') || die;
 
 /**
  * @var \Akeeba\Panopticon\View\Main\Html $this
+ * @var \Akeeba\Panopticon\Model\Site $model
+ * @var \Akeeba\Panopticon\Model\Main $mainModel
  */
+$model      = $this->getModel();
+$mainModel  = $this->getModel('main');
+$user       = $this->container->userManager->getUser();
+$canCreate  = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.addown');
+$isFiltered = array_reduce(
+	['search', 'coreUpdates', 'extUpdates', 'phpFamily', 'cmsFamily'],
+	fn(bool $carry, string $filterKey) => $carry || !empty($model->getState($filterKey)),
+	false
+);
+
 ?>
 
 @if($this->container->userManager->getUser()->getPrivilege('panopticon.super'))
@@ -33,8 +45,78 @@ defined('AKEEBA') || die;
         </span>
     </h3>
     <div class="card-body">
+        @if ($this->itemsCount || $isFiltered)
         <form name="sitesForm" id="adminForm" method="post"
               action="@route('index.php?view=main')">
+
+            {{-- Filters --}}
+            <div class="mt-2 mb-3 border rounded-1 p-2 bg-body-tertiary">
+                {{-- Search --}}
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="input-group" style="max-width: max(50%, 25em)">
+                        <input type="search" class="form-control" id="search"
+                               placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
+                               name="search" value="{{{ $model->getState('search', '') }}}">
+                        <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
+                        <button type="submit"
+                                class="btn btn-primary">
+                            <span class="fa fa-search" aria-hidden="true"></span>
+                            <span class="visually-hidden">
+                                @lang('PANOPTICON_LBL_FORM_SEARCH')
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                {{-- Drop-down filters --}}
+                <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-3 mt-2">
+                    {{-- coreUpdates Has Core Updates --}}
+                    <div>
+                        <label for="coreUpdates" class="form-label">@lang('PANOPTICON_MAIN_LBL_FILTER_COREUPDATES')</label>
+                        {{ \Awf\Html\Select::genericList([
+                            '' => 'PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT',
+                            '0' => 'AWF_NO',
+                            '1' => 'AWF_YES',
+                        ], 'coreUpdates', [
+                            'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+                        ], selected: $model->getState('coreUpdates'),
+                        idTag: 'coreUpdates',
+                        translate: true) }}
+                    </div>
+                    {{-- cmsFamily CMS Version --}}
+                    <div>
+                        <label class="form-label" for="cmsFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY')</label>
+                        {{ \Awf\Html\Select::genericList(
+	                        array_merge([
+								'' => \Awf\Text\Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
+                            ], $mainModel->getKnownJoomlaVersions()),
+	                        'cmsFamily',
+	                        [
+                                'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+                            ],
+                        selected: $model->getState('cmsFamily'),
+                        idTag: 'cmsFamily',
+                        translate: false) }}
+                    </div>
+                    {{-- phpFamily PHP Version --}}
+                    <div>
+                        <label class="form-label" for="cmsFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY')</label>
+                        {{ \Awf\Html\Select::genericList(
+	                        array_merge([
+								'' => \Awf\Text\Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
+                            ], $mainModel->getKnownPHPVersions()),
+	                        'phpFamily',
+	                        [
+                                'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+                            ],
+                        selected: $model->getState('phpFamily'),
+                        idTag: 'phpFamily',
+                        translate: false) }}
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- Results table --}}
             <table class="table table-striped table-hover table-sm align-middle table-responsive-sm">
                 <caption class="visually-hidden">
                     @lang('PANOPTICON_MAIN_SITES_TABLE_CAPTION')
@@ -86,10 +168,10 @@ defined('AKEEBA') || die;
 				/** @var \Akeeba\Panopticon\Model\Site $item */
 				?>
                 @foreach($this->items as $item)
-						<?php
-						$url    = $item->getBaseUrl();
-						$config = new Awf\Registry\Registry($item->config);
-						?>
+                    <?php
+                    $url    = $item->getBaseUrl();
+                    $config = new Awf\Registry\Registry($item->config);
+                    ?>
                     <tr>
                         <td>
                             <a class="fw-medium"
@@ -128,6 +210,16 @@ defined('AKEEBA') || die;
                         </td>
                     </tr>
                 @endforeach
+                @if ($this->itemsCount == 0)
+                    <tr>
+                        <td colspan="20">
+                            <div class="alert alert-info m-2">
+                                <span class="fa fa-info-circle" aria-hidden="true"></span>
+                                @lang('PANOPTICON_MAIN_SITES_LBL_NO_RESULTS')
+                            </div>
+                        </td>
+                    </tr>
+                @endif
                 </tbody>
             </table>
             {{ $this->pagination->getListFooter(['class' => 'form-select akeebaGridViewAutoSubmitOnChange']) }}
@@ -135,5 +227,25 @@ defined('AKEEBA') || die;
             <input type="hidden" name="filter_order" id="filter_order" value="{{{ $this->lists->order }}}">
             <input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="{{{ $this->lists->order_Dir }}}">
         </form>
+        @else
+            <div class="d-flex flex-column align-items-center gap-3 mt-4">
+                <div class="text-body-tertiary">
+                    <span class="fa fa-globe display-1" aria-hidden="true"></span>
+                </div>
+                <div class="display-1">
+                    @lang('PANOPTICON_MAIN_SITES_LBL_NOSITES_HEAD')
+                </div>
+                <div class="display-6 text-center text-secondary" style="max-width: 600px">
+                    @lang('PANOPTICON_MAIN_SITES_LBL_NOSITES_CTA')
+                </div>
+                <div class="py-5 mb-2">
+                    <a href="@route('index.php?view=sites&task=add')"
+                       class="btn btn-primary btn-lg" role="button">
+                        <span class="fa fa-plus" aria-hidden="true"></span>
+                        @lang('PANOPTICON_MAIN_SITES_LBL_NOSITES_BUTTON')
+                    </a>
+                </div>
+            </div>
+        @endif
     </div>
 </div>

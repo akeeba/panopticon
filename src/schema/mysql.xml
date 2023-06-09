@@ -65,11 +65,20 @@ CREATE TABLE IF NOT EXISTS `#__sites`
     FOREIGN KEY `#__sites_users_created` (`created_by`) REFERENCES `#__users` (`id`) ON DELETE CASCADE,
     FOREIGN KEY `#__sites_users_modified` (`modified_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL,
     FOREIGN KEY `#__sites_users_locked` (`locked_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    KEY `#__sites_name` (`name`(50))
 )
     DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
             ]]></query>
+        </action>
+
+        <action table="#__sites" canfail="1">
+            <condition type="index" operator="not"><![CDATA[#__sites_name]]></condition>
+            <query><![CDATA[
+ALTER TABLE `#__sites`
+ADD INDEX `#__sites_name` (`name`(50));
+]]></query>
         </action>
 
         <action table="#__tasks" canfail="0">
