@@ -33,12 +33,17 @@ class Html extends \Awf\Mvc\DataView\Html
 		$model->savestate(1);
 
 		// Ordering information
-		$this->lists->order     = $model->getState('filter_order', $model->getIdFieldName(), 'cmd');
-		$this->lists->order_Dir = $model->getState('filter_order_Dir', 'DESC', 'cmd');
+		$this->lists->order     = $model->getState('filter_order', 'name', 'cmd');
+		$this->lists->order_Dir = $model->getState('filter_order_Dir', 'ASC', 'cmd');
 
 		// Display limits
 		$this->lists->limitStart = $model->getState('limitstart', 0, 'int');
 		$this->lists->limit      = $model->getState('limit', 50, 'int');
+
+		$model->setState('filter_order', $this->lists->order);
+		$model->setState('filter_order_Dir', $this->lists->order_Dir);
+		$model->setState('limitstart', $this->lists->limitStart);
+		$model->setState('limit', $this->lists->limit);
 
 		// Assign items to the view
 		$this->items      = $model->get();
