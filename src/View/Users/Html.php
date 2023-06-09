@@ -41,9 +41,6 @@ class Html extends BaseHtmlView
 		$this->setStrictLayout(true);
 		$this->setStrictTpl(true);
 
-		$this->viewFinder->setStrictLayout(true);
-		$this->viewFinder->setStrictTpl(true);
-		$this->viewFinder->setStrictView(true);
 		$this->addButton('back', ['url' => 'javascript:history.back()']);
 
 		return parent::onBeforeRead();

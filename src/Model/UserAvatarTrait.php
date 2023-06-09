@@ -14,7 +14,7 @@ use Awf\Registry\Registry;
 
 trait UserAvatarTrait
 {
-	public function getAvatar(int $size = 32)
+	public function getAvatar(int $size = 32): string
 	{
 		$defaultGravatar = sprintf(
 			'https://www.gravatar.com/avatar/%s?d=mp&s=%d',
@@ -31,6 +31,28 @@ trait UserAvatarTrait
 		$avatarFromPlugin = array_reduce(
 			$results,
 			fn($carry, $x) => $carry ?? ((!empty(trim($x)) && is_string($x)) ? trim($x) : null),
+			null
+		);
+
+		return $avatarFromPlugin ?? $defaultGravatar;
+	}
+
+	public function getAvatarEditUrl(): ?string
+	{
+		$defaultGravatar = sprintf(
+			'https://www.gravatar.com/%s',
+			md5(strtolower(trim($this->email))),
+		);
+
+		$params = $this->parameters instanceof Registry ? $this->parameters : new Registry($this->parameters);
+
+		$results = Factory::getContainer()
+			->eventDispatcher
+			->trigger('onUserAvatarEditURL', [$this->id, $this->email, $params]);
+
+		$avatarFromPlugin = array_reduce(
+			$results,
+			fn($carry, $x) => $carry ?? (is_string($x) ? trim($x) : null),
 			null
 		);
 

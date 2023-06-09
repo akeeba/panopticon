@@ -31,11 +31,6 @@ class Users extends DataController
 		// If I am a superuser I can see any user account
 		$mySelf = $this->container->userManager->getUser();
 
-		if ($mySelf->getPrivilege('panopticon.super'))
-		{
-			return true;
-		}
-
 		$model = $this->getModel();
 
 		// If there is no record loaded, try loading a record based on the id passed in the input object
@@ -55,6 +50,11 @@ class Users extends DataController
 			{
 				return false;
 			}
+		}
+
+		if ($mySelf->getPrivilege('panopticon.super'))
+		{
+			return true;
 		}
 
 		// If I am not a superuser I can only read my own record
