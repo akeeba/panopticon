@@ -253,7 +253,7 @@ $i     = 1;
         <tfoot>
         <tr>
             <td colspan="20" class="center">
-                {{ $this->pagination->getListFooter() }}
+                {{ $this->pagination->getListFooter(['class' => 'form-select akeebaGridViewAutoSubmitOnChange']) }}
             </td>
         </tr>
         </tfoot>
