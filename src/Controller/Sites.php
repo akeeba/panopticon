@@ -806,7 +806,7 @@ class Sites extends DataController
 		{
 			$this->container->segment->remove($model->getHash() . 'savedata');
 
-			return true;
+            return true;
 		}
 
 		// Cache the item data in the session. We may need to reuse them if the save fails.
