@@ -18,7 +18,7 @@ $user       = $this->container->userManager->getUser();
 $canCreate  = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.addown');
 $isFiltered = array_reduce(
 	['search', 'coreUpdates', 'extUpdates', 'phpFamily', 'cmsFamily'],
-	fn(bool $carry, string $filterKey) => $carry || !empty($model->getState($filterKey)),
+	fn(bool $carry, string $filterKey) => $carry || $model->getState($filterKey) !== null,
 	false
 );
 
@@ -80,6 +80,19 @@ $isFiltered = array_reduce(
                             'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
                         ], selected: $model->getState('coreUpdates'),
                         idTag: 'coreUpdates',
+                        translate: true) }}
+                    </div>
+                    {{-- extUpdates Has extension updates --}}
+                    <div>
+                        <label for="extUpdates" class="form-label">@lang('PANOPTICON_MAIN_LBL_FILTER_EXTUPDATES')</label>
+                        {{ \Awf\Html\Select::genericList([
+                            '' => 'PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT',
+                            '0' => 'AWF_NO',
+                            '1' => 'AWF_YES',
+                        ], 'extUpdates', [
+                            'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+                        ], selected: $model->getState('extUpdates'),
+                        idTag: 'extUpdates',
                         translate: true) }}
                     </div>
                     {{-- cmsFamily CMS Version --}}

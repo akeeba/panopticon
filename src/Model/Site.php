@@ -108,6 +108,22 @@ class Site extends DataModel
 			]);
 		}
 
+		// Filter: has potential extension updates
+		$fltExtUpdates = $this->getState('extUpdates', null, 'bool');
+
+		if ($fltExtUpdates === true)
+		{
+			$query->where([
+				$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 1',
+			]);
+		}
+		elseif ($fltExtUpdates === false)
+		{
+			$query->where([
+				$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 0',
+			]);
+		}
+
 		// Filter: cmsFamily
 		$fltCmsFamily = $this->getState('cmsFamily', null, 'cmd');
 
