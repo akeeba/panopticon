@@ -45,6 +45,9 @@ use Awf\Text\Text;
         $effectivePreference = $item->preference ?: $this->globalExtUpdatePreferences[$key]?->preference;
 		$effectivePreference = $effectivePreference ?: $this->defaultExtUpdatePreference;
         $effectivePreferenceText = Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_' . $effectivePreference);
+
+		$globalPreference = $this->globalExtUpdatePreferences[$key]?->preference ?: $this->defaultExtUpdatePreference;
+        $globalPreferenceText = Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_' . $globalPreference);
     ?>
     <tr>
         <td>
@@ -96,7 +99,7 @@ use Awf\Text\Text;
             {{ \Awf\Html\Select::genericList(
                 data: [
                     ''      => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_GLOBAL_ALT') .
-                        ' ' . $effectivePreferenceText
+                        ' ' . $globalPreferenceText
                     ,
                     'none'  => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_NONE'),
                     'patch' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_PATCH'),
