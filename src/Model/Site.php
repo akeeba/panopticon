@@ -461,8 +461,8 @@ class Site extends DataModel
 			$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
 			/** @var DataModel\Collection $taskCollection */
 			$taskCollection = $taskModel
-				->site_id($this->id)
-				->type('extensionsupdate')
+                ->where('site_id', '=', $this->id)
+                ->where('type', '=', $type)
 				->get(0, 100);
 
 			if ($taskCollection->isEmpty())
