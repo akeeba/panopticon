@@ -243,14 +243,34 @@ class RefreshInstalledExtensions extends AbstractCallback
 
 							$config = new Registry($site->getFieldValue('config') ?: '{}');
 
-							$config->set(
-								'extensions.list',
-								$this->mapExtensionsList(
-									array_filter(
-										array_map(fn($item) => $item?->attributes, $data)
-									)
+							$extensions = $this->mapExtensionsList(
+								array_filter(
+									array_map(fn($item) => $item?->attributes, $data)
 								)
 							);
+							$config->set(
+								'extensions.list',
+								$extensions
+							);
+
+							// Save a flag for the existence of updates
+							$hasUpdates    = array_reduce(
+								$extensions,
+								function (bool $carry, object $item): int {
+									$current = $item?->version?->current;
+									$new     = $item?->version?->new;
+
+									if ($carry || empty($current) || empty($new))
+									{
+										return $carry;
+									}
+
+									return version_compare($current, $new, 'lt');
+								},
+								false
+							);
+
+							$config->set('extensions.hasUpdates', $hasUpdates);
 
 							try
 							{

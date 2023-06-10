@@ -221,6 +221,66 @@ class ExtensionsUpdate extends AbstractCallback
 			(array) $status
 		);
 
+		// Update extensions.list and extensions.hasUpdates in the site's config storage
+		try
+		{
+			// Ensure the site information read/write is an atomic operation
+			$this->container->db->lockTable('#__sites');
+
+			// Reload the site information, in case it changed while we were installing updates
+			$site->findOrFail($site->id);
+
+			// Get the extensions list
+			$siteConfig = ($site->getFieldValue('config') instanceof Registry)
+				? $site->getFieldValue('config')
+				: (new Registry($site->getFieldValue('config')));
+			$extensions = (array)$siteConfig->get('extensions.list');
+
+			// Make sure our updated extension didn't get uninstalled in the meantime
+			if (!isset($extensions[$extensionId]))
+			{
+				throw new \RuntimeException('The extension went away.');
+			}
+
+			// Mark the extension as not having updates
+			$extensions[$extensionId]->version->new = null;
+			$siteConfig->set('extensions.list', $extensions);
+
+			// Set a flag for the existence of updates
+			$hasUpdates    = array_reduce(
+				$extensions,
+				function (bool $carry, object $item): int {
+					$current = $item?->version?->current;
+					$new     = $item?->version?->new;
+
+					if ($carry || empty($current) || empty($new))
+					{
+						return $carry;
+					}
+
+					return version_compare($current, $new, 'lt');
+				},
+				false
+			);
+
+			$siteConfig->set('extensions.hasUpdates', $hasUpdates);
+
+			// Update the site's JSON config field
+			$site->config = $siteConfig->toString('JSON');
+
+			// Save the modified site
+			$site->save();
+		}
+		catch (\Throwable)
+		{
+			// No worries, this was a mostly optional step...
+		}
+		finally
+		{
+			// No matter what happens, we need to unlock the tables.
+			$this->container->db->unlockTables();
+		}
+
 		$updateStatus[$extensionId] = [
 			'type'     => $extensions[$extensionId]->type,
 			'name'     => $extensions[$extensionId]->name,
