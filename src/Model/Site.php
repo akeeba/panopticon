@@ -91,7 +91,7 @@ class Site extends DataModel
 		}
 
 		// Filter: has potential core updates
-		$fltCoreUpdates = $this->getState('coreUpdates', null, 'bool');
+		$fltCoreUpdates = $this->getState('coreUpdates', null, 'cmd');
 
 		if ($fltCoreUpdates)
 		{
@@ -100,7 +100,7 @@ class Site extends DataModel
 				$query->jsonPointer('config', '$.latest.version') . ' != ' . $query->jsonPointer('config', '$.current.version'),
 			]);
 		}
-		elseif (!$fltCoreUpdates && $fltCoreUpdates !== null)
+		elseif (!$fltCoreUpdates && $fltCoreUpdates !== '')
 		{
 			$query->andWhere([
 				$query->jsonPointer('config', '$.core.canUpgrade') . ' = FALSE',
@@ -109,15 +109,15 @@ class Site extends DataModel
 		}
 
 		// Filter: has potential extension updates
-		$fltExtUpdates = $this->getState('extUpdates', null, 'bool');
+		$fltExtUpdates = $this->getState('extUpdates', null, 'cmd');
 
-		if ($fltExtUpdates === true)
+		if ($fltExtUpdates == 1)
 		{
 			$query->where([
 				$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 1',
 			]);
 		}
-		elseif ($fltExtUpdates === false)
+		elseif ($fltExtUpdates == 0 && $fltExtUpdates !== '')
 		{
 			$query->where([
 				$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 0',
