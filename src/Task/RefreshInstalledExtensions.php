@@ -362,6 +362,8 @@ class RefreshInstalledExtensions extends AbstractCallback
 					'supported' => $item?->downloadkey?->supported ?? false,
 					'valid'     => $item?->downloadkey?->valid ?? false,
 					'value'     => $item?->downloadkey?->value ?? '',
+					'prefix'    => $item?->downloadkey?->prefix ?? '',
+					'suffix'    => $item?->downloadkey?->suffix ?? '',
 				],
 			],
 			$items
