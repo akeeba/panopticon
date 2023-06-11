@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
 
+$user                 = $this->container->userManager->getUser();
 $config               = $this->item->getConfig();
 $token                = $this->container->session->getCsrfToken()->getValue();
 $extensions           = $this->item->getExtensionsList();
@@ -221,7 +222,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
             </tr>
             </thead>
             <tbody>
-            @foreach($extensions as $item)
+            @foreach($extensions as $extensionId => $item)
 					<?php
 					$key = $this->getModel('Sysconfig')
 								->getExtensionShortname(
@@ -320,13 +321,27 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                                         <span class="fa fa-key" aria-hidden="true"></span>
                                         @lang('PANOPTICON_SITE_LBL_EXTENSIONS_DOWNLOADKEY_MISSING')
                                     </span>
+
+                                    @if ($user->authorise('panopticon.admin', $this->item->id))
+                                        <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $this->item->id, $extensionId, $token))"
+                                           class="ms-2 btn btn-outline-primary btn-sm" role="button">
+                                            <span class="fa fa-pencil-square" aria-hidden="true"></span>
+                                            <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
+                                        </a>
+                                    @endif
                                 @endif
                             </div>
                         @elseif (($item->downloadkey?->supported ?? false) && !empty($item->downloadkey?->value ?? '') && $this->container->userManager->getUser()->getPrivilege('panopticon.admin'))
                             <span class="fa fa-key text-muted" ></span>
                             <span class="visually-hidden">Download Key: </span>
                             <code class="download-key" tabindex="0">{{{ $item->downloadkey?->value ?? '' }}}</code>
-
+                            @if ($user->authorise('panopticon.admin', $this->item->id))
+                                <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $this->item->id, $extensionId, $token))"
+                                   class="ms-2 btn btn-outline-primary btn-sm" role="button">
+                                    <span class="fa fa-pencil-square" aria-hidden="true"></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
+                                </a>
+                            @endif
                         @endif
                     </td>
                     <td class="small">

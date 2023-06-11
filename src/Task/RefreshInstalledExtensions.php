@@ -19,8 +19,6 @@ use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Utils;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(
 	name: 'refreshinstalledextensions',
@@ -358,12 +356,19 @@ class RefreshInstalledExtensions extends AbstractCallback
 				'authorUrl'      => $item?->authorUrl,
 				'authorEmail'    => $item?->authorEmail,
 				'hasUpdateSites' => !empty($item?->updatesites),
-				'downloadkey'    => (object)[
-					'supported' => $item?->downloadkey?->supported ?? false,
-					'valid'     => $item?->downloadkey?->valid ?? false,
-					'value'     => $item?->downloadkey?->value ?? '',
-					'prefix'    => $item?->downloadkey?->prefix ?? '',
-					'suffix'    => $item?->downloadkey?->suffix ?? '',
+				'downloadkey' => (object) [
+					'supported'   => $item?->downloadkey?->supported ?? false,
+					'valid'       => $item?->downloadkey?->valid ?? false,
+					'value'       => $item?->downloadkey?->value ?? '',
+					'prefix'      => $item?->downloadkey?->prefix ?? '',
+					'suffix'      => $item?->downloadkey?->suffix ?? '',
+					'updatesites' => empty($item?->updatesites)
+						? []
+						: array_filter(
+							array_map(
+								fn($updatesite) => $updatesite?->update_site_id ?? null, $item?->updatesites ?: []
+							)
+						),
 				],
 			],
 			$items

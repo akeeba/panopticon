@@ -67,6 +67,9 @@ trait ACLTrait
 			'read'                               => ['*'],
 			// To add a new site you need to have the addown or admin privilege
 			'add'                                => ['addown', 'admin'],
+			// To edit the Download Key you need editown or admin (these are finely checked in the controller)
+			'dlkey'                              => ['*'],
+			'savedlkey'                          => ['*'],
 			// To edit, apply, or save you need editown or admin (these are finely checked in the controller)
 			'edit'                               => ['*'],
 			'apply'                              => ['*'],

@@ -191,7 +191,7 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
-		if (!$status->attributes?->status ?? 1)
+		if (!($status->attributes?->status ?? 1))
 		{
 			$this->logger->error(
 				sprintf(

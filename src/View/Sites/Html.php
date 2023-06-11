@@ -43,6 +43,26 @@ class Html extends DataViewHtml
 
 	protected string $defaultExtUpdatePreference = 'none';
 
+	public object $extension;
+
+	public function onBeforeDlkey(): bool
+	{
+		$this->setStrictLayout(true);
+		$this->setStrictTpl(true);
+
+		$this->setTitle(Text::_('PANOPTICON_SITES_LBL_DLKEY_EDIT_TITLE'));
+		$this->addButton(
+			'back', [
+			'url' => $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%d', $this->getModel()->getId())
+			),
+		]
+		);
+		$this->addButton('save', ['task' => 'savedlkey']);
+
+		return true;
+	}
+
 	public function onBeforeBrowse(): bool
 	{
 		$result = $this->onBeforeBrowseCrud();

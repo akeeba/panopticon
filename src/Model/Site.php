@@ -21,6 +21,7 @@ use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
 use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Task\ApiRequestTrait;
+use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Awf\Container\Container;
 use Awf\Database\Query;
 use Awf\Date\Date;
@@ -29,9 +30,13 @@ use Awf\Registry\Registry;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\User\User;
+use Awf\Utils\ArrayHelper;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use stdClass;
 use Throwable;
@@ -448,6 +453,141 @@ class Site extends DataModel
 		$config = $this->getFieldValue('config');
 
 		return ($config instanceof Registry) ? $config : (new Registry($config));
+	}
+
+	public function saveDownloadKey(int $extensionId, ?string $key): void
+	{
+		$extensions = (array) $this->getConfig()->get('extensions.list');
+
+		if (!array_key_exists($extensionId, $extensions))
+		{
+			throw new RuntimeException(
+				sprintf('Extension #%d does not exist in site #%d (%s)', $extensionId, $this->getId(), $this->name)
+			);
+		}
+
+		$extension = $extensions[$extensionId];
+		$dlKeyInfo = $extension?->downloadkey;
+
+		if ($dlKeyInfo?->supported !== true || !is_array($dlKeyInfo?->updatesites) || empty($dlKeyInfo?->updatesites))
+		{
+			throw new RuntimeException(
+				sprintf(
+					'Extension #%d (%s) in site #%d (%s) does not support Download Keys', $extensionId,
+					$extension->description, $this->getId(), $this->name
+				)
+			);
+		}
+
+		// For each update site, save the Download Key
+		$updateSites = ArrayHelper::toInteger($dlKeyInfo->updatesites);
+		/** @var \GuzzleHttp\Client $httpClient */
+		$httpClient = $this->container->httpFactory->makeClient(cache: false);
+		$promises   = array_map(
+			function (int $id) use ($httpClient, $dlKeyInfo, $key) {
+				$uriPath = sprintf('/index.php/v1/panopticon/updatesite/%s', $id);
+				[$url, $options] = $this->getRequestOptions($this, $uriPath);
+
+				/**
+				 * ⚠️ WARNING! ⚠️
+				 * 1. Even though the field is called extra_query we must send the raw key. The server adds the prefix
+				 *    and suffix.
+				 * 2. We MUST use RequestOptions::JSON instead of RequestOptions::FORM_PARAMS because the data must be
+				 *    sent as a JSON document (Content-Type: application/json and the body encoded as JSON). This is
+				 *    exactly what RequestOptions::JSON does.
+				 * 3. The server returns the raw key, without the prefix and suffix, after saving the Download Key.
+				 */
+				$options[RequestOptions::JSON] = [
+					'extra_query' => $key,
+				];
+
+				return $httpClient
+					->patchAsync($url, $options)
+					->then(
+						function (ResponseInterface $response) use ($key) {
+							try
+							{
+								$document = @json_decode($response->getBody()->getContents());
+							}
+							catch (\Exception $e)
+							{
+								$document = null;
+							}
+
+							$errors = $document?->errors ?? [];
+
+							if (is_array($errors) && !empty($errors))
+							{
+								$message = array_shift($errors);
+
+								throw new RuntimeException($message);
+							}
+
+							$data = $document?->data;
+
+							if (empty($data) || empty($data?->attributes))
+							{
+								throw new RuntimeException(
+									sprintf(
+										'Could not retrieve information for site #%d (%s). Invalid data returned from API call.',
+										$this->getId(), $this->name
+									)
+								);
+							}
+
+							if ($data?->attributes?->extra_query != $key)
+							{
+								throw new RuntimeException("Could not save the Download Key");
+							}
+
+							return true;
+						},
+						function (RequestException $e) {
+							throw new RuntimeException(
+								sprintf(
+									'Could not save the Download Key for site #%d (%s). The server replied with the following error: %s',
+									$this->id, $this->name, $e->getMessage()
+								)
+							);
+						}
+					)
+					->otherwise(function (Throwable $e) {
+						return $e;
+					});
+			}, $updateSites
+		);
+
+		$responses = Utils::settle($promises)->wait(true);
+
+		foreach ($responses as $response)
+		{
+			if (!isset($response['value']))
+			{
+				continue;
+			}
+
+			if ($response['value'] instanceof Throwable)
+			{
+				throw $response['value'];
+			}
+		}
+
+		// Reload the update information
+		/** @var RefreshSiteInfo $callback */
+		$callback = $this->container->taskRegistry->get('refreshinstalledextensions');
+		$dummy    = new \stdClass();
+		$registry = new Registry();
+
+		$registry->set('limitStart', 0);
+		$registry->set('limit', 1);
+		$registry->set('force', true);
+		$registry->set('forceUpdates', true);
+		$registry->set('filter.ids', [$this->getId()]);
+
+		do
+		{
+			$return = $callback($dummy, $registry);
+		} while ($return === Status::WILL_RESUME->value);
 	}
 
 	protected function getSiteSpecificTask(string $type): ?Task

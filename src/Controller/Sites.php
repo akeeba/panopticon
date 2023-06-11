@@ -448,6 +448,123 @@ class Sites extends DataController
 		$this->setRedirect($returnUri, $message, $type);
 	}
 
+	public function dlkey()
+	{
+		$this->csrfProtection();
+
+		/** @var SiteModel $model */
+		$model = $this->getModel();
+
+		if (!$model->getId())
+		{
+			$this->getIDsFromRequest($model, true);
+		}
+
+		if (!$this->canAddEditOrSave($model))
+		{
+			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
+		// Does the site record exist?
+		if ($model->getId() <= 0)
+		{
+			return false;
+		}
+
+		// Does the extension exist?
+		$extensions = (array) $model->getConfig()->get('extensions.list');
+		$extensionID = $this->input->getInt('extension', -1);
+
+		if (!isset($extensions[$extensionID]))
+		{
+			return false;
+		}
+
+		$view = $this->getView();
+
+		$view->setDefaultModel($model);
+		$view->extension = $extensions[$extensionID];
+		$view->setLayout('dlkey');
+
+		parent::display();
+
+		return true;
+	}
+
+	public function savedlkey()
+	{
+		$this->csrfProtection();
+
+		/** @var SiteModel $model */
+		$model = $this->getModel();
+
+		if (!$model->getId())
+		{
+			$this->getIDsFromRequest($model, true);
+		}
+
+		if (!$this->canAddEditOrSave($model))
+		{
+			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
+		// Does the site record exist?
+		if ($model->getId() <= 0)
+		{
+			return false;
+		}
+
+		// Does the extension exist?
+		$extensions = (array) $model->getConfig()->get('extensions.list');
+		$extensionID = $this->input->getInt('extension', -1);
+
+		if (!isset($extensions[$extensionID]))
+		{
+			return false;
+		}
+
+		// Get the Download Key
+		$key = $this->input->getRaw('dlkey');
+		$type = 'info';
+		$message = 'The Download Key has been saved';
+
+		try
+		{
+			$this->getModel()->saveDownloadKey($extensionID, $key);
+		}
+		catch (\Exception $e)
+		{
+			$type = 'error';
+			$message = $e->getMessage();
+		}
+
+		// Redirect
+		if ($customURL = $this->input->getBase64('returnurl', ''))
+		{
+			$customURL = base64_decode($customURL);
+		}
+
+		$router = $this->container->router;
+
+		if (!empty($customURL))
+		{
+			$url = $customURL;
+		}
+		else
+		{
+			$url = $router->route(
+				sprintf(
+					"index.php?view=sites&task=read&id=%d",
+					$model->getId()
+				)
+			);
+		}
+
+		$this->setRedirect($url, $message, $type);
+
+		return true;
+	}
+
 	protected function onBeforeBrowse(): bool
 	{
 		if ($this->input->get('savestate', -999, 'int') == -999)
