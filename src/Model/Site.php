@@ -61,6 +61,7 @@ use Throwable;
 class Site extends DataModel
 {
 	use ApiRequestTrait;
+	use AkeebaBackupIntegrationTrait;
 
 	public function __construct(Container $container = null)
 	{
@@ -89,10 +90,12 @@ class Site extends DataModel
 		{
 			$fltSearch = trim($fltSearch ?? '');
 
-			$query->andWhere([
-				$db->quoteName('name') . ' LIKE ' . $db->quote('%' . $fltSearch . '%'),
-				$db->quoteName('url') . ' LIKE ' . $db->quote('%' . $fltSearch . '%'),
-			]);
+			$query->andWhere(
+				[
+					$db->quoteName('name') . ' LIKE ' . $db->quote('%' . $fltSearch . '%'),
+					$db->quoteName('url') . ' LIKE ' . $db->quote('%' . $fltSearch . '%'),
+				]
+			);
 		}
 
 		// Filter: has potential core updates
@@ -100,17 +103,23 @@ class Site extends DataModel
 
 		if ($fltCoreUpdates)
 		{
-			$query->where([
-				$query->jsonPointer('config', '$.core.canUpgrade') . ' = TRUE',
-				$query->jsonPointer('config', '$.latest.version') . ' != ' . $query->jsonPointer('config', '$.current.version'),
-			]);
+			$query->where(
+				[
+					$query->jsonPointer('config', '$.core.canUpgrade') . ' = TRUE',
+					$query->jsonPointer('config', '$.latest.version') . ' != ' .
+					$query->jsonPointer('config', '$.current.version'),
+				]
+			);
 		}
 		elseif (!$fltCoreUpdates && $fltCoreUpdates !== '')
 		{
-			$query->andWhere([
-				$query->jsonPointer('config', '$.core.canUpgrade') . ' = FALSE',
-				$query->jsonPointer('config', '$.core.latest.version') . ' = ' . $query->jsonPointer('config', '$.core.current.version'),
-			]);
+			$query->andWhere(
+				[
+					$query->jsonPointer('config', '$.core.canUpgrade') . ' = FALSE',
+					$query->jsonPointer('config', '$.core.latest.version') . ' = ' .
+					$query->jsonPointer('config', '$.core.current.version'),
+				]
+			);
 		}
 
 		// Filter: has potential extension updates
@@ -118,15 +127,19 @@ class Site extends DataModel
 
 		if ($fltExtUpdates == 1)
 		{
-			$query->where([
-				$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 1',
-			]);
+			$query->where(
+				[
+					$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 1',
+				]
+			);
 		}
 		elseif ($fltExtUpdates == 0 && $fltExtUpdates !== '')
 		{
-			$query->where([
-				$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 0',
-			]);
+			$query->where(
+				[
+					$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 0',
+				]
+			);
 		}
 
 		// Filter: cmsFamily
@@ -135,7 +148,8 @@ class Site extends DataModel
 		if ($fltCmsFamily)
 		{
 			$query->where(
-				$query->jsonPointer('config', '$.core.current.version') . ' LIKE ' . $query->quote('"' . $fltCmsFamily . '.%')
+				$query->jsonPointer('config', '$.core.current.version') . ' LIKE ' .
+				$query->quote('"' . $fltCmsFamily . '.%')
 			);
 		}
 
@@ -231,13 +245,17 @@ class Site extends DataModel
 		}
 		elseif ($response->getStatusCode() === 404)
 		{
-			throw new WebServicesInstallerNotEnabled('Cannot list installed extensions. Web Services - Installer is not enabled.');
+			throw new WebServicesInstallerNotEnabled(
+				'Cannot list installed extensions. Web Services - Installer is not enabled.'
+			);
 		}
 		elseif ($response->getStatusCode() !== 401)
 		{
 			$this->container->segment->setFlash('site_connection_http_code', $response->getStatusCode());
 
-			throw new APIApplicationIsBroken(sprintf('The API application does not work property (HTTP %d)', $response->getStatusCode()));
+			throw new APIApplicationIsBroken(
+				sprintf('The API application does not work property (HTTP %d)', $response->getStatusCode())
+			);
 		}
 
 		// Try to access index.php/v1/extensions **authenticated**
@@ -252,7 +270,9 @@ class Site extends DataModel
 		}
 		elseif ($response->getStatusCode() === 404)
 		{
-			throw new WebServicesInstallerNotEnabled('Cannot list installed extensions. Web Services - Installer is not enabled.');
+			throw new WebServicesInstallerNotEnabled(
+				'Cannot list installed extensions. Web Services - Installer is not enabled.'
+			);
 		}
 		elseif ($response->getStatusCode() === 401)
 		{
@@ -262,7 +282,9 @@ class Site extends DataModel
 		{
 			$this->container->segment->setFlash('site_connection_http_code', $response->getStatusCode());
 
-			throw new APIApplicationIsBroken(sprintf('The API application does not work property (HTTP %d)', $response->getStatusCode()));
+			throw new APIApplicationIsBroken(
+				sprintf('The API application does not work property (HTTP %d)', $response->getStatusCode())
+			);
 		}
 
 		try
@@ -276,7 +298,9 @@ class Site extends DataModel
 
 		if (empty($results?->data))
 		{
-			throw new WebServicesInstallerNotEnabled('Cannot list installed extensions. Web Services - Installer is not enabled.');
+			throw new WebServicesInstallerNotEnabled(
+				'Cannot list installed extensions. Web Services - Installer is not enabled.'
+			);
 		}
 
 		// Check if Panopticon is enabled
@@ -319,8 +343,6 @@ class Site extends DataModel
 		{
 			$warnings[] = 'akeebabackup';
 		}
-
-		// TODO Can I get a list of Akeeba Backup profiles?
 
 		// TODO Check for Admin Tools component and its Web Services plugins
 
@@ -390,10 +412,12 @@ class Site extends DataModel
 		$db    = $this->getDbo();
 		$query = $db
 			->getQuery(true)
-			->select([
-				$db->quoteName('id'),
-				$db->quoteName('title'),
-			])
+			->select(
+				[
+					$db->quoteName('id'),
+					$db->quoteName('title'),
+				]
+			)
 			->from($db->quoteName('#__groups'));
 
 		if (!empty($groupFilter))
@@ -551,9 +575,11 @@ class Site extends DataModel
 							);
 						}
 					)
-					->otherwise(function (Throwable $e) {
-						return $e;
-					});
+					->otherwise(
+						function (Throwable $e) {
+							return $e;
+						}
+					);
 			}, $updateSites
 		);
 
@@ -601,8 +627,8 @@ class Site extends DataModel
 			$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
 			/** @var DataModel\Collection $taskCollection */
 			$taskCollection = $taskModel
-                ->where('site_id', '=', $this->id)
-                ->where('type', '=', $type)
+				->where('site_id', '=', $this->id)
+				->where('type', '=', $type)
 				->get(0, 100);
 
 			if ($taskCollection->isEmpty())
@@ -629,10 +655,12 @@ class Site extends DataModel
 			return false;
 		}
 
-		return !in_array($task->last_exit_code, [
-			Status::INITIAL_SCHEDULE->value, Status::OK->value,
-			Status::RUNNING->value, Status::WILL_RESUME->value,
-		]);
+		return !in_array(
+			$task->last_exit_code, [
+				Status::INITIAL_SCHEDULE->value, Status::OK->value,
+				Status::RUNNING->value, Status::WILL_RESUME->value,
+			]
+		);
 	}
 
 	protected function isSiteSpecificTaskScheduled(string $type): bool
@@ -661,10 +689,12 @@ class Site extends DataModel
 			return false;
 		}
 
-		return in_array($task->last_exit_code, [
-			Status::INITIAL_SCHEDULE->value,
-			Status::RUNNING->value, Status::WILL_RESUME->value,
-		]);
+		return in_array(
+			$task->last_exit_code, [
+				Status::INITIAL_SCHEDULE->value,
+				Status::RUNNING->value, Status::WILL_RESUME->value,
+			]
+		);
 	}
 
 	private function applyUserGroupsToQuery(Query $query): void
@@ -711,8 +741,12 @@ class Site extends DataModel
 		// Basically: a bunch of JSON_CONTAINS(`config`, '1', '$.config.groups') with ORs between them
 		foreach (array_keys($groupPrivileges) as $gid)
 		{
-			$clauses[] = $query->jsonContains($query->quoteName('config'), $query->quote('"' . (int) $gid . '"'), $query->quote('$.config.groups'));
-			$clauses[] = $query->jsonContains($query->quoteName('config'), $query->quote((int) $gid), $query->quote('$.config.groups'));
+			$clauses[] = $query->jsonContains(
+				$query->quoteName('config'), $query->quote('"' . (int) $gid . '"'), $query->quote('$.config.groups')
+			);
+			$clauses[] = $query->jsonContains(
+				$query->quoteName('config'), $query->quote((int) $gid), $query->quote('$.config.groups')
+			);
 		}
 
 		$query->extendWhere('AND', $clauses, 'OR');
