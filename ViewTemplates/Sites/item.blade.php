@@ -37,7 +37,6 @@ $canEdit = $this->container->userManager->getUser()->getPrivilege('panopticon.ad
 
 <div class="container my-3">
     <div class="row g-3 mb-3">
-
         <div class="col-12 col-lg-6 order-1 order-lg-0">
             @include('Sites/item_joomlaupdate')
         </div>
@@ -54,19 +53,13 @@ $canEdit = $this->container->userManager->getUser()->getPrivilege('panopticon.ad
     </div>
 
     <div class="row g-3 mb-3">
-        <div class="col">
-            <div class="card">
-                <h3 class="card-header h4">
-                    <span class="fa fa-hard-drive" aria-hidden="true"></span>
-                    Backup
-                </h3>
-                <div class="card-body">
-                    <div class="display-4 text-center text-muted  py-2 rounded-3">TO-DO</div>
-                </div>
-            </div>
+        <div class="col-12">
+            @include('Sites/item_backup')
         </div>
+    </div>
 
-        <div class="col">
+    <div class="row g-3 mb-3">
+        <div class="col-12">
             <div class="card">
                 <h3 class="card-header h4">
                     <span class="fa fa-lock" aria-hidden="true"></span>
@@ -77,6 +70,5 @@ $canEdit = $this->container->userManager->getUser()->getPrivilege('panopticon.ad
                 </div>
             </div>
         </div>
-
     </div>
 </div>

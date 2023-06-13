@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site as SiteModel;
@@ -29,6 +30,7 @@ class Sites extends DataController
 	use ACLTrait;
 	use EnqueueJoomlaUpdateTrait;
 	use EnqueueExtensionUpdateTrait;
+	use AkeebaBackupIntegrationTrait;
 
 	private const CHECKBOX_KEYS = [
 		'config.core_update.email_error',
@@ -873,7 +875,20 @@ class Sites extends DataController
 
 			if ($mustCheckConnection)
 			{
-				$model->testConnection(false);
+				$warnings = $model->testConnection(false);
+			}
+
+			// Update the Akeeba Backup information if necessary
+			if (isset($warnings) && !in_array('akeebabackup', $warnings ?? []))
+			{
+				$model->testAkeebaBackupConnection();
+			}
+			else
+			{
+				$config = $model->getConfig();
+				$config->set('akeebabackup.info', null);
+				$config->set('akeebabackup.endpoint', null);
+				$model->setFieldValue('config', $config->toString());
 			}
 
 			// Save the data

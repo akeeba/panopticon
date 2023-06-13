@@ -90,6 +90,8 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
     return $ret;
 });
 
+$shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->site == 0 && $extensionsQuickInfo->key = 0;
+
 ?>
 <div class="card">
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
@@ -132,7 +134,6 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                     </span>
                 </sup>
             @endif
-
         </span>
         <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
            href="@route(sprintf('index.php?view=site&task=refreshExtensionsInformation&id=%d&%s=1', $this->item->id, $token))"
@@ -144,8 +145,17 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
                 @lang('PANOPTICON_SITE_LBL_EXTENSIONS_UPDATE_INFO')
             </span>
         </a>
+        <button class="btn btn-success btn-sm ms-2" role="button"
+                data-bs-toggle="collapse" href="#cardExtensionsBody"
+                aria-expanded="{{ $shouldCollapse ? 'false' : 'true' }}" aria-controls="cardExtensionsBody"
+                data-bs-tooltip="tooltip" data-bs-placement="bottom"
+                data-bs-title="@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')"
+        >
+            <span class="fa fa-arrow-down-up-across-line" aria-hidden="true"></span>
+            <span class="visually-hidden">@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')</span>
+        </button>
     </h3>
-    <div class="card-body">
+    <div class="card-body collapse{{ $shouldCollapse ? '' : ' show' }}" id="cardExtensionsBody">
         <p class="small text-body-tertiary">
             <strong>
                 @lang('PANOPTICON_SITE_LBL_EXTENSIONS_LAST_CHECKED')

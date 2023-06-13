@@ -14,9 +14,12 @@ use Akeeba\Panopticon\Model\Sysconfig;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
+use Awf\Date\Date;
 use Awf\Mvc\DataView\Html as DataViewHtml;
 use Awf\Text\Text;
 use Awf\Utils\Template;
+use DateTimeZone;
+use Throwable;
 
 class Html extends DataViewHtml
 {
@@ -28,6 +31,10 @@ class Html extends DataViewHtml
 		onBeforeAdd as onBeforeAddCrud;
 		onBeforeEdit as onBeforeEditCrud;
 	}
+
+	public object $extension;
+
+	public array|Throwable $backupRecords;
 
 	protected Site $item;
 
@@ -43,7 +50,7 @@ class Html extends DataViewHtml
 
 	protected string $defaultExtUpdatePreference = 'none';
 
-	public object $extension;
+	private array $backupProfiles = [];
 
 	public function onBeforeDlkey(): bool
 	{
@@ -53,10 +60,10 @@ class Html extends DataViewHtml
 		$this->setTitle(Text::_('PANOPTICON_SITES_LBL_DLKEY_EDIT_TITLE'));
 		$this->addButton(
 			'back', [
-			'url' => $this->container->router->route(
-				sprintf('index.php?view=site&task=read&id=%d', $this->getModel()->getId())
-			),
-		]
+				'url' => $this->container->router->route(
+					sprintf('index.php?view=site&task=read&id=%d', $this->getModel()->getId())
+				),
+			]
 		);
 		$this->addButton('save', ['task' => 'savedlkey']);
 
@@ -81,14 +88,7 @@ class Html extends DataViewHtml
 
 		Template::addJs('media://js/remember-tab.js');
 
-		$js = <<< JS
-window.addEventListener('DOMContentLoaded', () => {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    });
-
-JS;
-		$this->container->application->getDocument()->addScriptDeclaration($js);
+		$this->addTooltipJavaScript();
 
 		return $result;
 	}
@@ -105,9 +105,11 @@ JS;
 		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
 
 		$document = $this->container->application->getDocument();
-		$document->addScriptOptions('panopticon.rememberTab', [
-			'key' => 'panopticon.siteAdd.rememberTab',
-		]);
+		$document->addScriptOptions(
+			'panopticon.rememberTab', [
+				'key' => 'panopticon.siteAdd.rememberTab',
+			]
+		);
 		Template::addJs('media://js/remember-tab.js');
 
 		return $this->onBeforeAddCrud();
@@ -131,9 +133,11 @@ JS;
 		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
 
 		$this->container->application->getDocument()
-			->addScriptOptions('panopticon.rememberTab', [
-				'key' => 'panopticon.siteEdit.' . $this->getModel()->id . '.rememberTab',
-			]);
+			->addScriptOptions(
+				'panopticon.rememberTab', [
+					'key' => 'panopticon.siteEdit.' . $this->getModel()->id . '.rememberTab',
+				]
+			);
 		Template::addJs('media://js/remember-tab.js');
 
 		return $this->onBeforeEditCrud();
@@ -151,22 +155,251 @@ JS;
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();
 
+		try
+		{
+			$useCache             = !$this->item->getState('akeebaBackupForce', false, 'bool');
+			$this->backupRecords  = $this->item->akeebaBackupGetBackups(
+				$useCache,
+				$this->item->getState('akeebaBackupFrom', 0, 'int'),
+				$this->item->getState('akeebaBackupLimit', 20, 'int'),
+			);
+			$this->backupProfiles = $this->item->akeebaBackupGetProfiles($useCache);
+		}
+		catch (\Throwable $e)
+		{
+			$this->backupRecords = $e;
+		}
+
 		$document = $this->container->application->getDocument();
 
-		$document->addScriptOptions('panopticon.rememberTab', [
-			'key' => 'panopticon.siteRead.' . $this->getModel()->id . '.rememberTab',
-		]);
+		$document->addScriptOptions(
+			'panopticon.rememberTab', [
+				'key' => 'panopticon.siteRead.' . $this->getModel()->id . '.rememberTab',
+			]
+		);
 		Template::addJs('media://js/remember-tab.js');
 
+		$this->addTooltipJavaScript();
+
+		return true;
+	}
+
+	/**
+	 * Returns the origin's translated name and the appropriate icon class
+	 *
+	 * @param   object  $record  A backup record
+	 *
+	 * @return  array  array(originTranslation, iconClass)
+	 * @since   1.0.0
+	 */
+	protected function getOriginInformation(object $record): array
+	{
+		$originLanguageKey = 'PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_' . ($record?->origin ?? '');
+		$originDescription = Text::_($originLanguageKey);
+
+		switch (strtolower($record?->origin ?? ''))
+		{
+			case 'backend':
+				$originIcon = 'fa fa-desktop';
+				break;
+
+			case 'frontend':
+				$originIcon = 'fa fa-globe';
+				break;
+
+			case 'json':
+				$originIcon = 'fa fa-cloud';
+				break;
+
+			case 'joomlacli':
+			case 'joomla':
+				$originIcon = 'fa fab fa-joomla';
+				break;
+
+			case 'cli':
+				$originIcon = 'fa fa-terminal';
+				break;
+
+			case 'wpcron':
+				$originIcon = 'fab fa-wordpress';
+				break;
+
+			case 'xmlrpc':
+				$originIcon = 'fa fa-code';
+				break;
+
+			case 'lazy':
+				$originIcon = 'fa fa-cubes';
+				break;
+
+			default:
+				$originIcon = 'fa fa-question';
+				break;
+		}
+
+		if (empty($originLanguageKey) || ($originDescription == $originLanguageKey))
+		{
+			$originDescription = Text::_('PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_UNKNOWN');
+			$originIcon        = 'fa fa-question-circle';
+
+			return [$originDescription, $originIcon];
+		}
+
+		return [$originDescription, $originIcon];
+	}
+
+	/**
+	 * Get the start time and duration of a backup record
+	 *
+	 * @param   object  $record  A backup record
+	 *
+	 * @return  array  array(startTimeAsString, durationAsString)
+	 * @throws  \Exception
+	 * @since   1.0.0
+	 */
+	protected function getTimeInformation(object $record): array
+	{
+		$utcTimeZone = new DateTimeZone('UTC');
+		$startTime   = clone new Date($record->backupstart, $utcTimeZone);
+		$endTime     = clone new Date($record->backupend, $utcTimeZone);
+
+		$duration = $endTime->toUnix() - $startTime->toUnix();
+
+		if ($duration > 0)
+		{
+			$seconds  = $duration % 60;
+			$duration = $duration - $seconds;
+
+			$minutes  = ($duration % 3600) / 60;
+			$duration = $duration - $minutes * 60;
+
+			$hours    = $duration / 3600;
+			$duration = sprintf('%02d', $hours) . ':' . sprintf('%02d', $minutes) . ':' . sprintf('%02d', $seconds);
+		}
+		else
+		{
+			$duration = '';
+		}
+
+		$tz     = new DateTimeZone($this->container->appConfig->get('timezone', 'UTC'));
+		$startTime->setTimezone($tz);
+
+		$timeZoneSuffix = '';
+
+		if (!empty($this->timeZoneFormat))
+		{
+			$timeZoneSuffix = $startTime->format($this->timeZoneFormat, true);
+		}
+
+		return [
+			$startTime->format(Text::_('DATE_FORMAT_LC6'), true),
+			$duration,
+			$timeZoneSuffix,
+		];
+	}
+
+	/**
+	 * Get the class and icon for the backup status indicator
+	 *
+	 * @param   object  $record  A backup record
+	 *
+	 * @return  array  array(class, icon)
+	 * @since   1.0.0
+	 */
+	protected function getStatusInformation(object $record): array
+	{
+		switch ($record->meta)
+		{
+			case 'ok':
+				$statusIcon  = 'fa fa-check-circle';
+				$statusClass = 'bg-success';
+				break;
+			case 'pending':
+				$statusIcon  = 'fa fa-play';
+				$statusClass = 'bg-warning';
+				break;
+			case 'fail':
+				$statusIcon  = 'fa fa-times';
+				$statusClass = 'bg-danger';
+				break;
+			case 'remote':
+				$statusIcon  = 'fa fa-cloud';
+				$statusClass = 'bg-primary';
+				break;
+			default:
+				$statusIcon  = 'fa fa-trash';
+				$statusClass = 'bg-secondary';
+				break;
+		}
+
+		return [$statusClass, $statusIcon];
+	}
+
+	/**
+	 * Get the profile name for the backup record (or "–" if the profile no longer exists)
+	 *
+	 * @param   object  $record  A backup record
+	 *
+	 * @return  string
+	 */
+	protected function getProfileName(object $record): string
+	{
+		static $profiles = null;
+
+		if (is_null($profiles))
+		{
+			$profiles = [];
+
+			foreach ($this->backupProfiles as $profileInfo)
+			{
+				$profiles[$profileInfo->id] = $profileInfo->name;
+			}
+		}
+
+		return $profiles[$record->profile_id] ?? '—';
+	}
+
+	/**
+	 * Converts number of bytes to a human-readable representation.
+	 *
+	 * @param   int|null  $sizeInBytes         Size in bytes
+	 * @param   int       $decimals            How many decimals should I use? Default: 2
+	 * @param   string    $decSeparator        Decimal separator
+	 * @param   string    $thousandsSeparator  Thousands grouping character
+	 *
+	 * @return  string
+	 * @since   1.0.0
+	 */
+	public function formatFilesize(?int $sizeInBytes, int $decimals = 2, string $decSeparator = '.', string $thousandsSeparator = ''): string
+	{
+		if ($sizeInBytes <= 0)
+		{
+			return '&mdash;';
+		}
+
+		$units = ['b', 'KiB', 'MiB', 'GiB', 'TiB'];
+		$unit  = floor(log($sizeInBytes, 2) / 10);
+
+		if ($unit == 0)
+		{
+			$decimals = 0;
+		}
+
+		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' ' . $units[$unit];
+	}
+
+	/**
+	 * @return void
+	 */
+	private function addTooltipJavaScript(): void
+	{
 		$js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"],[data-bs-tooltip="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     });
 
 JS;
-		$document->addScriptDeclaration($js);
-
-		return true;
+		$this->container->application->getDocument()->addScriptDeclaration($js);
 	}
 }
