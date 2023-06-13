@@ -9,7 +9,6 @@ namespace Akeeba\Panopticon\Controller\Trait;
 
 use Akeeba\Panopticon\Model\Site;
 use Awf\Uri\Uri;
-use GuzzleHttp\Exception\GuzzleException;
 
 defined('AKEEBA') || die;
 
@@ -68,12 +67,80 @@ trait AkeebaBackupIntegrationTrait
 
 	public function akeebaBackupDelete(): bool
 	{
-		// TODO Implement me
+		$this->csrfProtection();
+
+		$id       = $this->input->getInt('id', null);
+		$backupId = $this->input->getInt('backup_id', null);
+
+		if (empty($id) || $id <= 0 || empty($backupId) || $backupId <= 0)
+		{
+			return false;
+		}
+
+		/** @var Site $model */
+		$model = $this->getModel();
+		$user  = $this->container->userManager->getUser();
+
+		$model->findOrFail($id);
+
+		if (!$user->authorise('panopticon.admin', $model))
+		{
+			return false;
+		}
+
+		$defaultRedirect = $this->container->router->route(sprintf('index.php?view=site&task=read&id=%d', $id));
+
+		try
+		{
+			$model->akeebaBackupDelete($backupId);
+
+			$this->setRedirectWithMessage($defaultRedirect);
+		}
+		catch (\Exception $e)
+		{
+			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
+		}
+
+		return true;
 	}
 
 	public function akeebaBackupDeleteFiles(): bool
 	{
-		// TODO Implement me
+		$this->csrfProtection();
+
+		$id       = $this->input->getInt('id', null);
+		$backupId = $this->input->getInt('backup_id', null);
+
+		if (empty($id) || $id <= 0 || empty($backupId) || $backupId <= 0)
+		{
+			return false;
+		}
+
+		/** @var Site $model */
+		$model = $this->getModel();
+		$user  = $this->container->userManager->getUser();
+
+		$model->findOrFail($id);
+
+		if (!$user->authorise('panopticon.admin', $model))
+		{
+			return false;
+		}
+
+		$defaultRedirect = $this->container->router->route(sprintf('index.php?view=site&task=read&id=%d', $id));
+
+		try
+		{
+			$model->akeebaBackupDeleteFiles($backupId);
+
+			$this->setRedirectWithMessage($defaultRedirect);
+		}
+		catch (\Exception $e)
+		{
+			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
+		}
+
+		return true;
 	}
 
 	public function akeebaBackupEnqueue(): bool
