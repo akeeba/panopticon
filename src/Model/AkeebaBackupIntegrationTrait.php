@@ -10,9 +10,9 @@ namespace Akeeba\Panopticon\Model;
 defined('AKEEBA') || die;
 
 use Akeeba\BackupJsonApi\Connector;
-use Akeeba\BackupJsonApi\DataShape\BackupOptions;
+use Akeeba\BackupJsonApi\Exception\RemoteError;
 use Akeeba\BackupJsonApi\HttpAbstraction\HttpClientGuzzle;
-use Akeeba\BackupJsonApi\Options;
+use Akeeba\BackupJsonApi\HttpAbstraction\HttpClientInterface;
 use Akeeba\BackupJsonApi\Options as JsonApiOptions;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
@@ -184,6 +184,12 @@ trait AkeebaBackupIntegrationTrait
 		return $dirtyFlag;
 	}
 
+	/**
+	 * Is the Akeeba Backup package or component installed on this site?
+	 *
+	 * @return  bool
+	 * @since   1.0.0
+	 */
 	public function hasAkeebaBackup(): bool
 	{
 		$config     = $this->getConfig();
@@ -274,12 +280,14 @@ trait AkeebaBackupIntegrationTrait
 	}
 
 	/**
-	 * @param   string|null  $description
-	 * @param   string|null  $comment
+	 * Starts taking a new backup.
 	 *
-	 * @param   int          $profile
+	 * @param   int          $profile      The profile ID to use
+	 * @param   string|null  $description  Backup description
+	 * @param   string|null  $comment      Backup comment
 	 *
 	 * @return  object
+	 * @throws  Throwable
 	 * @since   1.0.0
 	 */
 	public function akeebaBackupStartBackup(int $profile = 1, ?string $description = null, ?string $comment = null
@@ -287,24 +295,56 @@ trait AkeebaBackupIntegrationTrait
 	{
 		$this->ensureAkeebaBackupConnectionOptions();
 
-		// TODO Implement me
+		$httpClient = $this->getAkeebaBackupAPIClient();
+
+		$data = $httpClient->doQuery(
+			'startBackup', [
+				'profile'     => (int) $profile,
+				'description' => $description ?: 'Remote backup',
+				'comment'     => $comment,
+			]
+		);
+
+		$info = $this->akeebaBackupHandleAPIResponse($data);
+
+		$info->data = $data;
+
+		return $info;
 	}
 
 	/**
-	 * @param   string  $backupId
+	 * Continues taking a backup.
+	 *
+	 * @param   string|null  $backupId  The backup ID to continue stepping through.
 	 *
 	 * @return  object
+	 * @throws  Throwable
 	 * @since   1.0.0
 	 */
-	public function akeebaBackupStepBackup(string $backupId): object
+	public function akeebaBackupStepBackup(?string $backupId): object
 	{
 		$this->ensureAkeebaBackupConnectionOptions();
 
-		// TODO Implement me
+		$httpClient = $this->getAkeebaBackupAPIClient();
+		$parameters = [];
+
+		if (!empty($backupId))
+		{
+			$parameters['backupid'] = $backupId;
+		}
+
+		$data = $httpClient->doQuery('stepBackup', $parameters);
+		$info = $this->akeebaBackupHandleAPIResponse($data);
+
+		$info->data = $data;
+
+		return $info;
 	}
 
 	/**
-	 * @param   int  $id
+	 * Delete a backup record.
+	 *
+	 * @param   int  $id  The backup record to delete
 	 *
 	 * @return  void
 	 * @since   1.0.0
@@ -313,11 +353,15 @@ trait AkeebaBackupIntegrationTrait
 	{
 		$this->ensureAkeebaBackupConnectionOptions();
 
-		// TODO Implement me
+		$connector = $this->getAkeebaBackupAPIConnector();
+
+		$connector->delete($id);
 	}
 
 	/**
-	 * @param   int  $id
+	 * Delete a backup record's files from the web server.
+	 *
+	 * @param   int  $id  The backup record whose files will be deleted
 	 *
 	 * @return  void
 	 * @since   1.0.0
@@ -326,7 +370,9 @@ trait AkeebaBackupIntegrationTrait
 	{
 		$this->ensureAkeebaBackupConnectionOptions();
 
-		// TODO Implement me
+		$connector = $this->getAkeebaBackupAPIConnector();
+
+		$connector->deleteFiles($id);
 	}
 
 	/**
@@ -413,6 +459,16 @@ trait AkeebaBackupIntegrationTrait
 	 */
 	private function getAkeebaBackupAPIConnector(): Connector
 	{
+		return new Connector($this->getAkeebaBackupAPIClient());
+	}
+
+	/**
+	 * Get the Akeeba Backup JSON API HTTP client
+	 *
+	 * @return  HttpClientInterface
+	 */
+	private function getAkeebaBackupAPIClient(): HttpClientInterface
+	{
 		$config            = $this->getConfig();
 		$connectionOptions = (array) $config->get('akeebabackup.endpoint', null);
 
@@ -424,9 +480,41 @@ trait AkeebaBackupIntegrationTrait
 
 		$connectionOptions['capath'] = defined('AKEEBA_CACERT_PEM') ? AKEEBA_CACERT_PEM : null;
 
-		$options    = new Options($connectionOptions);
-		$httpClient = new HttpClientGuzzle($options);
+		$options = new JsonApiOptions($connectionOptions);
 
-		return new Connector($httpClient);
+		return new HttpClientGuzzle($options);
+	}
+
+	private function akeebaBackupHandleAPIResponse(object $data): object
+	{
+		$backupID       = null;
+		$backupRecordID = 0;
+		$archive        = '';
+
+		if ($data->body?->status != 200)
+		{
+			throw new RemoteError('Error ' . $data->body->status . ": " . $data->body->data);
+		}
+
+		if (isset($data->body->data->BackupID))
+		{
+			$backupRecordID = $data->body->data->BackupID;
+		}
+
+		if (isset($data->body->data->backupid))
+		{
+			$backupID = $data->body->data->backupid;
+		}
+
+		if (isset($data->body->data->Archive))
+		{
+			$archive = $data->body->data->Archive;
+		}
+
+		return (object) [
+			'backupID'       => $backupID,
+			'backupRecordID' => $backupRecordID,
+			'archive'        => $archive,
+		];
 	}
 }
