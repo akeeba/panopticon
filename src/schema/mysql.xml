@@ -283,7 +283,6 @@ This email was sent by the Panopticon installation on [URL]
 This is an automated email. Please do not reply to it.')
 ]]></query>
         <query><![CDATA[
-]]></query>
 INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`) VALUES ('akeebabackup_fail', '*', 'Failed backup on “[SITE_NAME]”', '<div class="akemail-outer-wrapper">
             <table>
                 <tbody>
@@ -343,6 +342,7 @@ INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintex
 
             This email was sent by the Panopticon installation on [URL]
             This is an automated email. Please do not reply to it.');
+]]></query>
         </action>
     </sql>
 </schema>
