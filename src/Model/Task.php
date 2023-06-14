@@ -19,8 +19,6 @@ use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
 use Cron\CronExpression;
 use DateInterval;
-use DateTime;
-use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 use Psr\Log\LoggerAwareInterface;
@@ -71,30 +69,104 @@ class Task extends DataModel
 		return $query;
 	}
 
+	/**
+	 * Get the duration of the last execution
+	 *
+	 * @return  string|null
+	 * @since   1.0.0
+	 */
+	public function getDuration(): ?string
+	{
+		// Some exit codes imply no duration
+		if (
+			in_array(
+				$this->last_exit_code,
+				[
+					Status::INITIAL_SCHEDULE->value,
+					Status::NO_ROUTINE->value,
+					Status::NO_LOCK->value,
+					Status::NO_RELEASE->value,
+					Status::NO_TASK->value,
+					Status::NO_RUN->value,
+				]
+			)
+		)
+		{
+			return null;
+		}
+
+		// We need to have valid execution start/stop timestamps.
+		if (
+			empty($this->last_execution) || empty($this->last_run_end) ||
+			$this->last_execution == '0000-00-00 00:00:00' || $this->last_run_end == '0000-00-00 00:00:00' ||
+			$this->last_execution == '2000-01-01 00:00:00' || $this->last_run_end == '2000-01-01 00:00:00'
+		)
+		{
+			return null;
+		}
+
+		$utcTimeZone = new DateTimeZone('UTC');
+		$startTime   = clone new Date($this->last_execution, $utcTimeZone);
+		$endTime     = clone new Date($this->last_run_end, $utcTimeZone);
+
+		$duration = abs($endTime->toUnix() - $startTime->toUnix());
+
+		$seconds  = $duration % 60;
+		$duration -= $seconds;
+
+		$minutes  = ($duration % 3600) / 60;
+		$duration -= $minutes * 60;
+
+		$hours = $duration / 3600;
+
+		return sprintf('%02d', $hours) . ':' .
+			sprintf('%02d', $minutes) . ':' .
+			sprintf('%02d', $seconds);
+
+	}
 
 	public function check(): self
 	{
 		parent::check();
 
-		/**
-		 * If this is a brand new CRON job set the last execution task to the previous run start relative to the current
-		 * date and time. This will prevent the CRON job from starting immediately after scheduling it.
-		 */
-		if ($this->last_execution === null)
+		// Check the cron_expression for validity
+		if (!CronExpression::isValidExpression($this->cron_expression))
+		{
+			new CronExpression($this->cron_expression);
+		}
+
+		// I always need to set the next run when I am saving a task.
+		try
 		{
 			try
 			{
-				$cron_expression      = $this->cron_expression instanceof CronExpression
-					? $this->cron_expression
-					: new CronExpression($this->cron_expression);
-				$previousRun          = $cron_expression->getPreviousRunDate()->format(DATE_W3C);
-				$this->last_execution = (new Date($previousRun, 'UTC'))->toSql();
+				$tz = $this->container->appConfig->get('timezone', 'UTC');
+
+				// Do not remove. This tests the validity of the configured timezone.
+				new DateTimeZone($tz);
 			}
 			catch (Exception)
 			{
-				$this->last_execution = (new Date('2000-01-01 00:00:00', 'UTC'))->toSql();
+				$tz = 'UTC';
 			}
 
+			$cron_expression      = $this->cron_expression instanceof CronExpression
+				? $this->cron_expression
+				: new CronExpression($this->cron_expression);
+			// Warning! The last execution time is ALWAYS stored in UTC
+			$relativeTime         = (new Date($this->last_execution ?: 'now', 'UTC'))->format(DATE_W3C);
+			// The call to getNextRunDate must use our local timezone because the CRON expression is in local time
+			$nextRun              = $cron_expression->getNextRunDate($relativeTime, timeZone: $tz)->format(DATE_W3C);
+			$this->next_execution = (new Date($nextRun, 'UTC'))->toSql();
+		}
+		catch (Exception)
+		{
+			// Nothing to do
+		}
+
+		// If this is a brand new CRON job describe it appropriately.
+		if ($this->next_execution === null || $this->next_execution === '2000-01-01 00:00:00')
+		{
 			$this->last_run_end   = null;
 			$this->last_exit_code = Status::INITIAL_SCHEDULE->value;
 		}
@@ -354,26 +426,16 @@ class Task extends DataModel
 				$logger->info(sprintf('Task finished with status “%s”', Status::tryFrom($pendingTask->last_exit_code)->forHumans()));
 			}
 
-			if ($pendingTask->last_exit_code !== Status::WILL_RESUME->value)
-			{
-				$pendingTask->storage        = '{}';
-				$cronExpression              = new CronExpression($pendingTask->cron_expression);
-				$lastExecution               = new Date($pendingTask->last_execution ?: 'now', 'UTC');
-				$nextRun                     = $cronExpression
-					->getNextRunDate($lastExecution)->format(DATE_RFC822);
-				$pendingTask->next_execution = (new Date($nextRun, 'UTC'))->toSql();
-			}
-			else
-			{
-				$pendingTask->storage = $storage->toString();
-			}
+			$pendingTask->storage = $pendingTask->last_exit_code !== Status::WILL_RESUME->value
+				? '{}'
+				: $storage->toString();
 		}
 		catch (InvalidTaskType)
 		{
 			$logger->error(sprintf('Unknown Task type ‘%s’', $pendingTask->type));
 
 			$pendingTask->last_exit_code = Status::NO_ROUTINE->value;
-			$pendingTask->storage->loadString('{}');
+			$pendingTask->storage = '{}';
 			$pendingTask->times_failed++;
 		}
 		catch (Throwable $e)
@@ -507,7 +569,7 @@ class Task extends DataModel
 				$db->quoteName('enabled') . ' = 1',
 				$db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value,
 			])
-			->order($db->qn('last_run_end') . ' DESC')
+			->order($db->qn('last_run_end') . ' ASC')
 			->union(
 				$db->getQuery(true)
 					->select('*')
@@ -518,62 +580,16 @@ class Task extends DataModel
 						$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value,
 						$db->qn('next_execution') . ' <= ' . $db->quote((new Date('now', 'UTC'))->toSql()),
 					])
-					->order($db->qn('priority') . ' ASC, ' . $db->qn('id') . ' ASC')
+					->order($db->qn('priority') . ' ASC, ' . $db->qn('next_execution') . ' ASC')
 			);
 
-		$tasks = $db->setQuery($query)->loadObjectList();
+		$task = $db->setQuery($query, 0, 1)->loadObject();
 
-		if (empty($tasks))
+		if (empty($task))
 		{
 			return null;
 		}
 
-		$now = new DateTimeImmutable();
-
-		try
-		{
-			$tz = $this->container->appConfig->get('timezone', 'UTC');
-
-			// Do not remove. This tests the validity of the configured timezone.
-			new DateTimeZone($tz);
-		}
-		catch (Exception)
-		{
-			$tz = 'UTC';
-		}
-
-		$nullDate = $this->getDbo()->getNullDate();
-
-		foreach ($tasks as $task)
-		{
-			if ($task->last_exit_code == Status::WILL_RESUME->value)
-			{
-				return $this->getClone()->bind($task);
-			}
-
-			$previousRunStamp = $task->last_run_start ?? '2000-01-01 00:00:00';
-			$previousRunStamp = $previousRunStamp === $nullDate ? '2000-01-01 00:00:00' : $previousRunStamp;
-			try
-			{
-				$previousRun  = new DateTime($previousRunStamp);
-				$relativeTime = $previousRun;
-			}
-			catch (Exception)
-			{
-				$previousRun  = new DateTime('2000-01-01 00:00:00');
-				$relativeTime = new DateTime('now');
-			}
-
-			$cronParser = new CronExpression($task->cron_expression);
-			$nextRun    = $cronParser->getNextRunDate($relativeTime, 0, false, $tz);
-
-			// A task is pending if its next run is after its last run but before the current date and time
-			if ($nextRun > $previousRun && $nextRun <= $now)
-			{
-				return $this->getClone()->bind($task);
-			}
-		}
-
-		return null;
+		return $this->getClone()->bind($task);
 	}
 }

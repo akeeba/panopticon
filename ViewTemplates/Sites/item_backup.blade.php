@@ -166,6 +166,49 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                 @endif
             </div>
         @else
+            {{-- TODO Scheduled backups info (we may have N tasks with different statuses…) --}}
+
+            <div class="row row-cols-lg-auto g-4 align-items-center mb-3 p-2">
+                {{-- Backup Schedule --}}
+                <div class="col-12">
+                    <a href="@route(sprintf('index.php?view=backuptasks&site_id=%d', $model->getId()))"
+                       role="button" class="btn btn-success">
+                        <span class="fa fa-calendar-alt me-1" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_SCHEDULE')
+                    </a>
+                </div>
+
+                <div class="col-12 flex-grow-1">
+                    <label for="akeebaBackupTakeProfile" class="visually-hidden">
+                        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_PROFILE')
+                    </label>
+                    <div class="input-group">
+                        {{ \Awf\Html\Select::genericList(
+                            $this->getProfileOptions(),
+                            'akeebaBackupTakeProfile',
+                            [
+                                'class' => 'form-select border-dark',
+                            ],
+                            selected: 1,
+                            idTag: 'akeebaBackupTakeProfile'
+                        ) }}
+                        {{-- TODO Need custom JavaScript for this button to do anything --}}
+                        <button class="btn btn-primary" id="akeebaBackupTakeButton">
+                            <span class="fa fa-play me-1" aria-hidden="true"></span>
+                            @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STARTBACKUP')
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <a href="@route(sprintf('index.php?view=site&task=read&id=%d&akeebaBackupForce=1', $model->getId()))"
+                       role="button" class="btn btn-secondary">
+                        <span class="fa fa-refresh" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_REFRESH')
+                    </a>
+                </div>
+            </div>
+
             <h4 class="border-bottom border-info-subtle pb-1 mt-2 mb-2">Latest backups</h4>
 
             <table class="table">

@@ -7,11 +7,20 @@
 
 namespace Akeeba\Panopticon\Controller;
 
-defined('AKEEBA') || die;
-
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
+
+defined('AKEEBA') || die;
 
 class About extends Controller
 {
+	use ACLTrait;
+
+	public function execute($task)
+	{
+		$this->aclCheck($task);
+
+		return parent::execute($task);
+	}
 
 }

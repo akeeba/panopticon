@@ -139,6 +139,11 @@ trait CrudTasksTrait
 			return;
 		}
 
+		if (isset($params['class']))
+		{
+			$buttonDef['class'] .= ' ' . $params['class'];
+		}
+
 		$this->addButtonFromDefinition($buttonDef);
 	}
 

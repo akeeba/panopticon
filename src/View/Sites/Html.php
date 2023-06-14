@@ -402,4 +402,23 @@ window.addEventListener('DOMContentLoaded', () => {
 JS;
 		$this->container->application->getDocument()->addScriptDeclaration($js);
 	}
+
+	public function getProfileOptions(): array
+	{
+		static $profiles = null;
+
+		$useCache = !$this->item->getState('akeebaBackupForce', false, 'bool');
+		$profiles ??= $this->getModel()->akeebaBackupGetProfiles($useCache);
+		$ret      = [];
+
+		foreach ($profiles as $profile)
+		{
+			$ret[$profile->id] = (object) [
+				'value' => $profile->id,
+				'text' => sprintf('#%u. %s', $profile->id, $profile->name)
+			];
+		}
+
+		return $ret;
+	}
 }

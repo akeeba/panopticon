@@ -31,6 +31,10 @@ trait ACLTrait
 		'captive'       => [
 			'*' => ['*'],
 		],
+		'backuptasks' => [
+			// We use per-site privileges in this controller
+			'*' => ['*'],
+		],
 		'cron'          => [
 			'*' => ['#'],
 		],

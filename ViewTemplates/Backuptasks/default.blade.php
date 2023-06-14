@@ -5,24 +5,31 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
+defined('AKEEBA') || die;
+
 use Akeeba\Panopticon\Library\Task\Status;
 use Awf\Html\Select;
 use Awf\Registry\Registry;
 use Awf\Html\Html as HtmlHelper;
 use Awf\Text\Text;
 
-defined('AKEEBA') || die;
-
 /**
- * @var \Akeeba\Panopticon\View\Tasks\Html $this
- * @var \Akeeba\Panopticon\Model\Task      $model
+ * @var \Akeeba\Panopticon\View\Backuptasks\Html $this
+ * @var \Akeeba\Panopticon\Model\Task            $model
  */
 $model = $this->getModel();
 $token = $this->container->session->getCsrfToken()->getValue();
 $i     = 1;
+
+$profileOptions = $this->getProfileOptions();
 ?>
 
-<form action="@route('index.php?view=tasks')" method="post" name="adminForm" id="adminForm" role="form">
+<h3 class="text-body-secondary border-bottom border-2 border-info-subtle">
+    <span class="text-body-tertiary me-2">#{{ (int) $this->site->id }}</span>
+    {{ $this->site->name }}
+</h3>
+
+<form action="@route('index.php?view=backuptasks')" method="post" name="adminForm" id="adminForm" role="form">
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
         <div class="d-flex flex-row justify-content-center">
             <div class="input-group" style="max-width: max(50%, 25em)">
@@ -43,13 +50,13 @@ $i     = 1;
             <div>
                 <label class="visually-hidden" for="type">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
                 {{ Select::genericList(
-	                array_merge(['' => Text::_('PANOPTICON_TASKS_LBL_SELECT_TYPE')], $this->getTaskTypeOptions()),
-	                'type',
+	                array_merge(['' => Text::_('PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE')], $profileOptions),
+	                'profile',
 	                [
-						'class' => 'form-select',
+						'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
                     ],
-                    selected: $model->getState('type'),
-                    idTag: 'type'
+                    selected: $model->getState('profile'),
+                    idTag: 'profile'
                 ) }}
             </div>
             <div>
@@ -59,12 +66,21 @@ $i     = 1;
 	                '0' => 'PANOPTICON_LBL_UNPUBLISHED',
 	                '1' => 'PANOPTICON_LBL_PUBLISHED',
                 ], 'enabled', [
-					'class' => 'form-select',
+					'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
                 ], selected: $model->getState('enabled'),
                 idTag: 'enabled',
                 translate: true) }}
             </div>
         </div>
+    </div>
+
+    <div class="alert alert-info">
+        <span class="fa fa-info-circle" aria-hidden="true"></span>
+        @sprintf(
+          'PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE',
+		  'https://en.wikipedia.org/wiki/Cron#Cron_expression',
+          (new DateTimeZone($this->container->appConfig->get('timezone', 'UTC')))->getName()
+        )
     </div>
 
     <table class="table table-striped align-middle" id="adminList" role="table">
@@ -79,10 +95,10 @@ $i     = 1;
                 </span>
             </th>
             <th>
-                @lang('PANOPTICON_TASKS_LBL_FIELD_SITE_ID')
+                @lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_PROFILE')
             </th>
             <th>
-                @lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')
+                @lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_SCHEDULE')
             </th>
             <th width="5%">
                 @lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')
@@ -106,35 +122,40 @@ $i     = 1;
         <tbody>
 		<?php /** @var \Akeeba\Panopticon\Model\Task $task */ ?>
         @foreach($this->items as $task)
+            <?php $params = is_object($task->params) ? $task->params : new Registry($task->params); ?>
             <tr>
                 {{-- Checkbox --}}
                 <td>
                     @html('grid.id', ++$i, $task->id)
                 </td>
-                {{-- Site --}}
+                {{-- Profile --}}
                 <td>
-                    @if ($task->site_id == 0)
-                        <span class="fa fa-robot text-muted" aria-hidden="true"></span>
-                        <span class="fw-medium">System</span>
-                    @else
-                        <span class="fa fa-globe text-body-tertiary" aria-hidden="true"></span>
-                        <span class="fw-medium">{{{ $this->siteNames[$task->site_id] }}}</span>
-                        <br />
-                        <span class="text-secondary">#{{ (int) $task->site_id }}</span>
-                    @endif
+                    {{{ $profileOptions[$params->get('profile_id')]?->text ?? '???'  }}}
                 </td>
-                {{-- Task Type --}}
+                {{-- Schedule --}}
                 <td>
-                    <code class="text-muted">{{{ $task->type }}}</code>
-                    <div class="small text-muted">
-                        <?php
-                            try {
-                                $taskDescription = $this->container->taskRegistry->get($task->type)->getDescription();
-                            } catch (\Akeeba\Panopticon\Exception\InvalidTaskType) {
-	                            $taskDescription = null;
-                            }
-                        ?>
-                        {{{ $taskDescription ?? "❓❓❓" }}}
+                    <div>
+                        <a href="@route(sprintf('index.php?view=backuptask&task=edit&site_id=%d&id=%d', $this->site->id, $task->id))">
+                            <code>{{{ $task->cron_expression  }}}</code>
+                        </a>
+                    </div>
+                    <div class="mt-1 pt-1 border-top">
+                        @if($params->get('run_once') == 'disable')
+                            <span class="fa fa-circle-stop me-2 text-warning" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                  data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE')"></span>
+                            <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE')</span>
+                        @elseif($params->get('run_once') == 'delete')
+                            <span class="fa fa-land-mine-on me-2 text-danger" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                  data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE')"></span>
+                            <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE')</span>
+                        @else
+                            <span class="fa fa-repeat me-2 text-success-emphasis" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                  data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_NONE')"></span>
+                            <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_NONE')</span>
+                        @endif
                     </div>
                 </td>
                 {{-- Enabled --}}
@@ -142,7 +163,7 @@ $i     = 1;
                     @if ($task->enabled)
                         @unless($task->site_id <= 0)
                             <a class="text-decoration-none text-success"
-                               href="@route(sprintf('index.php?view=tasks&task=unpublish&id=%d&%s=1', $task->id, $token))"
+                               href="@route(sprintf('index.php?view=backuptasks&site_id=%d&task=unpublish&id=%d&%s=1', $this->site->id, $task->id, $token))"
                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                                data-bs-title="@lang('PANOPTICON_LBL_PUBLISHED')"
                             >
@@ -157,7 +178,7 @@ $i     = 1;
                         @endunless
                     @else
                         <a class="text-decoration-none text-danger"
-                           href="@route(sprintf('index.php?view=tasks&task=publish&id=%d&%s=1', $task->id, $token))"
+                           href="@route(sprintf('index.php?view=backuptasks&task=publish&site_id=%d&id=%d&%s=1', $this->site->id, $task->id, $token))"
                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                            data-bs-title="@lang('PANOPTICON_LBL_UNPUBLISHED')"
                         >
@@ -251,10 +272,10 @@ $i     = 1;
                     @endif
                     @if ($duration = $task->getDuration())
                         <div class="text-body-tertiary mt-1">
-                        <span class="fa fa-stopwatch" aria-hidden="true"
-                              data-bs-toggle="tooltip" data-bs-placement="bottom"
-                              data-bs-title="@lang('PANOPTICON_TASKS_LBL_DURATION')"
-                        ></span>
+                            <span class="fa fa-stopwatch" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                  data-bs-title="@lang('PANOPTICON_TASKS_LBL_DURATION')"
+                            ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_TASKS_LBL_DURATION')</span>
                             {{{ $duration }}}
                         </div>
@@ -266,6 +287,13 @@ $i     = 1;
                 </td>
             </tr>
         @endforeach
+        @if (!$this->items?->count())
+            <tr>
+                <td colspan="20" class="text-center text-body-tertiary">
+                    @lang('AWF_PAGINATION_LBL_NO_RESULTS')
+                </td>
+            </tr>
+        @endif
         </tbody>
         <tfoot>
         <tr>
@@ -281,5 +309,6 @@ $i     = 1;
     <input type="hidden" name="task" id="task" value="browse">
     <input type="hidden" name="filter_order" id="filter_order" value="{{{ $this->lists->order }}}">
     <input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="{{{ $this->lists->order_Dir }}}">
+    <input type="hidden" name="site_id" id="site_id" value="{{{ (int) $this->site->id }}}">
     <input type="hidden" name="token" value="@token()">
 </form>

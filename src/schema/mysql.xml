@@ -89,8 +89,8 @@ CREATE TABLE IF NOT EXISTS `#__tasks`
     `id`              SERIAL,
     `site_id`         BIGINT UNSIGNED NULL DEFAULT NULL,
     `type`            VARCHAR(255)    NOT NULL,
-    `params`          LONGTEXT,
-    `storage`         LONGTEXT,
+    `params`          JSON,
+    `storage`         JSON,
     `cron_expression` VARCHAR(255)    NOT NULL DEFAULT '@daily',
     `enabled`         TINYINT         NOT NULL DEFAULT 1,
     `last_exit_code`  INT             NOT NULL DEFAULT 0,
@@ -107,6 +107,22 @@ CREATE TABLE IF NOT EXISTS `#__tasks`
     DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
             ]]></query>
+        </action>
+
+        <action table="#__tasks" canfail="1">
+            <condition type="type" value="params" coltype="longtext" />
+            <query><![CDATA[
+ALTER TABLE `#__tasks`
+    MODIFY COLUMN `params` JSON;
+]]></query>
+        </action>
+
+        <action table="#__tasks" canfail="1">
+            <condition type="type" value="storage" coltype="longtext" />
+            <query><![CDATA[
+ALTER TABLE `#__tasks`
+    MODIFY COLUMN `storage` JSON;
+]]></query>
         </action>
 
         <action table="#__queue" canfail="0">
