@@ -33,7 +33,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                     </h4>
                     @if(($lastRefreshResponse?->statusCode ?? null) != 200)
                         <p>
-                            There has been a communication error with the Akeeba Panopticon Connector on the remote site.
+                            @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_COMSERROR_HEAD')
                         </p>
                         <p class="text-danger">
                             <span class="fa fa-globe" aria-hidden="true"></span>
