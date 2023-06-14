@@ -14,10 +14,10 @@ use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Site;
 use Awf\Registry\Registry;
 use Awf\Timer\Timer;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
+use Awf\Utils\ArrayHelper;
 
 #[AsTask(
 	name: 'sendmail',
@@ -80,7 +80,18 @@ class SendMail extends AbstractCallback
 				continue;
 			}
 
-			$recipients = $this->getRecipientsByPermissions($permissions);
+			$site = Site::getTmpInstance('', 'Site', $this->container);
+
+			try
+			{
+				$site->findOrFail($queueItem->getSiteId());
+			}
+			catch (\Exception $e)
+			{
+				$site = null;
+			}
+
+			$recipients = $this->getRecipientsByPermissions($permissions, $site);
 
 			if (empty($recipients))
 			{
@@ -140,14 +151,46 @@ class SendMail extends AbstractCallback
 		return Status::OK->value;
 	}
 
-	private function getRecipientsByPermissions(array $permissions): array
+	private function getRecipientsByPermissions(array $permissions, ?Site $site = null): array
 	{
-		$db    = $this->container->db;
+		$db = $this->container->db;
+
+		// If we have a site we need to find which groups it belongs to
+		$groupIDs = [];
+
+		if (!empty($site))
+		{
+			$groupIDs = $site->getConfig()->get('config.groups', []);
+			$groupIDs = is_array($groupIDs) ? $groupIDs : [];
+			$groupIDs = array_filter(ArrayHelper::toInteger($groupIDs));
+		}
+
+		// If we have groups, we need to find which of these groups fulfill the permissions requested
+		if ($groupIDs)
+		{
+			$query = $db->getQuery(true)
+				->select($db->quoteName('id'))
+				->from($db->quoteName('#__groups'))
+				->where($db->quoteName('id') . ' IN(' . implode(',', $groupIDs) . ')');
+
+			$query->andWhere(
+				array_map(
+					fn($permission) => 'JSON_SEARCH(' . $db->quoteName('privileges') . ', ' . $db->quote('one') . ',' .
+						$db->quote($permission) . ')',
+					$permissions
+				)
+			);
+
+			$groupIDs = $db->setQuery($query)->loadColumn();
+		}
+
 		$query = $db->getQuery(true)
-			->select([
-				$db->quoteName('name'),
-				$db->quoteName('email'),
-			])
+			->select(
+				[
+					$db->quoteName('name'),
+					$db->quoteName('email'),
+				]
+			)
 			->from($db->quoteName('#__users'));
 
 		foreach ($permissions as $permission)
@@ -156,6 +199,18 @@ class SendMail extends AbstractCallback
 				->where(
 					$query->jsonPointer('parameters', '$.acl.' . $permission) . ' = TRUE',
 					'OR'
+				);
+		}
+
+		foreach ($groupIDs as $groupID)
+		{
+			$query
+				->where(
+					$query->jsonContains(
+						$db->quoteName('parameters'),
+						$db->quote((string) $groupID),
+						$db->quote('$.usergroups')
+					), 'OR'
 				);
 		}
 
