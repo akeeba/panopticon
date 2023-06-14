@@ -371,7 +371,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                     @if($user->authorise('panopticon.admin', $model))
                     <td valign="middle" class="text-end">
                         @if (in_array(strtolower($record->meta), ['ok', 'complete']))
-                            <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDeleteFiles&id=%s&backup_id=%d', $model->getId(), $record->id))"
+                            <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDeleteFiles&id=%s&backup_id=%d&%s=1', $model->getId(), $record->id, $token))"
                                role="button" class="btn btn-outline-danger"
                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                                data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETEFILES')">
@@ -380,7 +380,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                             </a>
                         @endif
 
-                        <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDelete&id=%s&backup_id=%d', $model->getId(), $record->id))"
+                        <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDelete&id=%s&backup_id=%d&%s=1', $model->getId(), $record->id, $token))"
                            role="button" class="btn btn-danger"
                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                            data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETE')">
