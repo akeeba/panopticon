@@ -393,7 +393,7 @@ class ExtensionsUpdate extends AbstractCallback
 		$data = new Registry();
 		$data->set('template', $emailKey);
 		$data->set('email_variables', $variables);
-		$data->set('permissions', ['panopticon.super', 'panopticon.admin']);
+		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
 
 		$queueItem = new QueueItem(

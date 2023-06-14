@@ -1280,7 +1280,7 @@ class JoomlaUpdate extends AbstractCallback
 	private function sendEmail(
 		string   $emailKey,
 		Registry $storage,
-		array    $permissions = ['panopticon.super'],
+		array    $permissions = ['panopticon.super', 'panopticon.admin', 'panopticon.editown'],
 		array    $additionalVariables = []
 	)
 	{
