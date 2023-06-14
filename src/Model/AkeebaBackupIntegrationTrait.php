@@ -16,9 +16,11 @@ use Akeeba\BackupJsonApi\HttpAbstraction\HttpClientInterface;
 use Akeeba\BackupJsonApi\Options as JsonApiOptions;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
+use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupCannotConnectException;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupNoInfoException;
+use Awf\Date\Date;
 use Composer\CaBundle\CaBundle;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
@@ -373,6 +375,116 @@ trait AkeebaBackupIntegrationTrait
 		$connector = $this->getAkeebaBackupAPIConnector();
 
 		$connector->deleteFiles($id);
+	}
+
+	/**
+	 * Enqueue a new backup
+	 *
+	 * @param   int          $profile
+	 * @param   string|null  $description
+	 * @param   string|null  $comment
+	 *
+	 * @return  void
+	 */
+	public function akeebaBackupEnqueue(int $profile = 1, ?string $description = null, ?string $comment = null): void
+	{
+		// Try to find an akeebabackup task object which is run once, not running / initial schedule, and matches the specifics
+		$tasks = $this->getSiteSpecificTasks('akeebabackup')
+			->filter(
+				function (Task $task) {
+					$params = $task->getParams();
+
+					// Mast not be running, or waiting to run
+					if (in_array(
+						$task->last_exit_code, [
+							Status::INITIAL_SCHEDULE->value,
+							Status::WILL_RESUME->value,
+							Status::RUNNING->value,
+						]
+					))
+					{
+						return false;
+					}
+
+					// Must be a run-once task
+					if (empty($params->get('run_once')))
+					{
+						return false;
+					}
+
+					// Must be a generated task, not a user-defined backup schedule
+					if (empty($params->get('run_once')))
+					{
+						return false;
+					}
+
+					if (empty($params->get('enqueued_backup')))
+					{
+						return false;
+					}
+
+					// Its next execution date must be empty or in the past
+					if (empty($task->last_execution))
+					{
+						return true;
+					}
+
+					$date = new Date($task->last_execution, 'UTC');
+					$now  = new Date();
+
+					return ($date < $now);
+				}
+			);
+
+		if ($tasks->count())
+		{
+			$task = $tasks->first();
+		}
+		else
+		{
+			$task = Task::getTmpInstance('', 'Task', $this->container);
+		}
+
+		try
+		{
+			$tz = $this->container->appConfig->get('timezone', 'UTC');
+
+			// Do not remove. This tests the validity of the configured timezone.
+			new DateTimeZone($tz);
+		}
+		catch (Exception)
+		{
+			$tz = 'UTC';
+		}
+
+		$runDateTime = new Date('now', $tz);
+		$runDateTime->add(new \DateInterval('PT1M'));
+		$runDateTime->setTime($runDateTime->hour, $runDateTime->minute, 0);
+
+		$task->save(
+			[
+				'site_id'         => $this->getId(),
+				'type'            => 'akeebabackup',
+				'params'          => json_encode(
+					[
+						'run_once'        => 'disable',
+						'enqueued_backup' => 1,
+						'profile_id'      => $profile,
+						'description'     => $description,
+						'comment'         => $comment ?? '',
+					]
+				),
+				'cron_expression' => $runDateTime->minute . ' ' . $runDateTime->hour . ' ' . $runDateTime->day . ' ' .
+					$runDateTime->month . ' ' . $runDateTime->dayofweek,
+				'enabled'         => 1,
+				'last_exit_code'  => Status::INITIAL_SCHEDULE,
+				'last_execution'  => null,
+				'last_run_end'    => null,
+				'next_execution'  => null,
+				'locked'          => null,
+				'priority'        => 1,
+			]
+		);
 	}
 
 	/**

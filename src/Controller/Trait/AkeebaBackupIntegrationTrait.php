@@ -35,7 +35,9 @@ trait AkeebaBackupIntegrationTrait
 			$db->lockTable('#__sites');
 			$model->findOrFail($id);
 
-			if (!$user->authorise('panopticon.admin', $model))
+			$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
+
+			if (!$user->authorise('panopticon.admin', $model) && !$canEditMine)
 			{
 				$db->unlockTables();
 
@@ -83,7 +85,9 @@ trait AkeebaBackupIntegrationTrait
 
 		$model->findOrFail($id);
 
-		if (!$user->authorise('panopticon.admin', $model))
+		$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
+
+		if (!$user->authorise('panopticon.admin', $model) && !$canEditMine)
 		{
 			return false;
 		}
@@ -132,7 +136,9 @@ trait AkeebaBackupIntegrationTrait
 
 		$model->findOrFail($id);
 
-		if (!$user->authorise('panopticon.admin', $model))
+		$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
+
+		if (!$user->authorise('panopticon.admin', $model) && !$canEditMine)
 		{
 			return false;
 		}
@@ -165,7 +171,48 @@ trait AkeebaBackupIntegrationTrait
 
 	public function akeebaBackupEnqueue(): bool
 	{
-		// TODO Implement me
+		$this->csrfProtection();
+
+		$id        = $this->input->getInt('id', null);
+		$profileId = $this->input->getInt('profile_id', null);
+
+		if (empty($id) || $id <= 0 || empty($profileId) || $profileId <= 0)
+		{
+			return false;
+		}
+
+		/** @var Site $model */
+		$model = $this->getModel();
+		$user  = $this->container->userManager->getUser();
+
+		$model->findOrFail($id);
+
+		$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
+
+		if (
+			!$user->authorise('panopticon.run', $model)
+			&& !$user->authorise('panopticon.admin', $model)
+			&& !$canEditMine
+		)
+		{
+			return false;
+		}
+
+		$defaultRedirect = $this->container->router->route(sprintf('index.php?view=site&task=read&id=%d', $id));
+
+		try
+		{
+			$model->akeebaBackupEnqueue($profileId);
+
+			// Redirect
+			$this->setRedirectWithMessage($defaultRedirect);
+		}
+		catch (\Exception $e)
+		{
+			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
+		}
+
+		return true;
 	}
 
 	private function setRedirectWithMessage(string $defaultReturnURL, ?string $message = null, ?string $type = null)

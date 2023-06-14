@@ -69,6 +69,16 @@ class Task extends DataModel
 		return $query;
 	}
 
+	public function getParams(): Registry
+	{
+		return $this->params instanceof Registry ? $this->params : new Registry($this->params);
+	}
+
+	public function getStorage(): Registry
+	{
+		return $this->storage instanceof Registry ? $this->storage : new Registry($this->storage);
+	}
+
 	/**
 	 * Get the duration of the last execution
 	 *

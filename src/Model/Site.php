@@ -646,6 +646,27 @@ class Site extends DataModel
 		return $tasks[$type];
 	}
 
+	protected function getSiteSpecificTasks(string $type): DataModel\Collection
+	{
+		static $tasks = [];
+
+		if (!array_key_exists($type, $tasks))
+		{
+			$tasks[$type] = null;
+
+			$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
+			/** @var DataModel\Collection $taskCollection */
+			$taskCollection = $taskModel
+				->where('site_id', '=', $this->id)
+				->where('type', '=', $type)
+				->get(0, 100);
+
+			$tasks[$type] = $taskCollection;
+		}
+
+		return $tasks[$type];
+	}
+
 	protected function isSiteSpecificTaskStuck(string $type): bool
 	{
 		$task = $this->getSiteSpecificTask($type);
