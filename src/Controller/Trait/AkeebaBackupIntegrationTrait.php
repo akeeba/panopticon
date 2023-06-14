@@ -92,8 +92,18 @@ trait AkeebaBackupIntegrationTrait
 
 		try
 		{
+			// Delete the record
 			$model->akeebaBackupDelete($backupId);
 
+			// Bust the cache
+			$from  = $model->getState('akeebaBackupFrom', 0, 'int');
+			$limit = $model->getState('akeebaBackupLimit', 20, 'int');
+			$key   = sprintf('backupList-%d-%d-%d', $model->id, $from, $limit);
+			/** @var \Symfony\Contracts\Cache\CacheInterface $pool */
+			$pool  = $this->container->cacheFactory->pool('akeebabackup');
+			$pool->delete($key);
+
+			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
 		}
 		catch (\Exception $e)
@@ -131,8 +141,18 @@ trait AkeebaBackupIntegrationTrait
 
 		try
 		{
+			// Delete the files
 			$model->akeebaBackupDeleteFiles($backupId);
 
+			// Bust the cache
+			$from  = $model->getState('akeebaBackupFrom', 0, 'int');
+			$limit = $model->getState('akeebaBackupLimit', 20, 'int');
+			$key   = sprintf('backupList-%d-%d-%d', $model->id, $from, $limit);
+			/** @var \Symfony\Contracts\Cache\CacheInterface $pool */
+			$pool  = $this->container->cacheFactory->pool('akeebabackup');
+			$pool->delete($key);
+
+			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
 		}
 		catch (\Exception $e)
@@ -144,11 +164,6 @@ trait AkeebaBackupIntegrationTrait
 	}
 
 	public function akeebaBackupEnqueue(): bool
-	{
-		// TODO Implement me
-	}
-
-	public function akeebaBackupCancel(): bool
 	{
 		// TODO Implement me
 	}
