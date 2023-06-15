@@ -16,6 +16,8 @@ use Akeeba\Panopticon\Model\Task;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
+use DateTimeZone;
+use Exception;
 
 trait EnqueueJoomlaUpdateTrait
 {
@@ -59,19 +61,34 @@ trait EnqueueJoomlaUpdateTrait
 		$task->last_exit_code = Status::INITIAL_SCHEDULE->value;
 		$task->locked         = null;
 
+		try
+		{
+			$tz = $this->container->appConfig->get('timezone', 'UTC');
+
+			// Do not remove. This tests the validity of the configured timezone.
+			new DateTimeZone($tz);
+		}
+		catch (Exception)
+		{
+			$tz = 'UTC';
+		}
+
 		$siteConfig = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
 		switch ($siteConfig->get('config.core_update.when', 'immediately'))
 		{
 			default:
 			case 'immediately':
-				$task->cron_expression = '* * * * *';
-				$then                  = new Date('now', 'UTC');
+				$then = new Date('now', $tz);
+				$then->add(new \DateInterval('PT2S'));
+
+				$task->cron_expression = $then->minute . ' ' . $then->hour . ' ' . $then->day . ' ' . $then->month . ' '
+					. $then->dayofweek;
 				break;
 
 			case 'time':
-				$hour   = max(0, min((int)$siteConfig->get('config.core_update.time.hour', 0), 23));
-				$minute = max(0, min((int)$siteConfig->get('config.core_update.time.minute', 0), 59));
-				$now    = new Date('now', 'UTC');
+				$hour   = max(0, min((int) $siteConfig->get('config.core_update.time.hour', 0), 23));
+				$minute = max(0, min((int) $siteConfig->get('config.core_update.time.minute', 0), 59));
+				$now    = new Date('now', $tz);
 				$then   = (clone $now)->setTime($hour, $minute, 0);
 
 				// If the selected time of day is in the past, go forward one day
