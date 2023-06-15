@@ -466,8 +466,7 @@ trait AkeebaBackupIntegrationTrait
 		}
 
 		$runDateTime = new Date('now', $tz);
-		$runDateTime->add(new \DateInterval('PT1M'));
-		$runDateTime->setTime($runDateTime->hour, $runDateTime->minute, 0);
+		$runDateTime->add(new \DateInterval('PT2S'));
 
 		$task->save(
 			[
