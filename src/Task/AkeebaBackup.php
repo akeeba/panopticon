@@ -127,6 +127,8 @@ class AkeebaBackup extends \Akeeba\Panopticon\Library\Task\AbstractCallback
 				]
 			);
 
+			$this->backupRecordsCacheBuster($site);
+
 			// Die.
 			throw new \RuntimeException($errorMessage);
 		}
@@ -189,8 +191,15 @@ class AkeebaBackup extends \Akeeba\Panopticon\Library\Task\AbstractCallback
 				]
 			);
 
+			$this->backupRecordsCacheBuster($site);
+
 			// Die.
 			throw new \RuntimeException($rawData?->Error);
+		}
+
+		if (!$rawData?->HasRun)
+		{
+			$this->backupRecordsCacheBuster($site);
 		}
 
 		return $rawData?->HasRun ? Status::WILL_RESUME->value : Status::OK->value;
@@ -219,5 +228,20 @@ class AkeebaBackup extends \Akeeba\Panopticon\Library\Task\AbstractCallback
 		$queue = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
 
 		$queue->push($queueItem, 'now');
+	}
+
+	private function backupRecordsCacheBuster(Site $site): void
+	{
+		$from   = 0;
+		$limits = [0, 5, 10, 15, 20, 25, 30, 50, 100];
+		/** @var \Symfony\Contracts\Cache\CacheInterface $pool */
+		$pool = $this->container->cacheFactory->pool('akeebabackup');
+
+		foreach ($limits as $limit)
+		{
+			$key = sprintf('backupList-%d-%d-%d', $model->id, $from, $limit);
+
+			$pool->delete($key);
+		}
 	}
 }
