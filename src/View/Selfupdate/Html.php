@@ -43,4 +43,39 @@ class Html extends BaseHtmlView
 
 		return true;
 	}
+
+	public function onBeforePreupdate(): bool
+	{
+		$document = $this->container->application->getDocument();
+		$document->getMenu()->disableMenu();
+
+		$js = <<< JS
+
+setInterval(() => {
+    const hourglass = document.getElementById('hourglass');
+    
+    if (hourglass.classList.contains('fa-hourglass-start')) {
+        hourglass.classList.remove('fa-hourglass-start');
+        hourglass.classList.add('fa-hourglass-half');
+    } else if (hourglass.classList.contains('fa-hourglass-half')) {
+        hourglass.classList.remove('fa-hourglass-half');
+        hourglass.classList.add('fa-hourglass-end');
+	} else if (hourglass.classList.contains('fa-hourglass-end') && !hourglass.classList.contains('fa-rotate-90')) {
+        hourglass.classList.add('fa-rotate-90');
+    } else {
+        hourglass.classList.remove('fa-hourglass-end', 'fa-rotate-90');
+        hourglass.classList.add('fa-hourglass-start');
+	}
+    
+}, 420);
+
+setTimeout(() => {
+    window.location.reload();
+}, 5000);
+
+JS;
+		$document->addScriptDeclaration($js);
+
+		return true;
+	}
 }

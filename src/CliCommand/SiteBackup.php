@@ -13,7 +13,7 @@ use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
-use Akeeba\Panopticon\Model\Task;
+use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Akeeba\Panopticon\Task\LogRotate as LogRotateTask;
 use Awf\Registry\Registry;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -33,9 +33,15 @@ defined('AKEEBA') || die;
 class SiteBackup extends AbstractCommand
 {
 	use ConsoleLoggerTrait;
+	use TasksPausedTrait;
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
+		if ($this->getTasksPausedFlag())
+		{
+			return Command::SUCCESS;
+		}
+
 		/** @var LogRotateTask|CallbackInterface $callback */
 		$container = Factory::getContainer();
 		$container->appConfig->loadConfiguration();

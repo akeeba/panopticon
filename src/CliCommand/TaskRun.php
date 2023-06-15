@@ -13,6 +13,7 @@ use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\CliCommand\Trait\ConsoleLoggerTrait;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Logger\ForkedLogger;
+use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Akeeba\Panopticon\Model\Task;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
@@ -31,9 +32,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 class TaskRun extends AbstractCommand
 {
 	use ConsoleLoggerTrait;
+	use TasksPausedTrait;
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
+		if ($this->getTasksPausedFlag())
+		{
+			return Command::SUCCESS;
+		}
+
 		$container = Factory::getContainer();
 
 		// Mark our last execution time
@@ -71,6 +78,12 @@ class TaskRun extends AbstractCommand
 
 		while ($timer->getTimeLeft() > 0.01)
 		{
+			if ($this->getTasksPausedFlag())
+			{
+				$logger->info('Tasks are paused; I will not look for further tasks.');
+				break;
+			}
+
 			if (!$model->runNextTask($logger, $this->ioStyle))
 			{
 				break;

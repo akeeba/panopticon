@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Application;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Akeeba\Panopticon\Model\Main as MainModel;
 use Awf\Container\Container;
 use Awf\Date\Date;
@@ -20,6 +21,7 @@ use Awf\Mvc\Controller;
 class Main extends Controller
 {
 	use ACLTrait;
+	use TasksPausedTrait;
 
 	public function __construct(Container $container = null)
 	{
@@ -68,6 +70,11 @@ class Main extends Controller
 
 	public function onBeforeDefault(): bool
 	{
+		if ($this->getTasksPausedFlag())
+		{
+			$this->setTasksPausedFlag(false);
+		}
+
 		if ($this->input->get('savestate', -999, 'int') == -999)
 		{
 			$this->input->set('savestate', true);

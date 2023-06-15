@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Akeeba\Panopticon\Task\LogRotate as LogRotateTask;
 use Awf\Registry\Registry;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -28,9 +29,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 class LogRotate extends AbstractCommand
 {
 	use ConsoleLoggerTrait;
+	use TasksPausedTrait;
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
+		if ($this->getTasksPausedFlag())
+		{
+			return Command::SUCCESS;
+		}
+
 		/** @var LogRotateTask|CallbackInterface $callback */
 		$container = Factory::getContainer();
 		$callback  = $container->taskRegistry->get('logrotate');

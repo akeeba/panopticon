@@ -12,16 +12,12 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\CliCommand\Trait\ConsoleLoggerTrait;
 use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Library\Logger\ForkedLogger;
+use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Akeeba\Panopticon\Model\Selfupdate;
-use Akeeba\Panopticon\Model\Task;
-use Awf\Date\Date;
 use Awf\Mvc\Model;
-use Awf\Timer\Timer;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
@@ -33,6 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SelfUpdateCleanup extends AbstractCommand
 {
 	use ConsoleLoggerTrait;
+	use TasksPausedTrait;
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
@@ -44,6 +41,8 @@ class SelfUpdateCleanup extends AbstractCommand
 		$this->ioStyle->info('Finalising the update');
 
 		$model->postUpdate();
+
+		$this->setTasksPausedFlag(true);
 
 		$this->ioStyle->success('The post-update clean-up is now complete');
 

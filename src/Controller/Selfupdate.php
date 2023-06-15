@@ -10,12 +10,14 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Awf\Mvc\Controller;
 use Awf\Text\Text;
 
 class Selfupdate extends Controller
 {
 	use ACLTrait;
+	use TasksPausedTrait;
 
 	public function execute($task)
 	{
@@ -26,11 +28,34 @@ class Selfupdate extends Controller
 
 	public function onBeforeDefault(): bool
 	{
+		if ($this->getTasksPausedFlag())
+		{
+			$this->setTasksPausedFlag(false);
+		}
+
 		$force = $this->input->getInt('force', false);
 
 		$this->getView()->force = $force;
 
 		return true;
+	}
+
+	public function preupdate()
+	{
+		if (!$this->getTasksPausedFlag())
+		{
+			$this->setTasksPausedFlag(true);
+		}
+
+		if (!$this->areTasksRunning())
+		{
+			$url = $this->container->router->route('index.php?view=selfupdate&task=update');
+
+			$this->setRedirect($url);
+		}
+
+		$this->getView()->setLayout('preupdate');
+		$this->display();
 	}
 
 	public function update()
@@ -57,7 +82,6 @@ class Selfupdate extends Controller
 		$url = $this->container->router->route('index.php?view=selfupdate&task=install');
 
 		$this->setRedirect($url);
-
 	}
 
 	public function install()
@@ -94,6 +118,8 @@ class Selfupdate extends Controller
 		try
 		{
 			$model->postUpdate();
+
+			$this->setTasksPausedFlag(false);
 		}
 		catch (\Exception $e)
 		{

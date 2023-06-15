@@ -12,12 +12,9 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\CliCommand\Trait\ConsoleLoggerTrait;
 use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Library\Logger\ForkedLogger;
+use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Akeeba\Panopticon\Model\Selfupdate;
-use Akeeba\Panopticon\Model\Task;
-use Awf\Date\Date;
 use Awf\Mvc\Model;
-use Awf\Timer\Timer;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,6 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SelfUpdateRun extends AbstractCommand
 {
 	use ConsoleLoggerTrait;
+	use TasksPausedTrait;
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
@@ -53,8 +51,8 @@ class SelfUpdateRun extends AbstractCommand
 		}
 
 		$currentVersion = defined('AKEEBA_PANOPTICON_VERSION') ? AKEEBA_PANOPTICON_VERSION : '0.0.0-dev';
-		$newVersion = $updateInformation->version;
-		$hasUpdate = version_compare($newVersion, $currentVersion, 'gt');
+		$newVersion     = $updateInformation->version;
+		$hasUpdate      = version_compare($newVersion, $currentVersion, 'gt');
 
 		if (!$hasUpdate)
 		{
@@ -71,13 +69,31 @@ class SelfUpdateRun extends AbstractCommand
 
 		$this->ioStyle->text(sprintf('Downloaded into %s', $tempFile));
 
-		$this->ioStyle->info('Extracting the update');
+		$this->setTasksPausedFlag(true);
 
-		$model->extract($tempFile);
+		try
+		{
+			do
+			{
+				$this->ioStyle->info('Waiting for running tasks to finish running...');
 
-		$this->ioStyle->info('Finalising the update');
+				sleep(5);
+			} while ($this->areTasksRunning());
 
-		$model->postUpdate();
+			$this->ioStyle->info('Extracting the update');
+
+			$model->extract($tempFile);
+
+			$this->ioStyle->info('Finalising the update');
+
+			$model->postUpdate();
+		}
+		catch (\Throwable $e)
+		{
+			$this->setTasksPausedFlag(false);
+
+			throw $e;
+		}
 
 		$this->ioStyle->success(sprintf('Panopticon upgraded to version %s', $newVersion));
 
@@ -88,6 +104,5 @@ class SelfUpdateRun extends AbstractCommand
 	{
 		$this
 			->addOption('force', 'f', InputOption::VALUE_NEGATABLE, 'Force reload the updates', false);
-
 	}
 }
