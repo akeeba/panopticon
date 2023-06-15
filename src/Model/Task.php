@@ -309,10 +309,21 @@ class Task extends DataModel
 		{
 			$willResume = $pendingTask->last_exit_code == Status::WILL_RESUME->value;
 
-			$pendingTask->save([
+			$updates = [
 				'last_exit_code' => Status::RUNNING,
-				'last_execution' => (new Date('now', 'UTC'))->toSql(),
-			]);
+			];
+
+			/**
+			 * Update the last execution time only when we are not resuming the task. Otherwise, the time spent on the
+			 * task will always be wrong as it will be measured from the beginning of its last step, not the very start
+			 * of the task itself.
+			 */
+			if (!$willResume)
+			{
+				$updates['last_execution'] = (new Date('now', 'UTC'))->toSql();
+			}
+
+			$pendingTask->save($updates);
 		}
 		catch (Exception)
 		{
