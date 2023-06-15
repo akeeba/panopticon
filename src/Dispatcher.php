@@ -64,7 +64,7 @@ class Dispatcher extends AWFDispatcher
 	private function loadCommonJavaScript(): void
 	{
 		Template::addJs('media://js/bootstrap.bundle.min.js', defer: true);
-		Template::addJs('media://js/system.min.js', defer: true);
+		Template::addJs('media://js/system.min.js', defer: false);
 		Template::addJs('media://js/ajax.min.js', defer: true);
 	}
 

@@ -71,6 +71,18 @@ $profileOptions = $this->getProfileOptions();
                 idTag: 'enabled',
                 translate: true) }}
             </div>
+            <div>
+                <label class="visually-hidden" for="manual">@lang('')</label>
+                {{ Select::genericList([
+	                '' => 'PANOPTICON_BACKUPTASKS_LBL_SELECT_MANUAL',
+	                '0' => 'PANOPTICON_BACKUPTASKS_LBL_MANUAL_NO',
+	                '1' => 'PANOPTICON_BACKUPTASKS_LBL_MANUAL_YES',
+                ], 'manual', [
+					'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+                ], selected: $model->getState('manual'),
+                idTag: 'manual',
+                translate: true) }}
+            </div>
         </div>
     </div>
 
@@ -134,48 +146,60 @@ $profileOptions = $this->getProfileOptions();
                 </td>
                 {{-- Schedule --}}
                 <td>
-                    <div>
-                        <a href="@route(sprintf('index.php?view=backuptask&task=edit&site_id=%d&id=%d', $this->site->id, $task->id))">
-                            <code>{{{ $task->cron_expression  }}}</code>
-                        </a>
-                    </div>
-                    <div class="mt-1 pt-1 border-top">
-                        @if($params->get('run_once') == 'disable')
-                            <span class="fa fa-circle-stop me-2 text-warning" aria-hidden="true"
-                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                  data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE')"></span>
-                            <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE')</span>
-                        @elseif($params->get('run_once') == 'delete')
-                            <span class="fa fa-land-mine-on me-2 text-danger" aria-hidden="true"
-                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                  data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE')"></span>
-                            <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE')</span>
-                        @else
-                            <span class="fa fa-repeat me-2 text-success-emphasis" aria-hidden="true"
-                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                  data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_NONE')"></span>
-                            <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_NONE')</span>
-                        @endif
-                    </div>
+                    @if($params->get('enqueued_backup'))
+                        <div class="d-flex flex-column flex-lg-row align-items-center gap-1 text-body-tertiary">
+                            <span class="fa fa-computer-mouse me-1" aria-hidden="true"></span>
+                            <span>@lang('PANOPTICON_BACKUPTASKS_LBL_MANUAL_BACKUP')</span>
+                        </div>
+                    @else
+                        <div>
+                            <a href="@route(sprintf('index.php?view=backuptask&task=edit&site_id=%d&id=%d', $this->site->id, $task->id))">
+                                <code>{{{ $task->cron_expression  }}}</code>
+                            </a>
+                        </div>
+                        <div class="mt-1 pt-1 border-top">
+                            @if($params->get('run_once') == 'disable')
+                                <span class="fa fa-circle-stop me-2 text-warning" aria-hidden="true"
+                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                      data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE')"></span>
+                                <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE')</span>
+                            @elseif($params->get('run_once') == 'delete')
+                                <span class="fa fa-land-mine-on me-2 text-danger" aria-hidden="true"
+                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                      data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE')"></span>
+                                <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE')</span>
+                            @else
+                                <span class="fa fa-repeat me-2 text-success-emphasis" aria-hidden="true"
+                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                      data-bs-title="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_NONE')"></span>
+                                <span class="visually-hidden">@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_NONE')</span>
+                            @endif
+                        </div>
+                    @endif
                 </td>
                 {{-- Enabled --}}
                 <td>
-                    @if ($task->enabled)
-                        @unless($task->site_id <= 0)
-                            <a class="text-decoration-none text-success"
-                               href="@route(sprintf('index.php?view=backuptasks&site_id=%d&task=unpublish&id=%d&%s=1', $this->site->id, $task->id, $token))"
-                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                               data-bs-title="@lang('PANOPTICON_LBL_PUBLISHED')"
-                            >
-                                <span class="fa fa-circle-check" aria-hidden="true"></span>
-                                <span class="visually-hidden">@lang('PANOPTICON_LBL_PUBLISHED')</span>
-                            </a>
-                        @else
-                            <span class="fa fa-circle-check" aria-hidden="true"
+                    @if($params->get('enqueued_backup'))
+                        @if ($task->enabled)
+                            <span class="fa fa-circle-check text-success-emphasis" aria-hidden="true"
                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
                                   data-bs-title="@lang('PANOPTICON_LBL_PUBLISHED')"></span>
                             <span class="visually-hidden">@lang('PANOPTICON_LBL_UNPUBLISHED')</span>
-                        @endunless
+                        @else
+                            <span class="fa fa-circle-xmark text-danger-emphasis" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                  data-bs-title="@lang('PANOPTICON_LBL_UNPUBLISHED')"></span>
+                            <span class="visually-hidden">@lang('PANOPTICON_LBL_PUBLISHED')</span>
+                        @endif
+                    @elseif ($task->enabled)
+                        <a class="text-decoration-none text-success"
+                           href="@route(sprintf('index.php?view=backuptasks&site_id=%d&task=unpublish&id=%d&%s=1', $this->site->id, $task->id, $token))"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-title="@lang('PANOPTICON_LBL_PUBLISHED')"
+                        >
+                            <span class="fa fa-circle-check" aria-hidden="true"></span>
+                            <span class="visually-hidden">@lang('PANOPTICON_LBL_PUBLISHED')</span>
+                        </a>
                     @else
                         <a class="text-decoration-none text-danger"
                            href="@route(sprintf('index.php?view=backuptasks&task=publish&site_id=%d&id=%d&%s=1', $this->site->id, $task->id, $token))"

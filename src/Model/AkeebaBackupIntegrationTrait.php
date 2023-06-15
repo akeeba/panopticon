@@ -21,7 +21,10 @@ use Akeeba\Panopticon\Model\Exception\AkeebaBackupCannotConnectException;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupNoInfoException;
 use Awf\Date\Date;
+use Awf\Mvc\DataModel\Collection;
 use Composer\CaBundle\CaBundle;
+use DateTimeZone;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Cache\CacheException;
@@ -377,19 +380,14 @@ trait AkeebaBackupIntegrationTrait
 		$connector->deleteFiles($id);
 	}
 
-	/**
-	 * Enqueue a new backup
-	 *
-	 * @param   int          $profile
-	 * @param   string|null  $description
-	 * @param   string|null  $comment
-	 *
-	 * @return  void
-	 */
-	public function akeebaBackupEnqueue(int $profile = 1, ?string $description = null, ?string $comment = null): void
+	public function akeebaBackupGetAllScheduledTasks(): Collection
 	{
-		// Try to find an akeebabackup task object which is run once, not running / initial schedule, and matches the specifics
-		$tasks = $this->getSiteSpecificTasks('akeebabackup')
+		return $this->getSiteSpecificTasks('akeebabackup');
+	}
+
+	public function akeebaBackupGetEnqueuedTasks(): Collection
+	{
+		return $this->getSiteSpecificTasks('akeebabackup')
 			->filter(
 				function (Task $task) {
 					$params = $task->getParams();
@@ -413,11 +411,6 @@ trait AkeebaBackupIntegrationTrait
 					}
 
 					// Must be a generated task, not a user-defined backup schedule
-					if (empty($params->get('run_once')))
-					{
-						return false;
-					}
-
 					if (empty($params->get('enqueued_backup')))
 					{
 						return false;
@@ -435,6 +428,21 @@ trait AkeebaBackupIntegrationTrait
 					return ($date < $now);
 				}
 			);
+	}
+
+	/**
+	 * Enqueue a new backup
+	 *
+	 * @param   int          $profile
+	 * @param   string|null  $description
+	 * @param   string|null  $comment
+	 *
+	 * @return  void
+	 */
+	public function akeebaBackupEnqueue(int $profile = 1, ?string $description = null, ?string $comment = null): void
+	{
+		// Try to find an akeebabackup task object which is run once, not running / initial schedule, and matches the specifics
+		$tasks = $this->akeebaBackupGetEnqueuedTasks();
 
 		if ($tasks->count())
 		{
@@ -477,7 +485,7 @@ trait AkeebaBackupIntegrationTrait
 				'cron_expression' => $runDateTime->minute . ' ' . $runDateTime->hour . ' ' . $runDateTime->day . ' ' .
 					$runDateTime->month . ' ' . $runDateTime->dayofweek,
 				'enabled'         => 1,
-				'last_exit_code'  => Status::INITIAL_SCHEDULE,
+				'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
 				'last_execution'  => null,
 				'last_run_end'    => null,
 				'next_execution'  => null,

@@ -7,6 +7,9 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Task;
+
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
 /** @var \Akeeba\Panopticon\Model\Site $model */
@@ -45,7 +48,8 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                                 {{{ $lastRefreshResponse?->reasonPhrase ?? ''  }}}
                             </span>
                         </p>
-				            <?php $body = @json_decode($lastRefreshResponse?->body ?? '{}') ?>
+							<?php
+							$body = @json_decode($lastRefreshResponse?->body ?? '{}') ?>
                         @if (is_array($body?->errors ?? '') && !empty($body?->errors ?? ''))
                             <ul class="text-body-secondary list-unstyled ms-4">
                                 @foreach($body?->errors as $errorInfo)
@@ -141,13 +145,13 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                     @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_BODY')
                 </p>
                 @if ($user->authorise('panopticon.admin', $model))
-                <p>
-                    <a href="@route(sprintf('index.php?view=site&task=akeebaBackupRelink&id=%d&%s=1', $model->getId(), $token))"
-                       role="button" class="btn btn-primary">
-                        <span class="fa fa-refresh" aria-hidden="true"></span>
-                        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_RELINK')
-                    </a>
-                </p>
+                    <p>
+                        <a href="@route(sprintf('index.php?view=site&task=akeebaBackupRelink&id=%d&%s=1', $model->getId(), $token))"
+                           role="button" class="btn btn-primary">
+                            <span class="fa fa-refresh" aria-hidden="true"></span>
+                            @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_RELINK')
+                        </a>
+                    </p>
                 @endif
                 <p>
                     <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TYPE')</strong>: {{ get_class($this->backupRecords) }}
@@ -159,19 +163,66 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                     <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_MESSAGE')</strong>: {{ $this->backupRecords->getMessage() }}
                 </p>
                 @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
-                <p>
-                    <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TROUBLESHOOTING')</strong>:
-                </p>
-                <pre>{{ $this->backupRecords->getTraceAsString() }}</pre>
+                    <p>
+                        <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TROUBLESHOOTING')</strong>:
+                    </p>
+                    <pre>{{ $this->backupRecords->getTraceAsString() }}</pre>
                 @endif
             </div>
         @else
-            {{-- TODO Scheduled backups info (we may have N tasks with different statuses…) --}}
+				<?php
+                $allSchedules = $this->item->akeebaBackupGetAllScheduledTasks();
+				$allPending = $allSchedules->filter(
+					fn(Task $task) => in_array(
+						$task->last_exit_code, [Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
+					)
+				)->count();
+				$manualSchedules = $this->item->akeebaBackupGetEnqueuedTasks();
+				$manualPending   = $manualSchedules->filter(
+					fn(Task $task) => in_array(
+						$task->last_exit_code, [Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
+					)
+				)->count();
+				$manualDone   = $manualSchedules->filter(
+					fn(Task $task) => $task->last_exit_code == Status::OK->value
+				)->count();
+				$manualError  = $manualSchedules->count() - $manualDone - $manualPending;
+				?>
+            @if($allPending)
+                <div class="alert alert-info">
+                    <span class="fa fa-play" aria-hidden="true"></span>
+                    @plural('PANOPTICON_SITES_LBL_AKEEBABACKUP_EXECUTION_PENDING', $allPending)
+                </div>
+            @endif
+            @if($manualError)
+                <div class="alert alert-danger">
+                    <div class="d-flex flex-column flex-lg-row gap-0 gap-lg-2 align-items-center">
+                        <div class="flex-grow-1">
+                            <span class="fa fa-xmark-circle" aria-hidden="true"></span>
+                            @plural('PANOPTICON_SITES_LBL_AKEEBABACKUP_MANUAL_ERROR', $manualError)
+                        </div>
+                        <div>
+                            <a href="@route(sprintf('index.php?view=backuptasks&site_id=%d&manual=1', $this->item->getId()))"
+                               role="button" class="btn btn-sm btn-outline-info "
+                            >
+                                <span class="fa fa-list" aria-hidden="true"></span>
+                                @lang('PANOPTICON_BACKUPTASKS_LBL_VIEW_MANUAL')
+                            </a>
+
+                            <a href=""
+                               role="button" class="btn btn-sm btn-outline-danger">
+                                <span class="fa fa-refresh" aria-hidden="true"></span>
+                                Reset
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             <div class="row row-cols-lg-auto g-4 align-items-center mb-3 p-2">
                 {{-- Backup Schedule --}}
                 <div class="col-12">
-                    <a href="@route(sprintf('index.php?view=backuptasks&site_id=%d', $model->getId()))"
+                    <a href="@route(sprintf('index.php?view=backuptasks&site_id=%d&manual=0', $model->getId()))"
                        role="button" class="btn btn-success">
                         <span class="fa fa-calendar-alt me-1" aria-hidden="true"></span>
                         @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_SCHEDULE')
@@ -192,7 +243,6 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                             selected: 1,
                             idTag: 'akeebaBackupTakeProfile'
                         ) }}
-                        {{-- TODO Need custom JavaScript for this button to do anything --}}
                         <button class="btn btn-primary" id="akeebaBackupTakeButton">
                             <span class="fa fa-play me-1" aria-hidden="true"></span>
                             @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STARTBACKUP')
@@ -212,196 +262,198 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
             <h4 class="border-bottom border-info-subtle pb-1 mt-2 mb-2">Latest backups</h4>
 
             <table class="table">
-            <thead class="table-dark">
-            <tr>
-                <th scope="col" class="text-center d-none d-md-table-cell" style="max-width: 48px;">
-                    <span aria-hidden="true">@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')</span>
-                    <span class="visually-hidden">@lang('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')</span>
-                </th>
-                <th scope="col" class="text-center" style="max-width: 3em">
-                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN')
-                </th>
-                <th scope="col" class="text-center">
-                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DESCRIPTION')
-                </th>
-                <th scope="col" class="text-center" style="max-width: 3em;">
-                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS')
-                </th>
-                @if($user->authorise('panopticon.admin', $model))
-                <th scope="col" class="text-center d-none d-sm-table-cell">
-                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_ACTIONS')
-                </th>
-                @endif
-            </tr>
-            </thead>
-            <tbody>
-            @foreach ($this->backupRecords as $record)
-                <?php
-		            [$originDescription, $originIcon] = $this->getOriginInformation($record);
-		            [$startTime, $duration, $timeZoneText] = $this->getTimeInformation($record);
-		            [$statusClass, $statusIcon] = $this->getStatusInformation($record);
-		            $profileName = $this->getProfileName($record);
-                ?>
+                <thead class="table-dark">
                 <tr>
-                    {{-- Backup ID --}}
-                    <td class="d-none d-md-table-cell" valign="middle">
-			                <?= $record->id ?>
-                    </td>
+                    <th scope="col" class="text-center d-none d-md-table-cell" style="max-width: 48px;">
+                        <span aria-hidden="true">@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')</span>
+                        <span class="visually-hidden">@lang('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')</span>
+                    </th>
+                    <th scope="col" class="text-center" style="max-width: 3em">
+                        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN')
+                    </th>
+                    <th scope="col" class="text-center">
+                        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DESCRIPTION')
+                    </th>
+                    <th scope="col" class="text-center" style="max-width: 3em;">
+                        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS')
+                    </th>
+                    @if($user->authorise('panopticon.admin', $model))
+                        <th scope="col" class="text-center d-none d-sm-table-cell">
+                            @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_ACTIONS')
+                        </th>
+                    @endif
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($this->backupRecords as $record)
+						<?php
+						[$originDescription, $originIcon] = $this->getOriginInformation($record);
+						[$startTime, $duration, $timeZoneText] = $this->getTimeInformation($record);
+						[$statusClass, $statusIcon] = $this->getStatusInformation($record);
+						$profileName = $this->getProfileName($record);
+						?>
+                    <tr>
+                        {{-- Backup ID --}}
+                        <td class="d-none d-md-table-cell" valign="middle">
+								<?= $record->id ?>
+                        </td>
 
-                    {{-- Frozen --}}
-                    <td class="text-center" valign="middle">
-                        @if ($record?->frozen ?? 0)
-                            <span class="fa fa-snowflake text-info" aria-hidden="true"
-                                  data-bs-tooltip="tooltip" data-bs-placement="bottom"
-                                  data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN')"></span>
-                            <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN')</span>
-                        @else
-                            <span class="fa fa-droplet text-body-tertiary" aria-hidden="true"
-                                  data-bs-tooltip="tooltip" data-bs-placement="bottom"
-                                  data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_UNFROZEN')"></span>
-                            <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_UNFROZEN')</span>
-                        @endif
-                    </td>
+                        {{-- Frozen --}}
+                        <td class="text-center" valign="middle">
+                            @if ($record?->frozen ?? 0)
+                                <span class="fa fa-snowflake text-info" aria-hidden="true"
+                                      data-bs-tooltip="tooltip" data-bs-placement="bottom"
+                                      data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN')"></span>
+                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN')</span>
+                            @else
+                                <span class="fa fa-droplet text-body-tertiary" aria-hidden="true"
+                                      data-bs-tooltip="tooltip" data-bs-placement="bottom"
+                                      data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_UNFROZEN')"></span>
+                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_UNFROZEN')</span>
+                            @endif
+                        </td>
 
-                    {{-- Description, backup date, duration and size --}}
-                    <td>
-                        {{-- Row: origin and description --}}
-                        <div class="d-flex flex-column flex-lg-row gap-2">
-                            {{-- Origin --}}
-                            <div>
+                        {{-- Description, backup date, duration and size --}}
+                        <td>
+                            {{-- Row: origin and description --}}
+                            <div class="d-flex flex-column flex-lg-row gap-2">
+                                {{-- Origin --}}
+                                <div>
                                 <span class="{{ $originIcon }} me" aria-hidden="true"
                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                                       data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN'): {{{ $originDescription }}}"
                                 ></span>
-                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN'): {{{ $originDescription }}}</span>
-                            </div>
-                            {{-- Description --}}
-                            <div class="flex-grow-1">
-                                {{{ $record->description }}}
-                            </div>
-                            {{-- Comment show / hide --}}
-                            @if (!empty($record->comment))
-                            <div>
-                                <button type="button" class="btn btn-sm btn-primary"
-                                        data-bs-toggle="collapse" href="#akeebaBackupComment-{{ $record->id }}"
-                                        aria-expanded="false" aria-controls="akeebaBackupComment-{{ $record->id }}"
-                                        data-bs-tooltip="tooltip" data-bs-placement="bottom"
-                                        data-bs-title="@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')"
-                                >
-                                    <span class="fa fa-arrow-down-up-across-line" aria-hidden="true"></span>
-                                    <span class="visually-hidden">@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')</span>
-                                </button>
-                            </div>
-                            @endif
-                        </div>
-
-                        {{-- Row: Comment --}}
-                        @if (!empty($record->comment))
-                        <div class="collapse m-2 p-2 border rounded-2 bg-body-tertiary" id="akeebaBackupComment-{{ $record->id }}">
-                            {{ $record->comment }}
-                        </div>
-                        @endif
-
-                        <div class="row mt-1">
-                            {{-- Start Date --}}
-                            <div class="col-lg">
-                                <span class="fa fa-calendar" aria-hidden="true"
-                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                      data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_START')"
-                                ></span>&nbsp;
-                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_START')</span>
-                                <?= $startTime ?> <?= $timeZoneText ?>
-                            </div>
-
-                            {{-- Backup Duration --}}
-                            <div class="col-lg">
-                                <span class="fa fa-stopwatch" aria-hidden="true"
-                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                      data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DURATION')"
-                                ></span>&nbsp
-                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DURATION')</span>
-                                <?= $duration ?: '&mdash;' ?>
-                            </div>
-
-                            {{-- Backup size --}}
-                            <div class="col-lg">
-                                <span class="fa fa-weight-hanging" aria-hidden="true"
-                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                      data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_SIZE')"
-                                ></span>
-                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_SIZE')</span>
-			                    @if ($record->meta == 'ok')
-				                    {{ $this->formatFilesize($record->size) }}
-                                @elseif($record->total_size > 0)
-                                    <i>{{ $this->formatFilesize($record->total_size) }}</i>
-                                @else
-                                    &mdash;
+                                    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN'): {{{ $originDescription }}}</span>
+                                </div>
+                                {{-- Description --}}
+                                <div class="flex-grow-1">
+                                    {{{ $record->description }}}
+                                </div>
+                                {{-- Comment show / hide --}}
+                                @if (!empty($record->comment))
+                                    <div>
+                                        <button type="button" class="btn btn-sm btn-primary"
+                                                data-bs-toggle="collapse" href="#akeebaBackupComment-{{ $record->id }}"
+                                                aria-expanded="false"
+                                                aria-controls="akeebaBackupComment-{{ $record->id }}"
+                                                data-bs-tooltip="tooltip" data-bs-placement="bottom"
+                                                data-bs-title="@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')"
+                                        >
+                                            <span class="fa fa-arrow-down-up-across-line" aria-hidden="true"></span>
+                                            <span class="visually-hidden">@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')</span>
+                                        </button>
+                                    </div>
                                 @endif
                             </div>
-                        </div>
 
-                        {{-- Backup Profile (condensed display) --}}
-                        <div class="row mt-1">
-                            <div class="col-md">
+                            {{-- Row: Comment --}}
+                            @if (!empty($record->comment))
+                                <div class="collapse m-2 p-2 border rounded-2 bg-body-tertiary"
+                                     id="akeebaBackupComment-{{ $record->id }}">
+                                    {{ $record->comment }}
+                                </div>
+                            @endif
+
+                            <div class="row mt-1">
+                                {{-- Start Date --}}
+                                <div class="col-lg-5">
+                                    <span class="fa fa-calendar" aria-hidden="true"
+                                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                          data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_START')"
+                                    ></span>&nbsp;
+                                    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_START')</span>
+										<?= $startTime ?> <?= $timeZoneText ?>
+                                </div>
+
+                                {{-- Backup Duration --}}
+                                <div class="col-lg">
+                                    <span class="fa fa-stopwatch" aria-hidden="true"
+                                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                          data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DURATION')"
+                                    ></span>&nbsp
+                                    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DURATION')</span>
+										<?= $duration ?: '&mdash;' ?>
+                                </div>
+
+                                {{-- Backup size --}}
+                                <div class="col-lg">
+                                    <span class="fa fa-weight-hanging" aria-hidden="true"
+                                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                          data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_SIZE')"
+                                    ></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_SIZE')</span>
+                                    @if ($record->meta == 'ok')
+                                        {{ $this->formatFilesize($record->size) }}
+                                    @elseif($record->total_size > 0)
+                                        <i>{{ $this->formatFilesize($record->total_size) }}</i>
+                                        @else
+                                            &mdash;
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Backup Profile (condensed display) --}}
+                            <div class="row mt-1">
+                                <div class="col-md">
                                 <span class="fa fa-users" aria-hidden="true"
                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                                       data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_PROFILE')"
                                 ></span>
-                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_PROFILE')</span>
-                                #{{ (int) $record->profile_id }}.
-                                {{{ $profileName }}}
+                                    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_PROFILE')</span>
+                                    #{{ (int) $record->profile_id }}.
+                                    {{{ $profileName }}}
+                                </div>
                             </div>
-                        </div>
-                    </td>
+                        </td>
 
-                    {{-- Status --}}
-                    <td valign="middle" class="text-center">
-                        <div class="badge rounded-pill fs-6 {{ $statusClass }}"
-                             data-bs-toggle="tooltip" data-bs-placement="bottom"
-                             data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS_' . $record->meta)"
-                        >
-                            <div class="my-1">
-                                <span class="{{ $statusIcon }}" aria-hidden="true"></span>
-                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS_' . $record->meta)</span>
+                        {{-- Status --}}
+                        <td valign="middle" class="text-center">
+                            <div class="badge rounded-pill fs-6 {{ $statusClass }}"
+                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                 data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS_' . $record->meta)"
+                            >
+                                <div class="my-1">
+                                    <span class="{{ $statusIcon }}" aria-hidden="true"></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS_' . $record->meta)</span>
+                                </div>
                             </div>
-                        </div>
-                    </td>
+                        </td>
 
-                    {{-- Actions --}}
-                    @if($user->authorise('panopticon.admin', $model))
-                    <td valign="middle" class="text-end">
-                        @if (in_array(strtolower($record->meta), ['ok', 'complete']))
-                            <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDeleteFiles&id=%s&backup_id=%d&%s=1', $model->getId(), $record->id, $token))"
-                               role="button" class="btn btn-outline-danger"
-                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                               data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETEFILES')">
-                                <span class="fa fa-delete-left" aria-hidden="true"></span>
-                                <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETEFILES')</span>
-                            </a>
+                        {{-- Actions --}}
+                        @if($user->authorise('panopticon.admin', $model))
+                            <td valign="middle" class="text-end">
+                                @if (in_array(strtolower($record->meta), ['ok', 'complete']))
+                                    <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDeleteFiles&id=%s&backup_id=%d&%s=1', $model->getId(), $record->id, $token))"
+                                       role="button" class="btn btn-outline-danger"
+                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETEFILES')">
+                                        <span class="fa fa-delete-left" aria-hidden="true"></span>
+                                        <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETEFILES')</span>
+                                    </a>
+                                @endif
+
+                                <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDelete&id=%s&backup_id=%d&%s=1', $model->getId(), $record->id, $token))"
+                                   role="button" class="btn btn-danger"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETE')">
+                                    <span class="fa fa-trash-can" aria-hidden="true"></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETE')</span>
+                                </a>
+                            </td>
                         @endif
-
-                        <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDelete&id=%s&backup_id=%d&%s=1', $model->getId(), $record->id, $token))"
-                           role="button" class="btn btn-danger"
-                           data-bs-toggle="tooltip" data-bs-placement="bottom"
-                           data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETE')">
-                            <span class="fa fa-trash-can" aria-hidden="true"></span>
-                            <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETE')</span>
-                        </a>
-                    </td>
-                    @endif
-                </tr>
-            @endforeach
-            @if(empty($this->backupRecords))
-                <tr>
-                    <td colspan="20">
-                        <div class="alert alert-info m-2">
-                            <span class="fa fa-info-circle" aria-hidden="true"></span>
-                            @lang('PANOPTICON_MAIN_SITES_LBL_NO_RESULTS')
-                        </div>
-                    </td>
-                </tr>
-            @endif
-            </tbody>
+                    </tr>
+                @endforeach
+                @if(empty($this->backupRecords))
+                    <tr>
+                        <td colspan="20">
+                            <div class="alert alert-info m-2">
+                                <span class="fa fa-info-circle" aria-hidden="true"></span>
+                                @lang('PANOPTICON_MAIN_SITES_LBL_NO_RESULTS')
+                            </div>
+                        </td>
+                    </tr>
+                @endif
+                </tbody>
             </table>
         @endif
     </div>

@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Awf\Container\Container;
 use Awf\Mvc\DataController;
+use Awf\Text\Text;
 use Awf\Uri\Uri;
 
 defined('AKEEBA') || die;
@@ -70,6 +71,35 @@ class Backuptasks extends DataController
 		return parent::execute($task);
 	}
 
+	protected function onBeforeEdit()
+	{
+		$model = $this->getModel();
+
+		if (!$model->getId())
+		{
+			$this->getIDsFromRequest($model, true);
+		}
+
+		if ($model->getParams()->get('enqueued_backup'))
+		{
+			$this->setRedirect(
+				$this->container->router->route(
+					sprintf(
+						'index.php?view=backuptasks&site_id=%d',
+						$this->site->getId()
+					)
+				),
+				Text::_('PANOPTICON_BACKUPTASKS_ERR_CANNOT_EDIT_MANUAL'),
+				'error'
+			);
+
+			$this->redirect();
+		}
+
+		return true;
+	}
+
+
 	public function getModel($name = null, $config = [])
 	{
 		$model = parent::getModel($name, $config);
@@ -84,7 +114,7 @@ class Backuptasks extends DataController
 			$model->where('type', '=', 'akeebabackup');
 
 			/**
-			 * I am totally cheating here. I am applying a filter without subclassing the model.
+			 * I am totally cheating here. I am applying filters without subclassing the model.
 			 */
 			$db = $model->getDbo();
 			$fltProfile = $model->getState('profile');
@@ -93,6 +123,21 @@ class Backuptasks extends DataController
 			{
 				$model->whereRaw(
 					"JSON_EXTRACT(" . $db->quoteName('params') . ', ' . $db->quote('$.profile_id') . ') = ' . $db->quote((string) $fltProfile)
+				);
+			}
+
+			$fltManual = $model->getState('manual');
+
+			if (is_numeric($fltManual) && $fltManual)
+			{
+				$model->whereRaw(
+					"JSON_EXTRACT(" . $db->quoteName('params') . ', ' . $db->quote('$.enqueued_backup') . ') = 1'
+				);
+			}
+			elseif (is_numeric($fltManual) && !$fltManual)
+			{
+				$model->whereRaw(
+					"NOT JSON_CONTAINS_PATH(" . $db->quoteName('params') . ', ' . $db->quote('one') . ', ' . $db->quote('$.enqueued_backup') . ')'
 				);
 			}
 		}

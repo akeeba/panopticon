@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\Sites;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
@@ -181,6 +182,35 @@ class Html extends DataViewHtml
 
 		$this->addTooltipJavaScript();
 
+		$document->addScriptOptions('akeebabackup', [
+			'enqueue' => $this->container->router->route(
+				sprintf(
+					'index.php?view=sites&task=akeebaBackupEnqueue&id=%d&%s=1',
+					$this->item->id, $this->container->session->getCsrfToken()->getValue()
+				)
+			)
+		]);
+		$js = <<< JS
+
+akeeba.System.documentReady(function() {
+    
+    document.getElementById('akeebaBackupTakeButton')?.addEventListener('click', (event) => {
+		const profileId = document.getElementById('akeebaBackupTakeProfile')?.value;
+		const url = akeeba.System.getOptions('akeebabackup')?.enqueue + '&profile_id=' + profileId;
+		
+		if (!profileId) {
+		    return;
+		}
+		
+        window.location = url;
+    });
+    
+});
+
+JS;
+		$document->addScriptDeclaration($js);
+
+
 		return true;
 	}
 
@@ -284,12 +314,7 @@ class Html extends DataViewHtml
 		$tz     = new DateTimeZone($this->container->appConfig->get('timezone', 'UTC'));
 		$startTime->setTimezone($tz);
 
-		$timeZoneSuffix = '';
-
-		if (!empty($this->timeZoneFormat))
-		{
-			$timeZoneSuffix = $startTime->format($this->timeZoneFormat, true);
-		}
+		$timeZoneSuffix = $startTime->format('T', true);
 
 		return [
 			$startTime->format(Text::_('DATE_FORMAT_LC6'), true),
