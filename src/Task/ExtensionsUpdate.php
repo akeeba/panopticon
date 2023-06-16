@@ -361,9 +361,9 @@ class ExtensionsUpdate extends AbstractCallback
 
 		$emailKey  = 'extensions_update_done';
 		$variables = [
-			'[SITE_NAME]'     => $site->name,
-			'[RENDERED_HTML]' => $rendered,
-			'[RENDERED_TEXT]' => $renderedText,
+			'SITE_NAME'     => $site->name,
+			'RENDERED_HTML' => $rendered,
+			'RENDERED_TEXT' => $renderedText,
 		];
 
 		// Get the CC email addresses

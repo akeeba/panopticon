@@ -209,8 +209,8 @@ class AkeebaBackup extends \Akeeba\Panopticon\Library\Task\AbstractCallback
 	{
 		$vars = array_merge(
 			[
-				'[SITE_NAME]' => $site->getName(),
-				'[SITE_ID]'   => $site->getId(),
+				'SITE_NAME' => $site->getName(),
+				'SITE_ID'   => $site->getId(),
 			], $vars
 		);
 
