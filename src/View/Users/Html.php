@@ -9,15 +9,45 @@ namespace Akeeba\Panopticon\View\Users;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\Users;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
+use Awf\Mvc\DataModel;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
+use Awf\Text\Text;
 use Awf\Utils\Template;
 
 class Html extends BaseHtmlView
 {
+	/**
+	 * The MFA methods available for this user
+	 *
+	 * @var   array
+	 * @since 1.0.0
+	 */
+	public array $methods = [];
+
+	/**
+	 * Are there any active TFA methods at all?
+	 *
+	 * @var   bool
+	 * @since 1.0.0
+	 */
+	public bool $mfaActive = false;
+
+	/**
+	 * Which method has the default record?
+	 *
+	 * @var   string
+	 * @since 1.0.0
+	 */
+	public string $defaultMethod = '';
+
+	protected bool $canEditMFA = false;
+
 	use ShowOnTrait;
-	use CrudTasksTrait {
+	use CrudTasksTrait
+	{
 		onBeforeAdd as onBeforeAddCrud;
 		onBeforeEdit as onBeforeEditCrud;
 	}
@@ -33,7 +63,14 @@ class Html extends BaseHtmlView
 	{
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
 
-		return $this->onBeforeEditCrud();
+		$ret = $this->onBeforeEditCrud();
+
+		if ($ret)
+		{
+			$this->prepareMFAProperties();
+		}
+
+		return $ret;
 	}
 
 	protected function onBeforeRead()
@@ -45,4 +82,89 @@ class Html extends BaseHtmlView
 
 		return parent::onBeforeRead();
 	}
+
+	/**
+	 * Prepares the properties required for Multi-factor Authentication setup
+	 *
+	 * @return void
+	 */
+	private function prepareMFAProperties()
+	{
+		/** @var Users $item */
+		$item        = $this->getModel();
+		$currentUser = $this->container->userManager->getUser();
+		$editedUser  = $this->container->userManager->getUser($item->getId());
+
+		$this->canEditMFA =
+			$item->getId() > 0
+			&& (
+				$currentUser->getId() == $item->getId()
+				|| (
+					$currentUser->getPrivilege('panopticon.super')
+					&& !$editedUser->getPrivilege('panopticon.super')
+				)
+			);
+
+		if (!$this->canEditMFA)
+		{
+			return;
+		}
+
+		$model = DataModel::getTmpInstance('', 'Mfamethods');
+
+		if ($this->getLayout() != 'firsttime')
+		{
+			$this->setLayout('default');
+		}
+
+		$this->methods = $model->getMethods($editedUser);
+		$activeRecords = 0;
+
+		foreach ($this->methods as $methodName => $method)
+		{
+			$methodActiveRecords = count($method['active']);
+
+			if (!$methodActiveRecords)
+			{
+				continue;
+			}
+
+			$activeRecords   += $methodActiveRecords;
+			$this->mfaActive = true;
+
+			foreach ($method['active'] as $record)
+			{
+				if ($record->default)
+				{
+					$this->defaultMethod = $methodName;
+
+					break;
+				}
+			}
+		}
+
+		$model       = DataModel::getTmpInstance('', 'Backupcodes');
+		$backupCodes = $model->getBackupCodes($editedUser);
+
+		if ($activeRecords && empty($backupCodes))
+		{
+			$model->regenerateBackupCodes($editedUser);
+		}
+
+		$backupCodesRecord = $model->getBackupCodesRecord($editedUser);
+
+		if (!is_null($backupCodesRecord))
+		{
+			$this->methods['backupcodes'] = [
+				'name'          => 'backupcodes',
+				'display'       => Text::_('PANOPTICON_MFA_LBL_BACKUPCODES'),
+				'shortinfo'     => Text::_('PANOPTICON_MFA_LBL_BACKUPCODES_DESCRIPTION'),
+				'image'         => 'media/mfa/images/emergency.svg',
+				'canDisable'    => false,
+				'allowMultiple' => false,
+				'active'        => [$backupCodesRecord],
+			];
+		}
+	}
+
 }

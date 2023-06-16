@@ -9,9 +9,9 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\User\User;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
-use Awf\User\User;
 
 class Backupcodes extends Model
 {

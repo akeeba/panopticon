@@ -127,6 +127,19 @@ class Mfa extends DataModel
 		return $this;
 	}
 
+	public function getOptions(): array
+	{
+		try
+		{
+			return is_array($this->options) ? $this->options : (@json_decode($this->options, true) ?: []);
+		}
+		catch (\Exception $e)
+		{
+			return [];
+		}
+	}
+
+
 	protected function onBeforeDelete(int &$pk): bool
 	{
 		$record = $this;

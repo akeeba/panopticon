@@ -58,17 +58,5 @@ $canEdit = $this->container->userManager->getUser()->getPrivilege('panopticon.ad
         </div>
     </div>
 
-    <div class="row g-3 mb-3">
-        <div class="col-12">
-            <div class="card">
-                <h3 class="card-header h4">
-                    <span class="fa fa-lock" aria-hidden="true"></span>
-                    Security
-                </h3>
-                <div class="card-body">
-                    <div class="display-4 text-center text-muted  py-2 rounded-3">TO-DO</div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{-- TODO Admin Tools integration (https://github.com/akeeba/panopticon/issues/17) --}}
 </div>
