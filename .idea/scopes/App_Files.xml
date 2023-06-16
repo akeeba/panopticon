@@ -1,3 +1,3 @@
 <component name="DependencyValidationManager">
-  <scope name="App Files" pattern="file:cli//*.php||file:includes//*.php||file:src//*||file:media/js//*.js||file:media/scss//*.scss||file:build/templates//*.php||file:templates//*.php||file:templates//*.html||file:ViewTemplates//*.php||file:ViewTemplates//*.blade.php||file:defines.php||file:index.php||file:version.php||file:build.xml" />
+  <scope name="App Files" pattern="file:cli//*.php||file:includes//*.php||file:src//*||file:media/js//*.js||file:media/scss//*.scss||file:build/templates//*.php||file:templates//*.php||file:templates//*.html||file:ViewTemplates//*.php||file:ViewTemplates//*.blade.php||file:defines.php||file:index.php||file:version.php||file:build.xml||file:.phpstorm.meta.php" />
 </component>
