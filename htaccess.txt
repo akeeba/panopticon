@@ -112,7 +112,7 @@
    RewriteRule ^(media|user_code)/ - [F]
    ## Disallow front-end access for system folders and files
    RewriteRule ^(.idea|.github|assets|build|cache|cli|includes|languages|log|node_modules|release|src|templates|tmp|vendor|ViewTemplates)/ - [F]
-   RewriteRule ^(.gitattributes|.gitignore|.htaccess|htaccess.txt|build.xml|CHANGELOG|composer|config\.php|version\.php|defines\.php|LICENSE|package|README|RELEASENOTES|TODO|php\.ini|.user\.ini) - [F]
+   RewriteRule ^(.gitattributes|.gitignore|.htaccess|htaccess.txt|build.xml|CHANGELOG|composer|config\.php|version\.php|defines\.php|package|README|RELEASENOTES|TODO|php\.ini|.user\.ini) - [F]
 
 
     ## -------------------------------------------------------------------------
@@ -120,8 +120,9 @@
     ## -------------------------------------------------------------------------
     ## Explicitly allow access to the site's index.php main entry point file
     RewriteRule ^index.php(/.*){0,1}$ - [L]
-    ## Explicitly allow access to the site's robots.txt file
+    ## Explicitly allow access to the site's robots.txt and LICENSE.txt files
     RewriteRule ^robots.txt$ - [L]
+    RewriteRule ^LICENSE.txt$ - [L]
     ## Disallow access to all other PHP files throughout the site, unless they are explicitly allowed
     RewriteCond %{REQUEST_FILENAME} (\.php)$
     RewriteCond %{REQUEST_FILENAME} -f

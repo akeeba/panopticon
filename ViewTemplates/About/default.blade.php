@@ -62,50 +62,17 @@ $integrity = function(string $hash): string {
     </div>
 </div>
 
-<details class="mb-4">
-    <summary class="h5">Additional Terms and Conditions</summary>
-
-    <div class="small text-muted">
-        <p>The following Additional Terms And Conditions are supplementary to the License, as per Article 7 of the license. As
-            such, they must be understood to be an integral part of the software license.</p>
-
-        <p>1. Preservation of legal notices</p>
-
-        <p>You are required to preserve all legal notices present in source code files, the About page of the software, and the LICENSE.txt file, as well as any author attributions in the same. You are required to preserve all legal notices and author attributions in all files contained under the vendor directory, in accordance with the software license of each dependency contained therein. This applies to the original work, as well as any copies verbatim, or modified, and any derivative works. While Article 7 of the License allows you to remove this clause, this will most likely violate the software license of the software and / or its dependencies, therefore removing the legal grounds under which you can use and / or convey the software and its dependencies.</p>
-
-        <p>2. Identification of modified copies</p>
-
-        <p>Modified versions must bear prominent notices in both the source code files, README.md file, and the user interface which clearly state that this is no longer the original work and must not be misconstrued as such.</p>
-
-        <p>3. No rights to names, logos, and wordmarks</p>
-
-        <p>Notwithstanding your rights under the fair use doctrine or equivalent laws, the license of this material does
-            <em>not</em> grant you any rights to use the “Akeeba” name, logo, and wordmark, the “Akeeba Panopticon” name, and logo, and the “Panopticon” name.</p>
-
-        <p>4. Restrictions on advertising and commercial usage of the names, logos, and wordmarks</p>
-
-        <p>You are disallowed from using the “Akeeba” name, logo, and wordmark, the “Akeeba Panopticon” name, and logo, and the “Panopticon” name for advertising and commercial purposes —including but not limited to advertising campaigns (printed, electronic, or otherwise), web site banners, web site copy, and social media posts— in a way which asserts, implies, or could reasonably be misconstrued as endorsement of your person, business, or product by the licensors and authors of this material. You are permitted to use the aforementioned copyrighted items under the fair use doctrine for factual statements such as “This service makes use of Akeeba Panopticon, a self-hosted site monitoring software created and distributed by Akeeba Ltd”.</p>
-
-        <p>5. Non-transferability of liability and indemnification</p>
-
-        <p>Anyone who this material (or modified versions of it) is conveyed to with contractual or legal assumptions of liability are required to explicitly indemnify the licensors and authors of this software for any liability that these contractual or legal assumptions directly impose on those licensors and authors. A recipient of the software may only remove this clause for the copies they convey to others by assuming the FULL and SOLE LEGAL RESPONSIBILITY and LIABILITY for all copies of this material (or modified versions of it) which have originated directly or indirectly from the copy they conveyed to others.</p>
-
-        <p>6. Support</p>
-
-        <p>The license of the software does not entitle you to any kind of support, or consultancy by the licensor and authors of this software.</p>
-
-        <p>7. Access to services and software</p>
-
-        <p>The license of the software does not entitle you to access of any additional services or software which may be used in conjunction with this software, or required to use this software.</p>
-    </div>
-</details>
+<div class="text-body-tertiary my-3 mx-4">
+    Akeeba Panopticon comes with additional Terms and Conditions on top of the GNU Affero General Public License version 3. Nothing scary, just common sense stuff. Please read the <a class="text-body-tertiary" href="{{ \Awf\Uri\Uri::base() }}LICENSE.txt">LICENSE.txt</a> file supplied with the software.
+</div>
 
 <h4>Third Party Software Included</h4>
 
 <p>Panopticon does not exist in a vacuum. It makes use of third party, Free and Open Source Software packages. Here are the packages, and their corresponding versions, installed with this version of Panopticon.</p>
 
 <div class="alert alert-info">
-    This information presented below is read directly from the Composer and Node.js Package Manager (NPM) lock files used to build this version of the software. Therefore, the information below is equivalent to a Software Bill Of Materials (SBOM).
+    <p>This information presented below is read directly from the Composer and Node.js Package Manager (NPM) lock files used to build this version of the software. Therefore, the information below is equivalent to a Software Bill Of Materials (SBOM).</p>
+    <p>You can view a detailed dependency analysis, and download the formal SBOM in JSON format, of the latest <em>in-development</em> version at <a href="https://github.com/akeeba/panopticon/network/dependencies">the GitHub reporsitory of Panopticon</a>. Please note that most Node (NPM) dependencies are <em>development</em> dependencies which are not shipped with the software. The dependencies used in production code are listed below.</p>
 </div>
 
 <h5>PHP Dependencies</h5>
@@ -189,22 +156,42 @@ $integrity = function(string $hash): string {
     </tbody>
 </table>
 
-<h4 class="mt-4">Software Lifetime, Bug Fixes, and Security Policy</h4>
+<h4 class="mt-4">Software Lifetime, Support, Bug Fixes, and Security Policy</h4>
+<h5>Supported Versions</h5>
 <p>
-    Only the versions of this software distributed by Akeeba Ltd from the <a href="https://github.com/akeeba/panopticon/releases" target="_blank">Releases page</a> of the GitHub repository of this project are considered within scope of bug fixes and security updates, and only in accordance with the stipulations in the next three paragraphs. Versions marked as “pre-release”, “alpha”, “beta”, “release candidate”, “RC”, “development”, or “dev” are explicitly considered outside the scope.
+    Akeeba Ltd actively supports only the versions of this software distributed from the <a href="https://github.com/akeeba/panopticon/releases" target="_blank">Releases page</a> of its GitHub repository, and only the latest published stable (not marked as “Testing”) version. Upon release of a new stable version, all past versions (stable, and testing) are immediately considered out-of-support.
 </p>
 <p>
-    Akeeba Ltd only provides bug fixes and security updates for the latest released version family of the software, unless otherwise explicitly indicated. A version family consists of the major and minor version. Your installation's version family is <strong>{{ \Akeeba\Panopticon\Library\Version\Version::create(AKEEBA_PANOPTICON_VERSION)->versionFamily() }}</strong>.
+    This software can be extended with code provided by the person or entity managing this installation. Any functional issue (bug) or security issue which may arise from such third party code is explicitly considered the sole responsibility of the person or entity managing this installation, and they carry the full liability for it.
+</p>
+
+<h5>Bug and Security Fixes</h5>
+<p>
+    Supported versions receive bug fixes and security fixes in the form of new versions (updates). We provide information about the latest released version through GitHub's Releases feature in our aforementioned GitHub repository. This is the only canonical resource for discovering updates. Discovery and timely installation of these updates is the user's responsibility.
+</p>
+
+<h5>PHP support</h5>
+<p>
+    As a general rule, Akeeba Ltd only supports installing and using this software on the latest version of the PHP branches which are currently shown as being in “Active Support” in <a href="https://www.php.net/supported-versions" target="_blank">the Supported Versions page</a> of the PHP language's official site.
 </p>
 <p>
-    Akeeba Ltd only supports installing and using this software on the latest version of the PHP branches which are currently supported by the PHP project, unless otherwise specified. These versions are marked as “Security fixes only” and “Active support” on <a href="https://www.php.net/supported-versions" target="_blank">PHP's official site</a>. Any bugs or security issues which can only be reproduced on a version of PHP which is not supported by Akeeba Ltd is considered outside the scope of our development. Your current installation supports PHP {{ AKEEBA_PANOPTICON_MINPHP }} at a minimum.
+    Because of our dependency on third party code, we may have to drop support for some versions of PHP before their end of life. Likewise, we may not be able to provide full or even partial support for new PHP versions within a predictable timeframe after their stable release; we are beholden to the release schedule of the third party dependencies.
+</p>
+
+<h5>End User Support</h5>
+<p>
+    Akeeba Ltd offers priority end user support only on a subscription basis from our site, <a href="https://www.akeeba.com">https://www.akeeba.com</a>, and only through its Support ticket system.
 </p>
 <p>
-    This software can be extended with code provided by the person or entity managing this installation. Any functional issue (bug) or security issue which may arise from such third party code is explicitly the responsibility of the person or entity managing this installation, and they carry the full liability for it.
+    End users may seek peer support in the Discussions section of Panopticon's aforementioned GitHub repository. We may occasionally post replies there, but we cannot guarantee a service level — we peruse the Discussions in our very limited free time, and it is more than likely that none will be had for a stretch of days to weeks during the peak seasons of our business activities. Please do <em>not</em> use the Issues to seek support; your request will be converted to a Discussion. Moreover, if you are a subscriber to our priority end user support service, please do not use GitHub to request support; we cannot know if you are a subscriber or not when viewing Issues and Discussions on GitHub.
 </p>
+
+<h5>Bug Reports</h5>
 <p>
-    If you have found a reproducible functional issue (bug) please use the Issues feature of the software's code repository in GitHub to report it. Please keep in mind the <a href="https://github.com/akeeba/panopticon/blob/main/.github/SUPPORT.md" target="_blank">support policy</a> of the software when doing so.
+    Please make sure that your issue is reproducible with a new Panopticon and CMS installation. If it can only be reproduced with your specific Panopticon or CMS installation your request will be treated as end user support. If you have found a reproducible functional issue (bug) please use the Issues feature of the software's code repository in GitHub to report it. Please keep in mind the <a href="https://github.com/akeeba/panopticon/blob/main/.github/SUPPORT.md" target="_blank">support policy</a> of the software when doing so.
 </p>
+
+<h5>Security Issue Reports</h5>
 <p>
-    If you have found a security issue please <em>do not</em> report it in public. Instead, please follow the instructions detailed in our <a href="https://github.com/akeeba/panopticon/security/policy" target="_blank">Security Policy</a> for this software.
+    If you have found a security issue please <em>do not</em> report it in public! Instead, please follow the instructions detailed in our <a href="https://github.com/akeeba/panopticon/security/policy" target="_blank">Security Policy</a> for this software.
 </p>

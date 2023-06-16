@@ -28,10 +28,13 @@ trait ACLTrait
 	 * - run    : Execute access
 	 */
 	protected array $aclChecks = [
+		'about'         => [
+			'*' => ['*'],
+		],
 		'captive'       => [
 			'*' => ['*'],
 		],
-		'backuptasks' => [
+		'backuptasks'   => [
 			// We use per-site privileges in this controller
 			'*' => ['*'],
 		],
