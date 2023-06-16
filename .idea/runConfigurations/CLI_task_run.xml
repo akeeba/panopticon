@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CLI task:run" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="task:run -vvv">
+  <configuration default="false" name="CLI task:run" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="task:run -l -vvv">
     <method v="2" />
   </configuration>
 </component>

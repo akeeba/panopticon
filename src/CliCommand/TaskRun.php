@@ -21,6 +21,7 @@ use Awf\Timer\Timer;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
@@ -76,6 +77,8 @@ class TaskRun extends AbstractCommand
 			$container->loggerFactory->get('task_runner'),
 		]);
 
+		$loop = (bool) $input->getOption('loop') ?? false;
+
 		while ($timer->getTimeLeft() > 0.01)
 		{
 			if ($this->getTasksPausedFlag())
@@ -84,12 +87,32 @@ class TaskRun extends AbstractCommand
 				break;
 			}
 
-			if (!$model->runNextTask($logger, $this->ioStyle))
+			if (!$model->runNextTask($logger, $this->ioStyle) && !$loop)
 			{
 				break;
 			}
+
+			if ($timer->getTimeLeft() < 5)
+			{
+				$logger->debug('Not enough time left; exiting');
+
+				break;
+			}
+
+			$logger->debug(sprintf(
+				'No tasks; waiting for 5 seconds. Time left before exiting: %0.1fs',
+				$timer->getTimeLeft()
+			));
+
+			sleep(5);
 		}
 
 		return Command::SUCCESS;
+	}
+
+	protected function configure()
+	{
+		$this
+			->addOption('loop', 'l', InputOption::VALUE_NEGATABLE, 'Enter a wait loop if no tasks exist?', false);
 	}
 }
