@@ -21,8 +21,8 @@ $item = $this->getModel();
         <?php $editURL = $item->getAvatarEditUrl(); ?>
         @unless(empty($editURL))
         <div>
-            <a href="" class="btn btn-secondary" role="button">
-                Edit avatar
+            <a href="{{ $editURL }}" target="_blank" class="btn btn-secondary" role="button">
+                @lang('PANOPTICON_USERS_LBL_AVATAR_EDIT')
                 <span class="fa fa-external-link" aria-hidden="true"></span>
             </a>
         </div>
