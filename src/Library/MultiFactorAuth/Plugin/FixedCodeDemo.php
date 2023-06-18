@@ -203,7 +203,7 @@ class FixedCodeDemo extends Observer
 	 *
 	 * @return  bool
 	 */
-	public function onLoginGuardTfaValidate(Mfa $record, User $user, ?string $code): bool
+	public function onMfaValidate(Mfa $record, User $user, ?string $code): bool
 	{
 		// Make sure we are actually meant to handle this method
 		if ($record->method != self::METHOD_NAME)

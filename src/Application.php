@@ -197,7 +197,7 @@ class Application extends AWFApplication
 			{
 				$this->conditionalRedirectToCronSetup();
 
-				if (!$this->getMfaCheckedFlag())
+				if (!$this->getMfaCheckedFlag() && $manager->getUser()->getId() > 0)
 				{
 					$this->setMfaCheckedFlag(true);
 				}
