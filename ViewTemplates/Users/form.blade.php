@@ -203,7 +203,7 @@ JS;
     @if ($this->canEditMFA)
     <div class="row g-2">
         <div class="col-12">
-            <span class="display-1">MFA</span>
+            @include('Users/form_mfa')
         </div>
     </div>
     @endif

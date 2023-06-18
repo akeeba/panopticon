@@ -63,6 +63,17 @@ class Html extends BaseHtmlView
 	{
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
 
+		$js = <<< JS
+window.addEventListener('DOMContentLoaded', () => {
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {
+            html: true
+        }))
+    });
+
+JS;
+		$this->container->application->getDocument()->addScriptDeclaration($js);
+
 		$ret = $this->onBeforeEditCrud();
 
 		if ($ret)
@@ -114,7 +125,7 @@ class Html extends BaseHtmlView
 
 		if ($this->getLayout() != 'firsttime')
 		{
-			$this->setLayout('default');
+			$this->setLayout('form');
 		}
 
 		$this->methods = $model->getMethods($editedUser);

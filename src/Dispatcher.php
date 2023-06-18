@@ -37,7 +37,7 @@ class Dispatcher extends AWFDispatcher
 			// Access Denied: redirect to the login page
 			if ($e->getCode() === 403 && !$this->container->userManager->getUser()->getId())
 			{
-				$returnUrl = base64_encode(Uri::current());
+				$returnUrl = base64_encode(Uri::getInstance()->toString());
 				$redirectUrl = $this->container->router->route(
 					sprintf('index.php?view=login&return=%s', $returnUrl)
 				);

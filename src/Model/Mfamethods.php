@@ -53,8 +53,8 @@ class Mfamethods extends Model
 
 		foreach ($rawMethods as $method)
 		{
-			$method['active']         = [];
-			$methods[$method['name']] = $method;
+			$method->active = [];
+			$methods[$method->name] = $method;
 		}
 
 		// Put the user MFA records into the methods array
@@ -69,7 +69,10 @@ class Mfamethods extends Model
 					continue;
 				}
 
-				$methods[$record->method]['active'][$record->id] = $record;
+				// We have to do this because you can't update the value returned by a magic __get or offsetGet.
+				$active = $methods[$record->method]->active;
+				$active[$record->id] = $record;
+				$methods[$record->method]->active = $active;
 			}
 		}
 
@@ -298,7 +301,7 @@ class Mfamethods extends Model
 
 		if ($method && isset($this->mfaMethods[$method]))
 		{
-			$title = $this->mfaMethods[$method]['display'];
+			$title = $this->mfaMethods[$method]->display;
 		}
 
 		$record = DataModel::getTmpInstance('', 'Mfa');
@@ -335,7 +338,7 @@ class Mfamethods extends Model
 
 		foreach ($mfaMethods as $method)
 		{
-			$this->mfaMethods[$method['name']] = $method;
+			$this->mfaMethods[$method->name] = $method;
 		}
 
 		// We also need to add the backup codes method

@@ -40,12 +40,12 @@ abstract class Helper
 
 				$method = new MethodDescriptor($method);
 
-				if (empty($method['name']))
+				if (empty($method->name))
 				{
 					continue;
 				}
 
-				$ret[$method['name']] = $method;
+				$ret[$method->name] = $method;
 			}
 
 			return $ret;
