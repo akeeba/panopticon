@@ -13,6 +13,9 @@ use Awf\Uri\Uri;
 
 $baseUri = Uri::getInstance($this->item->getBaseUrl());
 $canEdit = $this->container->userManager->getUser()->getPrivilege('panopticon.admin');
+$connectorVersion = $this->item->getConfig()->get('core.panopticon.version');
+$connectorAPI = $this->item->getConfig()->get('core.panopticon.api');
+
 ?>
 
 <h3 class="mt-2 pb-1 border-bottom border-3 border-primary-subtle d-flex flex-row align-items-center gap-2">
@@ -27,12 +30,19 @@ $canEdit = $this->container->userManager->getUser()->getPrivilege('panopticon.ad
     @endif
 </h3>
 
-<div class="text-end">
-    <a href="{{{ $this->item->getBaseUrl() }}}" target="_blank" class="text-decoration-none">
-        <span class="{{ ($baseUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $baseUri->getScheme() }}}://</span><span
-                class="fw-medium">{{{ $baseUri->toString(['user', 'pass', 'host', 'port', 'path', 'query', 'fragment']) }}}</span>
-        <span class="fa fa-external-link-alt fw-light text-muted small" aria-hidden="true"></span>
-    </a>
+<div class="d-flex flex-column flex-md-row gap-1 gap-md-2">
+    @if (!empty($connectorVersion))
+    <div class="flex-md-grow-1 small text-muted">
+        @sprintf('PANOPTICON_SITES_LBL_CONNECTOR_VERSION', $this->escape($connectorVersion))
+    </div>
+    @endif
+    <div class="{{ empty($connectorVersion) ? 'flex-md-grow-1 text-end' : '' }}">
+        <a href="{{{ $this->item->getBaseUrl() }}}" target="_blank" class="text-decoration-none">
+            <span class="{{ ($baseUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $baseUri->getScheme() }}}://</span><span
+                    class="fw-medium">{{{ $baseUri->toString(['user', 'pass', 'host', 'port', 'path', 'query', 'fragment']) }}}</span>
+            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+        </a>
+    </div>
 </div>
 
 <div class="container my-3">
