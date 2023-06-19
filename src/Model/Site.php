@@ -368,6 +368,46 @@ class Site extends DataModel
 		return $url;
 	}
 
+	/**
+	 * Get the site administration interface login URL.
+	 *
+	 * If Admin Tools is installed this includes the secret word.
+	 *
+	 * @return  string
+	 * @since   1.0.0
+	 */
+	public function getAdminUrl(): string
+	{
+		$url = $this->getBaseUrl() . '/administrator';
+		$config = $this->getConfig();
+
+		if (!$config->get('core.admintools.enabled', false) || $config->get('core.admintools.renamed', false))
+		{
+			return $url;
+		}
+
+		$adminDir = $config->get('core.admintools.admindir', 'administrator');
+
+		if (!empty($adminDir) && $adminDir !== 'administrator')
+		{
+			$url = $this->getBaseUrl() . '/' . trim($adminDir, '/');
+		}
+
+		$secretWord = trim($config->get('core.admintools.secret_word', '') ?: '');
+
+		if (!empty($secretWord))
+		{
+			if (empty($adminDir))
+			{
+				$url .= '/index.php';
+			}
+
+			$url .= '?' . urlencode($secretWord);
+		}
+
+		return $url;
+	}
+
 	public function getAPIEndpointURL(): string
 	{
 		$url = rtrim($this->url, "/ \t\n\r\0\x0B");

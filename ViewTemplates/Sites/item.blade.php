@@ -11,10 +11,11 @@ defined('AKEEBA') || die;
 
 use Awf\Uri\Uri;
 
-$baseUri = Uri::getInstance($this->item->getBaseUrl());
-$canEdit = $this->container->userManager->getUser()->getPrivilege('panopticon.admin');
+$baseUri          = Uri::getInstance($this->item->getBaseUrl());
+$adminUri         = Uri::getInstance($this->item->getAdminUrl());
+$canEdit          = $this->container->userManager->getUser()->getPrivilege('panopticon.admin');
 $connectorVersion = $this->item->getConfig()->get('core.panopticon.version');
-$connectorAPI = $this->item->getConfig()->get('core.panopticon.api');
+$connectorAPI     = $this->item->getConfig()->get('core.panopticon.api');
 
 ?>
 
@@ -22,24 +23,29 @@ $connectorAPI = $this->item->getConfig()->get('core.panopticon.api');
     <span class="text-muted fw-light fs-4">#{{ $this->item->id }}</span>
     <span class="flex-grow-1">{{{ $this->item->name }}}</span>
     @if($canEdit)
-    <a class="btn btn-secondary" role="button"
-       href="@route(sprintf('index.php?view=site&id=%d&returnurl=%s', $this->item->id, base64_encode(Uri::getInstance()->toString())))">
-        <span class="fa fa-pencil-alt"></span>
-        <span class="visually-hidden">Edit</span>
-    </a>
+        <a class="btn btn-secondary" role="button"
+           href="@route(sprintf('index.php?view=site&id=%d&returnurl=%s', $this->item->id, base64_encode(Uri::getInstance()->toString())))">
+            <span class="fa fa-pencil-alt"></span>
+            <span class="visually-hidden">Edit</span>
+        </a>
     @endif
 </h3>
 
 <div class="d-flex flex-column flex-md-row gap-1 gap-md-2">
     @if (!empty($connectorVersion))
-    <div class="flex-md-grow-1 small text-muted">
-        @sprintf('PANOPTICON_SITES_LBL_CONNECTOR_VERSION', $this->escape($connectorVersion))
-    </div>
+        <div class="flex-md-grow-1 small text-muted">
+            @sprintf('PANOPTICON_SITES_LBL_CONNECTOR_VERSION', $this->escape($connectorVersion))
+        </div>
     @endif
-    <div class="{{ empty($connectorVersion) ? 'flex-md-grow-1 text-end' : '' }}">
+    <div class="{{ empty($connectorVersion) ? 'flex-md-grow-1 text-end' : '' }} d-flex flex-column">
         <a href="{{{ $this->item->getBaseUrl() }}}" target="_blank" class="text-decoration-none">
             <span class="{{ ($baseUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $baseUri->getScheme() }}}://</span><span
                     class="fw-medium">{{{ $baseUri->toString(['user', 'pass', 'host', 'port', 'path', 'query', 'fragment']) }}}</span>
+            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+        </a>
+        <a href="{{{ $this->item->getAdminUrl() }}}" target="_blank" class="text-decoration-none">
+            <span class="{{ ($adminUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $adminUri->getScheme() }}}://</span><span
+                    class="fw-medium">{{{ $adminUri->toString(['user', 'pass', 'host', 'port', 'path']) }}}</span>@if(!empty($adminUri->getQuery()))<span class="text-body-tertiary">?{{{ $adminUri->toString(['query', 'fragment']) }}}</span>@endif
             <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
         </a>
     </div>
