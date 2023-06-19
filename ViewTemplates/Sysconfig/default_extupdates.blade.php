@@ -120,6 +120,19 @@ $config = $this->container->appConfig;
                     @endif
                 </td>
                 <td>
+                    <?php
+                        $attribs = [
+	                        'class' => 'form-select',
+	                        'required' => 'required',
+                        ];
+
+		                if ($key === 'pkg_panopticon')
+		                {
+			                $attribs['disabled'] = true;
+			                $item->preference    = 'major';
+		                }
+                    ?>
+
                     {{ \Awf\Html\Select::genericList(
                         data: [
                             ''      => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_GLOBAL',
@@ -129,10 +142,7 @@ $config = $this->container->appConfig;
                             'major' => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_MAJOR',
                         ],
                         name: 'extupdates['.$key.']',
-                        attribs: [
-                            'class' => 'form-select',
-                            'required' => 'required',
-                        ],
+                        attribs: $attribs,
                         selected: $item->preference ?? '',
                         idTag: 'extupdates_' . $key,
                         translate: true

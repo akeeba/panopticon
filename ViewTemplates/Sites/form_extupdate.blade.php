@@ -95,7 +95,18 @@ use Awf\Text\Text;
             @endif
         </td>
         <td>
-            {{-- option.label.toHtml --}}
+            <?php
+                $attribs = [
+	                'class' => 'form-select',
+	                'required' => 'required',
+                ];
+
+		        if ($key === 'pkg_panopticon')
+		        {
+			        $attribs['disabled'] = true;
+			        $item->preference    = 'major';
+		        }
+            ?>
             {{ \Awf\Html\Select::genericList(
                 data: [
                     ''      => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_GLOBAL_ALT') .
@@ -107,10 +118,7 @@ use Awf\Text\Text;
                     'major' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_MAJOR'),
                 ],
                 name: 'extupdates['.$key.']',
-                attribs: [
-                    'class' => 'form-select',
-                    'required' => 'required',
-                ],
+                attribs: $attribs,
                 selected: $item->preference ?? '',
                 idTag: 'extupdates_' . $key,
                 translate: false

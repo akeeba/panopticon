@@ -165,6 +165,11 @@ class Sysconfig extends Model
 						continue;
 					}
 
+					if ($ext->element === 'pkg_panopticon')
+					{
+						$preferences[$extKey] = 'major';
+					}
+
 					$extensions[$extKey] = (object)[
 						'element'     => $ext->element,
 						'type'        => $ext->type,
