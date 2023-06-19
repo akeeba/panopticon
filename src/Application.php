@@ -645,7 +645,7 @@ class Application extends AWFApplication
 
 		foreach (
 			[
-				FixedCodeDemo::class,
+				//FixedCodeDemo::class,
 				PassKeys::class,
 			] as $className
 		)
