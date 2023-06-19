@@ -227,6 +227,7 @@ class Credentials
 		$request = (new HttpFactory())->createServerRequest('', Uri::current(), $_SERVER);
 
 		// Load the data
+		$data = $this->reshapeValidationData($data);
 		$publicKeyCredential = $publicKeyCredentialLoader->load($data);
 		$response            = $publicKeyCredential->getResponse();
 
@@ -484,7 +485,21 @@ class Credentials
 		);
 	}
 
-	private function reshapeRegistrationData(string $data)
+	/**
+	 * Reshape the PassKey registration data.
+	 *
+	 * Some of the data returned from the browser are encoded using regular Base64 (instead of URL-safe Base64) and/or
+	 * have padding. The WebAuthn library requires all data to be encoded using the URL-safe Base64 algorithm *without*
+	 * padding.
+	 *
+	 * This method will safely convert between the actual and the desired format.
+	 *
+	 * @param   string  $data
+	 *
+	 * @return  string
+	 * @since   1.0.0
+	 */
+	private function reshapeRegistrationData(string $data): string
 	{
 		$json = @Base64UrlSafe::decode($data);
 
@@ -538,5 +553,52 @@ class Credentials
 		}
 
 		return Base64UrlSafe::encodeUnpadded(json_encode($decodedData));
+	}
+
+	/**
+	 * Reshape the PassKey validation data.
+	 *
+	 * Some of the data returned from the browser are encoded using regular Base64 (instead of URL-safe Base64) and/or
+	 * have padding. The WebAuthn library requires all data to be encoded using the URL-safe Base64 algorithm *without*
+	 * padding.
+	 *
+	 * This method will safely convert between the actual and the desired format.
+	 *
+	 * @param   string  $data
+	 *
+	 * @return  string
+	 * @since   1.0.0
+	 */
+	private function reshapeValidationData(string $data): string
+	{
+		$decodedData = @json_decode($data);
+
+		if (empty($decodedData) || !is_object($decodedData))
+		{
+			return $data;
+		}
+
+		if ($decodedData->id ?? null)
+		{
+			$decodedData->id = Base64UrlSafe::encodeUnpadded(Base64UrlSafe::decode($decodedData->id));
+		}
+
+		if ($decodedData->rawId ?? null)
+		{
+			$decodedData->rawId = Base64::encodeUnpadded(Base64UrlSafe::decode($decodedData->id));
+		}
+
+		if (!is_object($decodedData->response ?? null))
+		{
+			return json_encode($decodedData);
+		}
+
+		foreach ($decodedData->response as $key => $value)
+		{
+
+			$decodedData->response->{$key} = Base64UrlSafe::encodeUnpadded(Base64::decode($decodedData->response->{$key}));
+		}
+
+		return json_encode($decodedData);
 	}
 }
