@@ -159,6 +159,10 @@
         <exclude name="vendor/joomla/uri/ruleset*" />
         <exclude name="vendor/joomla/uri/SECURITY.md" />
 
+        <exclude name="vendor/nette/schema/contributing.md" />
+
+        <exclude name="vendor/nette/utils/.phpstorm.meta.php" />
+
         <exclude name="vendor/phpmailer/phpmailer/COMMITMENT" />
         <exclude name="vendor/phpmailer/phpmailer/get_*.php" />
         <exclude name="vendor/phpmailer/phpmailer/SECURITY.md" />
@@ -166,8 +170,17 @@
 
         <exclude name="vendor/psr/cache/CHANGELOG.md" />
 
+        <exclude name="vendor/psr/clock/CHANGELOG.md" />
+
+        <exclude name="vendor/psr/event-dispatcher/.editorconfig" />
+
+        <exclude name="vendor/psr/http-client/CHANGELOG.md" />
+
         <exclude name="vendor/psr/http-factory/.gitignore" />
         <exclude name="vendor/psr/http-factory/.pullapprove.yml" />
+
+        <exclude name="vendor/psr/http-message/docs/**" />
+        <exclude name="vendor/psr/http-message/docs/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/cache-contracts/CHANGELOG.md" />
 

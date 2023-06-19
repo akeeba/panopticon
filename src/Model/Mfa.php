@@ -127,6 +127,19 @@ class Mfa extends DataModel
 		return $this;
 	}
 
+	public function getOptions(): array
+	{
+		try
+		{
+			return is_array($this->options) ? $this->options : (@json_decode($this->options, true) ?: []);
+		}
+		catch (\Exception $e)
+		{
+			return [];
+		}
+	}
+
+
 	protected function onBeforeDelete(int &$pk): bool
 	{
 		$record = $this;
@@ -232,7 +245,7 @@ class Mfa extends DataModel
 		// This record is marked as default, so we must unset the default flag from all other records for this user.
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true)
-			->update($db->quoteName('#__user_mfa'))
+			->update($db->quoteName('#__mfa'))
 			->set($db->quoteName('default') . ' = 0')
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($this->user_id))
 			->where($db->quoteName('id') . ' != ' . $db->quote($this->getId()));
@@ -254,7 +267,7 @@ class Mfa extends DataModel
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true)
 			->select('COUNT(*)')
-			->from($db->quoteName('#__user_mfa'))
+			->from($db->quoteName('#__mfa'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($userId));
 
 		return (int) ($db->setQuery($query)->loadResult() ?: 0);

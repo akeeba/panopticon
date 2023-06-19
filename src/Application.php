@@ -12,6 +12,8 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Application\UserAuthenticationPassword;
 use Akeeba\Panopticon\Application\UserPrivileges;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
+use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\FixedCodeDemo;
+use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\PassKeys;
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Application\Application as AWFApplication;
@@ -141,7 +143,8 @@ class Application extends AWFApplication
 
 		$avatar = $user->getAvatar(64);
 
-		return "<img src=\"$avatar\" class=\"me-1\" style=\"width: 1.25em; border-radius: 0.625em \" >" . $user->getUsername();
+		return "<img src=\"$avatar\" class=\"me-1\" style=\"width: 1.25em; border-radius: 0.625em \" >" .
+			$user->getUsername();
 	}
 
 	public static function getUserNameTitle(): string
@@ -159,6 +162,8 @@ class Application extends AWFApplication
 		$this->discoverSessionSavePath();
 		$this->setTemplate('default');
 		$this->loadLanguages();
+
+		$this->registerMultifactorAuthentication();
 
 		// Will I have to redirect to the setup page?
 		$redirectToSetup = $this->redirectToSetup();
@@ -192,6 +197,11 @@ class Application extends AWFApplication
 			if (!$this->needsMFA())
 			{
 				$this->conditionalRedirectToCronSetup();
+
+				if (!$this->getMfaCheckedFlag() && $manager->getUser()->getId() > 0)
+				{
+					$this->setMfaCheckedFlag(true);
+				}
 			}
 			else
 			{
@@ -349,13 +359,15 @@ class Application extends AWFApplication
 		// Force the cookie timeout to coincide with the session timeout
 		if ($sessionTimeout > 0)
 		{
-			$this->container->session->setCookieParams([
-				'lifetime' => $sessionTimeout * 60,
-				'path'     => $uri->getPath(),
-				'domain'   => $uri->getHost(),
-				'secure'   => $uri->getScheme() === 'https',
-				'httponly' => true,
-			]);
+			$this->container->session->setCookieParams(
+				[
+					'lifetime' => $sessionTimeout * 60,
+					'path'     => $uri->getPath(),
+					'domain'   => $uri->getHost(),
+					'secure'   => $uri->getScheme() === 'https',
+					'httponly' => true,
+				]
+			);
 		}
 
 		// Calculate a hash for the current user agent and IP address
@@ -391,7 +403,9 @@ class Application extends AWFApplication
 		else
 		{
 			// ... put your server on a bed of thermite and light it with a magnesium flare!
-			throw new Exception('Your server does not provide any kind of hashing method. Please use a decent host.', 500);
+			throw new Exception(
+				'Your server does not provide any kind of hashing method. Please use a decent host.', 500
+			);
 		}
 
 		// Get the current session's key
@@ -548,9 +562,11 @@ class Application extends AWFApplication
 
 		$this->container->segment->setFlash('return_url', $return_url);
 
-		$this->getContainer()->input->setData([
-			'view' => 'login',
-		]);
+		$this->getContainer()->input->setData(
+			[
+				'view' => 'login',
+			]
+		);
 	}
 
 	private function setupMediaVersioning(): void
@@ -561,7 +577,9 @@ class Application extends AWFApplication
 
 		if (!$isDebug && !$isDevelopment)
 		{
-			$this->getContainer()->mediaQueryKey = md5(__DIR__ . ':' . AKEEBA_PANOPTICON_VERSION . ':' . AKEEBA_PANOPTICON_DATE);
+			$this->getContainer()->mediaQueryKey = md5(
+				__DIR__ . ':' . AKEEBA_PANOPTICON_VERSION . ':' . AKEEBA_PANOPTICON_DATE
+			);
 		}
 	}
 
@@ -580,9 +598,11 @@ class Application extends AWFApplication
 			return false;
 		}
 
-		$this->getContainer()->input->setData([
-			'view' => 'setup',
-		]);
+		$this->getContainer()->input->setData(
+			[
+				'view' => 'setup',
+			]
+		);
 
 		return true;
 	}
@@ -618,4 +638,20 @@ class Application extends AWFApplication
 
 		$this->redirect($captiveUrl);
 	}
+
+	private function registerMultifactorAuthentication()
+	{
+		$dispatcher = $this->container->eventDispatcher;
+
+		foreach (
+			[
+				FixedCodeDemo::class,
+				PassKeys::class,
+			] as $className
+		)
+		{
+			$o = new $className($dispatcher);
+		}
+	}
+
 }

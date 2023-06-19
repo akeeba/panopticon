@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!---
+  - @package   AkeebaLoginGuard
+  - @copyright Copyright (c)2016-2022 Nicholas K. Dionysopoulos / Akeeba Ltd
+  - @license   GNU General Public License version 3, or later
+  -->
+
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="113"
+   height="45"
+   viewBox="0 0 113 45.000001"
+   id="svg4464"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="smsapi.svg">
+  <defs
+     id="defs4466" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="106.76472"
+     inkscape:cy="-51.59982"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1500"
+     inkscape:window-height="937"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4469">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1007.3621)">
+    <g
+       id="g4869"
+       transform="matrix(0.91213126,0,0,0.91213126,-12.222595,92.295735)">
+      <g
+         transform="matrix(0.2970761,0,0,0.2970761,-149.66709,745.3003)"
+         id="g4709"
+         style="display:inline">
+        <g
+           id="g4705">
+          <rect
+             ry="5"
+             rx="5"
+             y="877.36212"
+             x="550"
+             height="100"
+             width="175"
+             id="rect4658"
+             style="fill:#008000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path4662"
+             d="m 665.00001,971.20781 50,0 -75,57.56269 z"
+             style="fill:#008000;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        </g>
+        <g
+           id="g4696"
+           style="fill:#ffffff"
+           transform="matrix(0.65664915,0,0,0.65664915,195.27555,318.256)">
+          <circle
+             r="25"
+             cy="927.36212"
+             cx="600"
+             id="path4664"
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none" />
+          <circle
+             r="25"
+             cy="926.20776"
+             cx="677.67877"
+             id="path4664-2"
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none" />
+          <circle
+             r="25"
+             cy="927.61615"
+             cx="747.16748"
+             id="path4664-2-8"
+             style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none" />
+        </g>
+      </g>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4701"
+         y="1031.6979"
+         x="71.20417"
+         style="font-style:normal;font-weight:normal;font-size:30.27212334px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-weight:normal"
+           y="1031.6979"
+           x="71.20417"
+           id="tspan4703"
+           sodipodi:role="line">SMS</tspan></text>
+    </g>
+  </g>
+</svg>

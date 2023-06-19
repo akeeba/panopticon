@@ -9,9 +9,10 @@ namespace Akeeba\Panopticon\Library\DataShape;
 
 defined('AKEEBA') || die;
 
+use ArrayAccess;
 use InvalidArgumentException;
 
-class AbstractDataShape
+class AbstractDataShape implements ArrayAccess
 {
 	public function __construct($array = [])
 	{
@@ -22,7 +23,7 @@ class AbstractDataShape
 
 		foreach (($array instanceof self) ? $array->asArray() : $array as $k => $v)
 		{
-			$this[$k] = $v;
+			$this->$k = $v;
 		}
 	}
 
@@ -40,7 +41,7 @@ class AbstractDataShape
 				continue;
 			}
 
-			$this[$k] = $v;
+			$this->$k = $v;
 		}
 
 		return $this;
@@ -74,12 +75,16 @@ class AbstractDataShape
 
 		if (method_exists($this, $methodName))
 		{
-			return $this->{$methodName}($value);
+			$this->{$methodName}($value);
+
+			return null;
 		}
 
 		if (property_exists($this, $name))
 		{
 			$this->{$name} = $value;
+
+			return null;
 		}
 
 		throw new InvalidArgumentException(sprintf('Property %s not found in %s', $name, __CLASS__));
