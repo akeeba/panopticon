@@ -46,6 +46,7 @@ $model = $this->getModel();
 
 <form action="@route('index.php?view=captive&task=validate&record_id=' . $this->record->id)"
       method="post"
+      name="captive-form" id="captive-form"
 >
     @if ($this->renderOptions['field_type'] == 'custom')
         {{ $this->renderOptions['html'] }}
@@ -75,10 +76,15 @@ $model = $this->getModel();
         <div class="col-sm-9 offset-sm-3 d-flex gap-3 align-items-center">
             <button class="btn btn-lg btn-primary px-5"
                     style="{{ $this->renderOptions['hide_submit'] ? 'display: none' : '' }}"
+                    id="captive-button-submit"
                     type="submit">
                 <span class="fa fa-unlock-keyhole" aria-hidden="true"></span>
                 @lang('PANOPTICON_MFA_LBL_VALIDATE')
             </button>
+
+            @if ($this->renderOptions['field_type'] == 'custom')
+                {{ $this->renderOptions['html_button'] ?? '' }}
+            @endif
 
             @if (count($this->records) > 1)
                 <a href="@route('index.php?view=captive&task=select')"

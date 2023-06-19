@@ -91,6 +91,14 @@ class CaptiveRenderOptions extends AbstractDataShape
 	protected $html = '';
 
 	/**
+	 * Custom HTML button
+	 *
+	 * @var   string
+	 * @since 1.0.0
+	 */
+	protected $html_button = '';
+
+	/**
 	 * Custom HTML to display below the MFA form
 	 *
 	 * @var   string

@@ -18,6 +18,8 @@ use Cose\Algorithm\Signature\RSA;
 use Cose\Algorithms;
 use Exception;
 use GuzzleHttp\Psr7\HttpFactory;
+use ParagonIE\ConstantTime\Base64;
+use ParagonIE\ConstantTime\Base64UrlSafe;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Throwable;
@@ -52,7 +54,10 @@ defined('AKEEBA') || die;
 
 class Credentials
 {
-	public function __construct(private readonly PublicKeyCredentialSourceRepository $repository, private ?LoggerInterface $logger) {
+	public function __construct(
+		private readonly PublicKeyCredentialSourceRepository $repository, private ?LoggerInterface $logger
+	)
+	{
 		$this->logger = $this->logger ?? Factory::getContainer()->loggerFactory->get('mfa_webauthn');
 	}
 
@@ -149,19 +154,19 @@ class Credentials
 
 		if (empty($userId))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_WEBAUTHN_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
 		// Make sure the user exists
 		if (Factory::getContainer()->userManager->getUser($userId)->getId() != $userId)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_WEBAUTHN_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
 		// Make sure the user is ourselves (we cannot perform 2SV on behalf of another user!)
 		if (Factory::getContainer()->userManager->getUser()->getId() != $userId)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_WEBAUTHN_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
 		// Make sure the public key credential request options in the session are valid
@@ -171,7 +176,7 @@ class Credentials
 		if (!is_object($publicKeyCredentialRequestOptions) || empty($publicKeyCredentialRequestOptions) ||
 			!($publicKeyCredentialRequestOptions instanceof PublicKeyCredentialRequestOptions))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_WEBAUTHN_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
 		// Unserialize the browser response data
@@ -378,7 +383,7 @@ class Credentials
 
 		if (empty($encodedOptions))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_WEBAUTHN_ERR_CREATE_NO_PK'));
+			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_NO_PK'));
 		}
 
 		try
@@ -395,7 +400,7 @@ class Credentials
 			!($publicKeyCredentialCreationOptions instanceof PublicKeyCredentialCreationOptions)
 		)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_WEBAUTHN_ERR_CREATE_NO_PK'));
+			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_NO_PK'));
 		}
 
 		// Retrieve the stored user ID and make sure it's the same one in the request.
@@ -405,7 +410,7 @@ class Credentials
 
 		if (($myUser->getId() <= 0) || ($myUserId != $storedUserId))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_WEBAUTHN_ERR_CREATE_INVALID_USER'));
+			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_USER'));
 		}
 
 		// Cose Algorithm Manager
@@ -455,6 +460,9 @@ class Credentials
 		$request = (new HttpFactory())->createServerRequest('', Uri::current(), $_SERVER);
 
 		// Load the data
+
+		$data = $this->reshapeRegistrationData($data);
+
 		$publicKeyCredential = $publicKeyCredentialLoader->load(base64_decode($data));
 		$response            = $publicKeyCredential->getResponse();
 
@@ -474,5 +482,61 @@ class Credentials
 		return $authenticatorAttestationResponseValidator->check(
 			$response, $publicKeyCredentialCreationOptions, $request
 		);
+	}
+
+	private function reshapeRegistrationData(string $data)
+	{
+		$json = @Base64UrlSafe::decode($data);
+
+		if ($json === false)
+		{
+			return $data;
+		}
+
+		$decodedData = @json_decode($json);
+
+		if (empty($decodedData) || !is_object($decodedData))
+		{
+			return $data;
+		}
+
+		if (!isset($decodedData->response) || !is_object($decodedData->response))
+		{
+			return $data;
+		}
+
+		$clientDataJSON = $decodedData->response->clientDataJSON ?? null;
+
+		if ($clientDataJSON)
+		{
+			$json = Base64UrlSafe::decode($clientDataJSON);
+
+			if ($json !== false)
+			{
+				$clientDataJSON = @json_decode($json);
+
+				if (!empty($clientDataJSON) && is_object($clientDataJSON) && isset($clientDataJSON->challenge))
+				{
+					$clientDataJSON->challenge = Base64UrlSafe::encodeUnpadded(Base64UrlSafe::decode($clientDataJSON->challenge));
+
+					$decodedData->response->clientDataJSON = Base64UrlSafe::encodeUnpadded(json_encode($clientDataJSON));
+				}
+
+			}
+		}
+
+		$attestationObject = $decodedData->response->attestationObject ?? null;
+
+		if ($attestationObject)
+		{
+			$decoded = Base64::decode($attestationObject);
+
+			if ($decoded !== false)
+			{
+				$decodedData->response->attestationObject = Base64UrlSafe::encodeUnpadded($decoded);
+			}
+		}
+
+		return Base64UrlSafe::encodeUnpadded(json_encode($decodedData));
 	}
 }

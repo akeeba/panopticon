@@ -80,8 +80,8 @@ class MFA implements PublicKeyCredentialSourceRepository
 		}
 
 		$arrayKeys   = $results->modelKeys();
-		$arrayValues = array_map(
-			function (MfaModel $result) use ($userId) {
+		$arrayValues = $results
+			->map(			function (MfaModel $result) use ($userId) {
 				$options = $result->getOptions();
 
 				if (empty($options) || !isset($options['pubkeysource']))
@@ -101,9 +101,8 @@ class MFA implements PublicKeyCredentialSourceRepository
 				}
 
 				return null;
-			},
-			$results->toArray()
-		);
+			})
+			->toArray();
 
 		unset($results);
 

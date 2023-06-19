@@ -7,6 +7,8 @@
 
 namespace Akeeba\Panopticon\Library\MultiFactorAuth\Plugin;
 
+defined('AKEEBA') || die;
+
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Model\Mfa;
 use Awf\Event\Observer;
@@ -14,8 +16,6 @@ use Awf\Input\Input;
 use Awf\Text\Text;
 use RuntimeException;
 use stdClass;
-
-defined('AKEEBA') || die;
 
 class FixedCodeDemo extends Observer
 {

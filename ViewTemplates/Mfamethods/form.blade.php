@@ -26,6 +26,7 @@ $userId   = $this->user->getId() ?? 0;
 ?>
 
 <form action="@route(sprintf('index.php?view=mfamethod&task=save&id=%d&method=%s&user_id=%d', $recordId, $method, $userId))"
+      id="mfa-method-edit" name="mfa-method-edit"
       method="post">
 
     <div class="row mb-3">
@@ -107,12 +108,16 @@ $userId   = $this->user->getId() ?? 0;
         <div class="col-sm-9 offset-sm-3 d-flex flex-row gap-3 align-items-center">
 	        @if ($this->renderOptions['show_submit'] || $this->isEditExisting)
                 <div>
-                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                    <button type="submit" class="btn btn-primary btn-lg px-5" id="mfa-register-submit">
                         <span class="fa fa-check-circle" aria-hidden="true"></span>
                         @lang('PANOPTICON_MFA_LBL_EDIT_SUBMIT')
                     </button>
                 </div>
 	        @endif
+
+            @if ($this->renderOptions['field_type'] === 'custom')
+                {{ $this->renderOptions['html_button'] ?? '' }}
+            @endif
 
             <div>
                 <a href="<?= $cancelURL ?>" role="button"
