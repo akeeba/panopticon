@@ -62,6 +62,7 @@ class Site extends DataModel
 {
 	use ApiRequestTrait;
 	use AkeebaBackupIntegrationTrait;
+	use AdminToolsIntegrationTrait;
 
 	public function __construct(Container $container = null)
 	{
