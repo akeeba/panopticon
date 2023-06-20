@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
+use Akeeba\Panopticon\Task\AdminToolsTrait;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
@@ -32,6 +33,7 @@ class Html extends DataViewHtml
 		onBeforeAdd as onBeforeAddCrud;
 		onBeforeEdit as onBeforeEditCrud;
 	}
+	use AdminToolsTrait;
 
 	public object $extension;
 
@@ -52,6 +54,10 @@ class Html extends DataViewHtml
 	protected string $defaultExtUpdatePreference = 'none';
 
 	private array $backupProfiles = [];
+
+	private bool $hasAdminTools = false;
+
+	private bool $hasAdminToolsPro = false;
 
 	public function onBeforeDlkey(): bool
 	{
@@ -170,6 +176,9 @@ class Html extends DataViewHtml
 		{
 			$this->backupRecords = $e;
 		}
+
+		$this->hasAdminTools = $this->hasAdminTools($this->item, false);
+		$this->hasAdminToolsPro = $this->hasAdminTools($this->item, true);
 
 		$document = $this->container->application->getDocument();
 

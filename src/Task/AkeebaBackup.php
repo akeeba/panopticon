@@ -7,22 +7,22 @@
 
 namespace Akeeba\Panopticon\Task;
 
+defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Queue\QueueItem;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
+use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 
-defined('AKEEBA') || die;
-
 #[AsTask(
 	name: 'akeebabackup',
 	description: 'PANOPTICON_TASKTYPE_AKEEBABACKUP'
 )]
-class AkeebaBackup extends \Akeeba\Panopticon\Library\Task\AbstractCallback
+class AkeebaBackup extends AbstractCallback
 {
 
 	public function __invoke(object $task, Registry $storage): int

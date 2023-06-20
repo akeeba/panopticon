@@ -9,7 +9,6 @@ namespace Akeeba\Panopticon\CliCommand;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\CliCommand\Trait\ConsoleLoggerTrait;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
@@ -25,12 +24,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-	name: 'site:backup',
-	description: 'Take a backup of a site using Akeeba Backup',
+	name: 'site:scanner',
+	description: 'Scan the site\'s files using Admin Tools Professional\'s PHP File Change Scanner',
 	hidden: false,
 )]
-#[ConfigAssertion(false)]
-class SiteBackup extends AbstractCommand
+class SiteScanner extends AbstractCommand
 {
 	use ConsoleLoggerTrait;
 	use TasksPausedTrait;
@@ -46,7 +44,7 @@ class SiteBackup extends AbstractCommand
 		$container = Factory::getContainer();
 		$container->appConfig->loadConfiguration();
 
-		$callback  = $container->taskRegistry->get('akeebabackup');
+		$callback  = $container->taskRegistry->get('filescanner');
 
 		if ($callback instanceof AbstractCallback)
 		{
@@ -55,19 +53,6 @@ class SiteBackup extends AbstractCommand
 
 		$params  = new Registry();
 		$storage = new Registry();
-
-		$profile     = $input->getOption('profile');
-		$description = $input->getOption('description');
-
-		if (!empty($profile))
-		{
-			$params->set('profile_id', $profile);
-		}
-
-		if (!empty($description))
-		{
-			$params->set('description', $description);
-		}
 
 		$dummyTask          = new \stdClass();
 		$dummyTask->site_id = $input->getArgument('site');
@@ -80,14 +65,11 @@ class SiteBackup extends AbstractCommand
 		} while ($return === Status::WILL_RESUME->value);
 
 		return Command::SUCCESS;
-
 	}
 
 	protected function configure(): void
 	{
 		$this
-			->addArgument('site', InputOption::VALUE_REQUIRED, 'The numeric ID of the site which will be backed up.')
-			->addOption('profile', null, InputOption::VALUE_OPTIONAL, 'The numeric profile ID used for the backup.', 1)
-			->addOption('description', null, InputOption::VALUE_OPTIONAL, 'The description of the backup', null);
+			->addArgument('site', InputOption::VALUE_REQUIRED, 'The numeric ID of the site which will scanned.');
 	}
 }
