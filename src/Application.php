@@ -161,7 +161,6 @@ class Application extends AWFApplication
 
 		$this->discoverSessionSavePath();
 		$this->setTemplate('default');
-		$this->loadLanguages();
 
 		$this->registerMultifactorAuthentication();
 
@@ -179,6 +178,8 @@ class Application extends AWFApplication
 		{
 			$this->container->appConfig->loadConfiguration();
 		}
+
+		$this->loadLanguages();
 
 		// Configure the user manager
 		$this->container->appConfig->set('user_class', User::class);
@@ -460,8 +461,31 @@ class Application extends AWFApplication
 
 	private function loadLanguages(): void
 	{
-		Text::loadLanguage(null, 'panopticon', '.ini', false, $this->container->languagePath);
-		Text::loadLanguage('en-GB', 'panopticon', '.ini', false, $this->container->languagePath);
+		try
+		{
+			$defaultLanguage = $this->container->appConfig->get('language', 'en-GB');
+		}
+		catch (Exception $e)
+		{
+			$defaultLanguage = 'en-GB';
+		}
+
+		$detectedLanguage = Text::detectLanguage('panopticon', '.ini', $this->container->languagePath);
+
+		// Always load the English (Great Britain) language. It contains all the strings.
+		Text::loadLanguage('en-GB', 'panopticon', '.ini', true, $this->container->languagePath);
+
+		// Load the site's default language, if it's different from en-GB.
+		if ($defaultLanguage != 'en-GB')
+		{
+			Text::loadLanguage($defaultLanguage, 'panopticon', '.ini', true, $this->container->languagePath);
+		}
+
+		// Load the auto-detected preferred language (per browser settings), as long as it's not one we already loaded.
+		if (!in_array($detectedLanguage, [$defaultLanguage, 'en-GB']))
+		{
+			Text::loadLanguage($detectedLanguage, 'panopticon', '.ini', true, $this->container->languagePath);
+		}
 	}
 
 	private function applyTimezonePreference(): void
