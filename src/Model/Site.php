@@ -398,7 +398,7 @@ class Site extends DataModel
 
 		if (!empty($secretWord))
 		{
-			if (empty($adminDir))
+			if (empty($adminDir) || $adminDir === 'administrator')
 			{
 				$url .= '/index.php';
 			}

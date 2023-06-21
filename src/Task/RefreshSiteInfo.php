@@ -264,6 +264,26 @@ class RefreshSiteInfo extends AbstractCallback
 								&& $config->get('core.updateSiteAvailable')
 							);
 
+							$panopticon = $attributes->panopticon ?? null;
+
+							if (!empty($panopticon) && (is_object($panopticon) || is_array($panopticon)))
+							{
+								foreach ($panopticon as $k => $v)
+								{
+									$config->set('core.panopticon.' . $k, $v);
+								}
+							}
+
+							$admintools = $attributes->admintools ?? null;
+
+							if (!empty($admintools) && (is_object($admintools) || is_array($admintools)))
+							{
+								foreach ($admintools as $k => $v)
+								{
+									$config->set('core.admintools.' . $k, $v);
+								}
+							}
+
 							try
 							{
 								$site->save([

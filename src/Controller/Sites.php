@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -31,6 +32,7 @@ class Sites extends DataController
 	use EnqueueJoomlaUpdateTrait;
 	use EnqueueExtensionUpdateTrait;
 	use AkeebaBackupIntegrationTrait;
+	use AdminToolsIntegrationTrait;
 
 	private const CHECKBOX_KEYS = [
 		'config.core_update.email_error',

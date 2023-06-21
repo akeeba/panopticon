@@ -27,7 +27,7 @@ trait AdminToolsIntegrationTrait
 	{
 		static $result = null;
 
-		$result ??= $this->hasAdminToolsPro();
+		$result ??= $this->hasAdminTools($this, true);
 
 		return $result;
 	}
@@ -52,7 +52,7 @@ trait AdminToolsIntegrationTrait
 			'ip' => $ip,
 		];
 
-		$httpClient->get($url, $options);
+		$httpClient->post($url, $options);
 	}
 
 	/**
@@ -75,13 +75,13 @@ trait AdminToolsIntegrationTrait
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/plugin/disable');
 
 		$result = json_decode(
-			$httpClient->get($url, $options)->getBody()->getContents()
+			$httpClient->post($url, $options)->getBody()->getContents()
 		);
 		$return = $result?->data?->attributes ?? null;
 
 		$config   = $this->getConfig();
 		$oldValue = $config->get('core.admintools.renamed', false);
-		$newValue = $result?->renamed ?? $oldValue;
+		$newValue = $return?->renamed ?? $oldValue;
 		$config->set('core.admintools.renamed', $newValue);
 
 		if (is_object($return))
@@ -104,13 +104,13 @@ trait AdminToolsIntegrationTrait
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/plugin/enable');
 
 		$result = json_decode(
-			$httpClient->get($url, $options)->getBody()->getContents()
+			$httpClient->post($url, $options)->getBody()->getContents()
 		);
 		$return = $result?->data?->attributes ?? null;
 
 		$config   = $this->getConfig();
 		$oldValue = $config->get('core.admintools.renamed', false);
-		$newValue = $result?->renamed ?? $oldValue;
+		$newValue = $return?->renamed ?? $oldValue;
 		$config->set('core.admintools.renamed', $newValue);
 
 		if (is_object($return))
@@ -133,7 +133,7 @@ trait AdminToolsIntegrationTrait
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/htaccess/disable');
 
 		$result = json_decode(
-			$httpClient->get($url, $options)->getBody()->getContents()
+			$httpClient->post($url, $options)->getBody()->getContents()
 		);
 
 		return $result?->data?->attributes ?? null;
@@ -151,7 +151,7 @@ trait AdminToolsIntegrationTrait
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/htaccess/enable');
 
 		$result = json_decode(
-			$httpClient->get($url, $options)->getBody()->getContents()
+			$httpClient->post($url, $options)->getBody()->getContents()
 		);
 
 		return $result?->data?->attributes ?? null;
@@ -176,7 +176,7 @@ trait AdminToolsIntegrationTrait
 		}
 
 		$result = json_decode(
-			$httpClient->get($url, $options)->getBody()->getContents()
+			$httpClient->post($url, $options)->getBody()->getContents()
 		);
 
 		return $result?->data?->attributes ?? null;

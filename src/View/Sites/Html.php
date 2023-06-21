@@ -9,7 +9,6 @@ namespace Akeeba\Panopticon\View\Sites;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
 use Akeeba\Panopticon\Task\AdminToolsTrait;
@@ -53,11 +52,11 @@ class Html extends DataViewHtml
 
 	protected string $defaultExtUpdatePreference = 'none';
 
+	protected bool $hasAdminTools = false;
+
+	protected bool $hasAdminToolsPro = false;
+
 	private array $backupProfiles = [];
-
-	private bool $hasAdminTools = false;
-
-	private bool $hasAdminToolsPro = false;
 
 	public function onBeforeDlkey(): bool
 	{
@@ -98,6 +97,57 @@ class Html extends DataViewHtml
 		$this->addTooltipJavaScript();
 
 		return $result;
+	}
+
+	/**
+	 * Converts number of bytes to a human-readable representation.
+	 *
+	 * @param   int|null  $sizeInBytes         Size in bytes
+	 * @param   int       $decimals            How many decimals should I use? Default: 2
+	 * @param   string    $decSeparator        Decimal separator
+	 * @param   string    $thousandsSeparator  Thousands grouping character
+	 *
+	 * @return  string
+	 * @since   1.0.0
+	 */
+	public function formatFilesize(
+		?int $sizeInBytes, int $decimals = 2, string $decSeparator = '.', string $thousandsSeparator = ''
+	): string
+	{
+		if ($sizeInBytes <= 0)
+		{
+			return '&mdash;';
+		}
+
+		$units = ['b', 'KiB', 'MiB', 'GiB', 'TiB'];
+		$unit  = floor(log($sizeInBytes, 2) / 10);
+
+		if ($unit == 0)
+		{
+			$decimals = 0;
+		}
+
+		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' ' .
+			$units[$unit];
+	}
+
+	public function getProfileOptions(): array
+	{
+		static $profiles = null;
+
+		$useCache = !$this->item->getState('akeebaBackupForce', false, 'bool');
+		$profiles ??= $this->getModel()->akeebaBackupGetProfiles($useCache);
+		$ret      = [];
+
+		foreach ($profiles as $profile)
+		{
+			$ret[$profile->id] = (object) [
+				'value' => $profile->id,
+				'text'  => sprintf('#%u. %s', $profile->id, $profile->name),
+			];
+		}
+
+		return $ret;
 	}
 
 	protected function onBeforeAdd()
@@ -177,7 +227,7 @@ class Html extends DataViewHtml
 			$this->backupRecords = $e;
 		}
 
-		$this->hasAdminTools = $this->hasAdminTools($this->item, false);
+		$this->hasAdminTools    = $this->hasAdminTools($this->item, false);
 		$this->hasAdminToolsPro = $this->hasAdminTools($this->item, true);
 
 		$document = $this->container->application->getDocument();
@@ -191,14 +241,16 @@ class Html extends DataViewHtml
 
 		$this->addTooltipJavaScript();
 
-		$document->addScriptOptions('akeebabackup', [
+		$document->addScriptOptions(
+			'akeebabackup', [
 			'enqueue' => $this->container->router->route(
 				sprintf(
 					'index.php?view=sites&task=akeebaBackupEnqueue&id=%d&%s=1',
 					$this->item->id, $this->container->session->getCsrfToken()->getValue()
 				)
-			)
-		]);
+			),
+		]
+		);
 		$js = <<< JS
 
 akeeba.System.documentReady(function() {
@@ -320,7 +372,7 @@ JS;
 			$duration = '';
 		}
 
-		$tz     = new DateTimeZone($this->container->appConfig->get('timezone', 'UTC'));
+		$tz = new DateTimeZone($this->container->appConfig->get('timezone', 'UTC'));
 		$startTime->setTimezone($tz);
 
 		$timeZoneSuffix = $startTime->format('T', true);
@@ -394,35 +446,6 @@ JS;
 	}
 
 	/**
-	 * Converts number of bytes to a human-readable representation.
-	 *
-	 * @param   int|null  $sizeInBytes         Size in bytes
-	 * @param   int       $decimals            How many decimals should I use? Default: 2
-	 * @param   string    $decSeparator        Decimal separator
-	 * @param   string    $thousandsSeparator  Thousands grouping character
-	 *
-	 * @return  string
-	 * @since   1.0.0
-	 */
-	public function formatFilesize(?int $sizeInBytes, int $decimals = 2, string $decSeparator = '.', string $thousandsSeparator = ''): string
-	{
-		if ($sizeInBytes <= 0)
-		{
-			return '&mdash;';
-		}
-
-		$units = ['b', 'KiB', 'MiB', 'GiB', 'TiB'];
-		$unit  = floor(log($sizeInBytes, 2) / 10);
-
-		if ($unit == 0)
-		{
-			$decimals = 0;
-		}
-
-		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' ' . $units[$unit];
-	}
-
-	/**
 	 * @return void
 	 */
 	private function addTooltipJavaScript(): void
@@ -435,24 +458,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
 JS;
 		$this->container->application->getDocument()->addScriptDeclaration($js);
-	}
-
-	public function getProfileOptions(): array
-	{
-		static $profiles = null;
-
-		$useCache = !$this->item->getState('akeebaBackupForce', false, 'bool');
-		$profiles ??= $this->getModel()->akeebaBackupGetProfiles($useCache);
-		$ret      = [];
-
-		foreach ($profiles as $profile)
-		{
-			$ret[$profile->id] = (object) [
-				'value' => $profile->id,
-				'text' => sprintf('#%u. %s', $profile->id, $profile->name)
-			];
-		}
-
-		return $ret;
 	}
 }
