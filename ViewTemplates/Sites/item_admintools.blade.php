@@ -64,7 +64,7 @@ $config              = $model->getConfig();
             </div>
         @else
             @include('Sites/admintools_actions')
-            {{-- TODO PHP File Change Scanner --}}
+            @include('Sites/admintools_scanner')
         @endif
     </div>
 </div>

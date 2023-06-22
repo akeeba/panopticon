@@ -56,6 +56,8 @@ class Html extends DataViewHtml
 
 	protected bool $hasAdminToolsPro = false;
 
+	protected array $scans = [];
+
 	private array $backupProfiles = [];
 
 	public function onBeforeDlkey(): bool
@@ -229,6 +231,10 @@ class Html extends DataViewHtml
 
 		$this->hasAdminTools    = $this->hasAdminTools($this->item, false);
 		$this->hasAdminToolsPro = $this->hasAdminTools($this->item, true);
+		if($this->hasAdminToolsPro)
+		{
+			$this->scans = $this->getModel()->adminToolsGetScans()?->items ?? [];
+		}
 
 		$document = $this->container->application->getDocument();
 

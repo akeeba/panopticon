@@ -189,30 +189,38 @@ trait AdminToolsIntegrationTrait
 			throw new \RuntimeException('This site does not have Admin Tools Professional installed.');
 		}
 
-		/** @var Client $httpClient */
-		$httpClient = $this->container->httpFactory->makeClient(cache: false);
-		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/scans');
+		$controller = $this->getAdminToolsCacheController();
 
-		$uri = new Uri($url);
-		$uri->setVar('page[offset]', $from);
-		$uri->setVar('page[limit]', $limit);
+		return $controller->get(
+			callback: function (int $from, int $limit) {
+				/** @var Client $httpClient */
+				$httpClient = $this->container->httpFactory->makeClient(cache: false);
+				[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/scans');
 
-		$result = json_decode(
-			$httpClient->get($uri->toString(), $options)->getBody()->getContents()
+				$uri = new Uri($url);
+				$uri->setVar('page[offset]', $from);
+				$uri->setVar('page[limit]', $limit);
+
+				$result = json_decode(
+					$httpClient->get($uri->toString(), $options)->getBody()->getContents()
+				);
+
+				if (empty($result) || !is_object($result))
+				{
+					return null;
+				}
+
+				return (object) [
+					'pages' => ((array) ($result?->meta ?? []))['total-pages'] ?? 1,
+					'items' => array_map(
+						fn(?object $x) => $x?->attributes ?? null,
+						$result?->data ?? []
+					),
+				];
+			},
+			args: [$from, $limit],
+			id: sprintf('scans-%d-%d-%d', $this->getId(), $from, $limit),
 		);
-
-		if (empty($result) || !is_object($result))
-		{
-			return null;
-		}
-
-		return (object) [
-			'pages' => ((array) ($result?->meta ?? []))['total-pages'] ?? 1,
-			'items' => array_map(
-				fn(?object $x) => $x?->attributes ?? null,
-				$result?->data ?? []
-			),
-		];
 	}
 
 	public function adminToolsGetScanalerts(int $scanId, int $from = 0, int $limit = 10): ?object
@@ -222,33 +230,41 @@ trait AdminToolsIntegrationTrait
 			throw new \RuntimeException('This site does not have Admin Tools Professional installed.');
 		}
 
-		/** @var Client $httpClient */
-		$httpClient = $this->container->httpFactory->makeClient(cache: false);
-		[$url, $options] = $this->getRequestOptions(
-			$this,
-			sprintf('/index.php/v1/panopticon/admintools/scan/%d', $scanId)
+		$controller = $this->getAdminToolsCacheController();
+
+		return $controller->get(
+			callback: function (int $scanId, int $from, int $limit): ?object {
+				/** @var Client $httpClient */
+				$httpClient = $this->container->httpFactory->makeClient(cache: false);
+				[$url, $options] = $this->getRequestOptions(
+					$this,
+					sprintf('/index.php/v1/panopticon/admintools/scan/%d', $scanId)
+				);
+
+				$uri = new Uri($url);
+				$uri->setVar('page[offset]', $from);
+				$uri->setVar('page[limit]', $limit);
+
+				$result = json_decode(
+					$httpClient->get($uri->toString(), $options)->getBody()->getContents()
+				);
+
+				if (empty($result) || !is_object($result))
+				{
+					return null;
+				}
+
+				return (object) [
+					'pages' => ((array) ($result?->meta ?? []))['total-pages'] ?? 1,
+					'items' => array_map(
+						fn(?object $x) => $x?->attributes ?? null,
+						$result?->data ?? []
+					),
+				];
+			},
+			args: [$scanId, $from, $limit],
+			id: sprintf('scanalerts-%d-%d-%d-%d', $this->getId(), $scanId, $from, $limit)
 		);
-
-		$uri = new Uri($url);
-		$uri->setVar('page[offset]', $from);
-		$uri->setVar('page[limit]', $limit);
-
-		$result = json_decode(
-			$httpClient->get($uri->toString(), $options)->getBody()->getContents()
-		);
-
-		if (empty($result) || !is_object($result))
-		{
-			return null;
-		}
-
-		return (object) [
-			'pages' => ((array) ($result?->meta ?? []))['total-pages'] ?? 1,
-			'items' => array_map(
-				fn(?object $x) => $x?->attributes ?? null,
-				$result?->data ?? []
-			),
-		];
 	}
 
 	public function adminToolsGetScanalert(int $scanAlertId): ?object
@@ -258,23 +274,33 @@ trait AdminToolsIntegrationTrait
 			throw new \RuntimeException('This site does not have Admin Tools Professional installed.');
 		}
 
-		/** @var Client $httpClient */
-		$httpClient = $this->container->httpFactory->makeClient(cache: false);
-		[$url, $options] = $this->getRequestOptions(
-			$this,
-			sprintf('/index.php/v1/panopticon/admintools/scanalert/%d', $scanAlertId)
+		$controller = $this->getAdminToolsCacheController();
+
+		return $controller->get(
+			callback: function (int $scanAlertId): ?object
+			{
+				/** @var Client $httpClient */
+				$httpClient = $this->container->httpFactory->makeClient(cache: false);
+				[$url, $options] = $this->getRequestOptions(
+					$this,
+					sprintf('/index.php/v1/panopticon/admintools/scanalert/%d', $scanAlertId)
+				);
+
+				$result = json_decode(
+					$httpClient->get($url, $options)->getBody()->getContents()
+				);
+
+				if (empty($result) || !is_object($result))
+				{
+					return null;
+				}
+
+				return $result?->data?->attributes ?? null;
+			},
+			args: [$scanAlertId],
+			id: sprintf('scanalert-%d', $scanAlertId),
+			expiration: (new Date())->add(new \DateInterval('P1Y'))
 		);
-
-		$result = json_decode(
-			$httpClient->get($url, $options)->getBody()->getContents()
-		);
-
-		if (empty($result) || !is_object($result))
-		{
-			return null;
-		}
-
-		return $result?->data?->attributes ?? null;
 	}
 
 	/**

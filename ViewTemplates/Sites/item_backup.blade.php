@@ -259,7 +259,9 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                 </div>
             </div>
 
-            <h4 class="border-bottom border-info-subtle pb-1 mt-2 mb-2">Latest backups</h4>
+            <h4 class="border-bottom border-info-subtle pb-1 mt-2 mb-2">
+                @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_LATEST')
+            </h4>
 
             <table class="table">
                 <thead class="table-dark">

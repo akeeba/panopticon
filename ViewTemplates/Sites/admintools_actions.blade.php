@@ -55,7 +55,10 @@ $config              = $model->getConfig();
                     'index.php?view=site&task=admintoolsPluginDisable&id=%d&%s=1',
                     $model->getId(), $token
                 ))"
-                   class="btn btn-warning" role="button">
+                   class="btn btn-warning" role="button"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_PLUGIN_DISABLE_TIP')"
+                >
                     <span class="fa fa-toggle-off" aria-hidden="true"></span>
                     @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_PLUGIN_DISABLE')
                 </a>
@@ -64,7 +67,10 @@ $config              = $model->getConfig();
                     'index.php?view=site&task=admintoolsPluginEnable&id=%d&%s=1',
                     $model->getId(), $token
                 ))"
-                   class="btn btn-success" role="button">
+                   class="btn btn-success" role="button"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_PLUGIN_ENABLE_TIP')"
+                >
                     <span class="fa fa-toggle-on" aria-hidden="true"></span>
                     @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_PLUGIN_ENABLE')
                 </a>
@@ -75,7 +81,10 @@ $config              = $model->getConfig();
                     'index.php?view=site&task=admintoolsHtaccessDisable&id=%d&%s=1',
                     $model->getId(), $token
                 ))"
-               class="btn btn-outline-secondary" role="button">
+               class="btn btn-outline-secondary" role="button"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_HTACCESS_DISABLE_TIP')"
+            >
                 <span class="fa fa-file-export" aria-hidden="true"></span>
                 @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_HTACCESS_DISABLE')
             </a>
@@ -85,7 +94,10 @@ $config              = $model->getConfig();
                     'index.php?view=site&task=admintoolsHtaccessEnable&id=%d&%s=1',
                     $model->getId(), $token
                 ))"
-               class="btn btn-outline-dark" role="button">
+               class="btn btn-outline-dark" role="button"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_HTACCESS_ENABLE_TIP')"
+            >
                 <span class="fa fa-file-export" aria-hidden="true"></span>
                 @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_HTACCESS_ENABLE')
             </a>
