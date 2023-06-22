@@ -195,7 +195,7 @@ class Setup extends Controller
 
 		$document = $this->container->application->getDocument();
 
-		Template::addJs('media://js/setup.js', async: true);
+		Template::addJs('media://js/setup.js', defer: true);
 		$document->addScriptOptions('panopticon.benchmark', [
 			'url'      => $this->container->router->route('index.php?view=setup&task=cronHeartbeat'),
 			'nextPage' => $this->container->router->route('index.php?view=setup&task=finish'),

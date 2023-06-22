@@ -107,6 +107,6 @@ HTML;
 		self::$hasInitialised = true;
 
 		// Include the JavaScript
-		Template::addJs('media://tinymce/tinymce.js', async: true);
+		Template::addJs('media://tinymce/tinymce.js', defer: true);
 	}
 }

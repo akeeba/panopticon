@@ -154,7 +154,7 @@ class Html extends DataViewHtml
 
 	protected function onBeforeAdd()
 	{
-		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
+		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();
@@ -176,7 +176,7 @@ class Html extends DataViewHtml
 
 	protected function onBeforeEdit()
 	{
-		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
+		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();

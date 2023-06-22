@@ -54,14 +54,14 @@ class Html extends BaseHtmlView
 
 	protected function onBeforeAdd()
 	{
-		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
+		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
 
 		return $this->onBeforeAddCrud();
 	}
 
 	protected function onBeforeEdit()
 	{
-		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
+		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
 
 		$js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {

@@ -54,7 +54,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public function onBeforeDatabase(): bool
 	{
-		Template::addJs('media://js/showon.js', $this->getContainer()->application, async: true);
+		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
 
 		$this->addButton('inlineHelp');
 

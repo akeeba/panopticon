@@ -83,7 +83,7 @@ abstract class DefaultTemplate
 			return;
 		}
 
-		Factory::getApplication()->getDocument()->addScript(Uri::base() . 'media/js/darkmode.min.js', async: true);
+		Factory::getApplication()->getDocument()->addScript(Uri::base() . 'media/js/darkmode.min.js', defer: true);
 	}
 
 	private static function isSubmenuActive(Item $item): bool
