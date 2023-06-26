@@ -94,7 +94,7 @@ class Main extends Model
 					return [];
 				}
 
-				uasort($versions, fn($a, $b) => version_compare($a, $b));
+				uasort($versions, fn($a, $b) => version_compare($a ?? '', $b ?? ''));
 
 				return array_combine($versions, $versions);
 			},

@@ -209,7 +209,7 @@ class Site extends DataModel
 			$options[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout;
 			$options[RequestOptions::TIMEOUT]         = $totalTimeout;
 
-			$response = $client->get($this->url . '/index.php/v1/extensions', $options);
+			$response = $client->get($this->getAPIEndpointURL() . '/index.php/v1/extensions', $options);
 		}
 		catch (GuzzleException $e)
 		{
@@ -310,7 +310,7 @@ class Site extends DataModel
 				$results->data,
 				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Panopticon')
 			),
-			fn(bool $carry, object $data) => $carry && $data->attributes?->status == 1,
+			fn(bool $carry, object $data) => $carry && ($data->attributes?->status == 1 || $data->attributes?->enabled == 1),
 			true
 		);
 
@@ -361,7 +361,16 @@ class Site extends DataModel
 	{
 		$url = rtrim($this->url, "/ \t\n\r\0\x0B");
 
-		if (str_ends_with($url, '/api'))
+		if (str_ends_with($url, '/panopticon_api'))
+		{
+			$url = rtrim(substr($url, 0, -15), '?/');
+
+			if (str_ends_with($url, '/index.php'))
+			{
+				$url = substr($url, 0, -10);
+			}
+		}
+		elseif (str_ends_with($url, '/api'))
 		{
 			$url = rtrim(substr($url, 0, -4), '/');
 		}
@@ -411,9 +420,7 @@ class Site extends DataModel
 
 	public function getAPIEndpointURL(): string
 	{
-		$url = rtrim($this->url, "/ \t\n\r\0\x0B");
-
-		return $this->url;
+		return rtrim($this->url, "/ \t\n\r\0\x0B");
 	}
 
 	public function fixCoreUpdateSite(): void
@@ -828,19 +835,22 @@ class Site extends DataModel
 		$uri->setFragment('');
 		$path = rtrim($uri->getPath(), '/');
 
-		if (str_ends_with($path, '/api/index.php'))
+		if (!str_ends_with($path, '/panopticon_api'))
 		{
-			$path = substr($path, 0, -10);
-		}
+			if (str_ends_with($path, '/api/index.php'))
+			{
+				$path = substr($path, 0, -10);
+			}
 
-		if (str_contains($path, '/api/'))
-		{
-			$path = substr($path, 0, strrpos($path, '/api/')) . '/api';
-		}
+			if (str_contains($path, '/api/'))
+			{
+				$path = substr($path, 0, strrpos($path, '/api/')) . '/api';
+			}
 
-		if (!str_ends_with($path, '/api'))
-		{
-			$path .= '/api';
+			if (!str_ends_with($path, '/api'))
+			{
+				$path .= '/api';
+			}
 		}
 
 		$uri->setPath($path);
