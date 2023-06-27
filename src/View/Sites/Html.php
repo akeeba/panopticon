@@ -56,7 +56,7 @@ class Html extends DataViewHtml
 
 	protected bool $hasAdminToolsPro = false;
 
-	protected array $scans = [];
+	protected array|Throwable $scans = [];
 
 	private array $backupProfiles = [];
 
@@ -231,9 +231,17 @@ class Html extends DataViewHtml
 
 		$this->hasAdminTools    = $this->hasAdminTools($this->item, false);
 		$this->hasAdminToolsPro = $this->hasAdminTools($this->item, true);
-		if($this->hasAdminToolsPro)
+
+		if ($this->hasAdminToolsPro)
 		{
-			$this->scans = $this->getModel()->adminToolsGetScans()?->items ?? [];
+			try
+			{
+				$this->scans = $this->getModel()->adminToolsGetScans()?->items ?? [];
+			}
+			catch (\Exception $e)
+			{
+				$this->scans = $e;
+			}
 		}
 
 		$document = $this->container->application->getDocument();
@@ -249,13 +257,13 @@ class Html extends DataViewHtml
 
 		$document->addScriptOptions(
 			'akeebabackup', [
-			'enqueue' => $this->container->router->route(
-				sprintf(
-					'index.php?view=sites&task=akeebaBackupEnqueue&id=%d&%s=1',
-					$this->item->id, $this->container->session->getCsrfToken()->getValue()
-				)
-			),
-		]
+				'enqueue' => $this->container->router->route(
+					sprintf(
+						'index.php?view=sites&task=akeebaBackupEnqueue&id=%d&%s=1',
+						$this->item->id, $this->container->session->getCsrfToken()->getValue()
+					)
+				),
+			]
 		);
 		$js = <<< JS
 

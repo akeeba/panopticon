@@ -21,6 +21,34 @@ $config              = $model->getConfig();
     @lang('PANOPTICON_SITE_LBL_SCANNER_HEAD')
 </h4>
 
+@if ($this->scans instanceof Throwable)
+    <div class="alert alert-danger">
+        <h4 class="alert-heading fs-5">
+            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+            @lang('PANOPTICON_SITE_LBL_SCANNER_ERROR_HEAD')
+        </h4>
+        <p>
+            @lang('PANOPTICON_SITE_LBL_SCANNER_ERROR_BODY')
+        </p>
+        <p class="fs-5 fw-medium mb-1">
+            <span class="badge bg-danger">{{ $this->scans->getCode() }}</span> {{ get_class($this->scans) }}
+        </p>
+        <p class="mx-2 px-2 border-4 border-danger border-start">
+            {{ $this->scans->getMessage() }}
+        </p>
+        @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
+            <details>
+                <summary>
+                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TROUBLESHOOTING')
+                </summary>
+
+                <pre>{{ $this->scans->getTraceAsString() }}</pre>
+            </details>
+        @endif
+    </div>
+<?php return; ?>
+@endif
+
 <p class="small text-info mb-3">
     @lang('PANOPTICON_SITE_LBL_SCANNER_TIP')
 </p>
