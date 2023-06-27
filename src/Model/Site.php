@@ -100,7 +100,7 @@ class Site extends DataModel
 		}
 
 		// Filter: has potential core updates
-		$fltCoreUpdates = $this->getState('coreUpdates', null, 'cmd');
+		$fltCoreUpdates = $this->getState('coreUpdates', '', 'cmd');
 
 		if ($fltCoreUpdates)
 		{
@@ -124,7 +124,7 @@ class Site extends DataModel
 		}
 
 		// Filter: has potential extension updates
-		$fltExtUpdates = $this->getState('extUpdates', null, 'cmd');
+		$fltExtUpdates = $this->getState('extUpdates', '', 'cmd');
 
 		if ($fltExtUpdates == 1)
 		{
