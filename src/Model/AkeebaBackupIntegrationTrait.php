@@ -485,9 +485,9 @@ trait AkeebaBackupIntegrationTrait
 					$runDateTime->month . ' ' . $runDateTime->dayofweek,
 				'enabled'         => 1,
 				'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
-				'last_execution'  => null,
+				'last_execution'  => (clone $runDateTime)->sub(new \DateInterval('PT1M'))->toSql(),
 				'last_run_end'    => null,
-				'next_execution'  => null,
+				'next_execution'  => $runDateTime->toSql(),
 				'locked'          => null,
 				'priority'        => 1,
 			]
