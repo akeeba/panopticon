@@ -39,7 +39,7 @@ $model = $this->getModel();
 </h3>
 
 @if ($this->renderOptions['pre_message'])
-    <div class="">
+    <div class="my-3">
         {{ $this->renderOptions['pre_message'] }}
     </div>
 @endif
@@ -108,7 +108,7 @@ $model = $this->getModel();
 </form>
 
 @if ($this->renderOptions['post_message'])
-    <div class="">
+    <div class="my-3">
         {{ $this->renderOptions['post_message'] }}
     </div>
 @endif
