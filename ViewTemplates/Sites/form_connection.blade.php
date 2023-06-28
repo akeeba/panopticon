@@ -34,6 +34,21 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 	<p>
 		@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_BODY')
 	</p>
+	<p>
+		@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_HERE')
+	</p>
+	<ul>
+		<li>
+			<a href="https://github.com/akeeba/panopticon-connector/releases" target="_blank">
+				@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_J4_LATER')
+			</a>
+		</li>
+		<li>
+			<a href="https://github.com/akeeba/panopticon-connector-j3/releases" target="_blank">
+				@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_J3')
+			</a>
+		</li>
+	</ul>
 </div>
 
 <div class="row mb-3">
