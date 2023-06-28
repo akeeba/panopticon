@@ -23,7 +23,7 @@ $lastUpdateTimestamp = function () use ($config): string
 {
 	$timestamp = $config->get('extensions.lastAttempt');
 
-	return $timestamp ? $this->timeAgo($timestamp) : '(never)';
+	return $timestamp ? $this->timeAgo($timestamp) : \Awf\Text\Text::_('PANOPTICON_LBL_NEVER');
 };
 
 $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersion): bool

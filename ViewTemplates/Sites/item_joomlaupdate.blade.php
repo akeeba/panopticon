@@ -24,7 +24,7 @@ $lastUpdateTimestamp = function () use ($config): string
 {
 	$timestamp = $config->get('core.lastAttempt');
 
-	return $timestamp ? $this->timeAgo($timestamp) : '(never)';
+	return $timestamp ? $this->timeAgo($timestamp) : \Awf\Text\Text::_('PANOPTICON_LBL_NEVER');
 };
 
 ?>
