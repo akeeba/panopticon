@@ -57,10 +57,11 @@ class Html extends \Awf\Mvc\DataView\Html
 		if ($this->layout === 'cron')
 		{
 			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition([
-				'title'   => Text::_('PANOPTICON_BTN_PREV'),
-				'class'   => 'btn btn-secondary border-light',
-				'url' => $this->container->router->route('index.php'),
-				'icon'    => 'fa fa-chevron-left',
+				'id'    => 'prev',
+				'title' => Text::_('PANOPTICON_BTN_PREV'),
+				'class' => 'btn btn-secondary border-light',
+				'url'   => $this->container->router->route('index.php'),
+				'icon'  => 'fa fa-chevron-left',
 			]);
 		}
 

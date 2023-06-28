@@ -92,6 +92,7 @@ class Html extends BaseHtmlView
 
 			$this->addButton('back', ['url' => $cancelURL]);
 			$toolbar->addButtonFromDefinition([
+				'id'    => 'reset',
 				'title' => Text::_('PANOPTICON_MFA_LBL_BACKUPCODES_RESET'),
 				'class' => 'btn btn-danger',
 				'url'   => $refreshURL,

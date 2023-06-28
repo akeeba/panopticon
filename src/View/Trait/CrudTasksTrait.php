@@ -64,66 +64,77 @@ trait CrudTasksTrait
 		$buttonDef = match ($type)
 		{
 			'add' => [
+				'id'      => 'add',
 				'title'   => Text::_('PANOPTICON_BTN_ADD'),
 				'class'   => 'btn btn-success',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'add') . '\')',
 				'icon'    => 'fa fa-plus',
 			],
 			'edit' => [
+				'id'      => 'edit',
 				'title'   => Text::_('PANOPTICON_BTN_EDIT'),
 				'class'   => 'btn btn-secondary border-light',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'edit') . '\')',
 				'icon'    => 'fa fa-pen-to-square',
 			],
 			'copy' => [
+				'id'      => 'copy',
 				'title'   => Text::_('PANOPTICON_BTN_COPY'),
 				'class'   => 'btn btn-secondary border-light',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'copy') . '\')',
 				'icon'    => 'fa fa-clone',
 			],
 			'delete' => [
+				'id'      => 'delete',
 				'title'   => Text::_('PANOPTICON_BTN_DELETE'),
 				'class'   => 'btn btn-danger',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'remove') . '\')',
 				'icon'    => 'fa fa-trash-can',
 			],
 			'publish' => [
+				'id'      => 'publish',
 				'title'   => Text::_('PANOPTICON_BTN_ENABLE'),
 				'class'   => 'btn btn-dark',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'publish') . '\')',
 				'icon'    => 'fa fa-circle-check',
 			],
 			'unpublish' => [
+				'id'      => 'unpublish',
 				'title'   => Text::_('PANOPTICON_BTN_DISABLE'),
 				'class'   => 'btn btn-dark',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'unpublish') . '\')',
 				'icon'    => 'fa fa-circle-xmark',
 			],
 			'save' => [
+				'id'      => 'save',
 				'title'   => Text::_('PANOPTICON_BTN_SAVE'),
 				'class'   => 'btn btn-primary',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'save') . '\');',
 				'icon'    => 'fa fa-save',
 			],
 			'apply' => [
+				'id'      => 'apply',
 				'title'   => Text::_('PANOPTICON_BTN_APPLY'),
 				'class'   => 'btn btn-success',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'apply') . '\');',
 				'icon'    => 'fa fa-check',
 			],
 			'cancel' => [
+				'id'      => 'cancel',
 				'title'   => Text::_('PANOPTICON_BTN_CANCEL'),
 				'class'   => 'btn btn-danger',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'cancel') . '\');',
 				'icon'    => 'fa fa-cancel',
 			],
 			'back' => [
+				'id'      => 'back',
 				'title' => Text::_('PANOPTICON_BTN_PREV'),
 				'class' => 'btn btn-secondary border-light',
 				'url'   => $params['url'],
 				'icon'  => 'fa fa-chevron-left',
 			],
 			'inlineHelp' => [
+				'id'      => 'inlineHelp',
 				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
 				'class'   => 'btn-info',
 				'onClick' => json_encode([

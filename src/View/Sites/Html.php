@@ -86,7 +86,7 @@ class Html extends DataViewHtml
 		$canAdd    = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.addown');
 		$canEdit   = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.editown');
 		$canDelete = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.editown');
-		$buttons   = [];
+ 		$buttons   = [];
 		$buttons[] = $canAdd ? 'add' : null;
 		$buttons[] = $canEdit ? 'edit' : null;
 		$buttons[] = $canDelete ? 'delete' : null;

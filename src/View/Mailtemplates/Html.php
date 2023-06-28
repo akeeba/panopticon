@@ -27,11 +27,12 @@ class Html extends DataViewHtml
 	{
 		$result = $this->onBeforeBrowseCrud();
 
-		$this->addButtonFromDefinition(			[
-			'title'   => Text::_('PANOPTICON_MAILTEMPLATES_BTN_CSS'),
-			'class'   => 'btn btn-primary',
-			'url' => $this->container->router->route('index.php?view=mailtemplates&task=editcss'),
-			'icon'    => 'fab fa-css3-alt',
+		$this->addButtonFromDefinition([
+			'id'    => 'editCss',
+			'title' => Text::_('PANOPTICON_MAILTEMPLATES_BTN_CSS'),
+			'class' => 'btn btn-primary',
+			'url'   => $this->container->router->route('index.php?view=mailtemplates&task=editcss'),
+			'icon'  => 'fab fa-css3-alt',
 		]);
 
 		return $result;

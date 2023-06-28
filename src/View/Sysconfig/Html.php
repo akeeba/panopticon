@@ -30,7 +30,8 @@ class Html extends \Awf\Mvc\DataView\Html
 		// Create a save and apply button in the toolbar
 		$this->addButton('save');
 		$this->addButton('apply');
-		$this->addButtonFromDefinition(			[
+		$this->addButtonFromDefinition([
+			'id'    => 'phpinfo',
 			'title' => Text::_('PANOPTICON_SYSCONFIG_BTN_PHPINFO'),
 			'class' => 'btn btn-warning',
 			'url'   => $this->container->router->route('index.php?view=phpinfo'),
