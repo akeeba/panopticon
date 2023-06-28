@@ -83,6 +83,9 @@ trait EnqueueJoomlaUpdateTrait
 
 				$task->cron_expression = $then->minute . ' ' . $then->hour . ' ' . $then->day . ' ' . $then->month . ' '
 					. $then->dayofweek;
+				$task->last_execution = (clone $then)->sub(new \DateInterval('PT1M'))->toSql();
+				$task->last_run_end = null;
+				$task->next_execution = $then->toSql();
 				break;
 
 			case 'time':
