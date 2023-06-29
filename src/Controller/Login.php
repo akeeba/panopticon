@@ -35,6 +35,8 @@ class Login extends Controller
 				$e->getMessage(),
 				'error'
 			);
+
+			return true;
 		}
 
 		try

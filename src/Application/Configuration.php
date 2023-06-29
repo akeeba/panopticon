@@ -25,6 +25,8 @@ class Configuration extends AWFConfiguration
 
 	public function set($path, $value, $separator = null)
 	{
+		$path = str_replace(',', '', $path);
+
 		$validator = $this->getConfigurationOptionFilterCallback($path);
 		$value     = $validator($value);
 
