@@ -136,6 +136,16 @@ $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
         @endif
 
     @endif
+
+    @if (($overridesChanged = $config->get('core.overridesChanged')) > 0)
+        <div class="ms-2 small" data-bs-toggle="tooltip" data-bs-placement="bottom"
+             data-bs-title="@sprintf('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N', $overridesChanged)">
+            <span class="badge bg-light-subtle text-warning border border-warning-subtle">
+                <span class="fa fa-arrows-to-eye fa-fw" aria-hidden="true"></span>
+                <span aria-hidden="true">{{ $overridesChanged ?? 0 }}</span>
+                <span class="visually-hidden">@sprintf('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N', $overridesChanged)</span>
+            </span>
+        </div>
+    @endif
+
 </div>
-
-

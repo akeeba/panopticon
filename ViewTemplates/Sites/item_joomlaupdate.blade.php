@@ -19,6 +19,7 @@ use Awf\Text\Text;
 $config           = $this->item->getConfig();
 $token            = $this->container->session->getCsrfToken()->getValue();
 $joomlaUpdateTask = $this->item->getJoomlaUpdateTask();
+$overridesChanged = $config->get('core.overridesChanged');
 
 $lastUpdateTimestamp = function () use ($config): string
 {
@@ -214,6 +215,23 @@ $lastUpdateTimestamp = function () use ($config): string
                     @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_UPDATE', $this->escape($config->get('core.latest.version')))
                 </a>
             @endif
+        @endif
+
+        @if ($overridesChanged > 0)
+            <div class="alert alert-warning mt-4">
+                <h4 class="alert-heading fs-5">
+                    <span class="fa fa-arrows-to-eye fa-fw" aria-hidden="true"></span>
+                    @sprintf('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N', $overridesChanged)
+                </h4>
+                <p class="mt-2 mb-0 py-1">
+                    <a href="@route(sprintf('index.php?view=overrides&site_id=%d', $this->item->id))"
+                       class="btn btn-primary" role="button"
+                    >
+                        <span class="fa fa-arrows-to-eye fa-fw" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITE_BTN_TEMPLATE_OVERRIDES_CHECK')
+                    </a>
+                </p>
+            </div>
         @endif
 
         @if (!$config->get('core.canUpgrade', false) && $config->get('core.extensionAvailable', true) && $config->get('core.updateSiteAvailable', true))
