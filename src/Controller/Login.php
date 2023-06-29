@@ -23,6 +23,20 @@ class Login extends Controller
 		/** @var LoggerInterface $logger */
 		$logger = $this->container->loggerFactory->get('login');
 
+		// Do not remove. This will throw an error if the database connection is broken.
+		try
+		{
+			$this->container->db->setQuery('SELECT 1')->execute();
+		}
+		catch (Throwable $e)
+		{
+			$this->setRedirect(
+				$this->container->router->route('index.php?view=login'),
+				$e->getMessage(),
+				'error'
+			);
+		}
+
 		try
 		{
 			$this->csrfProtection();

@@ -124,10 +124,8 @@ $config = $this->container->appConfig;
             <div class="col-sm-9">
                 {{ \Awf\Html\Select::genericList(
                     data: [
-                        'utf8mb4_unicode_ci' => 'utf8mb4_unicode_ci',
-                        'utf8mb4_general_ci' => 'utf8mb4_general_ci',
-                        'utf8_unicode_ci' => 'utf8_unicode_ci',
-                        'utf8_general_ci' => 'utf8_general_ci',
+                        'utf8mb4' => 'utf8mb4',
+                        'utf8' => 'utf8',
                     ],
                     name: 'options[dbcharset]',
                     attribs: [
