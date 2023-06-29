@@ -81,6 +81,8 @@ class Captive extends Controller
 		$record_id = $this->input->getInt('record_id', null);
 		$model->setState('record_id', $record_id);
 
+		$view->setTask('captive');
+		$view->setDoTask('captive');
 		$view->display();
 
 		return true;
