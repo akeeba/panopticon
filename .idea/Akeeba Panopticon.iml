@@ -63,6 +63,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/web-auth/metadata-service" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/web-auth/webauthn-lib" />
       <excludeFolder url="file://$MODULE_DIR$/tmp/compiled_templates" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jfcherng/php-color-output" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jfcherng/php-diff" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jfcherng/php-mb-string" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jfcherng/php-sequence-matcher" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/scrivo/highlight.php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

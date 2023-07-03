@@ -41,7 +41,7 @@ class PassKeys extends Observer
 			'display'            => Text::_('PANOPTICON_MFA_PASSKEYS_LBL_DISPLAYEDAS'),
 			'shortinfo'          => Text::_('PANOPTICON_MFA_PASSKEYS_LBL_SHORTINFO'),
 			//'image'              => 'media/mfa/images/final-webauthn-logo-webauthn-color.png',
-			'image'              => 'media/mfa/images/passkey.webp',
+			'image'              => 'media/mfa/images/passkey.svg',
 			'allowMultiple'      => true,
 			'allowEntryBatching' => true,
 			'help_url'           => self::HELP_URL,

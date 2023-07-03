@@ -62,6 +62,11 @@ trait ACLTrait
 		'mfamethods'    => [
 			'*' => ['*'],
 		],
+		'overrides'     => [
+			'default' => ['read'],
+			'browse'  => ['read'],
+			'read'    => ['read'],
+		],
 		'setup'         => [
 			'cron' => ['super'],
 			'*'    => ['*'],

@@ -207,7 +207,7 @@ class Html extends DataViewHtml
 		$this->setStrictLayout(true);
 		$this->setStrictTpl(true);
 
-		$this->addButton('prev', ['url' => $this->container->router->route('index.php?view=main')]);
+		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=main')]);
 
 		$this->setTitle(Text::_('PANOPTICON_SITES_TITLE_READ'));
 

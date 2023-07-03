@@ -98,6 +98,22 @@
       <path value="$PROJECT_DIR$/app/vendor/symfony/var-exporter" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/cache" />
       <path value="$PROJECT_DIR$/app/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/vendor/web-auth/webauthn-lib" />
+      <path value="$PROJECT_DIR$/vendor/web-auth/metadata-service" />
+      <path value="$PROJECT_DIR$/vendor/web-auth/cose-lib" />
+      <path value="$PROJECT_DIR$/vendor/spomky-labs/pki-framework" />
+      <path value="$PROJECT_DIR$/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/vendor/spomky-labs/cbor-php" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-mb-string" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-color-output" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-diff" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-sequence-matcher" />
+      <path value="$PROJECT_DIR$/vendor/scrivo/highlight.php" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
