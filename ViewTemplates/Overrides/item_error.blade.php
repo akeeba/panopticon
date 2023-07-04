@@ -14,12 +14,12 @@ defined('AKEEBA') || die;
 
 <div class="alert alert-danger">
     <h3 class="alert-heading">
-        Error retrieving the template override from the site
+        @lang('PANOPTICON_OVERRIDES_LBL_NO_OVERRIDE_HEAD')
     </h3>
     <p>
-        The template override, or the corresponding original file, may no longer exist on your site.
+        @lang('PANOPTICON_OVERRIDES_LBL_NO_OVERRIDE_MESSAGE')
     </p>
     <p>
-        Please visit your site's administrator backend to inspect the template overrides.
+        @lang('PANOPTICON_OVERRIDES_LBL_NO_OVERRIDE_SUGGESTION')
     </p>
 </div>

@@ -30,7 +30,7 @@ $returnUrl = $this->input->getBase64('returnurl', '');
 
     <div class="row mt-3 mb-4">
         <label for="name" class="col-sm-3 col-form-label">
-            Download Key
+            @lang('PANOPTICON_SITES_LBL_DLKEY')
         </label>
         <div class="col-sm-9">
             <input type="text" class="form-control" name="dlkey" id="dlkey"

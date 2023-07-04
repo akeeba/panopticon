@@ -58,7 +58,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
 @if (!$isSuper)
     <div class="alert alert-info">
         <span class="fa fa-info-circle" aria-hidden="true"></span>
-        If you need the site ownership information modified please contact a user with administration or superuser privileges.
+        @lang('PANOPTICON_LBL_SITE_OWNERSHIP_NON_SUPER')
     </div>
 @endif
 

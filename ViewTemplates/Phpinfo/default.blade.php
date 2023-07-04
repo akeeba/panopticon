@@ -11,14 +11,14 @@ defined('AKEEBA') || die;
 @if(empty($this->phpInfo))
     <h3 class="display-6 text-center bg-light p-2 fw-bold">
         <span class="fab fa-php me-2" aria-hidden="true"></span>
-        PHP Version {{ PHP_VERSION }}
+        @sprintf('PANOPTICON_SELFUPDATE_LBL_PHP_VERSION', PHP_VERSION)
     </h3>
     <div class="alert alert-danger">
         <h3 class="alert-heading">
-            <code>phpinfo()</code> is not available on your server
+            @lang('PANOPTICON_SELFUPDATE_LBL_PHPINFO_NOT_AVAILABLE')
         </h3>
         <p>
-            Your server operator has disabled the built-in <code>phpinfo()</code> PHP function. Panopticon cannot display detailed PHP information on your server.
+            @lang('PANOPTICON_SELFUPDATE_LBL_PHPINFO_NOT_AVAILABLE_INFO')
         </p>
     </div>
 @else

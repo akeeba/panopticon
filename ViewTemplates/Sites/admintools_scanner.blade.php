@@ -60,27 +60,27 @@ $config              = $model->getConfig();
             @lang('PANOPTICON_LBL_TABLE_HEAD_NUM')
         </th>
         <th rowspan="2">
-            Status
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_STATUS')
         </th>
         <th rowspan="2">
-            Date &amp; Time
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_DATE_TIME')
         </th>
         <th colspan="4" class="text-center">
-            Files
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_FILES')
         </th>
     </tr>
     <tr>
         <th>
-            Total
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_TOTAL')
         </th>
         <th>
-            New
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_NEW')
         </th>
         <th>
-            Modified
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_MODIFIED')
         </th>
         <th>
-            Suspicious
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS')
         </th>
     </tr>
     </thead>
@@ -105,19 +105,19 @@ $config              = $model->getConfig();
                     <div class="badge bg-secondary">
                         @if ($scan->origin === 'backend')
                             <span class="fa fa-desktop fw-fw" aria-hidden="true"></span>
-                            <span class="visually-hidden">Backend</span>
+                            <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_BACKEND')</span>
                         @elseif ($scan->origin === 'cli')
                             <span class="fa fa-terminal fw-fw" aria-hidden="true"></span>
-                            <span class="visually-hidden">CLI</span>
+                            <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_CLI')</span>
                         @elseif ($scan->origin === 'joomla')
                             <span class="fab fa-joomla fw-fw" aria-hidden="true"></span>
-                            <span class="visually-hidden">Joomla!&trade; CLI</span>
+                            <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_JOOMLA')</span>
                         @elseif ($scan->origin === 'api')
                             <span class="fa fa-code fw-fw" aria-hidden="true"></span>
-                            <span class="visually-hidden">Panopticon</span>
+                            <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_PANOPTICON')</span>
                         @else
                             <span class="fa fa-question fw-fw" aria-hidden="true"></span>
-                            <span class="visually-hidden">Unknown</span>
+                            <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_UNKNOWN')</span>
                         @endif
                     </div>
                 </div>
@@ -125,13 +125,13 @@ $config              = $model->getConfig();
                     {{-- complete fail run --}}
                     @if ($scan->status === 'complete')
                         <span class="fa fa-check-circle fw-fw" aria-hidden="true"></span>
-                        Complete
+                        @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_COMPLETE')
                     @elseif ($scan->status === 'run')
                         <span class="fa fa-play-circle fw-fw" aria-hidden="true"></span>
-                        Running
+                        @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_RUNNING')
                     @else
                         <span class="fa fa-exclamation-circle fw-fw" aria-hidden="true"></span>
-                        Failed
+                        @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_FAILED')
                     @endif
                 </div>
             </div>
