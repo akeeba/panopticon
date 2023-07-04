@@ -59,7 +59,7 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 						<?= Text::_('PANOPTICON_SETUP_LBL_CRON_CLI_CREATE_A_JOB') ?>
 					</p>
 					<p>
-						<code><i>/path/to/php</i> <?= APATH_ROOT ?>/cli/panopticon.php task:run >/dev/null 2>&1</code>
+						<code><i>/path/to/php</i> <?= APATH_ROOT ?>/cli/panopticon.php task:run --loop >/dev/null 2>&1</code>
 					</p>
 					<p>
 						<?= Text::sprintf('PANOPTICON_SETUP_LBL_CRON_REPLACE_PHP_CLI', PHP_VERSION) ?>
