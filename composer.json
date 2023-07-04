@@ -59,6 +59,7 @@
 		"ext-zend-opcache": "*"
 	},
 	"config": {
+		"process-timeout": 600,
 		"optimize-autoloader": true,
 		"platform": {
 			"php": "8.1.0"
@@ -106,7 +107,6 @@
 			"TODO.md"
 		]
 	},
-	"process-timeout": 600,
 	"extra": {
 		"copy-static": [
 			{
