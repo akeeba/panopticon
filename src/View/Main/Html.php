@@ -74,6 +74,16 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		Template::addJs('media://js/main.js', defer: true);
 
+		$toolbar = $doc->getToolbar();
+		$toolbar->setTitle(Text::_('PANOPTICON_MAIN_TITLE'));
+		$toolbar->addButtonFromDefinition([
+			'id'      => 'manageSites',
+			'title' => Text::_('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE'),
+			'class' => 'btn btn-secondary border-light',
+			'url'   => $this->container->router->route('index.php?view=sites'),
+			'icon'  => 'fa fa-gears',
+		]);
+
 		return true;
 	}
 }

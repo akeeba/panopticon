@@ -71,6 +71,9 @@ $returnUrl = $this->input->getBase64('returnurl', '');
              id="siteTabContentConnection" role="tabpanel" aria-labelledby="siteTabConnection" tabindex="-1"
         >
             @include('Sites/form_connection')
+
+            {{-- Server Identity --}}
+            @include('Main/default_serverid')
         </div>
         <div class="tab-pane show"
              id="siteTabContentProperties" role="tabpanel" aria-labelledby="siteTabProperties" tabindex="-1"
