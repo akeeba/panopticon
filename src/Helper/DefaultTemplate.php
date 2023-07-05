@@ -11,9 +11,11 @@ namespace Akeeba\Panopticon\Helper;
 use Akeeba\Panopticon\Factory;
 use Awf\Document\Menu\Item;
 use Awf\Document\Toolbar\Button;
+use Awf\Input\Filter;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\Utils\ArrayHelper;
+use Awf\Utils\Template;
 
 defined('AKEEBA') || die;
 
@@ -310,5 +312,49 @@ abstract class DefaultTemplate
 		Factory::getApplication()->clearMessageQueue();
 
 		return $html;
+	}
+
+	public static function getThemeColour(): string
+	{
+		$themeFile = Factory::getContainer()->appConfig->get('theme', 'theme') ?: 'theme';
+		$themeFile = (new Filter())->clean($themeFile, 'path');
+
+		if (!@file_exists(Template::parsePath('media://css/' . $themeFile . '.min.css')))
+		{
+			$themeFile = 'theme';
+		}
+
+		$currentTemplate = Factory::getApplication()->getTemplate();
+
+		$filePaths = [
+			APATH_THEMES . '/' . $currentTemplate . '/media/css/' . $themeFile . '.min.css',
+			APATH_THEMES . '/' . $currentTemplate . '/media/css/' . $themeFile . '.css',
+			APATH_MEDIA . '/css/' . $themeFile . '.min.css',
+			APATH_MEDIA . '/css/' . $themeFile . '.css',
+		];
+
+		foreach ($filePaths as $filePath)
+		{
+			if (!file_exists($filePath) || !is_file($filePath) || !is_readable($filePath))
+			{
+				continue;
+			}
+
+			$contents = @file_get_contents($filePath);
+
+			if ($contents === false)
+			{
+				continue;
+			}
+
+			if (!preg_match("%--bs-primary:\s*#([0-9a-f]{3,6})\s*;%", $contents, $matches))
+			{
+				continue;
+			}
+
+			return '#' . $matches[1];
+		}
+
+		return '';
 	}
 }

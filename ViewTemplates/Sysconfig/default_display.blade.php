@@ -18,6 +18,26 @@ $config = $this->container->appConfig;
     <div class="card-body">
         <h3 class="card-title h5">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DISPLAY')</h3>
 
+        {{-- theme --}}
+        <div class="row mb-3">
+            <label for="theme" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_THEME')
+            </label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <div class="input-group-text">
+                        media/css/
+                    </div>
+                    <input type="text" class="form-control" id="theme" name="options[theme]"
+                           value="{{{ $config->get('theme', 'theme') ?: 'theme' }}}"
+                    >
+                    <div class="input-group-text">
+                        .min.css
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{--darkmode--}}
         <div class="row mb-3">
             <label for="darkmode" class="col-sm-3 col-form-label">

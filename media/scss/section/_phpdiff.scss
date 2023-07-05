@@ -1,0 +1,28 @@
+/*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+$diff-bg-color: var(--bs-body-bg);
+$diff-text-color: var(--bs-body-color);
+
+$diff-bg-color-ins-base: var(--bs-success);
+$diff-bg-color-del-base: var(--bs-danger);
+$diff-bg-color-rep-base: var(--bs-warning);
+
+$diff-bg-color-ins-highlight: var(--bs-success-bg-subtle);
+$diff-bg-color-del-highlight: var(--bs-danger-bg-subtle);
+
+$diff-bg-color-ins: var(--bs-success-bg-subtle);
+$diff-bg-color-del: var(--bs-danger-bg-subtle);
+$diff-bg-color-rep: var(--bs-warning-bg-subtle);
+
+$diff-table-head-color: var(--bs-table-striped-bg);
+$diff-table-sidebar-color: var(--bs-secondary-bg-subtle);
+$diff-border-color: var(--bs-secondary-border-subtle);
+
+$diff-bg-color-none-block: var(--bs-secondary-bg-subtle);
+$diff-bg-color-none-block-alternative: var(--bs-dark-bg-subtle);
+
+@import "../../../vendor/jfcherng/php-diff/example/diff-table.scss";

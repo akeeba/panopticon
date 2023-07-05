@@ -52,8 +52,6 @@
         <exclude name="composer.json" />
         <exclude name="composer.lock" />
         <exclude name="config.php" />
-        <exclude name="package.json" />
-        <exclude name="package-lock.json" />
         <exclude name="*.md" />
 
         <!-- Exclude SCSS -->

@@ -1,0 +1,46 @@
+/*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+svg.panopticonLogoColour {
+  height: 1.3em;
+}
+
+html[data-bs-theme=dark] svg.panopticonLogoColour {
+  path.main {
+    fill: $gray-100
+  }
+
+  path.w {
+    fill: $dark;
+  }
+}
+
+svg.panopticonLogoColour
+{
+  &[data-bs-theme=success] {
+    path.w {
+      fill: $success
+    }
+  }
+
+  &[data-bs-theme=warning] {
+    path.w {
+      fill: $warning
+    }
+  }
+
+  &[data-bs-theme=danger] {
+    path.w {
+      fill: $danger
+    }
+  }
+
+  &[data-bs-theme=off] {
+    path.w {
+      fill: $secondary
+    }
+  }
+}

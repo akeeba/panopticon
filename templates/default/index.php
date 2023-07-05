@@ -32,6 +32,8 @@ TemplateHelper::applyFontSize();
 
 $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component';
 $isMenuEnabled = $this->getMenu()->isEnabled('main');
+
+$themeColor = TemplateHelper::getThemeColour();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $langCode ?>">
@@ -49,7 +51,9 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 	<?php if($darkModeValue): ?>
 	<meta name="color-scheme" content="<?= $darkModeValue ?>">
 	<?php endif ?>
-	<meta name="theme-color" content="#147878">
+	<?php if(!empty($themeColor)): ?>
+	<meta name="theme-color" content="<?= $themeColor ?>">
+	<?php endif; ?>
 </head>
 <body data-bs-theme="<?= $darkModeValue ?: '' ?>">
 

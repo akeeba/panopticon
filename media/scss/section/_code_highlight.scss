@@ -1,0 +1,119 @@
+/*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+pre.codeLines {
+  &::before {
+    counter-reset: codeLineNumbers;
+  }
+
+  code {
+    counter-increment: codeLineNumbers;
+
+    &::before {
+      color: $pink-500;
+      background: var(--bs-tertiary-bg);
+      content: counter(codeLineNumbers);
+      display: inline-block;
+      width: 3.5em;
+      border-right: thin solid var(--bs-secondary-bg);
+      margin-right: .5em;
+    }
+  }
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: var(--bs-body-color);
+  background: var(--bs-body-color);
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--bs-success);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: var(--bs-secondary);
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: var(--bs-primary);
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: var(--bs-danger);
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: var(--bs-danger-text-emphasis);
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: var(--bs-primary-text-emphasis);
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: var(--bs-primary-text-emphasis);
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: var(--bs-success);
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: var(--bs-pink);
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: var(--bs-primary-text-emphasis);
+}
+
+.hljs-meta {
+  color: var(--bs-tertiary-color);
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: var(--bs-danger-bg-subtle);
+}
+
+.hljs-addition {
+  background: var(--bs-success-bg-subtle);
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}

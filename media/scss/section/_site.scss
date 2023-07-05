@@ -1,0 +1,23 @@
+/*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+.download-key {
+  filter: blur(4px);
+
+  &:hover, &:focus {
+    filter: blur(0);
+  }
+}
+
+@keyframes deblur {
+  0% {
+    filter: blur(4px);
+  }
+
+  100% {
+    filter: blur(0);
+  }
+}

@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon;
 
 use Awf\Dispatcher\Dispatcher as AWFDispatcher;
+use Awf\Input\Filter;
 use Awf\Uri\Uri;
 use Awf\Utils\Template;
 
@@ -70,7 +71,16 @@ class Dispatcher extends AWFDispatcher
 
 	private function loadCommonCSS(): void
 	{
-		Template::addCss('media://css/theme.min.css');
+		$themeFile = $this->container->appConfig->get('theme', 'theme') ?: 'theme';
+		$themeFile = (new Filter())->clean($themeFile, 'path');
+		$themeFile .= '.min.css';
+
+		if (!@file_exists(Template::parsePath('media://css/' . $themeFile)))
+		{
+			$themeFile = 'theme.min.css';
+		}
+
+		Template::addCss('media://css/' . $themeFile);
 		Template::addCss('media://css/fontawesome.min.css');
 	}
 }
