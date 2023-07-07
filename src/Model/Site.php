@@ -388,7 +388,7 @@ class Site extends DataModel
 	 */
 	public function getAdminUrl(): string
 	{
-		$url = $this->getBaseUrl() . '/administrator';
+		$url    = $this->getBaseUrl() . '/administrator';
 		$config = $this->getConfig();
 
 		if (!$config->get('core.admintools.enabled', false) || $config->get('core.admintools.renamed', false))
@@ -518,6 +518,30 @@ class Site extends DataModel
 		}
 
 		return $extensions;
+	}
+
+	public function getExtensionsScheduledForUpdate(): array
+	{
+		$queueName = sprintf('extensions.%d', $this->getId());
+		$db        = $this->getDbo();
+		$query     = $db->getQuery(true);
+		$query
+			->select($query->jsonPointer('item', '$.data'))
+			->from($db->quoteName('#__queue'))
+			->where([
+				$query->jsonPointer('item', '$.queueType') . ' = ' . $db->quote($queueName),
+				$query->jsonPointer('item', '$.siteId') . ' = ' . (int) $this->getId(),
+			]);
+
+
+		try
+		{
+			return $db->setQuery($query)->loadColumn() ?: [];
+		}
+		catch (Exception $e)
+		{
+			return [];
+		}
 	}
 
 	public function getConfig(): Registry

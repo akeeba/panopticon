@@ -18,6 +18,7 @@ $config               = $this->item->getConfig();
 $token                = $this->container->session->getCsrfToken()->getValue();
 $extensions           = $this->item->getExtensionsList();
 $extensionsUpdateTask = $this->item->getExtensionsUpdateTask();
+$scheduledExtensions  = $this->item->getExtensionsScheduledForUpdate();
 
 $lastUpdateTimestamp = function () use ($config): string
 {
@@ -308,13 +309,23 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                                 {{{ $item->name }}}
                             @endif
 
-                            @if ($hasUpdate && !$error && $willAutoUpdate($key, $currentVersion, $latestVersion))
+                            @if (in_array($item->extension_id, $scheduledExtensions))
+                                <span class="badge bg-success">
+                                    <span class="fa fa-refresh" aria-hidden="true"
+                                          data-bs-toggle="tooltip" data-bs-placement="top"
+                                          data-bs-title="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_SCHEDULED_UPDATE')"></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_SCHEDULED_UPDATE')</span>
+                                </span>
+
+                            @elseif ($hasUpdate && !$error && $willAutoUpdate($key, $currentVersion, $latestVersion))
                                 <span class="fa fa-magic-wand-sparkles text-success ms-2" aria-hidden="true"
-                                      title="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_AUTOUPDATE')"></span>
+                                      data-bs-toggle="tooltip" data-bs-placement="top"
+                                      data-bs-title="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_AUTOUPDATE')"></span>
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_AUTOUPDATE')</span>
                             @elseif ($hasUpdate && $error && $willAutoUpdate($key, $currentVersion, $latestVersion))
                                 <span class="fa fa-magic text-danger ms-2" aria-hidden="true"
-                                      title="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_NOT_AUTOUPDATE')"></span>
+                                      data-bs-toggle="tooltip" data-bs-placement="top"
+                                      data-bs-title="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_NOT_AUTOUPDATE')"></span>
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_NOT_AUTOUPDATE')</span>
                             @endif
                         </div>
@@ -396,7 +407,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                             </div>
 
                             {{-- Button to install the update (if not scheduled, or if schedule failed) --}}
-                            @if ($hasUpdate && !$error && !$willAutoUpdate($key, $currentVersion, $latestVersion))
+                            @if (!in_array($item->extension_id, $scheduledExtensions) && $hasUpdate && !$error && !$willAutoUpdate($key, $currentVersion, $latestVersion))
                                 <a class="btn btn-sm btn-outline-primary" role="button"
                                    title="@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))"
                                    href="@route(sprintf('index.php?view=site&task=scheduleExtensionUpdate&site_id=%d&id=%d&%s=1', $this->item->id, $item->extension_id, $token))">
