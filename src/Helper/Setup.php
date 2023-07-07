@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Factory;
 use Awf\Database\Driver;
 use Awf\Html\Select;
 use Awf\Text\Text;
+use Awf\Utils\ParseIni;
 use DateTimeZone;
 
 abstract class Setup
@@ -112,21 +113,17 @@ abstract class Setup
 			// Get the group/locale from the timezone.
 			[$group, $locale] = explode('/', $zone, 2);
 
-			// Only use known groups.
-			if (in_array($group, $zoneHeaders))
+			// Only add options in known groups, and for which a locale exists.
+			if (!in_array($group, $zoneHeaders) || empty($locale))
 			{
-				// Initialize the group if necessary.
-				if (!isset($groups[$group]))
-				{
-					$groups[$group] = [];
-				}
-
-				// Only add options where a locale exists.
-				if (!empty($locale))
-				{
-					$groups[$group][$zone] = Select::option($zone, str_replace('_', ' ', $locale));
-				}
+				continue;
 			}
+
+			$groups[$group] ??= [];
+			$groups[$group][$zone] = Select::option(
+				$zone,
+				str_replace('_', ' ', $locale)
+			);
 		}
 
 		// Sort the group lists.
@@ -293,10 +290,63 @@ abstract class Setup
 		{
 			array_unshift($users, (object) [
 				'value' => 0,
-				'text' => Text::_('PANOPTICON_LBL_SELECT_USER')
+				'text'  => Text::_('PANOPTICON_LBL_SELECT_USER'),
 			]);
 		}
 
 		return Select::genericList($users, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false);
+	}
+
+	public static function languageOptions(?string $selected, string $name, ?string $id = null, array $attribs = [])
+	{
+		$options = self::getLanguageOptions();
+
+		return Select::genericList($options, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false);
+	}
+
+	private static function getLanguageOptions()
+	{
+		$ret = [];
+
+		$di = new \DirectoryIterator(Factory::getContainer()->languagePath);
+		/** @var \DirectoryIterator $file */
+		foreach ($di as $file)
+		{
+			if (!$file->isFile() || $file->getExtension() !== 'ini')
+			{
+				continue;
+			}
+
+			$retKey  = $file->getBasename('.ini');
+			$rawText = @file_get_contents($file->getPathname());
+
+			if ($rawText === false)
+			{
+				continue;
+			}
+
+			$rawText = str_replace('\\"_QQ_\\"', '\"', $rawText);
+			$rawText = str_replace('\\"_QQ_"', '\"', $rawText);
+			$rawText = str_replace('"_QQ_\\"', '\"', $rawText);
+			$rawText = str_replace('"_QQ_"', '\"', $rawText);
+			$rawText = str_replace('\\"', '"', $rawText);
+			$strings = ParseIni::parse_ini_file($rawText, false, true);
+
+			if (!isset($strings['LANGUAGE_NAME_IN_ENGLISH']))
+			{
+				continue;
+			}
+
+			$retText = $strings['LANGUAGE_NAME_IN_ENGLISH'];
+
+			if (isset($strings['LANGUAGE_NAME_TRANSLATED']) && $strings['LANGUAGE_NAME_TRANSLATED'] != $strings['LANGUAGE_NAME_IN_ENGLISH'])
+			{
+				$retText = sprintf('%s (%s)', $retText, $strings['LANGUAGE_NAME_TRANSLATED']);
+			}
+
+			$ret[$retKey] = $retText;
+		}
+
+		return $ret;
 	}
 }

@@ -87,6 +87,21 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{-- language --}}
+        <div class="row mb-3">
+            <label for="language" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_LANGUAGE')
+            </label>
+            <div class="col-sm-9">
+                {{ \Akeeba\Panopticon\Helper\Setup::languageOptions(
+                    $config->get('language', 'en-GB'),
+                    name: 'config[language]',
+                    id: 'language',
+                    attribs: ['class' => 'form-select']
+                ) }}
+            </div>
+        </div>
+
         {{--timezone--}}
         <div class="row mb-3">
             <label for="timezone" class="col-sm-3 col-form-label">
