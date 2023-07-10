@@ -197,7 +197,7 @@ class SendMail extends AbstractCallback
 		{
 			$query
 				->where(
-					$query->jsonPointer('parameters', '$.acl.' . $permission) . ' = TRUE',
+					$query->jsonExtract($db->quoteName('parameters'), '$.acl.' . $permission) . ' = TRUE',
 					'OR'
 				);
 		}

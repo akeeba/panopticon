@@ -77,11 +77,12 @@ class Main extends Model
 		return $cacheController->get(
 			callback: function (): array {
 				$db       = $this->container->db;
-				$query    = $db->getQuery(true)
-					// SELECT DISTINCT SUBSTR(SUBSTRING_INDEX(`config`->'$.core.current.version', '.', 2) FROM 2) AS `joomla`
+				$query    = $db->getQuery(true);
+				$query
 					->select(
-						'DISTINCT SUBSTR(SUBSTRING_INDEX(' . $db->quoteName('config') . '->' .
-						$db->quote('$.core.current.version') . ', ' . $db->quote('.') . ', 2) FROM 2) AS ' .
+						'DISTINCT SUBSTR(SUBSTRING_INDEX(' .
+						$query->jsonExtract($db->quoteName('config'), '$.core.current.version') .
+						', ' . $db->quote('.') . ', 2) FROM 2) AS ' .
 						$db->quoteName('version')
 					)
 					->from($db->quoteName('#__sites'))

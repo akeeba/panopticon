@@ -101,7 +101,7 @@ class Users extends DataModel
 			->select('COUNT(*)')
 			->from('#__users')
 			->where($db->quoteName('id') . ' != ' . $db->quote((int) $id));
-		$query->where($query->jsonPointer('parameters', '$.acl.panopticon.super') . ' = TRUE');
+		$query->where($query->jsonExtract($db->quoteName('parameters'), '$.acl.panopticon.super') . ' = TRUE');
 
 		$howManySuperUsersLeft = $db->setQuery($query)->loadResult() ?: 0;
 

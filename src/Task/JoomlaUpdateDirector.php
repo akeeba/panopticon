@@ -81,7 +81,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 			->update($db->quoteName('#__sites'));
 		$query->set(
 			$db->quoteName('config') . '= JSON_SET(' . $db->quoteName('config') . ',' .
-			$db->quote('$.core.lastAutoUpdateVersion') . ',' . $query->jsonPointer('config', '$.core.latest.version') . ')'
+			$db->quote('$.core.lastAutoUpdateVersion') . ',' . $query->jsonExtract($db->quoteName('config'), '$.core.latest.version') . ')'
 		)
 			->where($db->quoteName('id') . ' IN(' . implode(',', $siteIDs) . ')');
 		$db->setQuery($query)->execute();
@@ -184,26 +184,26 @@ class JoomlaUpdateDirector extends AbstractCallback
 			// `enabled` = 1
 			$db->quoteName('enabled') . ' = 1',
 			// `config` -> '$.core.canUpgrade'
-			$query->jsonPointer('config', '$.core.canUpgrade'),
+			$query->jsonExtract($db->quoteName('config'), '$.core.canUpgrade'),
 		]);
 
 		if (!$force)
 		{
 			$query->where([
 				// `config` -> '$.core.current.version' != `config` -> '$.core.latest.version'
-				$query->jsonPointer('config', '$.core.current.version') . ' != ' .
-				$query->jsonPointer('config', '$.core.latest.version'),
+				$query->jsonExtract($db->quoteName('config'), '$.core.current.version') . ' != ' .
+				$query->jsonExtract($db->quoteName('config'), '$.core.latest.version'),
 				// `config` -> '$.config.core_update.install' != 'none'
-				$query->jsonPointer('config', '$.config.core_update.install') . ' != ' . $db->quote('none'),
+				$query->jsonExtract($db->quoteName('config'), '$.config.core_update.install') . ' != ' . $db->quote('none'),
 			]);
 			//   AND (
 			//        `config` -> '$.core.lastAutoUpdate' IS NULL
 			//        OR `config` -> '$.core.lastAutoUpdateVersion' != `config` -> '$.core.latest.version'
 			//    )
 			$query->extendWhere('AND', [
-				$query->jsonPointer('config', '$.core.lastAutoUpdateVersion') . ' IS NULL',
-				$query->jsonPointer('config', '$.core.lastAutoUpdateVersion') . ' != ' .
-				$query->jsonPointer('config', '$.core.latest.version'),
+				$query->jsonExtract($db->quoteName('config'), '$.core.lastAutoUpdateVersion') . ' IS NULL',
+				$query->jsonExtract($db->quoteName('config'), '$.core.lastAutoUpdateVersion') . ' != ' .
+				$query->jsonExtract($db->quoteName('config'), '$.core.latest.version'),
 			], 'OR');
 		}
 

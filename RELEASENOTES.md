@@ -7,5 +7,5 @@
 ## Minimum Requirements
 
 * PHP 8.1
-* MySQL 5.7 or mariaDB 10.7
+* MySQL 5.7 or MariaDB 10.3
 * Ability to run CRON jobs, either command-line (preferred) or URLs with a frequency of once every minute

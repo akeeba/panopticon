@@ -289,8 +289,8 @@ class ExtensionUpdatesDirector extends AbstractCallback
 			//        OR `config` -> '$.extensions.lastAutoUpdateEnqueueTime' <= 1234567890
 			//    )
 			$query->extendWhere('AND', [
-				$query->jsonPointer('config', '$.extensions.lastAutoUpdateEnqueueTime') . ' IS NULL',
-				$query->jsonPointer('config', '$.extensions.lastAutoUpdateEnqueueTime') . ' <= ' .
+				$query->jsonExtract($db->quoteName('config'), '$.extensions.lastAutoUpdateEnqueueTime') . ' IS NULL',
+				$query->jsonExtract($db->quoteName('config'), '$.extensions.lastAutoUpdateEnqueueTime') . ' <= ' .
 				$db->quote($timeLimit),
 			], 'OR');
 		}

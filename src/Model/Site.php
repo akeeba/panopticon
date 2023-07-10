@@ -106,9 +106,9 @@ class Site extends DataModel
 		{
 			$query->where(
 				[
-					$query->jsonPointer('config', '$.core.canUpgrade') . ' = TRUE',
-					$query->jsonPointer('config', '$.latest.version') . ' != ' .
-					$query->jsonPointer('config', '$.current.version'),
+					$query->jsonExtract($db->quoteName('config'), '$.core.canUpgrade') . ' = TRUE',
+					$query->jsonExtract($db->quoteName('config'), '$.latest.version') . ' != ' .
+					$query->jsonExtract($db->quoteName('config'), '$.current.version'),
 				]
 			);
 		}
@@ -116,9 +116,9 @@ class Site extends DataModel
 		{
 			$query->andWhere(
 				[
-					$query->jsonPointer('config', '$.core.canUpgrade') . ' = FALSE',
-					$query->jsonPointer('config', '$.core.latest.version') . ' = ' .
-					$query->jsonPointer('config', '$.core.current.version'),
+					$query->jsonExtract($db->quoteName('config'), '$.core.canUpgrade') . ' = FALSE',
+					$query->jsonExtract($db->quoteName('config'), '$.core.latest.version') . ' = ' .
+					$query->jsonExtract($db->quoteName('config'), '$.core.current.version'),
 				]
 			);
 		}
@@ -130,7 +130,7 @@ class Site extends DataModel
 		{
 			$query->where(
 				[
-					$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 1',
+					$query->jsonExtract($db->quoteName('config'), '$.extensions.hasUpdates') . ' = 1',
 				]
 			);
 		}
@@ -138,7 +138,7 @@ class Site extends DataModel
 		{
 			$query->where(
 				[
-					$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 0',
+					$query->jsonExtract($db->quoteName('config'), '$.extensions.hasUpdates') . ' = 0',
 				]
 			);
 		}
@@ -149,7 +149,7 @@ class Site extends DataModel
 		if ($fltCmsFamily)
 		{
 			$query->where(
-				$query->jsonPointer('config', '$.core.current.version') . ' LIKE ' .
+				$query->jsonExtract($db->quoteName('config'), '$.core.current.version') . ' LIKE ' .
 				$query->quote('"' . $fltCmsFamily . '.%')
 			);
 		}
@@ -160,7 +160,7 @@ class Site extends DataModel
 		if ($fltPHPFamily)
 		{
 			$query->where(
-				$query->jsonPointer('config', '$.core.php') . ' LIKE ' . $query->quote('"' . $fltPHPFamily . '.%')
+				$query->jsonExtract($db->quoteName('config'), '$.core.php') . ' LIKE ' . $query->quote('"' . $fltPHPFamily . '.%')
 			);
 		}
 
@@ -526,11 +526,11 @@ class Site extends DataModel
 		$db        = $this->getDbo();
 		$query     = $db->getQuery(true);
 		$query
-			->select($query->jsonPointer('item', '$.data'))
+			->select($query->jsonExtract($db->quoteName('item'), '$.data'))
 			->from($db->quoteName('#__queue'))
 			->where([
-				$query->jsonPointer('item', '$.queueType') . ' = ' . $db->quote($queueName),
-				$query->jsonPointer('item', '$.siteId') . ' = ' . (int) $this->getId(),
+				$query->jsonExtract($db->quoteName('item'), '$.queueType') . ' = ' . $db->quote($queueName),
+				$query->jsonExtract($db->quoteName('item'), '$.siteId') . ' = ' . (int) $this->getId(),
 			]);
 
 
