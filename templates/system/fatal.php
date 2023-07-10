@@ -20,13 +20,30 @@ use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
  * @var  string            $statusCode exception error code
  */
 
-//$exception = debug_backtrace()[2]['args'][0] ?? new RuntimeException($statusText, $statusCode);
-
 $replacements = [
 	'{{statusCode}}'            => $statusCode,
 	'{{statusText}}'            => $statusText,
 	'{{statusCode_statusText}}' => $statusCode . ' - ' . $statusText,
-	'{{message}}'               => $exception->getMessage(),
+	'{{message}}'               => call_user_func(
+		function (string $message): string {
+			$parts = array_map(
+				'htmlentities',
+				explode(PHP_EOL, $message)
+			);
+
+			$parts = array_map(
+				function ($i, $string) {
+					if ($i === 0) return $string;
+
+					return sprintf('<span style="color: gray; font-size: small; display: inline-block; margin: 1em 0 0">%s</span>', $string);
+				},
+				array_keys($parts), array_values($parts)
+			);
+
+			return implode('<br />', $parts);
+		},
+		$exception->getMessage()
+	),
 	'{{code}}'                  => $exception->getCode(),
 	'{{file}}'                  => $exception->getFile(),
 	'{{line}}'                  => $exception->getLine(),
