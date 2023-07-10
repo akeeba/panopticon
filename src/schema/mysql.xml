@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `#__queue`
     `time`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `item`  JSON,
     PRIMARY KEY (`id`)
-) DEFAULT COLLATE binary
+) DEFAULT COLLATE utf8mb4_unicode_ci
   ENGINE = InnoDB;
             ]]></query>
         </action>
