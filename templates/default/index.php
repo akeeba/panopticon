@@ -59,7 +59,7 @@ $themeColor = TemplateHelper::getThemeColour();
 
 <?php // Top header ?>
 <?php if (!$isBareDisplay): ?>
-	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark pt-1 pb-0"
+	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark pt-2 pb-1 px-2"
 	     id="topNavbar">
 		<h1>
 			<?php if (!$isMenuEnabled): ?>
@@ -131,7 +131,7 @@ $themeColor = TemplateHelper::getThemeColour();
 
 <?php // Toolbar / page title ?>
 <?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
-	<section class="navbar container-xl bg-secondary" id="toolbar" data-bs-theme="dark"
+	<section class="navbar container-xl bg-secondary py-3 px-2" id="toolbar" data-bs-theme="dark"
 	         aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOOLBAR') ?>">
 		<div class="ms-2 me-auto d-flex flex-row gap-2">
 			<?= TemplateHelper::getRenderedToolbarButtons() ?>
@@ -154,7 +154,7 @@ $themeColor = TemplateHelper::getThemeColour();
 </main>
 
 <?php if (!$isBareDisplay): ?>
-	<footer class="container-xl bg-dark text-light py-2 text-light small sticky-bottom" data-bs-theme="dark">
+	<footer class="container-xl bg-dark text-light p-3 pb-3 text-light small sticky-bottom" data-bs-theme="dark">
 		<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= Version::create(AKEEBA_PANOPTICON_VERSION)->shortVersion(true) ?><?php if (Version::create(AKEEBA_PANOPTICON_VERSION)->hasTag()): ?><span class="text-muted small">.<?= Version::create(AKEEBA_PANOPTICON_VERSION)->tag() ?></span><?php endif; ?>
 		<?php if (defined('AKEEBADEBUG') && AKEEBADEBUG): ?>
 			<span class="text-body-tertiary">on</span>
@@ -169,12 +169,12 @@ $themeColor = TemplateHelper::getThemeColour();
 			</span>
 		<?php endif ?>
 	</footer>
-	<footer class="container-xl bg-dark text-light py-2 text-light small" data-bs-theme="dark">
-		<div class="d-flex flex-column mt-2">
-			<p class="m-0">
+	<footer class="container-xl bg-dark text-light p-3 pt-1 text-light small" data-bs-theme="dark">
+		<div class="d-flex flex-column">
+			<p class="mb-2">
 				<?= Text::sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>
 			</p>
-			<p class="m-0">
+			<p class="mb-2">
 				<?= Text::sprintf('PANOPTICON_APP_LBL_LICENSE', Text::_('PANOPTICON_APP_TITLE')) ?>
 			</p>
 				<div class="mt-0 mb-0 text-muted d-flex flex-row gap-2">
