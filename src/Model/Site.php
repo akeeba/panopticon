@@ -9,7 +9,6 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationDoesNotAuthenticate;
 use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBlocked;
 use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBroken;
 use Akeeba\Panopticon\Exception\SiteConnection\APIInvalidCredentials;

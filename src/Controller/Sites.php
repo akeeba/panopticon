@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Site as SiteModel;
 use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\EnqueueExtensionUpdateTrait;
@@ -24,7 +25,11 @@ use Awf\Mvc\DataController;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use RuntimeException;
+use stdClass;
+use Throwable;
 
 class Sites extends DataController
 {
@@ -68,7 +73,7 @@ class Sites extends DataController
 
 			return;
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$type    = 'error';
 			$message = Text::sprintf('PANOPTICON_SITE_ERR_COREUPDATESITEFIX_FAILED', $e->getMessage());
@@ -100,7 +105,8 @@ class Sites extends DataController
 	{
 		$this->csrfProtection();
 
-		$id   = $this->input->get->getInt('id', 0);
+		$id = $this->input->get->getInt('id', 0);
+		/** @var Site $site */
 		$site = $this->getModel('Site', [
 			'modelTemporaryInstance' => true,
 			'modelClearState'        => true,
@@ -111,25 +117,12 @@ class Sites extends DataController
 		{
 			$site->findOrFail($id);
 
-			/** @var RefreshSiteInfo $callback */
-			$callback = $this->container->taskRegistry->get('refreshsiteinfo');
-			$dummy    = new \stdClass();
-			$registry = new Registry();
-
-			$registry->set('limitStart', 0);
-			$registry->set('limit', 1);
-			$registry->set('force', true);
-			$registry->set('filter.ids', [$id]);
-
-			do
-			{
-				$return = $callback($dummy, $registry);
-			} while ($return === Status::WILL_RESUME->value);
+			$this->doRefreshSiteInformation($site);
 
 			$type    = 'info';
 			$message = Text::_('PANOPTICON_SITE_LBL_REFRESHED_OK');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$type    = 'error';
 			$message = Text::sprintf('PANOPTICON_SITE_ERR_REFRESHED_FAILED', $e->getMessage());
@@ -161,7 +154,8 @@ class Sites extends DataController
 	{
 		$this->csrfProtection();
 
-		$id   = $this->input->get->getInt('id', 0);
+		$id = $this->input->get->getInt('id', 0);
+		/** @var Site $site */
 		$site = $this->getModel('Site', [
 			'modelTemporaryInstance' => true,
 			'modelClearState'        => true,
@@ -172,26 +166,12 @@ class Sites extends DataController
 		{
 			$site->findOrFail($id);
 
-			/** @var RefreshSiteInfo $callback */
-			$callback = $this->container->taskRegistry->get('refreshinstalledextensions');
-			$dummy    = new \stdClass();
-			$registry = new Registry();
-
-			$registry->set('limitStart', 0);
-			$registry->set('limit', 1);
-			$registry->set('force', true);
-			$registry->set('forceUpdates', true);
-			$registry->set('filter.ids', [$id]);
-
-			do
-			{
-				$return = $callback($dummy, $registry);
-			} while ($return === Status::WILL_RESUME->value);
+			$this->doRefreshExtensionsInformation($site);
 
 			$type    = 'info';
 			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSIONS_REFRESHED_OK');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$type    = 'error';
 			$message = Text::sprintf('PANOPTICON_SITE_ERR_EXTENSIONS_REFRESHED_FAILED', $e->getMessage());
@@ -250,7 +230,7 @@ class Sites extends DataController
 			$type    = 'info';
 			$message = Text::_('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_OK');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$type    = 'error';
 			$message = Text::sprintf('PANOPTICON_SITE_ERR_JUPDATE_SCHEDULE_FAILED', $e->getMessage());
@@ -309,7 +289,7 @@ class Sites extends DataController
 			$type    = 'info';
 			$message = Text::_('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_CLEARED');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$type    = 'error';
 			$message = Text::sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage());
@@ -368,7 +348,7 @@ class Sites extends DataController
 			$type    = 'info';
 			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_CLEARED');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$type    = 'error';
 			$message = Text::sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage());
@@ -424,7 +404,7 @@ class Sites extends DataController
 			$type    = 'info';
 			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_OK');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$type    = 'error';
 			$message = Text::sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
@@ -466,7 +446,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model))
 		{
-			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		// Does the site record exist?
@@ -476,7 +456,7 @@ class Sites extends DataController
 		}
 
 		// Does the extension exist?
-		$extensions = (array) $model->getConfig()->get('extensions.list');
+		$extensions  = (array) $model->getConfig()->get('extensions.list');
 		$extensionID = $this->input->getInt('extension', -1);
 
 		if (!isset($extensions[$extensionID]))
@@ -509,7 +489,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model))
 		{
-			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		// Does the site record exist?
@@ -519,7 +499,7 @@ class Sites extends DataController
 		}
 
 		// Does the extension exist?
-		$extensions = (array) $model->getConfig()->get('extensions.list');
+		$extensions  = (array) $model->getConfig()->get('extensions.list');
 		$extensionID = $this->input->getInt('extension', -1);
 
 		if (!isset($extensions[$extensionID]))
@@ -528,17 +508,17 @@ class Sites extends DataController
 		}
 
 		// Get the Download Key
-		$key = $this->input->getRaw('dlkey');
-		$type = 'info';
+		$key     = $this->input->getRaw('dlkey');
+		$type    = 'info';
 		$message = 'The Download Key has been saved';
 
 		try
 		{
 			$this->getModel()->saveDownloadKey($extensionID, $key);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
-			$type = 'error';
+			$type    = 'error';
 			$message = $e->getMessage();
 		}
 
@@ -610,7 +590,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model))
 		{
-			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		$sysconfigModel = $this->getModel('Sysconfig');
@@ -631,7 +611,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model, true))
 		{
-			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		return parent::onBeforeApply();
@@ -649,7 +629,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model, true))
 		{
-			throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		return parent::onBeforeSave();
@@ -767,10 +747,10 @@ class Sites extends DataController
 
 			if (empty($token))
 			{
-				throw new \RuntimeException(Text::_('PANOPTICON_SITES_ERR_NO_TOKEN'));
+				throw new RuntimeException(Text::_('PANOPTICON_SITES_ERR_NO_TOKEN'));
 			}
 
-			$config = new \Awf\Registry\Registry($model?->config ?? '{}');
+			$config = new Registry($model?->config ?? '{}');
 			$config->set('config.apiKey', $token);
 
 			// Get the connection-relevant information BEFORE making any changes to the site
@@ -856,7 +836,7 @@ class Sites extends DataController
 			 */
 			if (!$canAdmin && ($canEditOwn || $canAddOwn) && ($user->getId() !== $model->created_by))
 			{
-				throw new \RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+				throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 			}
 
 			// Get the connection-relevant information AFTER making changes to the site
@@ -909,8 +889,22 @@ class Sites extends DataController
 				/** @var \Akeeba\Panopticon\Model\Sysconfig $sysconfigModel */
 				$sysconfigModel = $this->getModel('Sysconfig');
 				$sysconfigModel->saveExtensionPreferences($data, $model->getId());
+
+				// Update core information, update extensions information as necessary
+				$config = $model->getConfig();
+
+				if (empty($config->get('core.php')))
+				{
+					$this->doRefreshSiteInformation($model);
+				}
+
+				if (empty($config->get('extensions.list')))
+				{
+					$this->doRefreshExtensionsInformation($model);
+				}
 			}
 
+			// Call events
 			if (method_exists($this, 'onAfterApplySave'))
 			{
 				$this->onAfterApplySave($data);
@@ -930,7 +924,7 @@ class Sites extends DataController
 			$this->container->segment->setFlash('site_connection_error', GuzzleException::class);
 			$error = Text::_('PANOPTICON_SITES_ERR_CONNECTION_ERROR');
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$status = false;
 			$error  = $e->getMessage();
@@ -940,7 +934,7 @@ class Sites extends DataController
 		{
 			$this->container->segment->remove($model->getHash() . 'savedata');
 
-            return true;
+			return true;
 		}
 
 		// Cache the item data in the session. We may need to reuse them if the save fails.
@@ -979,5 +973,42 @@ class Sites extends DataController
 		$this->setRedirect($url, $error ?? '', 'error');
 
 		return false;
+	}
+
+	private function doRefreshExtensionsInformation(Site $site)
+	{
+		/** @var RefreshSiteInfo $callback */
+		$callback = $this->container->taskRegistry->get('refreshinstalledextensions');
+		$dummy    = new stdClass();
+		$registry = new Registry();
+
+		$registry->set('limitStart', 0);
+		$registry->set('limit', 1);
+		$registry->set('force', true);
+		$registry->set('forceUpdates', true);
+		$registry->set('filter.ids', [$site->getId()]);
+
+		do
+		{
+			$return = $callback($dummy, $registry);
+		} while ($return === Status::WILL_RESUME->value);
+	}
+
+	private function doRefreshSiteInformation(Site $site)
+	{
+		/** @var RefreshSiteInfo $callback */
+		$callback = $this->container->taskRegistry->get('refreshsiteinfo');
+		$dummy    = new stdClass();
+		$registry = new Registry();
+
+		$registry->set('limitStart', 0);
+		$registry->set('limit', 1);
+		$registry->set('force', true);
+		$registry->set('filter.ids', [$site->id]);
+
+		do
+		{
+			$return = $callback($dummy, $registry);
+		} while ($return === Status::WILL_RESUME->value);
 	}
 }
