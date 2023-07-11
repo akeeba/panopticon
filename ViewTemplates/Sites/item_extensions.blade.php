@@ -311,7 +311,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
 
                             @if (in_array($item->extension_id, $scheduledExtensions))
                                 <span class="badge bg-success">
-                                    <span class="fa fa-refresh" aria-hidden="true"
+                                    <span class="fa fa-hourglass-half" aria-hidden="true"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
                                           data-bs-title="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_SCHEDULED_UPDATE')"></span>
                                     <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_SCHEDULED_UPDATE')</span>
@@ -411,7 +411,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                                 <a class="btn btn-sm btn-outline-primary" role="button"
                                    title="@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))"
                                    href="@route(sprintf('index.php?view=site&task=scheduleExtensionUpdate&site_id=%d&id=%d&%s=1', $this->item->id, $item->extension_id, $token))">
-                                    <span class="fa fa-paper-plane" aria-hidden="true"></span>
+                                    <span class="fa fa-bolt" aria-hidden="true"></span>
                                     <span class="visually-hidden">@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))</span>
                                 </a>
                             @endif
