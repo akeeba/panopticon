@@ -169,6 +169,11 @@ class ExtensionsUpdate extends AbstractCallback
 		try
 		{
 			$status = @json_decode($response->getBody()->getContents() ?? '{}');
+
+			if (empty($status))
+			{
+				throw new \RuntimeException('No JSON object returned from the Joomla! API application.');
+			}
 		}
 		catch (\Exception $e)
 		{
@@ -191,13 +196,37 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
+		// Crystal Error Trap(tm): This only happens on Crystal's site. I have no idea why!
+		if (!is_object($status->attributes ?? null))
+		{
+			$this->logger->error(
+				sprintf(
+					'Extension updates for site #%d (%s): failed installing update for %s “%s”. Joomla! returned invalid data',
+					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name
+				),
+				[$response->getBody()->getContents() ?? '']
+			);
+
+			$updateStatus[$extensionId] = [
+				'type'     => $extensions[$extensionId]->type,
+				'name'     => $extensions[$extensionId]->name,
+				'status'   => 'error',
+				'messages' => [$response->getBody()->getContents() ?? ''],
+			];
+			$storage->set('updateStatus', $updateStatus);
+
+			return;
+		}
+
 		if (!($status->attributes?->status ?? 1))
 		{
+			$messages = $status->attributes?->messages ?? [];
+
 			$this->logger->error(
 				sprintf(
 					'Extension updates for site #%d (%s): failed installing update for %s “%s”. Joomla! reported an error: %s',
 					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name,
-					implode(' • ', $status->attributes?->messages ?? [])
+					implode(' • ', $messages)
 				),
 				(array) $status
 			);
@@ -206,7 +235,7 @@ class ExtensionsUpdate extends AbstractCallback
 				'type'     => $extensions[$extensionId]->type,
 				'name'     => $extensions[$extensionId]->name,
 				'status'   => 'error',
-				'messages' => $status->attributes?->messages ?? [],
+				'messages' => $messages,
 			];
 			$storage->set('updateStatus', $updateStatus);
 
