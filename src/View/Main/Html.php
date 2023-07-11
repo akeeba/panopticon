@@ -16,6 +16,8 @@ defined('AKEEBA') || die;
 
 class Html extends \Awf\Mvc\DataView\Html
 {
+	public string $cronKey;
+
 	protected function onBeforeMain()
 	{
 		$this->setStrictLayout(true);
@@ -56,6 +58,8 @@ class Html extends \Awf\Mvc\DataView\Html
 		// Back button in the CRON instructions page
 		if ($this->layout === 'cron')
 		{
+			$this->cronKey = $this->container->appConfig->get('webcron_key', '');
+
 			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition([
 				'id'    => 'prev',
 				'title' => Text::_('PANOPTICON_BTN_PREV'),
@@ -74,6 +78,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		Template::addJs('media://js/main.js', defer: true);
 
+		// Toolbar
 		$toolbar = $doc->getToolbar();
 		$toolbar->setTitle(Text::_('PANOPTICON_MAIN_TITLE'));
 		$toolbar->addButtonFromDefinition([

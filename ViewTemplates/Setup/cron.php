@@ -18,20 +18,20 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 
 <!-- Instructions -->
 <div class="px-4 py-5 my-3" id="instructions">
-	<h3 class="display-5 fw-bold text-center">
+	<h3 class="display-5 fw-bold text-center mb-4">
 		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_HEAD') ?>
 	</h3>
-	<p class="lead text-center">
+	<p class="lead text-center mb-4">
 		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_SUBHEAD') ?>
 	</p>
-	<p class="lead text-center">
+	<p class="lead text-center fw-medium alert alert-info">
 		<?= Text::_( $ctaLangString ?? 'PANOPTICON_SETUP_LBL_CRON_SUBHEAD_CTA') ?>
 	</p>
 	<p class="small text-muted text-center <?= $whatsNextClass ?>">
 		<?= Text::_('PANOPTICON_SETUP_LBL_CRON_SUBHEAD_BREATHE') ?>
 	</p>
 
-	<ul class="nav nav-tabs mt-4" id="instructionsTab" role="tablist">
+	<ul class="nav nav-tabs mt-5 mb-4 fs-3" id="instructionsTab" role="tablist">
 		<li class="nav-item" role="presentation">
 			<button type="button" role="tab"
 			        class="nav-link active" id="cliTab"
@@ -52,9 +52,9 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 	<div class="tab-content pb-2 mb-3 border-bottom border-2" id="instructionsContent">
 		<div class="tab-pane show active px-2" id="cliTabPane" role="tabpanel" aria-labelledby="cliTab" tabindex="0">
 
-			<div class="row">
-				<div class="col-12 col-lg-8 order-1 order-lg-0 py-1">
-					<h3><?= Text::_('PANOPTICON_SETUP_LBL_CRON_LBL_INSTRUCTIONS') ?></h3>
+			<div class="row px-2 g-5">
+				<div class="col-12 col-lg-8 order-1 py-1">
+					<h3 class="h2 text-secondary"><?= Text::_('PANOPTICON_SETUP_LBL_CRON_LBL_INSTRUCTIONS') ?></h3>
 					<p>
 						<?= Text::_('PANOPTICON_SETUP_LBL_CRON_CLI_CREATE_A_JOB') ?>
 					</p>
@@ -146,8 +146,8 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 					</details>
 
 				</div>
-				<div class="col-12 col-lg-4 bg-light-subtle order-0 order-lg-1 py-1">
-					<h3 class="mb-4">
+				<div class="col-12 col-lg-4 bg-light-subtle order-0 px-3 card card-body">
+					<h3 class="mb-4 mt-2 card-title text-secondary">
 						<?= Text::_('PANOPTICON_SETUP_LBL_CRON_LBL_IS_THIS_RIGHT_FOR_ME') ?>
 					</h3>
 					<h4 class="text-success-emphasis">
@@ -183,9 +183,9 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 		</div>
 
 		<div class="tab-pane" id="webTabPane" role="tabpanel" aria-labelledby="webTab" tabindex="0">
-			<div class="row">
-				<div class="col-12 col-lg-8 order-1 order-lg-0 py-1">
-					<h3><?= Text::_('PANOPTICON_SETUP_LBL_CRON_LBL_INSTRUCTIONS') ?></h3>
+			<div class="row px-2 g-5">
+				<div class="col-12 col-lg-8 order-1 py-1">
+					<h3 class="h2 text-secondary"><?= Text::_('PANOPTICON_SETUP_LBL_CRON_LBL_INSTRUCTIONS') ?></h3>
 					<p>
 						<?= Text::_('PANOPTICON_SETUP_LBL_CRON_WEB_IF_URL_CRON') ?>
 					</p>
@@ -222,8 +222,8 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 					</div>
                 </div>
 
-				<div class="col-12 col-lg-4 bg-light-subtle order-0 order-lg-1 py-1">
-					<h3 class="mb-4">
+				<div class="col-12 col-lg-4 bg-light-subtle order-0 px-3 card card-body">
+					<h3 class="mb-4 mt-2 card-title text-secondary">
 						<?= Text::_('PANOPTICON_SETUP_LBL_CRON_LBL_IS_THIS_RIGHT_FOR_ME') ?>
 					</h3>
 					<h4 class="text-success-emphasis">
