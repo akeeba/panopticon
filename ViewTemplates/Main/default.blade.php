@@ -148,7 +148,7 @@ $isFiltered = array_reduce(
             <th>
                 <span class="fab fa-php fs-3" aria-hidden="true"
                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                      data-bs-title="@lang('PHP version')"
+                      data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')"
                 ></span>
                 <span class="visually-hidden">
                 @lang('PHP version')
