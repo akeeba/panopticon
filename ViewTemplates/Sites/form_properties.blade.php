@@ -62,6 +62,9 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
     </div>
 @endif
 
+<div class="alert alert-info">
+    @lang('PANOPTICON_SITES_LBL_GROUPS_INFO')
+</div>
 
 {{-- Groups, editable only by superusers --}}
 <?php

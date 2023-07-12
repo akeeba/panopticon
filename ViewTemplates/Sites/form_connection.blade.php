@@ -13,18 +13,7 @@ defined('AKEEBA') || die;
 $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 
 ?>
-<div class="row mb-3">
-	<div class="col-sm-9 offset-sm-3">
-		<div class="form-check form-switch">
-			<input class="form-check-input" type="checkbox" id="enabled" name="enabled"
-			       {{ $this->item->enabled ? 'checked' : '' }}
-			>
-			<label class="form-check-label" for="enabled">
-				@lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')
-			</label>
-		</div>
-	</div>
-</div>
+<h4>@lang('PANOPTICON_SITES_LBL_CONNECTOR_HEAD')</h4>
 
 <div class="alert alert-info col-sm-9 offset-sm-3">
 	<h3 class="alert-heading fs-5 fw-semibold">
@@ -69,6 +58,57 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 	<div class="col-sm-9">
 		<input type="text" class="form-control font-monospace" name="apiToken" id="url"
 		       value="{{{ $config->get('config.apiKey') ?? '' }}}" required
+		>
+	</div>
+</div>
+
+<h4>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_HEAD')</h4>
+
+<div class="alert alert-info col-sm-9 offset-sm-3">
+	<p>
+		@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1')
+	</p>
+	<p>
+		@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_2')
+	</p>
+	<details>
+		<summary>
+			@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_HEAD')
+		</summary>
+		<p>
+			@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_1')
+		</p>
+		<ul>
+			<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2')</li>
+			<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3')</li>
+			<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_4')</li>
+		</ul>
+		<p>
+			@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_5')
+		</p>
+	</details>
+</div>
+
+{{-- I have to use greeklish and plain text fields to prevent bloody password managers from screwing up those fields. GARGH! --}}
+
+<div class="row mb-3">
+	<label for="diaxeiristis_onoma" class="col-sm-3 col-form-label">
+		@lang('PANOPTICON_SITES_FIELD_ADMIN_USERNAME')
+	</label>
+	<div class="col-sm-9">
+		<input type="text" class="form-control" name="config[config.diaxeiristis_onoma]" id="diaxeiristis_onoma"
+			   value="{{{ $config->get('config.diaxeiristis_onoma', '') }}}" required autocomplete="off"
+		>
+	</div>
+</div>
+
+<div class="row mb-3">
+	<label for="diaxeiristis_sunthimatiko" class="col-sm-3 col-form-label">
+		@lang('PANOPTICON_SITES_FIELD_ADMIN_PASSWORD')
+	</label>
+	<div class="col-sm-9">
+		<input type="text" class="form-control" name="config[config.diaxeiristis_sunthimatiko]" id="diaxeiristis_sunthimatiko"
+			   value="{{{ $config->get('config.diaxeiristis_sunthimatiko', '') }}}" required autocomplete="off"
 		>
 	</div>
 </div>

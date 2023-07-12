@@ -21,6 +21,7 @@ use Awf\Registry\Registry;
 use Awf\Text\Text;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
 use LogicException;
 use RuntimeException;
 use Throwable;
@@ -409,6 +410,16 @@ class JoomlaUpdate extends AbstractCallback
 			$site->name
 		));
 
+        // Force reload the update information (in case the latest available Joomla version changed)
+        [$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update?force=1');
+        $response = $httpClient->get($url, $options);
+
+        if ($response->getStatusCode() !== 200)
+        {
+            throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
+        }
+
+        // Then, download the update
 		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/download');
 		$response = $httpClient->post($url, $options);
 		$json     = $response->getBody()->getContents();
@@ -907,17 +918,30 @@ class JoomlaUpdate extends AbstractCallback
 			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J404'));
 		}
 
+        // Prepare the POST data
 		$postData                = (array) $data;
 		$postData['password']    = $storage->get('update.password', '');
 		$postData['_randomJunk'] = sha1(random_bytes(32));
 
-		[, $options] = $this->getRequestOptions($site, '/foobar');
+        // Prepare the client options
+        $client   = $this->container->httpFactory->makeClient(cache: false);
+        $options  = $this->container->httpFactory->getDefaultRequestOptions();
+        $options[RequestOptions::HEADERS] ??= [];
+        $options[RequestOptions::HEADERS]['User-Agent'] = 'panopticon/' . AKEEBA_PANOPTICON_VERSION;
 
-		// Send the request
-		$response = $this->container
-			->httpFactory
-			->makeClient(cache: false)
-			->post($url, array_merge($options, [
+        // Administrator HTTP Authentication
+        $config = $site->getConfig();
+        $username = $config->get('config.diaxeiristis_onoma');
+        $password = $config->get('config.diaxeiristis_sunthimatiko');
+
+        if (!empty($username))
+        {
+            $options[RequestOptions::AUTH] = [$username, $password];
+        }
+
+        // Send the request
+        $response = $client
+            ->post($url, array_merge($options, [
 				'form_params' => $postData,
 			]));
 
