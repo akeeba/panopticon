@@ -113,7 +113,7 @@ use Awf\Text\Text;
 				</label>
 			</div>
 		</div>
-		<div class="form-text collapse">
+		<div class="form-text">
 			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION_HELP') ?>
 		</div>
 	</div>
