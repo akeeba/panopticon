@@ -185,7 +185,7 @@ class RefreshSiteInfo extends AbstractCallback
 					$site->id, $site->name
 				));
 
-				[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update');
+				[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update?force=1');
 
 				return $httpClient
 					// See https://docs.guzzlephp.org/en/stable/quickstart.html#async-requests and https://docs.guzzlephp.org/en/stable/request-options.html
