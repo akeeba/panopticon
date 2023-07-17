@@ -402,54 +402,184 @@ class JoomlaUpdate extends AbstractCallback
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
-		$httpClient = $this->container->httpFactory->makeClient(cache: false);
+		// Retrieve information from the storage
+		$mode = $storage->get('update.mode', 'chunk');
 
-		$this->logger->info(Text::sprintf(
-			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING',
-			$site->id,
-			$site->name
-		));
+		$storage->set('update.mode', $mode);
 
-        // Force reload the update information (in case the latest available Joomla version changed)
-        [$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update?force=1');
-        $response = $httpClient->get($url, $options);
-
-        if ($response->getStatusCode() !== 200)
-        {
-            throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
-        }
-
-        // Then, download the update
-		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/download');
-		$response = $httpClient->post($url, $options);
-		$json     = $response->getBody()->getContents();
-
-		try
+		switch ($mode)
 		{
-			$raw = @json_decode($json);
+			case 'chunk':
+			default:
+				$offsetInt = (int) ($offset ?? -1);
+				$offsetInt = $offsetInt <= 0 ? 0 : $offset;
+				$this->logger->info(
+					$offsetInt <= 0
+						? Text::sprintf(
+						'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_START',
+						$site->id,
+						$site->name
+					)
+						: Text::sprintf(
+						'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_CONTINUE',
+						$site->id,
+						$site->name,
+						$offsetInt
+					)
+				);
+
+				$httpClient = $this->container->httpFactory->makeClient(cache: false);
+
+				// Force reload the update information (in case the latest available Joomla version changed)
+				if ($offsetInt <= 0)
+				{
+					[$serviceUrl, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update?force=1');
+					$response = $httpClient->get($serviceUrl, $options);
+
+					if ($response->getStatusCode() !== 200)
+					{
+						throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
+					}
+				}
+
+				// Then, download the update
+			// Get values from the storage
+				$url         = $storage->get('update.package_url', null);
+				$size        = $storage->get('update.size', null);
+				$offset      = $storage->get('update.offset', null);
+				$chunk_index = $storage->get('update.chunk_index', null);
+				$max_time    = $storage->get('update.max_time', null);
+
+				// Sanitise values
+				$url         = empty($url) ? null : (filter_var($url, FILTER_SANITIZE_URL) ?: null);
+				$size        = $size >= 0 ? $size : null;
+				$offset      = $offset >= 0 ? $offset : null;
+				$chunk_index = $chunk_index >= 0 ? $chunk_index : null;
+				$max_time    = $max_time >= 0 ? $max_time : null;
+
+				$postData = [];
+
+				if ($url !== null)
+				{
+					$postData['url'] = $url;
+				}
+
+				if ($size !== null)
+				{
+					$postData['size'] = $size;
+				}
+
+				if ($offset !== null)
+				{
+					$postData['offset'] = $offset;
+				}
+
+				if ($chunk_index !== null)
+				{
+					$postData['chunk_index'] = $chunk_index;
+				}
+
+				if ($max_time !== null)
+				{
+					$postData['max_time'] = $max_time;
+				}
+
+				[
+					$serviceUrl, $options,
+				] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/download/chunked');
+
+				if (!empty($postData))
+				{
+					$options[RequestOptions::FORM_PARAMS] = $postData;
+				}
+
+				// We expect this to fail on Joomla 3 where the connector does not support chunked downloads.
+				try
+				{
+					$this->logger->debug('Sending request for chunked download', $postData);
+					$response = $httpClient->post($serviceUrl, $options);
+				}
+				catch (GuzzleException $e)
+				{
+					$this->logger->notice(
+						Text::sprintf(
+							'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED',
+							$site->id,
+							$site->name
+						),
+						[$e->getMessage()]
+					);
+
+					$storage->set('update.mode', 'single');
+
+					return;
+				}
+
+				$json     = $response->getBody()->getContents();
+
+				try
+				{
+					$raw = @json_decode($json);
+				}
+				catch (Exception $e)
+				{
+					$raw = null;
+				}
+
+				if (empty($raw) || empty($raw->data?->attributes?->basename))
+				{
+					$this->logger->notice(
+						Text::sprintf(
+							'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED',
+							$site->id,
+							$site->name
+						),
+						[json_encode($raw)]
+					);
+
+					$storage->set('update.mode', 'single');
+
+					return;
+				}
+
+				$storage->set('update.basename', $raw->data?->attributes?->basename);
+				$storage->set('update.package_url', $raw->data?->attributes?->url);
+				$storage->set('update.size', $raw->data?->attributes?->size);
+				$storage->set('update.offset', $raw->data?->attributes?->offset);
+				$storage->set('update.chunk_index', $raw->data?->attributes?->chunk_index);
+
+				$error = $raw->data?->attributes?->error;
+				$done = $raw->data?->attributes?->done;
+
+				if (!empty($error))
+				{
+					$this->logger->notice($error);
+					$this->logger->notice(
+						Text::sprintf(
+							'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED',
+							$site->id,
+							$site->name
+						)
+					);
+
+					$storage->set('update.mode', 'single');
+
+					return;
+				}
+
+				if ($done)
+				{
+					$this->advanceState();
+				}
+
+				break;
+
+			case 'single':
+				$this->doSinglePartDownload($site, $storage);
+
+				$this->advanceState();
+				break;
 		}
-		catch (Exception $e)
-		{
-			$raw = null;
-		}
-
-		if (empty($raw) || empty($raw->data?->attributes?->basename))
-		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_DOWNLOAD_FAILED'));
-		}
-
-		$baseName = $raw->data?->attributes?->basename;
-		$check    = $raw->data?->attributes?->check ?? false;
-
-		if (!$check)
-		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_CHECKSUM'));
-		}
-
-		$storage->set('update.basename', $baseName);
-		$storage->set('update.check', $check);
-
-		$this->advanceState();
 	}
 
 	/**
@@ -528,6 +658,8 @@ class JoomlaUpdate extends AbstractCallback
 
 		if (empty($raw) || empty($raw->data?->attributes?->password))
 		{
+			$this->logger->debug(json_encode($raw));
+
 			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_ENABLE_FAILED'));
 		}
 
@@ -537,11 +669,15 @@ class JoomlaUpdate extends AbstractCallback
 
 		if (basename($baseName) != $storage->get('update.basename') || $filesize <= 0)
 		{
+			$this->logger->debug(json_encode($raw));
+
 			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED'));
 		}
 
 		if (empty($password))
 		{
+			$this->logger->debug(json_encode($raw));
+
 			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_PASSWORD'));
 		}
 
@@ -918,30 +1054,30 @@ class JoomlaUpdate extends AbstractCallback
 			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J404'));
 		}
 
-        // Prepare the POST data
+		// Prepare the POST data
 		$postData                = (array) $data;
 		$postData['password']    = $storage->get('update.password', '');
 		$postData['_randomJunk'] = sha1(random_bytes(32));
 
-        // Prepare the client options
-        $client   = $this->container->httpFactory->makeClient(cache: false);
-        $options  = $this->container->httpFactory->getDefaultRequestOptions();
-        $options[RequestOptions::HEADERS] ??= [];
-        $options[RequestOptions::HEADERS]['User-Agent'] = 'panopticon/' . AKEEBA_PANOPTICON_VERSION;
+		// Prepare the client options
+		$client                                         = $this->container->httpFactory->makeClient(cache: false);
+		$options                                        = $this->container->httpFactory->getDefaultRequestOptions();
+		$options[RequestOptions::HEADERS]               ??= [];
+		$options[RequestOptions::HEADERS]['User-Agent'] = 'panopticon/' . AKEEBA_PANOPTICON_VERSION;
 
-        // Administrator HTTP Authentication
-        $config = $site->getConfig();
-        $username = $config->get('config.diaxeiristis_onoma');
-        $password = $config->get('config.diaxeiristis_sunthimatiko');
+		// Administrator HTTP Authentication
+		$config   = $site->getConfig();
+		$username = $config->get('config.diaxeiristis_onoma');
+		$password = $config->get('config.diaxeiristis_sunthimatiko');
 
-        if (!empty($username))
-        {
-            $options[RequestOptions::AUTH] = [$username, $password];
-        }
+		if (!empty($username))
+		{
+			$options[RequestOptions::AUTH] = [$username, $password];
+		}
 
-        // Send the request
-        $response = $client
-            ->post($url, array_merge($options, [
+		// Send the request
+		$response = $client
+			->post($url, array_merge($options, [
 				'form_params' => $postData,
 			]));
 
@@ -1335,5 +1471,62 @@ class JoomlaUpdate extends AbstractCallback
 		$queue = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
 
 		$queue->push($queueItem, 'now');
+	}
+
+	/**
+	 * @param   Site      $site
+	 * @param   Registry  $storage
+	 *
+	 * @return void
+	 * @throws GuzzleException
+	 */
+	private function doSinglePartDownload(Site $site, Registry $storage): void
+	{
+		$httpClient = $this->container->httpFactory->makeClient(cache: false);
+
+		$this->logger->info(Text::sprintf(
+			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING',
+			$site->id,
+			$site->name
+		));
+
+		// Force reload the update information (in case the latest available Joomla version changed)
+		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update?force=1');
+		$response = $httpClient->get($url, $options);
+
+		if ($response->getStatusCode() !== 200)
+		{
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
+		}
+
+		// Then, download the update
+		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/download');
+		$response = $httpClient->post($url, $options);
+		$json     = $response->getBody()->getContents();
+
+		try
+		{
+			$raw = @json_decode($json);
+		}
+		catch (Exception $e)
+		{
+			$raw = null;
+		}
+
+		if (empty($raw) || empty($raw->data?->attributes?->basename))
+		{
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_DOWNLOAD_FAILED'));
+		}
+
+		$baseName = $raw->data?->attributes?->basename;
+		$check    = $raw->data?->attributes?->check ?? false;
+
+		if (!$check)
+		{
+			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_CHECKSUM'));
+		}
+
+		$storage->set('update.basename', $baseName);
+		$storage->set('update.check', $check);
 	}
 }
