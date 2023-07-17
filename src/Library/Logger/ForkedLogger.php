@@ -27,12 +27,22 @@ class ForkedLogger extends AbstractLogger implements LoggerInterface
 		}
 	}
 
-	public function pushLogger(LoggerInterface $logger)
+	public function pushLogger(LoggerInterface $logger): void
 	{
+		if ($this->hasLogger($logger))
+		{
+			return;
+		}
+
 		$this->loggers[] = $logger;
 	}
 
-	public function clearLoggers()
+	public function hasLogger(LoggerInterface $logger): bool
+	{
+		return in_array($logger, $this->loggers, true);
+	}
+
+	public function clearLoggers(): void
 	{
 		$this->loggers = [];
 	}
