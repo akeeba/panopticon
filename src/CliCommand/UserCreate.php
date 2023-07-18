@@ -9,6 +9,8 @@ namespace Akeeba\Panopticon\CliCommand;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Application\UserAuthenticationPassword;
+use Akeeba\Panopticon\Application\UserPrivileges;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
 use Complexify\Complexify;
@@ -136,7 +138,11 @@ class UserCreate extends AbstractCommand
 
 		$container = Factory::getContainer();
 		$manager   = $container->userManager;
-		$user      = $manager->getUserByUsername($username);
+
+		$manager->registerPrivilegePlugin('panopticon', UserPrivileges::class);
+		$manager->registerAuthenticationPlugin('password', UserAuthenticationPassword::class);
+
+		$user = $manager->getUserByUsername($username);
 
 		if (!empty($user) && !$overwrite)
 		{
