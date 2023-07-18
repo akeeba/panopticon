@@ -22,29 +22,56 @@ trait DefaultConfigurationTrait
 	public function getDefaultConfiguration(): array
 	{
 		return [
-			'session_timeout' => 1440,
-			'timezone'        => 'UTC',
-			'debug'           => false,
-
-			'log_level'            => 'warning',
-			'log_rotate_compress'  => true,
-			'log_rotate_files'     => 3,
-			'log_backup_threshold' => 14,
-
-			'cron_stuck_threshold'  => 3,
-			'max_execution'         => 60,
-			'execution_bias'        => 75,
-			'dbdriver'              => 'mysqli',
-			'dbhost'                => 'localhost',
-			'dbuser'                => '',
-			'dbpass'                => '',
-			'dbname'                => '',
-			'dbprefix'              => 'ak_',
-			'dbencryption'          => false,
-			'dbsslca'               => '',
-			'dbsslkey'              => '',
-			'dbsslcert'             => '',
-			'dbsslverifyservercert' => '',
+			'session_timeout'          => 1440,
+			'language'                 => 'en-GB',
+			'timezone'                 => 'UTC',
+			'debug'                    => false,
+			'error_reporting'          => 'default',
+			'live_site'                => '',
+			'session_token_algorithm'  => 'sha512',
+			'finished_setup'           => false,
+			'theme'                    => 'theme',
+			'darkmode'                 => 1,
+			'fontsize'                 => '',
+			'phpwarnings'              => true,
+			'webcron_key'              => '',
+			'cron_stuck_threshold'     => 3,
+			'max_execution'            => 60,
+			'execution_bias'           => 75,
+			'siteinfo_freq'            => 60,
+			'tasks_coreupdate_install' => 'patch',
+			'tasks_extupdate_install'  => 'none',
+			'caching_time'             => 60,
+			'cache_adapter'            => 'filesystem',
+			'caching_redis_dsn'        => '',
+			'caching_memcached_dsn'    => '',
+			'log_level'                => 'warning',
+			'log_rotate_compress'      => true,
+			'log_rotate_files'         => 3,
+			'log_backup_threshold'     => 14,
+			'dbdriver'                 => 'mysqli',
+			'dbhost'                   => 'localhost',
+			'dbuser'                   => '',
+			'dbpass'                   => '',
+			'dbname'                   => '',
+			'dbprefix'                 => 'ak_',
+			'dbcharset'                => 'utf8mb4',
+			'dbencryption'             => false,
+			'dbsslca'                  => '',
+			'dbsslkey'                 => '',
+			'dbsslcert'                => '',
+			'dbsslverifyservercert'    => '',
+			'mail_online'              => false,
+			'mail_inline_images'       => false,
+			'mailer'                   => 'mail',
+			'mailfrom'                 => '',
+			'fromname'                 => 'Panopticon',
+			'smtphost'                 => 'localhost',
+			'smtpport'                 => 25,
+			'smtpsecure'               => 'none',
+			'smtpauth'                 => false,
+			'smtpuser'                 => '',
+			'smtppass'                 => '',
 		];
 	}
 
@@ -74,6 +101,11 @@ trait DefaultConfigurationTrait
 		return array_filter($values, fn($x) => stripos($x, $currentValue) === 0);
 	}
 
+	public function isValidConfigurationKey(string $key)
+	{
+		return array_key_exists($key, $this->getDefaultConfiguration());
+	}
+
 	private function getConfigurationOptionFilterCallback(string $key): callable
 	{
 		return match ($key)
@@ -90,11 +122,6 @@ trait DefaultConfigurationTrait
 			'dbdriver' => [$this, 'validateDatabaseDriver'],
 			default => fn($x) => $x,
 		};
-	}
-
-	public function isValidConfigurationKey(string $key)
-	{
-		return array_key_exists($key, $this->getDefaultConfiguration());
 	}
 
 	private function validateBool($x): bool
@@ -137,7 +164,7 @@ trait DefaultConfigurationTrait
 	{
 		if (!in_array($x, [
 			LogLevel::DEBUG, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING, LogLevel::ERROR, LogLevel::CRITICAL,
-			LogLevel::ALERT, LogLevel::EMERGENCY
+			LogLevel::ALERT, LogLevel::EMERGENCY,
 		], true))
 		{
 			return LogLevel::WARNING;

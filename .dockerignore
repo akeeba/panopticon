@@ -1,0 +1,39 @@
+### Application stuff
+config.php
+/cache/**
+!/cache/.htaccess
+!/cache/web.config
+/tmp/**
+!/tmp/.htaccess
+!/tmp/web.config
+/log/**
+!/log/.htaccess
+!/log/web.config
+/.htaccess
+
+### User code dir
+/user_code/*
+!/user_code/.gitkeep
+
+### Node.js dev dependencies
+/node_modules
+
+### Build & Release files
+/.github
+/assets
+!/assets/php.ini
+!/assets/docker-entrypoint.sh
+/build
+/release
+/.dockerignore
+/.editorconfig
+/.gitattributes
+/.gitignore
+/.phpstorm.meta.php
+/1
+/build.xml
+/docker-compose.yml
+/docker-run.sh
+/Dockerfile
+/RELEASENOTES.md
+/TODO.md

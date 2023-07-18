@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+  php:
+    build:
+      context: '.'
+      args:
+        PHP_VERSION: 8.2
+    entrypoint: ["bash", "/usr/local/bin/docker-entrypoint.sh"]
+    depends_on:
+      mysql:
+        condition: service_started
+    links:
+      - mysql
+    ports:
+      - 4280:80
+      - 4443:443
+    volumes:
+      - panopticon_usercode:/var/www/html/user_code
+    container_name: panopticon_php
+    restart: always
+  mysql:
+    image: mysql:8.0
+    command:
+      - --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - panopticon_mysql:/var/lib/mysql
+    environment:
+      TZ: "Asia/Nicosia"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: "panopticon"
+      MYSQL_USER: "panopticon"
+      MYSQL_PASSWORD: "Emx6Rf9mtneXNgpZyehvdm8NUJJMJQA8"
+    container_name: panopticon_mysql
+volumes:
+  panopticon_usercode:
+  panopticon_mysql:

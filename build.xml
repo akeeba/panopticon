@@ -44,6 +44,7 @@
         <exclude name="node_modules/**" />
         <exclude name="release/**" />
 
+        <exclude name=".dockerignore" />
         <exclude name=".gitattributes" />
         <exclude name=".gitignore" />
         <exclude name=".htaccess" />
@@ -52,6 +53,9 @@
         <exclude name="composer.json" />
         <exclude name="composer.lock" />
         <exclude name="config.php" />
+        <exclude name="docker-compose.yml" />
+        <exclude name="docker-run.sh" />
+        <exclude name="Dockerfile" />
         <exclude name="*.md" />
 
         <!-- Exclude SCSS -->
