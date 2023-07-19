@@ -10,4 +10,4 @@ Self-hosted site monitoring and management
 
 Akeeba Panopticon is a standalone PHP application. You install on a domain or subdomain separate from your sites. You can then use it to monitor manage your sites remotely.
 
-Currently, it supports Joomla 4 (and later) sites.
+Currently, it supports Joomla 3, Joomla 4, and Joomla 5 sites.
