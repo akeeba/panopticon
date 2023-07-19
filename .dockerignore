@@ -32,7 +32,7 @@ config.php
 /.phpstorm.meta.php
 /1
 /build.xml
-/docker-compose.yml
+/docker-*.yml
 /docker-run.sh
 /Dockerfile
 /RELEASENOTES.md

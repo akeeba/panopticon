@@ -36,3 +36,4 @@ config.php
 /build/override.properties
 /release
 /1
+/docker-compose.override.yml
