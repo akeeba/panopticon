@@ -22,7 +22,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 $i     = 1;
 ?>
 
-<form action="@route('index.php?view=tasks')" method="post" name="adminForm" id="adminForm" role="form">
+<form action="@route('index.php?view=tasks')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
         <div class="d-flex flex-row justify-content-center">
             <div class="input-group" style="max-width: max(50%, 25em)">

@@ -22,8 +22,7 @@ $sessionPath = $this->getContainer()->session->getSavePath();
 	<?= Text::sprintf('PANOPTICON_SETUP_SESSION_LBL_WARNING_BODY', $sessionPath) ?>
 </p>
 
-<form action="<?= $this->container->router->route('index.php?view=setup&task=savesession') ?>" method="post"
-      role="form">
+<form action="<?= $this->container->router->route('index.php?view=setup&task=savesession') ?>" method="post">
 	<div class="row mb-3">
 		<label for="fs_driver" class="col-sm-3 col-form-label">
 			<?= Text::_('PANOPTICON_SETUP_LBL_FS_DRIVER_SESSION') ?>

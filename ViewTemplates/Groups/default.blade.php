@@ -15,7 +15,7 @@ $model = $this->getModel();
 $token = $this->container->session->getCsrfToken()->getValue();
 
 ?>
-<form action="@route('index.php?view=groups')" method="post" name="adminForm" id="adminForm" role="form">
+<form action="@route('index.php?view=groups')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
         <div class="input-group" style="max-width: max(50%, 25em)">
             <input type="search" class="form-control" id="search"

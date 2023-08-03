@@ -18,7 +18,7 @@ $returnUrl = $this->input->getBase64('returnurl', '');
     @include('Sites/troubleshoot')
 @endif
 
-<form action="@route('index.php?view=sites')" method="post" name="adminForm" id="adminForm" role="form">
+<form action="@route('index.php?view=sites')" method="post" name="adminForm" id="adminForm">
 
     <div class="row mt-3 mb-4">
         <label for="name" class="col-sm-3 col-form-label fs-5 fw-bold">

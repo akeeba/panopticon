@@ -22,7 +22,7 @@ use Awf\Text\Text;
 </p>
 
 
-<form action="<?= $this->container->router->route('index.php?view=setup&task=saveconfig') ?>" role="form"
+<form action="<?= $this->container->router->route('index.php?view=setup&task=saveconfig') ?>"
       method="post" name="setupForm" id="setupForm">
 
 	<div class="row mb-3">

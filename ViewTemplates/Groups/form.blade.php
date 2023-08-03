@@ -16,7 +16,7 @@ $privileges = $model->getPrivileges();
 $token      = $this->container->session->getCsrfToken()->getValue();
 
 ?>
-<form action="@route('index.php?view=groups')" method="post" name="adminForm" id="adminForm" role="form">
+<form action="@route('index.php?view=groups')" method="post" name="adminForm" id="adminForm">
     <div class="row mb-3">
         <label for="title" class="col-sm-3 col-form-label">
             @lang('PANOPTICON_GROUPS_FIELD_TITLE')

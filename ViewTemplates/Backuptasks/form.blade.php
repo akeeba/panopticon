@@ -35,7 +35,7 @@ catch (InvalidArgumentException $e)
 ?>
 
 <form action="@route('index.php?view=backuptasks')"
-      method="post" name="adminForm" id="adminForm" role="form">
+      method="post" name="adminForm" id="adminForm">
 
     <h3 class="text-body-secondary border-bottom border-2 border-info-subtle">
         <span class="text-body-tertiary me-2">#{{ (int) $this->site->id }}</span>

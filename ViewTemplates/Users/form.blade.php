@@ -30,7 +30,7 @@ JS;
 @js('choices/choices.min.js')
 @inlinejs($js)
 
-<form action="@route('index.php?view=users')" method="post" role="form"
+<form action="@route('index.php?view=users')" method="post"
       name="adminForm" id="adminForm"
       class="row g-2"
 >

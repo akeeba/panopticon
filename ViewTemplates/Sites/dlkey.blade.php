@@ -16,7 +16,7 @@ $returnUrl = $this->input->getBase64('returnurl', '');
 
 ?>
 
-<form action="@route('index.php?view=sites')" method="post" name="adminForm" id="adminForm" role="form">
+<form action="@route('index.php?view=sites')" method="post" name="adminForm" id="adminForm">
     <p class="fs-3">
         <span>
             {{{ $model->name }}}

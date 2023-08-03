@@ -24,7 +24,7 @@ $i     = 1;
     {{ $this->site->name }}
 </h3>
 
-<form action="@route('index.php?view=overrides')" method="post" name="adminForm" id="adminForm" role="form">
+<form action="@route('index.php?view=overrides')" method="post" name="adminForm" id="adminForm">
     <table class="table table-striped align-middle" id="adminList" role="table">
         <comment class="visually-hidden">
             @lang('PANOPTICON_OVERRIDES_TABLE_COMMENT')

@@ -22,7 +22,7 @@ use Awf\Text\Text;
 
 <form action="<?= $this->container->router->route('index.php?view=setup&task=installDatabase') ?>"
       name="dbForm" id="dbForm"
-      method="post" role="form">
+      method="post">
 
 	<div class="row mb-3">
 		<label for="driver" class="col-sm-3 col-form-label">
