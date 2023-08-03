@@ -187,7 +187,7 @@ akeeba.Ajax.ajax = function (url, parameters)
 
 /**
  * Adds an AJAX request to the request queue and begins processing the queue if it's not already started. The request
- * queue is a FIFO buffer. Each request will be executed as soon as the one preceeding it has completed processing
+ * queue is a FIFO buffer. Each request will be executed as soon as the one preceding it has completed processing
  * (successfully or otherwise).
  *
  * It's the same syntax as .ajax() with the difference that the request is queued instead of executed right away.
