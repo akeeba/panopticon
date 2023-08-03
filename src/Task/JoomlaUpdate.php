@@ -104,7 +104,7 @@ class JoomlaUpdate extends AbstractCallback
 					}
 
 					/**
-					 * Only send emails if we didn't reinstall the same verison AND if we are asked to send emails after
+					 * Only send emails if we didn't reinstall the same version AND if we are asked to send emails after
 					 * Joomla! update.
 					 */
 					$vars       = $storage->get('email_variables', []);
