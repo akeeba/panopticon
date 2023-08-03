@@ -168,10 +168,8 @@ $themeColor = TemplateHelper::getThemeColour();
 				<?php endif ?>
 			</span>
 		<?php endif ?>
-	</footer>
-	<footer class="container-xl bg-dark text-light p-3 pt-1 text-light small" data-bs-theme="dark">
 		<div class="d-flex flex-column">
-			<p class="mb-2">
+			<p class="mt-3 mb-2">
 				<?= Text::sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>
 			</p>
 			<p class="mb-2">
