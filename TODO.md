@@ -61,7 +61,7 @@ Groups only carry a name and zero or more of the following permissions:
 
 * **View**
 * **Execute**
-* **Adminstration**
+* **Administration**
 
 These are the same permissions as the ones you saw for each User. However, they do NOT apply across all sites. They only apply to the sites which belong to that Group, as long as the user trying to access that site also belongs in that Group. 
 

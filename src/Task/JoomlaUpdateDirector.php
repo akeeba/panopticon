@@ -256,7 +256,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 	{
 		$this->logger->debug(
 			sprintf(
-				'Enqueing email template ‘%s’ for site %d (%s)',
+				'Enqueuing email template ‘%s’ for site %d (%s)',
 				$mailtemplate, $site->id, $site->name
 			)
 		);

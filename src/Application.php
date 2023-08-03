@@ -31,7 +31,7 @@ class Application extends AWFApplication
 	use MFATrait;
 
 	/**
-	 * LIst of view names we're allowed to access directly, without a login, and without redirection to the setup view
+	 * List of view names we're allowed to access directly, without a login, and without redirection to the setup view
 	 */
 	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup'];
 
