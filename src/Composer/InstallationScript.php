@@ -16,6 +16,47 @@ use function Symfony\Component\VarDumper\Dumper\esc;
 
 abstract class InstallationScript
 {
+	public static function makeVersionPhp(Event $event): void
+	{
+		$io         = $event->getIO();
+		$targetFile = __DIR__ . '/../../version.php';
+
+		if (file_exists($targetFile))
+		{
+			$io->debug('version.php already exists; skipping');
+
+			return;
+		}
+
+		$fileContents = file_get_contents(__DIR__ . '/../../build/templates/version.php');
+
+		if ($fileContents === false)
+		{
+			$io->warning('Cannot find build/templates/version.php. Creating a new version.php file has failed.');
+		}
+
+		$workingCopyDir = realpath((__DIR__ . '/../..'));
+
+		$replacements = [
+			'##VERSION##' => self::getChangelogVersion($workingCopyDir)
+			                 ?? self::getLatestGitTag($workingCopyDir)
+			                    ?? self::getFakeVersion($workingCopyDir),
+			'##DATE##'    => gmdate('Y-m-d'),
+		];
+		$fileContents = str_replace(array_keys($replacements), array_values($replacements), $fileContents);
+
+		$result = file_put_contents($targetFile, $fileContents);
+
+		if ($result)
+		{
+			$io->debug('Created a new version.php file');
+		}
+		else
+		{
+			$io->warning('Could not create a version.php file. Is the directory not writeable?');
+		}
+	}
+
 	/**
 	 * Run actions after Composer Update
 	 *
@@ -387,4 +428,121 @@ abstract class InstallationScript
 			$container->fileSystem->copy($file->getPathname(), $target);
 		}
 	}
+
+	private static function getChangelogVersion(string $changeLogDirectory): ?string
+	{
+		// Try to detect the CHANGELOG file
+		$rootDir    = rtrim($changeLogDirectory, '/' . DIRECTORY_SEPARATOR);
+		$changeLogs = [
+			'CHANGELOG',
+			'CHANGELOG.md',
+			'CHANGELOG.php',
+			'CHANGELOG.txt',
+		];
+
+		foreach ($changeLogs as $possibleFile)
+		{
+			$possibleFile = $rootDir . '/' . $possibleFile;
+
+			if (@file_exists($possibleFile))
+			{
+				$changelog = $possibleFile;
+			}
+		}
+
+		// No changelog specified? Bummer.
+		if (empty($changelog ?? null))
+		{
+			return null;
+		}
+
+		// Get the contents of the changelog.
+		$content = @file_get_contents($changelog);
+
+		if (empty($content))
+		{
+			return null;
+		}
+
+		// Remove a leading die() statement
+		$lines = array_map('trim', explode("\n", $content));
+
+		if (strpos($lines[0], '<?') !== false)
+		{
+			array_shift($lines);
+		}
+
+		// Remove empty lines
+		$lines = array_filter($lines, function ($x) {
+			return !empty($x);
+		});
+
+		// The first line should be "Something something something VERSION" or just "VERSION"
+		$firstLine = array_shift($lines);
+		$parts     = explode(' ', $firstLine);
+		$firstLine = array_pop($parts);
+
+		// The first line should be "Something something something VERSION" or just "VERSION"
+
+		if (!preg_match('/((\d+\.?)+)(((a|alpha|b|beta|rc|dev)\d)*(-[^\s]*)?)?/', $firstLine, $matches))
+		{
+			return null;
+		}
+
+		$version = $matches[0];
+
+		if (is_array($version))
+		{
+			$version = array_shift($version);
+		}
+
+		return $version;
+	}
+
+	private static function getLatestGitTag(string $workingCopy): ?string
+	{
+		if ($workingCopy == '..')
+		{
+			$workingCopy = '../';
+		}
+
+		$cwd         = getcwd();
+		$workingCopy = realpath($workingCopy);
+
+		chdir($workingCopy);
+		exec('git describe --abbrev=0 --tags', $out);
+		chdir($cwd);
+
+		if (empty($out))
+		{
+			return null;
+		}
+
+		return ltrim(trim($out[0]), 'v.');
+	}
+
+	private static function getFakeVersion(string $workingCopy): string
+	{
+		$commitHash = self::getLatestCommitHash($workingCopy);
+
+		return '0.0.0-dev' . gmdate('YmdHi') . (empty($commitHash) ? '' : ('-rev' . $commitHash));
+	}
+
+	private static function getLatestCommitHash(string $workingCopy): string
+	{
+		if ($workingCopy == '..')
+		{
+			$workingCopy = '../';
+		}
+
+		$cwd         = getcwd();
+		$workingCopy = realpath($workingCopy);
+
+		chdir($workingCopy);
+		exec('git log --format=%h -n1', $out);
+		chdir($cwd);
+
+		return empty($out) ? '' : trim($out[0]);
+	}
+
 }

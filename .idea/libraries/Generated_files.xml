@@ -2,6 +2,7 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/webauthn-mfa.min.js" />
       </sourceFilesUrls>
     </properties>

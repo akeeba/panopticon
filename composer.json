@@ -265,11 +265,13 @@
 		],
 		"post-install-cmd": [
 			"@npm-deps",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::makeVersionPhp",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::schemaUpdate"
 		],
 		"post-update-cmd": [
 			"@npm-deps",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::makeVersionPhp",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::postComposerUpdate",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::schemaUpdate"
 		],
