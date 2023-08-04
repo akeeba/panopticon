@@ -56,7 +56,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 		@lang('PANOPTICON_SITES_FIELD_TOKEN')
 	</label>
 	<div class="col-sm-9">
-		<input type="text" class="form-control font-monospace" name="apiToken" id="url"
+		<input type="text" class="form-control font-monospace" name="apiToken" id="apiToken"
 		       value="{{{ $config->get('config.apiKey') ?? '' }}}" required
 		>
 	</div>

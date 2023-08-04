@@ -43,7 +43,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
                    name="enabled" id="enabled"
                     {{ $this->item->enabled ? 'checked' : '' }}
             >
-            <label class="form-check-label" for="config_core_update_email_error">
+            <label class="form-check-label" for="enabled">
                 @lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')
             </label>
             <div class="form-text">
@@ -71,7 +71,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
     $attribs = $isSuper ? [] : ['disabled' => 'disabled'];
 ?>
 <div class="row mb-3">
-    <label for="name" class="col-sm-3 col-form-label">
+    <label for="groups" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_SITES_LBL_GROUPS')
     </label>
     <div class="col-sm-9">
@@ -92,7 +92,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
 
 {{-- created_by --}}
 <div class="row mb-3">
-    <label for="name" class="col-sm-3 col-form-label">
+    <label for="created_by" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_LBL_FIELD_CREATED_BY')
     </label>
     <div class="col-sm-9">
@@ -103,7 +103,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
 
 {{-- created_on --}}
 <div class="row mb-3">
-    <label for="name" class="col-sm-3 col-form-label">
+    <label for="created_on" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_LBL_FIELD_CREATED_ON')
     </label>
     <div class="col-sm-9">
@@ -121,7 +121,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
 
 {{-- modified_by --}}
 <div class="row mb-3">
-    <label for="name" class="col-sm-3 col-form-label">
+    <label for="modified_by" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_LBL_FIELD_MODIFIED_BY')
     </label>
     <div class="col-sm-9">
@@ -131,7 +131,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
 
 {{-- modified_on --}}
 <div class="row mb-3">
-    <label for="name" class="col-sm-3 col-form-label">
+    <label for="modified_on" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_LBL_FIELD_MODIFIED_ON')
     </label>
     <div class="col-sm-9">
