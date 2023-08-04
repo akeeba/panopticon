@@ -122,6 +122,7 @@ trait ACLTrait
 			// Not adding other tasks means they are implicitly disallowed, even to superusers.
 			'browse'  => ['super'],
 			'default' => ['super'],
+			'add'     => ['super'],
 			'edit'    => ['*'],
 			'read'    => ['*'],
 			'save'    => ['*'],
