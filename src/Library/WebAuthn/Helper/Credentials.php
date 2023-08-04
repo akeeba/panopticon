@@ -486,7 +486,7 @@ class Credentials
 	}
 
 	/**
-	 * Reshape the PassKey registration data.
+	 * Reshape the Passkey registration data.
 	 *
 	 * Some of the data returned from the browser are encoded using regular Base64 (instead of URL-safe Base64) and/or
 	 * have padding. The WebAuthn library requires all data to be encoded using the URL-safe Base64 algorithm *without*
@@ -556,7 +556,7 @@ class Credentials
 	}
 
 	/**
-	 * Reshape the PassKey validation data.
+	 * Reshape the Passkey validation data.
 	 *
 	 * Some of the data returned from the browser are encoded using regular Base64 (instead of URL-safe Base64) and/or
 	 * have padding. The WebAuthn library requires all data to be encoded using the URL-safe Base64 algorithm *without*
