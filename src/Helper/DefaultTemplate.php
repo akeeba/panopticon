@@ -137,12 +137,8 @@ abstract class DefaultTemplate
 
 		if (!$hasChildren)
 		{
-			$aClass = $anchorClass . ($isActiveItem ? ' active' : '');
-
-			if (str_ends_with($item->getUrl(), '#!disabled!'))
-			{
-				$aClass .= ' disabled';
-			}
+            $isDisabled = str_ends_with($item->getUrl(), '#!disabled!');
+			$aClass = $anchorClass . ($isActiveItem ? ' active' : '') . ($isDisabled ? ' disabled' : '');
 
 			$aria   = $isActiveItem ? ' aria-current="page"' : '';
 
@@ -150,10 +146,19 @@ abstract class DefaultTemplate
 			{
 				$html .= '<hr class="dropdown-divider" />';
 			}
+            elseif ($isDisabled)
+            {
+                $html .= sprintf(
+                    '<span class="%s">%s%s</span>',
+                    $aClass,
+                    $icon,
+                    $item->getTitle()
+                );
+            }
 			else
 			{
 				$html .= sprintf(
-					'<a class="%s%s" href="%s">%s%s</a>',
+					'<a class="%s"%s href="%s">%s%s</a>',
 					$aClass,
 					$aria,
 					$item->getUrl(),
