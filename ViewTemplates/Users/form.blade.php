@@ -109,7 +109,7 @@ JS;
                 @if ($this->container->userManager->getUser()->getPrivilege('panopticon.super'))
                     {{-- Groups--}}
                     <div class="row mb-3">
-                        <label for="name" class="col-sm-3 col-form-label">
+                        <label for="groups" class="col-sm-3 col-form-label">
                             @lang('PANOPTICON_USERS_LBL_FIELD_GROUPS')
                         </label>
                         <div class="col-sm-9">

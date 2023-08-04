@@ -24,7 +24,7 @@ $config = $this->container->appConfig;
                     <input class="form-check-input" type="checkbox" name="options[proxy_enabled]" id="proxy_enabled"
                             {{ $config->get('proxy_enabled', false) ? 'checked' : '' }} value="1"
                     >
-                    <label class="form-check-label" for="mail_online">
+                    <label class="form-check-label" for="proxy_enabled">
                         @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_ENABLED')
                     </label>
                 </div>
