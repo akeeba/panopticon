@@ -186,7 +186,7 @@ $themeColor = TemplateHelper::getThemeColour();
 					</div
 					><div>
 						<span class="fa fa-address-card" aria-hidden="true"></span>
-						<a href="<?= $this->container->router->route('index.php?view=about') ?>" target="_blank">
+						<a href="<?= $this->container->router->route('index.php?view=about') ?>">
 							About
 						</a>
 					</div>
