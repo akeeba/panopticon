@@ -118,10 +118,15 @@ abstract class DefaultTemplate
 		$hasChildren = count($item->getChildren()) > 0;
 
 		$isActiveItem = self::isSubmenuActive($item);
+		$isDivider = $item->getTitle() === '---';
 
 		$liClass = $listItemClass . ($hasChildren ? ' dropdown' : '');
 		$liClass .= $isActiveItem ? ' active' : '';
-		$html    .= sprintf("<li class=\"%s\">", $liClass);
+		$html    .= sprintf(
+			"<li class=\"%s\"%s>",
+			$liClass,
+			$isDivider ? ' role="presentation"' : ''
+		);
 
 		$icon = $item->getIcon();
 
@@ -141,7 +146,7 @@ abstract class DefaultTemplate
 
 			$aria   = $isActiveItem ? ' aria-current="page"' : '';
 
-			if ($item->getTitle() === '---')
+			if ($isDivider)
 			{
 				$html .= '<hr class="dropdown-divider" />';
 			}
