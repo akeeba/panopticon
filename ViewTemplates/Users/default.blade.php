@@ -71,7 +71,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             <td>
                 <div class="d-flex flex-row gap-2">
                     <div>
-                        <img src="{{ $user->getAvatar(128) }}" alt="" aria-hidden="true"
+                        <img src="{{ $user->getAvatar(128) }}" alt=""
                              class="rounded-3 border"
                              style="max-width: 2.5em" >
                     </div>

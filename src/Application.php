@@ -143,7 +143,7 @@ class Application extends AWFApplication
 
 		$avatar = $user->getAvatar(64);
 
-		return "<img src=\"$avatar\" class=\"me-1\" style=\"width: 1.25em; border-radius: 0.625em \" >" .
+		return "<img src=\"$avatar\" alt=\"\" class=\"me-1\" style=\"width: 1.25em; border-radius: 0.625em \" >" .
 			$user->getUsername();
 	}
 
