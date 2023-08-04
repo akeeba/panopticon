@@ -1,0 +1,9 @@
+/*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+.tox-dialog-wrap > div[role=dialog] > .tox-dialog__content-js > .tox-dialog__body > .tox-dialog__body-content > .tox-form > .tox-form__group--stretched > .tox-textarea-wrap > textarea[type=text].tox-textarea {
+  height: 30em;
+}
