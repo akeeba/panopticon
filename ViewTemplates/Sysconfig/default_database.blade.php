@@ -30,7 +30,7 @@ $config = $this->container->appConfig;
 
         {{-- dbdriver --}}
         <div class="row mb-3">
-            <label for="error_reporting" class="col-sm-3 col-form-label">
+            <label for="dbdriver" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DBDRIVER')
             </label>
             <div class="col-sm-9">
