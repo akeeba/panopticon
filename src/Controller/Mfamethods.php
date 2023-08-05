@@ -39,6 +39,33 @@ class Mfamethods extends Controller
 		return parent::execute($task);
 	}
 
+	public function disable(): bool
+	{
+		$this->assertLoggedInUser();
+
+		// Make sure I am allowed to edit the specified user
+		$user_id = $this->input->getInt('user_id', 0);
+		$user    = $this->container->userManager->getUser($user_id);
+
+		$this->_assertCanEdit($user);
+
+		/** @var \Akeeba\Panopticon\Model\Mfamethods $model */
+		$model = $this->getModel();
+
+		$model->deleteAll($user);
+
+		$returnURL = $this->input->getBase64('returnurl', '');
+
+		if (!empty($returnURL))
+		{
+			$url = base64_decode($returnURL);
+		}
+
+		$this->setRedirect($url);
+
+		return true;
+	}
+
 	/**
 	 * Add a new MFA Method
 	 *
