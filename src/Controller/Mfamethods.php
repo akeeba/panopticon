@@ -75,6 +75,7 @@ class Mfamethods extends Controller
 		$view->setLayout($viewLayout);
 		$view->returnURL = $returnURL;
 		$view->user      = $user;
+		$view->doTask    = 'add';
 
 		$view->setDefaultModel($model);
 
@@ -118,6 +119,7 @@ class Mfamethods extends Controller
 		$view->setLayout($viewLayout);
 		$view->returnURL = $returnURL;
 		$view->user      = $user;
+		$view->doTask    = 'edit';
 
 		$view->setDefaultModel($model);
 
