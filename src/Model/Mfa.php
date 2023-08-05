@@ -191,7 +191,7 @@ class Mfa extends DataModel
 			 */
 			$db    = $this->getDbo();
 			$query = $db->getQuery(true)
-				->delete($db->quoteName('#__loginguard_tfa'))
+				->delete($db->quoteName('#__mfa'))
 				->where($db->quoteName('user_id') . ' = ' . $db->quote($this->deleteFlags[$pk]['user_id']));
 
 			$db->setQuery($query)->execute();
@@ -207,7 +207,7 @@ class Mfa extends DataModel
 			$db    = $this->getDbo();
 			$query = $db->getQuery(true)
 				->select($db->quoteName('id'))
-				->from($db->quoteName('#__loginguard_tfa'))
+				->from($db->quoteName('#__mfa'))
 				->where($db->quoteName('user_id') . ' = ' . $db->quote($this->deleteFlags[$pk]['user_id']));
 
 			$ids   = $db->setQuery($query)->loadColumn();
@@ -219,7 +219,7 @@ class Mfa extends DataModel
 
 			$id    = array_shift($ids);
 			$query = $db->getQuery(true)
-				->update($db->quoteName('#__loginguard_tfa'))
+				->update($db->quoteName('#__mfa'))
 				->set($db->qn('default') . ' = 1')
 				->where($db->quoteName('id') . ' = ' . $db->quote($id));
 

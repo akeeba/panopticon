@@ -91,7 +91,7 @@ class FixedCodeDemo extends Observer
 	 * This is the page which allows the user to add or modify a MFA method for their user account. If the record does
 	 * not correspond to your plugin, return an empty array.
 	 *
-	 * @param   Mfa  $record  The #__loginguard_tfa record currently selected by the user.
+	 * @param   Mfa  $record  The #__mfa record currently selected by the user.
 	 *
 	 * @return  array
 	 */
@@ -160,7 +160,7 @@ class FixedCodeDemo extends Observer
 	 * message of the exception will be displayed to the user. If the record does not correspond to your plugin return
 	 * an empty array.
 	 *
-	 * @param   Mfa    $record  The #__loginguard_tfa record currently selected by the user.
+	 * @param   Mfa    $record  The #__mfa record currently selected by the user.
 	 * @param   Input  $input   The user input you are going to take into account.
 	 *
 	 * @return  array  The configuration data to save to the database
@@ -225,7 +225,7 @@ class FixedCodeDemo extends Observer
 	}
 
 	/**
-	 * Decodes the options from a #__loginguard_tfa record into an options object.
+	 * Decodes the options from a #__mfa record into an options object.
 	 *
 	 * @param   Mfa  $record
 	 *

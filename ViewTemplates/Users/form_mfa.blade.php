@@ -161,10 +161,11 @@ $token = $container->session->getCsrfToken()->getValue();
 
                                             @if ($method['canDisable'])
                                                 <a href="@route(sprintf(
-                                        'index.php?view=mfamethod&task=delete&id=%s&returnurl=%s&user_id=%d',
+                                        'index.php?view=mfamethod&task=delete&id=%s&returnurl=%s&user_id=%d&%s=1',
                                         (int) $record->id,
                                         base64_encode(Uri::getInstance()->toString()),
-                                        $user->getId()
+                                        $user->getId(),
+                                        $token
                                     ))"
                                                    role="button" class="btn btn-outline-danger">
                                                     <span class="fa fa-trash-alt" aria-hidden="true"></span>
