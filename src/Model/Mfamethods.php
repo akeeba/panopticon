@@ -40,7 +40,7 @@ class Mfamethods extends Model
 	 */
 	public function getMethods(?User $user = null): array
 	{
-		$user ??= Factory::getContainer()->userManager->getUser();
+		$user ??= $this->container->userManager->getUser();
 
 		if ($user->getId() <= 0)
 		{
@@ -91,14 +91,14 @@ class Mfamethods extends Model
 	 */
 	public function deleteAll(?User $user = null): void
 	{
-		$user ??= Factory::getContainer()->userManager->getUser();
+		$user ??= $this->container->userManager->getUser();
 
 		if ($user->getId() <= 0)
 		{
 			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
-		$db    = Factory::getContainer()->db;
+		$db    = $this->container->db;
 		$query = $db->getQuery(true)
 			->delete($db->quoteName('#__mfa'))
 			->where($db->quoteName('user_id') . ' = ' . $db->quote($user->getId()));
@@ -119,7 +119,7 @@ class Mfamethods extends Model
 	{
 		$user->getParameters()->set('mfa.dontshow', $flag);
 
-		Factory::getContainer()->userManager->saveUser($user);
+		$this->container->userManager->saveUser($user);
 	}
 
 	/**
@@ -179,7 +179,7 @@ class Mfamethods extends Model
 	 */
 	public function getRecord(User $user = null): Mfa
 	{
-		$user ??= Factory::getContainer()->userManager->getUser();
+		$user ??= $this->container->userManager->getUser();
 
 		$defaultRecord = $this->getDefaultRecord($user);
 		$id            = (int) $this->getState('id', 0);
@@ -220,7 +220,7 @@ class Mfamethods extends Model
 	 */
 	public function getRenderOptions(?User $user = null): array
 	{
-		$user ??= Factory::getContainer()->userManager->getUser();
+		$user ??= $this->container->userManager->getUser();
 
 		$renderOptions = [
 			// Default title if you are setting up this MFA method for the first time
@@ -289,7 +289,7 @@ class Mfamethods extends Model
 	 */
 	protected function getDefaultRecord(User $user = null): Mfa
 	{
-		$user ??= Factory::getContainer()->userManager->getUser();
+		$user ??= $this->container->userManager->getUser();
 
 		$method = $this->getState('method');
 		$title  = '';
