@@ -168,9 +168,9 @@ class Site extends DataModel
 
 	public function check()
 	{
-		$this->name = trim($this->name ?? '');
+		$this->setFieldValue('name', trim($this->getFieldValue('name', '') ?: ''));
 
-		if (empty($this->name))
+		if (empty($this->getFieldValue('name', '')))
 		{
 			throw new RuntimeException(Text::_('PANOPTICON_SITES_ERR_NO_TITLE'));
 		}
