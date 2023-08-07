@@ -251,7 +251,8 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
 					$noUpdateSite      = !($item->hasUpdateSites ?? false);
 					$missingDownloadID = ($item->downloadkey?->supported ?? false)
 						&& !($item->downloadkey?->valid ?? false);
-					$error             = $noUpdateSite || $missingDownloadID;
+					$naughtyUpdates    = $item->naughtyUpdates === 'parent';
+					$error             = $noUpdateSite || $missingDownloadID || $naughtyUpdates;
 					$hasUpdate         = !empty($currentVersion) && !empty($latestVersion)
 						&& ($currentVersion != $latestVersion)
 						&& version_compare($currentVersion, $latestVersion, 'lt');
@@ -297,6 +298,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                                     <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE')</span>
                                 @endif
                             </span>
+
                             @if ($error)
                                 <span class="text-danger fw-medium">
                                     {{{ $item->name }}}
@@ -332,11 +334,25 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                         <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
                         @if ($error)
                             <div>
-                                @if ($noUpdateSite)
-                                    <span class="badge bg-warning">
-                                        <span class="fa fa-globe" aria-hidden="true"></span>
-                                        @lang('PANOPTICON_SITE_LBL_EXTENSIONS_UPDATESITE_MISSING')
+                                @if ($item->naughtyUpdates === 'parent')
+                                <a href="https://github.com/akeeba/panopticon/wiki/Extension-With-Problematic-Updates" target="_blank">
+                                    <span class="badge bg-danger">
+                                        <span class="fa fa-bug" aria-hidden="true"
+                                              data-bs-toggle="tooltip" data-bs-placement="right"
+                                              data-bs-title="@lang('PANOPTICON_SITES_LBL_NAUGHTY_UPDATES')"
+                                        ></span>
+                                        <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_NAUGHTY_UPDATES')</span>
                                     </span>
+                                </a>
+                                @endif
+
+                                @if ($noUpdateSite)
+                                    <a href="https://github.com/akeeba/panopticon/wiki/Extensions-Without-Update-Sites" target="_blank">
+                                        <span class="badge bg-warning">
+                                            <span class="fa fa-globe" aria-hidden="true"></span>
+                                            @lang('PANOPTICON_SITE_LBL_EXTENSIONS_UPDATESITE_MISSING')
+                                        </span>
+                                    </a>
                                 @elseif ($missingDownloadID)
                                     <span class="badge bg-danger">
                                         <span class="fa fa-key" aria-hidden="true"></span>

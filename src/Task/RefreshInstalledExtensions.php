@@ -356,6 +356,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 				'authorUrl'      => $item?->authorUrl,
 				'authorEmail'    => $item?->authorEmail,
 				'hasUpdateSites' => !empty($item?->updatesites),
+				'naughtyUpdates' => $item?->naughtyUpdates,
 				'downloadkey' => (object) [
 					'supported'   => $item?->downloadkey?->supported ?? false,
 					'valid'       => $item?->downloadkey?->valid ?? false,
