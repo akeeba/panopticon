@@ -113,7 +113,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
             @endif
             @if ($extensionsQuickInfo->site > 0)
                 <sup>
-                    <span class="badge bg-warning-subtle" style="font-size: small"
+                    <span class="badge bg-warning" style="font-size: small"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATESITES_N', $extensionsQuickInfo->site)"
                     >

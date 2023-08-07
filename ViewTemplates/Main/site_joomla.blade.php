@@ -38,21 +38,21 @@ $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
         </sup>
     @elseif($version->isAlpha())
         <sup>
-            <span class="badge bg-danger-subtle small text-dark">
+            <span class="badge bg-danger small">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_ALPHA_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_ALPHA_LONG')</span>
             </span>
         </sup>
     @elseif($version->isBeta())
         <sup>
-            <span class="badge bg-warning-subtle small text-dark">
+            <span class="badge bg-warning small">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_BETA_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BETA_LONG')</span>
             </span>
         </sup>
     @elseif($version->isRC())
         <sup>
-            <span class="badge bg-info-subtle small text-dark">
+            <span class="badge bg-info small">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_RC_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_RC_LONG')</span>
             </span>
