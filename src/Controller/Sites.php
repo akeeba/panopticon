@@ -617,6 +617,31 @@ class Sites extends DataController
 		return parent::onBeforeApply();
 	}
 
+	protected function onAfterApply()
+	{
+		/** @var SiteModel $model */
+		$model = $this->getModel();
+
+		if (!$model->getId())
+		{
+			$this->getIDsFromRequest($model, true);
+		}
+
+		$returnUrl = $this->input->getBase64('returnurl', '');
+
+		$this->setRedirect(
+			$this->container->router->route(
+				sprintf(
+					'index.php?view=site&id=%d&returnurl=%s',
+					$model->getId(),
+					$returnUrl
+				)
+			)
+		);
+
+		return true;
+	}
+
 	protected function onBeforeSave()
 	{
 		/** @var SiteModel $model */
