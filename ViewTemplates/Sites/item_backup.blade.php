@@ -24,7 +24,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
         <span class="fa fa-hard-drive" aria-hidden="true"></span>
         <span class="flex-grow-1">
-        @lang('PANOPTICON_SITE_LBL_BACKUP_HEAD')
+            @lang('PANOPTICON_SITE_LBL_BACKUP_HEAD')
         </span>
         <button class="btn btn-success btn-sm ms-2" role="button"
                 data-bs-toggle="collapse" href="#cardBackupBody"
