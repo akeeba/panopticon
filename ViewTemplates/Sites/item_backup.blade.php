@@ -21,12 +21,22 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
 
 ?>
 <div class="card">
-    <h3 class="card-header h4">
+    <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
         <span class="fa fa-hard-drive" aria-hidden="true"></span>
+        <span class="flex-grow-1">
         @lang('PANOPTICON_SITE_LBL_BACKUP_HEAD')
+        </span>
+        <button class="btn btn-success btn-sm ms-2" role="button"
+                data-bs-toggle="collapse" href="#cardBackupBody"
+                aria-expanded="{{ $shouldCollapse ? 'false' : 'true' }}" aria-controls="cardBackupBody"
+                data-bs-tooltip="tooltip" data-bs-placement="bottom"
+                data-bs-title="@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')"
+        >
+            <span class="fa fa-arrow-down-up-across-line" aria-hidden="true"></span>
+            <span class="visually-hidden">@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')</span>
+        </button>
     </h3>
-    <div class="card-body">
-
+    <div class="card-body" id="cardBackupBody">
         @if ($this->backupRecords instanceof \Akeeba\Panopticon\Model\Exception\AkeebaBackupNoInfoException)
             <div class="alert alert-info">
                 @if($model->hasAkeebaBackup())
@@ -48,8 +58,8 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                                 {{{ $lastRefreshResponse?->reasonPhrase ?? ''  }}}
                             </span>
                         </p>
-							<?php
-							$body = @json_decode($lastRefreshResponse?->body ?? '{}') ?>
+                            <?php
+                            $body = @json_decode($lastRefreshResponse?->body ?? '{}') ?>
                         @if (is_array($body?->errors ?? '') && !empty($body?->errors ?? ''))
                             <ul class="text-body-secondary list-unstyled ms-4">
                                 @foreach($body?->errors as $errorInfo)
@@ -170,24 +180,24 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                 @endif
             </div>
         @else
-				<?php
+                <?php
                 $allSchedules = $this->item->akeebaBackupGetAllScheduledTasks();
-				$allPending = $allSchedules->filter(
-					fn(Task $task) => in_array(
-						$task->last_exit_code, [Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
-					)
-				)->count();
-				$manualSchedules = $this->item->akeebaBackupGetEnqueuedTasks();
-				$manualPending   = $manualSchedules->filter(
-					fn(Task $task) => in_array(
-						$task->last_exit_code, [Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
-					)
-				)->count();
-				$manualDone   = $manualSchedules->filter(
-					fn(Task $task) => $task->last_exit_code == Status::OK->value
-				)->count();
-				$manualError  = $manualSchedules->count() - $manualDone - $manualPending;
-				?>
+                $allPending = $allSchedules->filter(
+                    fn(Task $task) => in_array(
+                        $task->last_exit_code, [Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
+                    )
+                )->count();
+                $manualSchedules = $this->item->akeebaBackupGetEnqueuedTasks();
+                $manualPending   = $manualSchedules->filter(
+                    fn(Task $task) => in_array(
+                        $task->last_exit_code, [Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
+                    )
+                )->count();
+                $manualDone   = $manualSchedules->filter(
+                    fn(Task $task) => $task->last_exit_code == Status::OK->value
+                )->count();
+                $manualError  = $manualSchedules->count() - $manualDone - $manualPending;
+                ?>
             @if($allPending)
                 <div class="alert alert-info">
                     <span class="fa fa-play" aria-hidden="true"></span>
@@ -288,16 +298,16 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                 </thead>
                 <tbody>
                 @foreach ($this->backupRecords as $record)
-						<?php
-						[$originDescription, $originIcon] = $this->getOriginInformation($record);
-						[$startTime, $duration, $timeZoneText] = $this->getTimeInformation($record);
-						[$statusClass, $statusIcon] = $this->getStatusInformation($record);
-						$profileName = $this->getProfileName($record);
-						?>
+                        <?php
+                        [$originDescription, $originIcon] = $this->getOriginInformation($record);
+                        [$startTime, $duration, $timeZoneText] = $this->getTimeInformation($record);
+                        [$statusClass, $statusIcon] = $this->getStatusInformation($record);
+                        $profileName = $this->getProfileName($record);
+                        ?>
                     <tr>
                         {{-- Backup ID --}}
                         <td class="d-none d-md-table-cell" valign="middle">
-								<?= $record->id ?>
+                                <?= $record->id ?>
                         </td>
 
                         {{-- Frozen --}}
@@ -364,7 +374,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                                           data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_START')"
                                     ></span>&nbsp;
                                     <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_START')</span>
-										<?= $startTime ?> <?= $timeZoneText ?>
+                                        <?= $startTime ?> <?= $timeZoneText ?>
                                 </div>
 
                                 {{-- Backup Duration --}}
@@ -374,7 +384,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                                           data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DURATION')"
                                     ></span>&nbsp
                                     <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DURATION')</span>
-										<?= $duration ?: '&mdash;' ?>
+                                        <?= $duration ?: '&mdash;' ?>
                                 </div>
 
                                 {{-- Backup size --}}
