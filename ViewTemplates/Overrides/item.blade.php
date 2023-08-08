@@ -17,7 +17,7 @@ defined('AKEEBA') || die;
     {{ $this->site->name }}
 </h3>
 
-@if($this->item instanceof Throwable)
+@if($this->item instanceof Throwable || empty($this->item))
     @include('Overrides/item_error')
 @else
     @include('Overrides/item_ui')
