@@ -28,7 +28,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
         </span>
         <button class="btn btn-success btn-sm ms-2" role="button"
                 data-bs-toggle="collapse" href="#cardBackupBody"
-                aria-expanded="{{ $shouldCollapse ? 'false' : 'true' }}" aria-controls="cardBackupBody"
+                aria-expanded="true" aria-controls="cardBackupBody"
                 data-bs-tooltip="tooltip" data-bs-placement="bottom"
                 data-bs-title="@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')"
         >
@@ -36,7 +36,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
             <span class="visually-hidden">@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')</span>
         </button>
     </h3>
-    <div class="card-body" id="cardBackupBody">
+    <div class="card-body collapse show" id="cardBackupBody">
         @if ($this->backupRecords instanceof \Akeeba\Panopticon\Model\Exception\AkeebaBackupNoInfoException)
             <div class="alert alert-info">
                 @if($model->hasAkeebaBackup())
