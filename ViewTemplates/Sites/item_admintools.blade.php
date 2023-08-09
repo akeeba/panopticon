@@ -17,11 +17,22 @@ $config              = $model->getConfig();
 
 ?>
 <div class="card">
-    <h3 class="card-header h4">
+    <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
         <span class="fa fa-hard-drive" aria-hidden="true"></span>
-        @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_HEAD') <small class="text-muted">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SUBHEAD')</small>
+        <span class="flex-grow-1">
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_HEAD') <small class="text-muted">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SUBHEAD')</small>
+        </span>
+        <button class="btn btn-success btn-sm ms-2" role="button"
+                data-bs-toggle="collapse" href="#cardAdminToolsBody"
+                aria-expanded="true" aria-controls="cardAdminToolsBody"
+                data-bs-tooltip="tooltip" data-bs-placement="bottom"
+                data-bs-title="@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')"
+        >
+            <span class="fa fa-arrow-down-up-across-line" aria-hidden="true"></span>
+            <span class="visually-hidden">@lang('PANOPTICON_LBL_EXPAND_COLLAPSE')</span>
+        </button>
     </h3>
-    <div class="card-body">
+    <div class="card-body collapse show" id="cardAdminToolsBody">
         @if ($this->hasAdminTools && !$this->hasAdminToolsPro)
             <div class="alert alert-info fs-5">
                 <h4 class="alert-heading">
