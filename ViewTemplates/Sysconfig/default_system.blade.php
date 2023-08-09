@@ -95,7 +95,7 @@ $config = $this->container->appConfig;
             <div class="col-sm-9">
                 {{ \Akeeba\Panopticon\Helper\Setup::languageOptions(
                     $config->get('language', 'en-GB'),
-                    name: 'config[language]',
+                    name: 'options[language]',
                     id: 'language',
                     attribs: ['class' => 'form-select']
                 ) }}
@@ -110,7 +110,7 @@ $config = $this->container->appConfig;
             <div class="col-sm-9">
                 {{ \Akeeba\Panopticon\Helper\Setup::timezoneSelect(
                     $config->get('timezone', 'UTC'),
-                    name: 'config[timezone]',
+                    name: 'options[timezone]',
                     id: 'timezone'
                 ) }}
             </div>
