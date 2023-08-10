@@ -293,7 +293,7 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 		<div class="progress w-75 mx-auto" role="progressbar"
 		     aria-label="<?= Text::_('PANOPTICON_SETUP_LBL_CRON_BENCHMARK_PROGRESS_HINT') ?>"
 		     aria-valuenow="0" aria-valuemin="0" aria-valuemax="185">
-			<div class="progress-bar progress-bar-striped progress-bar-animated text-dark fw-bold" id="progressFill" style="width: 25%">
+			<div class="progress-bar progress-bar-striped progress-bar-animated text-white fw-bold" id="progressFill" style="width: 25%">
 			</div>
 		</div>
 	</div>
