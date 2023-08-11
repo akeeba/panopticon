@@ -100,7 +100,7 @@ $isFiltered = array_reduce(
             </div>
             {{-- phpFamily PHP Version --}}
             <div>
-                <label class="form-label" for="cmsFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY')</label>
+                <label class="form-label" for="phpFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY')</label>
                 {{ \Awf\Html\Select::genericList(
                     array_merge([
                         '' => \Awf\Text\Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
