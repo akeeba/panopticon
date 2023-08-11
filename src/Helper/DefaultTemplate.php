@@ -39,7 +39,7 @@ abstract class DefaultTemplate
 			return;
 		}
 
-		$container->application->getDocument()->addStyleDeclaration("body{font-size: {$baseFontSize}pt}");
+		$container->application->getDocument()->addStyleDeclaration("html{font-size: {$baseFontSize}pt}");
 	}
 
 	public static function getDarkMode(): DarkModeEnum
