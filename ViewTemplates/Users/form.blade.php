@@ -13,8 +13,8 @@ defined('AKEEBA') || die;
  */
 $model      = $this->getModel();
 $user       = $model->getId()
-	? $this->container->userManager->getUser($model->getId())
-	: new \Akeeba\Panopticon\Library\User\User();
+    ? $this->container->userManager->getUser($model->getId())
+    : new \Akeeba\Panopticon\Library\User\User();
 $token      = $this->container->session->getCsrfToken()->getValue();
 
 $js = <<< JS
@@ -137,61 +137,61 @@ JS;
         @if ($this->container->userManager->getUser()->getPrivilege('panopticon.super'))
         <div class="col-12 col-lg-6">
             <div class="card card-body">
-
-                <label for="permissions" class="card-title fs-5 fw-semibold mt-1 mb-4">
-                    @lang('PANOPTICON_USERS_LBL_FIELD_PERMISSIONS')
-                </label>
-
-                <div class="w-100 d-flex flex-column gap-2">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch"
-                               name="permissions[panopticon.super]" value="1"
-                               {{ $user->getPrivilege('panopticon.super') ? 'checked' : '' }}
-                               id="permissions_super">
-                        <label class="form-check-label" for="permissions_super">@lang('PANOPTICON_PRIVILEGE_SUPER')</label>
-                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_SUPER_HELP')</div>
+                <fieldset>
+                    <legend class="card-title fs-5 fw-semibold mt-1 mb-4">
+                        @lang('PANOPTICON_USERS_LBL_FIELD_PERMISSIONS')
+                    </legend>
+                    <div class="w-100 d-flex flex-column gap-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                name="permissions[panopticon.super]" value="1"
+                                {{ $user->getPrivilege('panopticon.super') ? 'checked' : '' }}
+                                id="permissions_super">
+                            <label class="form-check-label" for="permissions_super">@lang('PANOPTICON_PRIVILEGE_SUPER')</label>
+                            <div class="form-text">@lang('PANOPTICON_PRIVILEGE_SUPER_HELP')</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                name="permissions[panopticon.admin]" value="1"
+                                {{ $user->getPrivilege('panopticon.admin') ? 'checked' : '' }}
+                                id="permissions_admin">
+                            <label class="form-check-label" for="permissions_admin">@lang('PANOPTICON_PRIVILEGE_ADMIN')</label>
+                            <div class="form-text">@lang('PANOPTICON_PRIVILEGE_ADMIN_HELP')</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                name="permissions[panopticon.view]" value="1"
+                                {{ $user->getPrivilege('panopticon.view') ? 'checked' : '' }}
+                                id="permissions_view">
+                            <label class="form-check-label" for="permissions_view">@lang('PANOPTICON_PRIVILEGE_VIEW')</label>
+                            <div class="form-text">@lang('PANOPTICON_PRIVILEGE_VIEW_HELP')</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                name="permissions[panopticon.run]" value="1"
+                                {{ $user->getPrivilege('panopticon.run') ? 'checked' : '' }}
+                                id="permissions_run">
+                            <label class="form-check-label" for="permissions_run">@lang('PANOPTICON_PRIVILEGE_RUN')</label>
+                            <div class="form-text">@lang('PANOPTICON_PRIVILEGE_RUN_HELP')</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                name="permissions[panopticon.addown]" value="1"
+                                {{ $user->getPrivilege('panopticon.addown') ? 'checked' : '' }}
+                                id="permissions_addown">
+                            <label class="form-check-label" for="permissions_addown">@lang('PANOPTICON_PRIVILEGE_ADDOWN')</label>
+                            <div class="form-text">@lang('PANOPTICON_PRIVILEGE_ADDOWN_HELP')</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                name="permissions[panopticon.editown]" value="1"
+                                {{ $user->getPrivilege('panopticon.editown') ? 'checked' : '' }}
+                                id="permissions_editown">
+                            <label class="form-check-label" for="permissions_editown">@lang('PANOPTICON_PRIVILEGE_EDITOWN')</label>
+                            <div class="form-text">@lang('PANOPTICON_PRIVILEGE_EDITOWN_HELP')</div>
+                        </div>
                     </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch"
-                               name="permissions[panopticon.admin]" value="1"
-                               {{ $user->getPrivilege('panopticon.admin') ? 'checked' : '' }}
-                               id="permissions_admin">
-                        <label class="form-check-label" for="permissions_admin">@lang('PANOPTICON_PRIVILEGE_ADMIN')</label>
-                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_ADMIN_HELP')</div>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch"
-                               name="permissions[panopticon.view]" value="1"
-                               {{ $user->getPrivilege('panopticon.view') ? 'checked' : '' }}
-                               id="permissions_view">
-                        <label class="form-check-label" for="permissions_view">@lang('PANOPTICON_PRIVILEGE_VIEW')</label>
-                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_VIEW_HELP')</div>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch"
-                               name="permissions[panopticon.run]" value="1"
-                               {{ $user->getPrivilege('panopticon.run') ? 'checked' : '' }}
-                               id="permissions_run">
-                        <label class="form-check-label" for="permissions_run">@lang('PANOPTICON_PRIVILEGE_RUN')</label>
-                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_RUN_HELP')</div>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch"
-                               name="permissions[panopticon.addown]" value="1"
-                               {{ $user->getPrivilege('panopticon.addown') ? 'checked' : '' }}
-                               id="permissions_addown">
-                        <label class="form-check-label" for="permissions_addown">@lang('PANOPTICON_PRIVILEGE_ADDOWN')</label>
-                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_ADDOWN_HELP')</div>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch"
-                               name="permissions[panopticon.editown]" value="1"
-                               {{ $user->getPrivilege('panopticon.editown') ? 'checked' : '' }}
-                               id="permissions_editown">
-                        <label class="form-check-label" for="permissions_editown">@lang('PANOPTICON_PRIVILEGE_EDITOWN')</label>
-                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_EDITOWN_HELP')</div>
-                    </div>
-                </div>
+                </fieldset>
 
             </div>
 

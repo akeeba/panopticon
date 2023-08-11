@@ -29,38 +29,40 @@ $token      = $this->container->session->getCsrfToken()->getValue();
     </div>
 
     <div class="row mb-3">
-        <label for="permissions" class="col-sm-3 col-form-label">
-            @lang('PANOPTICON_GROUPS_FIELD_PERMISSIONS')
-        </label>
-        <div class="col-sm-9" id="permissions">
-            <div class="w-100 d-flex flex-column gap-2">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch"
-                           name="permissions[panopticon.view]"
-                           {{ in_array('panopticon.view', $privileges) ? 'checked' : '' }}
-                           id="permissions_view">
-                    <label class="form-check-label" for="permissions_view">@lang('PANOPTICON_PRIVILEGE_VIEW')</label>
-                    <div class="form-text">@lang('PANOPTICON_PRIVILEGE_VIEW_HELP')</div>
-                </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch"
-                           name="permissions[panopticon.run]"
-                           {{ in_array('panopticon.run', $privileges) ? 'checked' : '' }}
-                           id="permissions_run">
-                    <label class="form-check-label" for="permissions_run">@lang('PANOPTICON_PRIVILEGE_RUN')</label>
-                    <div class="form-text">@lang('PANOPTICON_PRIVILEGE_RUN_HELP')</div>
-                </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch"
-                           name="permissions[panopticon.admin]"
-                           {{ in_array('panopticon.admin', $privileges) ? 'checked' : '' }}
-                           id="permissions_admin">
-                    <label class="form-check-label" for="permissions_admin">@lang('PANOPTICON_PRIVILEGE_ADMIN')</label>
-                    <div class="form-text">@lang('PANOPTICON_PRIVILEGE_ADMIN_HELP')</div>
-                </div>
+        <fieldset class="d-flex">
+            <legend class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_GROUPS_FIELD_PERMISSIONS')
+            </legend>
+            <div class="col-sm-9" id="permissions">
+                <div class="w-100 d-flex flex-column gap-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch"
+                            name="permissions[panopticon.view]"
+                            {{ in_array('panopticon.view', $privileges) ? 'checked' : '' }}
+                            id="permissions_view">
+                        <label class="form-check-label" for="permissions_view">@lang('PANOPTICON_PRIVILEGE_VIEW')</label>
+                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_VIEW_HELP')</div>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch"
+                            name="permissions[panopticon.run]"
+                            {{ in_array('panopticon.run', $privileges) ? 'checked' : '' }}
+                            id="permissions_run">
+                        <label class="form-check-label" for="permissions_run">@lang('PANOPTICON_PRIVILEGE_RUN')</label>
+                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_RUN_HELP')</div>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch"
+                            name="permissions[panopticon.admin]"
+                            {{ in_array('panopticon.admin', $privileges) ? 'checked' : '' }}
+                            id="permissions_admin">
+                        <label class="form-check-label" for="permissions_admin">@lang('PANOPTICON_PRIVILEGE_ADMIN')</label>
+                        <div class="form-text">@lang('PANOPTICON_PRIVILEGE_ADMIN_HELP')</div>
+                    </div>
 
+                </div>
             </div>
-        </div>
+        </fieldset>
     </div>
 
     <input type="hidden" name="id" value="{{ (int) $model->id ?? 0 }}">
