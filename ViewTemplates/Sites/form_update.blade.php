@@ -65,11 +65,11 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 </div>
 
 <div class="row mb-3" {{ $this->showOn('config[config.core_update.install]!:none[AND]config[config.core_update.install]!:email[AND]config[config.core_update.when]:time') }}>
-    <label for="config_core_update_time" class="col-sm-3 col-form-label">
-        @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME')
-    </label>
-    <div class="col-sm-9">
-        <fieldset class="d-flex flex-row gap-2 align-items-center" id="config_core_update_time">
+    <fieldset class="d-flex">
+        <legend class="col-sm-3 col-form-label">
+            @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME')
+        </legend>
+        <div class="col-sm-9 d-flex flex-row gap-2 align-items-center ps-2">
             <label class="visually-hidden" for="config_core_update_time_hour">
                 @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_HOUR')
             </label>
@@ -83,10 +83,10 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             <input name="config[config.core_update.time.minute]" id="config_core_update_time_minute"
                    class="form-control"
                    value="{{ $config->get('config.core_update.time.minute', '0') }}">
-        </fieldset>
-        <div class="form-text">
-            @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_HELP')
         </div>
+    </fieldset>
+    <div class=" offset-sm-3 col-sm-9">
+        @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_HELP')
     </div>
 </div>
 
