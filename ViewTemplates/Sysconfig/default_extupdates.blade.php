@@ -100,7 +100,7 @@ $config = $this->container->appConfig;
                             <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE')</span>
                         @endif
                     </span>
-                    {{{ $item->name }}}
+                     {{{ $item->name }}}
                     <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
                 </td>
                 <td class="d-none d-lg-table-cell">
@@ -120,17 +120,20 @@ $config = $this->container->appConfig;
                     @endif
                 </td>
                 <td>
+                    <label for="extupdates_{{ $key }}" class="visually-hidden">
+                        @sprintf('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_PREFERENCE_SELECT', $item->name)
+                    </label>
                     <?php
                         $attribs = [
-	                        'class' => 'form-select',
-	                        'required' => 'required',
+                            'class' => 'form-select',
+                            'required' => 'required',
                         ];
 
-		                if ($key === 'pkg_panopticon')
-		                {
-			                $attribs['disabled'] = true;
-			                $item->preference    = 'major';
-		                }
+                        if ($key === 'pkg_panopticon')
+                        {
+                            $attribs['disabled'] = true;
+                            $item->preference    = 'major';
+                        }
                     ?>
 
                     {{ \Awf\Html\Select::genericList(
