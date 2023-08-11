@@ -35,9 +35,9 @@ $token = $this->container->session->getCsrfToken()->getValue();
     </div>
 
     <table class="table table-striped align-middle" id="adminList" role="table">
-        <comment class="visually-hidden">
+        <caption class="visually-hidden">
             @lang('PANOPTICON_USERS_TABLE_COMMENT')
-        </comment>
+        </caption>
         <thead>
         <tr>
             <th width="1">

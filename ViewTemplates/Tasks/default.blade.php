@@ -68,9 +68,9 @@ $i     = 1;
     </div>
 
     <table class="table table-striped align-middle" id="adminList" role="table">
-        <comment class="visually-hidden">
+        <caption class="visually-hidden">
             @lang('PANOPTICON_SITES_TABLE_COMMENT')
-        </comment>
+        </caption>
         <thead>
         <tr>
             <th width="1">

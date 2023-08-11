@@ -26,9 +26,9 @@ $i     = 1;
 
 <form action="@route('index.php?view=overrides')" method="post" name="adminForm" id="adminForm">
     <table class="table table-striped align-middle" id="adminList" role="table">
-        <comment class="visually-hidden">
+        <caption class="visually-hidden">
             @lang('PANOPTICON_OVERRIDES_TABLE_COMMENT')
-        </comment>
+        </caption>
         <thead>
         <tr>
             <th width="1">
