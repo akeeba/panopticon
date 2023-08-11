@@ -56,7 +56,7 @@ $config              = $model->getConfig();
 <table class="table">
     <thead class="table-dark">
     <tr>
-        <th rowspan="2">
+        <th rowspan="2" class="d-none d-md-table-cell">
             @lang('PANOPTICON_LBL_TABLE_HEAD_NUM')
         </th>
         <th rowspan="2">
@@ -68,19 +68,46 @@ $config              = $model->getConfig();
         <th colspan="4" class="text-center">
             @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_FILES')
         </th>
+        <th rowspan="2" class="d-none d-md-table-cell">
+            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_ACTIONS')
+        </th>
     </tr>
     <tr>
         <th>
-            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_TOTAL')
+            <span class="fa fa-file-alt d-md-none" aria-hidden="true"
+                  data-bs-toggle="tooltip" data-bs-placement="top"
+                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_TOTAL')"
+            ></span>
+            <span class="d-none d-md-inline">
+                @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_TOTAL')
+            </span>
         </th>
         <th>
-            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_NEW')
+            <span class="fa fa-file-circle-plus d-md-none" aria-hidden="true"
+                  data-bs-toggle="tooltip" data-bs-placement="top"
+                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_NEW')"
+            ></span>
+            <span class="d-none d-md-inline">
+                @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_NEW')
+            </span>
         </th>
         <th>
-            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_MODIFIED')
+            <span class="fa fa-file-edit d-md-none" aria-hidden="true"
+                  data-bs-toggle="tooltip" data-bs-placement="top"
+                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_MODIFIED')"
+            ></span>
+            <span class="d-none d-md-inline">
+                @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_MODIFIED')
+            </span>
         </th>
         <th>
-            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS')
+            <span class="fa fa-file-circle-exclamation d-md-none" aria-hidden="true"
+                  data-bs-toggle="tooltip" data-bs-placement="top"
+                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS')"
+            ></span>
+            <span class="d-none d-md-inline">
+                @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS')
+            </span>
         </th>
     </tr>
     </thead>
@@ -93,30 +120,45 @@ $config              = $model->getConfig();
         $backendUri->setVar('scan_id', (int) $scan->id);
     ?>
     <tr>
-        <td>
+        <td class="d-none d-md-table-cell">
             <a href="{{{ $backendUri->toString() }}}"
                target="_blank">
                 {{ (int) $scan->id }}
             </a>
         </td>
         <td>
-            <div class="d-flex flex-row gap-2">
+            <div class="d-flex flex-column flex-md-row gap-2">
                 <div>
                     <div class="badge bg-secondary">
                         @if ($scan->origin === 'backend')
-                            <span class="fa fa-desktop fw-fw" aria-hidden="true"></span>
+                            <span class="fa fa-desktop fw-fw" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="top"
+                                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_BACKEND')"
+                            ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_BACKEND')</span>
                         @elseif ($scan->origin === 'cli')
-                            <span class="fa fa-terminal fw-fw" aria-hidden="true"></span>
+                            <span class="fa fa-terminal fw-fw" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="top"
+                                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_CLI')"
+                            ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_CLI')</span>
                         @elseif ($scan->origin === 'joomla')
-                            <span class="fab fa-joomla fw-fw" aria-hidden="true"></span>
+                            <span class="fab fa-joomla fw-fw" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="top"
+                                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_JOOMLA')"
+                            ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_JOOMLA')</span>
                         @elseif ($scan->origin === 'api')
-                            <span class="fa fa-code fw-fw" aria-hidden="true"></span>
+                            <span class="fa fa-code fw-fw" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="top"
+                                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_PANOPTICON')"
+                            ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_PANOPTICON')</span>
                         @else
-                            <span class="fa fa-question fw-fw" aria-hidden="true"></span>
+                            <span class="fa fa-question fw-fw" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="top"
+                                  data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_UNKNOWN')"
+                            ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_UNKNOWN')</span>
                         @endif
                     </div>
@@ -124,30 +166,69 @@ $config              = $model->getConfig();
                 <div class="{{ $scan->status === 'complete' ? 'text-success' : ($scan->status === 'run' ? 'text-warning' : 'text-danger') }}">
                     {{-- complete fail run --}}
                     @if ($scan->status === 'complete')
-                        <span class="fa fa-check-circle fw-fw" aria-hidden="true"></span>
-                        @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_COMPLETE')
+                        <span class="fa fa-check-circle fw-fw d-md-none" aria-hidden="true"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_COMPLETE')"
+                        ></span>
+                        <span class="d-none d-md-inline">
+                            <span class="fa fa-check-circle fw-fw" aria-hidden="true"></span>
+                            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_COMPLETE')
+                        </span>
+                        <span class="d-md-none visually-hidden">
+                            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_COMPLETE')
+                        </span>
                     @elseif ($scan->status === 'run')
-                        <span class="fa fa-play-circle fw-fw" aria-hidden="true"></span>
-                        @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_RUNNING')
+                        <span class="fa fa-play-circle fw-fw d-md-none" aria-hidden="true"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_RUNNING')"
+                        ></span>
+                        <span class="d-none d-md-inline">
+                            <span class="fa fa-play-circle fw-fw" aria-hidden="true"></span>
+                            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_RUNNING')
+                        </span>
+                        <span class="d-md-none visually-hidden">
+                            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_RUNNING')
+                        </span>
                     @else
-                        <span class="fa fa-exclamation-circle fw-fw" aria-hidden="true"></span>
-                        @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_FAILED')
+                        <span class="fa fa-exclamation-circle fw-fw d-md-none" aria-hidden="true"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-title="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_FAILED')"
+                        ></span>
+                        <span class="d-none d-md-inline">
+                            <span class="fa fa-exclamation-circle fw-fw" aria-hidden="true"></span>
+                            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_FAILED')
+                        </span>
+                        <span class="d-md-none visually-hidden">
+                            @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_FAILED')
+                        </span>
                     @endif
                 </div>
             </div>
         </td>
         <td>
-            <div class="d-flex flex-column">
-                <span class="fw-semibold">
+            <div class="d-flex flex-column gap-1">
+                <span class="fw-semibold d-md-none" aria-hidden="true">
+                    @if (!empty($scan->scanstart) && $scan->scanstart != '0000-00-00 00:00:00')
+                        {{ \Awf\Html\Html::date($scan->scanstart, \Awf\Text\Text::_('DATE_FORMAT_LC6')) }}
+                    @endif
+                </span>
+                <span class="fw-semibold d-none d-md-block">
                     @if (!empty($scan->scanstart) && $scan->scanstart != '0000-00-00 00:00:00')
                     {{ \Awf\Html\Html::date($scan->scanstart, \Awf\Text\Text::_('DATE_FORMAT_LC7')) }}
                     @endif
                 </span>
-                <span class="text-muted">
+                <span class="text-muted d-none d-md-block">
                     @if (!empty($scan->scanend) && $scan->scanend != '0000-00-00 00:00:00')
                     {{ \Awf\Html\Html::date($scan->scanend, \Awf\Text\Text::_('DATE_FORMAT_LC7')) }}
                     @endif
                 </span>
+                <div class="d-md-none">
+                    <a href="{{{ $backendUri->toString() }}}"
+                       class="btn btn-outline-success btn-sm"
+                       target="_blank">
+                        @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_VIEW_REPORT')
+                    </a>
+                </div>
             </div>
         </td>
         <td>
@@ -161,6 +242,13 @@ $config              = $model->getConfig();
         </td>
         <td class="text-danger-emphasis fw-bold">
             {{ (int) $scan->files_suspicious }}
+        </td>
+        <td class="d-none d-md-table-cell">
+            <a href="{{{ $backendUri->toString() }}}"
+               class="btn btn-outline-success"
+               target="_blank">
+                @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_VIEW_REPORT')
+            </a>
         </td>
     </tr>
     @endforeach
