@@ -15,9 +15,8 @@ $config = $this->container->appConfig;
 
 ?>
 <div class="card">
+    <h3 class="card-header h4">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES')</h3>
     <div class="card-body">
-        <h3 class="card-title h5">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES')</h3>
-
         {{--tasks_coreupdate_install--}}
         <div class="row mb-3">
             <label for="tasks_coreupdate_install" class="col-sm-3 col-form-label">

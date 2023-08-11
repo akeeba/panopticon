@@ -15,9 +15,8 @@ $config = $this->container->appConfig;
 
 ?>
 <div class="card">
+    <h3 class="card-header h4">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DATABASE')</h3>
     <div class="card-body">
-        <h3 class="card-title h5">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DATABASE')</h3>
-
         <div class="alert alert-info">
             <h4 class="alert-heading h6">
                 <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
