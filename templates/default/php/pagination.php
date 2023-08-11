@@ -165,7 +165,9 @@ function _akeeba_pagination_list_footer($list)
 		{$list['pagescounter']}
 	</div>
 	<div class="ms-md-5">
-		<span class="visually-hidden">$textNum</span>
+		<span class="visually-hidden">
+			<label id="limit-lbl" for="limit">$textNum</label>
+		</span>
 		{$list['limitfield']}
 	</div>
 	<input type="hidden" name="limitstart" value="{$list['limitstart']}">
