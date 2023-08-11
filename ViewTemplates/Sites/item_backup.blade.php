@@ -24,8 +24,16 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
         <span class="fa fa-hard-drive" aria-hidden="true"></span>
         <span class="flex-grow-1">
-            @lang('PANOPTICON_SITE_LBL_BACKUP_HEAD')
+            @lang('PANOPTICON_SITE_LBL_BACKUP_HEAD') <small class="text-muted">@lang('PANOPTICON_SITE_LBL_BACKUP_SUBHEAD')</small>
         </span>
+        <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
+            href="@route(sprintf('index.php?view=site&task=read&id=%d&akeebaBackupForce=1', $model->getId()))"
+            data-bs-toggle="tooltip" data-bs-placement="bottom"
+            data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_REFRESH')"
+        >
+            <span class="fa fa-refresh" aria-hidden="true"></span>
+            <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_REFRESH')</span>
+        </a>
         <button class="btn btn-success btn-sm ms-2" role="button"
                 data-bs-toggle="collapse" href="#cardBackupBody"
                 aria-expanded="true" aria-controls="cardBackupBody"
