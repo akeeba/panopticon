@@ -213,5 +213,3 @@ JS;
     <input type="hidden" name="task" id="task" value="browse">
 
 </form>
-
-<div class="vh-100"></div>

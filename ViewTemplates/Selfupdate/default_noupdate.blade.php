@@ -31,5 +31,3 @@ $version = Version::create(AKEEBA_PANOPTICON_VERSION);
 <p class="text-center fs-5">
     @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', \Awf\Html\Html::date(AKEEBA_PANOPTICON_DATE, \Awf\Text\Text::_('DATE_FORMAT_LC1')))
 </p>
-
-<div class="vh-100"></div>

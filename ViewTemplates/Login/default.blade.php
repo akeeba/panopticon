@@ -20,7 +20,7 @@ CSS;
 @inlinecss($css)
 
 <form action="@route('index.php?view=login&task=login')"
-      class="vh-100 d-flex flex-column justify-content-center align-items-center m-0 p-0"
+      class="d-flex flex-column justify-content-center align-items-center m-0 p-0"
       method="POST" id="loginForm">
 
     <header class="mb-4 text-center">
