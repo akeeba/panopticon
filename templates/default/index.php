@@ -136,11 +136,13 @@ $themeColor = TemplateHelper::getThemeColour();
 		<div class="ms-2 me-auto d-flex flex-row gap-2">
 			<?= TemplateHelper::getRenderedToolbarButtons() ?>
 		</div>
-		<h2 class="navbar-text ps-2 fs-5 py-0 my-0 me-2">
-			<?= $this->getToolbar()->getTitle() ?>
-		</h2>
+		 <?php if (!empty($this->getToolbar()->getTitle())): ?>
+			<h2 class="navbar-text ps-2 fs-5 py-0 my-0 me-2">
+				<?= $this->getToolbar()->getTitle() ?>
+			</h2>
+		<?php endif; ?>
 	</section>
-<?php endif ?>
+<?php endif; ?>
 
 <?php // Main Content ?>
 <main class="container-xl py-2">
