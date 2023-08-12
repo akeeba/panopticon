@@ -82,7 +82,7 @@ $config = $this->container->appConfig;
 
         {{--caching_memcached_dsn--}}
         <div class="row mb-3" data-showon='[{"field":"options[cache_adapter]","values":["memcached"],"sign":"=","op":""}]'>
-            <label for="caching_redis_dsn" class="col-sm-3 col-form-label">
+            <label for="caching_memcached_dsn" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN')
             </label>
             <div class="col-sm-9">
