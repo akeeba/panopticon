@@ -15,10 +15,7 @@ $config = $this->container->appConfig;
 
 ?>
 <div class="card">
-    <div class="card-body">
-        <h3 class="card-title h5">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL')</h3>
-    </div>
-
+    <h3 class="card-header h4">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL')</h3>
     <div class="card-body">
         {{--mail_online--}}
         <div class="row mb-3">

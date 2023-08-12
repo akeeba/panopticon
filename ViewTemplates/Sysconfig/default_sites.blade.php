@@ -19,9 +19,8 @@ $config = $this->container->appConfig;
 {{--================================================================================================================--}}
 
 <div class="card">
+    <h3 class="card-header h4">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SITE_INFO')</h3>
     <div class="card-body">
-        <h3 class="card-title h5">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SITE_INFO')</h3>
-
         <div class="row mb-3">
             <label for="siteinfo_freq" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SITEINFO_FREQ')
