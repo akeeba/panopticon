@@ -48,7 +48,7 @@ $profileOptions = $this->getProfileOptions();
         </div>
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
             <div>
-                <label class="visually-hidden" for="type">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
+                <label class="visually-hidden" for="profile">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
                 {{ Select::genericList(
 	                array_merge(['' => Text::_('PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE')], $profileOptions),
 	                'profile',
