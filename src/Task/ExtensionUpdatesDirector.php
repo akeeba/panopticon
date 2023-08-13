@@ -134,10 +134,14 @@ class ExtensionUpdatesDirector extends AbstractCallback
 
 			$extensionsWithMeta = $sysConfigModel->getExtensionPreferencesAndMeta($site->id);
 
+			$lastSeenVersions = $siteConfig->get('extensions.lastSeen', []) ?: [];
+			$lastSeenVersions = is_array($lastSeenVersions) ? $lastSeenVersions : [];
+
 			$extensions = array_filter(
 				$extensions,
 				function ($item) use (
-					$globalExtUpdatePreferences, $defaultExtUpdatePreference, $sysConfigModel, $extensionsWithMeta
+					$globalExtUpdatePreferences, $defaultExtUpdatePreference, $sysConfigModel, $extensionsWithMeta,
+					$lastSeenVersions
 				): bool
 				{
 					// Can't update an extension without any update sites to its name, right?
@@ -165,6 +169,14 @@ class ExtensionUpdatesDirector extends AbstractCallback
 						return false;
 					}
 
+					// Skip extension if its new version is the same we last saw trying to update it.
+					$lastSeenVersion = $lastSeenVersions[$item->extension_id] ?? null;
+
+					if ($lastSeenVersion !== null && $lastSeenVersion == $newVersion)
+					{
+						return false;
+					}
+
 					// Get the extension shortname (key)
 					$key = $sysConfigModel
 						->getExtensionShortname($item->type, $item->element, $item->folder, $item->client_id);
@@ -174,16 +186,19 @@ class ExtensionUpdatesDirector extends AbstractCallback
 						$extensionsWithMeta[$key]?->preference ?: $globalExtUpdatePreferences[$key]?->preference;
 					$effectivePreference = $effectivePreference ?: $defaultExtUpdatePreference;
 
+					// "Do nothing": we exclude the extension from the automatic updates code
 					if ($effectivePreference === 'none')
 					{
 						return false;
 					}
 
-					if ($effectivePreference === 'major')
+					// "Email" or "Major": We have to process this entry regardless of its new and old versions
+					if ($effectivePreference === 'major' || $effectivePreference === 'email')
 					{
 						return true;
 					}
 
+					// "Minor" or "Patch": we have to take the old and new version into consideration
 					$vOld = Version::create($currentVersion);
 					$vNew = Version::create($newVersion);
 
@@ -284,10 +299,6 @@ class ExtensionUpdatesDirector extends AbstractCallback
 			// Only allow update enqueueing to run every 30'
 			$timeLimit = time() - 1800;
 
-			//   AND (
-			//        `config` -> '$.extensions.lastAutoUpdateEnqueueTime' IS NULL
-			//        OR `config` -> '$.extensions.lastAutoUpdateEnqueueTime' <= 1234567890
-			//    )
 			$query->extendWhere('AND', [
 				$query->jsonExtract($db->quoteName('config'), '$.extensions.lastAutoUpdateEnqueueTime') . ' IS NULL',
 				$query->jsonExtract($db->quoteName('config'), '$.extensions.lastAutoUpdateEnqueueTime') . ' <= ' .
