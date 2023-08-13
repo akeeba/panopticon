@@ -113,7 +113,7 @@ use Awf\Text\Text;
                         ' ' . $globalPreferenceText
                     ,
                     'none'  => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_NONE'),
-                    'email' => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_EMAIL',
+                    'email' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_EMAIL'),
                     'patch' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_PATCH'),
                     'minor' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_MINOR'),
                     'major' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_MAJOR'),

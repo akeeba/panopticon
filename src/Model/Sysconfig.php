@@ -203,7 +203,7 @@ class Sysconfig extends Model
 		// Filter the data values so they make sense
 		$data = array_filter(
 			$data,
-			fn($v) => is_string($v) && in_array($v, ['', 'none', 'major', 'minor', 'patch'])
+			fn($v) => is_string($v) && in_array($v, ['', 'email', 'none', 'major', 'minor', 'patch'])
 		);
 
 		// Filter the data keys
