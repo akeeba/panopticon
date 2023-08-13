@@ -70,7 +70,7 @@ class Sysconfig extends Controller
 		}
 
 		// Save the extension update preferences
-		$data = $this->input->get('extupdates', [], 'none');
+		$data = $this->input->get('extupdates', [], 'email');
 		$data = is_array($data) ? $data : [];
 
 		$this->getModel()->saveExtensionPreferences($data);

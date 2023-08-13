@@ -909,7 +909,7 @@ class Sites extends DataController
 			// Save the extension update preferences
 			if ($model->getId())
 			{
-				$data = $this->input->get('extupdates', [], 'none');
+				$data = $this->input->get('extupdates', [], 'email');
 				$data = is_array($data) ? $data : [];
 				/** @var \Akeeba\Panopticon\Model\Sysconfig $sysconfigModel */
 				$sysconfigModel = $this->getModel('Sysconfig');
