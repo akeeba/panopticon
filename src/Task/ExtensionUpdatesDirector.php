@@ -228,7 +228,13 @@ class ExtensionUpdatesDirector extends AbstractCallback
 
 			foreach ($extensions as $item)
 			{
-				$added = $this->enqueueExtensionUpdate($site, $item->extension_id);
+				$key = $sysConfigModel
+					->getExtensionShortname($item->type, $item->element, $item->folder, $item->client_id);
+				$effectivePreference =
+					$extensionsWithMeta[$key]?->preference ?: $globalExtUpdatePreferences[$key]?->preference;
+				$effectivePreference = $effectivePreference ?: $defaultExtUpdatePreference;
+
+				$added = $this->enqueueExtensionUpdate($site, $item->extension_id, $effectivePreference);
 
 				if ($added)
 				{

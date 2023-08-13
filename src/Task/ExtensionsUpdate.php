@@ -92,7 +92,19 @@ class ExtensionsUpdate extends AbstractCallback
 		$updateStatus = (array) $storage->get('updateStatus', []);
 
 		// This is the extension ID we are asked to install
-		$extensionId = (int)$item->getData();
+		$data = $item->getData();
+
+		if (is_object($item->getData()))
+		{
+			// This handles legacy data which might be in the database. Eventually, it can be removed.
+			$extensionId = (int) ($data->id ?? 0);
+			$updateMode  = $data->mode ?? 'update';
+		}
+		else
+		{
+			$extensionId = (int)$item->getData();
+			$updateMode  = 'update';
+		}
 
 		if (empty($extensionId) || $extensionId <= 0)
 		{
@@ -120,6 +132,23 @@ class ExtensionsUpdate extends AbstractCallback
 					$site->id, $site->name, $extensionId
 				)
 			);
+
+			return;
+		}
+
+		// Record the "last seen" new version in the site's configuration.
+		$this->recordLastSeenVersion($site, $extensionId);
+
+		if ($updateMode === 'email')
+		{
+			$this->logger->info(
+				sprintf(
+					'Extension updates for site #%d (%s): will notify by email for %s “%s” (EID: %d). The update will NOT be installed automatically.',
+					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name, $extensionId
+				)
+			);
+
+			// TODO Enqueue email
 
 			return;
 		}
@@ -196,7 +225,7 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
-		// Crystal Error Trap(tm): This only happens on Crystal's site. I have no idea why!
+		// This should never happen, really.
 		if (!is_object($status->attributes ?? null))
 		{
 			$this->logger->error(
@@ -454,5 +483,30 @@ class ExtensionsUpdate extends AbstractCallback
 		$dummyRegistry->set('filter.ids', [$site->id]);
 
 		$return = $callback($dummy, $dummyRegistry);
+	}
+
+	/**
+	 * Records the last seen newest version of an extension in a site's configuration.
+	 *
+	 * @param   Site  $site         The site which the extension belongs to.
+	 * @param   int   $extensionId  The extension to record information for.
+	 *
+	 * @return  void
+	 */
+	private function recordLastSeenVersion(Site $site, int $extensionId): void
+	{
+		$siteConfig                     = ($site->getFieldValue('config') instanceof Registry)
+			? $site->getFieldValue('config')
+			: (new Registry($site->getFieldValue('config')));
+		$lastSeenVersions               = $siteConfig->get('extensions.lastSeen', []) ?: [];
+		$lastSeenVersions               = is_array($lastSeenVersions) ? $lastSeenVersions : [];
+		$extensions                     = (array) $siteConfig->get('extensions.list');
+		$extensionItem                  = $extensions[$extensionId] ?? null;
+		$latestVersion                  = $extensionItem?->version?->new;
+		$lastSeenVersions[$extensionId] = $latestVersion;
+
+		$siteConfig->set('extensions.lastSeen', $lastSeenVersions);
+		$site->setFieldValue('config', $siteConfig->toString());
+		$site->save();
 	}
 }
