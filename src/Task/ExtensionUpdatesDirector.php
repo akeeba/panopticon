@@ -135,6 +135,7 @@ class ExtensionUpdatesDirector extends AbstractCallback
 			$extensionsWithMeta = $sysConfigModel->getExtensionPreferencesAndMeta($site->id);
 
 			$lastSeenVersions = $siteConfig->get('extensions.lastSeen', []) ?: [];
+			$lastSeenVersions = is_object($lastSeenVersions) ? (array)$lastSeenVersions : $lastSeenVersions;
 			$lastSeenVersions = is_array($lastSeenVersions) ? $lastSeenVersions : [];
 
 			$extensions = array_filter(
