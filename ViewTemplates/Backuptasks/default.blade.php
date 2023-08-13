@@ -122,12 +122,7 @@ $profileOptions = $this->getProfileOptions();
                 @lang('PANOPTICON_TASKS_LBL_FIELD_TIMES')
             </th>
             <th width="5%">
-                <span aria-hidden="true">
-                    @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
-                </span>
-                <span class="visually-hidden">
-                    @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM_SR', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
-                </span>
+                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
             </th>
         </tr>
         </thead>

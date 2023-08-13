@@ -55,12 +55,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 @html('grid.sort', 'PANOPTICON_MAILTEMPLATES_TABLE_HEAD_LANGUAGE', 'language', $this->lists->order_Dir, $this->lists->order, 'browse')
             </th>
             <th width="5%">
-                <span aria-hidden="true">
-                    @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
-                </span>
-                <span class="visually-hidden">
-                    @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM_SR', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
-                </span>
+                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
             </th>
         </tr>
         </thead>

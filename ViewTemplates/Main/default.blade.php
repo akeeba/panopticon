@@ -155,12 +155,7 @@ $isFiltered = array_reduce(
                 </span>
             </th>
             <th style="min-width: 2em">
-                <span aria-hidden="true">
-                    @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
-                </span>
-                <span class="visually-hidden">
-                    @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM_SR', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
-                </span>
+                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
             </th>
         </tr>
         </thead>
