@@ -145,7 +145,7 @@ $themeColor = TemplateHelper::getThemeColour();
 <?php endif; ?>
 
 <?php // Main Content ?>
-<main class="container-xl py-2">
+<main class="container-xl py-2 min-vh-100">
 	<?php // Messages ?>
 	<?php if ($messages = TemplateHelper::getRenderedMessages()): ?>
 		<section aria-label="<?= Text::_('PANOPTICON_APP_LBL_MESSAGES') ?>">
