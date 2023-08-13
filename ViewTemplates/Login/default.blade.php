@@ -21,7 +21,6 @@ CSS;
 
 <form action="@route('index.php?view=login&task=login')"
       class="d-flex flex-column justify-content-center align-items-center m-0 p-0"
-      style="min-height: calc(100vh - 1em)"
       method="POST" id="loginForm">
 
     <header class="mb-4 text-center">
@@ -31,7 +30,7 @@ CSS;
         </h3>
     </header>
 
-    <div class="w-75 border rounded p-3 bg-light-subtle">
+    <div class="w-75 border rounded p-3 bg-light-subtle" id="loginArea">
         <div class="form-floating mb-3">
             <input type="text" id="username" name="username" class="form-control"
                    placeholder="@lang('PANOPTICON_LOGIN_LBL_USERNAME')" required autofocus
