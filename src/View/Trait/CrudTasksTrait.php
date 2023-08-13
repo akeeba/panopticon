@@ -19,7 +19,10 @@ trait CrudTasksTrait
 	{
 		$this->addButtons(['add', 'edit', 'copy', 'delete']);
 
-		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
+		if (empty($this->getTitle()))
+		{
+			$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
+		}
 
 		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
 		$limit = $this->getModel()->getState('limit', 50, 'int');
@@ -35,7 +38,10 @@ trait CrudTasksTrait
 
 		$this->addButtons(['save', 'apply', 'cancel']);
 
-		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_NEW'));
+		if (empty($this->getTitle()))
+		{
+			$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_NEW'));
+		}
 
 		return parent::onBeforeAdd();
 	}
@@ -47,16 +53,22 @@ trait CrudTasksTrait
 
 		$this->addButtons(['save', 'apply', 'cancel']);
 
-		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_EDIT'));
+		if (empty($this->getTitle()))
+		{
+			$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_EDIT'));
+		}
 
 		return parent::onBeforeEdit();
 	}
 
 	protected function addButtons(array $buttons)
 	{
-		array_walk($buttons, function (array|string|null $button) {
-			is_array($button) ? $this->addButtonFromDefinition($button) : $this->addButton($button);
-		});
+		array_walk(
+			$buttons,
+			function (array|string|null $button) {
+				is_array($button) ? $this->addButtonFromDefinition($button) : $this->addButton($button);
+			}
+		);
 	}
 
 	protected function addButton(?string $type, array $params = []): void
@@ -127,7 +139,7 @@ trait CrudTasksTrait
 				'icon'    => 'fa fa-cancel',
 			],
 			'back' => [
-				'id'      => 'back',
+				'id'    => 'back',
 				'title' => Text::_('PANOPTICON_BTN_PREV'),
 				'class' => 'btn btn-secondary border-light',
 				'url'   => $params['url'],
@@ -137,9 +149,13 @@ trait CrudTasksTrait
 				'id'      => 'inlineHelp',
 				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
 				'class'   => 'btn-info',
-				'onClick' => json_encode([
-					'data-bs-toggle' => "collapse", 'data-bs-target' => ".form-text", 'aria-expanded' => "false",
-				]),
+				'onClick' => json_encode(
+					[
+						'data-bs-toggle' => "collapse",
+						'data-bs-target' => ".form-text",
+						'aria-expanded'  => "false",
+					]
+				),
 				'icon'    => 'fa fa-question-circle me-1',
 			],
 			default => null
@@ -167,5 +183,10 @@ trait CrudTasksTrait
 	{
 		$this->container->application->getDocument()->getToolbar()
 			->setTitle($title);
+	}
+
+	protected function getTitle(): string
+	{
+		return $this->container->application->getDocument()->getToolbar()->getTitle() ?: '';
 	}
 }
