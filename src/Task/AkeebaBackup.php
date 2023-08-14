@@ -119,11 +119,11 @@ class AkeebaBackup extends AbstractCallback
 				'akeebabackup_fail',
 				$site,
 				[
-					'[PROFILE_ID]'    => $profile,
-					'[BACKUPID]'      => $backupId,
-					'[BACKUP_RECORD]' => $backupRecordId,
-					'[ARCHIVE_NAME]'  => $archive,
-					'[MESSAGE]'       => $errorMessage,
+					'PROFILE_ID'    => $profile,
+					'BACKUPID'      => $backupId,
+					'BACKUP_RECORD' => $backupRecordId,
+					'ARCHIVE_NAME'  => $archive,
+					'MESSAGE'       => $errorMessage,
 				]
 			);
 
@@ -167,10 +167,10 @@ class AkeebaBackup extends AbstractCallback
 				'akeebabackup_success',
 				$site,
 				[
-					'[PROFILE_ID]'    => $profile,
-					'[BACKUPID]'      => $backupId,
-					'[BACKUP_RECORD]' => $backupRecordId,
-					'[ARCHIVE_NAME]'  => $archive,
+					'PROFILE_ID'    => $profile,
+					'BACKUPID'      => $backupId,
+					'BACKUP_RECORD' => $backupRecordId,
+					'ARCHIVE_NAME'  => $archive,
 				]
 			);
 		}
@@ -183,11 +183,11 @@ class AkeebaBackup extends AbstractCallback
 				'akeebabackup_fail',
 				$site,
 				[
-					'[PROFILE_ID]'    => $profile,
-					'[BACKUPID]'      => $backupId,
-					'[BACKUP_RECORD]' => $backupRecordId,
-					'[ARCHIVE_NAME]'  => $archive,
-					'[MESSAGE]'       => $rawData?->Error,
+					'PROFILE_ID'    => $profile,
+					'BACKUPID'      => $backupId,
+					'BACKUP_RECORD' => $backupRecordId,
+					'ARCHIVE_NAME'  => $archive,
+					'MESSAGE'       => $rawData?->Error,
 				]
 			);
 
@@ -209,7 +209,7 @@ class AkeebaBackup extends AbstractCallback
 	{
 		$vars = array_merge(
 			[
-				'SITE_NAME' => $site->getName(),
+				'SITE_NAME' => $site->name,
 				'SITE_URL'  => $site->getBaseUrl(),
 				'SITE_ID'   => $site->getId(),
 			], $vars
