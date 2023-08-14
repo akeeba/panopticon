@@ -33,6 +33,7 @@ use Throwable;
 class JoomlaUpdate extends AbstractCallback
 {
 	use ApiRequestTrait;
+	use SiteNotificationEmailTrait;
 
 	protected string $currentState;
 
@@ -265,6 +266,7 @@ class JoomlaUpdate extends AbstractCallback
 			'NEW_VERSION' => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
 			'OLD_VERSION' => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
 			'SITE_NAME'   => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
+			'SITE_URL'    => 'https://www.example.com',
 		]);
 
 		// Try to get the site
@@ -320,34 +322,17 @@ class JoomlaUpdate extends AbstractCallback
 			));
 		}
 
-		$storage->set('email_variables', [
+		$storage->set(
+			'email_variables', [
 			'NEW_VERSION' => $latestVersion,
 			'OLD_VERSION' => $currentVersion,
 			'SITE_NAME'   => $site->name,
+			'SITE_URL'    => $site->getBaseUrl(),
 		]);
 		$storage->set('site_id', $site->id);
 
-		$cc = array_map(
-			function (string $item) {
-				$item = trim($item);
+		$cc = $this->getSiteNotificationEmails($config);
 
-				if (!str_contains($item, '<'))
-				{
-					return [$item, ''];
-				}
-
-				[$name, $email] = explode('<', $item, 2);
-				$name  = trim($name);
-				$email = trim(
-					str_contains($email, '>')
-						? substr($email, 0, strrpos($email, '>') - 1)
-						: $email
-				);
-
-				return [$email, $name];
-			},
-			explode(',', $config?->config?->core_update?->email?->cc ?? "")
-		);
 		$storage->set('email_cc', $cc);
 
 		$storage->set('email_after', (bool) ($config?->config?->core_update?->email_after ?? true));

@@ -19,6 +19,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 
@@ -26,6 +27,7 @@ use GuzzleHttp\RequestOptions;
 class ExtensionsUpdate extends AbstractCallback
 {
 	use ApiRequestTrait;
+	use SiteNotificationEmailTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -202,7 +204,7 @@ class ExtensionsUpdate extends AbstractCallback
 				throw new \RuntimeException('No JSON object returned from the Joomla! API application.');
 			}
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->logger->error(
 				sprintf(
@@ -381,7 +383,7 @@ class ExtensionsUpdate extends AbstractCallback
 					'site'         => $site,
 				]);
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				// Expected, as the language override may not be in place.
 			}
@@ -403,7 +405,7 @@ class ExtensionsUpdate extends AbstractCallback
 					'site'         => $site,
 				]);
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				// Expected, as the language override may not be in place.
 			}
@@ -418,33 +420,25 @@ class ExtensionsUpdate extends AbstractCallback
 		$emailKey  = 'extensions_update_done';
 		$variables = [
 			'SITE_NAME'     => $site->name,
+			'SITE_URL'      => $site->getBaseUrl(),
 			'RENDERED_HTML' => $rendered,
 			'RENDERED_TEXT' => $renderedText,
 		];
 
 		// Get the CC email addresses
-		$cc = array_map(
-			function (string $item)
-			{
-				$item = trim($item);
+		$config = $site->getFieldValue('config', '{}');
+		$config = ($config instanceof Registry) ? $config->toString() : $config;
 
-				if (!str_contains($item, '<'))
-				{
-					return [$item, ''];
-				}
+		try
+		{
+			$config = @json_decode($config);
+		}
+		catch (Exception $e)
+		{
+			$config = null;
+		}
 
-				[$name, $email] = explode('<', $item, 2);
-				$name  = trim($name);
-				$email = trim(
-					str_contains($email, '>')
-						? substr($email, 0, strrpos($email, '>') - 1)
-						: $email
-				);
-
-				return [$email, $name];
-			},
-			explode(',', $config?->config?->core_update?->email?->cc ?? "")
-		);
+		$cc = $this->getSiteNotificationEmails($config);
 
 		$data = new Registry();
 		$data->set('template', $emailKey);
