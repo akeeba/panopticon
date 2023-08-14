@@ -19,10 +19,8 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
-use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(name: 'extensionsupdate', description: 'PANOPTICON_TASKTYPE_EXTENSIONSUPDATE')]
 class ExtensionsUpdate extends AbstractCallback
