@@ -196,9 +196,11 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
+		$rawJSONData = $response->getBody()->getContents();
+
 		try
 		{
-			$status = @json_decode($response->getBody()->getContents() ?? '{}');
+			$status = @json_decode($rawJSONData ?? '{}');
 
 			if (empty($status))
 			{
@@ -226,31 +228,36 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
+		// Try to get the returned data.
+		$returnedDataArray = $status?->data ?? [];
+		$returnedDataZeroElement = is_array($returnedDataArray) ? ($returnedDataArray[0] ?? null) : null;
+		$returnedAttributes = $returnedDataZeroElement?->attributes ?? null;
+
 		// This should never happen, really.
-		if (!is_object($status->attributes ?? null))
+		if (!is_object($returnedAttributes))
 		{
 			$this->logger->error(
 				sprintf(
 					'Extension updates for site #%d (%s): failed installing update for %s “%s”. Joomla! returned invalid data',
 					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name
 				),
-				[$response->getBody()->getContents() ?? '']
+				[$rawJSONData]
 			);
 
 			$updateStatus[$extensionId] = [
 				'type'     => $extensions[$extensionId]->type,
 				'name'     => $extensions[$extensionId]->name,
 				'status'   => 'error',
-				'messages' => [$response->getBody()->getContents() ?? ''],
+				'messages' => [$rawJSONData ?? ''],
 			];
 			$storage->set('updateStatus', $updateStatus);
 
 			return;
 		}
 
-		if (!($status->attributes?->status ?? 1))
+		if (!($returnedAttributes?->status ?? 1))
 		{
-			$messages = $status->attributes?->messages ?? [];
+			$messages = $returnedAttributes?->messages ?? [];
 
 			$this->logger->error(
 				sprintf(
@@ -344,7 +351,7 @@ class ExtensionsUpdate extends AbstractCallback
 			'type'     => $extensions[$extensionId]->type,
 			'name'     => $extensions[$extensionId]->name,
 			'status'   => 'success',
-			'messages' => $status->attributes?->messages ?? [],
+			'messages' => $returnedAttributes?->messages ?? [],
 		];
 		$storage->set('updateStatus', $updateStatus);
 	}

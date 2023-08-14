@@ -55,12 +55,26 @@ The following extensions have been updated successfully:
 
 @foreach($updateStatus as $info)
 <?php if ($info['status'] !== 'success') continue ?>
+<?php
+    $messages = array_map(function($item) {
+	    $item    = is_object($item) ? (array) $item : $item;
+	    $message = is_array($item) ? ($item['message'] ?? '') : $item;
+	    $message = is_string($message) ? $message : '';
+		$message = strip_tags($message);
+
+		$type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
+		$type = is_string($type) ? $type : 'info';
+
+		return sprintf('[%s] %s', strtoupper($type), $message);
+    }, $info['messages']);
+?>
+
 @lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”.
 
 @if (!empty($info['messages']))
   Update messages:
 
-  {{{ implode("\n  ", array_map('htmlentities', $info['messages']) ) }}}
+  {{ implode("\n  ", $messages ) }}
 @endif
 @endforeach
 @endif
@@ -71,6 +85,19 @@ The following extensions have failed to update:
 
 @foreach($updateStatus as $info)
 <?php if ($info['status'] === 'success') continue ?>
+<?php
+$messages = array_map(function($item) {
+	$item    = is_object($item) ? (array) $item : $item;
+    $message = is_array($item) ? ($item['message'] ?? '') : $item;
+    $message = is_string($message) ? $message : '';
+    $message = strip_tags($message);
+
+    $type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
+    $type = is_string($type) ? $type : 'info';
+
+    return sprintf('[%s] %s', strtoupper($type), $message);
+}, $info['messages']);
+?>
 @lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”.
 
 @if ($info['status'] === 'exception')
@@ -83,8 +110,8 @@ The following extensions have failed to update:
 
 @if (!empty($info['messages']))
   Update messages:
-<br />
-  {{{ implode("\n  ", array_map('htmlentities', $info['messages']) ) }}}
+
+  {{ implode("\n  ", $messages ) }}
 @endif
 @endforeach
 @endif
