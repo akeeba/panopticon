@@ -54,7 +54,7 @@ class ExtensionsUpdate extends AbstractCallback
 			);
 
 			// Email say we are done
-			$this->enqueueEmail($site, $storage);
+			$this->enqueueResultsEmail($site, $storage);
 
 			// Reload the update information from the site (you never know…)
 			$this->reloadExtensionInformation($site);
@@ -148,7 +148,8 @@ class ExtensionsUpdate extends AbstractCallback
 				)
 			);
 
-			// TODO Enqueue email
+			// Enqueue update email
+			$this->enqueueUpdateEmail($site, $extensions[$extensionId]);
 
 			return;
 		}
@@ -348,7 +349,7 @@ class ExtensionsUpdate extends AbstractCallback
 		$storage->set('updateStatus', $updateStatus);
 	}
 
-	private function enqueueEmail(Site $site, Registry $storage): void
+	private function enqueueResultsEmail(Site $site, Registry $storage): void
 	{
 		// Render the messages as HTML
 		$updateStatus            = (array) $storage->get('updateStatus', []);
@@ -445,6 +446,49 @@ class ExtensionsUpdate extends AbstractCallback
 		$data->set('email_variables', $variables);
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
+
+		$queueItem = new QueueItem(
+			$data->toString(),
+			QueueTypeEnum::MAIL->value,
+			$site->id
+		);
+		$queue     = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
+
+		$queue->push($queueItem, 'now');
+	}
+
+	private function enqueueUpdateEmail(Site $site, ?object $extension): void
+	{
+		$emailKey  = 'extension_update_found';
+		$variables = [
+			'SITE_NAME'             => $site->name,
+			'SITE_URL'              => $site->getBaseUrl(),
+			'OLD_VERSION'           => $extension?->version?->current,
+			'NEW_VERSION'           => $extension?->version?->new,
+			'EXTENSION_TYPE'        => $extension?->type,
+			'EXTENSION_NAME'        => $extension?->name,
+			'EXTENSION_DESCRIPTION' => $extension?->description,
+			'EXTENSION_AUTHOR'      => $extension?->author,
+		];
+
+		// Get the CC email addresses
+		$config = $site->getFieldValue('config', '{}');
+		$config = ($config instanceof Registry) ? $config->toString() : $config;
+
+		try
+		{
+			$config = @json_decode($config);
+		}
+		catch (Exception $e)
+		{
+			$config = null;
+		}
+
+		$data = new Registry();
+		$data->set('template', $emailKey);
+		$data->set('email_variables', $variables);
+		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
+		$data->set('email_cc', $this->getSiteNotificationEmails($config));
 
 		$queueItem = new QueueItem(
 			$data->toString(),

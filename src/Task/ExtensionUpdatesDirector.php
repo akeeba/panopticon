@@ -187,28 +187,8 @@ class ExtensionUpdatesDirector extends AbstractCallback
 						$extensionsWithMeta[$key]?->preference ?: $globalExtUpdatePreferences[$key]?->preference;
 					$effectivePreference = $effectivePreference ?: $defaultExtUpdatePreference;
 
-					// "Do nothing": we exclude the extension from the automatic updates code
-					if ($effectivePreference === 'none')
-					{
-						return false;
-					}
-
-					// "Email" or "Major": We have to process this entry regardless of its new and old versions
-					if ($effectivePreference === 'major' || $effectivePreference === 'email')
-					{
-						return true;
-					}
-
-					// "Minor" or "Patch": we have to take the old and new version into consideration
-					$vOld = Version::create($currentVersion);
-					$vNew = Version::create($newVersion);
-
-					return match ($effectivePreference)
-					{
-						default => false,
-						'minor' => $vOld->major() === $vNew->major(),
-						'patch' => $vOld->versionFamily() === $vNew->versionFamily(),
-					};
+					// Exclude extensions we are told to do nothing with.
+					return $effectivePreference !== 'none';
 				}
 			);
 
@@ -225,7 +205,8 @@ class ExtensionUpdatesDirector extends AbstractCallback
 			}
 
 			// Enqueue necessary updates
-			$numExtensions = 0;
+			$numExtensionsUpdate = 0;
+			$numExtensionsEmail = 0;
 
 			foreach ($extensions as $item)
 			{
@@ -235,11 +216,46 @@ class ExtensionUpdatesDirector extends AbstractCallback
 					$extensionsWithMeta[$key]?->preference ?: $globalExtUpdatePreferences[$key]?->preference;
 				$effectivePreference = $effectivePreference ?: $defaultExtUpdatePreference;
 
+				/**
+				 * Extensions here can have an effective preference of email, major, minor, or patch.
+				 *
+				 * - `email`. Always sends an email. No post-processing necessary.
+				 * - `major`. Always installs an update. No post-processing necessary.
+				 * - `minor`. Only install an update if it's a minor or patch version update, otherwise send email.
+				 * - `patch`. Only install an update if it's a patch version update, otherwise send email.
+				 *
+				 * Therefore, if the effective preference is `minor` or `patch` I need to check the old and new versions
+				 * to decide what kind of action to execute.
+				 */
+				if (in_array($effectivePreference, ['minor', 'patch']))
+				{
+					// Parse the old (current) and new versions.
+					$currentVersion = $item->version?->current;
+					$newVersion     = $item->version?->new;
+
+					$vOld = Version::create($currentVersion);
+					$vNew = Version::create($newVersion);
+
+					// Install a new version by comparing the old and new versions, base on the effective preference.
+					$isInstall = match ($effectivePreference)
+					{
+						default => false,
+						'minor' => $vOld->major() === $vNew->major(),
+						'patch' => $vOld->versionFamily() === $vNew->versionFamily(),
+					};
+
+					// If I am not installing an update then I must just send an email.
+					if (!$isInstall)
+					{
+						$effectivePreference = 'email';
+					}
+				}
+
 				$added = $this->enqueueExtensionUpdate($site, $item->extension_id, $effectivePreference);
 
 				if ($added)
 				{
-					$numExtensions++;
+					$effectivePreference === 'email' ? $numExtensionsEmail++ : $numExtensionsUpdate++;
 				}
 			}
 
@@ -254,9 +270,9 @@ class ExtensionUpdatesDirector extends AbstractCallback
 			 * LOGGING ONLY BELOW THIS LINE
 			 * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			 */
-			if ($numExtensions > 0)
+			if ($numExtensionsUpdate > 0)
 			{
-				if ($numExtensions === 1)
+				if ($numExtensionsUpdate === 1)
 				{
 					$this->logger->debug(
 						sprintf(
@@ -270,7 +286,7 @@ class ExtensionUpdatesDirector extends AbstractCallback
 					$this->logger->debug(
 						sprintf(
 							'%d extensions were queued for automatic updates on site #%d (%s)',
-							$numExtensions, $site->id, $site->name
+							$numExtensionsUpdate, $site->id, $site->name
 						)
 					);
 				}
@@ -278,12 +294,39 @@ class ExtensionUpdatesDirector extends AbstractCallback
 				continue;
 			}
 
-			$this->logger->debug(
-				sprintf(
-					'No extension were queued for automatic updates on site #%d (%s) — all extensions were already queued up',
-					$site->id, $site->name
-				)
-			);
+			if ($numExtensionsEmail > 0)
+			{
+				if ($numExtensionsEmail === 1)
+				{
+					$this->logger->debug(
+						sprintf(
+							'1 extension was queued for update email on site #%d (%s)',
+							$site->id, $site->name
+						)
+					);
+				}
+				else
+				{
+					$this->logger->debug(
+						sprintf(
+							'%d extensions were queued for update emails on site #%d (%s)',
+							$numExtensionsUpdate, $site->id, $site->name
+						)
+					);
+				}
+
+				continue;
+			}
+
+			if ($numExtensionsUpdate <= 0 && $numExtensionsEmail <= 0)
+			{
+				$this->logger->debug(
+					sprintf(
+						'No extension were queued for automatic updates or email on site #%d (%s) — all extensions were already queued up',
+						$site->id, $site->name
+					)
+				);
+			}
 		}
 
 		$storage->set('limitStart', $limitStart + $limit);
