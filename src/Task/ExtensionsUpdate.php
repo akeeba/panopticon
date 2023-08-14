@@ -19,15 +19,15 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
-use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(name: 'extensionsupdate', description: 'PANOPTICON_TASKTYPE_EXTENSIONSUPDATE')]
 class ExtensionsUpdate extends AbstractCallback
 {
 	use ApiRequestTrait;
+	use SiteNotificationEmailTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -54,7 +54,7 @@ class ExtensionsUpdate extends AbstractCallback
 			);
 
 			// Email say we are done
-			$this->enqueueEmail($site, $storage);
+			$this->enqueueResultsEmail($site, $storage);
 
 			// Reload the update information from the site (you never know…)
 			$this->reloadExtensionInformation($site);
@@ -92,7 +92,19 @@ class ExtensionsUpdate extends AbstractCallback
 		$updateStatus = (array) $storage->get('updateStatus', []);
 
 		// This is the extension ID we are asked to install
-		$extensionId = (int)$item->getData();
+		$data = $item->getData();
+
+		if (is_object($item->getData()))
+		{
+			// This handles legacy data which might be in the database. Eventually, it can be removed.
+			$extensionId = (int) ($data->id ?? 0);
+			$updateMode  = $data->mode ?? 'update';
+		}
+		else
+		{
+			$extensionId = (int)$item->getData();
+			$updateMode  = 'update';
+		}
 
 		if (empty($extensionId) || $extensionId <= 0)
 		{
@@ -120,6 +132,24 @@ class ExtensionsUpdate extends AbstractCallback
 					$site->id, $site->name, $extensionId
 				)
 			);
+
+			return;
+		}
+
+		// Record the "last seen" new version in the site's configuration.
+		$this->recordLastSeenVersion($site, $extensionId);
+
+		if ($updateMode === 'email')
+		{
+			$this->logger->info(
+				sprintf(
+					'Extension updates for site #%d (%s): will notify by email for %s “%s” (EID: %d). The update will NOT be installed automatically.',
+					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name, $extensionId
+				)
+			);
+
+			// Enqueue update email
+			$this->enqueueUpdateEmail($site, $extensions[$extensionId]);
 
 			return;
 		}
@@ -166,16 +196,18 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
+		$rawJSONData = $response->getBody()->getContents();
+
 		try
 		{
-			$status = @json_decode($response->getBody()->getContents() ?? '{}');
+			$status = @json_decode($rawJSONData ?? '{}');
 
 			if (empty($status))
 			{
 				throw new \RuntimeException('No JSON object returned from the Joomla! API application.');
 			}
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->logger->error(
 				sprintf(
@@ -196,31 +228,36 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
-		// Crystal Error Trap(tm): This only happens on Crystal's site. I have no idea why!
-		if (!is_object($status->attributes ?? null))
+		// Try to get the returned data.
+		$returnedDataArray = $status?->data ?? [];
+		$returnedDataZeroElement = is_array($returnedDataArray) ? ($returnedDataArray[0] ?? null) : null;
+		$returnedAttributes = $returnedDataZeroElement?->attributes ?? null;
+
+		// This should never happen, really.
+		if (!is_object($returnedAttributes))
 		{
 			$this->logger->error(
 				sprintf(
 					'Extension updates for site #%d (%s): failed installing update for %s “%s”. Joomla! returned invalid data',
 					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name
 				),
-				[$response->getBody()->getContents() ?? '']
+				[$rawJSONData]
 			);
 
 			$updateStatus[$extensionId] = [
 				'type'     => $extensions[$extensionId]->type,
 				'name'     => $extensions[$extensionId]->name,
 				'status'   => 'error',
-				'messages' => [$response->getBody()->getContents() ?? ''],
+				'messages' => [$rawJSONData ?? ''],
 			];
 			$storage->set('updateStatus', $updateStatus);
 
 			return;
 		}
 
-		if (!($status->attributes?->status ?? 1))
+		if (!($returnedAttributes?->status ?? 1))
 		{
-			$messages = $status->attributes?->messages ?? [];
+			$messages = $returnedAttributes?->messages ?? [];
 
 			$this->logger->error(
 				sprintf(
@@ -314,12 +351,12 @@ class ExtensionsUpdate extends AbstractCallback
 			'type'     => $extensions[$extensionId]->type,
 			'name'     => $extensions[$extensionId]->name,
 			'status'   => 'success',
-			'messages' => $status->attributes?->messages ?? [],
+			'messages' => $returnedAttributes?->messages ?? [],
 		];
 		$storage->set('updateStatus', $updateStatus);
 	}
 
-	private function enqueueEmail(Site $site, Registry $storage): void
+	private function enqueueResultsEmail(Site $site, Registry $storage): void
 	{
 		// Render the messages as HTML
 		$updateStatus            = (array) $storage->get('updateStatus', []);
@@ -354,7 +391,7 @@ class ExtensionsUpdate extends AbstractCallback
 					'site'         => $site,
 				]);
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				// Expected, as the language override may not be in place.
 			}
@@ -376,7 +413,7 @@ class ExtensionsUpdate extends AbstractCallback
 					'site'         => $site,
 				]);
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				// Expected, as the language override may not be in place.
 			}
@@ -391,39 +428,74 @@ class ExtensionsUpdate extends AbstractCallback
 		$emailKey  = 'extensions_update_done';
 		$variables = [
 			'SITE_NAME'     => $site->name,
+			'SITE_URL'      => $site->getBaseUrl(),
 			'RENDERED_HTML' => $rendered,
 			'RENDERED_TEXT' => $renderedText,
 		];
 
 		// Get the CC email addresses
-		$cc = array_map(
-			function (string $item)
-			{
-				$item = trim($item);
+		$config = $site->getFieldValue('config', '{}');
+		$config = ($config instanceof Registry) ? $config->toString() : $config;
 
-				if (!str_contains($item, '<'))
-				{
-					return [$item, ''];
-				}
+		try
+		{
+			$config = @json_decode($config);
+		}
+		catch (Exception $e)
+		{
+			$config = null;
+		}
 
-				[$name, $email] = explode('<', $item, 2);
-				$name  = trim($name);
-				$email = trim(
-					str_contains($email, '>')
-						? substr($email, 0, strrpos($email, '>') - 1)
-						: $email
-				);
-
-				return [$email, $name];
-			},
-			explode(',', $config?->config?->core_update?->email?->cc ?? "")
-		);
+		$cc = $this->getSiteNotificationEmails($config);
 
 		$data = new Registry();
 		$data->set('template', $emailKey);
 		$data->set('email_variables', $variables);
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
+
+		$queueItem = new QueueItem(
+			$data->toString(),
+			QueueTypeEnum::MAIL->value,
+			$site->id
+		);
+		$queue     = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
+
+		$queue->push($queueItem, 'now');
+	}
+
+	private function enqueueUpdateEmail(Site $site, ?object $extension): void
+	{
+		$emailKey  = 'extension_update_found';
+		$variables = [
+			'SITE_NAME'             => $site->name,
+			'SITE_URL'              => $site->getBaseUrl(),
+			'OLD_VERSION'           => $extension?->version?->current,
+			'NEW_VERSION'           => $extension?->version?->new,
+			'EXTENSION_TYPE'        => $extension?->type,
+			'EXTENSION_NAME'        => $extension?->name,
+			'EXTENSION_DESCRIPTION' => $extension?->description,
+			'EXTENSION_AUTHOR'      => $extension?->author,
+		];
+
+		// Get the CC email addresses
+		$config = $site->getFieldValue('config', '{}');
+		$config = ($config instanceof Registry) ? $config->toString() : $config;
+
+		try
+		{
+			$config = @json_decode($config);
+		}
+		catch (Exception $e)
+		{
+			$config = null;
+		}
+
+		$data = new Registry();
+		$data->set('template', $emailKey);
+		$data->set('email_variables', $variables);
+		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
+		$data->set('email_cc', $this->getSiteNotificationEmails($config));
 
 		$queueItem = new QueueItem(
 			$data->toString(),
@@ -454,5 +526,30 @@ class ExtensionsUpdate extends AbstractCallback
 		$dummyRegistry->set('filter.ids', [$site->id]);
 
 		$return = $callback($dummy, $dummyRegistry);
+	}
+
+	/**
+	 * Records the last seen newest version of an extension in a site's configuration.
+	 *
+	 * @param   Site  $site         The site which the extension belongs to.
+	 * @param   int   $extensionId  The extension to record information for.
+	 *
+	 * @return  void
+	 */
+	private function recordLastSeenVersion(Site $site, int $extensionId): void
+	{
+		$siteConfig                     = ($site->getFieldValue('config') instanceof Registry)
+			? $site->getFieldValue('config')
+			: (new Registry($site->getFieldValue('config')));
+		$lastSeenVersions               = $siteConfig->get('extensions.lastSeen', []) ?: [];
+		$lastSeenVersions               = is_array($lastSeenVersions) ? $lastSeenVersions : [];
+		$extensions                     = (array) $siteConfig->get('extensions.list');
+		$extensionItem                  = $extensions[$extensionId] ?? null;
+		$latestVersion                  = $extensionItem?->version?->new;
+		$lastSeenVersions[$extensionId] = $latestVersion;
+
+		$siteConfig->set('extensions.lastSeen', $lastSeenVersions);
+		$site->setFieldValue('config', $siteConfig->toString());
+		$site->save();
 	}
 }

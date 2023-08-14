@@ -210,6 +210,7 @@ class AkeebaBackup extends AbstractCallback
 		$vars = array_merge(
 			[
 				'SITE_NAME' => $site->getName(),
+				'SITE_URL'  => $site->getBaseUrl(),
 				'SITE_ID'   => $site->getId(),
 			], $vars
 		);

@@ -19,6 +19,7 @@ use Akeeba\Panopticon\Model\Site;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
+use Exception;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
@@ -29,6 +30,7 @@ use Psr\Log\LoggerAwareTrait;
 class JoomlaUpdateDirector extends AbstractCallback
 {
 	use EnqueueJoomlaUpdateTrait;
+	use SiteNotificationEmailTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -267,29 +269,19 @@ class JoomlaUpdateDirector extends AbstractCallback
 			'NEW_VERSION' => $siteConfig->get('core.latest.version'),
 			'OLD_VERSION' => $siteConfig->get('core.current.version'),
 			'SITE_NAME'   => $site->name,
+			'SITE_URL'    => $site->getBaseUrl(),
 		];
 
-		$cc = array_map(
-			function (string $item) {
-				$item = trim($item);
+		try
+		{
+			$config = @json_decode($siteConfig->toString());
+		}
+		catch (Exception $e)
+		{
+			$config = null;
+		}
 
-				if (!str_contains($item, '<'))
-				{
-					return [$item, ''];
-				}
-
-				[$name, $email] = explode('<', $item, 2);
-				$name  = trim($name);
-				$email = trim(
-					str_contains($email, '>')
-						? substr($email, 0, strrpos($email, '>') - 1)
-						: $email
-				);
-
-				return [$email, $name];
-			},
-			explode(',', $siteConfig->get('config.core_update.email.cc', ''))
-		);
+		$cc = $this->getSiteNotificationEmails($config);
 
 		$data = new Registry();
 		$data->set('template', $mailtemplate);

@@ -82,7 +82,7 @@ trait EnqueueExtensionUpdateTrait
 		$task->save();
 	}
 
-	private function enqueueExtensionUpdate(Site $site, int $extensionId): bool
+	private function enqueueExtensionUpdate(Site $site, int $extensionId, string $effectivePreference = 'major'): bool
 	{
 		// Enqueue necessary updates
 		$queueKey = sprintf('extensions.%d', $site->id);
@@ -97,7 +97,14 @@ trait EnqueueExtensionUpdateTrait
 		}
 
 		$queueItem = new QueueItem(
-			data: $extensionId,
+			data: (object) [
+				'id'   => $extensionId,
+				'mode' => match ($effectivePreference)
+				{
+					'email' => 'email',
+					default => 'update'
+				},
+			],
 			queueType: $queueKey,
 			siteId: $site->id
 		);
