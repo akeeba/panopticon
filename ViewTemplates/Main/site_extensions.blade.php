@@ -44,10 +44,10 @@ $numKeyMissing = array_reduce(
 		<a type="button" class="btn btn-outline-secondary btn-sm" role="button"
 		   href="@route(sprintf('index.php?view=site&task=refreshExtensionsInformation&id=%d&return=%s&%s=1', $item->id, base64_encode(\Awf\Uri\Uri::getInstance()->toString()), $this->container->session->getCsrfToken()->getValue()))"
 		   data-bs-toggle="tooltip" data-bs-placement="bottom"
-		   data-bs-title="@lang('PANOPTICON_SITE_BTN_EXTENSIONS_RELOAD')"
+		   data-bs-title="@sprintf('PANOPTICON_SITE_BTN_EXTENSIONS_RELOAD', $item->name)"
 		>
 			<span class="fa fa-refresh" aria-hidden="true"></span>
-			<span class="visually-hidden">@lang('PANOPTICON_SITE_BTN_EXTENSIONS_RELOAD')</span>
+			<span class="visually-hidden">@sprintf('PANOPTICON_SITE_BTN_EXTENSIONS_RELOAD', $item->name)</span>
 		</a>
 	</div>
 	<div class="d-flex flex-column flex-md-row gap-2">
