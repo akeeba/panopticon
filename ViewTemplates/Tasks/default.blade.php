@@ -142,13 +142,13 @@ $i     = 1;
                                data-bs-title="@lang('PANOPTICON_LBL_PUBLISHED')"
                             >
                                 <span class="fa fa-circle-check" aria-hidden="true"></span>
-                                <span class="visually-hidden">@lang('PANOPTICON_LBL_PUBLISHED')</span>
+                                <span class="visually-hidden">@sprintf('PANOPTICON_LBL_PUBLISHED_SR', $task->id)</span>
                             </a>
                         @else
                             <span class="fa fa-circle-check" aria-hidden="true"
                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
                                   data-bs-title="@lang('PANOPTICON_LBL_PUBLISHED')"></span>
-                            <span class="visually-hidden">@lang('PANOPTICON_LBL_UNPUBLISHED')</span>
+                            <span class="visually-hidden">@sprintf('PANOPTICON_LBL_UNPUBLISHED_SR', $task->id)</span>
                         @endunless
                     @else
                         <a class="text-decoration-none text-danger"

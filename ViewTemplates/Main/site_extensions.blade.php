@@ -47,7 +47,7 @@ $numKeyMissing = array_reduce(
 		   data-bs-title="@lang('PANOPTICON_SITE_BTN_EXTENSIONS_RELOAD')"
 		>
 			<span class="fa fa-refresh" aria-hidden="true"></span>
-			<span class="visually-hidden">@lang('PANOPTICON_SITE_BTN_EXTENSIONS_RELOAD')</span>
+			<span class="visually-hidden">@sprintf('PANOPTICON_SITE_BTN_EXTENSIONS_RELOAD_SR', $item->name)</span>
 		</a>
 	</div>
 	<div class="d-flex flex-column flex-md-row gap-2">

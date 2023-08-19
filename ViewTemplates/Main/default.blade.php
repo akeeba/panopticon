@@ -151,7 +151,7 @@ $isFiltered = array_reduce(
                       data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')"
                 ></span>
                 <span class="visually-hidden">
-                @lang('PHP version')
+                @lang('PANOPTICON_MAIN_SITES_THEAD_PHP')
                 </span>
             </th>
             <th style="min-width: 2em">
@@ -178,7 +178,7 @@ $isFiltered = array_reduce(
                         <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
                         <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
                             {{{ $url }}}
-                            <span class="fa fa-external-link-square"></span>
+                            <span class="fa fa-external-link-square" aria-hidden="true"></span>
                         </a>
                     </div>
                 </td>

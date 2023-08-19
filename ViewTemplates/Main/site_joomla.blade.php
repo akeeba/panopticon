@@ -69,7 +69,7 @@ $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
        data-bs-title="@lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')"
     >
         <span class="fa fa-refresh" aria-hidden="true"></span>
-        <span class="visually-hidden">@lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')</span>
+        <span class="visually-hidden">@sprintf('PANOPTICON_SITE_BTN_JUPDATE_RELOAD_SR', $item->name)</span>
     </a>
     {{-- Is Joomla Update working at all? --}}
     @if($jUpdateFailure)
