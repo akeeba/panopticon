@@ -66,10 +66,10 @@ $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
     <a class="btn btn-sm btn-outline-secondary" role="button"
        href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d&return=%s&%s=1', $item->id, $returnUrl, $token))"
        data-bs-toggle="tooltip" data-bs-placement="bottom"
-       data-bs-title="@lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')"
+       data-bs-title="@sprintf('PANOPTICON_SITE_BTN_JUPDATE_RELOAD', $item->name)"
     >
         <span class="fa fa-refresh" aria-hidden="true"></span>
-        <span class="visually-hidden">@lang('PANOPTICON_SITE_BTN_JUPDATE_RELOAD')</span>
+        <span class="visually-hidden">@sprintf('PANOPTICON_SITE_BTN_JUPDATE_RELOAD', $item->name)</span>
     </a>
     {{-- Is Joomla Update working at all? --}}
     @if($jUpdateFailure)
