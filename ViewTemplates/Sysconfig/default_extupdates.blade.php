@@ -107,7 +107,7 @@ $config = $this->container->appConfig;
                 <td class="d-none d-lg-table-cell">
                     <div class="small">
                         @if ($item->authorUrl)
-                            <a href="{{{ $item->authorUrl }}}" target="_blank">
+                            <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
                                 {{{ $item->author }}}
                             </a>
                         @else
