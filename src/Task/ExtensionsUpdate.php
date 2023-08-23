@@ -257,13 +257,36 @@ class ExtensionsUpdate extends AbstractCallback
 
 		if (!($returnedAttributes?->status ?? 1))
 		{
-			$messages = $returnedAttributes?->messages ?? [];
+			$messages   = $returnedAttributes?->messages ?? [];
+			$forImplode = array_filter(
+				array_map(
+					function ($message) {
+						if (is_string($message))
+						{
+							return $message;
+						}
+
+						if (is_array($message))
+						{
+							return $message['message'] ?? null;
+						}
+
+						if (is_object($message))
+						{
+							return $message->message ?? null;
+						}
+
+						return null;
+					},
+					$messages
+				)
+			);
 
 			$this->logger->error(
 				sprintf(
 					'Extension updates for site #%d (%s): failed installing update for %s “%s”. Joomla! reported an error: %s',
 					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name,
-					implode(' • ', $messages)
+					implode(' • ', $forImplode)
 				),
 				(array) $status
 			);
