@@ -3,6 +3,7 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/webauthn-mfa.min.js" />
       </sourceFilesUrls>
     </properties>
@@ -14,6 +15,7 @@
       <root url="file://$PROJECT_DIR$/media/js/remember-tab.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/setup.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/showon.min.js" />
+      <root url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/system.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/webauthn-mfa.min.js" />
     </CLASSES>

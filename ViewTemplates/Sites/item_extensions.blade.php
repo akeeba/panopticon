@@ -166,12 +166,31 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
         </button>
     </h3>
     <div class="card-body collapse{{ $shouldCollapse ? '' : ' show' }}" id="cardExtensionsBody">
+
         <p class="small text-body-tertiary">
             <strong>
                 @lang('PANOPTICON_SITE_LBL_EXTENSIONS_LAST_CHECKED')
             </strong>
             {{ $lastUpdateTimestamp() }}
         </p>
+
+        <div class="mb-3 mx-1 p-2 border rounded-2 border-secondary bg-light-subtle d-flex flex-row gap-3 align-items-baseline justify-content-center">
+            <strong>@lang('PANOPTICON_SITE_LBL_EXTENSIONS_FILTERS')</strong>
+
+            @foreach($this->extensionFilters as $filterName => $icon)
+                <button type="button"
+                        class="btn btn-outline-secondary extensionFilter"
+                        data-bs-toggle="button"
+                        data-ext-filter="{{ $filterName }}"
+                        data-toggle-tooltip="tooltip"
+                        data-bs-title="{{{ str_replace('"', '\'', \Awf\Text\Text::_('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))) }}}"
+                >
+                    <span class="fa {{ $icon }}" aria-hidden="true"></span>
+                    <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))</span>
+                </button>
+
+            @endforeach
+        </div>
 
         {{-- Show Update Schedule Information --}}
         @if(!is_null($extensionsUpdateTask))
@@ -265,8 +284,16 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
 					$hasUpdate         = !empty($currentVersion) && !empty($latestVersion)
 						&& ($currentVersion != $latestVersion)
 						&& version_compare($currentVersion, $latestVersion, 'lt');
+
+					$cssClasses = 'extension-row';
+		            $cssClasses .= $noUpdateSite ? ' filter-updatesite' : '';
+		            $cssClasses .= $missingDownloadID ? ' filter-dlid' : '';
+		            $cssClasses .= $naughtyUpdates ? ' filter-naughty' : '';
+		            $cssClasses .= ($hasUpdate && !$noUpdateSite) ? ' filter-update' : ' filter-noupdate';
+		            $cssClasses .= $hasUpdate && (in_array($item->extension_id, $scheduledExtensions) || (!$error && $willAutoUpdate($key, $currentVersion, $latestVersion))) ? ' filter-scheduled' :
+			            ($hasUpdate ? ' filter-unscheduled' : '');
 					?>
-                <tr>
+                <tr class="{{ $cssClasses }}">
                     <td>
                         <div>
                             <span class="text-body-tertiary pe-2">
@@ -343,7 +370,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                         <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
                         @if ($error)
                             <div>
-                                @if ($item->naughtyUpdates === 'parent')
+                                @if ($naughtyUpdates)
                                 <a href="https://github.com/akeeba/panopticon/wiki/Extension-With-Problematic-Updates" target="_blank">
                                     <span class="badge bg-danger">
                                         <span class="fa fa-bug" aria-hidden="true"

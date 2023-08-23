@@ -60,6 +60,15 @@ class Html extends DataViewHtml
 
 	private array $backupProfiles = [];
 
+	protected array $extensionFilters = [
+		'filter-updatesite'  => 'fa-globe',
+		'filter-dlid'        => 'fa-key',
+		'filter-naughty'     => 'fa-bug',
+		'filter-scheduled'   => 'fa-hourglass-half',
+		'filter-unscheduled' => 'fa-bolt',
+
+	];
+
 	public function onBeforeDlkey(): bool
 	{
 		$this->setStrictLayout(true);
@@ -204,6 +213,8 @@ class Html extends DataViewHtml
 
 	protected function onBeforeRead(): bool
 	{
+		Template::addJs('media://js/site-read.js', $this->getContainer()->application, defer: true);
+
 		$this->setStrictLayout(true);
 		$this->setStrictTpl(true);
 
@@ -253,6 +264,11 @@ class Html extends DataViewHtml
 		);
 		Template::addJs('media://js/remember-tab.js');
 
+		$document->addScriptOptions('panopticon.siteRemember', [
+			'extensionsFilters' => sprintf('panopticon.site%d.extensionFilters', $this->item->getId()),
+			'collapsible' => sprintf('panopticon.site%d.collapsible', $this->item->getId())
+		]);
+
 		$this->addTooltipJavaScript();
 
 		$document->addScriptOptions(
@@ -265,26 +281,6 @@ class Html extends DataViewHtml
 				),
 			]
 		);
-		$js = <<< JS
-
-akeeba.System.documentReady(function() {
-    
-    document.getElementById('akeebaBackupTakeButton')?.addEventListener('click', (event) => {
-		const profileId = document.getElementById('akeebaBackupTakeProfile')?.value;
-		const url = akeeba.System.getOptions('akeebabackup')?.enqueue + '&profile_id=' + profileId;
-		
-		if (!profileId) {
-		    return;
-		}
-		
-        window.location = url;
-    });
-    
-});
-
-JS;
-		$document->addScriptDeclaration($js);
-
 
 		return true;
 	}
