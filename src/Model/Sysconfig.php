@@ -24,7 +24,7 @@ class Sysconfig extends Model
 		'plg_system_schedulerunner', 'plg_task_checkfiles', 'plg_task_demotasks', 'plg_task_requests',
 		'plg_task_sitestatus', 'plg_com_com_ats', 'plg_multifactorauth_email', 'plg_multifactorauth_fixed',
 		'plg_multifactorauth_totp', 'plg_multifactorauth_webauthn', 'plg_multifactorauth_yubikey',
-		'plg_system_shortcut',
+		'plg_system_shortcut', 'plg_sampledata_testing', 
 	];
 
 	public function isExcludedShortname(string $shortname): bool
