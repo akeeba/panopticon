@@ -64,8 +64,17 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
 		'site'   => 0,
 	];
 
+	/** @var \Akeeba\Panopticon\Model\Sysconfig $sysConfigModel */
+	$sysConfigModel = $this->getModel('Sysconfig');
+
 	foreach ($extensions as $item)
 	{
+		$extensionkey = $sysConfigModel->getExtensionShortname(
+            $item->type, $item->element, $item->folder, $item->client_id
+        );
+
+		if ($sysConfigModel->isExcludedShortname($extensionkey)) continue;
+
 		$currentVersion    = $item->version?->current;
 		$latestVersion     = $item->version?->new;
 		$noUpdateSite      = !($item->hasUpdateSites ?? false);
