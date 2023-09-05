@@ -361,8 +361,8 @@ class Html extends DataViewHtml
 	protected function getTimeInformation(object $record): array
 	{
 		$utcTimeZone = new DateTimeZone('UTC');
-		$startTime   = clone new Date($record->backupstart, $utcTimeZone);
-		$endTime     = clone new Date($record->backupend, $utcTimeZone);
+		$startTime   = clone $this->container->dateFactory($record->backupstart, $utcTimeZone);
+		$endTime     = clone $this->container->dateFactory($record->backupend, $utcTimeZone);
 
 		$duration = $endTime->toUnix() - $startTime->toUnix();
 

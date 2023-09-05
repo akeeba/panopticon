@@ -474,7 +474,7 @@ class Setup extends Model
 			'cron_expression' => '@daily',
 			'enabled'         => 1,
 			'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
-			'next_execution'  => (new Date('now', 'UTC'))->toSql(),
+			'next_execution'  => ($this->container->dateFactory('now', 'UTC'))->toSql(),
 			'params'          => (new Registry('{"run_once": "delete"}'))->toString(),
 		];
 		$db->insertObject('#__tasks', $newTask);

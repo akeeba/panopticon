@@ -422,8 +422,8 @@ trait AkeebaBackupIntegrationTrait
 						return true;
 					}
 
-					$date = new Date($task->last_execution, 'UTC');
-					$now  = new Date();
+					$date = $this->container->dateFactory($task->last_execution, 'UTC');
+					$now  = $this->container->dateFactory();
 
 					return ($date < $now);
 				}
@@ -465,7 +465,7 @@ trait AkeebaBackupIntegrationTrait
 			$tz = 'UTC';
 		}
 
-		$runDateTime = new Date('now', $tz);
+		$runDateTime = $this->container->dateFactory('now', $tz);
 		$runDateTime->add(new \DateInterval('PT2S'));
 
 		$task->save(

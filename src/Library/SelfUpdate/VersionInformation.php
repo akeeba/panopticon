@@ -7,6 +7,7 @@
 
 namespace Akeeba\Panopticon\Library\SelfUpdate;
 
+use Akeeba\Panopticon\Factory;
 use Awf\Date\Date;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
@@ -37,9 +38,10 @@ class VersionInformation
 			$item->version = substr($item->version, 2);
 		}
 
+		$container          = Factory::getContainer();
 		$item->infoUrl      = $data->html_url ?? null;
 		$item->preRelease   = $data->prerelease ?? false;
-		$item->releaseDate  = new Date($data->published_at ?? ('now'));
+		$item->releaseDate  = $container->dateFactory($data->published_at ?? ('now'));
 		$item->releaseNotes = $data->body ?? null;
 
 		foreach ($data->assets ?? [] as $asset)

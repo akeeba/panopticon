@@ -78,7 +78,7 @@ trait EnqueueJoomlaUpdateTrait
 		{
 			default:
 			case 'immediately':
-				$then = new Date('now', $tz);
+				$then = $this->container->dateFactory('now', $tz);
 				$then->add(new \DateInterval('PT2S'));
 
 				$task->cron_expression = $then->minute . ' ' . $then->hour . ' ' . $then->day . ' ' . $then->month . ' '
@@ -91,7 +91,7 @@ trait EnqueueJoomlaUpdateTrait
 			case 'time':
 				$hour   = max(0, min((int) $siteConfig->get('config.core_update.time.hour', 0), 23));
 				$minute = max(0, min((int) $siteConfig->get('config.core_update.time.minute', 0), 59));
-				$now    = new Date('now', $tz);
+				$now    = $this->container->dateFactory('now', $tz);
 				$then   = (clone $now)->setTime($hour, $minute, 0);
 
 				// If the selected time of day is in the past, go forward one day

@@ -46,7 +46,7 @@ class Cron extends Controller
 				->replace($db->quoteName('#__akeeba_common'))
 				->values(implode(',', [
 					$db->quote('panopticon.task.last.execution'),
-					$db->quote((new Date())->toSql()),
+					$db->quote($this->container->dateFactory()->toSql()),
 				]));
 			$db->setQuery($query)->execute();
 			$db->unlockTables();

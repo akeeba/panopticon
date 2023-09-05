@@ -836,7 +836,7 @@ class Sites extends DataController
 			{
 				$data = array_merge([
 					'created_by' => $this->container->userManager->getUser()->getId(),
-					'created_on' => (new Date())->toSql(),
+					'created_on' => ($this->container->dateFactory())->toSql(),
 				], $data);
 			}
 

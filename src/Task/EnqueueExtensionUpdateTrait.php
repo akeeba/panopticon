@@ -57,13 +57,13 @@ trait EnqueueExtensionUpdateTrait
 			default:
 			case 'immediately':
 				$task->cron_expression = '* * * * *';
-				$then                  = new Date('now', 'UTC');
+				$then                  = $this->container->dateFactory('now', 'UTC');
 				break;
 
 			case 'time':
 				$hour   = max(0, min((int)$siteConfig->get('config.extensions_update.time.hour', 0), 23));
 				$minute = max(0, min((int)$siteConfig->get('config.extensions_update.time.minute', 0), 59));
-				$now    = new Date('now', 'UTC');
+				$now    = $this->container->dateFactory('now', 'UTC');
 				$then   = (clone $now)->setTime($hour, $minute, 0);
 
 				// If the selected time of day is in the past, go forward one day

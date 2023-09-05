@@ -44,7 +44,7 @@ class AkeebaBackup extends AbstractCallback
 		$comment     = $params->get('comment', '');
 
 		// Replace the variables in the description and comment
-		$now = new Date();
+		$now = $this->container->dateFactory();
 		$replacements = [
 			'{DATE_FORMAT_LC}' => $now->format(Text::_('DATE_FORMAT_LC')),
 			'{DATE_FORMAT_LC1}' => $now->format(Text::_('DATE_FORMAT_LC1')),

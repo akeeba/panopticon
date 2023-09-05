@@ -116,8 +116,8 @@ class Task extends DataModel
 		}
 
 		$utcTimeZone = new DateTimeZone('UTC');
-		$startTime   = clone new Date($this->last_execution, $utcTimeZone);
-		$endTime     = clone new Date($this->last_run_end, $utcTimeZone);
+		$startTime   = clone $this->container->dateFactory($this->last_execution, $utcTimeZone);
+		$endTime     = clone $this->container->dateFactory($this->last_run_end, $utcTimeZone);
 
 		$duration = abs($endTime->toUnix() - $startTime->toUnix());
 
@@ -164,10 +164,10 @@ class Task extends DataModel
 				? $this->cron_expression
 				: new CronExpression($this->cron_expression);
 			// Warning! The last execution time is ALWAYS stored in UTC
-			$relativeTime         = (new Date($this->last_execution ?: 'now', 'UTC'))->format(DATE_W3C);
+			$relativeTime         = ($this->container->dateFactory($this->last_execution ?: 'now', 'UTC'))->format(DATE_W3C);
 			// The call to getNextRunDate must use our local timezone because the CRON expression is in local time
 			$nextRun              = $cron_expression->getNextRunDate($relativeTime, timeZone: $tz)->format(DATE_W3C);
-			$this->next_execution = (new Date($nextRun, 'UTC'))->toSql();
+			$this->next_execution = ($this->container->dateFactory($nextRun, 'UTC'))->toSql();
 		}
 		catch (Exception)
 		{
@@ -320,7 +320,7 @@ class Task extends DataModel
 			 */
 			if (!$willResume)
 			{
-				$updates['last_execution'] = (new Date('now', 'UTC'))->toSql();
+				$updates['last_execution'] = ($this->container->dateFactory('now', 'UTC'))->toSql();
 			}
 
 			$pendingTask->save($updates);
@@ -334,7 +334,7 @@ class Task extends DataModel
 			{
 				$pendingTask->save([
 					'last_exit_code' => Status::NO_LOCK,
-					'last_execution' => (new Date('now', 'UTC'))->toSql(),
+					'last_execution' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
 				]);
 			}
 			catch (Exception)
@@ -511,7 +511,7 @@ class Task extends DataModel
 			{
 				$db->lockTable($this->tableName);
 				$pendingTask->save([
-					'last_run_end' => (new Date('now', 'UTC'))->toSql(),
+					'last_run_end' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
 				]);
 				$db->unlockTables();
 			}
@@ -520,7 +520,7 @@ class Task extends DataModel
 				$logger->error('Failed to update the task\'s last execution information');
 
 				$pendingTask->save([
-					'last_run_end'   => (new Date('now', 'UTC'))->toSql(),
+					'last_run_end'   => ($this->container->dateFactory('now', 'UTC'))->toSql(),
 					'last_exit_code' => Status::NO_RELEASE,
 				]);
 			}
@@ -549,7 +549,8 @@ class Task extends DataModel
 	{
 		$db         = $this->getDbo();
 		$threshold  = max(3, (int) $this->container->appConfig->get('cron_stuck_threshold', 3));
-		$cutoffTime = (new Date('now', 'UTC'))->sub(new DateInterval('PT' . $threshold . 'M'));
+		$cutoffTime = $this->container->dateFactory('now', 'UTC')
+			->sub(new DateInterval('PT' . $threshold . 'M'));
 
 		$query = $db->getQuery(true)
 			->update($db->qn($this->tableName))
@@ -599,7 +600,8 @@ class Task extends DataModel
 						$db->quoteName('enabled') . ' = 1',
 						$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value,
 						$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value,
-						$db->qn('next_execution') . ' <= ' . $db->quote((new Date('now', 'UTC'))->toSql()),
+						$db->qn('next_execution') . ' <= ' . $db->quote(
+							$this->container->dateFactory('now', 'UTC')->toSql()),
 					])
 					->order($db->qn('priority') . ' ASC, ' . $db->qn('next_execution') . ' ASC')
 			);

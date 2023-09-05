@@ -49,7 +49,7 @@ class Main extends Controller
 		}
 		else
 		{
-			$lastPlausibleRun = (new Date())->sub(new \DateInterval('PT55S'));
+			$lastPlausibleRun = ($this->container->dateFactory())->sub(new \DateInterval('PT55S'));
 			$lastPlausibleRun->setTime($lastPlausibleRun->hour, $lastPlausibleRun->minute, 0, 0);
 
 			$isValid = $lastPlausibleRun->diff($lastExecutionTime)->invert === 0;

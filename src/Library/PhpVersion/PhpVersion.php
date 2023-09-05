@@ -33,7 +33,7 @@ class PhpVersion
 
 		if (empty($this->httpClient))
 		{
-			$today            = new Date();
+			$today            = $this->container->dateFactory();
 			$this->expiration = (clone $today)->add(new DateInterval('P1W'));
 			$interval         = $today->diff($this->expiration);
 
@@ -71,7 +71,7 @@ class PhpVersion
 			'eol'           => $phpInfo[$version]->eol,
 		];
 
-		$today          = new Date();
+		$today          = $this->container->dateFactory();
 		$ret->eol       = $ret->dates->eol->diff($today)->invert === 0;
 		$ret->supported = !$ret->eol && !empty($ret->dates->activeSupport) && $ret->dates->activeSupport->diff($today)->invert === 1;
 

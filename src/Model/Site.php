@@ -768,7 +768,7 @@ class Site extends DataModel
 		{
 			try
 			{
-				$task->next_execution = new Date($task->next_execution);
+				$task->next_execution = $this->container->dateFactory($task->next_execution);
 			}
 			catch (Exception $e)
 			{
@@ -776,7 +776,7 @@ class Site extends DataModel
 			}
 		}
 
-		if ($task->next_execution < (new Date()))
+		if ($task->next_execution < ($this->container->dateFactory()))
 		{
 			return false;
 		}

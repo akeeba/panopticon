@@ -88,7 +88,7 @@ class Backupcodes extends Model
 
 		// Try to load existing backup codes
 		$existingCodes = $this->getBackupCodes($user);
-		$now           = new Date();
+		$now           = $this->container->dateFactory();
 
 		/** @var Mfa $record */
 		$record = $this->getContainer()->mvcFactory->makeTempModel('Mfa');

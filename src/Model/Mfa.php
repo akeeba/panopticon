@@ -72,7 +72,7 @@ class Mfa extends DataModel
 		// Update the dates on a new record
 		if (empty($this->id))
 		{
-			$this->created_on = (new Date())->toSql();
+			$this->created_on = ($this->container->dateFactory())->toSql();
 			$this->last_used  = null;
 		}
 

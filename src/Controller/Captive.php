@@ -163,7 +163,7 @@ class Captive extends Controller
 		}
 		
 		// Update the Last Used, UA and IP columns
-		$jNow = new Date();
+		$jNow = $this->container->dateFactory();
 
 		$record->last_used = $jNow->toSql();
 		$record->save();

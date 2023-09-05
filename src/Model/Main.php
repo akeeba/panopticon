@@ -56,7 +56,7 @@ class Main extends Model
 
 		try
 		{
-			return new Date($lastExecution);
+			return $this->container->dateFactory($lastExecution);
 		}
 		catch (\Throwable $e)
 		{

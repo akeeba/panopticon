@@ -299,7 +299,7 @@ trait AdminToolsIntegrationTrait
 			},
 			args: [$scanAlertId],
 			id: sprintf('scanalert-%d', $scanAlertId),
-			expiration: (new Date())->add(new \DateInterval('P1Y'))
+			expiration: ($this->container->dateFactory())->add(new \DateInterval('P1Y'))
 		);
 	}
 

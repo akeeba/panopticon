@@ -9,15 +9,21 @@ namespace Akeeba\Panopticon\Library\Queue;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
 use Awf\Database\Driver;
 use Awf\Date\Date;
 use DateTime;
 use Exception;
 
-class MySQLQueue implements QueueInterface
+class MySQLQueue implements QueueInterface, ContainerAwareInterface
 {
+	use ContainerAwareTrait;
+
 	public function __construct(private string $queueIdentifier, private Driver $db, private string $tableName = '#__queue')
 	{
+		$this->setContainer(Factory::getContainer());
 	}
 
 	public function push(QueueItem $item, DateTime|int|string|null $time = null): void
@@ -210,7 +216,7 @@ class MySQLQueue implements QueueInterface
 	{
 		if (empty($time))
 		{
-			$time = new Date();
+			$time = $this->container->dateFactory();
 		}
 
 		if (is_integer($time))
@@ -227,11 +233,11 @@ class MySQLQueue implements QueueInterface
 		{
 			try
 			{
-				$time = new Date($time);
+				$time = $this->container->dateFactory($time);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
-				$time = new Date();
+				$time = $this->container->dateFactory();
 			}
 		}
 
