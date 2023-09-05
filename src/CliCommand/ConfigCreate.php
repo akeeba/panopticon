@@ -51,7 +51,7 @@ class ConfigCreate extends AbstractCommand
 
 		try
 		{
-			$driver = Driver::getInstance($container);
+			$driver = Driver::fromContainer($container);
 			$driver->connect();
 
 			$connected = $driver->connected();

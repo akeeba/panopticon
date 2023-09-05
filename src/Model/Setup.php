@@ -306,7 +306,7 @@ class Setup extends Model
 		$this->container->offsetUnset('db');
 		$this->container->offsetSet('db', function (Container $c)
 		{
-			return Driver::getInstance($c);
+			return Driver::fromContainer($c);
 		});
 	}
 

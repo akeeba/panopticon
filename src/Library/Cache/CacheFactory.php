@@ -101,7 +101,7 @@ class CacheFactory
 						'ssl'      => [],
 					];
 
-					$db = Driver::getInstance($options);
+					$db = Driver::fromOptions($options);
 				}
 
 				self::$instances[$poolName] = new PdoAdapter(
