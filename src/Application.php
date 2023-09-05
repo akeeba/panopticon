@@ -157,7 +157,7 @@ class Application extends AWFApplication
 
 	public function initialise()
 	{
-		Grid::$javascriptPrefix = 'akeeba.System.';
+		$this->getContainer()->html->run('grid.setJavascriptPrefix', 'akeeba.System.');
 
 		$this->discoverSessionSavePath();
 		$this->setTemplate('default');
