@@ -20,7 +20,7 @@ defined('AKEEBA') || die;
 
 class MFA implements PublicKeyCredentialSourceRepository, ContainerAwareInterface
 {
-	use ContainerAwareTrait
+	use ContainerAwareTrait;
 
 	/**
 	 * The user ID we will operate with
