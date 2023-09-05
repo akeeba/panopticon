@@ -18,6 +18,11 @@ call_user_func(function (){
 
 	$app = Factory::getApplication();
 
+	if (method_exists(Application::class, 'setInstance'))
+	{
+		Application::setInstance('panopticon', $app);
+	}
+
 	$app->initialise();
 	$app->route();
 	$app->dispatch();

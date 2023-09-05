@@ -12,14 +12,12 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Application\UserAuthenticationPassword;
 use Akeeba\Panopticon\Application\UserPrivileges;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
-use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\FixedCodeDemo;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\PassKeys;
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Application\Application as AWFApplication;
 use Awf\Application\TransparentAuthentication;
 use Awf\Document\Menu\Item;
-use Awf\Html\Grid;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\User\ManagerInterface;
@@ -470,21 +468,21 @@ class Application extends AWFApplication
 			$defaultLanguage = 'en-GB';
 		}
 
-		$detectedLanguage = Text::detectLanguage('panopticon', '.ini', $this->container->languagePath);
+		$detectedLanguage = Text::detectLanguage($this->container, '.ini', $this->container->languagePath);
 
 		// Always load the English (Great Britain) language. It contains all the strings.
-		Text::loadLanguage('en-GB', 'panopticon', '.ini', true, $this->container->languagePath);
+		Text::loadLanguage('en-GB', $this->container, '.ini', true, $this->container->languagePath);
 
 		// Load the site's default language, if it's different from en-GB.
 		if ($defaultLanguage != 'en-GB')
 		{
-			Text::loadLanguage($defaultLanguage, 'panopticon', '.ini', true, $this->container->languagePath);
+			Text::loadLanguage($defaultLanguage, $this->container, '.ini', true, $this->container->languagePath);
 		}
 
 		// Load the auto-detected preferred language (per browser settings), as long as it's not one we already loaded.
 		if (!in_array($detectedLanguage, [$defaultLanguage, 'en-GB']))
 		{
-			Text::loadLanguage($detectedLanguage, 'panopticon', '.ini', true, $this->container->languagePath);
+			Text::loadLanguage($detectedLanguage, $this->container, '.ini', true, $this->container->languagePath);
 		}
 	}
 
