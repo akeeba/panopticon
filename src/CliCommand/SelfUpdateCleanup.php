@@ -36,7 +36,7 @@ class SelfUpdateCleanup extends AbstractCommand
 		$container = Factory::getContainer();
 
 		/** @var Selfupdate $model */
-		$model = Model::getTmpInstance('', 'selfupdate', $container);
+		$model = $container->mvcFactory->makeTempModel('selfupdate');
 
 		$this->ioStyle->info('Finalising the update');
 

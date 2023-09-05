@@ -110,7 +110,7 @@ class Overrides extends DataController
 
 			$this->container['mvc_config'] = $config;
 
-			$this->modelInstances[$modelName] = Model::getInstance($appName, $modelName, $this->container);
+			$this->modelInstances[$modelName] = $this->container->mvcFactory->makeModel($modelName);
 		}
 
 		return $this->modelInstances[$modelName];

@@ -51,7 +51,7 @@ class Captive extends Model
 		$user ??= $this->container->userManager->getUser();
 
 		/** @var Mfa $record */
-		$record = DataModel::getTmpInstance('', 'Mfa');
+		$record = $this->getContainer()->mvcFactory->makeTempModel('Mfa');
 
 		try
 		{
@@ -93,7 +93,7 @@ class Captive extends Model
 		$user ??= $this->container->userManager->getUser();
 
 		// Get the user's MFA records
-		$records = MfaHelper::getUserMfaRecords($user->getId());
+		$records = MfaHelper::getUserMfaRecords($this->getContainer(), $user->getId());
 
 		// No MFA Methods? Then we obviously don't need to display a Captive login page.
 		if (empty($records))

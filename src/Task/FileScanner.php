@@ -32,7 +32,7 @@ class FileScanner extends AbstractCallback
 	{
 		// Get the site object
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
-		$this->site = Model::getTmpInstance(null, 'Site', $this->container);
+		$this->site = $this->container->mvcFactory->makeTempModel('Site');
 		$this->site->findOrFail($task->site_id);
 
 		// Add a site-specific logger

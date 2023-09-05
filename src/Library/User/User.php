@@ -12,12 +12,15 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\UserAvatarTrait;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
 
-class User extends \Awf\User\User
+class User extends \Awf\User\User implements ContainerAwareInterface
 {
 	use UserAvatarTrait;
+	use ContainerAwareTrait;
 
 	private array $groupPrivileges = [];
 
@@ -53,7 +56,7 @@ class User extends \Awf\User\User
 		{
 			try
 			{
-				$site = DataModel::getTmpInstance('', 'Site', Factory::getContainer())
+				$site = $this->getContainer()->mvcFactory->makeTempModel('Site')
 					->findOrFail($site);
 			}
 			catch (\Exception $e)

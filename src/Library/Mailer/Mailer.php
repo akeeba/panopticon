@@ -12,13 +12,17 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Mailtemplates;
 use Awf\Application\Application;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
 use Awf\Mailer\Mailer as AWFMailer;
 use Awf\Mvc\Model;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 
-class Mailer extends AWFMailer
+class Mailer extends AWFMailer implements ContainerAwareInterface
 {
+	use ContainerAwareTrait;
+
 	/**
 	 * Allowed image file extensions to inline in sent emails
 	 *
@@ -244,7 +248,7 @@ class Mailer extends AWFMailer
 	public function initialiseWithTemplate(string $type, string $language = 'en-GB', array $replacements = [])
 	{
 		/** @var Mailtemplates $model */
-		$model = Model::getTmpInstance('', 'Mailtemplates', $this->container);
+		$model = $this->container->mvcFactory->makeModel('Mailtemplates');
 		$model->where('type', values: strtolower($type));
 		$model->where('language', 'in', [$language, '*']);
 		$templates = $model->get(true);

@@ -38,7 +38,7 @@ class ConfigTasksInstall extends AbstractCommand
 		 * Using the PHP 8.x and later calling convention with named parameters does not allow graceful termination on older
 		 * PHP versions.
 		 */
-		$model = Model::getTmpInstance('', 'Setup', $container);
+		$model = $container->mvcFactory->makeTempModel('Setup');
 
 		$model->installDefaultTasks();
 

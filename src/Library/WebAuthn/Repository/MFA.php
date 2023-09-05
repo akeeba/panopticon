@@ -9,6 +9,8 @@ namespace Akeeba\Panopticon\Library\WebAuthn\Repository;
 
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Mfa as MfaModel;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
 use Awf\Mvc\DataModel;
 use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialSourceRepository;
@@ -16,8 +18,10 @@ use Webauthn\PublicKeyCredentialUserEntity;
 
 defined('AKEEBA') || die;
 
-class MFA implements PublicKeyCredentialSourceRepository
+class MFA implements PublicKeyCredentialSourceRepository, ContainerAwareInterface
 {
+	use ContainerAwareTrait
+
 	/**
 	 * The user ID we will operate with
 	 *
@@ -35,6 +39,8 @@ class MFA implements PublicKeyCredentialSourceRepository
 	 */
 	public function __construct(?int $userid = null)
 	{
+		$this->setContainer(Factory::getContainer());
+
 		if (empty($userid))
 		{
 			$userid = Factory::getContainer()->userManager->getUser()->getId();
@@ -64,7 +70,7 @@ class MFA implements PublicKeyCredentialSourceRepository
 	{
 		$userId = $publicKeyCredentialUserEntity->getId();
 
-		$results = DataModel::getTmpInstance('', 'Mfa')
+		$results = $this->getContainer()->mvcFactory->makeTempModel('Mfa')
 			->where('user_id', values: $userId)
 			->get(true)
 			->filter(fn(MfaModel $mfa) => !empty($mfa->options));
@@ -137,7 +143,8 @@ class MFA implements PublicKeyCredentialSourceRepository
 			break;
 		}
 
-		$mfaModel = DataModel::getTmpInstance('', 'Mfa');
+		/** @var \Akeeba\Panopticon\Model\Mfa $mfaModel */
+		$mfaModel = $this->getContainer()->mvcFactory->makeTempModel('Mfa');
 
 		if ($recordId)
 		{

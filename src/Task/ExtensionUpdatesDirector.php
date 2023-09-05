@@ -91,10 +91,10 @@ class ExtensionUpdatesDirector extends AbstractCallback
 		$db->setQuery('SET autocommit = 1')->execute();
 
 		/** @var Site $site */
-		$site = Model::getTmpInstance('', 'Site', $this->container);
+		$site = $this->container->mvcFactory->makeTempModel('Site');
 
 		/** @var Sysconfig $sysConfigModel */
-		$sysConfigModel             = Model::getTmpInstance('', 'Sysconfig', $this->container);
+		$sysConfigModel             = $this->container->mvcFactory->makeTempModel('Sysconfig');
 		$globalExtUpdatePreferences = $sysConfigModel->getExtensionPreferencesAndMeta(null);
 		$defaultExtUpdatePreference = $this->container->appConfig->get('tasks_extupdate_install', 'none');
 

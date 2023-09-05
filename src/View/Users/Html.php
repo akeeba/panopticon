@@ -121,7 +121,7 @@ JS;
 			return;
 		}
 
-		$model = DataModel::getTmpInstance('', 'Mfamethods');
+		$model = $this->container->mvcFactory->makeTempModel('Mfamethods');
 
 		if ($this->getLayout() != 'firsttime')
 		{
@@ -154,7 +154,7 @@ JS;
 			}
 		}
 
-		$model       = DataModel::getTmpInstance('', 'Backupcodes');
+		$model       = $this->container->mvcFactory->makeTempModel('Backupcodes');
 		$backupCodes = $model->getBackupCodes($editedUser);
 
 		if ($activeRecords && empty($backupCodes))

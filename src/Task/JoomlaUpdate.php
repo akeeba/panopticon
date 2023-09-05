@@ -360,7 +360,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		// Does the site exist?
 		/** @var Site $site */
-		$site = Model::getTmpInstance(null, 'Site', $this->container);
+		$site = $this->container->mvcFactory->makeTempModel('Site');
 		$site->find($task->site_id);
 
 		if ($site->id != $task->site_id)

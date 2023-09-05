@@ -553,7 +553,7 @@ class Setup extends Model
 			$this->deleteSystemTasks($type);
 
 			/** @var Task $task */
-			$task = DataModel::getInstance(null, 'Task', $this->container);
+			$task = $this->container->mvcFactory->makeModel('Task');
 
 			$task->save([
 				'site_id'         => null,

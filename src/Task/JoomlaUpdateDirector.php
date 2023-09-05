@@ -101,7 +101,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 		$db->setQuery('SET autocommit = 1')->execute();
 
 		/** @var Site $site */
-		$site = Model::getTmpInstance('', 'Site', $this->container);
+		$site = $this->container->mvcFactory->makeTempModel('Site');
 
 		foreach ($siteIDs as $id)
 		{

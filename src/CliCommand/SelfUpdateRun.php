@@ -37,7 +37,7 @@ class SelfUpdateRun extends AbstractCommand
 		$container = Factory::getContainer();
 
 		/** @var Selfupdate $model */
-		$model = Model::getTmpInstance('', 'selfupdate', $container);
+		$model = $container->mvcFactory->makeTempModel('selfupdate');
 
 		$force = $input->getOption('force');
 

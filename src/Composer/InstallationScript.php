@@ -280,7 +280,7 @@ abstract class InstallationScript
 		$appConfig->loadConfiguration();
 
 		/** @var \Akeeba\Panopticon\Model\Setup $model */
-		$model = Model::getTmpInstance('', 'Setup', $container);
+		$model = $container->mvcFactory->makeTempModel('Setup');
 		// Check the installed default tasks
 		$model->checkDefaultTasks();
 		// Make sure the DB tables are installed correctly

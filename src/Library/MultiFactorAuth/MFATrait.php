@@ -37,7 +37,7 @@ trait MFATrait
 		if ($lastUserId != $user->getId())
 		{
 			$lastUserId = $user->getId();
-			$records    = Helper::getUserMfaRecords($user->getId());
+			$records    = Helper::getUserMfaRecords($this->getContainer(), $user->getId());
 		}
 
 		// No MFA Methods? Then we obviously don't need to display a Captive login page.

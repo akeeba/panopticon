@@ -31,7 +31,7 @@ class AkeebaBackup extends AbstractCallback
 	{
 		// Get the site object
 		/** @var Site $site */
-		$site = Model::getTmpInstance(null, 'Site', $this->container);
+		$site = $this->container->mvcFactory->makeTempModel('Site');
 		$site->findOrFail($task->site_id);
 
 		// Add a site-specific logger

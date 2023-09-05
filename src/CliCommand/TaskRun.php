@@ -65,7 +65,7 @@ class TaskRun extends AbstractCommand
 		 * Using the PHP 8.x and later calling convention with named parameters does not allow graceful termination on older
 		 * PHP versions.
 		 */
-		$model = Model::getTmpInstance('', 'Task', $container);
+		$model = $container->mvcFactory->makeTempModel('Task');
 
 		$timer = new Timer(
 			$container->appConfig->get('max_execution', 60),

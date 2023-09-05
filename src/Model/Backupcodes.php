@@ -31,7 +31,7 @@ class Backupcodes extends Model
 		$user ??= $this->container->userManager->getUser();
 
 		/** @var Mfa $record */
-		$record = Model::getTmpInstance('', 'Mfa', $this->container);
+		$record = $this->getContainer()->mvcFactory->makeTempModel('Mfa');
 
 		try
 		{
@@ -91,7 +91,7 @@ class Backupcodes extends Model
 		$now           = new Date();
 
 		/** @var Mfa $record */
-		$record = Model::getTmpInstance('', 'Mfa', $this->container);
+		$record = $this->getContainer()->mvcFactory->makeTempModel('Mfa');
 
 		if (is_null($existingCodes))
 		{
@@ -155,7 +155,7 @@ class Backupcodes extends Model
 
 		// Try to load the record
 		/** @var Mfa $record */
-		$record = Model::getTmpInstance('', 'Mfa', $this->container);
+		$record = $this->getContainer()->mvcFactory->makeTempModel('Mfa');
 
 		try
 		{

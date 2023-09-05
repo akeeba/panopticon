@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\MultiFactorAuth\DataShape\MethodDescriptor;
 use Akeeba\Panopticon\Model\Mfa;
+use Awf\Container\Container;
 use Awf\Mvc\Model;
 use Awf\User\User;
 use Exception;
@@ -62,7 +63,7 @@ abstract class Helper
 	 *
 	 * @since   1.0.0
 	 */
-	public static function getUserMfaRecords(?int $user_id): array
+	public static function getUserMfaRecords(Container $container = null, ?int $user_id): array
 	{
 		if (empty($user_id))
 		{
@@ -91,9 +92,9 @@ abstract class Helper
 		}
 
 		// Map all results to MFA table objects
-		$records = array_map(function ($id) {
+		$records = array_map(function ($id) use ($container) {
 			/** @var Mfa $record */
-			$record = Model::getTmpInstance('', 'Mfa', Factory::getContainer());
+			$record = $container->mvcFactory->makeTempModel('Mfa');
 			try
 			{
 				return $record->findOrFail($id);

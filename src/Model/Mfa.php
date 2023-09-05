@@ -56,7 +56,7 @@ class Mfa extends DataModel
 			$this->last_used = null;
 		}
 
-		$records = MfaHelper::getUserMfaRecords($this->user_id);
+		$records = MfaHelper::getUserMfaRecords($this->getContainer(), $this->user_id);
 
 		// Existing record: remove it from the list of records.
 		if ($this->getId() > 0)

@@ -33,7 +33,7 @@ class ExtensionsUpdate extends AbstractCallback
 	{
 		// Get the site object
 		/** @var Site $site */
-		$site = Model::getTmpInstance(null, 'Site', $this->container);
+		$site = $this->container->mvcFactory->makeTempModel('Site');
 		$site->findOrFail($task->site_id);
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));

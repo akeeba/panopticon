@@ -695,7 +695,7 @@ class Site extends DataModel
 		{
 			$tasks[$type] = null;
 
-			$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
+			$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Task');
 			/** @var DataModel\Collection $taskCollection */
 			$taskCollection = $taskModel
 				->where('site_id', '=', $this->id)
@@ -725,7 +725,7 @@ class Site extends DataModel
 		{
 			$tasks[$type] = null;
 
-			$taskModel = DataModel::getTmpInstance(modelName: 'Task', container: $this->container);
+			$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Task');
 			/** @var DataModel\Collection $taskCollection */
 			$taskCollection = $taskModel
 				->where('site_id', '=', $this->id)

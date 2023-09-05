@@ -23,7 +23,7 @@ trait EnqueueExtensionUpdateTrait
 	private function scheduleExtensionsUpdateForSite(Site $site, Container $container, bool $force = false): void
 	{
 		/** @var Task $task */
-		$task = Model::getTmpInstance('', 'Task', $container);
+		$task = $container->mvcFactory->makeTempModel('Task');
 
 		// Try to load an existing task
 		try

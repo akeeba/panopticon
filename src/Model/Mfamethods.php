@@ -58,7 +58,7 @@ class Mfamethods extends Model
 		}
 
 		// Put the user MFA records into the methods array
-		$userMfaRecords = Helper::getUserMfaRecords($user->getId());
+		$userMfaRecords = Helper::getUserMfaRecords($this->getContainer(), $user->getId());
 
 		if (!empty($userMfaRecords))
 		{
@@ -190,7 +190,7 @@ class Mfamethods extends Model
 		}
 
 		/** @var Mfa $record */
-		$record = DataModel::getTmpInstance('', 'Mfa');
+		$record = $this->getContainer()->mvcFactory->makeTempModel('Mfa');
 
 		try
 		{
@@ -304,7 +304,7 @@ class Mfamethods extends Model
 			$title = $this->mfaMethods[$method]->display;
 		}
 
-		$record = DataModel::getTmpInstance('', 'Mfa');
+		$record = $this->getContainer()->mvcFactory->makeTempModel('Mfa');
 
 		$record->bind(
 			[

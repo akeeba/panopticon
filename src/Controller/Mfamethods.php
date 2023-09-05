@@ -475,7 +475,7 @@ class Mfamethods extends Controller
 		}
 
 		$existingRecords = array_filter(
-			MfaHelper::getUserMfaRecords($user_id),
+			MfaHelper::getUserMfaRecords($this->container, $user_id),
 			fn(Mfa $x) => $x->method === $method
 		);
 
