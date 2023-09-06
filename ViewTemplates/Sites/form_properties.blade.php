@@ -5,9 +5,6 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-use Akeeba\Panopticon\Helper\Setup;
-use Awf\Html\Html as HtmlHelper;
-
 defined('AKEEBA') || die;
 
 /**
@@ -96,8 +93,10 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
         @lang('PANOPTICON_LBL_FIELD_CREATED_BY')
     </label>
     <div class="col-sm-9">
-        {{ Setup::userSelect($this->item->created_by, 'created_by',
-                attribs: array_merge($attribs, ['class' => 'form-select js-choice'])) }}
+        {{ $this->getContainer()->helper->setup->userSelect(
+	            $this->item->created_by, 'created_by',
+                attribs: array_merge($attribs, ['class' => 'form-select js-choice'])
+        ) }}
     </div>
 </div>
 
@@ -125,7 +124,10 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
         @lang('PANOPTICON_LBL_FIELD_MODIFIED_BY')
     </label>
     <div class="col-sm-9">
-        {{ Setup::userSelect($this->item->modified_by, 'modified_by', attribs: array_merge($attribs, ['class' => 'form-select js-choice'])) }}
+        {{ $this->getContainer()->helper->setup->userSelect(
+	        $this->item->modified_by, 'modified_by',
+	        attribs: array_merge($attribs, ['class' => 'form-select js-choice'])
+	    ) }}
     </div>
 </div>
 

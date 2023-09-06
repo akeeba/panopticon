@@ -93,7 +93,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_LANGUAGE')
             </label>
             <div class="col-sm-9">
-                {{ \Akeeba\Panopticon\Helper\Setup::languageOptions(
+                {{ $this->getContainer()->helper->setup->languageOptions(
                     $config->get('language', 'en-GB'),
                     name: 'options[language]',
                     id: 'language',
@@ -108,7 +108,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE')
             </label>
             <div class="col-sm-9">
-                {{ \Akeeba\Panopticon\Helper\Setup::timezoneSelect(
+                {{ $this->getContainer()->helper->setup->timezoneSelect(
                     $config->get('timezone', 'UTC'),
                     name: 'options[timezone]',
                     id: 'timezone'

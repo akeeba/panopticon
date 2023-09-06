@@ -7,7 +7,6 @@
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Helper\Setup as SetupHelper;
 use Awf\Text\Text;
 
 /** @var \Akeeba\Panopticon\View\Setup\Html $this */
@@ -95,7 +94,7 @@ use Awf\Text\Text;
 			<?= Text::_('PANOPTICON_SETUP_LBL_TIMEZONE') ?>
 		</label>
 		<div class="col-sm-9">
-			<?= SetupHelper::timezoneSelect($this->params['timezone']) ?>
+			<?= $this->getContainer()->helper->setup->timezoneSelect($this->params['timezone']) ?>
 		</div>
 		<div class="form-text collapse">
 			<?= Text::_('PANOPTICON_SETUP_LBL_TIMEZONE_HELP') ?>

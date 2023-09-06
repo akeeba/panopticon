@@ -29,7 +29,7 @@ use Awf\Text\Text;
 			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DRIVER') ?>
 		</label>
 		<div class="col-sm-9">
-			<?= Akeeba\Panopticon\Helper\Setup::databaseTypesSelect($this->connectionParameters['driver']) ?>
+			<?= $this->getContainer()->helper->setup->databaseTypesSelect($this->connectionParameters['driver']) ?>
 		</div>
 		<div class="form-text collapse">
 			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DRIVER_HELP') ?>

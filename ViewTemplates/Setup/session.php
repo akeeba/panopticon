@@ -7,7 +7,6 @@
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Helper\Setup as SetupHelper;
 use Awf\Text\Text;
 
 /** @var \Akeeba\Panopticon\View\Setup\Html $this */
@@ -28,7 +27,7 @@ $sessionPath = $this->getContainer()->session->getSavePath();
 			<?= Text::_('PANOPTICON_SETUP_LBL_FS_DRIVER_SESSION') ?>
 		</label>
 		<div class="col-sm-9">
-			<?= SetupHelper::fsDriverSelect($this->params['fs.driver'], false) ?>
+			<?= $this->getContainer()->helper->setup->fsDriverSelect($this->params['fs.driver'], false) ?>
 		</div>
 	</div>
 
