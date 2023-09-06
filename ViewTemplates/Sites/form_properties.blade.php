@@ -72,7 +72,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
         @lang('PANOPTICON_SITES_LBL_GROUPS')
     </label>
     <div class="col-sm-9">
-        {{ $this->container->html->get('select.genericList',
+        {{ $this->container->html->select->genericList(
             data: array_merge([(object) [
 				'value' => '',
 				'text' => \Awf\Text\Text::_('PANOPTICON_SITES_LBL_GROUPS_PLACEHOLDER')

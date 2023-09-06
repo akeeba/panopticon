@@ -60,7 +60,7 @@ $isFiltered = array_reduce(
             {{-- coreUpdates Has Core Updates --}}
             <div>
                 <label for="coreUpdates" class="form-label">@lang('PANOPTICON_MAIN_LBL_FILTER_COREUPDATES')</label>
-                {{ $this->container->html->get('select.genericList', [
+                {{ $this->container->html->select->genericList( [
                     '' => 'PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT',
                     '0' => 'AWF_NO',
                     '1' => 'AWF_YES',
@@ -73,7 +73,7 @@ $isFiltered = array_reduce(
             {{-- extUpdates Has extension updates --}}
             <div>
                 <label for="extUpdates" class="form-label">@lang('PANOPTICON_MAIN_LBL_FILTER_EXTUPDATES')</label>
-                {{ $this->container->html->get('select.genericList', [
+                {{ $this->container->html->select->genericList( [
                     '' => 'PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT',
                     '0' => 'AWF_NO',
                     '1' => 'AWF_YES',
@@ -86,7 +86,7 @@ $isFiltered = array_reduce(
             {{-- cmsFamily CMS Version --}}
             <div>
                 <label class="form-label" for="cmsFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY')</label>
-                {{ $this->container->html->get('select.genericList',
+                {{ $this->container->html->select->genericList(
                     array_merge([
                         '' => \Awf\Text\Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
                     ], $mainModel->getKnownJoomlaVersions()),
@@ -101,7 +101,7 @@ $isFiltered = array_reduce(
             {{-- phpFamily PHP Version --}}
             <div>
                 <label class="form-label" for="phpFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY')</label>
-                {{ $this->container->html->get('select.genericList',
+                {{ $this->container->html->select->genericList(
                     array_merge([
                         '' => \Awf\Text\Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
                     ], $mainModel->getKnownPHPVersions()),

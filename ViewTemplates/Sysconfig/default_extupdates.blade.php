@@ -24,7 +24,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL')
             </label>
             <div class="col-sm-9">
-                {{ $this->container->html->get('select.genericList',
+                {{ $this->container->html->select->genericList(
                     data: [
                         'none' => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_NONE',
                         'email' => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_EMAIL',
@@ -137,7 +137,7 @@ $config = $this->container->appConfig;
                         }
                     ?>
 
-                    {{ $this->container->html->get('select.genericList',
+                    {{ $this->container->html->select->genericList(
                         data: [
                             ''      => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_GLOBAL',
                             'none'  => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_NONE',

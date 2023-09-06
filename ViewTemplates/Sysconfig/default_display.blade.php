@@ -44,7 +44,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DARKMODE')
             </label>
             <div class="col-sm-9">
-                {{ $this->container->html->get('select.genericList',
+                {{ $this->container->html->select->genericList(
                     data: [
                         1 => 'PANOPTICON_SYSCONFIG_OPT_DARKMODE_BROWSER',
                         2 => 'PANOPTICON_SYSCONFIG_OPT_DARKMODE_LIGHT',

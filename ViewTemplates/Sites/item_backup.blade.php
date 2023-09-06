@@ -252,7 +252,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                         @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_PROFILE')
                     </label>
                     <div class="input-group">
-                        {{ $this->container->html->get('select.genericList',
+                        {{ $this->container->html->select->genericList(
                             $this->getProfileOptions(),
                             'akeebaBackupTakeProfile',
                             [

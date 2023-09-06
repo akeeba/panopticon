@@ -22,7 +22,7 @@ $item = $this->getModel();
             @lang('PANOPTICON_MAILTEMPLATE_FIELD_TYPE')
         </label>
         <div class="col-sm-9">
-            {{ $this->container->html->get('select.genericList',
+            {{ $this->container->html->select->genericList(
             	\Akeeba\Panopticon\Model\Mailtemplates::getMailTypeOptions(),
             	'type',
             	[

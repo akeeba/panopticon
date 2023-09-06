@@ -51,7 +51,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_mailer')
             </label>
             <div class="col-sm-9">
-                {{ $this->container->html->get('select.genericList',
+                {{ $this->container->html->select->genericList(
                     data: [
                         'mail' => 'PANOPTICON_SYSCONFIG_OPT_MAILER_MAIL',
                         'sendmail' => 'PANOPTICON_SYSCONFIG_OPT_MAILER_SENDMAIL',
@@ -125,7 +125,7 @@ $config = $this->container->appConfig;
                     @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPSECURE')
                 </label>
                 <div class="col-sm-9">
-                    {{ $this->container->html->get('select.genericList',
+                    {{ $this->container->html->select->genericList(
                         data: [
                             'none' => 'PANOPTICON_SYSCONFIG_OPT_SMTPSECURE_NONE',
                             'ssl' => 'PANOPTICON_SYSCONFIG_OPT_SMTPSECURE_SSL',

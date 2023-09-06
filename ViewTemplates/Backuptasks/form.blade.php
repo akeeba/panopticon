@@ -49,7 +49,7 @@ catch (InvalidArgumentException $e)
             @lang('PANOPTICON_BACKUPTASKS_LBL_BACKUP_PROFILE')
         </label>
         <div class="col-sm-9">
-            {{ $this->container->html->get('select.genericList',
+            {{ $this->container->html->select->genericList(
                 $profileOptions,
                 'params[profile_id]',
                 [
@@ -183,7 +183,7 @@ catch (InvalidArgumentException $e)
                 @lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE')
             </label>
             <div class="col-sm-9">
-                {{ $this->container->html->get('select.genericList',
+                {{ $this->container->html->select->genericList(
                     [
 						'' => 'PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_NONE',
 						'disable' => 'PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE',

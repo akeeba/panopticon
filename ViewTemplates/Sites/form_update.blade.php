@@ -18,7 +18,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
         @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_INSTALL')
     </label>
     <div class="col-sm-9">
-        {{ $this->container->html->get('select.genericList',
+        {{ $this->container->html->select->genericList(
                     data: [
                         '' => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_GLOBAL',
                         'none' => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_NONE',
@@ -47,7 +47,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
         @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_WHEN')
     </label>
     <div class="col-sm-9">
-        {{ $this->container->html->get('select.genericList',
+        {{ $this->container->html->select->genericList(
                     data: [
                         'immediately' => 'PANOPTICON_SITES_OPT_CONFIG_CORE_UPDATE_WHEN_IMMEDIATELY',
                         'time' => 'PANOPTICON_SITES_OPT_CONFIG_CORE_UPDATE_WHEN_TIME',
