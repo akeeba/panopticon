@@ -45,7 +45,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CACHE_ADAPTER')
             </label>
             <div class="col-sm-9">
-                {{ \Awf\Html\Select::genericList(
+                {{ $this->container->html->get('select.genericList',
                     data: [
                         'filesystem' => 'PANOPTICON_SYSCONFIG_OPT_CACHE_ADAPTER_FILESYSTEM',
                         'linuxfs' => 'PANOPTICON_SYSCONFIG_OPT_CACHE_ADAPTER_LINUXFS',

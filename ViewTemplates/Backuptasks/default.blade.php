@@ -49,7 +49,7 @@ $profileOptions = $this->getProfileOptions();
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
             <div>
                 <label class="visually-hidden" for="profile">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
-                {{ Select::genericList(
+                {{ $this->container->html->get('select.genericList',
 	                array_merge(['' => Text::_('PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE')], $profileOptions),
 	                'profile',
 	                [
@@ -61,7 +61,7 @@ $profileOptions = $this->getProfileOptions();
             </div>
             <div>
                 <label class="visually-hidden" for="enabled">@lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')</label>
-                {{ Select::genericList([
+                {{ $this->container->html->get('select.genericList', [
 	                '' => 'PANOPTICON_TASKS_LBL_SELECT_ENABLED',
 	                '0' => 'PANOPTICON_LBL_UNPUBLISHED',
 	                '1' => 'PANOPTICON_LBL_PUBLISHED',
@@ -73,7 +73,7 @@ $profileOptions = $this->getProfileOptions();
             </div>
             <div>
                 <label class="visually-hidden" for="manual">@lang('')</label>
-                {{ Select::genericList([
+                {{ $this->container->html->get('select.genericList',[
 	                '' => 'PANOPTICON_BACKUPTASKS_LBL_SELECT_MANUAL',
 	                '0' => 'PANOPTICON_BACKUPTASKS_LBL_MANUAL_NO',
 	                '1' => 'PANOPTICON_BACKUPTASKS_LBL_MANUAL_YES',

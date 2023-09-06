@@ -33,7 +33,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DBDRIVER')
             </label>
             <div class="col-sm-9">
-                {{ \Awf\Html\Select::genericList(
+                {{ $this->container->html->get('select.genericList',
                     data: [
                         'mysqli' => 'PANOPTICON_SYSCONFIG_OPT_DBDRIVER_MYSQLI',
                         'pdomysql' => 'PANOPTICON_SYSCONFIG_OPT_DBDRIVER_PDOMYSQL',
@@ -121,7 +121,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DBCHARSET')
             </label>
             <div class="col-sm-9">
-                {{ \Awf\Html\Select::genericList(
+                {{ $this->container->html->get('select.genericList',
                     data: [
                         'utf8mb4' => 'utf8mb4',
                         'utf8' => 'utf8',

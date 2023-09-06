@@ -28,7 +28,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_LEVEL')
             </label>
             <div class="col-sm-9">
-                {{ \Awf\Html\Select::genericList(
+                {{ $this->container->html->get('select.genericList',
                     data: [
                         'error' => 'PANOPTICON_SYSCONFIG_OPT_LOG_LEVEL_ERROR',
                         'warning' => 'PANOPTICON_SYSCONFIG_OPT_LOG_LEVEL_WARNING',

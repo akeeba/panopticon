@@ -107,7 +107,7 @@ use Awf\Text\Text;
 			        $item->preference    = 'major';
 		        }
             ?>
-            {{ \Awf\Html\Select::genericList(
+            {{ $this->container->html->get('select.genericList',
                 data: [
                     ''      => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_GLOBAL_ALT') .
                         ' ' . $globalPreferenceText

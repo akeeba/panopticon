@@ -63,7 +63,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM')
             </label>
             <div class="col-sm-9">
-                {{ \Awf\Html\Select::genericList(
+                {{ $this->container->html->get('select.genericList',
                     data: [
                         'sha512' => 'PANOPTICON_SYSCONFIG_OPT_SHA512',
                         'sha384' => 'PANOPTICON_SYSCONFIG_OPT_SHA384',
@@ -122,7 +122,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_ERROR_REPORTING')
             </label>
             <div class="col-sm-9">
-                {{ \Awf\Html\Select::genericList(
+                {{ $this->container->html->get('select.genericList',
                     data: [
                         'default' => 'PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_DEFAULT',
                         'none' => 'PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_NONE',

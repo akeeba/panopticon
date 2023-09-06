@@ -42,7 +42,7 @@ $i     = 1;
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
             <div>
                 <label class="visually-hidden" for="type">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
-                {{ Select::genericList(
+                {{ $this->container->html->get('select.genericList',
 	                array_merge(['' => Text::_('PANOPTICON_TASKS_LBL_SELECT_TYPE')], $this->getTaskTypeOptions()),
 	                'type',
 	                [
@@ -54,7 +54,7 @@ $i     = 1;
             </div>
             <div>
                 <label class="visually-hidden" for="enabled">@lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')</label>
-                {{ Select::genericList([
+                {{ $this->container->html->get('select.genericList', [
 	                '' => 'PANOPTICON_TASKS_LBL_SELECT_ENABLED',
 	                '0' => 'PANOPTICON_LBL_UNPUBLISHED',
 	                '1' => 'PANOPTICON_LBL_PUBLISHED',

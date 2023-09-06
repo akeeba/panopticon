@@ -71,6 +71,7 @@
       <path value="$PROJECT_DIR$/vendor/jfcherng/php-diff" />
       <path value="$PROJECT_DIR$/vendor/jfcherng/php-sequence-matcher" />
       <path value="$PROJECT_DIR$/vendor/scrivo/highlight.php" />
+      <path value="$PROJECT_DIR$/vendor/akeeba/awf" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

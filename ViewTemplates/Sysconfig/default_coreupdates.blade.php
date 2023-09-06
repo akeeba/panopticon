@@ -23,7 +23,7 @@ $config = $this->container->appConfig;
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_COREUPDATE_INSTALL')
             </label>
             <div class="col-sm-9">
-                {{ \Awf\Html\Select::genericList(
+                {{ $this->container->html->get('select.genericList',
                     data: [
                         'none' => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_NONE',
                         'email' => 'PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_EMAIL',
