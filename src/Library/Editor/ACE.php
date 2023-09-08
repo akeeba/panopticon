@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Library\Editor;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
+use Awf\Container\Container;
 use Awf\Utils\Template;
 use Delight\Random\Random;
 
@@ -19,6 +20,13 @@ use Delight\Random\Random;
 abstract class ACE
 {
 	private static bool $hasInitialised = false;
+
+	private static Container $container;
+
+	public static function setContainer(Container $container): void
+	{
+		self::$container = $container;
+	}
 
 	/**
 	 * Displays an ACE source code editor.
@@ -134,8 +142,9 @@ HTML;
 		self::$hasInitialised = true;
 
 		// Include the JavaScript
-		Template::addJs('media://ace/ace.js');
-		Template::addJs('media://ace/ext-language_tools.js');
-		Template::addCss('media://ace/css/ace.css');
+		$app = self::$container->application;
+		Template::addJs('media://ace/ace.js', $app);
+		Template::addJs('media://ace/ext-language_tools.js', $app);
+		Template::addCss('media://ace/css/ace.css', $app);
 	}
 }

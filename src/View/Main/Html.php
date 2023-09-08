@@ -76,7 +76,7 @@ class Html extends \Awf\Mvc\DataView\Html
 			'warningId' => 'heartbeatWarning',
 		]);
 
-		Template::addJs('media://js/main.js', defer: true);
+		Template::addJs('media://js/main.js', $this->getContainer()->application, defer: true);
 
 		// Toolbar
 		$toolbar = $doc->getToolbar();

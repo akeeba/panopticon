@@ -25,7 +25,7 @@ class Html extends \Awf\Mvc\DataView\Html
 		$this->extUpdatePreferences = $this->getModel()->getExtensionPreferencesAndMeta();
 
 		// Load JavaScript
-		Template::addJs('media://js/showon.js');
+		Template::addJs('media://js/showon.js', $this->getContainer()->application);
 
 		// Create a save and apply button in the toolbar
 		$this->addButton('save');
@@ -45,7 +45,7 @@ class Html extends \Awf\Mvc\DataView\Html
 		$document->addScriptOptions('panopticon.rememberTab', [
 			'key' => 'panopticon.sysconfig.rememberTab'
 		]);
-		Template::addJs('media://js/remember-tab.js');
+		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 
 		return true;
 	}

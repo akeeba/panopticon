@@ -7,6 +7,8 @@
 
 namespace Akeeba\Panopticon;
 
+use Akeeba\Panopticon\Library\Editor\ACE;
+use Akeeba\Panopticon\Library\Editor\TinyMCE;
 use Awf\Dispatcher\Dispatcher as AWFDispatcher;
 use Awf\Input\Filter;
 use Awf\Uri\Uri;
@@ -64,9 +66,11 @@ class Dispatcher extends AWFDispatcher
 
 	private function loadCommonJavaScript(): void
 	{
-		Template::addJs('media://js/bootstrap.bundle.min.js', defer: true);
-		Template::addJs('media://js/system.min.js', defer: false);
-		Template::addJs('media://js/ajax.min.js', defer: true);
+		$app = $this->getContainer()->application;
+
+		Template::addJs('media://js/bootstrap.bundle.min.js', $app, defer: true);
+		Template::addJs('media://js/system.min.js', $app, defer: false);
+		Template::addJs('media://js/ajax.min.js', $app, defer: true);
 	}
 
 	private function loadCommonCSS(): void
@@ -80,7 +84,13 @@ class Dispatcher extends AWFDispatcher
 			$themeFile = 'theme.min.css';
 		}
 
-		Template::addCss('media://css/' . $themeFile);
-		Template::addCss('media://css/fontawesome.min.css');
+		$app = $this->getContainer()->application;
+
+		Template::addCss('media://css/' . $themeFile, $app);
+		Template::addCss('media://css/fontawesome.min.css', $app);
+
+		// Prepare the editors
+		ACE::setContainer($this->getContainer());
+		TinyMCE::setContainer($this->getContainer());
 	}
 }

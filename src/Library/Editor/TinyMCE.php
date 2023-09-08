@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Library\Editor;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
+use Awf\Container\Container;
 use Awf\Uri\Uri;
 use Awf\Utils\Template;
 use Delight\Random\Random;
@@ -20,6 +21,13 @@ use Delight\Random\Random;
 abstract class TinyMCE
 {
 	private static bool $hasInitialised = false;
+
+	private static Container $container;
+
+	public static function setContainer(Container $container): void
+	{
+		self::$container = $container;
+	}
 
 	public static function editor(string $name, ?string $content, array $options = []): string
 	{
@@ -107,6 +115,6 @@ HTML;
 		self::$hasInitialised = true;
 
 		// Include the JavaScript
-		Template::addJs('media://tinymce/tinymce.js', defer: true);
+		Template::addJs('media://tinymce/tinymce.js', self::$container->application, defer: true);
 	}
 }

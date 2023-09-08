@@ -103,7 +103,7 @@ class Html extends DataViewHtml
 		$this->container->application->getDocument()->getToolbar()->clearButtons();
 		$this->addButtons($buttons);
 
-		Template::addJs('media://js/remember-tab.js');
+		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 
 		$this->addTooltipJavaScript();
 
@@ -178,7 +178,7 @@ class Html extends DataViewHtml
 				'key' => 'panopticon.siteAdd.rememberTab',
 			]
 		);
-		Template::addJs('media://js/remember-tab.js');
+		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 
 		return $this->onBeforeAddCrud();
 	}
@@ -206,7 +206,7 @@ class Html extends DataViewHtml
 					'key' => 'panopticon.siteEdit.' . $this->getModel()->id . '.rememberTab',
 				]
 			);
-		Template::addJs('media://js/remember-tab.js');
+		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 
 		return $this->onBeforeEditCrud();
 	}
@@ -262,7 +262,7 @@ class Html extends DataViewHtml
 				'key' => 'panopticon.siteRead.' . $this->getModel()->id . '.rememberTab',
 			]
 		);
-		Template::addJs('media://js/remember-tab.js');
+		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 
 		$document->addScriptOptions('panopticon.siteRemember', [
 			'extensionsFilters' => sprintf('panopticon.site%d.extensionFilters', $this->item->getId()),

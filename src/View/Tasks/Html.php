@@ -41,7 +41,7 @@ class Html extends BaseHtmlView
 
 		$this->populateSiteNames();
 
-		Template::addJs('media://js/remember-tab.js');
+		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 
 		$js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {

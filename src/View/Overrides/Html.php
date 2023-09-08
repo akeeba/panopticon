@@ -87,7 +87,7 @@ class Html extends BaseHtmlView
 				'key' => 'panopticon.overrideRead.rememberTab',
 			]
 		);
-		Template::addJs('media://js/remember-tab.js');
+		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 
 		return true;
 	}

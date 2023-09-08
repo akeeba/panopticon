@@ -29,7 +29,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
 }
 
 ?>
-@js('choices/choices.min.js')
+@js('choices/choices.min.js', $this->getContainer()->application)
 @inlinejs($js)
 
 {{-- enabled --}}

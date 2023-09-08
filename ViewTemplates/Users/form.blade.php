@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
 JS;
 
 ?>
-@js('choices/choices.min.js')
+@js('choices/choices.min.js', $this->getContainer()->application)
 @inlinejs($js)
 
 <form action="@route('index.php?view=users')" method="post"
