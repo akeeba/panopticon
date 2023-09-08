@@ -56,7 +56,6 @@ class Backuptasks extends DataController
 
 		// In all cases we need a site_id in the request and ensure the current user has admin privileges on the site
 		$siteId = $this->input->getInt('site_id', null);
-		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->site = $this->getModel('Site');
 
 		try
