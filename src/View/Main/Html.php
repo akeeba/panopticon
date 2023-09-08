@@ -53,7 +53,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		// Pagination
 		$displayedLinks   = 10;
-		$this->pagination = new Pagination($this->itemsCount, $this->lists->limitStart, $this->lists->limit, $displayedLinks, $this->container->application);
+		$this->pagination = new Pagination($this->itemsCount, $this->lists->limitStart, $this->lists->limit, $displayedLinks, $this->container);
 
 		// Back button in the CRON instructions page
 		if ($this->layout === 'cron')

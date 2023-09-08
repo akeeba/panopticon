@@ -44,7 +44,7 @@ class Overrides extends Model
 		$limitStart = $this->getUserStateFromRequest('limitstart', 'limitstart', 0, 'int') ?: 0;
 		$limit      = $this->getUserStateFromRequest('limit', 'limit', 20, 'int') ?: 20;
 
-		return new Pagination($this->count(), $limitStart, $limit);
+		return new Pagination($this->count(), $limitStart, $limit, app: $this->getContainer());
 	}
 
 	public function get(): Collection
