@@ -46,13 +46,13 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 </span>
             </th>
             <th>
-                @html('grid.sort', 'PANOPTICON_SITES_TABLE_HEAD_NAME', 'name', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_SITES_TABLE_HEAD_NAME', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th width="10%">
                 @lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')
             </th>
             <th width="5%">
-                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
         </thead>
@@ -61,7 +61,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         @foreach($this->items as $site)
             <tr>
                 <td>
-                    @html('grid.id', ++$i, $site->id)
+                    {{ $this->getContainer()->html->grid->id(++$i, $site->id) }}
                 </td>
                 <td>
                     <div class="fw-medium">

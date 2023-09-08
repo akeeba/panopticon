@@ -58,7 +58,7 @@ $i     = 1;
             <tr>
                 {{-- Checkbox --}}
                 <td>
-                    @html('grid.id', ++$i, $item->id)
+                    {{ $this->getContainer()->html->grid->id(++$i, $item->id) }}
                 </td>
                 {{-- Template --}}
                 <td>
@@ -91,11 +91,11 @@ $i     = 1;
                 </td>
                 {{-- Created --}}
                 <td>
-                    {{{ \Awf\Html\Html::date($item->created_date, Text::_('DATE_FORMAT_LC5')) }}}
+                    {{{ $this->getContainer()->html->basic->date($item->created_date, Text::_('DATE_FORMAT_LC5')) }}}
                 </td>
                 {{-- Modified --}}
                 <td>
-                    {{{ \Awf\Html\Html::date($item->modified_date, Text::_('DATE_FORMAT_LC5')) }}}
+                    {{{ $this->getContainer()->html->basic->date($item->modified_date, Text::_('DATE_FORMAT_LC5')) }}}
                 </td>
                 {{-- Action --}}
                 <td>

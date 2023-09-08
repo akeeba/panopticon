@@ -46,16 +46,16 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 </span>
             </th>
             <th width="20%">
-                @html('grid.sort', 'PANOPTICON_MAILTEMPLATES_TABLE_HEAD_TYPE', 'type', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_TYPE', 'type', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th>
-                @html('grid.sort', 'PANOPTICON_MAILTEMPLATES_TABLE_HEAD_SUBJECT', 'subject', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_SUBJECT', 'subject', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th>
-                @html('grid.sort', 'PANOPTICON_MAILTEMPLATES_TABLE_HEAD_LANGUAGE', 'language', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_LANGUAGE', 'language', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th width="5%">
-                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
         </thead>
@@ -64,7 +64,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         @foreach($this->items as $mailtemplate)
             <tr>
                 <td>
-                    @html('grid.id', ++$i, $mailtemplate->id)
+                    {{ $this->getContainer()->html->grid->id(++$i, $mailtemplate->id) }}
                 </td>
                 <td class="small text-muted">
                     @lang('PANOPTICON_MAILTEMPLATES_OPT_TYPE_' . $mailtemplate->type)

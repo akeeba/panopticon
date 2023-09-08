@@ -52,7 +52,7 @@ defined('AKEEBA') || die;
         @lang('PANOPTICON_APP_TITLE_SHORT') {{{ $this->latestversion->version }}}
     </h4>
     <p>
-        @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', Html::date($this->latestversion->releaseDate, \Awf\Text\Text::_('DATE_FORMAT_LC1')))
+        @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', $this->getContainer()->html->basic->date($this->latestversion->releaseDate, \Awf\Text\Text::_('DATE_FORMAT_LC1')))
         <br />
         @lang('PANOPTICON_SELFUPDATE_LBL_WILL_BE_DOWNLOADED_FROM')
         <a href="{{{ $this->latestversion->downloadUrl }}}" target="_blank" class="font-monospace small text-decoration-none text-secondary">

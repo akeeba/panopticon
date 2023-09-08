@@ -44,10 +44,10 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 </span>
             </th>
             <th>
-                @html('grid.sort', 'PANOPTICON_GROUPS_TABLE_HEAD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_GROUPS_TABLE_HEAD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th width="5%">
-                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
         </thead>
@@ -56,7 +56,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         @foreach($this->items as $group)
         <tr>
             <td>
-                @html('grid.id', ++$i, $group->id)
+                {{ $this->getContainer()->html->grid->id(++$i, $group->id) }}
             </td>
             <td>
                 <a href="@route(sprintf('index.php?view=group&task=edit&id=%d', $group->id))">

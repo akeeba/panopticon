@@ -29,5 +29,5 @@ $version = Version::create(AKEEBA_PANOPTICON_VERSION);
 	<span class="text-body-tertiary">({{ AKEEBA_PANOPTICON_CODENAME }})</span>
 </p>
 <p class="text-center fs-5">
-    @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', \Awf\Html\Html::date(AKEEBA_PANOPTICON_DATE, \Awf\Text\Text::_('DATE_FORMAT_LC1')))
+    @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', $this->getContainer()->html->basic->date(AKEEBA_PANOPTICON_DATE, \Awf\Text\Text::_('DATE_FORMAT_LC1')))
 </p>

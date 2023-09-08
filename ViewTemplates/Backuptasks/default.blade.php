@@ -122,7 +122,7 @@ $profileOptions = $this->getProfileOptions();
                 @lang('PANOPTICON_TASKS_LBL_FIELD_TIMES')
             </th>
             <th width="5%">
-                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
         </thead>
@@ -133,7 +133,7 @@ $profileOptions = $this->getProfileOptions();
             <tr>
                 {{-- Checkbox --}}
                 <td>
-                    @html('grid.id', ++$i, $task->id)
+                    {{ $this->getContainer()->html->grid->id(++$i, $task->id) }}
                 </td>
                 {{-- Profile --}}
                 <td>

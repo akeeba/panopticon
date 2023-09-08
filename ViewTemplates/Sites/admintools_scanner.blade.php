@@ -209,17 +209,17 @@ $config              = $model->getConfig();
             <div class="d-flex flex-column gap-1">
                 <span class="fw-semibold d-md-none" aria-hidden="true">
                     @if (!empty($scan->scanstart) && $scan->scanstart != '0000-00-00 00:00:00')
-                        {{ \Awf\Html\Html::date($scan->scanstart, \Awf\Text\Text::_('DATE_FORMAT_LC6')) }}
+                        {{ $this->getContainer()->html->basic->date($scan->scanstart, \Awf\Text\Text::_('DATE_FORMAT_LC6')) }}
                     @endif
                 </span>
                 <span class="fw-semibold d-none d-md-block">
                     @if (!empty($scan->scanstart) && $scan->scanstart != '0000-00-00 00:00:00')
-                    {{ \Awf\Html\Html::date($scan->scanstart, \Awf\Text\Text::_('DATE_FORMAT_LC7')) }}
+                    {{ $this->getContainer()->html->basic->date($scan->scanstart, \Awf\Text\Text::_('DATE_FORMAT_LC7')) }}
                     @endif
                 </span>
                 <span class="text-muted d-none d-md-block">
                     @if (!empty($scan->scanend) && $scan->scanend != '0000-00-00 00:00:00')
-                    {{ \Awf\Html\Html::date($scan->scanend, \Awf\Text\Text::_('DATE_FORMAT_LC7')) }}
+                    {{ $this->getContainer()->html->basic->date($scan->scanend, \Awf\Text\Text::_('DATE_FORMAT_LC7')) }}
                     @endif
                 </span>
                 <div class="d-md-none">

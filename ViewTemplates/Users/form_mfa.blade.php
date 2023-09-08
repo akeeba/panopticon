@@ -129,7 +129,7 @@ $token = $container->session->getCsrfToken()->getValue();
                                             'PANOPTICON_MFA_LBL_CREATEDON',
                                             empty($record->created_on)
                                                 ? '&mdash;'
-                                                : Html::date($record->created_on, Text::_('DATE_FORMAT_LC2'))
+                                                : $this->getContainer()->html->basic->date($record->created_on, Text::_('DATE_FORMAT_LC2'))
                                             )
                                         </span>
                                         <span class="flex-grow-1">
@@ -137,7 +137,7 @@ $token = $container->session->getCsrfToken()->getValue();
                                                 'PANOPTICON_MFA_LBL_LASTUSED',
                                                 empty($record->last_used)
                                                 ? '&mdash;'
-                                                : Html::date($record->last_used, Text::_('DATE_FORMAT_LC2'))
+                                                : $this->getContainer()->html->basic->date($record->last_used, Text::_('DATE_FORMAT_LC2'))
                                             )
                                         </span>
                                         </div>

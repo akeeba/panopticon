@@ -46,16 +46,16 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 </span>
             </th>
             <th>
-                @html('grid.sort', 'PANOPTICON_USERS_TABLE_HEAD_USERNAME', 'username', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_USERS_TABLE_HEAD_USERNAME', 'username', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th>
-                @html('grid.sort', 'PANOPTICON_SETUP_LBL_USER_NAME', 'name', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_SETUP_LBL_USER_NAME', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th>
                 @lang('PANOPTICON_GROUPS_FIELD_PERMISSIONS_GROUPS')
             </th>
             <th width="5%">
-                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
         </thead>
@@ -85,7 +85,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 				?>
             <tr>
                 <td>
-                    @html('grid.id', ++$i, $user->id)
+                    {{ $this->getContainer()->html->grid->id(++$i, $user->id) }}
                 </td>
                 <td>
                     <div class="d-flex flex-row gap-2">

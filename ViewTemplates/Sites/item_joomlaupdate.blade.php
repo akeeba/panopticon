@@ -159,7 +159,7 @@ $lastUpdateTimestamp = function () use ($config): string
                 {{-- Scheduled, will run --}}
                 <p>
                     @if ($joomlaUpdateTask?->next_execution)
-                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED', Html::date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')))
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED', $this->getContainer()->html->basic->date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')))
                     @else
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP')
                     @endif
@@ -264,7 +264,7 @@ $lastUpdateTimestamp = function () use ($config): string
                 @if ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
                     <div class="alert alert-info mt-2">
                         @if ($joomlaUpdateTask?->next_execution)
-                            @sprintf('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED', Html::date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')))
+                            @sprintf('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED', $this->getContainer()->html->basic->date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')))
                         @else
                             @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED_ASAP')
                         @endif

@@ -110,7 +110,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
             <input type="datetime-local" name="created_on" id="created_on"
                    class="form-control"
                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-                   value="{{ Awf\Html\Html::date($this->item->created_on ?? 'now', 'Y-m-d\TH:i:s', 'UTC', $this->container->application) }}"
+                   value="{{ $this->getContainer()->html->basic->date($this->item->created_on ?? 'now', 'Y-m-d\TH:i:s', 'UTC', $this->container->application) }}"
                    {{ $isSuper ? '' : 'disabled="disabled"' }}
             >
             <span class="input-group-text">GMT</span>
@@ -141,7 +141,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
             <input type="datetime-local" name="modified_on" id="modified_on"
                    class="form-control"
                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-                   value="{{ Awf\Html\Html::date($this->item->modified_on ?? 'now', 'Y-m-d\TH:i:s', 'UTC', $this->container->application) }}"
+                   value="{{ $this->getContainer()->html->basic->date($this->item->modified_on ?? 'now', 'Y-m-d\TH:i:s', 'UTC', $this->container->application) }}"
                     {{ $isSuper ? '' : 'disabled="disabled"' }}
             >
             <span class="input-group-text">GMT</span>

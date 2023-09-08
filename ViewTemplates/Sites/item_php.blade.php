@@ -77,7 +77,7 @@ $isOldestBranch = $phpBranch === $minimumSupportedBranch;
                     @sprintf('PANOPTICON_SITE_LBL_PHP_EOL', $this->escape($php))
                 </h3>
 
-                @sprintf('PANOPTICON_SITE_LBL_PHP_EOL_INFO', $this->escape($php), Html::date($versionInfo?->dates?->eol?->format(DATE_RFC7231)), $this->escape($minimumSupportedBranch))
+                @sprintf('PANOPTICON_SITE_LBL_PHP_EOL_INFO', $this->escape($php), $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RFC7231)), $this->escape($minimumSupportedBranch))
             </div>
             <details class="small">
                 <summary class="fw-bold text-body-secondary">
@@ -113,7 +113,7 @@ $isOldestBranch = $phpBranch === $minimumSupportedBranch;
             </div>
 
             <p class="text-muted">
-                @sprintf('PANOPTICON_SITE_LBL_PHP_SECURITY_ONLY', Html::date($versionInfo?->dates?->eol?->format(DATE_RFC7231)))
+                @sprintf('PANOPTICON_SITE_LBL_PHP_SECURITY_ONLY', $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RFC7231)))
             </p>
 
             <hr/>
@@ -136,13 +136,13 @@ $isOldestBranch = $phpBranch === $minimumSupportedBranch;
             </div>
 
             <p class="text-muted">
-                @sprintf('PANOPTICON_SITE_LBL_PHP_VERSION_INFO', Html::date($versionInfo?->dates?->activeSupport?->format(DATE_RFC7231)), Html::date($versionInfo?->dates?->eol?->format(DATE_RFC7231)))
+                @sprintf('PANOPTICON_SITE_LBL_PHP_VERSION_INFO', $this->getContainer()->html->basic->date($versionInfo?->dates?->activeSupport?->format(DATE_RFC7231)), $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RFC7231)))
             </p>
 
             @if (!$isLatestBranch)
                 <hr/>
                 <p class="text-warning-emphasis">
-                    @sprintf('PANOPTICON_SITE_LBL_PHP_NEWER_BRANCH_AVAILABLE', $this->escape($phpVersion->getLatestBranch()), Html::date($versionInfo?->dates?->activeSupport?->format(DATE_RFC7231)))
+                    @sprintf('PANOPTICON_SITE_LBL_PHP_NEWER_BRANCH_AVAILABLE', $this->escape($phpVersion->getLatestBranch()), $this->getContainer()->html->basic->date($versionInfo?->dates?->activeSupport?->format(DATE_RFC7231)))
                 </p>
             @endif
         @endif

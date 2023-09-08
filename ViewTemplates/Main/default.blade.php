@@ -125,7 +125,7 @@ $isFiltered = array_reduce(
         <thead class="table-secondary">
         <tr>
             <th>
-                @html('grid.sort', 'PANOPTICON_MAIN_SITES_THEAD_SITE', 'name', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAIN_SITES_THEAD_SITE', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th>
                 <span class="fab fa-joomla fs-3" aria-hidden="true"
@@ -155,7 +155,7 @@ $isFiltered = array_reduce(
                 </span>
             </th>
             <th style="min-width: 2em">
-                @html('grid.sort', 'PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
         </thead>
