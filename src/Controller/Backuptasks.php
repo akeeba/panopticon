@@ -31,7 +31,7 @@ class Backuptasks extends DataController
 		parent::__construct($container);
 	}
 
-	public function redirect()
+	public function redirect(): bool
 	{
 		// Magically add the site_id to the redirection URLs as needed.
 		if (!empty($this->redirect))

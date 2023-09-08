@@ -22,7 +22,7 @@ class Overrides extends DataController
 
 	private Site $site;
 
-	public function redirect()
+	public function redirect(): bool
 	{
 		// Magically add the site_id to the redirection URLs as needed.
 		if (!empty($this->redirect))
