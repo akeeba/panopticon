@@ -4,24 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2997cb5aadf7b5551339425520e6b45d",
+    "content-hash": "e1b68ef7a770fc0a7d3c2b5ce2cd2f5e",
     "packages": [
         {
             "name": "akeeba/awf",
-            "version": "1.0.3",
+            "version": "dev-development",
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "4f5b00e7cf5de7a157db881169329e3c3cef2192"
+                "reference": "9f08cf1799fe52820a5d77029e9e8e45f39d0097"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/4f5b00e7cf5de7a157db881169329e3c3cef2192",
-                "reference": "4f5b00e7cf5de7a157db881169329e3c3cef2192",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/9f08cf1799fe52820a5d77029e9e8e45f39d0097",
+                "reference": "9f08cf1799fe52820a5d77029e9e8e45f39d0097",
                 "shasum": ""
             },
             "require": {
                 "composer/ca-bundle": "^1.2",
+                "ext-json": "*",
                 "php": "^7.2.0|^8.0.0",
                 "phpmailer/phpmailer": "^6.8.0"
             },
@@ -34,6 +35,7 @@
                 "ext-simplexml": "*",
                 "ext-sqlsrv": "*"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -64,9 +66,9 @@
             ],
             "support": {
                 "issues": "https://github.com/akeeba/awf/issues",
-                "source": "https://github.com/akeeba/awf/tree/1.0.3"
+                "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2023-08-14T08:05:46+00:00"
+            "time": "2023-09-07T12:29:08+00:00"
         },
         {
             "name": "akeeba/json-backup-api",
@@ -4220,7 +4222,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "akeeba/awf": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

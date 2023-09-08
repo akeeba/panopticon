@@ -35,7 +35,7 @@
 		"ext-mbstring": "*",
 		"ext-json": "*",
 		"ext-zip": "*",
-		"akeeba/awf": "^1.0.0",
+		"akeeba/awf": "dev-development",
 		"akeeba/json-backup-api": "^1.0.0",
 		"cesargb/php-log-rotation": "^2.7.1",
 		"composer/ca-bundle": "^1.3.4",
