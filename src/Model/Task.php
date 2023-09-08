@@ -64,7 +64,40 @@ class Task extends DataModel
 
 	public function buildQuery($overrideLimits = false)
 	{
+		/**
+		 * Workaround for filtering on site_id = 0.
+		 *
+		 * System tasks have a site_id = NULL. However, we cannot pass NULL as a query parameter. The closest thing is
+		 * either an empty string, or the value 0. An empty string in AWF means "no filter", therefor we use the value
+		 * 0. However, in this case, AWF will filter for value 0 which does not actually exist in our table. Therefore,
+		 * we need to do some sleight of hand.
+		 *
+		 * When we detect this condition we set the $filterSystemTask flag. When this flag is set, we do two things.
+		 *
+		 * First, we unset the site_id state variable before constructing the query. This bypasses AWF's filters, i.e.
+		 * AWF will not add a WHERE site_id = 0. This of course means that it does no filtering.
+		 *
+		 * Hence, the second part, after we construct the query. We add WHERE site_id IS NULL manually, and restore the
+		 * state variable back to '0', so that the interface will display the sites dropdown correctly. Ta-da!
+		 */
+		$filterSystemTask = $this->getState('site_id') === '0';
+
+		if ($filterSystemTask)
+		{
+			$this->setState('site_id', '');
+		}
+
 		$query = parent::buildQuery($overrideLimits);
+
+		// Part two of the sleight-of-hand explained above.
+		if ($filterSystemTask)
+		{
+			$query->where(
+				$query->quoteName('site_id') . ' IS NULL'
+			);
+
+			$this->setState('site_id', '0');
+		}
 
 		return $query;
 	}

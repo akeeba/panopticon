@@ -75,6 +75,33 @@ class Site extends DataModel
 		$this->addBehaviour('filters');
 	}
 
+	public function keyedList(bool $onlyEnabled = true): array
+	{
+		$db = $this->getDbo();
+		$query = $db->getQuery(true)
+			->select([
+				$db->quoteName('id'),
+				$db->quoteName('name')
+			])
+			->from($db->quoteName('#__sites'));
+
+		if ($onlyEnabled)
+		{
+			$query->where(
+				$db->quoteName('enabled') . ' = 1'
+			);
+		}
+
+		try
+		{
+			return $db->setQuery($query)->loadAssocList('id', 'name') ?: [];
+		}
+		catch (Exception $e)
+		{
+			return [];
+		}
+	}
+
 	public function buildQuery($overrideLimits = false)
 	{
 		$query = parent::buildQuery($overrideLimits);

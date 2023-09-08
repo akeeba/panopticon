@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Helper;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\Sites;
 use Awf\Database\Driver;
 use Awf\Helper\AbstractHelper;
 use Awf\Text\Text;
@@ -328,6 +329,35 @@ class Setup extends AbstractHelper
 			->genericList(
 				$users, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
 			);
+	}
+
+	public function siteSelect(int|string|null $selected, string $name, ?string $id = null, array $attribs = [], bool $withSystem = true)
+	{
+		$siteList = $this->getContainer()->mvcFactory->makeTempModel('Sites')->keyedList();
+		asort($siteList, SORT_NATURAL);
+
+		if ($withSystem)
+		{
+			$siteList = array_merge(
+				[
+					0 => Text::_('PANOPTICON_APP_LBL_SYSTEM_TASK')
+				],
+				$siteList
+			);
+		}
+
+		$siteList = array_merge(
+			[
+				'' => sprintf('– %s –', Text::_('PANOPTICON_TASKS_LBL_FIELD_SITE_ID'))
+			],
+			$siteList
+		);
+
+
+		return $this->getContainer()->html->select->genericList(
+			$siteList,
+			$name, $attribs, selected: $selected ?? '', idTag: $id ?? $name, translate: false
+		);
 	}
 
 	public function languageOptions(?string $selected, string $name, ?string $id = null, array $attribs = [])

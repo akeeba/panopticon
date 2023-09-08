@@ -41,12 +41,25 @@ $i     = 1;
         </div>
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
             <div>
+                <label class="visually-hidden" for="site_id">@lang('PANOPTICON_TASKS_LBL_FIELD_SITE_ID')</label>
+                {{
+                   $this->container->helper->setup->siteSelect(
+	                   selected: $model->getState('site_id') ?? '',
+	                   name: 'site_id',
+	                   attribs: [
+						   'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+						   'style' => 'width: max(50%, 25em)',
+                       ]
+	               )
+                }}
+            </div>
+            <div>
                 <label class="visually-hidden" for="type">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
                 {{ $this->container->html->select->genericList(
 	                array_merge(['' => Text::_('PANOPTICON_TASKS_LBL_SELECT_TYPE')], $this->getTaskTypeOptions()),
 	                'type',
 	                [
-						'class' => 'form-select',
+						'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
                     ],
                     selected: $model->getState('type'),
                     idTag: 'type'
@@ -59,7 +72,7 @@ $i     = 1;
 	                '0' => 'PANOPTICON_LBL_UNPUBLISHED',
 	                '1' => 'PANOPTICON_LBL_PUBLISHED',
                 ], 'enabled', [
-					'class' => 'form-select',
+					'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
                 ], selected: $model->getState('enabled'),
                 idTag: 'enabled',
                 translate: true) }}
