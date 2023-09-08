@@ -15,7 +15,7 @@ use Awf\Uri\Uri;
 
 /** @var Awf\Document\Document $this */
 
-[$langCode,] = explode('-', Text::detectLanguage() ?: 'en-GB');
+[$langCode,] = explode('-', Text::detectLanguage($this->getContainer()) ?: 'en-GB');
 $user          = $this->container->userManager->getUser();
 $darkMode      = TemplateHelper::getDarkMode();
 $darkModeValue = match ($darkMode)
