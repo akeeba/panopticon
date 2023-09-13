@@ -367,7 +367,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 						? []
 						: array_filter(
 							array_map(
-								fn($updatesite) => $updatesite?->update_site_id ?? null, $item?->updatesites ?: []
+								fn($updatesite) => $updatesite?->update_site_id ?? null, (array)($item?->updatesites ?: [])
 							)
 						),
 				],
