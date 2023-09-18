@@ -3993,16 +3993,16 @@
         },
         {
             "name": "web-auth/metadata-service",
-            "version": "4.7.0",
+            "version": "4.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-auth/webauthn-metadata-service.git",
-                "reference": "d38751afc45b20e880ddb89b4e4c879b56b5a0be"
+                "reference": "33f4481be91c7a9a6809441400a664031e208f5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-auth/webauthn-metadata-service/zipball/d38751afc45b20e880ddb89b4e4c879b56b5a0be",
-                "reference": "d38751afc45b20e880ddb89b4e4c879b56b5a0be",
+                "url": "https://api.github.com/repos/web-auth/webauthn-metadata-service/zipball/33f4481be91c7a9a6809441400a664031e208f5c",
+                "reference": "33f4481be91c7a9a6809441400a664031e208f5c",
                 "shasum": ""
             },
             "require": {
@@ -4058,7 +4058,7 @@
                 "webauthn"
             ],
             "support": {
-                "source": "https://github.com/web-auth/webauthn-metadata-service/tree/4.7.0"
+                "source": "https://github.com/web-auth/webauthn-metadata-service/tree/4.7.1"
             },
             "funding": [
                 {
@@ -4070,20 +4070,20 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-07-30T17:14:57+00:00"
+            "time": "2023-09-08T10:14:34+00:00"
         },
         {
             "name": "web-auth/webauthn-lib",
-            "version": "4.7.0",
+            "version": "4.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-auth/webauthn-lib.git",
-                "reference": "760dda5f64be89bc535120b054b44f349e495a79"
+                "reference": "f4d2f3da7160ac1a634aca38e72b31629efdec87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-auth/webauthn-lib/zipball/760dda5f64be89bc535120b054b44f349e495a79",
-                "reference": "760dda5f64be89bc535120b054b44f349e495a79",
+                "url": "https://api.github.com/repos/web-auth/webauthn-lib/zipball/f4d2f3da7160ac1a634aca38e72b31629efdec87",
+                "reference": "f4d2f3da7160ac1a634aca38e72b31629efdec87",
                 "shasum": ""
             },
             "require": {
@@ -4146,7 +4146,7 @@
                 "webauthn"
             ],
             "support": {
-                "source": "https://github.com/web-auth/webauthn-lib/tree/4.7.0"
+                "source": "https://github.com/web-auth/webauthn-lib/tree/4.7.1"
             },
             "funding": [
                 {
@@ -4158,7 +4158,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-07-30T17:14:57+00:00"
+            "time": "2023-09-08T10:14:34+00:00"
         },
         {
             "name": "webmozart/assert",
