@@ -14,7 +14,7 @@ if (version_compare(
 	'lt'
 ))
 {
-	if (defined('AKEEBA_PANOPTICON_CLI') || @is_file(APATH_THEMES . '/system/incompatible.html'))
+	if (defined('AKEEBA_PANOPTICON_CLI') || !@is_file(APATH_THEMES . '/system/incompatible.html'))
 	{
 		echo sprintf(
 			"Akeeba Panopticon requires PHP %s or later. Your server is using PHP %s." . PHP_EOL,

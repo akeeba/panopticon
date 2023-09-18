@@ -1655,7 +1655,7 @@ akeeba.System.documentReady(function ()
     {
         akeeba.System.addEventListener(el, "click", function ()
         {
-            Joomla.checkAll(this);
+            akeeba.System.checkAll(this);
         })
     });
 
