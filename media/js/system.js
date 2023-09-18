@@ -1651,26 +1651,20 @@ akeeba.System.documentReady(function ()
     akeeba.System.assignDefaultErrorHandler();
 
     // Grid Views: click event handler for the Check All checkbox
-    akeeba.System.iterateNodes(".akeebaGridViewCheckAll", function (el)
-    {
-        akeeba.System.addEventListener(el, "click", function ()
+    [].slice.call(document.querySelectorAll('.akeebaGridViewCheckAll')).forEach((el) => {
+        el.addEventListener("click", function ()
         {
             akeeba.System.checkAll(this);
         })
     });
 
     // Grid Views: change event handler for the ordering field and direction dropdowns
-    akeeba.System.iterateNodes(".akeebaGridViewOrderTable", function (el)
-    {
-        akeeba.System.addEventListener(el, "change", akeeba.System.orderTable)
+    [].slice.call(document.querySelectorAll('.akeebaGridViewOrderTable')).forEach((el) => {
+        el.addEventListener("change", akeeba.System.orderTable);
     });
 
     // Grid Views: change event handler for search fields which autosubmit the form on change
-    akeeba.System.iterateNodes(".akeebaGridViewAutoSubmitOnChange", function (el)
-    {
-        akeeba.System.addEventListener(el, "change", function ()
-        {
-            akeeba.System.submitForm();
-        })
+    [].slice.call(document.querySelectorAll('.akeebaGridViewAutoSubmitOnChange')).forEach((el) => {
+        el.addEventListener("change", akeeba.System.submitForm);
     });
 });
