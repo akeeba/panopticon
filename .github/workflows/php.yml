@@ -39,6 +39,16 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+    - name: Create archive
+      run: composer archive --dir=release --format=zip
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifacts@v3
+      with:
+        name: installable-zip
+        path: release/akeeba-panopticon-*.zip
+        retention-days: 7
+
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 

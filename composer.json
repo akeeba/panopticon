@@ -75,9 +75,12 @@
 	},
 	"archive": {
 		"exclude": [
+			"/.dockerignore",
+			"/.editorconfig",
 			"/.github",
 			"/.idea",
 			"/.htaccess",
+			"/.phpstorm.meta.php",
 			"/1",
 			"/assets",
 			"/build",
@@ -86,6 +89,9 @@
 			"!/cache/web.config",
 			"/config.php",
 			"/documentation",
+			"/docker-compose.yml",
+			"/docker-run.sh",
+			"/Dockerfile",
 			"/log",
 			"!/log/.htaccess",
 			"!/log/web.config",
