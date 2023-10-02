@@ -18,25 +18,28 @@ use Akeeba\Panopticon\View\Main\Html;
 
 $extensions    = get_object_vars($config->get('extensions.list', new stdClass()));
 $numUpdates    = array_reduce(
-	$extensions,
-	function (int $carry, object $item): int {
-		$current = $item?->version?->current;
-		$new     = $item?->version?->new;
+		$extensions,
+		function (int $carry, object $item): int {
+			$current = $item?->version?->current;
+			$new     = $item?->version?->new;
 
-		if (empty($new))
-		{
-			return $carry;
-		}
+			if (empty($new))
+			{
+				return $carry;
+			}
 
-		return $carry + ((empty($current) || version_compare($current, $new, 'ge')) ? 0 : 1);
-	},
-	0
+			return $carry + ((empty($current) || version_compare($current, $new, 'ge')) ? 0 : 1);
+		},
+		0
 );
 $numKeyMissing = array_reduce(
-	$extensions,
-	fn(int $carry, object $item): int => $carry + ((!$item?->downloadkey?->supported || $item?->downloadkey?->valid) ? 0 : 1),
-	0
+		$extensions,
+		fn(int $carry, object $item): int => $carry + ((!$item?->downloadkey?->supported || $item?->downloadkey?->valid)
+						? 0 : 1),
+		0
 );
+
+$lastError = trim($config->get('extensions.lastErrorMessage') ?? '');
 ?>
 
 <div class="d-flex flex-row gap-2">
@@ -51,6 +54,50 @@ $numKeyMissing = array_reduce(
 		</a>
 	</div>
 	<div class="d-flex flex-column flex-md-row gap-2">
+		@if ($lastError)
+			<?php $extensionsLastErrorModalID = 'exlem-' . md5(random_bytes(120)); ?>
+			<div>
+				<div class="btn btn-danger btn-sm" aria-hidden="true"
+					 data-bs-toggle="modal" data-bs-target="#{{ $extensionsLastErrorModalID }}"
+				>
+				<span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
+					  data-bs-toggle="tooltip" data-bs-placement="bottom"
+					  data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')"
+					  data-bs-content="{{{ $lastError }}}"></span>
+				</div>
+
+				<div class="modal fade" id="{{ $extensionsLastErrorModalID }}"
+					 tabindex="-1" aria-labelledby="{{ $extensionsLastErrorModalID }}_label" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5"
+									id="{{ $extensionsLastErrorModalID }}_label">
+									@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')
+								</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="@lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')"></button>
+							</div>
+							<div class="modal-body">
+								<p class="text-break">
+									{{{ $lastError }}}
+								</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+									@lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<span class="visually-hidden">
+				@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS') {{{ $lastError }}}
+			</span>
+			</div>
+		@endif
+
 		@if (empty($extensions))
 			<span class="badge bg-secondary-subtle">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UNKNOWN')</span>
 		@else

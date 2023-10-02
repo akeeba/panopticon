@@ -3,6 +3,7 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/main.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/system.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/webauthn-mfa.min.js" />

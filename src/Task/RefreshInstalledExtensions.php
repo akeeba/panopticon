@@ -269,6 +269,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 							);
 
 							$config->set('extensions.hasUpdates', $hasUpdates);
+							$config->set('extensions.lastErrorMessage', null);
 
 							try
 							{
@@ -298,6 +299,20 @@ class RefreshInstalledExtensions extends AbstractCallback
 								'Could not retrieve extensions information for site #%d (%s). The server replied with the following error: %s',
 								$site->id, $site->name, $e->getMessage()
 							));
+
+							$config = new Registry($site->getFieldValue('config') ?: '{}');
+							$config->set('extensions.lastErrorMessage', $e->getMessage());
+
+							try
+							{
+								$site->save([
+									'config' => $config->toString(),
+								]);
+							}
+							catch (\Exception $e)
+							{
+								// Ah, shucks.
+							}
 						}
 					);
 			},

@@ -21,6 +21,7 @@ $jVersion            = $config->get('core.current.version');
 $stability           = $config->get('core.current.stability');
 $canUpgrade          = $config->get('core.canUpgrade');
 $latestJoomlaVersion = $config->get('core.latest.version');
+$lastError           = trim($config->get('core.lastErrorMessage') ?? '');
 $jUpdateFailure      = !$config->get('core.extensionAvailable') || !$config->get('core.updateSiteAvailable');
 $token               = $this->container->session->getCsrfToken()->getValue();
 $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
@@ -71,6 +72,50 @@ $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
         <span class="fa fa-refresh" aria-hidden="true"></span>
         <span class="visually-hidden">@sprintf('PANOPTICON_SITE_BTN_JUPDATE_RELOAD_SR', $item->name)</span>
     </a>
+    {{-- Did we have an error last time we tried to update the site information? --}}
+    @if ($lastError)
+        <?php $siteInfoLastErrorModalID = 'silem-' . md5(random_bytes(120)); ?>
+        <div>
+            <div class="btn btn-danger btn-sm" aria-hidden="true"
+                 data-bs-toggle="modal" data-bs-target="#{{ $siteInfoLastErrorModalID }}"
+            >
+                <span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO')"
+                      data-bs-content="{{{ $lastError }}}"></span>
+            </div>
+
+            <div class="modal fade" id="{{ $siteInfoLastErrorModalID }}"
+                 tabindex="-1" aria-labelledby="{{ $siteInfoLastErrorModalID }}_label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5"
+                                id="{{ $siteInfoLastErrorModalID }}_label">
+                                @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO')
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="@lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-break">
+                                {{{ $lastError }}}
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                @lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <span class="visually-hidden">
+                @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO') {{{ $lastError }}}
+            </span>
+        </div>
+    @endif
     {{-- Is Joomla Update working at all? --}}
     @if($jUpdateFailure)
         <div>

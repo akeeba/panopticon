@@ -285,6 +285,10 @@ class RefreshSiteInfo extends AbstractCallback
 								}
 							}
 
+							// Clear the last error message
+							$config->set('core.lastErrorMessage', null);
+
+							// Save the configuration
 							try
 							{
 								$site->save([
@@ -304,6 +308,27 @@ class RefreshSiteInfo extends AbstractCallback
 								'Could not retrieve information for site #%d (%s). The server replied with the following error: %s',
 								$site->id, $site->name, $e->getMessage()
 							));
+
+							// Save the last error message
+							$config = new Registry($site->getFieldValue('config') ?: '{}');
+
+							$config->set('core.lastErrorMessage', $e->getMessage());
+
+							try
+							{
+								$site->save(
+									[
+										'config' => $config->toString(),
+									]
+								);
+							}
+							catch (\Exception $e)
+							{
+								$this->logger->error(sprintf(
+									'Error saving the information for site #%d (%s): %s',
+									$site->id, $site->name, $e->getMessage()
+								));
+							}
 						}
 					);
 			},
