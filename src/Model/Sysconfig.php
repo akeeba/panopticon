@@ -17,6 +17,11 @@ use Psr\Cache\InvalidArgumentException;
 use Symfony\Contracts\Cache\CacheInterface;
 use Throwable;
 
+/**
+ * System Configuration Model
+ *
+ * @since  1.0.0
+ */
 class Sysconfig extends Model
 {
 	private const EXCLUDED_EXTENSIONS = [

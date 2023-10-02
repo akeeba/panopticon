@@ -17,6 +17,11 @@ use Awf\Uri\Uri;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 
+/**
+ * Model Trait for the integration with Admin Tools Professional for Joomla!
+ *
+ * @since  1.0.0
+ */
 trait AdminToolsIntegrationTrait
 {
 	private ?CallbackController $callbackControllerForAdminTools;

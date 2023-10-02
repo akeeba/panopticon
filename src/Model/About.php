@@ -11,6 +11,13 @@ defined('AKEEBA') || die;
 
 use Awf\Mvc\Model;
 
+/**
+ * About Page Model
+ *
+ * It's empty, but it has to exist.
+ *
+ * @since  1.0.0
+ */
 class About extends Model
 {
 

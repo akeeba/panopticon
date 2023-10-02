@@ -11,6 +11,11 @@ defined('AKEEBA') || die;
 
 use Awf\Mvc\Model;
 
+/**
+ * PHP Information Model
+ *
+ * @since  1.0.0
+ */
 class Phpinfo extends Model
 {
 	public function getPhpInfo(): ?string

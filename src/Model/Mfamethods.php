@@ -18,6 +18,11 @@ use RuntimeException;
 
 defined('AKEEBA') || die;
 
+/**
+ * MFA Methods Model
+ *
+ * @since  1.0.0
+ */
 class Mfamethods extends Model
 {
 	/**

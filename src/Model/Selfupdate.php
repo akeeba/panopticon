@@ -20,6 +20,11 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use RuntimeException;
 
+/**
+ * Self-update (integrated update) Model
+ *
+ * @since  1.0.0
+ */
 class Selfupdate extends Model
 {
 	/**

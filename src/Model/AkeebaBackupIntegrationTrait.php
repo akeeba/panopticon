@@ -32,6 +32,11 @@ use Psr\Cache\InvalidArgumentException;
 use stdClass;
 use Throwable;
 
+/**
+ * Model Trait for the integration with Akeeba Backup Professional for Joomla!
+ *
+ * @since  1.0.0
+ */
 trait AkeebaBackupIntegrationTrait
 {
 	private ?CallbackController $callbackControllerForAkeebaBackup = null;

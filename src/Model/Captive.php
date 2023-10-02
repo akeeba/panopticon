@@ -17,6 +17,11 @@ use Awf\Mvc\Model;
 use Awf\Text\Text;
 use Exception;
 
+/**
+ * MFA Captive Page Model
+ *
+ * @since  1.0.0
+ */
 class Captive extends Model
 {
 	/**

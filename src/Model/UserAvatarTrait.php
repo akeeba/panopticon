@@ -12,6 +12,11 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Factory;
 use Awf\Registry\Registry;
 
+/**
+ * Model Trait to handle user avatars
+ *
+ * @since  1.0.0
+ */
 trait UserAvatarTrait
 {
 	public function getAvatar(int $size = 32): string

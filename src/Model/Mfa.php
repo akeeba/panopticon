@@ -11,14 +11,13 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Helper as MfaHelper;
-use Awf\Date\Date;
 use Awf\Mvc\DataModel;
 use Awf\Text\Text;
 use Joomla\Database\ParameterType;
 use RuntimeException;
 
 /**
- * Table for the Multi-Factor Authentication records
+ * Model for the Multi-Factor Authentication records
  *
  * @property int    $id          Record ID.
  * @property int    $user_id     User ID

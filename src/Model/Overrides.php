@@ -19,6 +19,11 @@ use Awf\Utils\Collection;
 use Jfcherng\Diff\Differ;
 use Jfcherng\Diff\DiffHelper;
 
+/**
+ * View Template Overrides Model
+ *
+ * @since  1.0.0
+ */
 class Overrides extends Model
 {
 	use ApiRequestTrait;

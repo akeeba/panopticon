@@ -27,6 +27,11 @@ use PDO;
 use RuntimeException;
 use stdClass;
 
+/**
+ * Setup Model
+ *
+ * @since  1.0.0
+ */
 class Setup extends Model
 {
 	private const DEFAULT_TASKS = [

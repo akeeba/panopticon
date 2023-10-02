@@ -9,6 +9,11 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+/**
+ * Tasks Management Model
+ *
+ * @since  1.0.0
+ */
 class Tasks extends Task
 {
 

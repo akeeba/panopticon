@@ -15,12 +15,16 @@ use Awf\Text\Text;
 use RuntimeException;
 
 /**
+ * User Management Model
+ *
  * @property int    $id
  * @property string $username
  * @property string $name
  * @property string $email
  * @property string $password
  * @property string $parameters
+ *
+ * @since  1.0.0
  */
 class Users extends DataModel
 {

@@ -15,6 +15,11 @@ use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
 
+/**
+ * Main Page Model. Used to get the sites overview information.
+ *
+ * @since  1.0.0
+ */
 class Main extends Model
 {
 	public function getHighestJoomlaVersion(): ?string

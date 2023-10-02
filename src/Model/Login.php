@@ -11,6 +11,13 @@ defined('AKEEBA') || die;
 
 use Awf\Mvc\Model;
 
+/**
+ * Login Page Model
+ *
+ * It's empty, but it is necessary for it to exist
+ *
+ * @since  1.0.0
+ */
 class Login extends Model
 {
 
