@@ -20,7 +20,6 @@ use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\EnqueueJoomlaUpdateTrait;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
-use Awf\Date\Date;
 use Awf\Mvc\DataController;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
@@ -57,11 +56,13 @@ class Sites extends DataController
 
 		$id = $this->input->get->getInt('id', 0);
 		/** @var SiteModel $site */
-		$site = $this->getModel('Site', [
-			'modelTemporaryInstance' => true,
-			'modelClearState'        => true,
-			'modelClearInput'        => true,
-		]);
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
 
 		try
 		{
@@ -107,11 +108,13 @@ class Sites extends DataController
 
 		$id = $this->input->get->getInt('id', 0);
 		/** @var Site $site */
-		$site = $this->getModel('Site', [
-			'modelTemporaryInstance' => true,
-			'modelClearState'        => true,
-			'modelClearInput'        => true,
-		]);
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
 
 		try
 		{
@@ -156,11 +159,13 @@ class Sites extends DataController
 
 		$id = $this->input->get->getInt('id', 0);
 		/** @var Site $site */
-		$site = $this->getModel('Site', [
-			'modelTemporaryInstance' => true,
-			'modelClearState'        => true,
-			'modelClearInput'        => true,
-		]);
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
 
 		try
 		{
@@ -207,11 +212,13 @@ class Sites extends DataController
 		$force = $this->input->get->getBool('force', false);
 
 		/** @var SiteModel $site */
-		$site = $this->getModel('Site', [
-			'modelTemporaryInstance' => true,
-			'modelClearState'        => true,
-			'modelClearInput'        => true,
-		]);
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
 
 		$site->findOrFail($id);
 
@@ -279,10 +286,12 @@ class Sites extends DataController
 			/** @var Task $task */
 			$task = $this->getModel('Task', $tempConfig);
 
-			$task->findOrFail([
-				'site_id' => (int) $id,
-				'type'    => 'joomlaupdate',
-			]);
+			$task->findOrFail(
+				[
+					'site_id' => (int) $id,
+					'type'    => 'joomlaupdate',
+				]
+			);
 
 			$task->delete();
 
@@ -338,10 +347,12 @@ class Sites extends DataController
 			/** @var Task $task */
 			$task = $this->getModel('Task', $tempConfig);
 
-			$task->findOrFail([
-				'site_id' => (int) $id,
-				'type'    => 'extensionsupdate',
-			]);
+			$task->findOrFail(
+				[
+					'site_id' => (int) $id,
+					'type'    => 'extensionsupdate',
+				]
+			);
 
 			$task->delete();
 
@@ -351,7 +362,9 @@ class Sites extends DataController
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage());
+			$message = Text::sprintf(
+				'PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage()
+			);
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -384,11 +397,13 @@ class Sites extends DataController
 		$siteId = $this->input->get->getInt('site_id', 0);
 
 		/** @var SiteModel $site */
-		$site = $this->getModel('Site', [
-			'modelTemporaryInstance' => true,
-			'modelClearState'        => true,
-			'modelClearInput'        => true,
-		]);
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
 
 		$site->findOrFail($siteId);
 
@@ -597,6 +612,33 @@ class Sites extends DataController
 		$this->getView()->setModel('Sysconfig', $sysconfigModel);
 
 		return parent::onBeforeEdit();
+	}
+
+	protected function onBeforeApplySave(array &$data)
+	{
+		// The config is provided as a JSON-encoded string
+		$config = new \Awf\Registry\Registry($data['config'] ?? '{}');
+
+		// Handle the single `core_update_time` for both the hour and the minute returned by the `type="time"` field.
+		if (isset($data['core_update_time']))
+		{
+			$updateTime = $data['core_update_time'];
+			$parts      = explode(':', $updateTime);
+
+			if ($parts >= 2)
+			{
+				[$hour, $minute] = array_slice($parts, 0, 2);
+				$hour   = (int) $hour;
+				$minute = (int) $minute;
+				$hour   = max(0, min(23, $hour));
+				$minute = max(0, min(59, $minute));
+
+				$config->set('config.core_update.time.hour', $hour);
+				$config->set('config.core_update.time.minute', $minute);
+
+				$data['config'] = $config->toString();
+			}
+		}
 	}
 
 	protected function onBeforeApply()
@@ -834,10 +876,12 @@ class Sites extends DataController
 			// If this is a new record the owner is the current user
 			elseif (empty($model->getId()))
 			{
-				$data = array_merge([
-					'created_by' => $this->container->userManager->getUser()->getId(),
-					'created_on' => ($this->container->dateFactory())->toSql(),
-				], $data);
+				$data = array_merge(
+					[
+						'created_by' => $this->container->userManager->getUser()->getId(),
+						'created_on' => ($this->container->dateFactory())->toSql(),
+					], $data
+				);
 			}
 
 			// Set the layout to form, if it's not set in the URL

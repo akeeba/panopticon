@@ -11,6 +11,11 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
 $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
+$updateTime = sprintf(
+	'%02u:%02u',
+	$config->get('config.core_update.time.hour', '0'),
+	$config->get('config.core_update.time.minute', '0')
+);
 
 ?>
 <div class="row mb-3">
@@ -66,23 +71,15 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 
 <div class="row mb-3" {{ $this->showOn('config[config.core_update.install]!:none[AND]config[config.core_update.install]!:email[AND]config[config.core_update.when]:time') }}>
     <fieldset class="d-flex">
-        <legend class="col-sm-3 col-form-label">
+        <label class="col-sm-3 col-form-label" for="core_update_time">
             @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME')
-        </legend>
+        </label>
         <div class="col-sm-9 d-flex flex-row gap-2 align-items-center ps-2">
-            <label class="visually-hidden" for="config_core_update_time_hour">
-                @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_HOUR')
-            </label>
-            <input name="config[config.core_update.time.hour]" id="config_core_update_time_hour"
+            <input type="time" name="core_update_time" id="core_update_time"
                    class="form-control"
-                   value="{{ $config->get('config.core_update.time.hour', '0') }}">
-            <strong aria-hidden="true">:</strong>
-            <label class="visually-hidden" for="config_core_update_time_minute">
-                @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_MINUTES')
-            </label>
-            <input name="config[config.core_update.time.minute]" id="config_core_update_time_minute"
-                   class="form-control"
-                   value="{{ $config->get('config.core_update.time.minute', '0') }}">
+                   pattern="[0-9]{2}:[0-9]{2}"
+                   value="{{ $updateTime }}"
+            >
         </div>
     </fieldset>
     <div class="form-text offset-sm-3 col-sm-9">
