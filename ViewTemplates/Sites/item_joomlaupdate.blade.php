@@ -20,6 +20,8 @@ $config           = $this->item->getConfig();
 $token            = $this->container->session->getCsrfToken()->getValue();
 $joomlaUpdateTask = $this->item->getJoomlaUpdateTask();
 $overridesChanged = $config->get('core.overridesChanged');
+$lastError        = trim($config->get('core.lastErrorMessage') ?? '');
+$hasError         = !empty($lastError);
 
 $lastUpdateTimestamp = function () use ($config): string
 {
@@ -45,12 +47,55 @@ $lastUpdateTimestamp = function () use ($config): string
         </a>
     </h3>
     <div class="card-body">
-        <p class="small text-body-tertiary">
-            <strong>
-                @lang('PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED')
-            </strong>
-            {{ $lastUpdateTimestamp() }}
-        </p>
+        <div class="small mb-3">
+            @if ($lastError)
+                <?php $siteInfoLastErrorModalID = 'silem-' . md5(random_bytes(120)); ?>
+                <div class="btn btn-danger btn-sm px-1 py-0" aria-hidden="true"
+                     data-bs-toggle="modal" data-bs-target="#{{ $siteInfoLastErrorModalID }}"
+                >
+                            <span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
+                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                  data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO')"
+                                  data-bs-content="{{{ $lastError }}}"></span>
+                </div>
+
+                <div class="modal fade" id="{{ $siteInfoLastErrorModalID }}"
+                     tabindex="-1" aria-labelledby="{{ $siteInfoLastErrorModalID }}_label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5"
+                                    id="{{ $siteInfoLastErrorModalID }}_label">
+                                    @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO')
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="@lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-break">
+                                    {{{ $lastError }}}
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    @lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="visually-hidden">
+                    @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO') {{{ $lastError }}}
+                </span>
+            @endif
+            <span class="{{ $hasError ? 'text-danger' : 'text-body-tertiary' }}">
+                <strong>
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED')
+                </strong>
+                {{ $lastUpdateTimestamp() }}
+            </span>
+        </div>
 
         @if(!$config->get('core.extensionAvailable', true))
             <div class="alert alert-danger">

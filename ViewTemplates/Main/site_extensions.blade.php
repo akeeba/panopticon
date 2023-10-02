@@ -60,10 +60,10 @@ $lastError = trim($config->get('extensions.lastErrorMessage') ?? '');
 				<div class="btn btn-danger btn-sm" aria-hidden="true"
 					 data-bs-toggle="modal" data-bs-target="#{{ $extensionsLastErrorModalID }}"
 				>
-				<span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
-					  data-bs-toggle="tooltip" data-bs-placement="bottom"
-					  data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')"
-					  data-bs-content="{{{ $lastError }}}"></span>
+					<span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
+						  data-bs-toggle="tooltip" data-bs-placement="bottom"
+						  data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')"
+						  data-bs-content="{{{ $lastError }}}"></span>
 				</div>
 
 				<div class="modal fade" id="{{ $extensionsLastErrorModalID }}"
