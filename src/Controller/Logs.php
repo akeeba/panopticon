@@ -116,7 +116,7 @@ class Logs extends Controller
 		/** @noinspection PhpStatementHasEmptyBodyInspection */
 		while (@ob_end_clean())
 		{
-			// Make sure no junk will come before out content – to the extent we have a say on this...
+			// Make sure no junk will come before our content – to the extent we have a say on this...
 		}
 
 		if (function_exists('ini_get') &&
