@@ -13,6 +13,7 @@ use Awf\Exception\App;
 use Awf\Mvc\Model;
 use Awf\Pagination\Pagination;
 use DirectoryIterator;
+use Exception;
 use JsonException;
 use Psr\Log\LogLevel;
 use Throwable;
@@ -62,7 +63,7 @@ class Log extends Model
 	 * @return  object[]
 	 * @since   1.0.0
 	 */
-	public function getLogLines(): array
+	public function getLogLines(?string $logFile = null): array
 	{
 		// Clamp the size in the range of 10KiB to 10MiB
 		$maxSize = $this->getState('size', 131072, 'int');
@@ -73,22 +74,91 @@ class Log extends Model
 		$maxLines = max(20, min($maxLines, 10000));
 
 		// Make sure the log file exists, it is readable, and it does not traverse to a folder other than the log folder
-		$logFile = APATH_LOG . '/' . $this->getState('logfile', '');
+		$logFile ??= $this->getState('logfile', '');
+		$logPath = $this->getVerifiedLogFilePath($logFile);
 
-		if (!file_exists($logFile) || !is_readable($logFile))
-		{
-			return [];
-		}
-
-		$logFile = realpath($logFile);
-
-		if (dirname($logFile) !== realpath(APATH_LOG))
+		if (empty($logPath))
 		{
 			return [];
 		}
 
 		// Return the parsed log lines
-		return $this->getLastLogLines($logFile, $maxSize, $maxLines);
+		return $this->getLastLogLines($logPath, $maxSize, $maxLines);
+	}
+
+	/**
+	 * Get the size of a log file
+	 *
+	 * @param   string|null  $fileName  The log filename, NULL to get from the model state
+	 *
+	 * @return  int
+	 * @since   1.0.0
+	 */
+	public function getFilesize(?string $fileName = null): int
+	{
+		$fileName ??= $this->getState('logfile', '');
+		$filePath = $this->getVerifiedLogFilePath($fileName);
+
+		if (!$filePath)
+		{
+			return 0;
+		}
+
+		$filePath = APATH_LOG . '/' . $fileName;
+
+		try
+		{
+			$fileSize = @fileSize($filePath) ?? 0;
+		}
+		catch (Exception $e)
+		{
+			$fileSize = 0;
+		}
+
+		return $fileSize;
+	}
+
+	/**
+	 * Returns a verified to be correct log file path given a log file name.
+	 *
+	 * This method performs the following checks:
+	 * - The log file name must end in .log or .log.{number}.gz
+	 * - It must be a filename relative to APATH_LOG
+	 * - It must NOT end up pointing to a location outside APATH_LOG
+	 * - The file must exist and be readable
+	 *
+	 * @param   string|null  $logFile  The name of the log file, NULL to get from the model state
+	 *
+	 * @return  string|null
+	 * @since   1.0.0
+	 */
+	public function getVerifiedLogFilePath(?string $logFile = null): ?string
+	{
+		$logFile ??= $this->getState('logfile', '');
+
+		if (!str_ends_with($logFile, '.log') && !str_ends_with($logFile, '.gz')
+		    && !preg_match(
+				'/\.log\.\d+\.gz$/', $logFile
+			))
+		{
+			return null;
+		}
+
+		$logPath = APATH_LOG . '/' . $logFile;
+
+		if (!file_exists($logPath) || !is_readable($logPath))
+		{
+			return null;
+		}
+
+		$logPath = realpath($logPath);
+
+		if (dirname($logPath) !== realpath(APATH_LOG))
+		{
+			return null;
+		}
+
+		return $logPath;
 	}
 
 	/**
@@ -116,6 +186,38 @@ class Log extends Model
 		}
 
 		return $this->logs;
+	}
+
+	/**
+	 * Converts number of bytes to a human-readable representation.
+	 *
+	 * @param   int|null  $sizeInBytes         Size in bytes
+	 * @param   int       $decimals            How many decimals should I use? Default: 2
+	 * @param   string    $decSeparator        Decimal separator
+	 * @param   string    $thousandsSeparator  Thousands grouping character
+	 *
+	 * @return  string
+	 * @since   1.0.0
+	 */
+	private function formatFilesize(
+		?int $sizeInBytes, int $decimals = 2, string $decSeparator = '.', string $thousandsSeparator = ''
+	): string
+	{
+		if ($sizeInBytes <= 0)
+		{
+			return '&mdash;';
+		}
+
+		$units = ['b', 'KiB', 'MiB', 'GiB', 'TiB'];
+		$unit  = floor(log($sizeInBytes, 2) / 10);
+
+		if ($unit == 0)
+		{
+			$decimals = 0;
+		}
+
+		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' '
+		       . $units[$unit];
 	}
 
 	/**
@@ -205,7 +307,7 @@ class Log extends Model
 		}
 
 		// Returned the parsed lines
-		return $lines;
+		return array_reverse($lines);
 	}
 
 	/**
@@ -238,7 +340,7 @@ class Log extends Model
 			return null;
 		}
 
-		$logLevel = match (strtolower($parts[1]))
+		$logLevel = match (trim(strtolower($parts[1])))
 		{
 			'emergency' => LogLevel::EMERGENCY,
 			'alert' => LogLevel::ALERT,
@@ -256,14 +358,25 @@ class Log extends Model
 			return null;
 		}
 
+		$short    = false;
+		$facility = $parts[2];
+		$message  = $parts[3];
+
+		if (count($parts) < 6)
+		{
+			$short    = true;
+			$facility = '';
+			$message  = $parts[2];
+		}
+
 		$context = null;
 		$extra   = null;
 
-		if (count($parts) >= 5)
+		if (isset($parts[$short ? 3 : 4]))
 		{
 			try
 			{
-				$context = json_decode($parts[4], flags: JSON_THROW_ON_ERROR);
+				$context = json_decode($parts[$short ? 3 : 4], flags: JSON_THROW_ON_ERROR);
 			}
 			catch (JsonException $e)
 			{
@@ -271,11 +384,11 @@ class Log extends Model
 			}
 		}
 
-		if (count($parts) >= 6)
+		if (isset($parts[$short ? 4 : 5]))
 		{
 			try
 			{
-				$extra = json_decode($parts[5], flags: JSON_THROW_ON_ERROR);
+				$extra = json_decode($parts[$short ? 4 : 5], flags: JSON_THROW_ON_ERROR);
 			}
 			catch (JsonException $e)
 			{
@@ -286,8 +399,8 @@ class Log extends Model
 		return (object) [
 			'loglevel'  => $logLevel,
 			'timestamp' => $timestamp,
-			'facility'  => $parts[2],
-			'message'   => $parts[3],
+			'facility'  => trim($facility),
+			'message'   => trim($message),
 			'context'   => $context,
 			'extra'     => $extra,
 		];

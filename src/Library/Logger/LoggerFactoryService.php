@@ -44,7 +44,8 @@ class LoggerFactoryService
 		$streamHandler = new StreamHandler(APATH_LOG . '/' . $logIdentifier . '.log', $logLevel);
 		$formatter     = new LineFormatter(
 			format: $format,
-			dateFormat: 'Y-m-d H:i:s.v T'
+			dateFormat: 'Y-m-d H:i:s.v T',
+			allowInlineLineBreaks: false
 		);
 
 		$streamHandler->setFormatter($formatter);
@@ -57,6 +58,7 @@ class LoggerFactoryService
 			$debugFormatter     = new LineFormatter(
 				format: "%datetime% | %level_name% | %channel% | %message% | %context% | %extra%\n",
 				dateFormat: 'Y-m-d H:i:s.v T',
+				allowInlineLineBreaks: false,
 				includeStacktraces: true
 			);
 			$debugStreamHandler->setFormatter($debugFormatter);

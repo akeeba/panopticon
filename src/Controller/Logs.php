@@ -37,7 +37,12 @@ class Logs extends Controller
 	 */
 	public function read(): void
 	{
-		// TODO
+		$format = $this->input->get('format', 'html');
+
+		$view = $this->getView();
+		$view->setLayout('item' . ($format === 'raw' ? '_table' : ''));
+
+		$this->display();
 	}
 
 	/**

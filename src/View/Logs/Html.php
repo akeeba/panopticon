@@ -15,6 +15,7 @@ use Awf\Inflector\Inflector;
 use Awf\Mvc\DataView\Html as BaseHtml;
 use Awf\Text\Text;
 use Awf\Utils\ArrayHelper;
+use Awf\Utils\Template;
 
 /**
  * Log management view
@@ -27,12 +28,13 @@ class Html extends BaseHtml
 
 	protected array $siteNames = [];
 
+	protected array $logLines;
+
+	protected int $fileSize;
+
 	public function onBeforeMain(): bool
 	{
-		if (empty($this->getTitle()))
-		{
-			$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
-		}
+		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
 
 		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
 		$limit = $this->getModel()->getState('limit', 50, 'int');
@@ -49,19 +51,35 @@ class Html extends BaseHtml
 		return true;
 	}
 
-	protected function filesize($fileName): string
+	public function onBeforeRead(): bool
 	{
-		$filePath = APATH_LOG . '/' . $fileName;
-		try
+		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_READ'));
+		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=logs')]);
+
+		/** @var Log $model */
+		$model          = $this->getModel();
+		$this->logLines = $model->getLogLines();
+		$this->fileSize = $model->getFilesize();
+		$this->filePath = $model->getVerifiedLogFilePath();
+
+		if (empty($this->fileSize))
 		{
-			$fileSize = @fileSize($filePath) ?? 0;
-		}
-		catch (\Exception $e)
-		{
-			$fileSize = 0;
+			$this->setLayout('item_none');
 		}
 
-		return $this->formatFilesize($fileSize);
+		$document = $this->container->application->getDocument();
+		$document->addScriptOptions('log', [
+			'url' => $this->container->router->route(sprintf('index.php?view=log&task=read&logfile=%s&format=raw', urlencode(basename($this->filePath))))
+		]);
+
+		Template::addJs('media://js/log.js', $this->container->application, defer: true);
+
+		return true;
+	}
+
+	protected function filesize($fileName): string
+	{
+		return $this->formatFilesize($this->getModel()->getFilesize($fileName));
 	}
 
 	/**
@@ -75,7 +93,7 @@ class Html extends BaseHtml
 	 * @return  string
 	 * @since   1.0.0
 	 */
-	private function formatFilesize(
+	protected function formatFilesize(
 		?int $sizeInBytes, int $decimals = 2, string $decSeparator = '.', string $thousandsSeparator = ''
 	): string
 	{
@@ -92,8 +110,8 @@ class Html extends BaseHtml
 			$decimals = 0;
 		}
 
-		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' ' .
-		       $units[$unit];
+		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' '
+		       . $units[$unit];
 	}
 
 	protected function getSiteIdFromFilename($logFilename): ?int
@@ -142,14 +160,12 @@ class Html extends BaseHtml
 		}
 
 		$db              = $this->container->db;
-		$query           = $db->getQuery(true)
-			->select(
+		$query           = $db->getQuery(true)->select(
 				[
 					$db->quoteName('id'),
 					$db->quoteName('name'),
 				]
-			)->from($db->quoteName('#__sites'))
-			->where($db->quoteName('id') . ' IN (' . implode(',', $siteIDs) . ')');
+			)->from($db->quoteName('#__sites'))->where($db->quoteName('id') . ' IN (' . implode(',', $siteIDs) . ')');
 		$this->siteNames = $db->setQuery($query)->loadAssocList('id', 'name') ?: [];
 	}
 }

@@ -3,6 +3,7 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/log.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/main.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/system.min.js" />
@@ -13,6 +14,7 @@
       <root url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/bootstrap.bundle.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/darkmode.min.js" />
+      <root url="file://$PROJECT_DIR$/media/js/log.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/main.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/remember-tab.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/setup.min.js" />
