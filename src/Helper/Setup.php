@@ -338,21 +338,16 @@ class Setup extends AbstractHelper
 
 		if ($withSystem)
 		{
-			$siteList = array_merge(
-				[
-					0 => Text::_('PANOPTICON_APP_LBL_SYSTEM_TASK')
-				],
-				$siteList
+			$siteList = array_combine(
+				array_merge([0], array_keys($siteList)),
+				array_merge([Text::_('PANOPTICON_APP_LBL_SYSTEM_TASK')], array_values($siteList)),
 			);
 		}
 
-		$siteList = array_merge(
-			[
-				'' => sprintf('– %s –', Text::_('PANOPTICON_TASKS_LBL_FIELD_SITE_ID'))
-			],
-			$siteList
+		$siteList = array_combine(
+			array_merge([''], array_keys($siteList)),
+			array_merge([sprintf('– %s –', Text::_('PANOPTICON_TASKS_LBL_FIELD_SITE_ID'))], array_values($siteList)),
 		);
-
 
 		return $this->getContainer()->html->select->genericList(
 			$siteList,

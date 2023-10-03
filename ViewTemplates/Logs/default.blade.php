@@ -50,6 +50,7 @@ $isArchived = str_ends_with($fileName, '.gz');
 @repeatable('actions', $fileName)
 <?php
 $isArchived = str_ends_with($fileName, '.gz');
+$token = $this->container->session->getCsrfToken()->getValue();
 ?>
 
 @if (!$isArchived)
@@ -72,7 +73,7 @@ $isArchived = str_ends_with($fileName, '.gz');
     </button>
 @endif
 
-<a href="@route(sprintf('index.php?view=log&task=download&logfile=%s', urlencode($fileName)))"
+<a href="@route(sprintf('index.php?view=log&task=download&logfile=%s&%s=1', urlencode($fileName), $token))"
    class="btn btn-sm btn-secondary">
         <span class="fa fa-fw fa-download" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -81,7 +82,7 @@ $isArchived = str_ends_with($fileName, '.gz');
     <span class="visually-hidden">@lang('PANOPTICON_LOGS_LBL_DOWNLOAD') {{{ $fileName }}}</span>
 </a>
 
-<a href="@route(sprintf('index.php?view=log&task=delete&logfile=%s', urlencode($fileName)))"
+<a href="@route(sprintf('index.php?view=log&task=delete&logfile=%s&%s=1', urlencode($fileName), $token))"
    class="btn btn-sm btn-danger">
         <span class="fa fa-fw fa-trash" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -94,7 +95,7 @@ $isArchived = str_ends_with($fileName, '.gz');
 
 <form action="@route('index.php?view=logs')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
-        <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
+        <div class="my-2 d-flex flex-row justify-content-center p-2">
             <div class="input-group" style="max-width: max(50%, 25em)">
                 <input type="search" class="form-control" id="search"
                        placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
@@ -118,7 +119,8 @@ $isArchived = str_ends_with($fileName, '.gz');
 	                   name: 'site_id',
 	                   attribs: [
 						   'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
-                       ]
+                       ],
+                       withSystem: false
 	               )
                 }}
             </div>

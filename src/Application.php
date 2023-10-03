@@ -37,19 +37,19 @@ class Application extends AWFApplication
 		[
 			'view'        => 'main',
 			'permissions' => [],
-			'icon'        => 'fa fa-eye',
+			'icon'        => 'fa fa-fw fa-eye',
 		],
 		[
 			'url'         => null,
 			'permissions' => ['panopticon.super', 'panopticon.addown', 'panopticon.editown'],
 			'name'        => 'administrator',
 			'title'       => 'PANOPTICON_APP_MENU_TITLE_ADMINISTRATION',
-			'icon'        => 'fa fa-screwdriver-wrench',
+			'icon'        => 'fa fa-fw fa-screwdriver-wrench',
 			'submenu'     => [
 				[
 					'view'        => 'sysconfig',
 					'permissions' => ['panopticon.super'],
-					'icon'        => 'fa fa-gears',
+					'icon'        => 'fa fa-fw fa-gears',
 				],
 				[
 					'url'         => null,
@@ -60,12 +60,12 @@ class Application extends AWFApplication
 				[
 					'view'        => 'sites',
 					'permissions' => ['panopticon.admin', 'panopticon.addown', 'panopticon.editown'],
-					'icon'        => 'fa fa-globe',
+					'icon'        => 'fa fa-fw fa-globe',
 				],
 				[
 					'view'        => 'mailtemplates',
 					'permissions' => ['panopticon.super'],
-					'icon'        => 'fa fa-envelope',
+					'icon'        => 'fa fa-fw fa-envelope',
 				],
 				[
 					'url'         => null,
@@ -76,12 +76,12 @@ class Application extends AWFApplication
 				[
 					'view'        => 'users',
 					'permissions' => ['panopticon.super'],
-					'icon'        => 'fa fa-users',
+					'icon'        => 'fa fa-fw fa-users',
 				],
 				[
 					'view'        => 'groups',
 					'permissions' => ['panopticon.super'],
-					'icon'        => 'fa fa-users-between-lines',
+					'icon'        => 'fa fa-fw fa-users-between-lines',
 				],
 				[
 					'url'         => null,
@@ -92,7 +92,13 @@ class Application extends AWFApplication
 				[
 					'view'        => 'tasks',
 					'permissions' => ['panopticon.super'],
-					'icon'        => 'fa fa-list-check',
+					'icon'        => 'fa fa-fw fa-list-check',
+				],
+				[
+					'view'        => 'log',
+					'title'       => 'PANOPTICON_LOGS_TITLE',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-fw fa-file-lines',
 				],
 			],
 		],
@@ -100,7 +106,7 @@ class Application extends AWFApplication
 			'url'          => null,
 			'permissions'  => [],
 			'name'         => 'user_submenu',
-			//'icon'         => 'fa fa-user',
+			//'icon'         => 'fa fa-fw fa-user',
 			'title'        => '',
 			'titleHandler' => [self::class, 'getUserMenuTitle'],
 			'submenu'      => [
@@ -122,14 +128,14 @@ class Application extends AWFApplication
 					'task'        => 'read',
 					'title'       => 'PANOPTICON_USERS_TITLE_EDIT_MENU',
 					'permissions' => [],
-					'icon'        => 'fa fa-user-gear',
+					'icon'        => 'fa fa-fw fa-user-gear',
 				],
 				[
 					'view'        => 'login',
 					'task'        => 'logout',
 					'title'       => 'PANOPTICON_APP_LBL_LOGOUT',
 					'permissions' => [],
-					'icon'        => 'fa fa-right-from-bracket',
+					'icon'        => 'fa fa-fw fa-right-from-bracket',
 				],
 			],
 		],
@@ -142,7 +148,7 @@ class Application extends AWFApplication
 		$avatar = $user->getAvatar(64);
 
 		return "<img src=\"$avatar\" alt=\"\" class=\"me-1\" style=\"width: 1.25em; border-radius: 0.625em \" >" .
-			$user->getUsername();
+		       $user->getUsername();
 	}
 
 	public static function getUserNameTitle(): string

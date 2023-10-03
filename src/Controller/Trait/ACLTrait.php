@@ -47,6 +47,9 @@ trait ACLTrait
 		'groups'        => [
 			'*' => ['super'],
 		],
+		'log'           => [
+			'*' => ['super'],
+		],
 		'login'         => [
 			'*' => ['#'],
 		],
@@ -133,7 +136,8 @@ trait ACLTrait
 
 	protected function aclCheck(string $task): void
 	{
-		$altView = Inflector::isSingular($this->getName()) ? Inflector::pluralize($this->getName()) : Inflector::singularize($this->getName());
+		$altView = Inflector::isSingular($this->getName()) ? Inflector::pluralize($this->getName())
+			: Inflector::singularize($this->getName());
 
 		if ($this->hasAccess($task, $this->getName()) || $this->hasAccess($task, $altView))
 		{
@@ -159,10 +163,10 @@ trait ACLTrait
 
 		// Determine the configured privileges
 		$requiredPrivileges = $this->aclChecks[$view][$task]
-			?? $this->aclChecks[$view]['*']
-			?? $this->aclChecks['*'][$task]
-			?? $this->aclChecks['*']['*']
-			?? [];
+		                      ?? $this->aclChecks[$view]['*']
+		                         ?? $this->aclChecks['*'][$task]
+		                            ?? $this->aclChecks['*']['*']
+		                               ?? [];
 
 		// No ACLs for the entire view, or the specific task (without a '*' task fallback)? Implicitly forbidden.
 		if (empty($requiredPrivileges))
@@ -203,8 +207,14 @@ trait ACLTrait
 		{
 			return array_reduce(
 				$requiredPrivileges,
-				fn($carry,
-				   $privilege) => $carry && (($privilege === '*') || ($privilege === '#') || $user->authorise('panopticon.' . $privilege, $id)),
+				fn(
+					$carry,
+					$privilege
+				) => $carry
+				     && (($privilege === '*') || ($privilege === '#')
+				         || $user->authorise(
+							'panopticon.' . $privilege, $id
+						)),
 				true
 			);
 		}
@@ -212,8 +222,10 @@ trait ACLTrait
 		// Global privileges for everything else
 		return array_reduce(
 			$requiredPrivileges,
-			fn($carry,
-			   $privilege) => $carry && (($privilege === '*') || $user->getPrivilege('panopticon.' . $privilege)),
+			fn(
+				$carry,
+				$privilege
+			) => $carry && (($privilege === '*') || $user->getPrivilege('panopticon.' . $privilege)),
 			true
 		);
 	}

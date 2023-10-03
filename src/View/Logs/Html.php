@@ -69,7 +69,13 @@ class Html extends BaseHtml
 
 		$document = $this->container->application->getDocument();
 		$document->addScriptOptions('log', [
-			'url' => $this->container->router->route(sprintf('index.php?view=log&task=read&logfile=%s&format=raw', urlencode(basename($this->filePath))))
+			'url' => $this->container->router->route(
+				sprintf(
+					'index.php?view=log&task=read&logfile=%s&format=raw&%s=1',
+					urlencode(basename($this->filePath)),
+					$this->container->session->getCsrfToken()->getValue()
+				)
+			)
 		]);
 
 		Template::addJs('media://js/log.js', $this->container->application, defer: true);
