@@ -23,6 +23,6 @@ defined('AKEEBA') || die;
 
 @include('About/default_license')
 
-@include('About/default_dependencies')
-
 @include('About/default_contributors')
+
+@include('About/default_dependencies')

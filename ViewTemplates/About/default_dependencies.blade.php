@@ -15,11 +15,24 @@ $integrity = function(string $hash): string {
 	$decoded = str_split(bin2hex(base64_decode($encoded)), 4);
 	return '<span class="badge bg-secondary me-1">' . strtoupper($algo) . '</span>' .
 	       implode('<wbr>', $decoded);
+};
+
+$dependencies = [];
+
+foreach (\Composer\InstalledVersions::getAllRawData() as $item)
+{
+	$dependencies = array_merge($dependencies, $item['versions']);
 }
+
+ksort($dependencies);
+
 ?>
+
 
 <details>
     <summary><h4 class="d-inline-block">@lang('PANOPTICON_ABOUT_LBL_3PD_SOFTWARE')</h4></summary>
+
+    <p class="small text-muted">@lang('PANOPTICON_ABOUT_LBL_3PD_SOFTWARE_ABOUT')</p>
 
     <h5>@lang('PANOPTICON_ABOUT_LBL_PHP_DEPS')</h5>
 
@@ -32,7 +45,7 @@ $integrity = function(string $hash): string {
         </tr>
         </thead>
         <tbody>
-        @foreach(\Composer\InstalledVersions::getAllRawData()[0]['versions'] as $packageName => $packageInfo)
+        @foreach($dependencies as $packageName => $packageInfo)
 				<?php if (!isset($packageInfo['version'])) continue ?>
 				<?php if ($packageName === 'akeeba/panopticon') continue ?>
             <tr>
