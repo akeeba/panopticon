@@ -17,10 +17,14 @@ class Html extends BaseHtmlView
 {
 	use CrudTasksTrait;
 
+	protected ?array $contributors;
+
 	protected function onBeforeMain(): bool
 	{
 		$this->addButton('back', ['url' => 'javascript:history.back()']);
 		$this->setTitle(Text::_('PANOPTICON_ABOUT_TITLE'));
+
+		$this->contributors = $this->getModel()->getContributors();
 
 		return true;
 	}
