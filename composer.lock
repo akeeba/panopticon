@@ -3992,7 +3992,7 @@
         },
         {
             "name": "web-auth/metadata-service",
-            "version": "4.7.2",
+            "version": "4.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-auth/webauthn-metadata-service.git",
@@ -4057,7 +4057,7 @@
                 "webauthn"
             ],
             "support": {
-                "source": "https://github.com/web-auth/webauthn-metadata-service/tree/4.7.2"
+                "source": "https://github.com/web-auth/webauthn-metadata-service/tree/4.7.3"
             },
             "funding": [
                 {
@@ -4073,16 +4073,16 @@
         },
         {
             "name": "web-auth/webauthn-lib",
-            "version": "4.7.2",
+            "version": "4.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-auth/webauthn-lib.git",
-                "reference": "c48f7049c96c1ed96672bcbbef13be5eb90a9163"
+                "reference": "d9b0d0563c561eaec5c24c46a551bf8ff23a030b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-auth/webauthn-lib/zipball/c48f7049c96c1ed96672bcbbef13be5eb90a9163",
-                "reference": "c48f7049c96c1ed96672bcbbef13be5eb90a9163",
+                "url": "https://api.github.com/repos/web-auth/webauthn-lib/zipball/d9b0d0563c561eaec5c24c46a551bf8ff23a030b",
+                "reference": "d9b0d0563c561eaec5c24c46a551bf8ff23a030b",
                 "shasum": ""
             },
             "require": {
@@ -4145,7 +4145,7 @@
                 "webauthn"
             ],
             "support": {
-                "source": "https://github.com/web-auth/webauthn-lib/tree/4.7.2"
+                "source": "https://github.com/web-auth/webauthn-lib/tree/4.7.3"
             },
             "funding": [
                 {
@@ -4157,7 +4157,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-09-29T14:10:15+00:00"
+            "time": "2023-10-15T11:54:31+00:00"
         },
         {
             "name": "webmozart/assert",
