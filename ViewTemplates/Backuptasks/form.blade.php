@@ -179,7 +179,7 @@ catch (InvalidArgumentException $e)
         </div>
 
         <div class="row mb-3">
-            <label for="profile_id" class="col-sm-3 col-form-label">
+            <label for="run_once" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE')
             </label>
             <div class="col-sm-9">
