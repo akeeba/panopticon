@@ -818,6 +818,11 @@ class Site extends DataModel
 
 	private function applyUserGroupsToQuery(Query $query): void
 	{
+		if (defined('AKEEBA_CLI'))
+		{
+			return;
+		}
+
 		// Get the user, so we can apply per group privilege checks
 		$user = $this->container->userManager->getUser();
 

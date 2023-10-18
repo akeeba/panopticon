@@ -147,15 +147,14 @@ class Application extends AWFApplication
 
 		$avatar = $user->getAvatar(64);
 
-		return "<img src=\"$avatar\" alt=\"\" class=\"me-1\" style=\"width: 1.25em; border-radius: 0.625em \" >" .
-		       $user->getUsername();
+		return "<img src=\"$avatar\" alt=\"\" class=\"me-1\" style=\"width: 1.25em; border-radius: 0.625em \" >"
+		       . $user->getUsername();
 	}
 
 	public static function getUserNameTitle(): string
 	{
 		return sprintf(
-			'<span class="small text-muted">%s</span>',
-			Factory::getContainer()->userManager->getUser()->getName()
+			'<span class="small text-muted">%s</span>', Factory::getContainer()->userManager->getUser()->getName()
 		);
 	}
 
@@ -278,6 +277,35 @@ class Application extends AWFApplication
 		}
 	}
 
+	public function loadLanguages(): void
+	{
+		try
+		{
+			$defaultLanguage = $this->container->appConfig->get('language', 'en-GB');
+		}
+		catch (Exception $e)
+		{
+			$defaultLanguage = 'en-GB';
+		}
+
+		$detectedLanguage = Text::detectLanguage($this->container, '.ini', $this->container->languagePath);
+
+		// Always load the English (Great Britain) language. It contains all the strings.
+		Text::loadLanguage('en-GB', $this->container, '.ini', true, $this->container->languagePath);
+
+		// Load the site's default language, if it's different from en-GB.
+		if ($defaultLanguage != 'en-GB')
+		{
+			Text::loadLanguage($defaultLanguage, $this->container, '.ini', true, $this->container->languagePath);
+		}
+
+		// Load the auto-detected preferred language (per browser settings), as long as it's not one we already loaded.
+		if (!in_array($detectedLanguage, [$defaultLanguage, 'en-GB']))
+		{
+			Text::loadLanguage($detectedLanguage, $this->container, '.ini', true, $this->container->languagePath);
+		}
+	}
+
 	private function initialiseMenu(array $items = self::MAIN_MENU, ?Item $parent = null): void
 	{
 		$menu  = $this->getDocument()->getMenu();
@@ -288,8 +316,7 @@ class Application extends AWFApplication
 		{
 			$allowed = array_reduce(
 				$params['permissions'] ?? [],
-				fn(bool $carry, string $permission) => $carry && $user->getPrivilege($permission),
-				true
+				fn(bool $carry, string $permission) => $carry && $user->getPrivilege($permission), true
 			);
 
 			if (!$allowed)
@@ -463,35 +490,6 @@ class Application extends AWFApplication
 		}
 	}
 
-	private function loadLanguages(): void
-	{
-		try
-		{
-			$defaultLanguage = $this->container->appConfig->get('language', 'en-GB');
-		}
-		catch (Exception $e)
-		{
-			$defaultLanguage = 'en-GB';
-		}
-
-		$detectedLanguage = Text::detectLanguage($this->container, '.ini', $this->container->languagePath);
-
-		// Always load the English (Great Britain) language. It contains all the strings.
-		Text::loadLanguage('en-GB', $this->container, '.ini', true, $this->container->languagePath);
-
-		// Load the site's default language, if it's different from en-GB.
-		if ($defaultLanguage != 'en-GB')
-		{
-			Text::loadLanguage($defaultLanguage, $this->container, '.ini', true, $this->container->languagePath);
-		}
-
-		// Load the auto-detected preferred language (per browser settings), as long as it's not one we already loaded.
-		if (!in_array($detectedLanguage, [$defaultLanguage, 'en-GB']))
-		{
-			Text::loadLanguage($detectedLanguage, $this->container, '.ini', true, $this->container->languagePath);
-		}
-	}
-
 	private function applyTimezonePreference(): void
 	{
 		if (!function_exists('date_default_timezone_get') || !function_exists('date_default_timezone_set'))
@@ -615,13 +613,10 @@ class Application extends AWFApplication
 	{
 		$configPath = $this->container->appConfig->getDefaultPath();
 
-		if (
-			@file_exists($configPath)
-			|| in_array(
-				$this->getContainer()->input->getCmd('view', ''),
-				self::NO_LOGIN_VIEWS
-			)
-		)
+		if (@file_exists($configPath)
+		    || in_array(
+			    $this->getContainer()->input->getCmd('view', ''), self::NO_LOGIN_VIEWS
+		    ))
 		{
 			return false;
 		}

@@ -10,6 +10,7 @@ use Akeeba\Panopticon\Factory;
 use Symfony\Component\Console\Application;
 
 const AKEEBA = 1;
+const AKEEBA_CLI = 1;
 
 // Make sure we're running under the PHP CLI SAPI
 if (php_sapi_name() !== 'cli')

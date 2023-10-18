@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\CliCommand;
 use Akeeba\Panopticon\CliCommand\Attribute\AppHeader;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
+use Awf\Text\Text;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,11 +38,28 @@ abstract class AbstractCommand extends Command
 
 		parent::initialize($input, $output);
 
-		$this->header();
+		// Load the application language
+		Factory::getApplication()->loadLanguages();
+
+		// Conditionally emit header
+		$this->header($input);
 	}
 
-	protected function header()
+	protected function header(InputInterface $input)
 	{
+		// No header in quiet mode
+		if ($this->ioStyle->isQuiet())
+		{
+			return;
+		}
+
+		// No header when using a special output format
+		if ($input->hasOption('format') && !in_array($input->getOption('format'), [null, 'table', 'txt', 'text', 'human']))
+		{
+			return;
+		}
+
+		// Check the command class' attributes
 		$showHeader = true;
 		$cliApp     = $this->getApplication();
 
@@ -53,21 +71,25 @@ abstract class AbstractCommand extends Command
 			$showHeader = $attributes[0]->getArguments()[0];
 		}
 
-		if ($showHeader && !$this->ioStyle->isQuiet())
+		// Forced to never emit a header? Go away.
+		if (!$showHeader)
 		{
-			$this->ioStyle->writeln($cliApp->getName() . ' <info>' . $cliApp->getVersion() . '</info>');
-
-			$year = gmdate('Y');
-			$this->ioStyle->writeln([
-				"Copyright (c) 2023-$year  Akeeba Ltd",
-				"",
-				"<debug>Distributed under the terms of the GNU General Public License as published",
-				"by the Free Software Foundation, either version 3 of the License, or (at your",
-				"option) any later version. See LICENSE.txt.</debug>",
-			]);
-
-			$this->ioStyle->title($this->getDescription());
+			return;
 		}
+
+		// If I am still here I need to emit the header.
+		$this->ioStyle->writeln($cliApp->getName() . ' <info>' . $cliApp->getVersion() . '</info>');
+
+		$year = gmdate('Y');
+		$this->ioStyle->writeln([
+			"Copyright (c) 2023-$year  Akeeba Ltd",
+			"",
+			"<debug>Distributed under the terms of the GNU General Public License as published",
+			"by the Free Software Foundation, either version 3 of the License, or (at your",
+			"option) any later version. See LICENSE.txt.</debug>",
+		]);
+
+		$this->ioStyle->title($this->getDescription());
 	}
 
 	protected function configureSymfonyIO(InputInterface $input, OutputInterface $output)
