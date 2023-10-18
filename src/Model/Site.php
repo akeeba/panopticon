@@ -816,6 +816,20 @@ class Site extends DataModel
 		);
 	}
 
+	protected function onBeforeDelete($id)
+	{
+		if (empty($id))
+		{
+			return;
+		}
+
+		// Remove all tasks attached to this site
+		/** @var Tasks $taskModel */
+		$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Tasks');
+		$taskModel->setState('site_id', $id);
+		$taskModel->get(true)->delete();
+	}
+
 	private function applyUserGroupsToQuery(Query $query): void
 	{
 		if (defined('AKEEBA_CLI'))
