@@ -29,12 +29,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-	name: 'sites:add',
+	name: 'site:add',
 	description: 'Add a site',
 	hidden: false,
 )]
 #[ConfigAssertion(true)]
-class SitesAdd extends AbstractCommand
+class SiteAdd extends AbstractCommand
 {
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{

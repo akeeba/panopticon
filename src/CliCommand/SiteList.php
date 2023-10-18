@@ -20,12 +20,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-	name: 'sites:list',
+	name: 'site:list',
 	description: 'List configured sites',
 	hidden: false,
 )]
 #[ConfigAssertion(true)]
-class SitesList extends AbstractCommand
+class SiteList extends AbstractCommand
 {
 	use PrintFormattedArrayTrait;
 

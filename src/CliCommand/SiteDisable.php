@@ -19,12 +19,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-	name: 'sites:delete',
-	description: 'Delete a site',
+	name: 'site:disable',
+	description: 'Disable a site',
 	hidden: false,
 )]
 #[ConfigAssertion(true)]
-class SitesDelete extends AbstractCommand
+class SiteDisable extends AbstractCommand
 {
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
@@ -36,7 +36,7 @@ class SitesDelete extends AbstractCommand
 
 		$model
 			->findOrFail($id)
-			->delete();
+			->unpublish();
 
 		return Command::SUCCESS;
 	}
@@ -44,7 +44,7 @@ class SitesDelete extends AbstractCommand
 	protected function configure(): void
 	{
 		$this
-			->addArgument('id', InputArgument::REQUIRED, 'The numeric site ID to delete');
+			->addArgument('id', InputArgument::REQUIRED, 'The numeric site ID to disable');
 	}
 
 }
