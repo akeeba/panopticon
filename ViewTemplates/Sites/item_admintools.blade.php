@@ -74,8 +74,8 @@ $config              = $model->getConfig();
                 </p>
             </div>
         @else
-            @include('Sites/admintools_actions')
-            @include('Sites/admintools_scanner')
+            @include('Sites/item_admintools_actions')
+            @include('Sites/item_admintools_scanner')
         @endif
     </div>
 </div>

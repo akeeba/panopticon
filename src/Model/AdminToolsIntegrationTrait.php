@@ -11,9 +11,14 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
+use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Task\AdminToolsTrait;
 use Awf\Date\Date;
+use Awf\Exception\App;
+use Awf\Mvc\DataModel\Collection;
 use Awf\Uri\Uri;
+use DateTimeZone;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 
@@ -187,7 +192,7 @@ trait AdminToolsIntegrationTrait
 		return $result?->data?->attributes ?? null;
 	}
 
-	public function adminToolsGetScans(int $from = 0, int $limit = 10): ?object
+	public function adminToolsGetScans(bool $cache = true, int $from = 0, int $limit = 10): ?object
 	{
 		if (!$this->hasAdminToolsPro())
 		{
@@ -225,6 +230,7 @@ trait AdminToolsIntegrationTrait
 			},
 			args: [$from, $limit],
 			id: sprintf('scans-%d-%d-%d', $this->getId(), $from, $limit),
+			expiration: $cache ? null : 0
 		);
 	}
 
@@ -328,4 +334,118 @@ trait AdminToolsIntegrationTrait
 		return $this->callbackControllerForAdminTools;
 	}
 
+	public function adminToolsGetAllScheduledTasks(): Collection
+	{
+		return $this->getSiteSpecificTasks('filescanner');
+	}
+
+	/**
+	 * Get the enqueued PHP File Change Scanner tasks
+	 *
+	 * @return  Collection
+	 * @since   1.0.0
+	 */
+	public function adminToolsGetEnqueuedTasks(): Collection
+	{
+		return $this->getSiteSpecificTasks('filescanner')
+			->filter(
+				function (Task $task) {
+					$params = $task->getParams();
+
+					// Mast not be running, or waiting to run
+					if (in_array(
+						$task->last_exit_code, [
+							Status::INITIAL_SCHEDULE->value,
+							Status::WILL_RESUME->value,
+							Status::RUNNING->value,
+						]
+					))
+					{
+						return false;
+					}
+
+					// Must be a run-once task
+					if (empty($params->get('run_once')))
+					{
+						return false;
+					}
+
+					// Must be a generated task, not a user-defined backup schedule
+					if (empty($params->get('enqueued_scan')))
+					{
+						return false;
+					}
+
+					// Its next execution date must be empty or in the past
+					if (empty($task->last_execution))
+					{
+						return true;
+					}
+
+					$date = $this->container->dateFactory($task->last_execution, 'UTC');
+					$now  = $this->container->dateFactory();
+
+					return ($date < $now);
+				}
+			);
+	}
+
+	/**
+	 * Enqueue a new PHP File Change Scanner scan
+	 *
+	 * @return  void
+	 * @throws  App
+	 * @since   1.0.0
+	 */
+	public function adminToolsScanEnqueue(): void
+	{
+		// Try to find an akeebabackup task object which is run once, not running / initial schedule, and matches the specifics
+		$tasks = $this->adminToolsGetEnqueuedTasks();
+
+		if ($tasks->count())
+		{
+			$task = $tasks->first();
+		}
+		else
+		{
+			$task = Task::getTmpInstance('', 'Task', $this->container);
+		}
+
+		try
+		{
+			$tz = $this->container->appConfig->get('timezone', 'UTC');
+
+			// Do not remove. This tests the validity of the configured timezone.
+			new DateTimeZone($tz);
+		}
+		catch (Exception)
+		{
+			$tz = 'UTC';
+		}
+
+		$runDateTime = $this->container->dateFactory('now', $tz);
+		$runDateTime->add(new \DateInterval('PT2S'));
+
+		$task->save(
+			[
+				'site_id'         => $this->getId(),
+				'type'            => 'filescanner',
+				'params'          => json_encode(
+					[
+						'run_once'      => 'disable',
+						'enqueued_scan' => 1,
+					]
+				),
+				'cron_expression' => $runDateTime->minute . ' ' . $runDateTime->hour . ' ' . $runDateTime->day . ' ' .
+				                     $runDateTime->month . ' ' . $runDateTime->dayofweek,
+				'enabled'         => 1,
+				'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
+				'last_execution'  => (clone $runDateTime)->sub(new \DateInterval('PT1M'))->toSql(),
+				'last_run_end'    => null,
+				'next_execution'  => $runDateTime->toSql(),
+				'locked'          => null,
+				'priority'        => 1,
+			]
+		);
+	}
 }

@@ -247,7 +247,12 @@ class Html extends DataViewHtml
 		{
 			try
 			{
-				$this->scans = $this->getModel()->adminToolsGetScans()?->items ?? [];
+				$useCache             = !$this->item->getState('adminToolsForce', false, 'bool');
+				$this->scans = $this->getModel()->adminToolsGetScans(
+					$useCache,
+					$this->item->getState('adminToolsFrom', 0, 'int'),
+					$this->item->getState('adminToolsLimit', 20, 'int'),
+				)?->items ?? [];
 			}
 			catch (\Exception $e)
 			{

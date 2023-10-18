@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CLI site:scanner" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="site:scanner 3 -vvv">
+  <configuration default="false" name="CLI site:scanner" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="site:scanner 7 -vvv">
     <method v="2" />
   </configuration>
 </component>

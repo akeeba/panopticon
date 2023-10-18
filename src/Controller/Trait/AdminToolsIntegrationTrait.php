@@ -184,6 +184,51 @@ trait AdminToolsIntegrationTrait
 		return true;
 	}
 
+	public function adminToolsEnqueue(): bool
+	{
+		$this->csrfProtection();
+
+		$id        = $this->input->getInt('id', null);
+
+		if (empty($id) || $id <= 0)
+		{
+			return false;
+		}
+
+		/** @var Site $model */
+		$model = $this->getModel();
+		$user  = $this->container->userManager->getUser();
+
+		$model->findOrFail($id);
+
+		$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
+
+		if (
+			!$user->authorise('panopticon.run', $model)
+			&& !$user->authorise('panopticon.admin', $model)
+			&& !$canEditMine
+		)
+		{
+			return false;
+		}
+
+		$defaultRedirect = $this->container->router->route(sprintf('index.php?view=site&task=read&id=%d', $id));
+
+		try
+		{
+			$model->adminToolsScanEnqueue();
+
+			// Redirect
+			$this->setRedirectWithMessage($defaultRedirect);
+		}
+		catch (\Exception $e)
+		{
+			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
+		}
+
+		return true;
+	}
+
 	private function admintoolsGetSiteModelFromRequest(): ?Site
 	{
 		$id = $this->input->getInt('id', null);

@@ -38,6 +38,10 @@ trait ACLTrait
 			// We use per-site privileges in this controller
 			'*' => ['*'],
 		],
+		'scannertasks'   => [
+			// We use per-site privileges in this controller
+			'*' => ['*'],
+		],
 		'cron'          => [
 			'*' => ['#'],
 		],

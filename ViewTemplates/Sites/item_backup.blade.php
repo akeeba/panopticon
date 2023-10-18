@@ -230,7 +230,7 @@ $lastRefreshResponse = $config->get('akeebabackup.lastRefreshResponse');
                             <a href=""
                                role="button" class="btn btn-sm btn-outline-danger">
                                 <span class="fa fa-refresh" aria-hidden="true"></span>
-                                Reset
+                                @lang('PANOPTICON_BACKUPTASKS_LBL_RESET')
                             </a>
                         </div>
                     </div>
