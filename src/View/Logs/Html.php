@@ -14,7 +14,6 @@ use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataView\Html as BaseHtml;
 use Awf\Text\Text;
-use Awf\Utils\ArrayHelper;
 use Awf\Utils\Template;
 
 /**
@@ -68,15 +67,17 @@ class Html extends BaseHtml
 		}
 
 		$document = $this->container->application->getDocument();
-		$document->addScriptOptions('log', [
+		$document->addScriptOptions(
+			'log', [
 			'url' => $this->container->router->route(
 				sprintf(
 					'index.php?view=log&task=read&logfile=%s&format=raw&%s=1',
 					urlencode(basename($this->filePath)),
 					$this->container->session->getCsrfToken()->getValue()
 				)
-			)
-		]);
+			),
+		]
+		);
 
 		Template::addJs('media://js/log.js', $this->container->application, defer: true);
 
@@ -150,28 +151,13 @@ class Html extends BaseHtml
 	{
 		$this->siteNames = [];
 
-		if ($this->itemsCount <= 0)
-		{
-			return;
-		}
-
-		$siteIDs = array_map([$this, 'getSiteIdFromFilename'], $this->items);
-		$siteIDs = array_filter($siteIDs);
-		$siteIDs = array_unique(array_filter($siteIDs));
-		$siteIDs = ArrayHelper::toInteger($siteIDs);
-
-		if (empty($siteIDs))
-		{
-			return;
-		}
-
 		$db              = $this->container->db;
 		$query           = $db->getQuery(true)->select(
-				[
-					$db->quoteName('id'),
-					$db->quoteName('name'),
-				]
-			)->from($db->quoteName('#__sites'))->where($db->quoteName('id') . ' IN (' . implode(',', $siteIDs) . ')');
+			[
+				$db->quoteName('id'),
+				$db->quoteName('name'),
+			]
+		)->from($db->quoteName('#__sites'));
 		$this->siteNames = $db->setQuery($query)->loadAssocList('id', 'name') ?: [];
 	}
 }
