@@ -38,6 +38,9 @@
 
         <!-- Do not copy the configuration and internal repo files and folders -->
         <exclude name=".idea/**" />
+        <exclude name=".editorconfig" />
+        <exclude name=".github/**" />
+        <exclude name=".phpstorm.meta.php" />
         <exclude name="assets/**" />
         <exclude name="build/**" />
         <exclude name="documentation/**" />
@@ -64,6 +67,9 @@
         <!-- Exclude map files -->
         <exclude name="media/css/*.map" />
         <exclude name="media/js/*.map" />
+
+        <!-- .gitkeep file in webfonts -->
+        <exclude name="media/webfonts/.gitkeep" />
 
         <!-- Exclude cache, log, tmp files -->
         <exclude name="cache/**" />
@@ -99,9 +105,11 @@
         <exclude name="vendor/akeeba/awf/.gitignore" />
         <exclude name="vendor/akeeba/awf/.travis.yml" />
         <exclude name="vendor/akeeba/awf/composer.lock" />
+        <exclude name="vendor/akeeba/awf/MIGRATION.md" />
         <exclude name="vendor/akeeba/awf/phpunit*" />
 
         <exclude name="vendor/akeeba/json-backup-api/.idea/**" />
+        <exclude name="vendor/akeeba/json-backup-api/composer.lock" />
 
         <exclude name="vendor/bin/**" />
 
@@ -125,41 +133,33 @@
 
         <exclude name="vendor/guzzlehttp/psr-7/CHANGELOG.md" />
 
-        <exclude name="vendor/joomla/data/.editorconfig" />
-        <exclude name="vendor/joomla/data/ruleset.xml" />
-        <exclude name="vendor/joomla/data/SECURITY.md" />
+        <exclude name="vendor/jfcherng/php-color-output/.php-cs-fixer.dist.php" />
+        <exclude name="vendor/jfcherng/php-color-output/demo.php" />
+        <exclude name="vendor/jfcherng/php-color-output/RMT" />
+        <exclude name="vendor/jfcherng/php-color-output/UPGRADING_v2.md" />
 
-        <exclude name="vendor/joomla/filesystem/.editorconfig" />
-        <exclude name="vendor/joomla/filesystem/ruleset.xml" />
-        <exclude name="vendor/joomla/filesystem/SECURITY.md" />
+        <exclude name="vendor/jfcherng/php-diff/.php-cs-fixer.dist.php" />
+        <exclude name="vendor/jfcherng/php-diff/.phpstorm.meta.php" />
+        <exclude name="vendor/jfcherng/php-diff/CHANGELOG/**" />
+        <exclude name="vendor/jfcherng/php-diff/composer.lock" />
+        <exclude name="vendor/jfcherng/php-diff/example/**" />
+        <exclude name="vendor/jfcherng/php-diff/UPGRADING/**" />
 
-        <exclude name="vendor/joomla/http/.drone*" />
-        <exclude name="vendor/joomla/http/.editorconfig" />
-        <exclude name="vendor/joomla/http/SECURITY.md" />
+        <exclude name="vendor/jfcherng/php-diff/php-mb-string/.php-cs-fixer.dist.php" />
+        <exclude name="vendor/jfcherng/php-diff/php-mb-string/CHANGELOG" />
+        <exclude name="vendor/jfcherng/php-diff/php-mb-string/composer.lock" />
 
-        <exclude name="vendor/joomla/registry/.github/***" />
-        <exclude name="vendor/joomla/registry/docs/***" />
-        <exclude name="vendor/joomla/registry/tests/***" />
-        <exclude name="vendor/joomla/registry/.editorconfig" />
-        <exclude name="vendor/joomla/registry/phpunit*" />
-        <exclude name="vendor/joomla/registry/ruleset*" />
-        <exclude name="vendor/joomla/registry/SECURITY.md" />
+        <exclude name="vendor/jfcherng/php-sequence-matcher/.php-cs-fixer.dist.php" />
+        <exclude name="vendor/jfcherng/php-sequence-matcher/composer.lock" />
 
-        <exclude name="vendor/joomla/string/.github/***" />
-        <exclude name="vendor/joomla/string/Tests/***" />
-        <exclude name="vendor/joomla/string/.drone*" />
-        <exclude name="vendor/joomla/string/.editorconfig" />
-        <exclude name="vendor/joomla/string/phpunit*" />
-        <exclude name="vendor/joomla/string/ruleset*" />
-        <exclude name="vendor/joomla/string/SECURITY.md" />
+        <exclude name="vendor/lcobucci/clock/renovate.json" />
 
-        <exclude name="vendor/joomla/uri/.github/***" />
-        <exclude name="vendor/joomla/uri/tests/***" />
-        <exclude name="vendor/joomla/uri/.drone*" />
-        <exclude name="vendor/joomla/uri/.editorconfig" />
-        <exclude name="vendor/joomla/uri/phpunit*" />
-        <exclude name="vendor/joomla/uri/ruleset*" />
-        <exclude name="vendor/joomla/uri/SECURITY.md" />
+        <exclude name="vendor/league/commonmark/.phpstorm.meta.php" />
+        <exclude name="vendor/league/commonmark/CHANGELOG.md" />
+
+        <exclude name="vendor/league/config/CHANGELOG.md" />
+
+        <exclude name="vendor/monolog/monolog/CHANGELOG.md" />
 
         <exclude name="vendor/nette/schema/contributing.md" />
 
@@ -184,13 +184,31 @@
         <exclude name="vendor/psr/http-message/docs/**" />
         <exclude name="vendor/psr/http-message/docs/CHANGELOG.md" />
 
+        <exclude name="vendor/scrivo/highlight.php/.php-cs-fixer.dist.php" />
+        <exclude name="vendor/scrivo/highlight.php/AUTHORS.txt" />
+        <exclude name="vendor/scrivo/highlight.php/CONTRIBUTING.md" />
+
         <exclude name="vendor/symfony/cache-contracts/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/cache-contracts/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/deprecation-contracts/.gitignore" />
+        <exclude name="vendor/symfony/deprecation-contracts/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/error-handler/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/service-contracts/CHANGELOG.md" />
+        <exclude name="vendor/symfony/service-contracts/Test/**" />
+
+        <exclude name="vendor/symfony/string/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/uid/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/var-dumper/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/var-exporter/CHANGELOG.md" />
+
+        <exclude name="vendor/webmozart/assert/CHANGELOG.md" />
     </fileset>
 
     <!--

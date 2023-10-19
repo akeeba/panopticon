@@ -1,7 +1,7 @@
-Aphelion [1.0 Alphas]
-Perihelion [1.0 Betas]
-Halo [1.0 RCs]
-Morn
+Aphelion [Alpha]
+Perihelion [Betas]
+Halo [RCs]
+Morn [1.0]
 Dawn
 Twilight
 Aurora
