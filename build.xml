@@ -76,16 +76,15 @@
         <include name="cache/.htaccess" />
         <include name="cache/web.config" />
 
-        <exclude name="log/**" />
-        <include name="log/.htaccess" />
-        <include name="log/web.config" />
+        <exclude name="log/*.log" />
+        <exclude name="log/*.php" />
+        <exclude name="log/*.gz" />
 
-        <exclude name="tmp/**" />
-        <include name="tmp/.htaccess" />
-        <include name="tmp/web.config" />
+        <exclude name="tmp/compiled_templates/**" />
 
-        <exclude name="user_code/**" />
-        <include name="user_code/.gitkeep" />
+        <exclude name="user_code/*.php" />
+        <exclude name="user_code/*.pem" />
+        <exclude name="user_code/*.json" />
 
         <!-- Clean up Composer vendor folder -->
         <exclude name="vendor/akeeba/awf/src/Database/Driver/None.php" />
@@ -273,14 +272,8 @@
     ====================================================================================================
     -->
 
-    <target name="documentation" description="Creates the documentation packages"
-            depends="doc-epub">
-    </target>
-
-    <target name="doc-epub" description="Documentation in ePub format">
-        <phingcall target="docbook-epub">
-            <property name="docs.input" value="panopticon.xml"/>
-        </phingcall>
+    <target name="documentation" description="Documentation is provided as a Wiki">
+        <!-- Intentionally left blank -->
     </target>
 
 </project>
