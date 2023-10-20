@@ -9,6 +9,7 @@ Akeeba Panopticon 1.0.1
 # [MEDIUM] Wrong indication of stuck core and site update tasks in the overview page
 # [LOW] Log view: undefined property warning, leads to the site list being empty
 # [LOW] Possible PHP issue with ForkedLogger
+# [LOW] Filters on the Task page partially overlapped (cosmetic issue)
 
 Akeeba Panopticon 1.0.0
 ================================================================================

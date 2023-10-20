@@ -48,7 +48,6 @@ $i     = 1;
 	                   name: 'site_id',
 	                   attribs: [
 						   'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
-						   'style' => 'width: max(50%, 25em)',
                        ]
 	               )
                 }}
