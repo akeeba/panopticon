@@ -56,7 +56,9 @@ class Selfupdate extends Model
 	 *
 	 * The application must not break when these files are present.
 	 */
-	private const REMOVE_FILES = [];
+	private const REMOVE_FILES = [
+		'phpinfo.php'
+	];
 
 	/**
 	 * Old folders to delete AFTER the update is finished.
