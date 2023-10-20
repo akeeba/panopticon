@@ -33,7 +33,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 			</a>
 		</li>
 		<li>
-			<a href="https://github.com/akeeba/panopticon-connector-j3/releases" target="_blank">
+			<a href="https://github.com/akeeba/panopticon_connector_j3/releases" target="_blank">
 				@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_J3')
 			</a>
 		</li>
