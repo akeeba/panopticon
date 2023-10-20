@@ -264,6 +264,17 @@ class Site extends DataModel
 			{
 				throw new cURLError('Miscellaneous cURL Error', previous: $e);
 			}
+
+			// If we have no response object something went _really_ wrong. Throw it back and let the front-end handle it.
+			if (!isset($response))
+			{
+				throw $e;
+			}
+		}
+
+		if (!isset($response))
+		{
+			throw new RuntimeException('No response to the unauthenticated API request probe.', 500);
 		}
 
 		if ($response->getStatusCode() === 403)
@@ -290,6 +301,11 @@ class Site extends DataModel
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
 		$response = $client->get($url, $options);
+
+		if (!isset($response))
+		{
+			throw new RuntimeException('No response to the authenticated API request probe.', 500);
+		}
 
 		if ($response->getStatusCode() === 403)
 		{
@@ -372,8 +388,6 @@ class Site extends DataModel
 		}
 
 		// TODO Check for Admin Tools component and its Web Services plugins
-
-		// TODO Check if I can list WAF settings
 
 		return $warnings;
 	}

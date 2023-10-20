@@ -7,6 +7,8 @@
 
 defined('AKEEBA') || die;
 
+/** @var \Akeeba\Panopticon\View\Sites\Html $this */
+
 $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 ?>
 <div class="card my-3 border-info">

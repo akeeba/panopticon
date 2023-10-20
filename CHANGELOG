@@ -12,6 +12,7 @@ Akeeba Panopticon 1.0.1
 # [LOW] Possible PHP issue with ForkedLogger
 # [LOW] Filters on the Task page partially overlapped (cosmetic issue)
 # [LOW] Leftover phpinfo.php file in the public root
+# [LOW] Guzzle may return NULL response when trying to connect a site
 
 Akeeba Panopticon 1.0.0
 ================================================================================
