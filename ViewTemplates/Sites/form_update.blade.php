@@ -83,7 +83,10 @@ $updateTime = sprintf(
         </div>
     </fieldset>
     <div class="form-text offset-sm-3 col-sm-9">
-        @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_HELP')
+        @sprintf(
+	        'PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_HELP',
+	        (new DateTimeZone($this->container->appConfig->get('timezone', 'UTC') ?: 'UTC'))->getName()
+	    )
     </div>
 </div>
 
