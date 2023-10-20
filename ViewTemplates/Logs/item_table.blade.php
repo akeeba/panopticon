@@ -58,7 +58,7 @@ $hasFacility = array_reduce($this->logLines, fn(bool $carry, object $item) => $c
 			?>
         <tr class="{{ $textClass }}">
             <td class="{{ $textClass }}" style="white-space: nowrap">
-                @html('basic.date', $item->timestamp, $timeFormat)
+                @html('basic.date', $item->timestamp->format(DATE_RFC7231), $timeFormat, false)
             </td>
             <td class="{{ $textClass }}">
                 <span class="fa fa-fw {{ $icon }} me-2" aria-hidden="true"></span>

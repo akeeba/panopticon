@@ -2,6 +2,7 @@
 Akeeba Panopticon 1.0.1
 ================================================================================
 ! Security update: TinyMCE 6.7.1
+# [MEDIUM] Log view: timezone calculation was wrong
 # [LOW] Log view: undefined property warning, leads to the site list being empty
 # [LOW] Possible PHP issue with ForkedLogger
 
