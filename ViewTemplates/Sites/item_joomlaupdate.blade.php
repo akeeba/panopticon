@@ -186,9 +186,10 @@ $lastUpdateTimestamp = function () use ($config): string
 
         @if ($config->get('core.canUpgrade', false))
             {{-- Is it scheduled? --}}
-				<?php
-				$showScheduleButton = true;
-				?>
+            <?php
+            $showScheduleButton = true;
+            $showCancelScheduleButton = false;
+            ?>
 
             @if ($config->get('core.lastAutoUpdateVersion') == $config->get('core.latest.version') || $joomlaUpdateTask === null)
                 {{-- Not scheduled --}}
@@ -209,17 +210,16 @@ $lastUpdateTimestamp = function () use ($config): string
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP')
                     @endif
                 </p>
-
-					<?php
-					$showScheduleButton = false; ?>
+                <?php
+                    $showScheduleButton = false;
+				    $showCancelScheduleButton = true;
+                ?>
             @elseif ($joomlaUpdateTask->enabled && in_array($joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
                 {{-- Scheduled, running --}}
                 <p>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_RUNNING')
                 </p>
-
-					<?php
-					$showScheduleButton = false; ?>
+                <?php $showScheduleButton = false; ?>
             @elseif ($joomlaUpdateTask->last_exit_code != Status::OK->value)
                 {{-- Task error condition --}}
                 <?php
@@ -258,6 +258,12 @@ $lastUpdateTimestamp = function () use ($config): string
                    class="btn btn-outline-warning" role="button">
                     <span class="fa fa-clock" aria-hidden="true"></span>
                     @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_UPDATE', $this->escape($config->get('core.latest.version')))
+                </a>
+            @elseif($showCancelScheduleButton)
+                <a href="@route(sprintf('index.php?view=site&task=unscheduleJoomlaUpdate&id=%d&%s=1', $this->item->id, $token))"
+                   class="btn btn-outline-danger" role="button">
+                    <span class="fa fa-cancel" aria-hidden="true"></span>
+                    @lang('PANOPTICON_SITE_LBL_JUPDATE_UNSCHEDULE_UPDATE')
                 </a>
             @endif
         @endif

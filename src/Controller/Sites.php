@@ -265,6 +265,74 @@ class Sites extends DataController
 		$this->setRedirect($returnUri, $message, $type);
 	}
 
+	public function unscheduleJoomlaUpdate()
+	{
+		$this->csrfProtection();
+
+		$id    = $this->input->get->getInt('id', 0);
+		$force = $this->input->get->getBool('force', false);
+
+		/** @var SiteModel $site */
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
+
+		$site->findOrFail($id);
+
+		try
+		{
+			/** @var Task|null $task */
+			$task = $site->getJoomlaUpdateTask();
+
+			if ($task === null)
+			{
+				throw new RuntimeException('PANOPTICON_SITE_LBL_JUPDATE_UNSCHEDULE_ERR_NOT_SCHEDULED');
+			}
+
+			if (in_array($task->last_exit_code, [
+				Status::WILL_RESUME->value,
+				Status::RUNNING->value
+			]))
+			{
+				throw new RuntimeException('PANOPTICON_SITE_LBL_JUPDATE_UNSCHEDULE_ERR_RUNNING');
+			}
+
+			$task->last_exit_code = Status::OK->value;
+
+			$task->unpublish();
+		}
+		catch (Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_ERR_JUPDATE_UNSCHEDULE_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
 	public function clearUpdateScheduleError()
 	{
 		$this->csrfProtection();
