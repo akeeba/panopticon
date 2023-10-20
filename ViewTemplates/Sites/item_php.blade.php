@@ -190,5 +190,12 @@ $hasError                = !empty($lastError);
                 </p>
             @endif
         @endif
+
+        <a href="http://endoflife.date/php" target="_blank"
+           class="link-secondary link-opacity-75 link-opacity-100-hover small"
+        >
+            @lang('PANOPTICON_SITE_LBL_WHERE_DID_I_GET_DATA')
+            <span class="fa fa-fw fa-external-link" aria-hidden="true"></span>
+        </a>
     </div>
 </div>
