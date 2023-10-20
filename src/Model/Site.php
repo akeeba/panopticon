@@ -268,6 +268,8 @@ class Site extends DataModel
 			// If we have no response object something went _really_ wrong. Throw it back and let the front-end handle it.
 			if (!isset($response))
 			{
+				$this->container->segment->setFlash('site_connection_guzzle_error', $e->getMessage());
+
 				throw $e;
 			}
 		}

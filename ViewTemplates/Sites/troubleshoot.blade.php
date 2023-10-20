@@ -124,7 +124,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH1')
             </p>
             <p class="px-2 text-secondary">
-                {{{ $this->connectionError->getMessage() }}}
+                {{{ $this->guzzleError }}}
             </p>
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2')

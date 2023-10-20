@@ -44,6 +44,8 @@ class Html extends DataViewHtml
 
 	protected ?string $curlError = null;
 
+	protected ?string $guzzleError = null;
+
 	protected ?int $httpCode;
 
 	protected array $extUpdatePreferences = [];
@@ -171,6 +173,7 @@ class Html extends DataViewHtml
 		$this->connectionError = $this->container->segment->getFlash('site_connection_error', null);
 		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
 		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
+		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
 
 		$document = $this->container->application->getDocument();
 		$document->addScriptOptions(
@@ -199,6 +202,7 @@ class Html extends DataViewHtml
 		$this->connectionError = $this->container->segment->getFlash('site_connection_error', null);
 		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
 		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
+		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
 
 		$this->container->application->getDocument()
 			->addScriptOptions(
