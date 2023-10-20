@@ -716,53 +716,35 @@ class Site extends DataModel
 
 	protected function getSiteSpecificTask(string $type): ?Task
 	{
-		static $tasks = [];
+		$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Task');
+		/** @var DataModel\Collection $taskCollection */
+		$taskCollection = $taskModel
+			->where('site_id', '=', $this->getId())
+			->where('type', '=', $type)
+			->get(0, 100);
 
-		if (!array_key_exists($type, $tasks))
+		if ($taskCollection->isEmpty())
 		{
-			$tasks[$type] = null;
-
-			$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Task');
-			/** @var DataModel\Collection $taskCollection */
-			$taskCollection = $taskModel
-				->where('site_id', '=', $this->id)
-				->where('type', '=', $type)
-				->get(0, 100);
-
-			if ($taskCollection->isEmpty())
-			{
-				return null;
-			}
-
-			/** @var Task $task */
-			$task          = $taskCollection->first();
-			$task->storage = $task->storage instanceof Registry ? $task->storage : new Registry($task->storage ?: '{}');
-
-			$tasks[$type] = $task;
+			return null;
 		}
 
-		return $tasks[$type];
+		/** @var Task $task */
+		$task          = $taskCollection->first();
+		$task->storage = $task->storage instanceof Registry ? $task->storage : new Registry($task->storage ?: '{}');
+
+		return $task;
 	}
 
 	protected function getSiteSpecificTasks(string $type): DataModel\Collection
 	{
-		static $tasks = [];
+		$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Task');
+		/** @var DataModel\Collection $taskCollection */
+		$taskCollection = $taskModel
+			->where('site_id', '=', $this->getId())
+			->where('type', '=', $type)
+			->get(0, 100);
 
-		if (!array_key_exists($type, $tasks))
-		{
-			$tasks[$type] = null;
-
-			$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Task');
-			/** @var DataModel\Collection $taskCollection */
-			$taskCollection = $taskModel
-				->where('site_id', '=', $this->id)
-				->where('type', '=', $type)
-				->get(0, 100);
-
-			$tasks[$type] = $taskCollection;
-		}
-
-		return $tasks[$type];
+		return $taskCollection;
 	}
 
 	protected function isSiteSpecificTaskStuck(string $type): bool
