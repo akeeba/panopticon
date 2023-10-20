@@ -2,7 +2,8 @@
 
 Self-hosted site monitoring and management
 
-[Documentation](https://github.com/akeeba/panopticon/wiki) • [Downloads](https://github.com/akeeba/panopticon/releases)
+
+[![Documentation](https://img.shields.io/badge/documentation-wiki-ffffff?labelColor=514f50&color=40b5b8)](https://github.com/akeeba/panopticon/wiki) &nbsp; [![Downloads](https://img.shields.io/github/downloads/akeeba/panopticon/total?labelColor=514f50&color=40b5b8)](https://github.com/akeeba/panopticon/releases)
 
 ## What is it?
 
