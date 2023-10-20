@@ -766,7 +766,7 @@ class Site extends DataModel
 
 	protected function isSiteSpecificTaskScheduled(string $type): bool
 	{
-		$task = $this->getExtensionsUpdateTask($type);
+		$task = $this->getSiteSpecificTask($type);
 
 		if (empty($task) || !$task->enabled || empty($task->next_execution))
 		{
