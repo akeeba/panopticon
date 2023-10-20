@@ -54,6 +54,7 @@ trait EnqueueJoomlaUpdateTrait
 		$params = new Registry();
 		$params->set('run_once', 'disable');
 		$params->set('force', $force);
+		$params->set('toVersion', $site->getConfig()->get('core.latest.version'));
 
 		$task->params         = $params->toString();
 		$task->storage        = '{}';

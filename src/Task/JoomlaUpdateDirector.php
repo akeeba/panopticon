@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Model\Task;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
@@ -78,22 +79,90 @@ class JoomlaUpdateDirector extends AbstractCallback
 			count($siteIDs)
 		));
 
-		// Set `core.lastAutoUpdateVersion` to `core.latest.version` for all sites to be processed
-		$query = $db->getQuery(true)
-			->update($db->quoteName('#__sites'));
-		$query->set(
-			$db->quoteName('config') . '= JSON_SET(' . $db->quoteName('config') . ',' .
-			$db->quote('$.core.lastAutoUpdateVersion') . ',' . $query->jsonExtract($db->quoteName('config'), '$.core.latest.version') . ')'
-		)
-			->where($db->quoteName('id') . ' IN(' . implode(',', $siteIDs) . ')');
-		$db->setQuery($query)->execute();
+		// Filter site IDs so that those with manually enabled, or currently executing, update tasks are not disrupted
+		$siteIDs = array_filter(
+			$siteIDs,
+			function (int $siteId)
+			{
+				/** @var Site $site */
+				$site = $this->container->mvcFactory->makeTempModel('Site');
 
-		// Disable all pending 'joomlaupdate' tasks for these sites.
-		$query = $db->getQuery(true)
-			->update($db->quoteName('#__tasks'))
-			->set($db->quoteName('enabled') . ' = 0')
-			->where($db->quoteName('site_id') . ' IN(' . implode(',', $siteIDs) . ')');
-		$db->setQuery($query)->execute();
+				try
+				{
+					$site->findOrFail($siteId);
+				}
+				catch (Exception)
+				{
+					$this->logger->debug(
+						sprintf(
+							'Site #%d does not exist.',
+							$siteId
+						)
+					);
+					return false;
+				}
+
+				/** @var Task|null $updateTask */
+				$updateTask = $site->getJoomlaUpdateTask();
+
+				if (empty($updateTask))
+				{
+					return true;
+				}
+
+				if (in_array($updateTask->last_exit_code, [
+					Status::WILL_RESUME->value,
+					Status::INITIAL_SCHEDULE->value,
+					Status::RUNNING->value,
+				]))
+				{
+					$this->logger->debug(
+						sprintf(
+							'Site #%d: Joomla! Update is currently running; skipping over.',
+							$siteId
+						)
+					);
+
+					return false;
+				}
+
+				$actualLatestVersion = $site->getConfig()->get('core.latest.version');
+				$taskLatestVersion   = $updateTask->getParams()->get('toVersion');
+
+				if ($actualLatestVersion === $taskLatestVersion)
+				{
+					$this->logger->debug(
+						sprintf(
+							'Site #%d: Joomla! Update to version %s is already scheduled.',
+							$siteId,
+							$actualLatestVersion
+						)
+					);
+				}
+
+				return true;
+			}
+		);
+
+		if (count($siteIDs))
+		{
+			// Set `core.lastAutoUpdateVersion` to `core.latest.version` for all sites to be processed
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__sites'));
+			$query->set(
+				$db->quoteName('config') . '= JSON_SET(' . $db->quoteName('config') . ',' .
+				$db->quote('$.core.lastAutoUpdateVersion') . ',' . $query->jsonExtract($db->quoteName('config'), '$.core.latest.version') . ')'
+			)
+				->where($db->quoteName('id') . ' IN(' . implode(',', $siteIDs) . ')');
+			$db->setQuery($query)->execute();
+
+			// Disable all pending 'joomlaupdate' tasks for these sites.
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__tasks'))
+				->set($db->quoteName('enabled') . ' = 0')
+				->where($db->quoteName('site_id') . ' IN(' . implode(',', $siteIDs) . ')');
+			$db->setQuery($query)->execute();
+		}
 
 		// End the transaction
 		$db->setQuery('COMMIT')->execute();
