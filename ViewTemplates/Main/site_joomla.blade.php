@@ -7,6 +7,7 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
 use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Main\Html;
@@ -25,42 +26,44 @@ $lastError           = trim($config->get('core.lastErrorMessage') ?? '');
 $jUpdateFailure      = !$config->get('core.extensionAvailable') || !$config->get('core.updateSiteAvailable');
 $token               = $this->container->session->getCsrfToken()->getValue();
 $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
+$jVersionHelper      = new JoomlaVersion($this->getContainer())
 ?>
 
 @repeatable('joomlaVersion', $jVersion)
-    {{{ $jVersion }}}
-   <?php $version = Version::create($jVersion) ?>
-    @if($version->isDev())
-        <sup>
+{{{ $jVersion }}}
+<?php
+$version = Version::create($jVersion) ?>
+@if($version->isDev())
+    <sup>
             <span class="badge bg-danger small text-light">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_DEV_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_DEV_LONG')</span>
             </span>
-        </sup>
-    @elseif($version->isAlpha())
-        <sup>
+    </sup>
+@elseif($version->isAlpha())
+    <sup>
             <span class="badge bg-danger small">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_ALPHA_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_ALPHA_LONG')</span>
             </span>
-        </sup>
-    @elseif($version->isBeta())
-        <sup>
+    </sup>
+@elseif($version->isBeta())
+    <sup>
             <span class="badge bg-warning small">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_BETA_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BETA_LONG')</span>
             </span>
-        </sup>
-    @elseif($version->isRC())
-        <sup>
+    </sup>
+@elseif($version->isRC())
+    <sup>
             <span class="badge bg-info small">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_RC_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_RC_LONG')</span>
             </span>
-        </sup>
-    @else
-        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_STABLE_LONG')</span>
-    @endif
+    </sup>
+@else
+    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_STABLE_LONG')</span>
+@endif
 @endrepeatable
 
 <div class="d-flex flex-row gap-2">
@@ -171,6 +174,24 @@ $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
         @else
             @if($jUpdateFailure)
                 <div class="text-secondary">
+                    @yieldRepeatable('joomlaVersion', $jVersion)
+                </div>
+            @elseif($jVersionHelper->isEOLMajor($jVersion))
+                <div class="text-danger-emphasis">
+                    <span class="fa fa-fw fa-skull" aria-hidden="true"
+                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                          data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_MAJOR')"
+                    ></span>
+                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_MAJOR')</span>
+                    @yieldRepeatable('joomlaVersion', $jVersion)
+                </div>
+            @elseif($jVersionHelper->isEOLBranch($jVersion))
+                <div class="text-danger">
+                    <span class="fa fa-fw fa-book-dead" aria-hidden="true"
+                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                          data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_BRANCH')"
+                    ></span>
+                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_BRANCH')</span>
                     @yieldRepeatable('joomlaVersion', $jVersion)
                 </div>
             @else

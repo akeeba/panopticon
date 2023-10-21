@@ -3,6 +3,7 @@ Akeeba Panopticon 1.0.1
 ================================================================================
 ! Security update: TinyMCE 6.7.1
 + Cancel pending Joomla! update (gh-162)
++ Joomla! version support status (gh-163)
 + Link to the data source for the PHP version information
 # [HIGH] Manually scheduled Joomla! updates are cancelled when evaluating automatic updates
 # [MEDIUM] Joomla! Update options falsely claim that the time to install updates is in GMT; it's local

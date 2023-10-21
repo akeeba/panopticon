@@ -9,6 +9,7 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
+use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Database\Driver;
@@ -23,13 +24,13 @@ $overridesChanged = $config->get('core.overridesChanged');
 $lastError        = trim($config->get('core.lastErrorMessage') ?? '');
 $hasError         = !empty($lastError);
 
-$lastUpdateTimestamp = function () use ($config): string
-{
+$lastUpdateTimestamp = function () use ($config): string {
 	$timestamp = $config->get('core.lastAttempt');
 
 	return $timestamp ? $this->timeAgo($timestamp) : \Awf\Text\Text::_('PANOPTICON_LBL_NEVER');
 };
 
+$jVersionHelper = new JoomlaVersion($this->getContainer())
 ?>
 <div class="card">
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
@@ -166,14 +167,23 @@ $lastUpdateTimestamp = function () use ($config): string
                     </p>
                 @endif
             </div>
-        @else
-            <div class="alert alert-success">
+        @elseif($jVersionHelper->isEOLMajor($config->get('core.current.version')))
+            <?php
+            $versionCurrent    = Version::create($config->get('core.current.version'));
+            $versionFamilyInfo = $jVersionHelper->getVersionInformation($config->get('core.current.version'));
+            $eolDate           = $versionFamilyInfo?->eol ?? null;
+            ?>
+            <div class="alert alert-danger text-danger-emphasis">
                 <h4 class="alert alert-heading h5 p-0 m-0">
-                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_UP_TO_DATE', $this->escape($config->get('core.current.version')))
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_EOL', $this->escape($config->get('core.latest.version')))
                 </h4>
+                <p class="my-1 fw-medium">
+                    <span class="fa fa-fw fa-skull" aria-hidden="true"></span>
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_EOL_MAJOR', $versionFamilyInfo->series)
+                </p>
                 {{-- Is there a new version available, which cannot be installed? --}}
                 @if (version_compare($config->get('core.latest.version'), $config->get('core.current.version'), 'lt'))
-                    <hr/>
+                    <hr />
                     <p class="my-2 text-warning-emphasis fw-semibold">
                         @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CANNOT_INSTALL', $this->escape($config->get('core.latest.version')))
                     </p>
@@ -182,14 +192,100 @@ $lastUpdateTimestamp = function () use ($config): string
                     </p>
                 @endif
             </div>
+            <p class="text-danger-emphasis">
+                <span class="fa fa-fw fa-warning" aria-hidden="true"></span>
+                @sprintf(
+	                'PANOPTICON_SITE_LBL_JUPDATE_EOL_DATE',
+	                $versionFamilyInfo->series,
+					$this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1'))
+                )
+            </p>
+        @elseif($jVersionHelper->isEOLBranch($config->get('core.current.version')))
+            <?php
+            $versionCurrent = Version::create($config->get('core.current.version'));
+            ?>
+            <div class="alert alert-danger text-danger-emphasis">
+                <h4 class="alert alert-heading h5 p-0 m-0">
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_EOL', $this->escape($config->get('core.latest.version')))
+                </h4>
+                <p class="my-1 fw-medium">
+                    <span class="fa fa-fw fa-book-dead" aria-hidden="true"></span>
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_EOL_MINOR', $versionCurrent->versionFamily())
+                </p>
+                {{-- Is there a new version available, which cannot be installed? --}}
+                @if (version_compare($config->get('core.latest.version'), $config->get('core.current.version'), 'lt'))
+                    <hr />
+                    <p class="my-2 text-warning-emphasis fw-semibold">
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CANNOT_INSTALL', $this->escape($config->get('core.latest.version')))
+                    </p>
+                    <p class="text-muted">
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION', $this->escape($config->get('core.php')))
+                    </p>
+                @endif
+            </div>
+        @else
+            <?php
+            $versionCurrent = Version::create($config->get('core.current.version'));
+            $versionFamilyInfo = $jVersionHelper->getVersionInformation($config->get('core.current.version'));
+            $branchEolDate = $versionFamilyInfo->dates->eolBranch;
+            $eolDate = $versionFamilyInfo->dates->eol;
+            $supportDate = $versionFamilyInfo->dates->activeSupport;
+			$isSecurity = $versionFamilyInfo->security;
+            ?>
+            <div class="alert alert-success">
+                <h4 class="alert alert-heading h5 p-0 m-0">
+                    @sprintf('PANOPTICON_SITE_LBL_JUPDATE_UP_TO_DATE', $this->escape($config->get('core.current.version')))
+                </h4>
+                {{-- Is there a new version available, which cannot be installed? --}}
+                @if (version_compare($config->get('core.latest.version'), $config->get('core.current.version'), 'lt'))
+                    <hr />
+                    <p class="my-2 text-warning-emphasis fw-semibold">
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CANNOT_INSTALL', $this->escape($config->get('core.latest.version')))
+                    </p>
+                    <p class="text-muted">
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION', $this->escape($config->get('core.php')))
+                    </p>
+                @endif
+            </div>
+            @if($isSecurity)
+                <p class="my-1 fw-medium text-warning">
+                    <span class="fa fa-fw fa-warning" aria-hidden="true"></span>
+                    @sprintf(
+                        'PANOPTICON_SITE_LBL_JUPDATE_SECURITY_DATE',
+                        $versionFamilyInfo->series,
+                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1')),
+                        $this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1'))
+                    )
+                </p>
+            @elseif ($branchEolDate == $eolDate)
+                <p class="my-1 text-muted">
+                    <span class="fa fa-fw fa-check-circle" aria-hidden="true"></span>
+                    @sprintf(
+                        'PANOPTICON_SITE_LBL_JUPDATE_LAST_STABLE_DATE',
+                       $versionFamilyInfo->series,
+                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1')),
+                        $this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1'))
+                    )
+                </p>
+            @else
+                <p class="my-1 text-muted">
+                    <span class="fa fa-fw fa-check-circle" aria-hidden="true"></span>
+                    @sprintf(
+                        'PANOPTICON_SITE_LBL_JUPDATE_STABLE_DATE',
+                       $versionCurrent->versionFamily(),
+                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1')),
+                        $this->getContainer()->html->basic->date($branchEolDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1'))
+                    )
+                </p>
+            @endif
         @endif
 
         @if ($config->get('core.canUpgrade', false))
             {{-- Is it scheduled? --}}
-            <?php
-            $showScheduleButton = true;
-            $showCancelScheduleButton = false;
-            ?>
+				<?php
+				$showScheduleButton       = true;
+				$showCancelScheduleButton = false;
+				?>
 
             @if ($config->get('core.lastAutoUpdateVersion') == $config->get('core.latest.version') || $joomlaUpdateTask === null)
                 {{-- Not scheduled --}}
@@ -210,29 +306,31 @@ $lastUpdateTimestamp = function () use ($config): string
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP')
                     @endif
                 </p>
-                <?php
-                    $showScheduleButton = false;
-				    $showCancelScheduleButton = true;
-                ?>
+					<?php
+					$showScheduleButton       = false;
+					$showCancelScheduleButton = true;
+					?>
             @elseif ($joomlaUpdateTask->enabled && in_array($joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
                 {{-- Scheduled, running --}}
                 <p>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_RUNNING')
                 </p>
-                <?php $showScheduleButton = false; ?>
+					<?php
+					$showScheduleButton = false; ?>
             @elseif ($joomlaUpdateTask->last_exit_code != Status::OK->value)
                 {{-- Task error condition --}}
-                <?php
-                $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE
-                ?>
+					<?php
+					$status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE
+					?>
                 <p class="text-warning-emphasis">
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_ERRORED')
                     {{ $status->forHumans() }}
                 </p>
                 @if ($status->value === Status::EXCEPTION->value)
-                    <?php
-						$storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage : (new Registry($joomlaUpdateTask->storage));
-                    ?>
+						<?php
+						$storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage
+							: (new Registry($joomlaUpdateTask->storage));
+						?>
                     <p>
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_THE_ERROR_REPORTED_WAS')
                     </p>
@@ -286,7 +384,7 @@ $lastUpdateTimestamp = function () use ($config): string
         @endif
 
         @if (!$config->get('core.canUpgrade', false) && $config->get('core.extensionAvailable', true) && $config->get('core.updateSiteAvailable', true))
-            <hr class="mt-4"/>
+            <hr class="mt-4" />
 
             <details>
                 <summary class="text-info">
@@ -325,10 +423,11 @@ $lastUpdateTimestamp = function () use ($config): string
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_RUNNING')
                     </div>
                 @elseif (!$joomlaUpdateTask->enabled)
-                    <?php
-                    $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE;
-                    $storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage : (new Registry($joomlaUpdateTask->storage));
-                    ?>
+						<?php
+						$status  = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE;
+						$storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage
+							: (new Registry($joomlaUpdateTask->storage));
+						?>
                     <div class="alert alert-danger mt-2">
                         <h4 class="alert-heading h6">
                             @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_ERRORED')
@@ -360,5 +459,12 @@ $lastUpdateTimestamp = function () use ($config): string
                 @endif
             @endif
         @endif
+
+        <details class="mt-3 mb-1 small text-secondary">
+            <summary>@lang('PANOPTICON_SITE_LBL_WHERE_DID_I_GET_DATA')</summary>
+            <p class="mt-1 mb-0">
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_SOURCE_INFO')
+            </p>
+        </details>
     </div>
 </div>
