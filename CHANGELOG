@@ -10,6 +10,7 @@ Akeeba Panopticon 1.0.1
 # [HIGH] Manually scheduled Joomla! updates are cancelled when evaluating automatic updates
 # [MEDIUM] Joomla! Update options falsely claim that the time to install updates is in GMT; it's local
 # [MEDIUM] Log view: timezone calculation was wrong
+# [MEDIUM] Log view: no site names shown
 # [MEDIUM] Wrong indication of stuck core and site update tasks in the overview page
 # [LOW] Log view: undefined property warning, leads to the site list being empty
 # [LOW] Possible PHP issue with ForkedLogger
