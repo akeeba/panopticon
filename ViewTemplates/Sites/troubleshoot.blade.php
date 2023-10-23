@@ -220,27 +220,39 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_HEAD')
             </p>
+            <p class="fst-italic text-decoration-underline">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_J4LATER')
+            </p>
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH1')
             </p>
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2')
             </p>
+            <p class="fst-italic text-decoration-underline">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_J3')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH3')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH4')
+            </p>
         @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\FrontendPasswordProtection::class)
             <p class="fw-semibold">
-                Your site appears to be password–protected at the web server level
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_HEAD')
             </p>
             <p>
-                Your site replied with an HTTP 401 Unauthorized status code when trying to access the API. This typically means that you have applied password protection at the web server level.
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH1')
             </p>
             <p>
-                Please remove the password protection.
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH2')
             </p>
             <p>
-                On Joomla! 4 and later versions the password protection may have been applied only to your site's <code>api</code> folder, or the root folder of your site. Look in both places, in this order.
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3')
             </p>
             <p>
-                On Joomla! 3, the password protection has been applied to the root folder of your site.
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH4')
             </p>
         @else
             <p class="fw-semibold">
