@@ -171,7 +171,7 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
             <?php
             $versionCurrent    = Version::create($config->get('core.current.version'));
             $versionFamilyInfo = $jVersionHelper->getVersionInformation($config->get('core.current.version'));
-            $eolDate           = $versionFamilyInfo?->eol ?? null;
+            $eolDate           = $versionFamilyInfo?->dates?->eol ?? null;
             ?>
             <div class="alert alert-danger text-danger-emphasis">
                 <h4 class="alert alert-heading h5 p-0 m-0">
