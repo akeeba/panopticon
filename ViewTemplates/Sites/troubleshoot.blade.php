@@ -9,7 +9,12 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
-$config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
+$config            = new \Awf\Registry\Registry($this->item?->config ?? '{}');
+$isJoomla3         = str_ends_with(rtrim($this->item->url, '/'), '/panopticon_api');
+$maybeJ3NeedsIndex = $isJoomla3 && !str_contains($this->item->url, '/index.php/panopticon_api');
+$possibleJ3Endpoint = $maybeJ3NeedsIndex
+    ? str_replace('/panopticon_api', '/index.php/panopticon_api', $this->item->url)
+    : $this->item->url;
 ?>
 <div class="card my-3 border-info">
     <h3 class="card-header bg-info text-white">
@@ -22,17 +27,17 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_HEAD')
             </p>
             <p>
-                @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS', htmlentities($this->item->url))
+                @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS' . ($isJoomla3 ? '_J3' : ''), htmlentities($this->item->url))
             </p>
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_TOCHECK')
             </p>
             <ul>
                 <li>
-                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1', htmlentities($this->item->url))
+                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1' . ($isJoomla3 ? '_J3' : ''), htmlentities($this->item->url))
                 </li>
                 <li>
-                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2', htmlentities($this->item->url), htmlentities($config->get('config.apiKey')), htmlentities(AKEEBA_PANOPTICON_VERSION))
+                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2' . ($isJoomla3 ? '_J3' : ''), htmlentities($this->item->url), htmlentities($config->get('config.apiKey')), htmlentities(AKEEBA_PANOPTICON_VERSION))
                 </li>
                 <li>
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK3')
@@ -40,11 +45,11 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             </ul>
         @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBroken::class)
             <p class="fw-semibold">
-                @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_HEAD', htmlentities($this->httpCode))
+                @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_HEAD' . ($isJoomla3 ? '_J3' : ''), htmlentities($this->httpCode))
             </p>
             @if ($this->httpCode > 500)
                 <p>
-                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_5XX', htmlentities($this->httpCode))
+                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_5XX' . ($isJoomla3 ? '_J3' : ''), htmlentities($this->httpCode))
                 </p>
             @elseif($this->httpCode === 400)
                 <p>
@@ -63,9 +68,15 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                 <p>
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH1')
                 </p>
+                @if (!$isJoomla3)
                 <p>
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH2')
                 </p>
+                @else
+                <p>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH2_J3')
+                </p>
+                @endif
                 <p>
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH3')
                 </p>
@@ -91,12 +102,18 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_HEAD')
             </p>
+            @if(!$isJoomla3)
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH1')
             </p>
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH2')
             </p>
+            @else
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH2_J3')
+            </p>
+            @endif
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH3')
             </p>
@@ -147,7 +164,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3')
                 </li>
             </ul>
-        @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled::class)
+        @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled::class && !$isJoomla3)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_HEAD')
             </p>
@@ -171,6 +188,13 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK4')
                 </li>
             </ul>
+        @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled::class && $isJoomla3)
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_HEAD')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_BLAH')
+            </p>
         @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL::class)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_HEAD')
@@ -216,12 +240,9 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4')
                 </li>
             </ul>
-        @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled::class)
+        @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled::class && !$isJoomla3)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_HEAD')
-            </p>
-            <p class="fst-italic text-decoration-underline">
-                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_J4LATER')
             </p>
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH1')
@@ -229,15 +250,21 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2')
             </p>
-            <p class="fst-italic text-decoration-underline">
-                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_J3')
+        @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled::class && $isJoomla3)
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD')
             </p>
             <p>
-                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH3')
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH1')
             </p>
             <p>
-                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH4')
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2')
             </p>
+            @if($maybeJ3NeedsIndex)
+            <p>
+                @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH3', $possibleJ3Endpoint)
+            </p>
+            @endif
         @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\FrontendPasswordProtection::class)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_HEAD')
@@ -248,12 +275,15 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH2')
             </p>
+            @if (!$isJoomla3)
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3')
             </p>
+            @else
             <p>
-                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH4')
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3_J3')
             </p>
+            @endif
         @else
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_HEAD')
@@ -272,6 +302,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
         @if($this->container->appConfig->get('debug', false))
             <?php
             $session           = $this->getContainer()->segment;
+            $step              = $session->get('testconnection.step', null) ?: '';
             $http_status       = $session->get('testconnection.http_status', null);
             $body              = $session->get('testconnection.body', null);
             $headers           = $session->get('testconnection.headers', null);
@@ -293,10 +324,14 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_INFO')
             </p>
+            <p class="small text-info">
+                <strong>Process step:</strong>
+                {{{ $step }}}
+            </p>
             @endif
 
             @if ($hasRequestDebug)
-            <table class="table table-info">
+            <table class="table" data-bs-theme="dark">
                 <tbody>
                 @if (is_int($http_status))
                 <tr>
@@ -313,7 +348,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                     <th scope="row">
                         @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_BODY')
                     </th>
-                    <td><pre>{{{ $body }}}</pre></td>
+                    <td><pre style="overflow-x: scroll">{{{ $body }}}</pre></td>
                 </tr>
                 @endif
                 @if (is_array($headers) && !empty($headers))
@@ -372,7 +407,7 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                     </p>
                 @endif
                 @if((is_string($exceptionTrace) && !empty($exceptionTrace)))
-                    <pre>{{{ $exceptionTrace }}}</pre>
+                    <pre style="overflow-x: scroll">{{{ $exceptionTrace }}}</pre>
                 @endif
             @endif
 

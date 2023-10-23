@@ -251,13 +251,16 @@ class Site extends DataModel
 			$options[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout;
 			$options[RequestOptions::TIMEOUT]         = $totalTimeout;
 
-			$session->set('testconnection.step', 'Unauthenticated v1/extensions');
+			$session->set('testconnection.step', 'Unauthenticated access (can I even access the API at all?)');
 
-			$response = $client->get($this->getAPIEndpointURL() . '/index.php/v1/extensions', $options);
+			[$url, ] = $this->getRequestOptions($this, '/index.php/v1/extensions');
+
+			$response = $client->get($url, $options);
 		}
 		catch (GuzzleException $e)
 		{
-			$this->updateDebugInfoInSession($response ?? null, $e);
+			$bodyContent = $response?->getBody()?->getContents();
+			$this->updateDebugInfoInSession($response ?? null, $response?->getBody()?->getContents(), $e);
 
 			$message = $e->getMessage();
 
@@ -294,7 +297,8 @@ class Site extends DataModel
 			}
 		}
 
-		$this->updateDebugInfoInSession($response ?? null, $e);
+		$bodyContent = $bodyContent ?? $response?->getBody()?->getContents();
+		$this->updateDebugInfoInSession($response ?? null, $bodyContent, $e ?? null);
 
 		if (!isset($response))
 		{
@@ -324,20 +328,21 @@ class Site extends DataModel
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/extensions?page[limit]=2000');
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
-		$session->set('testconnection.step', 'Authenticated v1/extensions');
+		$session->set('testconnection.step', 'Authenticated access (can I get information out of the API?)');
 
 		try
 		{
 			$response = $client->get($url, $options);
+			$bodyContent = $response?->getBody()?->getContents();
 		}
 		catch (GuzzleException $e)
 		{
-			$this->updateDebugInfoInSession($response ?? null, $e);
+			$this->updateDebugInfoInSession($response ?? null, $bodyContent, $e);
 
 			throw $e;
 		}
 
-		$this->updateDebugInfoInSession($response ?? null, $e);
+		$this->updateDebugInfoInSession($response ?? null, $bodyContent, $e ?? null);
 
 		if (!isset($response))
 		{
@@ -356,10 +361,9 @@ class Site extends DataModel
 		}
 		elseif ($response->getStatusCode() === 401)
 		{
-			$contents = $response->getBody()->getContents();
 			try
 			{
-				$temp = @json_decode($contents, true);
+				$temp = @json_decode($bodyContent, true);
 			}
 			catch (Exception $e)
 			{
@@ -390,7 +394,7 @@ class Site extends DataModel
 
 		try
 		{
-			$results = @json_decode($response->getBody()->getContents() ?? '{}');
+			$results = @json_decode($bodyContent ?? '{}');
 		}
 		catch (Throwable $e)
 		{
@@ -451,7 +455,7 @@ class Site extends DataModel
 		// TODO Check for Admin Tools component and its Web Services plugins
 
 		$session->set('testconnection.step', null);
-		$this->updateDebugInfoInSession(null, null);
+		$this->updateDebugInfoInSession(null, null, null);
 
 		return $warnings;
 	}
@@ -998,6 +1002,17 @@ class Site extends DataModel
 	private function cleanUrl(?string $url): string
 	{
 		$url = trim($url ?? '');
+
+		if (str_ends_with($url, '?/panopticon_api'))
+		{
+			$url = substr($url, 0, -16) . '/index.php/panopticon_api';
+
+			if (str_ends_with($url, '/index.php/index.php/panopticon_api'))
+			{
+				$url = substr($url, 0, -35) . '/index.php/panopticon_api';
+			}
+		}
+
 		$uri = new Uri($url);
 
 		if (!in_array($uri->getScheme(), ['http', 'https']))
@@ -1032,7 +1047,7 @@ class Site extends DataModel
 		return $uri->toString();
 	}
 
-	private function updateDebugInfoInSession(?ResponseInterface $response = null, ?Throwable $e = null): void
+	private function updateDebugInfoInSession(?ResponseInterface $response = null, ?string $responseBody = null, ?Throwable $e = null): void
 	{
 		$session = $this->getContainer()->segment;
 
@@ -1060,16 +1075,16 @@ class Site extends DataModel
 			{
 				$session->set('testconnection.http_status', $response->getStatusCode());
 			}
-			catch (Exception $e)
+			catch (Throwable $e)
 			{
 				$session->set('testconnection.http_status', null);
 			}
 
 			try
 			{
-				$session->set('testconnection.body', $response->getBody()->getContents());
+				$session->set('testconnection.body', $responseBody);
 			}
-			catch (Exception $e)
+			catch (Throwable $e)
 			{
 				$session->set('testconnection.body', null);
 			}
@@ -1078,7 +1093,7 @@ class Site extends DataModel
 			{
 				$session->set('testconnection.headers', $response->getHeaders());
 			}
-			catch (Exception $e)
+			catch (Throwable $e)
 			{
 				$session->set('testconnection.headers', null);
 			}
