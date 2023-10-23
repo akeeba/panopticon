@@ -370,10 +370,26 @@ class Html extends DataViewHtml
 	protected function getTimeInformation(object $record): array
 	{
 		$utcTimeZone = new DateTimeZone('UTC');
-		$startTime   = clone $this->container->dateFactory($record->backupstart, $utcTimeZone);
-		$endTime     = clone $this->container->dateFactory($record->backupend, $utcTimeZone);
 
-		$duration = $endTime->toUnix() - $startTime->toUnix();
+		try
+		{
+			$startTime = clone $this->container->dateFactory($record->backupstart, $utcTimeZone);
+		}
+		catch (\Exception $e)
+		{
+			$startTime = null;
+		}
+
+		try
+		{
+			$endTime = clone $this->container->dateFactory($record->backupend, $utcTimeZone);
+		}
+		catch (\Exception $e)
+		{
+			$endTime = null;
+		}
+
+		$duration = (is_null($startTime) || is_null($endTime)) ? 0 : $endTime->toUnix() - $startTime->toUnix();
 
 		if ($duration > 0)
 		{
@@ -392,12 +408,16 @@ class Html extends DataViewHtml
 		}
 
 		$tz = new DateTimeZone($this->container->appConfig->get('timezone', 'UTC'));
-		$startTime->setTimezone($tz);
+
+		if ($startTime !== null)
+		{
+			$startTime->setTimezone($tz);
+		}
 
 		$timeZoneSuffix = $startTime->format('T', true);
 
 		return [
-			$startTime->format(Text::_('DATE_FORMAT_LC6'), true),
+			is_null($startTime) ? '&nbsp;' : $startTime->format(Text::_('DATE_FORMAT_LC6'), true),
 			$duration,
 			$timeZoneSuffix,
 		];
