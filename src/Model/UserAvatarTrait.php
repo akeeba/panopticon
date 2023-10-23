@@ -23,7 +23,9 @@ trait UserAvatarTrait
 	{
 		$defaultGravatar = sprintf(
 			'https://www.gravatar.com/avatar/%s?d=mp&s=%d',
-			md5(strtolower(trim($this->email))),
+			function_exists('hash') && function_exists('hash_algos') && in_array('sha256', hash_algos())
+				? hash('sha256', strtolower(trim($this->email)))
+				: md5(strtolower(trim($this->email))),
 			max(1, min(2048, $size))
 		);
 
@@ -46,7 +48,9 @@ trait UserAvatarTrait
 	{
 		$defaultGravatar = sprintf(
 			'https://www.gravatar.com/%s',
-			md5(strtolower(trim($this->email))),
+			function_exists('hash') && function_exists('hash_algos') && in_array('sha256', hash_algos())
+				? hash('sha256', strtolower(trim($this->email)))
+				: md5(strtolower(trim($this->email))),
 		);
 
 		$params = $this->parameters instanceof Registry ? $this->parameters : new Registry($this->parameters);

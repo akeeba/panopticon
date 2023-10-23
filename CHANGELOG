@@ -2,6 +2,7 @@
 Akeeba Panopticon 1.0.1
 ================================================================================
 ! Security update: TinyMCE 6.7.1
+~ Update Gravatar URLs with SHA-256
 + Cancel pending Joomla! update (gh-162)
 + Joomla! version support status (gh-163)
 + Link to the data source for the PHP version information
