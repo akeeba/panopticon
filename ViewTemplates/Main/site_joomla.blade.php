@@ -140,6 +140,16 @@ $version = Version::create($jVersion) ?>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE')</span>
             </div>
         </div>
+    @elseif($item->isJoomlaUpdateTaskRunning())
+        <div>
+            <div class="badge bg-info-subtle text-primary"
+                 data-bs-toggle="tooltip" data-bs-placement="bottom"
+                 data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_CORE_RUNNING_UPDATE')"
+            >
+                <span class="fa fa-play" aria-hidden="true"></span>
+                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_CORE_RUNNING_UPDATE')</span>
+            </div>
+        </div>
     @elseif ($item->isJoomlaUpdateTaskScheduled())
         <div>
             <div class="badge bg-info-subtle text-info"

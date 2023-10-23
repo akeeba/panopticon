@@ -610,6 +610,17 @@ class Site extends DataModel
 		return $this->isSiteSpecificTaskScheduled('joomlaupdate');
 	}
 
+	public function isJoomlaUpdateTaskRunning(): bool
+	{
+		return $this->isSiteSpecificTaskRunning('joomlaupdate');
+	}
+
+	public function isExtensionsUpdateTaskRunning(): bool
+	{
+		return $this->isSiteSpecificTaskRunning('extensionsupdate');
+	}
+
+
 	public function getExtensionsList(bool $sortByName = true): array
 	{
 		$config     = $this->getConfig();
@@ -867,7 +878,7 @@ class Site extends DataModel
 			}
 		}
 
-		if ($task->next_execution < ($this->container->dateFactory()))
+		if ($task->last_exit_code !== Status::INITIAL_SCHEDULE->value && $task->next_execution < ($this->container->dateFactory()))
 		{
 			return false;
 		}
@@ -875,6 +886,35 @@ class Site extends DataModel
 		return in_array(
 			$task->last_exit_code, [
 				Status::INITIAL_SCHEDULE->value,
+				Status::RUNNING->value,
+				Status::WILL_RESUME->value,
+			]
+		);
+	}
+
+	protected function isSiteSpecificTaskRunning(string $type): bool
+	{
+		$task = $this->getSiteSpecificTask($type);
+
+		if (empty($task) || !$task->enabled || empty($task->next_execution))
+		{
+			return false;
+		}
+
+		if (!$task->next_execution instanceof Date)
+		{
+			try
+			{
+				$task->next_execution = $this->container->dateFactory($task->next_execution);
+			}
+			catch (Exception $e)
+			{
+				return false;
+			}
+		}
+
+		return in_array(
+			$task->last_exit_code, [
 				Status::RUNNING->value,
 				Status::WILL_RESUME->value,
 			]

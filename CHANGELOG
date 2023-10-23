@@ -7,6 +7,7 @@ Akeeba Panopticon 1.0.1
 + Joomla! version support status (gh-163)
 + Link to the data source for the PHP version information
 + Debug information for the initial connection
++ Note when updates are running on each site
 # [HIGH] Manually scheduled Joomla! updates are cancelled when evaluating automatic updates
 # [HIGH] PHP error when there are backup records without a backup start time
 # [MEDIUM] Joomla! Update options falsely claim that the time to install updates is in GMT; it's local

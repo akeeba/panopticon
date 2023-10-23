@@ -111,6 +111,16 @@ $lastError = trim($config->get('extensions.lastErrorMessage') ?? '');
 						<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_STUCK_UPDATE')</span>
 					</div>
 				</div>
+			@elseif ($item->isExtensionsUpdateTaskRunning())
+				<div>
+					<div class="badge bg-info-subtle text-primary"
+						 data-bs-toggle="tooltip" data-bs-placement="bottom"
+						 data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_EXT_RUNNING_UPDATE')"
+					>
+						<span class="fa fa-play" aria-hidden="true"></span>
+						<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_RUNNING_UPDATE')</span>
+					</div>
+				</div>
 			@elseif ($item->isExtensionsUpdateTaskScheduled())
 				<div>
 					<div class="badge bg-info-subtle text-info"
