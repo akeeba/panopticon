@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBlocked;
 use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBroken;
 use Akeeba\Panopticon\Exception\SiteConnection\APIInvalidCredentials;
 use Akeeba\Panopticon\Exception\SiteConnection\cURLError;
+use Akeeba\Panopticon\Exception\SiteConnection\FrontendPasswordProtection;
 use Akeeba\Panopticon\Exception\SiteConnection\InvalidHostName;
 use Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled;
 use Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL;
@@ -77,12 +78,14 @@ class Site extends DataModel
 
 	public function keyedList(bool $onlyEnabled = true): array
 	{
-		$db = $this->getDbo();
+		$db    = $this->getDbo();
 		$query = $db->getQuery(true)
-			->select([
-				$db->quoteName('id'),
-				$db->quoteName('name')
-			])
+			->select(
+				[
+					$db->quoteName('id'),
+					$db->quoteName('name'),
+				]
+			)
 			->from($db->quoteName('#__sites'));
 
 		if ($onlyEnabled)
@@ -186,7 +189,9 @@ class Site extends DataModel
 		if ($fltPHPFamily)
 		{
 			$query->where(
-				$query->jsonExtract($db->quoteName('config'), '$.core.php') . ' LIKE ' . $query->quote('"' . $fltPHPFamily . '.%')
+				$query->jsonExtract($db->quoteName('config'), '$.core.php') . ' LIKE ' . $query->quote(
+					'"' . $fltPHPFamily . '.%'
+				)
 			);
 		}
 
@@ -220,6 +225,17 @@ class Site extends DataModel
 		$container = $this->container;
 		$client    = $container->httpFactory->makeClient(cache: false, singleton: false);
 
+		$session = $this->getContainer()->segment;
+		$session->set('testconnection.step', null);
+		$session->set('testconnection.http_status', null);
+		$session->set('testconnection.body', null);
+		$session->set('testconnection.headers', null);
+		$session->set('testconnection.exception.type', null);
+		$session->set('testconnection.exception.message', null);
+		$session->set('testconnection.exception.file', null);
+		$session->set('testconnection.exception.line', null);
+		$session->set('testconnection.exception.trace', null);
+
 		// Try to get index.php/v1/extensions unauthenticated
 		try
 		{
@@ -235,10 +251,14 @@ class Site extends DataModel
 			$options[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout;
 			$options[RequestOptions::TIMEOUT]         = $totalTimeout;
 
+			$session->set('testconnection.step', 'Unauthenticated v1/extensions');
+
 			$response = $client->get($this->getAPIEndpointURL() . '/index.php/v1/extensions', $options);
 		}
 		catch (GuzzleException $e)
 		{
+			$this->updateDebugInfoInSession($response ?? null, $e);
+
 			$message = $e->getMessage();
 
 			if (str_contains($message, 'self-signed certificate'))
@@ -274,6 +294,8 @@ class Site extends DataModel
 			}
 		}
 
+		$this->updateDebugInfoInSession($response ?? null, $e);
+
 		if (!isset($response))
 		{
 			throw new RuntimeException('No response to the unauthenticated API request probe.', 500);
@@ -302,7 +324,20 @@ class Site extends DataModel
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/extensions?page[limit]=2000');
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
-		$response = $client->get($url, $options);
+		$session->set('testconnection.step', 'Authenticated v1/extensions');
+
+		try
+		{
+			$response = $client->get($url, $options);
+		}
+		catch (GuzzleException $e)
+		{
+			$this->updateDebugInfoInSession($response ?? null, $e);
+
+			throw $e;
+		}
+
+		$this->updateDebugInfoInSession($response ?? null, $e);
 
 		if (!isset($response))
 		{
@@ -321,7 +356,28 @@ class Site extends DataModel
 		}
 		elseif ($response->getStatusCode() === 401)
 		{
-			throw new APIInvalidCredentials('The API Token is invalid');
+			$contents = $response->getBody()->getContents();
+			try
+			{
+				$temp = @json_decode($contents, true);
+			}
+			catch (Exception $e)
+			{
+				$temp = null;
+			}
+
+			if (
+				is_array($temp) && isset($temp['errors']) && is_array($temp['errors'])
+				&& isset($temp['errors'][0])
+				&& is_array($temp['errors'][0])
+				&& isset($temp['errors'][0]['code'])
+				&& $temp['errors'][0]['code'] == 401
+			)
+			{
+				throw new APIInvalidCredentials('The API Token is invalid');
+			}
+
+			throw new FrontendPasswordProtection();
 		}
 		elseif ($response->getStatusCode() !== 200)
 		{
@@ -354,7 +410,9 @@ class Site extends DataModel
 				$results->data,
 				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Panopticon')
 			),
-			fn(bool $carry, object $data) => $carry && ($data->attributes?->status == 1 || $data->attributes?->enabled == 1),
+			fn(bool $carry, object $data) => $carry
+			                                 && ($data->attributes?->status == 1
+			                                     || $data->attributes?->enabled == 1),
 			true
 		);
 
@@ -374,11 +432,12 @@ class Site extends DataModel
 		$allEnabled = array_reduce(
 			array_filter(
 				$results->data,
-				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Akeeba Backup') &&
-					(
-						$data->attributes?->type === 'component' ||
-						($data->attributes?->type === 'plugin' && $data->attributes?->folder === 'webservices')
-					)
+				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Akeeba Backup')
+				                    && (
+					                    $data->attributes?->type === 'component'
+					                    || ($data->attributes?->type === 'plugin'
+					                        && $data->attributes?->folder === 'webservices')
+				                    )
 			),
 			fn(bool $carry, object $data) => $carry && $data->attributes?->status == 1,
 			true
@@ -390,6 +449,9 @@ class Site extends DataModel
 		}
 
 		// TODO Check for Admin Tools component and its Web Services plugins
+
+		$session->set('testconnection.step', null);
+		$this->updateDebugInfoInSession(null, null);
 
 		return $warnings;
 	}
@@ -570,10 +632,12 @@ class Site extends DataModel
 		$query
 			->select($query->jsonExtract($db->quoteName('item'), '$.data'))
 			->from($db->quoteName('#__queue'))
-			->where([
-				$query->jsonExtract($db->quoteName('item'), '$.queueType') . ' = ' . $db->quote($queueName),
-				$query->jsonExtract($db->quoteName('item'), '$.siteId') . ' = ' . (int) $this->getId(),
-			]);
+			->where(
+				[
+					$query->jsonExtract($db->quoteName('item'), '$.queueType') . ' = ' . $db->quote($queueName),
+					$query->jsonExtract($db->quoteName('item'), '$.siteId') . ' = ' . (int) $this->getId(),
+				]
+			);
 
 
 		try
@@ -774,8 +838,10 @@ class Site extends DataModel
 
 		return !in_array(
 			$task->last_exit_code, [
-				Status::INITIAL_SCHEDULE->value, Status::OK->value,
-				Status::RUNNING->value, Status::WILL_RESUME->value,
+				Status::INITIAL_SCHEDULE->value,
+				Status::OK->value,
+				Status::RUNNING->value,
+				Status::WILL_RESUME->value,
 			]
 		);
 	}
@@ -809,7 +875,8 @@ class Site extends DataModel
 		return in_array(
 			$task->last_exit_code, [
 				Status::INITIAL_SCHEDULE->value,
-				Status::RUNNING->value, Status::WILL_RESUME->value,
+				Status::RUNNING->value,
+				Status::WILL_RESUME->value,
 			]
 		);
 	}
@@ -923,5 +990,58 @@ class Site extends DataModel
 		$uri->setPath($path);
 
 		return $uri->toString();
+	}
+
+	private function updateDebugInfoInSession(?ResponseInterface $response = null, ?Throwable $e = null): void
+	{
+		$session = $this->getContainer()->segment;
+
+		$session->set('testconnection.http_status', null);
+		$session->set('testconnection.body', null);
+		$session->set('testconnection.headers', null);
+		$session->set('testconnection.exception.type', null);
+		$session->set('testconnection.exception.message', null);
+		$session->set('testconnection.exception.file', null);
+		$session->set('testconnection.exception.line', null);
+		$session->set('testconnection.exception.trace', null);
+
+		if ($e instanceof Throwable)
+		{
+			$session->set('testconnection.exception.type', get_class($e));
+			$session->set('testconnection.exception.message', $e->getMessage());
+			$session->set('testconnection.exception.file', $e->getFile());
+			$session->set('testconnection.exception.line', $e->getLine());
+			$session->set('testconnection.exception.trace', $e->getTraceAsString());
+		}
+
+		if ($response instanceof ResponseInterface)
+		{
+			try
+			{
+				$session->set('testconnection.http_status', $response->getStatusCode());
+			}
+			catch (Exception $e)
+			{
+				$session->set('testconnection.http_status', null);
+			}
+
+			try
+			{
+				$session->set('testconnection.body', $response->getBody()->getContents());
+			}
+			catch (Exception $e)
+			{
+				$session->set('testconnection.body', null);
+			}
+
+			try
+			{
+				$session->set('testconnection.headers', $response->getHeaders());
+			}
+			catch (Exception $e)
+			{
+				$session->set('testconnection.headers', null);
+			}
+		}
 	}
 }

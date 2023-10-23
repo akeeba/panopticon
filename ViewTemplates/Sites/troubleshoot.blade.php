@@ -226,6 +226,22 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2')
             </p>
+        @elseif($this->connectionError === \Akeeba\Panopticon\Exception\SiteConnection\FrontendPasswordProtection::class)
+            <p class="fw-semibold">
+                Your site appears to be password–protected at the web server level
+            </p>
+            <p>
+                Your site replied with an HTTP 401 Unauthorized status code when trying to access the API. This typically means that you have applied password protection at the web server level.
+            </p>
+            <p>
+                Please remove the password protection.
+            </p>
+            <p>
+                On Joomla! 4 and later versions the password protection may have been applied only to your site's <code>api</code> folder, or the root folder of your site. Look in both places, in this order.
+            </p>
+            <p>
+                On Joomla! 3, the password protection has been applied to the root folder of your site.
+            </p>
         @else
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_HEAD')
@@ -240,5 +256,120 @@ $config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3')
             </p>
         @endif
+
+        @if($this->container->appConfig->get('debug', false))
+            <?php
+            $session           = $this->getContainer()->segment;
+            $http_status       = $session->get('testconnection.http_status', null);
+            $body              = $session->get('testconnection.body', null);
+            $headers           = $session->get('testconnection.headers', null);
+            $exceptionType     = $session->get('testconnection.exception.type', null);
+            $exceptionMessage  = $session->get('testconnection.exception.message', null);
+            $exceptionFile     = $session->get('testconnection.exception.file', null);
+            $exceptionLine     = $session->get('testconnection.exception.line', null);
+            $exceptionTrace    = $session->get('testconnection.exception.trace', null);
+            $hasRequestDebug   = is_int($http_status) || is_string($body) || (is_array($headers) && !empty($headers));
+            $hasExceptionDebug = (is_string($exceptionType) && !empty($exceptionType))
+                                 || (is_string($exceptionMessage) && !empty($exceptionMessage))
+                                 || (is_string($exceptionFile) && !empty($exceptionFile))
+                                 || (is_scalar($exceptionLine) && !empty($exceptionLine))
+                                 || (is_string($exceptionTrace) && !empty($exceptionTrace));
+            ?>
+
+            @if ($hasRequestDebug || $hasExceptionDebug)
+            <hr class="my-3"/>
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_INFO')
+            </p>
+            @endif
+
+            @if ($hasRequestDebug)
+            <table class="table table-info">
+                <tbody>
+                @if (is_int($http_status))
+                <tr>
+                    <th scope="row">
+                        @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_STATUS')
+                    </th>
+                    <td>
+                        {{{ $http_status }}}
+                    </td>
+                </tr>
+                @endif
+                @if (is_string($body))
+                <tr>
+                    <th scope="row">
+                        @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_BODY')
+                    </th>
+                    <td><pre>{{{ $body }}}</pre></td>
+                </tr>
+                @endif
+                @if (is_array($headers) && !empty($headers))
+                <tr>
+                    <th scope="row">
+                        @lang('HTTP Headers')
+                    </th>
+                    <td>
+                        <dl>
+                            @foreach($headers as $k => $v)
+                            <dt>{{{$k}}}</dt>
+                            <dd>
+                                @if (is_array($v) && count($v) === 1)
+                                    {{{ array_pop($v) }}}
+                                @elseif (is_array($v))
+                                    <ul>
+                                        @foreach($v as $vv)
+                                        <li>
+                                            @if (is_scalar($vv))
+                                                {{{ $vv }}}
+                                            @else
+                                                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_HEADER_NO_STRING')
+                                            @endif
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                @elseif(is_string($v))
+                                    {{{ $v }}}
+                                @else
+                                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_HEADER_NO_PRINTABLE')
+                                @endif
+                            </dd>
+                            @endforeach
+                        </dl>
+                    </td>
+                </tr>
+                @endif
+                </tbody>
+            </table>
+            @endif
+
+            @if ($hasExceptionDebug)
+                @if((is_string($exceptionType) && !empty($exceptionType)))
+                    <p class="text-danger-emphasis">
+                        {{{ $exceptionType }}}
+                    </p>
+                @endif
+                @if(is_string($exceptionMessage) && !empty($exceptionMessage))
+                    <p>
+                        {{{ $exceptionMessage }}}
+                    </p>
+                @endif
+                @if(is_string($exceptionFile) && !empty($exceptionFile) && is_scalar($exceptionLine) && !empty($exceptionLine))
+                    <p>
+                        {{{ $exceptionFile }}}:{{{ $exceptionLine }}}
+                    </p>
+                @endif
+                @if((is_string($exceptionTrace) && !empty($exceptionTrace)))
+                    <pre>{{{ $exceptionTrace }}}</pre>
+                @endif
+            @endif
+
+        @else
+            <p class="text-info small">
+                <span class="fa fa-fw fa-circle-info" aria-hidden="true"></span>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_MUST_ENABLE_FOR_ISSUE')
+            </p>
+        @endif
+
     </div>
 </div>
