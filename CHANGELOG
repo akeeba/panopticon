@@ -9,6 +9,7 @@ Akeeba Panopticon 1.0.1
 + Debug information for the initial connection
 + Note when updates are running on each site
 # [HIGH] Constant core update rescheduling / emails
+# [HIGH] Constant extensions update rescheduling / emails
 # [HIGH] Cannot connect to Joomla! 3 sites which don't have SEF URLs with URL rewriting enabled
 # [HIGH] Manually scheduled Joomla! updates are cancelled when evaluating automatic updates
 # [HIGH] PHP error when there are backup records without a backup start time

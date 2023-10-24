@@ -564,14 +564,14 @@ class ExtensionsUpdate extends AbstractCallback
 		$siteConfig                     = ($site->getFieldValue('config') instanceof Registry)
 			? $site->getFieldValue('config')
 			: (new Registry($site->getFieldValue('config')));
-		$lastSeenVersions               = $siteConfig->get('extensions.lastSeen', []) ?: [];
+		$lastSeenVersions               = $siteConfig->get('director.extensionupdates.lastSeen', []) ?: [];
 		$lastSeenVersions               = is_array($lastSeenVersions) ? $lastSeenVersions : [];
 		$extensions                     = (array) $siteConfig->get('extensions.list');
 		$extensionItem                  = $extensions[$extensionId] ?? null;
 		$latestVersion                  = $extensionItem?->version?->new;
 		$lastSeenVersions[$extensionId] = $latestVersion;
 
-		$siteConfig->set('extensions.lastSeen', $lastSeenVersions);
+		$siteConfig->set('director.extensionupdates.lastSeen', $lastSeenVersions);
 		$site->setFieldValue('config', $siteConfig->toString());
 		$site->save();
 	}
