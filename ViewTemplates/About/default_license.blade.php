@@ -23,7 +23,7 @@ $copyrightYear = ($maxYear == 2023) ? "2023" : "2023–{$maxYear}";
 
 <div class="d-flex flex-column flex-md-row gap-2">
     <div>
-        <img src="@media('images/agpl_logo.svg')" class="img-fluid">
+        <img src="@media('images/agpl_logo.svg', false, $this->container->application)" class="img-fluid">
     </div>
     <div>
         <p>
