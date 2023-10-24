@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Application\UserAuthenticationPassword;
 use Akeeba\Panopticon\Application\UserPrivileges;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\PassKeys;
+use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\TOTP;
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Application\Application as AWFApplication;
@@ -668,8 +669,9 @@ class Application extends AWFApplication
 
 		foreach (
 			[
-				//FixedCodeDemo::class,
+				//Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\FixedCodeDemo::class,
 				PassKeys::class,
+				TOTP::class
 			] as $className
 		)
 		{
