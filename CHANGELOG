@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.0.2
 ================================================================================
+~ Improve behavior clicking Edit without selecting a site
 # [LOW] Missing email template type for failed Joomla! update
 
 Akeeba Panopticon 1.0.1

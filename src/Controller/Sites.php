@@ -20,6 +20,7 @@ use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\EnqueueJoomlaUpdateTrait;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
+use Awf\Inflector\Inflector;
 use Awf\Mvc\DataController;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
@@ -673,7 +674,23 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			// Redirect on error
+			if ($customURL = $this->input->getBase64('returnurl', ''))
+			{
+				$customURL = base64_decode($customURL);
+			}
+
+			$router = $this->container->router;
+			$url    = !empty($customURL)
+				? $customURL
+				: $router->route(
+					'index.php?&view=' . Inflector::pluralize($this->view)
+				);
+			$this->setRedirect($url, Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 'error');
+
+			$this->redirect();
+
+			return false;
 		}
 
 		$sysconfigModel = $this->getModel('Sysconfig');
