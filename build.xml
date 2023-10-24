@@ -112,6 +112,30 @@
 
         <exclude name="vendor/bin/**" />
 
+        <exclude name="vendor/chillerlan/php-qrcode/.github/**" />
+        <exclude name="vendor/chillerlan/php-qrcode/.idea/**" />
+        <exclude name="vendor/chillerlan/php-qrcode/.phan/**" />
+        <exclude name="vendor/chillerlan/php-qrcode/docs/**" />
+        <exclude name="vendor/chillerlan/php-qrcode/examples/**" />
+        <exclude name="vendor/chillerlan/php-qrcode/tests/**" />
+        <exclude name="vendor/chillerlan/php-qrcode/.editorconfig" />
+        <exclude name="vendor/chillerlan/php-qrcode/.gitignore" />
+        <exclude name="vendor/chillerlan/php-qrcode/.scrutinizer.yml" />
+        <exclude name="vendor/chillerlan/php-qrcode/phpcs.xml.dist" />
+        <exclude name="vendor/chillerlan/php-qrcode/phpdoc.xml.dist" />
+        <exclude name="vendor/chillerlan/php-qrcode/phpmd.xml.dist" />
+        <exclude name="vendor/chillerlan/php-qrcode/phpunit.xml.dist" />
+
+        <exclude name="vendor/chillerlan/php-settings-container/.github/**" />
+        <exclude name="vendor/chillerlan/php-settings-container/.phan/**" />
+        <exclude name="vendor/chillerlan/php-settings-container/docs/**" />
+        <exclude name="vendor/chillerlan/php-settings-container/examples/**" />
+        <exclude name="vendor/chillerlan/php-settings-container/tests/**" />
+        <exclude name="vendor/chillerlan/php-settings-container/.gitignore" />
+        <exclude name="vendor/chillerlan/php-settings-container/.scrutinizer.yml" />
+        <exclude name="vendor/chillerlan/php-settings-container/phpdoc.xml" />
+        <exclude name="vendor/chillerlan/php-settings-container/phpunit.xml" />
+
         <exclude name="vendor/delight-im/alphabets/tests/**" />
         <exclude name="vendor/delight-im/alphabets/.editorconfig" />
         <exclude name="vendor/delight-im/alphabets/.gitignore" />
