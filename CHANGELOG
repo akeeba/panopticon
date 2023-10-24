@@ -20,6 +20,7 @@ Akeeba Panopticon 1.0.1
 # [LOW] Filters on the Task page partially overlapped (cosmetic issue)
 # [LOW] Leftover phpinfo.php file in the public root
 # [LOW] Guzzle may return NULL response when trying to connect a site
+# [LOW] PHP 8 deprecated notices sending emails
 
 Akeeba Panopticon 1.0.0
 ================================================================================

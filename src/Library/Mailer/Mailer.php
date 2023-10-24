@@ -32,14 +32,32 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 
 	public function __construct($container = null)
 	{
-		if (!is_object($container))
-		{
-			$container = Application::getInstance()->getContainer();
-		}
+		$this->setContainer($container ?? Factory::getContainer());
 
-		parent::__construct();
+		$config = $this->getContainer()->appConfig;
 
-		$config = $container->appConfig;
+		// Prevent the core mailer from throwing PHP deprecated notices
+		$config->set('mail.smtpauth', !$config->get('smtpauth') ? null : 1);
+		$config->set('mail.smtpuser', $config->get('smtpuser'));
+		$config->set('mail.smtppass', $config->get('smtppass'));
+		$config->set('mail.smtphost', $config->get('smtphost', 'localhost'));
+		$config->set('mail.smtpsecure', $config->get('smtpsecure', 'none'));
+		$config->set('mail.smtpport', $config->get('smtpport', 25));
+		$config->set('mail.mailfrom', $config->get('mailfrom'));
+		$config->set('mail.fromname', $config->get('fromname'));
+		$config->set('mail.mailer', $config->get('mailer'));
+
+		parent::__construct($this->getContainer());
+
+		unset($config['mail.smtpauth']);
+		unset($config['mail.smtpuser']);
+		unset($config['mail.smtppass']);
+		unset($config['mail.smtphost']);
+		unset($config['mail.smtpsecure']);
+		unset($config['mail.smtpport']);
+		unset($config['mail.mailfrom']);
+		unset($config['mail.fromname']);
+		unset($config['mail.mailer']);
 
 		$smtpauth   = !$config->get('smtpauth') ? null : 1;
 		$smtpuser   = $config->get('smtpuser');
@@ -52,7 +70,6 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 		$mailer     = $config->get('mailer');
 
 		$this->SetFrom($mailfrom, $fromname);
-		$this->container = $container;
 
 		switch ($mailer)
 		{
@@ -167,7 +184,7 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 	 */
 	private static function getLocalAbsolutePath($url)
 	{
-		$base = rtrim(Uri::base(), '/');
+		$base = rtrim(Uri::base(false, Factory::getContainer()), '/');
 
 		if (!str_starts_with($url, $base))
 		{
@@ -214,7 +231,7 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 		}
 
 		// This is a file. We assume it's relative to the site's root
-		return rtrim(Uri::base(), '/') . '/' . $fileOrUri;
+		return rtrim(Uri::base(false, Factory::getContainer()), '/') . '/' . $fileOrUri;
 	}
 
 	public function Send()
@@ -272,7 +289,7 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 		);
 
 		$replacements = array_merge([
-			'URL' => Uri::base(),
+			'URL' => Uri::base(false, $this->getContainer()),
 		], $replacements);
 		$replaceFrom  = array_map(
 			fn(string $x) => '[' . strtoupper($x) . ']',

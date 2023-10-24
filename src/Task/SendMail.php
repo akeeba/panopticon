@@ -15,6 +15,7 @@ use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
+use Awf\Mailer\Mailer;
 use Awf\Registry\Registry;
 use Awf\Timer\Timer;
 use Awf\Utils\ArrayHelper;
@@ -32,8 +33,7 @@ class SendMail extends AbstractCallback
 		$timeLimit    = $params->get('timelimit', 60);
 		$bias         = $params->get('bias', 75);
 
-		$container = Factory::getContainer();
-		$mailQueue = $container->queueFactory->makeQueue(QueueTypeEnum::MAIL->name);
+		$mailQueue = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->name);
 		$timer     = new Timer($timeLimit, $bias);
 
 		while ($queueItem = $mailQueue->pop())
@@ -65,7 +65,7 @@ class SendMail extends AbstractCallback
 				)
 			);
 
-			$mailer = clone $container->mailer;
+			$mailer = clone $this->container->mailer;
 			$mailer->initialiseWithTemplate($template, $language, (array) $variables);
 
 			if (empty($mailer->Body))
@@ -80,7 +80,8 @@ class SendMail extends AbstractCallback
 				continue;
 			}
 
-			$site = Site::getTmpInstance('', 'Site', $this->container);
+			/** @var Site $site */
+			$site = $this->container->mvcFactory->makeTempModel('Site');
 
 			try
 			{
