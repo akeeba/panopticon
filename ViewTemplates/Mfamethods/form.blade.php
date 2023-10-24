@@ -97,6 +97,7 @@ $userId   = $this->user->getId() ?? 0;
             <div class="col-sm-9 {{ $this->renderOptions['label'] ? '' : 'offset-sm-3' }}">
                 <input type="{{ $this->renderOptions['input_type'] }}"
                        class="form-control" id="method-edit-code"
+                       <?= ($this->renderOptions['autocomplete'] ?? null) ? sprintf('autocomplete="%s"', $this->renderOptions['autocomplete']) : '' ?>
                        name="code"
                        value="{{{ $this->renderOptions['input_value'] }}}"
                        placeholder="{{{ $this->renderOptions['placeholder'] }}}">

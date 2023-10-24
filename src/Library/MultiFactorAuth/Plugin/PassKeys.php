@@ -106,7 +106,7 @@ class PassKeys extends Observer
 
 
 			// Load JS translations
-			Text::script('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_HEAD');
+			$document->lang('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_HEAD');
 
 			$document->addScriptOptions('mfa.pagetype', 'setup', false);
 
@@ -321,8 +321,8 @@ class PassKeys extends Observer
 		);
 
 		// Load JS translations
-		Text::script('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_HEAD');
-		Text::script('PANOPTICON_MFA_PASSKEYS_ERR_NO_STORED_CREDENTIAL');
+		$document->lang('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_HEAD');
+		$document->lang('PANOPTICON_MFA_PASSKEYS_ERR_NO_STORED_CREDENTIAL');
 
 		$document->addScriptOptions('mfa.pagetype', 'validate', false);
 
