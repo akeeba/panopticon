@@ -17,12 +17,9 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
-use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use Exception;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(
 	name: 'joomlaupdatedirector',
@@ -58,8 +55,8 @@ class JoomlaUpdateDirector extends AbstractCallback
 		$db = $this->container->db;
 		$db->setQuery('SET autocommit = 0')->execute();
 		$sql = 'LOCK TABLES ' . $db->quoteName('#__sites') . ' WRITE, '
-			. $db->quoteName('#__tasks') . ' WRITE, '
-			. $db->quoteName('#__queue') . ' WRITE';
+		       . $db->quoteName('#__tasks') . ' WRITE, '
+		       . $db->quoteName('#__queue') . ' WRITE';
 		$db->setQuery($sql)->execute();
 
 		$siteIDs = $this->getSiteIDs($limitStart, $limit, $force, $filterIDs);
@@ -74,16 +71,17 @@ class JoomlaUpdateDirector extends AbstractCallback
 			return Status::OK->value;
 		}
 
-		$this->logger->info(sprintf(
-			'Found a further %d site(s) to process for automatic Joomla! core updates / update notifications.',
-			count($siteIDs)
-		));
+		$this->logger->info(
+			sprintf(
+				'Found a further %d site(s) to process for automatic Joomla! core updates / update notifications.',
+				count($siteIDs)
+			)
+		);
 
 		// Filter site IDs so that those with manually enabled, or currently executing, update tasks are not disrupted
 		$siteIDs = array_filter(
 			$siteIDs,
-			function (int $siteId)
-			{
+			function (int $siteId) {
 				/** @var Site $site */
 				$site = $this->container->mvcFactory->makeTempModel('Site');
 
@@ -99,6 +97,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 							$siteId
 						)
 					);
+
 					return false;
 				}
 
@@ -110,11 +109,13 @@ class JoomlaUpdateDirector extends AbstractCallback
 					return true;
 				}
 
-				if (in_array($updateTask->last_exit_code, [
-					Status::WILL_RESUME->value,
-					Status::INITIAL_SCHEDULE->value,
-					Status::RUNNING->value,
-				]))
+				if (in_array(
+					$updateTask->last_exit_code, [
+						Status::WILL_RESUME->value,
+						Status::INITIAL_SCHEDULE->value,
+						Status::RUNNING->value,
+					]
+				))
 				{
 					$this->logger->debug(
 						sprintf(
@@ -151,7 +152,9 @@ class JoomlaUpdateDirector extends AbstractCallback
 				->update($db->quoteName('#__sites'));
 			$query->set(
 				$db->quoteName('config') . '= JSON_SET(' . $db->quoteName('config') . ',' .
-				$db->quote('$.core.lastAutoUpdateVersion') . ',' . $query->jsonExtract($db->quoteName('config'), '$.core.latest.version') . ')'
+				$db->quote('$.core.lastAutoUpdateVersion') . ',' . $query->jsonExtract(
+					$db->quoteName('config'), '$.core.latest.version'
+				) . ')'
 			)
 				->where($db->quoteName('id') . ' IN(' . implode(',', $siteIDs) . ')');
 			$db->setQuery($query)->execute();
@@ -218,6 +221,12 @@ class JoomlaUpdateDirector extends AbstractCallback
 						)
 					);
 
+					// Do I have to send an email?
+					if (!$this->mustSchedule($site, true))
+					{
+						continue 2;
+					}
+
 					$this->sendEmail('joomlaupdate_found', $site);
 					break;
 
@@ -230,6 +239,12 @@ class JoomlaUpdateDirector extends AbstractCallback
 							$siteConfig->get('core.latest.version')
 						)
 					);
+
+					// Do I have to enqueue?
+					if (!$this->mustSchedule($site, false))
+					{
+						continue 2;
+					}
 
 					// Send email
 					$this->sendEmail('joomlaupdate_will_install', $site);
@@ -251,31 +266,39 @@ class JoomlaUpdateDirector extends AbstractCallback
 		$query = $db->getQuery(true)
 			->select($db->quoteName('id'))
 			->from($db->quoteName('#__sites'));
-		$query->where([
-			// `enabled` = 1
-			$db->quoteName('enabled') . ' = 1',
-			// `config` -> '$.core.canUpgrade'
-			$query->jsonExtract($db->quoteName('config'), '$.core.canUpgrade'),
-		]);
+		$query->where(
+			[
+				// `enabled` = 1
+				$db->quoteName('enabled') . ' = 1',
+				// `config` -> '$.core.canUpgrade'
+				$query->jsonExtract($db->quoteName('config'), '$.core.canUpgrade'),
+			]
+		);
 
 		if (!$force)
 		{
-			$query->where([
-				// `config` -> '$.core.current.version' != `config` -> '$.core.latest.version'
-				$query->jsonExtract($db->quoteName('config'), '$.core.current.version') . ' != ' .
-				$query->jsonExtract($db->quoteName('config'), '$.core.latest.version'),
-				// `config` -> '$.config.core_update.install' != 'none'
-				$query->jsonExtract($db->quoteName('config'), '$.config.core_update.install') . ' != ' . $db->quote('none'),
-			]);
+			$query->where(
+				[
+					// `config` -> '$.core.current.version' != `config` -> '$.core.latest.version'
+					$query->jsonExtract($db->quoteName('config'), '$.core.current.version') . ' != ' .
+					$query->jsonExtract($db->quoteName('config'), '$.core.latest.version'),
+					// `config` -> '$.config.core_update.install' != 'none'
+					$query->jsonExtract($db->quoteName('config'), '$.config.core_update.install') . ' != ' . $db->quote(
+						'none'
+					),
+				]
+			);
 			//   AND (
 			//        `config` -> '$.core.lastAutoUpdate' IS NULL
 			//        OR `config` -> '$.core.lastAutoUpdateVersion' != `config` -> '$.core.latest.version'
 			//    )
-			$query->extendWhere('AND', [
+			$query->extendWhere(
+				'AND', [
 				$query->jsonExtract($db->quoteName('config'), '$.core.lastAutoUpdateVersion') . ' IS NULL',
 				$query->jsonExtract($db->quoteName('config'), '$.core.lastAutoUpdateVersion') . ' != ' .
 				$query->jsonExtract($db->quoteName('config'), '$.core.latest.version'),
-			], 'OR');
+			], 'OR'
+			);
 		}
 
 		$ids = ArrayHelper::toInteger($ids);
@@ -321,9 +344,12 @@ class JoomlaUpdateDirector extends AbstractCallback
 		}
 	}
 
-	private function sendEmail(string $mailtemplate, Site $site, array $permissions = [
-		'panopticon.super', 'panopticon.manage',
-	]): void
+	private function sendEmail(
+		string $mailtemplate, Site $site, array $permissions = [
+		'panopticon.super',
+		'panopticon.manage',
+	]
+	): void
 	{
 		$this->logger->debug(
 			sprintf(
@@ -367,4 +393,42 @@ class JoomlaUpdateDirector extends AbstractCallback
 
 		$queue->push($queueItem, 'now');
 	}
+
+	private function mustSchedule(Site $site, bool $emailOnly): bool
+	{
+		$siteConfig = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
+
+		// We must not send emails or schedule anything if an update is already running
+		if ($site->isJoomlaUpdateTaskRunning())
+		{
+			return false;
+		}
+
+		// We cannot schedule / send emails if the last time the director run the same update was available.
+		$lastLatestVersion = $siteConfig->get('director.joomlaupdate.lastLatestVersion');
+		$latestVersion     = $siteConfig->get('core.latest.version');
+		$mustSchedule      = $latestVersion != $lastLatestVersion;
+
+		// When scheduling updates we must make sure there is no update task to the same version already active.
+		if ($mustSchedule && !$emailOnly && $site->isJoomlaUpdateTaskScheduled())
+		{
+			$task = $site->getJoomlaUpdateTask();
+			$taskParams = ($task->params instanceof Registry) ? $task->params : new Registry($task->params ?? '{}');
+			$toVersion = $taskParams->get('toVersion');
+
+			$mustSchedule = $toVersion != $latestVersion;
+		}
+
+		if (!$mustSchedule)
+		{
+			return false;
+		}
+
+		$siteConfig->set('director.joomlaupdate.lastLatestVersion', $latestVersion);
+		$site->setFieldValue('config', $siteConfig->toString());
+		$site->save();
+
+		return true;
+	}
+
 }
