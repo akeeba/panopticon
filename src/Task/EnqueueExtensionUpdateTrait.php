@@ -89,7 +89,7 @@ trait EnqueueExtensionUpdateTrait
 		$queue    = $this->container->queueFactory->makeQueue($queueKey);
 
 		// Avoid enqueueing the same extension multiple times
-		$numItems = $queue->countByCondition(['data' => $extensionId, 'siteId' => (int) $site->id]);
+		$numItems = $queue->countByCondition(['data.id' => $extensionId, 'siteId' => (int) $site->id]);
 
 		if ($numItems > 0)
 		{

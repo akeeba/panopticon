@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
+use Awf\Text\Text;
 
 /**
  * Main Page Model. Used to get the sites overview information.
@@ -81,8 +82,8 @@ class Main extends Model
 
 		return $cacheController->get(
 			callback: function (): array {
-				$db       = $this->container->db;
-				$query    = $db->getQuery(true);
+				$db    = $this->container->db;
+				$query = $db->getQuery(true);
 				$query
 					->select(
 						'DISTINCT SUBSTR(SUBSTRING_INDEX(' .
@@ -116,5 +117,31 @@ class Main extends Model
 		$versions = array_keys($phpVersion->getPhpEolInformation());
 
 		return array_combine($versions, $versions);
+	}
+
+	public function getSiteNamesForSelect(bool $enabled = true, ?string $emptyLabel = null): array
+	{
+		$db    = $this->getContainer()->db;
+		$query = $db->getQuery(true)
+			->select(
+				[
+					$db->quoteName('id'),
+					$db->quoteName('name'),
+				]
+			)
+			->from($db->quoteName('#__sites'))
+			->order($db->quoteName('name') . ' ASC, ' . $db->quoteName('id') . ' ASC');
+
+		$ret = $db->setQuery($query)->loadAssocList('id', 'name') ?: [];
+
+		if (!empty($emptyLabel))
+		{
+			$ret = array_combine(
+				array_merge([''], array_keys($ret)),
+				array_merge([Text::_($emptyLabel)], array_values($ret))
+			);
+		}
+
+		return $ret;
 	}
 }
