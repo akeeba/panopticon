@@ -657,7 +657,14 @@ class Site extends DataModel
 
 		try
 		{
-			return $db->setQuery($query)->loadColumn() ?: [];
+			return array_map(
+				function($json) {
+					$item = json_decode($json);
+
+					return $item->id ?? null;
+				},
+				$db->setQuery($query)->loadColumn() ?: []
+			);
 		}
 		catch (Exception $e)
 		{
