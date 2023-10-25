@@ -211,16 +211,17 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
             <tr>
                 <td>
                     <label for="cb{{{ $i }}}" class="visually-hidden">
-                        Select extension DERP for site DORP
+                        @sprintf('PANOPTICON_EXTUPDATES_LBL_SELECT_EXTENSION', $item->name, $site->name)
                     </label>
                     <input type="checkbox" id="cb{{{ $i }}}" name="eid[]"
                            value="{{{ (int)$item->site_id . '_' . (int)$item->extension_id  }}}"
                            onclick="akeeba.System.isChecked(this.checked);" />
                 </td>
                 <td>
-                    <span class="fw-medium">
+                    <a class="fw-medium"
+                       href="@route(sprintf('index.php?view=site&task=read&id=%s', $site->getId()))">
                         {{{ $site->name }}}
-                    </span>
+                    </a>
                     <div class="text-body-secondary">
                         <span class="fab fa-fw fa-joomla text-info" aria-hidden="true"></span>
                         {{{ $site->getConfig()->get('core.current.version')  }}}
