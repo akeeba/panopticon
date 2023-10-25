@@ -3,6 +3,7 @@ Akeeba Panopticon 1.0.2
 ================================================================================
 + TOTP Multi-factor Authentication (gh-168)
 ~ Improve behavior clicking Edit without selecting a site
+~ Improve the TOTP method selection layout
 # [LOW] Missing email template type for failed Joomla! update
 
 Akeeba Panopticon 1.0.1

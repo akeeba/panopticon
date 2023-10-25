@@ -26,7 +26,7 @@ $shownMethods = [];
 			<?php
 			if (
 				!array_key_exists($record->method, $this->mfaMethods)
-				&& ($record->method != 'backupcodes')
+				&& ($record->method !== 'backupcodes')
 			) continue;
 
 			$allowEntryBatching = isset($this->mfaMethods[$record->method])
@@ -39,16 +39,18 @@ $shownMethods = [];
 			}
 
 			$methodName = $this->getModel()->translateMethodName($record->method);
-			$method = $this->mfaMethods[$record->method];
+			$method = $this->mfaMethods[$record->method] ?? null;
 			?>
         <a href="@route('index.php?view=captive&record_id=' . $record->id)"
-           class="d-flex flex-row gap-2 align-items-center link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover"
+		   class="row link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover"
         >
-            <img src="{{ Uri::root() . ($method->image ?: 'media/mfa/images/emergency.svg') }}"
-                 alt="{{{ strip_tags($record->title) }}}"
-				 class="img-fluid bg-light p-2 rounded-2" style="min-width: 3em; max-width: 7em" />
+            <div class="col-12 col-md-6 col-lg-3 col-xl-2">
+				<img src="{{ Uri::root() . ($method?->image ?: 'media/mfa/images/emergency.svg') }}"
+					 alt="{{{ strip_tags($record->title) }}}"
+					 class="img-fluid bg-light p-2 rounded-2" style="min-width: 3em; max-width: 7em" />
+			</div>
 
-			<div class="flex-grow-1 d-flex flex-column">
+			<div class="col-12 col-md-6 col-lg-9 col-xl-10 d-flex flex-column">
 				@if (!$this->allowEntryBatching || !$allowEntryBatching)
 					@if ($record->method === 'backupcodes')
 						<span class="fs-4 fw-bold text-body">
