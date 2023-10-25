@@ -56,7 +56,7 @@ $i     = 1;
                 translate: true) }}
             </div>
             <div>
-                <label class="visually-hidden" for="manual">@lang('')</label>
+                <label class="visually-hidden" for="manual">@lang('PANOPTICON_SCANNERTASKS_LBL_VIEW_MANUAL')</label>
                 {{ $this->container->html->select->genericList([
 	                '' => 'PANOPTICON_SCANNERTASKS_LBL_SELECT_MANUAL',
 	                '0' => 'PANOPTICON_SCANNERTASKS_LBL_MANUAL_NO',

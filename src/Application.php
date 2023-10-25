@@ -36,9 +36,28 @@ class Application extends AWFApplication
 
 	private const MAIN_MENU = [
 		[
-			'view'        => 'main',
+			'url'         => null,
 			'permissions' => [],
+			'name'        => 'overview',
+			'title'       => 'PANOPTICON_APP_MENU_TITLE_OVERVIEW',
 			'icon'        => 'fa fa-fw fa-eye',
+			'submenu'     => [
+				[
+					'view'        => 'main',
+					'permissions' => [],
+					'icon'        => 'fa fa-fw fa-globe',
+				],
+				[
+					'view'        => 'extupdates',
+					'permissions' => [],
+					'icon'        => 'fa fa-fw fa-cubes',
+				],
+				[
+					'view'        => 'coreupdates',
+					'permissions' => [],
+					'icon'        => 'fa fa-fw fa-atom',
+				],
+			],
 		],
 		[
 			'url'         => null,
@@ -671,7 +690,7 @@ class Application extends AWFApplication
 			[
 				//Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\FixedCodeDemo::class,
 				PassKeys::class,
-				TOTP::class
+				TOTP::class,
 			] as $className
 		)
 		{
