@@ -36,6 +36,7 @@ class Setup extends Model
 {
 	private const DEFAULT_TASKS = [
 		'logrotate'                  => '@daily',
+		'selfupdatefinder'           => '0 */6 * * *',
 		'refreshsiteinfo'            => '*/15 * * * *',
 		'refreshinstalledextensions' => '*/15 * * * *',
 		'joomlaupdatedirector'       => '*/3 * * * *',
