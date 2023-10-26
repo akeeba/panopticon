@@ -51,7 +51,7 @@ class JoomlaVersion
 	 * beyond the fact that they become EOL 2 years after their release (4 years since the release of the x.0 release
 	 * in the major version series). Since Joomla 3.10 which had the same role as a “caretaker version”, as they weirdly
 	 * put it in their release announcements, received bug fixes for a year and security updates for another year I am
-	 * using the same approach in my approximation fo support dates.
+	 * using the same approach in my approximation of support dates.
 	 *
 	 * @see    https://docs.joomla.org/Joomla!_CMS_versions
 	 * @see    https://downloads.joomla.org
