@@ -7,8 +7,7 @@
 
 namespace Akeeba\Panopticon\Library\SelfUpdate;
 
-use Akeeba\Panopticon\Factory;
-use Awf\Date\Date;
+use DateTime;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 defined('AKEEBA') || die;
@@ -19,7 +18,7 @@ class VersionInformation
 
 	public ?string $infoUrl = null;
 
-	public ?Date $releaseDate = null;
+	public ?DateTime $releaseDate = null;
 
 	public ?string $downloadUrl = null;
 
@@ -38,10 +37,9 @@ class VersionInformation
 			$item->version = substr($item->version, 2);
 		}
 
-		$container          = Factory::getContainer();
 		$item->infoUrl      = $data->html_url ?? null;
 		$item->preRelease   = $data->prerelease ?? false;
-		$item->releaseDate  = $container->dateFactory($data->published_at ?? ('now'));
+		$item->releaseDate  = new DateTime($data->published_at ?? 'now');
 		$item->releaseNotes = $data->body ?? null;
 
 		foreach ($data->assets ?? [] as $asset)

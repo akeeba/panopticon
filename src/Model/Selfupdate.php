@@ -101,9 +101,9 @@ class Selfupdate extends Model
 			pool: $this->container->cacheFactory->pool('self_update')
 		);
 
-		return $cacheController->get(function () use ($force): UpdateInformation {
+		return $cacheController->get(function (): UpdateInformation {
 			/** @var Client $httpClient */
-			$httpClient = $this->container->httpFactory->makeClient(cache: !$force, cacheTTL: 21600);
+			$httpClient = $this->container->httpFactory->makeClient(cache: false);
 			$options    = $this->container->httpFactory->getDefaultRequestOptions();
 
 			$options[RequestOptions::TIMEOUT] = 5.0;
