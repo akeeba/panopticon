@@ -9,6 +9,9 @@ namespace Akeeba\Panopticon\Controller\Trait;
 
 use Akeeba\Panopticon\Model\Site;
 use Awf\Uri\Uri;
+use Exception;
+use Symfony\Contracts\Cache\CacheInterface;
+use Throwable;
 
 defined('AKEEBA') || die;
 
@@ -25,39 +28,9 @@ trait AkeebaBackupIntegrationTrait
 			return false;
 		}
 
-		/** @var Site $model */
-		$model = $this->getModel();
-		$user  = $this->container->userManager->getUser();
-		$db    = $this->container->db;
-
-		try
-		{
-			$db->lockTable('#__sites');
-			$model->findOrFail($id);
-
-			$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
-
-			if (!$user->authorise('panopticon.admin', $model) && !$canEditMine)
-			{
-				$db->unlockTables();
-
-				return false;
-			}
-
-			$dirty = $model->testAkeebaBackupConnection(true);
-
-			if ($dirty)
-			{
-				$model->save();
-			}
-		}
-		catch (\Throwable)
+		if (!$this->akeebaBackupRelinkInternal($id))
 		{
 			return false;
-		}
-		finally
-		{
-			$db->unlockTables();
 		}
 
 		$this->setRedirectWithMessage(
@@ -103,14 +76,14 @@ trait AkeebaBackupIntegrationTrait
 			$from  = $model->getState('akeebaBackupFrom', 0, 'int');
 			$limit = $model->getState('akeebaBackupLimit', 20, 'int');
 			$key   = sprintf('backupList-%d-%d-%d', $model->id, $from, $limit);
-			/** @var \Symfony\Contracts\Cache\CacheInterface $pool */
-			$pool  = $this->container->cacheFactory->pool('akeebabackup');
+			/** @var CacheInterface $pool */
+			$pool = $this->container->cacheFactory->pool('akeebabackup');
 			$pool->delete($key);
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -154,17 +127,110 @@ trait AkeebaBackupIntegrationTrait
 			$from  = $model->getState('akeebaBackupFrom', 0, 'int');
 			$limit = $model->getState('akeebaBackupLimit', 20, 'int');
 			$key   = sprintf('backupList-%d-%d-%d', $model->id, $from, $limit);
-			/** @var \Symfony\Contracts\Cache\CacheInterface $pool */
-			$pool  = $this->container->cacheFactory->pool('akeebabackup');
+			/** @var CacheInterface $pool */
+			$pool = $this->container->cacheFactory->pool('akeebabackup');
 			$pool->delete($key);
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
+
+		return true;
+	}
+
+	public function reloadBoU()
+	{
+		$this->csrfProtection();
+
+		$id               = $this->input->getInt('id', null);
+		$reloadExtensions = $this->input->getBool('extensions', false);
+		$relink           = $this->input->getBool('relink', false);
+
+		/** @var Site $model */
+		$model = $this->getModel();
+		$user  = $this->container->userManager->getUser();
+
+		$model->findOrFail($id);
+
+		$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
+
+		if (!$user->authorise('panopticon.admin', $model) && !$canEditMine)
+		{
+			return false;
+		}
+
+		if ($reloadExtensions)
+		{
+			try
+			{
+				$this->doRefreshExtensionsInformation($model, forceUpdates: false);
+			}
+			catch (Exception $e)
+			{
+			}
+		}
+
+		if ($relink)
+		{
+			try
+			{
+				$this->akeebaBackupRelinkInternal($id);
+			}
+			catch (Exception $e)
+			{
+			}
+		}
+
+		$view = $this->getView();
+		$view->setTask('reloadBoU');
+		$view->setDoTask('reloadBoU');
+		$view->setLayout('form_akeebabackup');
+		$view->setStrictTpl(true);
+		$view->setStrictLayout(true);
+		$view->setDefaultModel($model);
+		$view->display();
+
+		return true;
+	}
+
+	public function akeebaBackupProfilesSelect()
+	{
+		$this->csrfProtection();
+
+		$selected = $this->input->getInt('selected', 1);
+		$id       = $this->input->getInt('id', null);
+
+		/** @var Site $model */
+		$model = $this->getModel();
+		$user  = $this->container->userManager->getUser();
+
+		$model->findOrFail($id);
+
+		$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
+
+		if (!$user->authorise('panopticon.admin', $model) && !$canEditMine)
+		{
+			return false;
+		}
+
+		$profiles = $model->akeebaBackupGetProfiles(false);
+
+		echo $this->getContainer()->html->select->genericList(
+			data: array_combine(
+				array_map(fn($p) => $p->id, $profiles),
+				array_map(fn($p) => sprintf('#%d. %s', $p->id, $p->name), $profiles),
+			),
+			name: 'config[config.core_update.backup_profile]',
+			attribs: [
+				'class' => 'form-control',
+			],
+			selected: $selected,
+			idTag: 'backupOnUpdateProfiles'
+		);
 
 		return true;
 	}
@@ -189,11 +255,9 @@ trait AkeebaBackupIntegrationTrait
 
 		$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
 
-		if (
-			!$user->authorise('panopticon.run', $model)
-			&& !$user->authorise('panopticon.admin', $model)
-			&& !$canEditMine
-		)
+		if (!$user->authorise('panopticon.run', $model)
+		    && !$user->authorise('panopticon.admin', $model)
+		    && !$canEditMine)
 		{
 			return false;
 		}
@@ -207,9 +271,49 @@ trait AkeebaBackupIntegrationTrait
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
+		}
+
+		return true;
+	}
+
+	private function akeebaBackupRelinkInternal(int $id): bool
+	{
+		/** @var Site $model */
+		$model = $this->getModel();
+		$user  = $this->container->userManager->getUser();
+		$db    = $this->container->db;
+
+		try
+		{
+			$db->lockTable('#__sites');
+			$model->findOrFail($id);
+
+			$canEditMine = $user->getId() == $model->created_by && $user->getPrivilege('panopticon.editown');
+
+			if (!$user->authorise('panopticon.admin', $model) && !$canEditMine)
+			{
+				$db->unlockTables();
+
+				return false;
+			}
+
+			$dirty = $model->testAkeebaBackupConnection(true);
+
+			if ($dirty)
+			{
+				$model->save();
+			}
+		}
+		catch (Throwable)
+		{
+			return false;
+		}
+		finally
+		{
+			$db->unlockTables();
 		}
 
 		return true;

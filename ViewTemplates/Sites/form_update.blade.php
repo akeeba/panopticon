@@ -131,3 +131,5 @@ $updateTime = sprintf(
         </div>
     </div>
 </div>
+
+@include('Sites/form_akeebabackup')
