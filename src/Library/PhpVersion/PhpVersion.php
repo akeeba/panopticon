@@ -23,8 +23,6 @@ class PhpVersion
 {
 	private const API_ENDPOINT = 'https://endoflife.date/api/php.json';
 
-	private const CACHE_KEY = 'php_versions';
-
 	private DateTime $expiration;
 
 	public function __construct(private ?Container $container = null, private ?ClientInterface $httpClient = null)
@@ -117,7 +115,7 @@ class PhpVersion
 	{
 		$cacheController = new CallbackController(
 			container: $this->container,
-			pool: $this->container->cacheFactory->pool(self::CACHE_KEY),
+			pool: $this->container->cacheFactory->pool('system'),
 		);
 
 		return $cacheController->get(
@@ -157,7 +155,8 @@ class PhpVersion
 
 				return $ret;
 			},
-			expiration: $this->expiration,
+			id: 'php_versions',
+			expiration: $this->expiration
 		);
 	}
 }

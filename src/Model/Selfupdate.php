@@ -57,6 +57,7 @@ class Selfupdate extends Model
 	 * The application must not break when these files are present.
 	 */
 	private const REMOVE_FILES = [
+		// Obsolete file
 		'phpinfo.php'
 	];
 
@@ -65,7 +66,8 @@ class Selfupdate extends Model
 	 *
 	 * The application must not break when these folders are present.
 	 */
-	private const REMOVE_FOLDERS = [];
+	private const REMOVE_FOLDERS = [
+	];
 
 	/**
 	 * @var string The currently installed version
@@ -98,7 +100,7 @@ class Selfupdate extends Model
 	{
 		$cacheController = new CallbackController(
 			container: $this->container,
-			pool: $this->container->cacheFactory->pool('self_update')
+			pool: $this->container->cacheFactory->pool('system')
 		);
 
 		return $cacheController->get(function (): UpdateInformation {
@@ -409,6 +411,9 @@ class Selfupdate extends Model
 	 */
 	public function postUpdate()
 	{
+		/** @var Container $container */
+		$container = $this->getContainer();
+
 		/** @var \Akeeba\Panopticon\Model\Setup $model */
 		$model = $this->getModel('Setup');
 		// Check the installed default tasks
@@ -440,6 +445,10 @@ class Selfupdate extends Model
 
 			$this->container->fileSystem->rmdir($folder);
 		}
+
+		// Remove obsolete cache pools
+		$container->cacheFactory->pool('php_versions')->clear();
+		$container->cacheFactory->pool('self_update')->clear();
 
 		// Finally, force–reload the update information
 		$this->getUpdateInformation(true);
