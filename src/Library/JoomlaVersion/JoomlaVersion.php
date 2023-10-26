@@ -85,7 +85,7 @@ class JoomlaVersion
 				'eolMajor'      => new DateTime('2012-09-27 18:00'),
 			],
 
-			// Joomla! 2 (1.6, 1.7, and 2.5 — because versioning was on crystal meth at the time…)
+			// Joomla! 2 (1.6, 1.7, and 2.5 - because versioning was on crystal meth at the time…)
 			'1.6'  => (object) [
 				'cycle'         => '2.5',
 				'firstRelease'  => new DateTime('2011-01-10 23:00'),

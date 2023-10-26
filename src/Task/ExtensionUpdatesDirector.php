@@ -322,7 +322,7 @@ class ExtensionUpdatesDirector extends AbstractCallback
 			{
 				$this->logger->debug(
 					sprintf(
-						'No extension were queued for automatic updates or email on site #%d (%s) — all extensions were already queued up',
+						'No extension were queued for automatic updates or email on site #%d (%s) - all extensions were already queued up',
 						$site->id, $site->name
 					)
 				);

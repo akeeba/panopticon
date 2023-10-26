@@ -679,7 +679,7 @@ Notwithstanding your rights under the fair use doctrine or equivalent laws, the 
 
 4. Restrictions on advertising and commercial usage of the names, logos, and wordmarks
 
-You are disallowed from using the “Akeeba” name, logo, and wordmark, the “Akeeba Panopticon” name, and logo, and the “Panopticon” name for advertising and commercial purposes —including but not limited to advertising campaigns (printed, electronic, or otherwise), web site banners, web site copy, and social media posts— in a way which asserts, implies, or could reasonably be misconstrued as endorsement of your person, business, or product by the licensors and authors of this material. You are permitted to use the aforementioned copyrighted items under the fair use doctrine for factual statements such as “This service makes use of Akeeba Panopticon, a self-hosted site monitoring software created and distributed by Akeeba Ltd”.
+You are disallowed from using the “Akeeba” name, logo, and wordmark, the “Akeeba Panopticon” name, and logo, and the “Panopticon” name for advertising and commercial purposes -including but not limited to advertising campaigns (printed, electronic, or otherwise), web site banners, web site copy, and social media posts— in a way which asserts, implies, or could reasonably be misconstrued as endorsement of your person, business, or product by the licensors and authors of this material. You are permitted to use the aforementioned copyrighted items under the fair use doctrine for factual statements such as “This service makes use of Akeeba Panopticon, a self-hosted site monitoring software created and distributed by Akeeba Ltd”.
 
 5. Non-transferability of liability and indemnification
 
