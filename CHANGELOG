@@ -8,6 +8,7 @@ Akeeba Panopticon 1.0.2
 + Take a backup before updating Joomla! (gh-16)
 ~ Improve behavior clicking Edit without selecting a site
 ~ Improve the TOTP method selection layout
+~ Caching tweaks
 # [LOW] Missing email template type for failed Joomla! update
 
 Akeeba Panopticon 1.0.1
