@@ -60,7 +60,7 @@ class ExtensionsUpdate extends AbstractCallback
 			$this->reloadExtensionInformation($site);
 
 			/**
-			 * DO NOT REMOVE THIS CHECK — THIS IS A CONCURRENCY SANITY CHECK
+			 * DO NOT REMOVE THIS CHECK - THIS IS A CONCURRENCY SANITY CHECK
 			 *
 			 * It is possible that there were no items in the queue when we tried to pop an item. However, between then
 			 * and now we've done a fair amount of work which gives enough time for another process to enqueue a new

@@ -315,7 +315,7 @@ class Task extends DataModel
 		{
 			$logger->info(
 				sprintf(
-					'System Task #%d — “%s”',
+					'System Task #%d - “%s”',
 					$pendingTask->id,
 					TaskUtils::getTaskDescription($pendingTask->type)
 				),
@@ -327,7 +327,7 @@ class Task extends DataModel
 		{
 			$logger->info(
 				sprintf(
-					'Site Task #%d — “%s” for site #%d (%s)',
+					'Site Task #%d - “%s” for site #%d (%s)',
 					$pendingTask->id,
 					TaskUtils::getTaskDescription($pendingTask->type),
 					$pendingTask->site_id,

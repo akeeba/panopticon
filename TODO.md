@@ -94,7 +94,7 @@ The `operator` user can only see the `Main Site`. They can also execute updates 
 
 The `secretary` user can only see the `Main Site`. They can neither edit its configuration, nor execute updates on it.
 
-**Your takeaway**: By creating appropriate groups and assigning them to your users and sites, you can give your clients' staff access to the Panopticon pages for their sites. You are not exposing your other clients' sites to them — Panopticon remains mum about these other sites to these users. By varying the per-group privileges you can prevent your clients from carrying out potentially problematic operations on their sites in Panopticon.
+**Your takeaway**: By creating appropriate groups and assigning them to your users and sites, you can give your clients' staff access to the Panopticon pages for their sites. You are not exposing your other clients' sites to them - Panopticon remains mum about these other sites to these users. By varying the per-group privileges you can prevent your clients from carrying out potentially problematic operations on their sites in Panopticon.
 
 ## Why no uptime monitoring
 

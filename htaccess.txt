@@ -173,7 +173,7 @@
 ServerSignature Off
 
 ### ============================================================================
-### HSTS — For HTTPS–only sites
+### HSTS - For HTTPS–only sites
 ### ============================================================================
 ## Remove if your server does not run under HTTPS (WHY?!!!!)
 <IfModule mod_headers.c>

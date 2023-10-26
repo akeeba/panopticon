@@ -16,7 +16,7 @@ $copyrightYear = ($maxYear == 2023) ? "2023" : "2023–{$maxYear}";
 <h4>@lang('PANOPTICON_ABOUT_LBL_LICENSE')</h4>
 
 <p>
-    @lang('PANOPTICON_APP_TITLE') — @lang('PANOPTICON_ABOUT_LBL_APP_SUBTITLE').
+    @lang('PANOPTICON_APP_TITLE') - @lang('PANOPTICON_ABOUT_LBL_APP_SUBTITLE').
     <br />
     @sprintf('PANOPTICON_ABOUT_LBL_COPYRIGHT', $copyrightYear)
 </p>
