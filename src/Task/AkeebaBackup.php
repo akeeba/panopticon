@@ -257,7 +257,7 @@ class AkeebaBackup extends AbstractCallback
 
 		foreach ($limits as $limit)
 		{
-			$key = sprintf('backupList-%d-%d-%d', $model->id, $from, $limit);
+			$key = sprintf('backupList-%d-%d-%d', $site->id, $from, $limit);
 
 			$pool->delete($key);
 		}

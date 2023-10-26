@@ -15,7 +15,6 @@ use Akeeba\Panopticon\Task\AdminToolsTrait;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
-use Awf\Date\Date;
 use Awf\Mvc\DataView\Html as DataViewHtml;
 use Awf\Text\Text;
 use Awf\Utils\Template;
@@ -60,8 +59,6 @@ class Html extends DataViewHtml
 
 	protected array|Throwable $scans = [];
 
-	private array $backupProfiles = [];
-
 	protected array $extensionFilters = [
 		'filter-updatesite'  => 'fa-globe',
 		'filter-dlid'        => 'fa-key',
@@ -70,6 +67,8 @@ class Html extends DataViewHtml
 		'filter-unscheduled' => 'fa-bolt',
 
 	];
+
+	private array $backupProfiles = [];
 
 	public function onBeforeDlkey(): bool
 	{
@@ -97,7 +96,7 @@ class Html extends DataViewHtml
 		$canAdd    = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.addown');
 		$canEdit   = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.editown');
 		$canDelete = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.editown');
- 		$buttons   = [];
+		$buttons   = [];
 		$buttons[] = $canAdd ? 'add' : null;
 		$buttons[] = $canEdit ? 'edit' : null;
 		$buttons[] = $canDelete ? 'delete' : null;
@@ -141,7 +140,7 @@ class Html extends DataViewHtml
 		}
 
 		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' ' .
-			$units[$unit];
+		       $units[$unit];
 	}
 
 	public function getProfileOptions(): array
@@ -176,12 +175,31 @@ class Html extends DataViewHtml
 		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
 
 		$document = $this->container->application->getDocument();
-		$document->addScriptOptions(
-			'panopticon.rememberTab', [
-				'key' => 'panopticon.siteAdd.rememberTab',
-			]
-		);
+		$document
+			->addScriptOptions(
+				'panopticon.rememberTab', [
+					'key' => 'panopticon.siteAdd.rememberTab',
+				]
+			);
+		$document
+			->addScriptOptions(
+				'panopticon.backupOnUpdate', [
+					'reload'  => $this->getContainer()->router->route(
+						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&extensions=1&format=raw&'
+						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+					),
+					'relink'  => $this->getContainer()->router->route(
+						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&relink=1&format=raw&'
+						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+					),
+					'refresh' => $this->getContainer()->router->route(
+						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId() . '&format=raw&'
+						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+					),
+				]
+			);
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
+		Template::addJs('media://js/site-edit.js', $this->getContainer()->application);
 
 		return $this->onBeforeAddCrud();
 	}
@@ -204,13 +222,32 @@ class Html extends DataViewHtml
 		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
 		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
 
-		$this->container->application->getDocument()
+		$document = $this->container->application->getDocument();
+		$document
 			->addScriptOptions(
 				'panopticon.rememberTab', [
 					'key' => 'panopticon.siteEdit.' . $this->getModel()->id . '.rememberTab',
 				]
 			);
+		$document
+			->addScriptOptions(
+				'panopticon.backupOnUpdate', [
+					'reload'  => $this->getContainer()->router->route(
+						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&extensions=1&format=raw&'
+						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+					),
+					'relink'  => $this->getContainer()->router->route(
+						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&relink=1&format=raw&'
+						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+					),
+					'refresh' => $this->getContainer()->router->route(
+						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId() . '&format=raw&'
+						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+					),
+				]
+			);
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
+		Template::addJs('media://js/site-edit.js', $this->getContainer()->application);
 
 		return $this->onBeforeEditCrud();
 	}
@@ -251,7 +288,7 @@ class Html extends DataViewHtml
 		{
 			try
 			{
-				$useCache             = !$this->item->getState('adminToolsForce', false, 'bool');
+				$useCache    = !$this->item->getState('adminToolsForce', false, 'bool');
 				$this->scans = $this->getModel()->adminToolsGetScans(
 					$useCache,
 					$this->item->getState('adminToolsFrom', 0, 'int'),
@@ -273,10 +310,12 @@ class Html extends DataViewHtml
 		);
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 
-		$document->addScriptOptions('panopticon.siteRemember', [
-			'extensionsFilters' => sprintf('panopticon.site%d.extensionFilters', $this->item->getId()),
-			'collapsible' => sprintf('panopticon.site%d.collapsible', $this->item->getId())
-		]);
+		$document->addScriptOptions(
+			'panopticon.siteRemember', [
+				'extensionsFilters' => sprintf('panopticon.site%d.extensionFilters', $this->item->getId()),
+				'collapsible'       => sprintf('panopticon.site%d.collapsible', $this->item->getId()),
+			]
+		);
 
 		$this->addTooltipJavaScript();
 

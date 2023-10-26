@@ -58,6 +58,10 @@ class JoomlaUpdate extends AbstractCallback
 					$this->runBeforeEvents($task, $storage);
 					break;
 
+				case 'backup':
+					$this->runBackup($task, $storage);
+					break;
+
 				case 'enable':
 					$this->runEnable($task, $storage);
 					break;
@@ -182,7 +186,8 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			default => 'download',
 			'download' => 'beforeEvents',
-			'beforeEvents' => 'enable',
+			'beforeEvents' => 'backup',
+			'backup' => 'enable',
 			'enable' => 'extract',
 			'extract' => 'postExtract',
 			'postExtract' => 'finalise',
@@ -300,7 +305,8 @@ class JoomlaUpdate extends AbstractCallback
 
 		$currentVersion = $config?->core?->current?->version;
 		$latestVersion  = $config?->core?->latest?->version;
-		$params         = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
+		$params         = (($task->params ?? null) instanceof Registry) ?
+			($task->params ?? null) : new Registry($task->params ?? null);
 		$force          = $params->get('force', false);
 
 		if (
@@ -603,6 +609,129 @@ class JoomlaUpdate extends AbstractCallback
 		));
 
 		$this->advanceState();
+	}
+
+	private function runBackup(object $task, Registry $storage): void
+	{
+		$site = $this->getSite($task);
+
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
+		// Collect configuration and task process information
+		$config         = $site->getConfig();
+		$backupOnUpdate = $config->get('config.core_update.backup_on_update', 0);
+		$backupProfile  = $config->get('config.core_update.backup_profile', 1);
+		$lastStatus     = $storage->get('backup.returnStatus', Status::INITIAL_SCHEDULE->value);
+		$subTaskStorage = $storage->get('backup.subTaskStorage', null);
+
+		// Has the backup already finished?
+		if (!in_array($lastStatus, [Status::OK->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]))
+		{
+			$this->logger->info(
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DONE',
+					$site->id,
+					$site->name
+				)
+			);
+
+			$this->advanceState();
+
+			return;
+		}
+
+		if (!$backupOnUpdate)
+		{
+			$this->logger->info(
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_NOT',
+					$site->id,
+					$site->name
+				)
+			);
+
+			$this->advanceState();
+
+			return;
+		}
+
+		if ($lastStatus === Status::WILL_RESUME->value)
+		{
+			$this->logger->info(
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_RESUME',
+					$site->id,
+					$site->name
+				)
+			);
+		}
+		else
+		{
+			$this->logger->info(
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_START',
+					$site->id,
+					$site->name
+				)
+			);
+		}
+
+		// Run a chunk of the backup task.
+		/** @var AkeebaBackup $callback */
+		$callback = $this->container->taskRegistry->get('akeebabackup');
+
+		$callback->setLogger($this->logger);
+
+		$taskStorage = (new Registry())->loadString($subTaskStorage ?: '{}');
+		$dummyTask = (object) [
+			'site_id' => $site->id,
+			'params'  => (new Registry())->loadArray(
+				[
+					'profile_id'  => $backupProfile,
+					'description' => Text::sprintf(
+						'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DESCRIPTION',
+						$config->get(
+							'core.latest.version',
+							$config->get(
+								'core.current.version',
+								Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION')
+							)
+						)
+					),
+				]
+			),
+			'storage' => $taskStorage,
+		];
+
+		$return = $callback($dummyTask, $taskStorage);
+
+		$storage->set('backup.returnStatus', $return);
+		$storage->set('backup.subTaskStorage', $taskStorage->toString());
+
+		// Has the backup finished successfully?
+		if ($return === Status::OK->value)
+		{
+			$this->logger->info(
+				Text::sprintf(
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DONE',
+					$site->id,
+					$site->name
+				)
+			);
+
+			$this->advanceState();
+
+			return;
+		}
+
+		// Do we have to come back for more?
+		if ($return === Status::WILL_RESUME->value)
+		{
+			return;
+		}
+
+		// If I am here, the backup has failed; throw an exception, so we can cancel the update
+		throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_FAIL'));
 	}
 
 	/**

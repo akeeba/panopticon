@@ -1129,7 +1129,7 @@ class Sites extends DataController
 		return false;
 	}
 
-	private function doRefreshExtensionsInformation(Site $site)
+	private function doRefreshExtensionsInformation(Site $site, bool $force = true, bool $forceUpdates = true)
 	{
 		/** @var RefreshSiteInfo $callback */
 		$callback = $this->container->taskRegistry->get('refreshinstalledextensions');
@@ -1138,8 +1138,8 @@ class Sites extends DataController
 
 		$registry->set('limitStart', 0);
 		$registry->set('limit', 1);
-		$registry->set('force', true);
-		$registry->set('forceUpdates', true);
+		$registry->set('force', $force);
+		$registry->set('forceUpdates', $forceUpdates);
 		$registry->set('filter.ids', [$site->getId()]);
 
 		do
