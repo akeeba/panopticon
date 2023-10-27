@@ -269,7 +269,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
 								);
 
 					// Hide core extensions which are stupidly only ever marked as top-level extensions on core update.
-					if ($this->getModel('Sysconfig')->isExcludedShortname($key))
+					if (empty($key) || $this->getModel('Sysconfig')->isExcludedShortname($key))
 					{
 						continue;
 					}

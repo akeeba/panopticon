@@ -10,6 +10,7 @@ Akeeba Panopticon 1.0.2
 ~ Improve the TOTP method selection layout
 ~ Caching tweaks
 # [LOW] Missing email template type for failed Joomla! update
+# [LOW] Invalid extensions could cause PHP errors listing a site's extensions
 
 Akeeba Panopticon 1.0.1
 ================================================================================

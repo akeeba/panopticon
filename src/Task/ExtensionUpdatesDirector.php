@@ -212,6 +212,13 @@ class ExtensionUpdatesDirector extends AbstractCallback
 			{
 				$key = $sysConfigModel
 					->getExtensionShortname($item->type, $item->element, $item->folder, $item->client_id);
+
+				if (empty($key))
+				{
+					// Invalid extension
+					continue;
+				}
+
 				$effectivePreference =
 					$extensionsWithMeta[$key]?->preference ?: $globalExtUpdatePreferences[$key]?->preference;
 				$effectivePreference = $effectivePreference ?: $defaultExtUpdatePreference;

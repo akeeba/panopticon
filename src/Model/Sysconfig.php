@@ -281,11 +281,11 @@ class Sysconfig extends Model
 	{
 		return match ($type)
 		{
-			'component', 'file', 'library', 'package' => $element,
-			'plugin'                                  => 'plg_' . ($folder ?? 'unknown') . '_' . $element,
-			'module'                                  => ($client_id === 0 ? 'a' : '') . $element,
-			'template'                                => ($client_id === 0 ? 'atpl_' : 'tpl_') . $element,
-			default                                   => null,
+			'component', 'file', 'files', 'library', 'package' => $element,
+			'plugin' => 'plg_' . ($folder ?? 'unknown') . '_' . $element,
+			'module' => ($client_id === 0 ? 'a' : '') . $element,
+			'template' => ($client_id === 0 ? 'atpl_' : 'tpl_') . $element,
+			default => null,
 		};
 	}
 
