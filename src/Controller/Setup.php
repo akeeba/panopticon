@@ -202,14 +202,14 @@ class Setup extends Controller
 			'token'    => $this->container->session->getCsrfToken()->getValue(),
 		]);
 
-		Text::script('PANOPTICON_SETUP_CRON_ERR_NO_MAXEXEC_TASK');
-		Text::script('PANOPTICON_SETUP_CRON_ERR_XHR_ABORT');
-		Text::script('PANOPTICON_SETUP_CRON_ERR_XHR_TIMEOUT');
-		Text::script('PANOPTICON_SETUP_CRON_ERR_AJAX_HEAD');
-		Text::script('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_STATUS');
-		Text::script('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_INTERNAL');
-		Text::script('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_READYSTATE');
-		Text::script('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_RAW');
+		$document->lang('PANOPTICON_SETUP_CRON_ERR_NO_MAXEXEC_TASK');
+		$document->lang('PANOPTICON_SETUP_CRON_ERR_XHR_ABORT');
+		$document->lang('PANOPTICON_SETUP_CRON_ERR_XHR_TIMEOUT');
+		$document->lang('PANOPTICON_SETUP_CRON_ERR_AJAX_HEAD');
+		$document->lang('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_STATUS');
+		$document->lang('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_INTERNAL');
+		$document->lang('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_READYSTATE');
+		$document->lang('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_RAW');
 
 		$this->display();
 	}

@@ -84,11 +84,13 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		$this->params = $this->getModel()->getSetupParameters();
 
-		Text::script('PANOPTICON_COMMON_LBL_ROOT');
-		Text::script('PANOPTICON_CONFIG_DIRECTFTP_TEST_OK');
-		Text::script('PANOPTICON_CONFIG_DIRECTFTP_TEST_FAIL');
-		Text::script('PANOPTICON_CONFIG_DIRECTSFTP_TEST_OK');
-		Text::script('PANOPTICON_CONFIG_DIRECTSFTP_TEST_FAIL');
+		$document = $this->getContainer()->application->getDocument();
+
+		$document->lang('PANOPTICON_COMMON_LBL_ROOT');
+		$document->lang('PANOPTICON_CONFIG_DIRECTFTP_TEST_OK');
+		$document->lang('PANOPTICON_CONFIG_DIRECTFTP_TEST_FAIL');
+		$document->lang('PANOPTICON_CONFIG_DIRECTSFTP_TEST_OK');
+		$document->lang('PANOPTICON_CONFIG_DIRECTSFTP_TEST_FAIL');
 
 		return true;
 	}
