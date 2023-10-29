@@ -73,7 +73,7 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
             $item->type, $item->element, $item->folder, $item->client_id
         );
 
-		if ($sysConfigModel->isExcludedShortname($extensionkey)) continue;
+		if (empty($extensionkey) || $sysConfigModel->isExcludedShortname($extensionkey)) continue;
 
 		$currentVersion    = $item->version?->current;
 		$latestVersion     = $item->version?->new;
