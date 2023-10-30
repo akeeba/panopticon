@@ -262,7 +262,7 @@ class Selfupdate extends Model
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 		$options    = $this->container->httpFactory->getDefaultRequestOptions();
 
-		$options[RequestOptions::TIMEOUT] = 5.0;
+		$options[RequestOptions::TIMEOUT] = 180.0;
 
 		// If the file already exists do a HEAD to see if we have already downloaded it.
 		try
