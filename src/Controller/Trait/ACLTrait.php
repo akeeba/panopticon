@@ -38,7 +38,7 @@ trait ACLTrait
 			// We use per-site privileges in this controller
 			'*' => ['*'],
 		],
-		'scannertasks'   => [
+		'scannertasks'  => [
 			// We use per-site privileges in this controller
 			'*' => ['*'],
 		],
@@ -127,6 +127,7 @@ trait ACLTrait
 		'users'         => [
 			// Explicitly allowed tasks. Using * because they have their own access control (I can view / edit myself).
 			// Not adding other tasks means they are implicitly disallowed, even to superusers.
+			'*'       => ['ø'],
 			'browse'  => ['super'],
 			'default' => ['super'],
 			'add'     => ['super'],
@@ -140,10 +141,12 @@ trait ACLTrait
 
 	protected function aclCheck(string $task): void
 	{
-		$altView = Inflector::isSingular($this->getName()) ? Inflector::pluralize($this->getName())
-			: Inflector::singularize($this->getName());
+		$viewName = strtolower($this->getName());
 
-		if ($this->hasAccess($task, $this->getName()) || $this->hasAccess($task, $altView))
+		$altView = Inflector::isSingular($viewName) ? Inflector::pluralize($viewName)
+			: Inflector::singularize($viewName);
+
+		if ($this->hasAccess($task, $viewName) || $this->hasAccess($task, $altView))
 		{
 			return;
 		}
@@ -187,9 +190,9 @@ trait ACLTrait
 			false
 		);
 
-		if (!$isExplicitlyForbidden)
+		if ($isExplicitlyForbidden)
 		{
-			return true;
+			return false;
 		}
 
 		// Special case: public access. Requires the '#' privilege.

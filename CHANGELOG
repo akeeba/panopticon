@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.0.2
 ================================================================================
+! Security [critical]: non-super users can change or remove other users, including super users
 + TOTP Multi-factor Authentication (gh-168)
 + Extensions Update Overview page (gh-178)
 + Core Updates Overview page (gh-178)
