@@ -8,7 +8,7 @@ Akeeba Panopticon 1.0.2
 + Automated task to check for self-updates (gh-174)
 + Take a backup before updating Joomla! (gh-16)
 ~ Improve behavior clicking Edit without selecting a site
-~ Improve the TOTP method selection layout
+~ Improve the MFA method selection layout
 ~ Caching tweaks
 # [LOW] Missing email template type for failed Joomla! update
 # [LOW] Invalid extensions could cause PHP errors listing a site's extensions
