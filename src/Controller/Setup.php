@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Model\Setup as SetupModel;
 use Awf\Filesystem\Factory as FilesystemFactory;
@@ -34,7 +35,7 @@ class Setup extends Controller
 
 		if (
 			!(defined('AKEEBADEBUG') && AKEEBADEBUG)
-			&& @file_exists($this->container->appConfig->getDefaultPath())
+			&& BootstrapUtilities::hasConfiguration()
 			&& !$this->container->userManager->getUser()->getPrivilege('panopticon.super')
 			&& !$this->container->segment->get('panopticon.installing', false)
 		)
@@ -316,7 +317,7 @@ class Setup extends Controller
 	private function needsRedirectToCronTask(): bool
 	{
 		$isDebug          = defined('AKEEBADEBUG') && AKEEBADEBUG;
-		$hasConfigFile    = @file_exists($this->container->appConfig->getDefaultPath());
+		$hasConfigFile    = BootstrapUtilities::hasConfiguration();
 		$isLoggedIn       = $this->container->userManager->getUser()->getPrivilege('panopticon.super');
 		$isInstalling     = $this->container->segment->get('panopticon.installing', false);
 		$hasFinishedSetup = (bool) $this->container->appConfig->get('finished_setup', false);

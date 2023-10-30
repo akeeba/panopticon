@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
 use Awf\Text\Text;
@@ -24,6 +25,17 @@ class Sysconfig extends Controller
 	public function execute($task)
 	{
 		$this->aclCheck($task);
+
+		if (BootstrapUtilities::hasConfiguration(true))
+		{
+			$this->setRedirect(
+				$this->getContainer()->router->route('index.php'),
+				Text::_('PANOPTICON_SYSCONFIG_ERR_USING_DOTENV'),
+				'error'
+			);
+
+			return true;
+		}
 
 		return parent::execute($task);
 	}

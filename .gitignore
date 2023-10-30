@@ -1,5 +1,10 @@
 ### Application stuff
-config.php
+/config.php
+/config.php.*
+/.env
+/.env.production
+/.env.local
+/.env.dev
 /cache/**
 !/cache/.htaccess
 !/cache/web.config

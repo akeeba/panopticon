@@ -142,7 +142,7 @@ class Configuration extends AWFConfiguration
 		$dotEnv->required('PANOPTICON_DBUSER');
 		$dotEnv->required('PANOPTICON_DBPASS');
 		$dotEnv->required('PANOPTICON_DBNAME');
-		$dotEnv->required('PANOPTICON_DBPREFIX');
+		$dotEnv->required('PANOPTICON_PREFIX');
 		$dotEnv->ifPresent('PANOPTICON_DBENCRYPTION')->isBoolean();
 
 		// Apply .env variables into the application configuration repository
