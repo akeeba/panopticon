@@ -53,6 +53,7 @@
 		"symfony/cache": "^6.2",
 		"symfony/console": "^6.2.7",
 		"symfony/error-handler": "^6.2",
+		"vlucas/phpdotenv": "^5.5.0",
 		"web-auth/webauthn-lib": "^4.6.2"
 	},
 	"suggest": {

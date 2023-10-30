@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Application\UserAuthenticationPassword;
 use Akeeba\Panopticon\Application\UserPrivileges;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
@@ -339,6 +340,15 @@ class Application extends AWFApplication
 				fn(bool $carry, string $permission) => $carry && $user->getPrivilege($permission), true
 			);
 
+			// Do not show the System Configuration or its separator if we're using .env files
+			if (
+				(($params['view'] ?? null) === 'sysconfig' || ($params['name'] ?? '') === 'separator01')
+				&& BootstrapUtilities::hasConfiguration(true)
+			)
+			{
+				$allowed = false;
+			}
+
 			if (!$allowed)
 			{
 				continue;
@@ -631,9 +641,7 @@ class Application extends AWFApplication
 
 	private function redirectToSetup(): bool
 	{
-		$configPath = $this->container->appConfig->getDefaultPath();
-
-		if (@file_exists($configPath)
+		if (BootstrapUtilities::hasConfiguration()
 		    || in_array(
 			    $this->getContainer()->input->getCmd('view', ''), self::NO_LOGIN_VIEWS
 		    ))

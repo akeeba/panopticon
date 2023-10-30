@@ -7,6 +7,7 @@
 
 namespace Akeeba\Panopticon\Composer;
 
+use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
 use Awf\Mvc\Model;
@@ -272,7 +273,7 @@ abstract class InstallationScript
 		$container = self::getAWFContainer();
 		$appConfig = $container->appConfig;
 
-		if (!file_exists($appConfig->getDefaultPath()))
+		if (!BootstrapUtilities::hasConfiguration())
 		{
 			return;
 		}

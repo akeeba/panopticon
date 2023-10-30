@@ -7,6 +7,7 @@
 
 namespace Akeeba\Panopticon\CliCommand;
 
+use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\CliCommand\Attribute\AppHeader;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
@@ -117,7 +118,7 @@ abstract class AbstractCommand extends Command
 
 		$container = Factory::getContainer();
 
-		if (!file_exists($container->appConfig->getDefaultPath()))
+		if (!BootstrapUtilities::hasConfiguration())
 		{
 			throw new \RuntimeException('You need to configure Akeeba Panopticon before running this command.', 125);
 		}
