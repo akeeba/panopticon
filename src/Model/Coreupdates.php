@@ -71,10 +71,10 @@ class Coreupdates extends Site
 			->where(
 				[
 					$db->quoteName('enabled') . ' = 1',
-					$query->jsonPointer('config', '$.core.current.version') . ' IS NOT NULL',
-					$query->jsonPointer('config', '$.core.latest.version') . ' IS NOT NULL',
-					$query->jsonPointer('config', '$.core.current.version')
-					. ' != ' . $query->jsonPointer('config', '$.core.latest.version'),
+					$query->jsonExtract($db->quoteName('config'), '$.core.current.version') . ' IS NOT NULL',
+					$query->jsonExtract($db->quoteName('config'), '$.core.latest.version') . ' IS NOT NULL',
+					$query->jsonExtract($db->quoteName('config'), '$.core.current.version')
+					. ' != ' . $query->jsonExtract($db->quoteName('config'), '$.core.latest.version'),
 				]
 			);
 

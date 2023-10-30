@@ -43,7 +43,7 @@ class Extupdates extends Model
 			->where(
 				[
 					$db->quoteName('enabled') . ' = 1',
-					$query->jsonPointer('config', '$.extensions.hasUpdates') . ' = 1',
+					$query->jsonExtract($db->quoteName('config'), '$.extensions.hasUpdates') . ' = 1',
 				]
 			);
 

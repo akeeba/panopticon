@@ -153,7 +153,7 @@ class SelfUpdateFinder extends AbstractCallback
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('id'))
 			->from($db->quoteName('#__users'))
-			->where($query->jsonPointer('parameters', '$.acl.panopticon.super') . ' = TRUE');
+			->where($query->jsonExtract($db->quoteName('parameters'), '$.acl.panopticon.super') . ' = TRUE');
 
 		try
 		{
