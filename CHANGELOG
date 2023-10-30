@@ -1,13 +1,18 @@
 <?php die(); ?>
+Akeeba Panopticon 1.0.3
+================================================================================
+# [HIGH] Too tight permissions check
+
 Akeeba Panopticon 1.0.2
 ================================================================================
+! Security [critical]: non-super users can change or remove other users, including super users
 + TOTP Multi-factor Authentication (gh-168)
 + Extensions Update Overview page (gh-178)
 + Core Updates Overview page (gh-178)
 + Automated task to check for self-updates (gh-174)
 + Take a backup before updating Joomla! (gh-16)
 ~ Improve behavior clicking Edit without selecting a site
-~ Improve the TOTP method selection layout
+~ Improve the MFA method selection layout
 ~ Caching tweaks
 # [LOW] Missing email template type for failed Joomla! update
 # [LOW] Invalid extensions could cause PHP errors listing a site's extensions
