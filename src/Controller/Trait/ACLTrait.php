@@ -131,6 +131,7 @@ trait ACLTrait
 			'browse'  => ['super'],
 			'default' => ['super'],
 			'add'     => ['super'],
+			'remove'  => ['super'],
 			'edit'    => ['*'],
 			'read'    => ['*'],
 			'save'    => ['*'],
@@ -232,8 +233,8 @@ trait ACLTrait
 			fn(
 				$carry,
 				$privilege
-			) => $carry && (($privilege === '*') || $user->getPrivilege('panopticon.' . $privilege)),
-			true
+			) => $carry || ($privilege === '*') || $user->getPrivilege('panopticon.' . $privilege),
+			false
 		);
 	}
 }

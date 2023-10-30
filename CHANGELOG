@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 1.0.3
+================================================================================
+# [HIGH] Too tight permissions check
+
 Akeeba Panopticon 1.0.2
 ================================================================================
 ! Security [critical]: non-super users can change or remove other users, including super users
