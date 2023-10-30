@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Awf\Inflector\Inflector;
 use Awf\Mvc\DataController;
 use Awf\Text\Text;
 use Awf\Utils\ArrayHelper;
@@ -26,10 +27,15 @@ class Users extends DataController
 		return parent::execute($task);
 	}
 
-	protected function onBeforeRead()
+	private function isThisMyOwnUserOrAmISuper(): bool
 	{
-		// If I am a superuser I can see any user account
+		// If I am a superuser I can change any user account
 		$mySelf = $this->container->userManager->getUser();
+
+		if ($mySelf->getPrivilege('panopticon.super'))
+		{
+			return true;
+		}
 
 		$model = $this->getModel();
 
@@ -52,13 +58,53 @@ class Users extends DataController
 			}
 		}
 
-		if ($mySelf->getPrivilege('panopticon.super'))
-		{
-			return true;
-		}
-
 		// If I am not a superuser I can only read my own record
 		return $model->getId() == $mySelf->getId();
+	}
+
+	protected function onBeforeEdit()
+	{
+		return $this->isThisMyOwnUserOrAmISuper();
+	}
+
+	protected function onBeforeRead()
+	{
+		return $this->isThisMyOwnUserOrAmISuper();
+	}
+
+	protected function onBeforeSave()
+	{
+		$this->overrideRedirectForNonSuper();
+
+		return $this->isThisMyOwnUserOrAmISuper();
+	}
+
+	protected function onBeforeApply()
+	{
+		$this->overrideRedirectForNonSuper();
+
+		return $this->isThisMyOwnUserOrAmISuper();
+	}
+
+	protected function onBeforeCancel()
+	{
+		$this->overrideRedirectForNonSuper();
+
+		return $this->isThisMyOwnUserOrAmISuper();
+	}
+
+	private function overrideRedirectForNonSuper()
+	{
+		// If I am a superuser I can change any user account
+		$mySelf = $this->container->userManager->getUser();
+
+		if ($mySelf->getPrivilege('panopticon.super'))
+		{
+			return;
+		}
+
+		$returnUrl = $this->getContainer()->router->route('index.php?view=user&task=read');
+		$this->input->set('returnurl', base64_encode($returnUrl));
 	}
 
 	protected function applySave()
