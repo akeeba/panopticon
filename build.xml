@@ -48,6 +48,11 @@
         <exclude name="release/**" />
 
         <exclude name=".dockerignore" />
+        <exclude name=".env" />
+        <exclude name=".env.production" />
+        <exclude name=".env.local" />
+        <exclude name=".env.development" />
+        <exclude name=".env.dev" />
         <exclude name=".gitattributes" />
         <exclude name=".gitignore" />
         <exclude name=".htaccess" />

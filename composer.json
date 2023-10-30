@@ -79,6 +79,11 @@
 	"archive": {
 		"exclude": [
 			"/.dockerignore",
+			"/.env",
+			"/.env.production",
+			"/.env.local",
+			"/.env.development",
+			"/.env.dev",
 			"/.editorconfig",
 			"/.github",
 			"/.idea",
