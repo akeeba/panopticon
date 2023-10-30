@@ -19,6 +19,16 @@ defined('AKEEBA') || die;
 
 trait DefaultConfigurationTrait
 {
+	protected static $REQUIRED = [
+		'finished_setup',
+		'dbdriver',
+		'dbhost',
+		'dbuser',
+		'dbpass',
+		'dbname',
+		'dbprefix',
+	];
+
 	public function getDefaultConfiguration(): array
 	{
 		return [
@@ -90,7 +100,7 @@ trait DefaultConfigurationTrait
 			'execution_time_bias' => [10, 20, 25, 50, 60, 75, 80, 85, 90, 95, 100],
 			'dbdriver' => ['mysqli', 'pdomysql'],
 			'dbhost' => array_filter(['localhost', '127.0.0.1', $this->get('dbhost')]),
-			'default' => []
+			'default' => [],
 		};
 
 		if (empty($currentValue))
@@ -126,16 +136,30 @@ trait DefaultConfigurationTrait
 
 	private function validateBool($x): bool
 	{
-		if (in_array($x, [
-			true, 'true', 'on', 'yes', 1, '1',
-		], true))
+		if (in_array(
+			$x, [
+			true,
+			'true',
+			'on',
+			'yes',
+			1,
+			'1',
+		], true
+		))
 		{
 			return true;
 		}
 
-		if (in_array($x, [
-			false, 'false', 'off', 'no', 0, '0',
-		], true))
+		if (in_array(
+			$x, [
+			false,
+			'false',
+			'off',
+			'no',
+			0,
+			'0',
+		], true
+		))
 		{
 			return false;
 		}
@@ -162,10 +186,18 @@ trait DefaultConfigurationTrait
 
 	private function validateLogLevel($x): string
 	{
-		if (!in_array($x, [
-			LogLevel::DEBUG, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING, LogLevel::ERROR, LogLevel::CRITICAL,
-			LogLevel::ALERT, LogLevel::EMERGENCY,
-		], true))
+		if (!in_array(
+			$x, [
+			LogLevel::DEBUG,
+			LogLevel::INFO,
+			LogLevel::NOTICE,
+			LogLevel::WARNING,
+			LogLevel::ERROR,
+			LogLevel::CRITICAL,
+			LogLevel::ALERT,
+			LogLevel::EMERGENCY,
+		], true
+		))
 		{
 			return LogLevel::WARNING;
 		}
