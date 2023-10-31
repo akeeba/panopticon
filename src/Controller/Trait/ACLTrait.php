@@ -93,6 +93,7 @@ trait ACLTrait
 			'edit'                               => ['*'],
 			'apply'                              => ['*'],
 			'save'                               => ['*'],
+			'cancel'                             => ['addown', 'editown', 'admin'],
 			// Reloading a site's information requires the read privilege on it
 			'refreshSiteInformation'             => ['read'],
 			'refreshExtensionsInformation'       => ['read'],

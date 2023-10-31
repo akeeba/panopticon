@@ -200,6 +200,33 @@ class Site extends DataModel
 
 	public function check()
 	{
+		$user        = $this->getContainer()->userManager->getUser();
+		$uid         = $user->getId();
+		$currentDate = $this->getContainer()->dateFactory()->toSql();
+
+		$createdOn  = $this->getFieldValue('created_on', null);
+		$createdBy  = $this->getFieldValue('created_by', null);
+		$modifiedOn = $this->getFieldValue('modified_on', null);
+		$modifiedBy = $this->getFieldValue('modified_by', null);
+
+		if (empty($createdBy))
+		{
+			$createdOn = $currentDate;
+			$createdBy = $uid;
+			$modifiedBy = null;
+			$modifiedOn = null;
+		}
+		else
+		{
+			$modifiedOn = $currentDate;
+			$modifiedBy = $uid;
+		}
+
+		$this->setFieldValue('created_on', $createdOn);
+		$this->setFieldValue('created_by', $createdBy);
+		$this->setFieldValue('modified_on', $modifiedOn);
+		$this->setFieldValue('modified_by', $modifiedBy);
+
 		$this->setFieldValue('name', trim($this->getFieldValue('name', '') ?: ''));
 
 		if (empty($this->getFieldValue('name', '')))
@@ -253,14 +280,13 @@ class Site extends DataModel
 
 			$session->set('testconnection.step', 'Unauthenticated access (can I even access the API at all?)');
 
-			[$url, ] = $this->getRequestOptions($this, '/index.php/v1/extensions');
+			[$url,] = $this->getRequestOptions($this, '/index.php/v1/extensions');
 
 			$response = $client->get($url, $options);
 		}
 		catch (GuzzleException $e)
 		{
-			$bodyContent = $response?->getBody()?->getContents();
-			$this->updateDebugInfoInSession($response ?? null, $response?->getBody()?->getContents(), $e);
+			$this->updateDebugInfoInSession(null, null, $e);
 
 			$message = $e->getMessage();
 
@@ -332,7 +358,7 @@ class Site extends DataModel
 
 		try
 		{
-			$response = $client->get($url, $options);
+			$response    = $client->get($url, $options);
 			$bodyContent = $response?->getBody()?->getContents();
 		}
 		catch (GuzzleException $e)
@@ -658,7 +684,7 @@ class Site extends DataModel
 		try
 		{
 			return array_map(
-				function($json) {
+				function ($json) {
 					$item = json_decode($json);
 
 					return $item->id ?? null;
@@ -889,7 +915,8 @@ class Site extends DataModel
 			}
 		}
 
-		if ($task->last_exit_code !== Status::INITIAL_SCHEDULE->value && $task->next_execution < ($this->container->dateFactory()))
+		if ($task->last_exit_code !== Status::INITIAL_SCHEDULE->value
+		    && $task->next_execution < ($this->container->dateFactory()))
 		{
 			return false;
 		}
@@ -1054,7 +1081,9 @@ class Site extends DataModel
 		return $uri->toString();
 	}
 
-	private function updateDebugInfoInSession(?ResponseInterface $response = null, ?string $responseBody = null, ?Throwable $e = null): void
+	private function updateDebugInfoInSession(
+		?ResponseInterface $response = null, ?string $responseBody = null, ?Throwable $e = null
+	): void
 	{
 		$session = $this->getContainer()->segment;
 

@@ -5,6 +5,7 @@ Akeeba Panopticon 1.0.3
 # [HIGH] Old MariaDB versions don't support JSONPath [gh-201]
 # [HIGH] Very low self-update timeout (5 seconds) [gh-185]
 # [HIGH] Too tight permissions check
+# [MEDIUM] Users with only Add Own and Edit Own privileges cannot add sites [gh-203]
 
 Akeeba Panopticon 1.0.2
 ================================================================================

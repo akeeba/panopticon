@@ -862,16 +862,57 @@ class Sites extends DataController
 		 * To edit/save a site I must either have the admin privilege, or it must be my site and I have the editown
 		 * privilege. Either way, I also need the view privilege to actually be able to see the site to begin with!
 		 */
+		$myOwnSite  = $user->getId() === $site->created_by;
+		$newSite    = $site->created_by === null;
 		$canAdmin   = $user->authorise('panopticon.admin', $site);
 		$canSee     = $user->authorise('panopticon.view', $site);
-		$canEditOwn = $user->authorise('panopticon.editown', $site) && ($user->getId() === $site->created_by);
+		$canAddOwn  = $user->authorise('panopticon.addown', $site);
+		$canEditOwn = $user->authorise('panopticon.editown', $site);
 
-		if (!$canSee || !($canAdmin || $canEditOwn))
+		// If I can admin and see the site with global privileges that's enough for any add or edit.
+		if ($canAdmin && $canSee)
+		{
+			return true;
+		}
+
+		// If it's a new site, or my site, and I can both global admin and edit own (therefore see own) that's enough.
+		if (($newSite || $myOwnSite) && $canAdmin && $canEditOwn)
+		{
+			return true;
+		}
+
+		// If it's a new site (and I don't fall into the cases above) I need add own and edit own
+		if ($newSite && $canAddOwn && $canEditOwn)
+		{
+			return true;
+		}
+
+		// If it's a new site and we haven't caught it above, no good.
+		if ($newSite)
 		{
 			return false;
 		}
 
-		return true;
+		// Editing my own site without global admin or edit own? No good.
+		if ($myOwnSite && !($canAdmin || $canEditOwn))
+		{
+			return false;
+		}
+
+		// Editing someone else's site without global admin? No good.
+		if (!$myOwnSite && !$canAdmin)
+		{
+			return false;
+		}
+
+		// Editing my own existing site, and I already have admin or edit own. I need to be able to see the site.
+		if ($myOwnSite)
+		{
+			return $canSee || $canEditOwn;
+		}
+
+		// Editing someone else's site, and I already have global admin. I need to be able to see the site.
+		return $canSee;
 	}
 
 	protected function applySave()
