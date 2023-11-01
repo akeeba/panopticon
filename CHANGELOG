@@ -3,6 +3,7 @@ Akeeba Panopticon 1.0.3
 ================================================================================
 + .env support [gh-34]
 + Anonymous usage statistics collection [gh-215]
++ Link to self-update page even without any updates found [gh-209]
 # [HIGH] Regression: can't access Setup
 # [HIGH] Old MariaDB versions don't support JSONPath [gh-201]
 # [HIGH] Very low self-update timeout (5 seconds) [gh-185]

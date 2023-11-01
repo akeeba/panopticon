@@ -121,6 +121,17 @@ class Application extends AWFApplication
 					'permissions' => ['panopticon.super'],
 					'icon'        => 'fa fa-fw fa-file-lines',
 				],
+				[
+					'url'         => null,
+					'name'        => 'separator04',
+					'title'       => '---',
+					'permissions' => ['panopticon.super'],
+				],
+				[
+					'view'        => 'selfupdate',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-fw fa-cloud',
+				],
 			],
 		],
 		[

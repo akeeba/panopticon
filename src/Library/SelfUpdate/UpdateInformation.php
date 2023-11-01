@@ -21,8 +21,15 @@ class UpdateInformation
 
 	public ?string $errorTraceString = null;
 
+	public ?int $lastCheckTimestamp = null;
+
 	/** @var VersionInformation[] Array of found versions */
 	public array $versions = [];
+
+	public function __construct()
+	{
+		$this->lastCheckTimestamp = time();
+	}
 
 	public function populateVersionsFromGitHubReleases(array $releases): void
 	{

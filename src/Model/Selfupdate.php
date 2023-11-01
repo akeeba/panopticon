@@ -18,7 +18,9 @@ use DateInterval;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use Psr\Cache\InvalidArgumentException;
 use RuntimeException;
+use Symfony\Contracts\Cache\CacheInterface;
 
 /**
  * Self-update (integrated update) Model
@@ -161,7 +163,9 @@ class Selfupdate extends Model
 			$updateInfo->loadedUpdate = !empty($updateInfo->versions);
 
 			return $updateInfo;
-		}, id: 'updateInformation', expiration: $force ? 0 : new DateInterval('PT6H'));
+		},
+			id: 'updateInformation',
+			expiration: $force ? 0 : new DateInterval('PT6H'));
 	}
 
 	public function getLatestVersion(bool $force = false): ?VersionInformation
@@ -460,5 +464,19 @@ class Selfupdate extends Model
 	public function getUpdateStreamUrl(): string
 	{
 		return $this->updateStreamUrl;
+	}
+
+	/**
+	 * Clear the updates cache
+	 *
+	 * @return  void
+	 * @throws  InvalidArgumentException
+	 * @since   1.0.3
+	 */
+	public function bustCache()
+	{
+		/** @var CacheInterface $cachePool */
+		$cachePool = $this->container->cacheFactory->pool('system');
+		$cachePool->delete('updateInformation');
 	}
 }

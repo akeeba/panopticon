@@ -35,6 +35,18 @@ class Selfupdate extends Controller
 
 		$force = $this->input->getInt('force', false);
 
+		if ($force)
+		{
+			/** @var \Akeeba\Panopticon\Model\Selfupdate $model */
+			$model = $this->getModel();
+			$model->bustCache();
+			$model->getUpdateInformation(true);
+
+			$this->setRedirect($this->getContainer()->router->route('index.php?view=selfupdate'));
+
+			$this->redirect();
+		}
+
 		$this->getView()->force = $force;
 
 		return true;
