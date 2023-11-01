@@ -155,5 +155,27 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--stats_collection--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[stats_collection]" id="stats_collection"
+                            {{ $config->get('stats_collection', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="stats_collection">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION')
+                    </label>
+                </div>
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP')
+                    <a href="@route('index.php?view=usagestats')"
+                       target="_blank">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP_LEARN_MORE')
+                        <span class="fa fa-fw fa-arrow-turn-right" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

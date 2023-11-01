@@ -1,40 +1,40 @@
 <?php
-// Control constants. Can be overridden in user_code/bootstrap.php
-defined('LOCAL_DEVELOPMENT_LOAD_AWF') || define('LOCAL_DEVELOPMENT_LOAD_AWF', true);
-defined('LOCAL_DEVELOPMENT_LOAD_JSON_API') || define('LOCAL_DEVELOPMENT_LOAD_JSON_API', true);
-defined('LOCAL_DEVELOPMENT_UPDATES_URL') || define('LOCAL_DEVELOPMENT_UPDATES_URL', '');
+/**
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
 
-// Load the development version of AWF
-(new class extends \Akeeba\Panopticon\LocalDev\LocalLibraryLoader {
-	public function __construct()
-	{
-		parent::__construct(
-			composerAutoloaderFile: $_SERVER['HOME'] . '/Projects/akeeba/awf/vendor/autoload.php',
-			namespace: 'Awf',
-			constantName: 'LOCAL_DEVELOPMENT_LOAD_AWF',
-		);
+/**
+ * =====================================================================================================================
+ * Local Development Helper
+ * =====================================================================================================================
+ *
+ * To use this, create the file user_code/bootstrap.php with these contents:
+ *
+ * require_once __DIR__ . '/../assets/localdev-bootstrap.php';
+ *
+ * To customise its behaviour define the respective control constants at the top of the user_code/bootstrap.php file,
+ * before requiring this file here.
+ *
+ * =====================================================================================================================
+ */
+
+use Akeeba\Panopticon\Factory;
+
+// Override values in the application Container
+call_user_func(
+	function () {
+		$container = Factory::getContainer();
+
+		if (defined('LOCAL_DEVELOPMENT_UPDATES_URL') && !empty(LOCAL_DEVELOPMENT_UPDATES_URL))
+		{
+			$container->updateStreamUrl = LOCAL_DEVELOPMENT_UPDATES_URL;
+		}
+
+		if (defined('LOCAL_DEVELOPMENT_STATS_URL') && !empty(LOCAL_DEVELOPMENT_STATS_URL))
+		{
+			$container->usageStatsUrl = LOCAL_DEVELOPMENT_STATS_URL;
+		}
 	}
-})();
-
-// Load the development version of the JSON Backup API library
-(new class extends \Akeeba\Panopticon\LocalDev\LocalLibraryLoader {
-	public function __construct()
-	{
-		parent::__construct(
-			composerAutoloaderFile: $_SERVER['HOME'] . '/Projects/akeeba/json-backup-api/vendor/autoload.php',
-			namespace: 'Akeeba\BackupJsonApi',
-			constantName: 'LOCAL_DEVELOPMENT_LOAD_JSON_API',
-		);
-	}
-})();
-
-// Override the update stream URL
-call_user_func(function () {
-	if (!defined('LOCAL_DEVELOPMENT_UPDATES_URL') || empty(LOCAL_DEVELOPMENT_UPDATES_URL))
-	{
-		return;
-	}
-
-	$container = \Akeeba\Panopticon\Factory::getContainer();
-	$container->updateStreamUrl = LOCAL_DEVELOPMENT_UPDATES_URL;
-});
+);

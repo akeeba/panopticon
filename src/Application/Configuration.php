@@ -81,7 +81,7 @@ class Configuration extends AWFConfiguration
 	 */
 	public function saveConfiguration($filePath = null)
 	{
-		if ($this->isReadWrite)
+		if (!$this->isReadWrite)
 		{
 			throw new ReadOnlyRepository();
 		}

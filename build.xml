@@ -115,6 +115,10 @@
         <exclude name="vendor/akeeba/json-backup-api/.idea/**" />
         <exclude name="vendor/akeeba/json-backup-api/composer.lock" />
 
+        <exclude name="vendor/akeeba/stats_collector/.idea/**" />
+        <exclude name="vendor/akeeba/stats_collector/.gitignore" />
+        <exclude name="vendor/akeeba/stats_collector/composer.lock" />
+
         <exclude name="vendor/bin/**" />
 
         <exclude name="vendor/chillerlan/php-qrcode/.github/**" />

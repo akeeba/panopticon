@@ -139,6 +139,9 @@ trait ACLTrait
 			'apply'   => ['*'],
 			'cancel'  => ['*'],
 		],
+		'usagestats'    => [
+			'*' => ['super'],
+		],
 	];
 
 	protected function aclCheck(string $task): void

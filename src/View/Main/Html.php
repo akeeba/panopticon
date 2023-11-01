@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\View\Main;
 
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Model\Usagestats;
 use Awf\Pagination\Pagination;
 use Awf\Text\Text;
 use Awf\Utils\Template;
@@ -70,10 +71,17 @@ class Html extends \Awf\Mvc\DataView\Html
 		}
 
 		// JavaScript
+		/** @var Usagestats $usageStatsModel */
+		$usageStatsModel = $this->getModel('usagestats');
+
 		$doc = $this->container->application->getDocument();
 		$doc->addScriptOptions('panopticon.heartbeat', [
 			'url'       => $this->container->router->route('index.php?view=main&task=heartbeat&format=json'),
 			'warningId' => 'heartbeatWarning',
+		]);
+		$doc->addScriptOptions('panopticon.usagestats', [
+			'url'     => $this->container->router->route('index.php?view=usagestats&task=ajax&format=raw'),
+			'enabled' => $usageStatsModel->isStatsCollectionEnabled(),
 		]);
 
 		Template::addJs('media://js/main.js', $this->getContainer()->application, defer: true);
