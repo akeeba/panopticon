@@ -76,7 +76,7 @@ trait ACLTrait
 		],
 		'setup'         => [
 			'cron' => ['super'],
-			'*'    => ['*'],
+			'*'    => ['#'],
 		],
 		'sites'         => [
 			// Anyone can browse; their view will be limited to the sites they have a view privilege on.
