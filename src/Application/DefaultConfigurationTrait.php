@@ -35,6 +35,7 @@ trait DefaultConfigurationTrait
 			'language'                 => 'en-GB',
 			'timezone'                 => 'UTC',
 			'debug'                    => false,
+			'stats_collection'         => true,
 			'error_reporting'          => 'default',
 			'live_site'                => '',
 			'session_token_algorithm'  => 'sha512',
@@ -88,7 +89,7 @@ trait DefaultConfigurationTrait
 	{
 		$values = match ($key)
 		{
-			'debug', 'dbencryption', 'log_rotate_compress', 'finished_setup', 'darkmode', 'phpwarnings', 'dbsslverifyservercert', 'mail_online', 'mail_inline_images', 'smtpauth' => [
+			'debug', 'dbencryption', 'log_rotate_compress', 'finished_setup', 'darkmode', 'phpwarnings', 'dbsslverifyservercert', 'mail_online', 'mail_inline_images', 'smtpauth', 'stats_collection' => [
 				'true',
 				'yes',
 				'1',
@@ -128,7 +129,7 @@ trait DefaultConfigurationTrait
 	{
 		return match ($key)
 		{
-			'debug', 'dbencryption', 'log_rotate_compress', 'finished_setup', 'darkmode', 'phpwarnings', 'dbsslverifyservercert', 'mail_online', 'mail_inline_images', 'smtpauth' => [
+			'debug', 'dbencryption', 'log_rotate_compress', 'finished_setup', 'darkmode', 'phpwarnings', 'dbsslverifyservercert', 'mail_online', 'mail_inline_images', 'smtpauth', 'stats_collection' => [
 				$this,
 				'validateBool',
 			],

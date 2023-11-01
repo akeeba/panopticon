@@ -6,7 +6,7 @@
 
 (() =>
 {
-    const heartBeatCheck = function ()
+    const heartBeatCheck = () =>
     {
         const options = akeeba.System.getOptions("panopticon.heartbeat")
         akeeba.Ajax.ajax(
@@ -30,37 +30,64 @@
 
                              const targetId = options.warningId;
 
-                             if (!targetId) {
+                             if (!targetId)
+                             {
                                  return;
                              }
 
                              const elTarget = document.getElementById(targetId);
 
-                             if (!elTarget) {
+                             if (!elTarget)
+                             {
                                  return;
                              }
 
-                             elTarget.classList.remove('d-none', 'd-block');
-                             elTarget.classList.add(response ? 'd-none' : 'd-block');
+                             elTarget.classList.remove("d-none", "d-block");
+                             elTarget.classList.add(response ? "d-none" : "d-block");
                          }
             }
         );
     }
 
-    const onDOMContentLoaded = () => {
+    const usageStats = () =>
+    {
+        const options = akeeba.System.getOptions("panopticon.usagestats", {});
+
+        if (!options?.enabled)
+        {
+            return;
+        }
+
+        akeeba.Ajax.ajax(
+            options.url,
+            {
+                type:  "GET",
+                cache: false,
+            }
+        );
+    };
+
+    const onDOMContentLoaded = () =>
+    {
         // Set up the CRON heartbeat check
         window.setInterval(heartBeatCheck, 30000);
 
         heartBeatCheck();
 
+        window.setTimeout(usageStats, 500);
+
         // Enable BS tooltips
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        const tooltipTriggerList = document.querySelectorAll("[data-bs-toggle=\"tooltip\"]")
+        const tooltipList        = [...tooltipTriggerList].map(
+            tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }
 
-    if (document.readyState === "loading") {
+    if (document.readyState === "loading")
+    {
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
-    } else {
+    }
+    else
+    {
         onDOMContentLoaded();
     }
 })()

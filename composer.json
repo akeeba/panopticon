@@ -37,6 +37,7 @@
 		"ext-zip": "*",
 		"akeeba/awf": "dev-development",
 		"akeeba/json-backup-api": "^1.0.0",
+		"akeeba/stats_collector": "dev-main",
 		"cesargb/php-log-rotation": "^2.7.1",
 		"chillerlan/php-qrcode": "5.0-beta@beta",
 		"composer/ca-bundle": "^1.3.4",
@@ -56,6 +57,13 @@
 		"vlucas/phpdotenv": "^5.5.0",
 		"web-auth/webauthn-lib": "^4.6.2"
 	},
+	"repositories": [
+		{
+			"type": "github",
+			"url": "https://github.com/akeeba/stats_collector"
+
+		}
+	],
 	"suggest": {
 		"ext-pdo": "*",
 		"ext-simplexml": "*",

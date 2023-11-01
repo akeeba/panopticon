@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0a532e5a3c2fc91e7add1b0ea875381",
+    "content-hash": "9425957bd3cee693ff965a722c4083b1",
     "packages": [
         {
             "name": "akeeba/awf",
@@ -128,6 +128,57 @@
                 "source": "https://github.com/akeeba/json-backup-api/tree/1.0.0"
             },
             "time": "2023-06-08T07:10:06+00:00"
+        },
+        {
+            "name": "akeeba/stats_collector",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akeeba/stats_collector.git",
+                "reference": "0c12279043d6bacdf55f536cddecec407d249dc2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/0c12279043d6bacdf55f536cddecec407d249dc2",
+                "reference": "0c12279043d6bacdf55f536cddecec407d249dc2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "suggest": {
+                "ext-curl": "For sending the usage stats to the server",
+                "ext-openssl": "Fallback when random_bytes is not available"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Akeeba\\UsageStats\\Collector\\": "src"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    ".idea/**",
+                    ".gitignore",
+                    "composer.lock"
+                ]
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicholas K. Dionysopoulos",
+                    "email": "nicholas_NO_SPAM@akeeba.com"
+                }
+            ],
+            "description": "Usage Statistic collector",
+            "support": {
+                "source": "https://github.com/akeeba/stats_collector/tree/main",
+                "issues": "https://github.com/akeeba/stats_collector/issues"
+            },
+            "time": "2023-11-01T10:19:46+00:00"
         },
         {
             "name": "brick/math",
@@ -4680,6 +4731,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "akeeba/awf": 20,
+        "akeeba/stats_collector": 20,
         "chillerlan/php-qrcode": 10
     },
     "prefer-stable": false,

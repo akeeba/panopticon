@@ -37,7 +37,7 @@ abstract class LocalLibraryLoader
 
 		/** @var \Composer\Autoload\ClassLoader $autoloader */
 		$autoloader = require_once $this->composerAutoloaderFile;
-		$autoloader->addPsr4(sprintf('\\%s\\', $this->namespace), $this->sourcesPath);
+		$autoloader->addPsr4(sprintf('\\%s\\', $this->namespace), $this->sourcesPath, true);
 	}
 
 	private function preload(string $path, string $namespace)
