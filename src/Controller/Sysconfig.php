@@ -19,7 +19,7 @@ class Sysconfig extends Controller
 	use ACLTrait;
 
 	private const CHECKBOX_KEYS = [
-		'debug', 'log_rotate_compress', 'phpwarnings', 'mail_online', 'smtpauth', 'proxy_enabled,'
+		'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto', 'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth'
 	];
 
 	public function execute($task)
@@ -53,14 +53,14 @@ class Sysconfig extends Controller
 			function (&$value, string $key) {
 				if (in_array($key, self::CHECKBOX_KEYS))
 				{
-					$value = in_array(strtolower($value), ['on', 'checked', 1, 'true']) ? 1 : 0;
+					$value = in_array(strtolower($value), ['on', 'checked', 1, 'true']);
 				}
 			}
 		);
 
 		foreach (self::CHECKBOX_KEYS as $k)
 		{
-			$data[$k] ??= 0;
+			$data[$k] ??= false;
 		}
 
 		// Apply the configuration to the appConfig object
@@ -68,9 +68,10 @@ class Sysconfig extends Controller
 
 		foreach ($data as $k => $v)
 		{
-			// TODO Validate
 			$config->set($k, $v);
 		}
+
+		$config->set('fs', null);
 
 		// Save the appConfig to disk
 		$this->container->appConfig->saveConfiguration();

@@ -60,6 +60,7 @@ $router = $this->getContainer()->router;
                 @include('Sysconfig/default_caching')
                 @include('Sysconfig/default_logging')
                 @include('Sysconfig/default_proxy')
+                @include('Sysconfig/default_dbtools')
                 @include('Sysconfig/default_database')
             </div>
         </div>

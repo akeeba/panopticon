@@ -11,6 +11,7 @@ namespace Akeeba\Panopticon\Library\DBUtils;
 use Akeeba\Panopticon\Factory;
 use Awf\Database\Driver;
 use Psr\Log\LoggerInterface;
+use function React\Promise\all;
 
 defined('AKEEBA') || die;
 
@@ -38,6 +39,7 @@ class Export implements \JsonSerializable
 		'backup',
 		'epilogue',
 		'compress',
+		'cleanup',
 		'finish',
 	];
 
@@ -224,6 +226,10 @@ class Export implements \JsonSerializable
 			case 'compress':
 				$this->logger?->info('Database export: compressing output');
 				$this->compress();
+				break;
+
+			case 'cleanup':
+				$this->cleanUp();
 				break;
 
 			case 'finish':
@@ -537,6 +543,80 @@ MYSQL;
 		}
 
 		// Now, let's get out of here.
+		$this->advanceState();
+	}
+
+	/**
+	 * Automatically prune the oldest automatic database backup files
+	 *
+	 * @return  void
+	 * @since   1.0.3
+	 */
+	private function cleanUp(): void
+	{
+		$path = APATH_CACHE . '/db_backups';
+
+		if (!is_dir($path) || !is_readable($path))
+		{
+			$this->logger?->notice(
+				sprintf(
+					'The database backup output folder %s does not exist or is not readable',
+					$path
+				)
+			);
+
+			$this->advanceState();
+
+			return;
+		}
+
+		$allFiles = [];
+		$di = new \DirectoryIterator($path);
+
+		/** @var \DirectoryIterator $item */
+		foreach ($di as $item)
+		{
+			if ($item->isDot() || !$item->isFile() || !in_array($item->getExtension(), ['sql', 'gz']))
+			{
+				continue;
+			}
+
+			if (str_ends_with($item->getBasename(), '.gz') && !str_ends_with($item->getBasename(), '.sql.gz'))
+			{
+				continue;
+			}
+
+			$allFiles[$item->getBasename()] = $item->getCTime();
+		}
+
+		$maxFiles = Factory::getContainer()->appConfig->get('dbbackup_maxfiles', 15);
+
+		$this->logger?->debug(sprintf('Found %d database backup file(s)', count($allFiles)));
+
+		if ($maxFiles < 1 || count($allFiles) < $maxFiles)
+		{
+			$this->logger?->debug(sprintf('No need to delete files (I am told to keep %d file(s))', $maxFiles));
+
+			$this->advanceState();
+
+			return;
+		}
+
+		asort($allFiles);
+
+		$allFiles = array_slice($allFiles, 0, -$maxFiles);
+
+		$this->logger?->debug(sprintf('I will delete %d old database backup file(s)', count($allFiles)));
+
+		foreach ($allFiles as $fileName => $dummy)
+		{
+			$filePath = $path . '/' . $fileName;
+
+			$this->logger?->debug(sprintf('Deleting old database backup file %s', $filePath));
+
+			@unlink($filePath);
+		}
+
 		$this->advanceState();
 	}
 

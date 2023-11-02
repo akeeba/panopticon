@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\Sites;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\FormatFilesizeTrait;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
 use Akeeba\Panopticon\Task\AdminToolsTrait;
@@ -32,6 +33,7 @@ class Html extends DataViewHtml
 		onBeforeEdit as onBeforeEditCrud;
 	}
 	use AdminToolsTrait;
+	use FormatFilesizeTrait;
 
 	public object $extension;
 
@@ -109,38 +111,6 @@ class Html extends DataViewHtml
 		$this->addTooltipJavaScript();
 
 		return $result;
-	}
-
-	/**
-	 * Converts number of bytes to a human-readable representation.
-	 *
-	 * @param   int|null  $sizeInBytes         Size in bytes
-	 * @param   int       $decimals            How many decimals should I use? Default: 2
-	 * @param   string    $decSeparator        Decimal separator
-	 * @param   string    $thousandsSeparator  Thousands grouping character
-	 *
-	 * @return  string
-	 * @since   1.0.0
-	 */
-	public function formatFilesize(
-		?int $sizeInBytes, int $decimals = 2, string $decSeparator = '.', string $thousandsSeparator = ''
-	): string
-	{
-		if ($sizeInBytes <= 0)
-		{
-			return '&mdash;';
-		}
-
-		$units = ['b', 'KiB', 'MiB', 'GiB', 'TiB'];
-		$unit  = floor(log($sizeInBytes, 2) / 10);
-
-		if ($unit == 0)
-		{
-			$decimals = 0;
-		}
-
-		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' ' .
-		       $units[$unit];
 	}
 
 	public function getProfileOptions(): array

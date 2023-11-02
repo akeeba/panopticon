@@ -31,15 +31,22 @@ trait DefaultConfigurationTrait
 	public function getDefaultConfiguration(): array
 	{
 		return [
+			'finished_setup'           => false,
 			'session_timeout'          => 1440,
 			'language'                 => 'en-GB',
 			'timezone'                 => 'UTC',
 			'debug'                    => false,
-			'stats_collection'         => true,
 			'error_reporting'          => 'default',
 			'live_site'                => '',
 			'session_token_algorithm'  => 'sha512',
-			'finished_setup'           => false,
+			'behind_load_balancer'     => false,
+			'stats_collection'         => true,
+			'proxy_enabled'            => false,
+			'proxy_host'               => 'localhost',
+			'proxy_port'               => 3128,
+			'proxy_user'               => '',
+			'proxy_pass'               => '',
+			'proxy_no'                 => '',
 			'theme'                    => 'theme',
 			'darkmode'                 => 1,
 			'fontsize'                 => '',
@@ -64,13 +71,16 @@ trait DefaultConfigurationTrait
 			'dbuser'                   => '',
 			'dbpass'                   => '',
 			'dbname'                   => '',
-			'dbprefix'                 => 'ak_',
+			'prefix'                   => 'pnptc_',
 			'dbcharset'                => 'utf8mb4',
 			'dbencryption'             => false,
 			'dbsslca'                  => '',
 			'dbsslkey'                 => '',
 			'dbsslcert'                => '',
-			'dbsslverifyservercert'    => '',
+			'dbsslverifyservercert'    => false,
+			'dbbackup_auto'            => true,
+			'dbbackup_compress'        => true,
+			'dbbackup_maxfiles'        => 15,
 			'mail_online'              => false,
 			'mail_inline_images'       => false,
 			'mailer'                   => 'mail',
@@ -89,7 +99,7 @@ trait DefaultConfigurationTrait
 	{
 		$values = match ($key)
 		{
-			'debug', 'dbencryption', 'log_rotate_compress', 'finished_setup', 'darkmode', 'phpwarnings', 'dbsslverifyservercert', 'mail_online', 'mail_inline_images', 'smtpauth', 'stats_collection' => [
+			'finished_setup', 'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto', 'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth' => [
 				'true',
 				'yes',
 				'1',
@@ -107,6 +117,7 @@ trait DefaultConfigurationTrait
 			'cron_stuck_threshold' => [3, 5, 10, 15, 30, 45, 60],
 			'max_execution' => [10, 14, 20, 30, 60, 90, 180, 300, 600, 900, 1800, 3600],
 			'execution_time_bias' => [10, 20, 25, 50, 60, 75, 80, 85, 90, 95, 100],
+			'dbbackup_maxfiles' => [7, 15, 30, 90, 180, 365],
 			'dbdriver' => ['mysqli', 'pdomysql'],
 			'dbhost' => array_filter(['localhost', '127.0.0.1', $this->get('dbhost')]),
 			'default' => [],
@@ -129,7 +140,7 @@ trait DefaultConfigurationTrait
 	{
 		return match ($key)
 		{
-			'debug', 'dbencryption', 'log_rotate_compress', 'finished_setup', 'darkmode', 'phpwarnings', 'dbsslverifyservercert', 'mail_online', 'mail_inline_images', 'smtpauth', 'stats_collection' => [
+			'finished_setup', 'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto', 'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth' => [
 				$this,
 				'validateBool',
 			],
@@ -174,6 +185,7 @@ trait DefaultConfigurationTrait
 			'dbcharset' => fn($x) => $this->validatePresetValues($x, 'utf8mb4', ['utf8mb4',]),
 			'mailer' => fn($x) => $this->validatePresetValues($x, 'mail', ['mail', 'sendmail', 'smtp']),
 			'smtpport' => fn($x) => $this->validateInteger($x, 25, 1, 65535),
+			'dbbackup_maxfiles' => fn($x) => $this->validateInteger($x, 15, 1, 730),
 			default => fn($x) => $x,
 		};
 	}

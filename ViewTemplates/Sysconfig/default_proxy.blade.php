@@ -22,7 +22,7 @@ $config = $this->container->appConfig;
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[proxy_enabled]" id="proxy_enabled"
-                            {{ $config->get('proxy_enabled', false) ? 'checked' : '' }} value="1"
+                            {{ $config->get('proxy_enabled', false) ? 'checked' : '' }}
                     >
                     <label class="form-check-label" for="proxy_enabled">
                         @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_ENABLED')
