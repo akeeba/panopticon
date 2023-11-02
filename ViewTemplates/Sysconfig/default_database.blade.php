@@ -147,7 +147,6 @@ $config = $this->container->appConfig;
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[dbencryption]" id="dbencryption"
                             {{ $config->get('dbencryption', false) ? 'checked' : '' }}
-                            value="1"
                     >
                     <label class="form-check-label" for="dbencryption">
                         @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DBENCRYPTION')
@@ -201,7 +200,6 @@ $config = $this->container->appConfig;
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[dbsslverifyservercert]" id="dbsslverifyservercert"
                            {{ $config->get('dbsslverifyservercert', false) ? 'checked' : '' }}
-                           value="1"
                     >
                     <label class="form-check-label" for="dbsslverifyservercert">
                         @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DBSSLVERIFYSERVERCERT')

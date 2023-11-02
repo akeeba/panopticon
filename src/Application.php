@@ -132,6 +132,11 @@ class Application extends AWFApplication
 					'permissions' => ['panopticon.super'],
 					'icon'        => 'fa fa-fw fa-cloud',
 				],
+				[
+					'view'        => 'dbtools',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-fw fa-database',
+				],
 			],
 		],
 		[

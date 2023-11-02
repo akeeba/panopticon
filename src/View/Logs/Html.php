@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\Logs;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\FormatFilesizeTrait;
 use Akeeba\Panopticon\Model\Log;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Inflector\Inflector;
@@ -24,6 +25,7 @@ use Awf\Utils\Template;
 class Html extends BaseHtml
 {
 	use CrudTasksTrait;
+	use FormatFilesizeTrait;
 
 	protected array $siteNames = [];
 
@@ -87,38 +89,6 @@ class Html extends BaseHtml
 	protected function filesize($fileName): string
 	{
 		return $this->formatFilesize($this->getModel()->getFilesize($fileName));
-	}
-
-	/**
-	 * Converts number of bytes to a human-readable representation.
-	 *
-	 * @param   int|null  $sizeInBytes         Size in bytes
-	 * @param   int       $decimals            How many decimals should I use? Default: 2
-	 * @param   string    $decSeparator        Decimal separator
-	 * @param   string    $thousandsSeparator  Thousands grouping character
-	 *
-	 * @return  string
-	 * @since   1.0.0
-	 */
-	protected function formatFilesize(
-		?int $sizeInBytes, int $decimals = 2, string $decSeparator = '.', string $thousandsSeparator = ''
-	): string
-	{
-		if ($sizeInBytes <= 0)
-		{
-			return '&mdash;';
-		}
-
-		$units = ['b', 'KiB', 'MiB', 'GiB', 'TiB'];
-		$unit  = floor(log($sizeInBytes, 2) / 10);
-
-		if ($unit == 0)
-		{
-			$decimals = 0;
-		}
-
-		return number_format($sizeInBytes / (1024 ** $unit), $decimals, $decSeparator, $thousandsSeparator) . ' '
-		       . $units[$unit];
 	}
 
 	protected function getSiteIdFromFilename($logFilename): ?int

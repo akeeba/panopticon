@@ -45,6 +45,9 @@ trait ACLTrait
 		'cron'          => [
 			'*' => ['#'],
 		],
+		'dbtools'       => [
+			'*' => ['super'],
+		],
 		'emails'        => [
 			'*' => ['super'],
 		],

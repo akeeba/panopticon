@@ -138,7 +138,7 @@ class HttpFactory
 	{
 		// Get the application configuration variables
 		$config  = $this->container->appConfig;
-		$enabled = $config->get('proxy_enabled', '');
+		$enabled = $config->get('proxy_enabled', false);
 		$host    = trim($config->get('proxy_host', ''));
 		$port    = (int) $config->get('proxy_port', 0);
 		$user    = $config->get('proxy_user', '');

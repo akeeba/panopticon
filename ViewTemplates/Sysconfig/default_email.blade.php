@@ -148,7 +148,6 @@ $config = $this->container->appConfig;
                 <div class="col-sm-9 offset-sm-3">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" name="options[smtpauth]" id="smtpauth"
-                                {{ $config->get('smtpauth', false) ? 'checked' : '' }} value="1"
                         >
                         <label class="form-check-label" for="smtpauth">
                             @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPAUTH')
