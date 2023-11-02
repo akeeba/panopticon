@@ -67,7 +67,8 @@
 	"suggest": {
 		"ext-pdo": "*",
 		"ext-simplexml": "*",
-		"ext-zend-opcache": "*"
+		"ext-zend-opcache": "*",
+		"ext-zlib": "*"
 	},
 	"config": {
 		"process-timeout": 600,
