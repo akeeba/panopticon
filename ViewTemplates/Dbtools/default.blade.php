@@ -115,7 +115,15 @@ $totalSize  = 0;
         <td class="fw-medium text-info">
             {{ $this->formatFilesize($totalSize) }}
         </td>
-        <td></td>
+        <td>
+            <div class="d-flex flex-column gap-2 align-items-center justify-content-evenly">
+                <a href="@route(sprintf('index.php?view=dbtools&task=startBackup&%s=1', $token))"
+                   class="btn btn-outline-primary">
+                    <span class="fa fa-fw fa-play-circle" aria-hidden="true"></span>
+                    @lang('PANOPTICON_DBTOOLS_LBL_BACKUP_NOW')
+                </a>
+            </div>
+        </td>
     </tr>
     </tfoot>
 </table>

@@ -20,6 +20,18 @@ class Html extends BaseHtmlView
 
 	protected array $files;
 
+	public function onBeforeStartBackup(): bool
+	{
+		return $this->onBeforeBackup();
+	}
+
+	public function onBeforeBackup(): bool
+	{
+		$this->setLayout('backup');
+
+		return true;
+	}
+
 	public function onBeforeMain(): bool
 	{
 		$toolbar = $this->getContainer()->application->getDocument()->getToolbar();

@@ -161,7 +161,7 @@ class Export implements \JsonSerializable
 
 		$instance = new static($o->outputFilename, $db);
 
-		$instance->fsmState      = $o->fsmState ?? [];
+		$instance->fsmState      = $o->fsmState ?? null;
 		$instance->tableStack    = $o->tableStack ?? [];
 		$instance->currentTable  = $o->currentTable ?? null;
 		$instance->currentOffset = $o->currentOffset ?? null;

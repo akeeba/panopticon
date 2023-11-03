@@ -10,8 +10,10 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Library\DBUtils\Export;
 use Awf\Mvc\Controller;
 use Awf\Text\Text;
+use Awf\Timer\Timer;
 
 class Dbtools extends Controller
 {
@@ -53,5 +55,69 @@ class Dbtools extends Controller
 				: Text::sprintf('PANOPTICON_DBTOOLS_LBL_NOT_DELETED', $escapedFile),
 			$success ? 'success' : 'error'
 		);
+	}
+
+	public function startBackup()
+	{
+		$this->csrfProtection();
+
+		$fileName = sprintf("%s/db_backups/backup-%s.sql", APATH_CACHE, date('Y-m-d-His'));
+		$export   = new Export($fileName, $this->getContainer()->db);
+
+		$session = $this->getContainer()->segment;
+		$session->set('dbtools.backup.export', json_encode($export));
+
+		$this->display();
+
+		return true;
+	}
+
+	public function backup()
+	{
+		$this->csrfProtection();
+
+		$returnUrl = $this->getContainer()->router->route('index.php?view=dbtools');
+
+		$session = $this->getContainer()->segment;
+		$json = $session->get('dbtools.backup.export', null);
+
+		if (empty($json))
+		{
+			$this->setRedirect($returnUrl, Text::_('PANOPTICON_DBTOOLS_ERR_BACKUP_INVALID_STATE'), 'error');
+
+			return;
+		}
+
+		try
+		{
+			$export = Export::fromJson($json);
+		}
+		catch (\JsonException $e)
+		{
+			$this->setRedirect($returnUrl, Text::sprintf('PANOPTICON_DBTOOLS_ERR_BACKUP_JSON', $e->getMessage()), 'error');
+
+			return;
+		}
+
+		$timer = new Timer(5, 75);
+
+		while ($timer->getTimeLeft())
+		{
+			$lastStatus = $export->execute();
+
+			if (!$lastStatus)
+			{
+				break;
+			}
+		}
+
+		if ($lastStatus === false)
+		{
+			$this->setRedirect($returnUrl, Text::_('PANOPTICON_DBTOOLS_LBL_BACKUP_DONE'), 'success');
+
+			return;
+		}
+
+		$this->display();
 	}
 }
