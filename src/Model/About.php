@@ -72,7 +72,10 @@ class About extends Model
 			return null;
 		}
 
+		// Filter out bots and other non-human users
 		$users = array_filter($users, fn($x) => !is_object($x) || $x?->type === 'User');
+		$users = array_filter($users, fn($x) => !in_array($x?->login, ['weblate']));
+
 		if (empty($users))
 		{
 			return null;
