@@ -185,8 +185,14 @@ $themeColor = TemplateHelper::getThemeColour();
 						<a href="https://github.com/akeeba/panopticon" target="_blank">
 							<?= Text::_('PANOPTICON_APP_LBL_SOURCE_CODE') ?>
 						</a>
-					</div
-					><div>
+					</div>
+					<div>
+						<span class="fa fa-language text-white" aria-hidden="true"></span>
+						<a href="https://akee.ba/panlang" target="_blank">
+							<?= Text::_('PANOPTICON_APP_LBL_LANGUAGES') ?>
+						</a>
+					</div>
+					<div>
 						<span class="fa fa-address-card" aria-hidden="true"></span>
 						<a href="<?= $this->container->router->route('index.php?view=about') ?>">
 							About
