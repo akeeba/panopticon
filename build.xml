@@ -66,9 +66,6 @@
         <exclude name="Dockerfile" />
         <exclude name="*.md" />
 
-        <!-- Exclude SCSS -->
-        <exclude name="media/scss/**" />
-
         <!-- Exclude map files -->
         <exclude name="media/css/*.map" />
         <exclude name="media/js/*.map" />
