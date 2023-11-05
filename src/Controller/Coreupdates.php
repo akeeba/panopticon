@@ -72,7 +72,7 @@ class Coreupdates extends DataController
 				continue;
 			}
 
-			$this->enqueueJoomlaUpdate($site, $this->getContainer());
+			$this->enqueueJoomlaUpdate($site, $this->getContainer(), user: $this->container->userManager->getUser());
 
 			$numScheduled++;
 		}

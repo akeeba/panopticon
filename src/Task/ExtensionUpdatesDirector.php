@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
 use Awf\Mvc\Model;
@@ -217,6 +218,24 @@ class ExtensionUpdatesDirector extends AbstractCallback
 				{
 					// Invalid extension
 					continue;
+				}
+
+				// Log extension update found: \Akeeba\Panopticon\Model\Reports::fromExtensionUpdateFound
+				try {
+					Reports::fromExtensionUpdateFound(
+						$site->getId(),
+						$key,
+						$item->name,
+						$item->version?->current,
+						$item->version?->new
+					)->save();
+				} catch (\Throwable $e) {
+					$this->logger->error(
+						sprintf(
+							'Problem saving report log entry [%s:%s]: %d %s',
+							$e->getFile(), $e->getLine(), $e->getCode(), $e->getMessage()
+						)
+					);
 				}
 
 				$effectivePreference =

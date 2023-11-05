@@ -105,7 +105,7 @@ class Extupdates extends Controller
 				continue;
 			}
 
-			if ($this->enqueueExtensionUpdate($site, $extensionId, 'major'))
+			if ($this->enqueueExtensionUpdate($site, $extensionId, 'major', $this->container->userManager->getUser()))
 			{
 				$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
 

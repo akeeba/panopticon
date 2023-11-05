@@ -15,7 +15,9 @@ use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
@@ -34,12 +36,15 @@ class JoomlaUpdate extends AbstractCallback
 {
 	use ApiRequestTrait;
 	use SiteNotificationEmailTrait;
+	use TimeAgoTrait;
 
 	protected string $currentState;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
 		$this->currentState = $storage->get('fsm.state', 'init');
+		$site = $this->getSite($task);
+		$config         = $site->getConfig();
 
 		try
 		{
@@ -83,7 +88,7 @@ class JoomlaUpdate extends AbstractCallback
 					break;
 
 				case 'siteInfo':
-					$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->getSite($task)->id));
+					$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 					// I have to wrap this in a transaction for saving the new information to work.
 					$this->container->db->transactionStart();
@@ -96,37 +101,7 @@ class JoomlaUpdate extends AbstractCallback
 					break;
 
 				case 'email':
-					$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->getSite($task)->id));
-
-					// Ensure there are not stray transactions
-					try
-					{
-						$this->container->db->transactionCommit();
-					}
-					catch (Exception)
-					{
-						// Okay...
-					}
-
-					/**
-					 * Only send emails if we didn't reinstall the same version AND if we are asked to send emails after
-					 * Joomla! update.
-					 */
-					$vars       = $storage->get('email_variables', []);
-					$vars       = (array) $vars;
-					$newVersion = $vars['NEW_VERSION'] ?? null;
-					$oldVersion = $vars['OLD_VERSION'] ?? null;
-
-					if (
-						!empty($newVersion) && !empty($oldVersion) && $newVersion != $oldVersion
-						&& $storage->get('email_after', true)
-					)
-					{
-						$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
-
-					}
-
-					$this->advanceState();
+					$this->sendSuccessEmail($task, $storage);
 					break;
 			}
 		}
@@ -138,6 +113,41 @@ class JoomlaUpdate extends AbstractCallback
 				'line'  => $e->getLine(),
 				'trace' => $e->getTraceAsString(),
 			]);
+
+			// Log the failed update
+			try
+			{
+				$params         = (($task->params ?? null) instanceof Registry) ?
+					($task->params ?? null) : new Registry($task->params ?? null);
+				$backupOnUpdate = $config->get('config.core_update.backup_on_update', 0);
+				$backupProfile  = $config->get('config.core_update.backup_profile', 1);
+
+				$report = Reports::fromCoreUpdateInstalled(
+					$site->id,
+					$config->get('core.current.version'),
+					$config->get('core.latest.version'),
+					false,
+					$e
+				);
+
+				$context = $report->context;
+				$context->set('start_time', $storage->get('start_timestamp', null));
+				$context->set('end_time', time());
+				$context->set('failed_step', $this->currentState);
+				$context->set('backup_on_update', (bool) $backupOnUpdate);
+				$context->set('backup_profile', $backupOnUpdate ? $backupProfile : null);
+
+				$report->save(
+					[
+						'context'    => $context,
+						'created_by' => $params->get('initiatingUser', 0),
+					]
+				);
+			}
+			catch (Throwable $e)
+			{
+				// Ignore this
+			}
 
 			// Send email about the failed update
 			if ($storage->get('email_error', true))
@@ -158,6 +168,40 @@ class JoomlaUpdate extends AbstractCallback
 
 			return Status::WILL_RESUME->value;
 		}
+
+		// Log a successful update
+		try
+		{
+			$params = (($task->params ?? null) instanceof Registry) ?
+				($task->params ?? null) : new Registry($task->params ?? null);
+
+			$report = Reports::fromCoreUpdateInstalled(
+				$site->id,
+				$config->get('core.current.version'),
+				$config->get('core.latest.version'),
+				true,
+				$e
+			);
+
+			$context = $report->context;
+			$context->set('start_time', $storage->get('start_timestamp', null));
+			$context->set('end_time', time());
+			$context->set('backup_on_update', (bool) $backupOnUpdate);
+			$context->set('backup_profile', $backupOnUpdate ? $backupProfile : null);
+
+			$report->save(
+				[
+					'context'    => $context,
+					'created_by' => $params->get('initiatingUser', 0),
+				]
+			);
+
+		}
+		catch (Throwable $e)
+		{
+			// Ignore this
+		}
+
 
 		// This is the "finish" state. We are done.
 		return Status::OK->value;
@@ -273,6 +317,9 @@ class JoomlaUpdate extends AbstractCallback
 			'SITE_NAME'   => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
 			'SITE_URL'    => 'https://www.example.com',
 		]);
+
+		// Remember when we started installing the update
+		$storage->set('start_timestamp', time());
 
 		// Try to get the site
 		$site = $this->getSite($task);
@@ -1642,5 +1689,70 @@ class JoomlaUpdate extends AbstractCallback
 
 		$storage->set('update.basename', $baseName);
 		$storage->set('update.check', $check);
+	}
+
+	/**
+	 * Sends a success email
+	 *
+	 * @param   object    $task
+	 * @param   Registry  $storage
+	 *
+	 * @return  void
+	 * @since   __DEPLOY_VERSION__  Moved into its own method
+	 */
+	private function sendSuccessEmail(object $task, Registry $storage): void
+	{
+		$this->logger->pushLogger(
+			$this->container->loggerFactory->get($this->name . '.' . $this->getSite($task)->id)
+		);
+
+		// Ensure there are not stray transactions
+		try
+		{
+			$this->container->db->transactionCommit();
+		}
+		catch (Exception)
+		{
+			// Okay...
+		}
+
+		// Get the start time, end time, and actual duration
+		$startTime = $storage->get('start_timestamp', null);
+		$endTime   = $startTime === null ? null : time();
+		$duration  = $startTime === null ? null : $endTime - $startTime;
+
+		/**
+		 * Only send emails if we didn't reinstall the same version AND if we are asked to send emails after
+		 * Joomla! update.
+		 */
+		$vars       = $storage->get('email_variables', []);
+		$vars       = (array) $vars;
+		$newVersion = $vars['NEW_VERSION'] ?? null;
+		$oldVersion = $vars['OLD_VERSION'] ?? null;
+
+		if ($startTime === null)
+		{
+			$vars['START_TIME'] = Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_TIME');
+			$vars['END_TIME'] = Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_TIME');
+			$vars['DURATION'] = Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_DURATION');
+		}
+		else
+		{
+			$basicHtmlHelper    = $this->container->html->basic;
+			$vars['START_TIME'] = $basicHtmlHelper->date('@' . $startTime, Text::_('DATE_FORMAT_LC7'));
+			$vars['END_TIME']   = $basicHtmlHelper->date('@' . $endTime, Text::_('DATE_FORMAT_LC7'));
+			$vars['DURATION']   = $this->timeAgo($startTime, $endTime);
+		}
+
+		if (
+			!empty($newVersion) && !empty($oldVersion) && $newVersion != $oldVersion
+			&& $storage->get('email_after', true)
+		)
+		{
+			$this->sendEmail('joomlaupdate_installed', $storage, ['panopticon.super', 'panopticon.manage']);
+
+		}
+
+		$this->advanceState();
 	}
 }

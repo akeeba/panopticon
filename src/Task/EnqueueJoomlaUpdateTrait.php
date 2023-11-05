@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Model\Task;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
+use Awf\User\User;
 use DateTimeZone;
 use Exception;
 
@@ -30,7 +31,7 @@ trait EnqueueJoomlaUpdateTrait
 	 *
 	 * @return  void
 	 */
-	private function enqueueJoomlaUpdate(Site $site, Container $container, bool $force = false): void
+	private function enqueueJoomlaUpdate(Site $site, Container $container, bool $force = false, ?User $user = null): void
 	{
 		/** @var Task $task */
 		$task = $container->mvcFactory->makeTempModel('Task');
@@ -55,6 +56,7 @@ trait EnqueueJoomlaUpdateTrait
 		$params->set('run_once', 'disable');
 		$params->set('force', $force);
 		$params->set('toVersion', $site->getConfig()->get('core.latest.version'));
+		$params->set('initiatingUser', $user?->getId());
 
 		$task->params         = $params->toString();
 		$task->storage        = '{}';

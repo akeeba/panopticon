@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\Controller\Trait;
 
 
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Utils\Ip;
 
@@ -44,6 +45,20 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$id,
+					'admintools.pluginDisable',
+					true
+				);
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
 		catch (\Throwable $e)
 		{
@@ -82,6 +97,20 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$id,
+					'admintools.pluginEnable',
+					true
+				);
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
 		catch (\Throwable $e)
 		{
@@ -112,6 +141,20 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$id,
+					'admintools.htaccessDisable',
+					true
+				);
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
 		catch (\Throwable $e)
 		{
@@ -142,6 +185,20 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$id,
+					'admintools.htaccessEnable',
+					true
+				);
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
 		catch (\Throwable $e)
 		{
@@ -175,6 +232,21 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$id,
+					'admintools.unblockMyIP',
+					true,
+					$myIp
+				);
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
 		catch (\Throwable $e)
 		{
@@ -216,7 +288,7 @@ trait AdminToolsIntegrationTrait
 
 		try
 		{
-			$model->adminToolsScanEnqueue();
+			$model->adminToolsScanEnqueue($this->getContainer()->userManager->getUser());
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);

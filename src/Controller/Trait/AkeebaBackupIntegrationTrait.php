@@ -7,6 +7,7 @@
 
 namespace Akeeba\Panopticon\Controller\Trait;
 
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Uri\Uri;
 use Exception;
@@ -82,6 +83,21 @@ trait AkeebaBackupIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$id,
+					'akeebabackup.delete',
+					true,
+					$backupId
+				);
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
 		catch (Exception $e)
 		{
@@ -133,6 +149,21 @@ trait AkeebaBackupIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$id,
+					'akeebabackup.deleteFiles',
+					true,
+					$backupId
+				);
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
 		catch (Exception $e)
 		{
@@ -266,7 +297,7 @@ trait AkeebaBackupIntegrationTrait
 
 		try
 		{
-			$model->akeebaBackupEnqueue($profileId);
+			$model->akeebaBackupEnqueue($profileId, user: $this->getContainer()->userManager->getUser());
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);

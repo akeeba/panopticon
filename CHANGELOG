@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon __DEPLOY_VERSION__
+================================================================================
++ Site reports (updates, backups, file scanner, Admin Tools actions) [gh-220]
+
 Akeeba Panopticon 1.0.3
 ================================================================================
 + .env support [gh-34]

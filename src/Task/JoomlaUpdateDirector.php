@@ -15,6 +15,7 @@ use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Awf\Registry\Registry;
@@ -192,10 +193,28 @@ class JoomlaUpdateDirector extends AbstractCallback
 				continue;
 			}
 
+			// Get the site's configuraiton
 			$siteConfig   = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
+
+			// Log a report entry: we found an update for the site
+			try {
+				Reports::fromCoreUpdateFound(
+					$site->getId(),
+					$siteConfig->get('core.current.version'),
+					$siteConfig->get('core.latest.version')
+				)->save();
+			} catch (\Throwable $e) {
+				$this->logger->error(
+					sprintf(
+						'Problem saving report log entry [%s:%s]: %d %s',
+						$e->getFile(), $e->getLine(), $e->getCode(), $e->getMessage()
+					)
+				);
+			}
+
+			// Process the update action for the site
 			$updateAction = $siteConfig->get("config.core_update.install", '')
 				?: $this->container->appConfig->get('tasks_coreupdate_install', 'patch');
-
 			$updateAction = $this->processUpdateAction($updateAction, $siteConfig);
 
 			switch ($updateAction)

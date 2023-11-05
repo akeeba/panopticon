@@ -14,9 +14,8 @@ use Akeeba\Panopticon\Library\Queue\QueueItem;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
-use Awf\Date\Date;
-use Awf\Mvc\Model;
 use Awf\Registry\Registry;
+use Awf\User\User;
 
 trait EnqueueExtensionUpdateTrait
 {
@@ -28,10 +27,12 @@ trait EnqueueExtensionUpdateTrait
 		// Try to load an existing task
 		try
 		{
-			$task->findOrFail([
-				'site_id' => $site->id,
-				'type'    => 'extensionsupdate',
-			]);
+			$task->findOrFail(
+				[
+					'site_id' => $site->id,
+					'type'    => 'extensionsupdate',
+				]
+			);
 		}
 		catch (\RuntimeException $e)
 		{
@@ -61,8 +62,8 @@ trait EnqueueExtensionUpdateTrait
 				break;
 
 			case 'time':
-				$hour   = max(0, min((int)$siteConfig->get('config.extensions_update.time.hour', 0), 23));
-				$minute = max(0, min((int)$siteConfig->get('config.extensions_update.time.minute', 0), 59));
+				$hour   = max(0, min((int) $siteConfig->get('config.extensions_update.time.hour', 0), 23));
+				$minute = max(0, min((int) $siteConfig->get('config.extensions_update.time.minute', 0), 59));
 				$now    = $this->container->dateFactory('now', 'UTC');
 				$then   = (clone $now)->setTime($hour, $minute, 0);
 
@@ -82,7 +83,9 @@ trait EnqueueExtensionUpdateTrait
 		$task->save();
 	}
 
-	private function enqueueExtensionUpdate(Site $site, int $extensionId, string $effectivePreference = 'major'): bool
+	private function enqueueExtensionUpdate(
+		Site $site, int $extensionId, string $effectivePreference = 'major', ?User $user
+	): bool
 	{
 		// Enqueue necessary updates
 		$queueKey = sprintf('extensions.%d', $site->id);
@@ -98,12 +101,13 @@ trait EnqueueExtensionUpdateTrait
 
 		$queueItem = new QueueItem(
 			data: (object) [
-				'id'   => $extensionId,
-				'mode' => match ($effectivePreference)
+				'id'             => $extensionId,
+				'mode'           => match ($effectivePreference)
 				{
 					'email' => 'email',
 					default => 'update'
 				},
+				'initiatingUser' => $user?->getId(),
 			],
 			queueType: $queueKey,
 			siteId: $site->id

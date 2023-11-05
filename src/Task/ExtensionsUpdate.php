@@ -15,9 +15,9 @@ use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
-use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -97,13 +97,15 @@ class ExtensionsUpdate extends AbstractCallback
 		if (is_object($item->getData()))
 		{
 			// This handles legacy data which might be in the database. Eventually, it can be removed.
-			$extensionId = (int) ($data->id ?? 0);
-			$updateMode  = $data->mode ?? 'update';
+			$extensionId    = (int) ($data->id ?? 0);
+			$updateMode     = $data->mode ?? 'update';
+			$initiatingUser = $data->initiatingUser ?? 0;
 		}
 		else
 		{
-			$extensionId = (int)$item->getData();
-			$updateMode  = 'update';
+			$extensionId    = (int) $item->getData();
+			$updateMode     = 'update';
+			$initiatingUser = 0;
 		}
 
 		if (empty($extensionId) || $extensionId <= 0)
@@ -122,7 +124,7 @@ class ExtensionsUpdate extends AbstractCallback
 		$siteConfig = ($site->getFieldValue('config') instanceof Registry)
 			? $site->getFieldValue('config')
 			: (new Registry($site->getFieldValue('config')));
-		$extensions = (array)$siteConfig->get('extensions.list');
+		$extensions = (array) $siteConfig->get('extensions.list');
 
 		if (!isset($extensions[$extensionId]))
 		{
@@ -144,7 +146,8 @@ class ExtensionsUpdate extends AbstractCallback
 			$this->logger->info(
 				sprintf(
 					'Extension updates for site #%d (%s): will notify by email for %s “%s” (EID: %d). The update will NOT be installed automatically.',
-					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name, $extensionId
+					$site->id, $site->name, $extensions[$extensionId]->type, $extensions[$extensionId]->name,
+					$extensionId
 				)
 			);
 
@@ -166,11 +169,13 @@ class ExtensionsUpdate extends AbstractCallback
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/update');
 
-		$options = array_merge($options, [
-			RequestOptions::FORM_PARAMS => [
-				'eid' => [$extensionId],
-			],
-		]);
+		$options = array_merge(
+			$options, [
+				RequestOptions::FORM_PARAMS => [
+					'eid' => [$extensionId],
+				],
+			]
+		);
 		try
 		{
 			$response = $httpClient->post($url, $options);
@@ -192,6 +197,15 @@ class ExtensionsUpdate extends AbstractCallback
 				'messages' => [$e->getMessage()],
 			];
 			$storage->set('updateStatus', $updateStatus);
+
+			// Log failed update report
+			$this->logReport(
+				$site,
+				$extensions[$extensionId],
+				false,
+				$e,
+				$initiatingUser
+			);
 
 			return;
 		}
@@ -225,13 +239,22 @@ class ExtensionsUpdate extends AbstractCallback
 			];
 			$storage->set('updateStatus', $updateStatus);
 
+			// Log failed update report
+			$this->logReport(
+				$site,
+				$extensions[$extensionId],
+				false,
+				$e,
+				$initiatingUser
+			);
+
 			return;
 		}
 
 		// Try to get the returned data.
-		$returnedDataArray = $status?->data ?? [];
+		$returnedDataArray       = $status?->data ?? [];
 		$returnedDataZeroElement = is_array($returnedDataArray) ? ($returnedDataArray[0] ?? null) : null;
-		$returnedAttributes = $returnedDataZeroElement?->attributes ?? null;
+		$returnedAttributes      = $returnedDataZeroElement?->attributes ?? null;
 
 		// This should never happen, really.
 		if (!is_object($returnedAttributes))
@@ -251,6 +274,17 @@ class ExtensionsUpdate extends AbstractCallback
 				'messages' => [$rawJSONData ?? ''],
 			];
 			$storage->set('updateStatus', $updateStatus);
+
+			// Log failed update report
+			$this->logReport(
+				$site,
+				$extensions[$extensionId],
+				false,
+				[
+					'invalidJson' => $rawJSONData,
+				],
+				$initiatingUser
+			);
 
 			return;
 		}
@@ -299,6 +333,17 @@ class ExtensionsUpdate extends AbstractCallback
 			];
 			$storage->set('updateStatus', $updateStatus);
 
+			// Log failed update report
+			$this->logReport(
+				$site,
+				$extensions[$extensionId],
+				false,
+				[
+					'messages' => $messages,
+				],
+				$initiatingUser
+			);
+
 			return;
 		}
 
@@ -323,7 +368,7 @@ class ExtensionsUpdate extends AbstractCallback
 			$siteConfig = ($site->getFieldValue('config') instanceof Registry)
 				? $site->getFieldValue('config')
 				: (new Registry($site->getFieldValue('config')));
-			$extensions = (array)$siteConfig->get('extensions.list');
+			$extensions = (array) $siteConfig->get('extensions.list');
 
 			// Make sure our updated extension didn't get uninstalled in the meantime
 			if (!isset($extensions[$extensionId]))
@@ -336,7 +381,7 @@ class ExtensionsUpdate extends AbstractCallback
 			$siteConfig->set('extensions.list', $extensions);
 
 			// Set a flag for the existence of updates
-			$hasUpdates    = array_reduce(
+			$hasUpdates = array_reduce(
 				$extensions,
 				function (bool $carry, object $item): int {
 					$current = $item?->version?->current;
@@ -377,12 +422,77 @@ class ExtensionsUpdate extends AbstractCallback
 			'messages' => $returnedAttributes?->messages ?? [],
 		];
 		$storage->set('updateStatus', $updateStatus);
+
+		// Log successful update report
+		$this->logReport(
+			$site,
+			$extensions[$extensionId],
+			true,
+			[
+				'messages' => $messages,
+			],
+			$initiatingUser
+		);
 	}
 
+	/**
+	 * Log an extension update installation report entry
+	 *
+	 * @param   Site      $site            The site we are installing extension updates on
+	 * @param   object    $extension       The extension object being updated
+	 * @param   bool      $status          Did we succeed?
+	 * @param   mixed     $e               Additional context (on failure)
+	 * @param   int|null  $initiatingUser  The initiating user of this update installation
+	 *
+	 * @return  void
+	 * @since   __DEPLOY_VERSION__
+	 */
+	private function logReport(
+		Site $site, object $extension, bool $status = true, mixed $e = null, ?int $initiatingUser = null
+	): void
+	{
+		$report = Reports::fromExtensionUpdateInstalled(
+			$site->id,
+			$this->container->mvcFactory->makeTempModel('Sysconfig')
+				->getExtensionShortname(
+					$extension->type, $extension->element, $extension->folder, $extension->client_id
+				),
+			$extension->name,
+			$extension->version?->current,
+			$extension->version?->new,
+			$status,
+			$e
+		);
+
+		if ($initiatingUser !== null && $initiatingUser !== 0)
+		{
+			$report->created_by = $initiatingUser;
+		}
+
+		try
+		{
+			$report->save();
+		}
+		catch (\Throwable $e)
+		{
+			// Whatever...
+		}
+	}
+
+	/**
+	 * Enqueue an email with the resilts of the update
+	 *
+	 * @param   Site      $site
+	 * @param   Registry  $storage
+	 *
+	 * @return  void
+	 * @throws  \Awf\Exception\App
+	 * @since   1.0.0
+	 */
 	private function enqueueResultsEmail(Site $site, Registry $storage): void
 	{
 		// Render the messages as HTML
-		$updateStatus            = (array) $storage->get('updateStatus', []);
+		$updateStatus = (array) $storage->get('updateStatus', []);
 
 		if (empty($updateStatus))
 		{
@@ -409,10 +519,13 @@ class ExtensionsUpdate extends AbstractCallback
 		{
 			try
 			{
-				$rendered = $fakeView->loadAnyTemplate($template, [
-					'updateStatus' => $updateStatus,
-					'site'         => $site,
-				]);
+				$rendered = $fakeView->loadAnyTemplate(
+					$template,
+					[
+						'updateStatus' => $updateStatus,
+						'site'         => $site,
+					]
+				);
 			}
 			catch (Exception $e)
 			{
@@ -431,10 +544,13 @@ class ExtensionsUpdate extends AbstractCallback
 		{
 			try
 			{
-				$renderedText = $fakeView->loadAnyTemplate($template, [
-					'updateStatus' => $updateStatus,
-					'site'         => $site,
-				]);
+				$renderedText = $fakeView->loadAnyTemplate(
+					$template,
+					[
+						'updateStatus' => $updateStatus,
+						'site'         => $site,
+					]
+				);
 			}
 			catch (Exception $e)
 			{
@@ -532,11 +648,13 @@ class ExtensionsUpdate extends AbstractCallback
 
 	private function reloadExtensionInformation(Site $site): void
 	{
-		$this->logger->info(sprintf(
-			'Refreshing the extension update information for site #%d (%s)',
-			$site->id,
-			$site->name
-		));
+		$this->logger->info(
+			sprintf(
+				'Refreshing the extension update information for site #%d (%s)',
+				$site->id,
+				$site->name
+			)
+		);
 
 		$callback = $this->container->taskRegistry->get('refreshinstalledextensions');
 
