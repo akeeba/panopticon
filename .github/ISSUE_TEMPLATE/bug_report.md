@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+Help keep Issues free from distractions so that Panopticon developers can work more efficiently. If you cannot provide accurate reproduction instructions please open a new Q&A Discussion instead: https://github.com/akeeba/panopticon/discussions/new?category=q-a-community-support
+
 ## Describe the bug
 
 A clear and concise description of what the bug is.

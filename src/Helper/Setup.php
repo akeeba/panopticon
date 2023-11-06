@@ -9,7 +9,6 @@ namespace Akeeba\Panopticon\Helper;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Model\Sites;
 use Awf\Database\Driver;
 use Awf\Helper\AbstractHelper;
 use Awf\Text\Text;
@@ -331,7 +330,9 @@ class Setup extends AbstractHelper
 			);
 	}
 
-	public function siteSelect(int|string|null $selected, string $name, ?string $id = null, array $attribs = [], bool $withSystem = true)
+	public function siteSelect(
+		int|string|null $selected, string $name, ?string $id = null, array $attribs = [], bool $withSystem = true
+	)
 	{
 		$siteList = $this->getContainer()->mvcFactory->makeTempModel('Sites')->keyedList();
 		asort($siteList, SORT_NATURAL);
@@ -362,6 +363,62 @@ class Setup extends AbstractHelper
 		return $this->getContainer()->html->select
 			->genericList(
 				$options, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
+			);
+	}
+
+	/**
+	 * Returns an HTML select list of application templates
+	 *
+	 * @param   string|null  $selected  Selected template
+	 * @param   string       $name      Name of the field, default is `template`
+	 * @param   string|null  $id        ID of the field, NULL to use $name
+	 * @param   array        $attribs   Additional HTML attributes of the SELECT element
+	 *
+	 * @return  string
+	 * @since   1.0.4
+	 */
+	public function template(
+		?string $selected = 'default', string $name = 'template', ?string $id = null, array $attribs = []
+	)
+	{
+		// List all folders under APATH_THEMES
+		$templates = [];
+		$di        = new \DirectoryIterator(APATH_THEMES);
+		/** @var \DirectoryIterator $file */
+		foreach ($di as $file)
+		{
+			if ($file->isDot() || !$file->isDir())
+			{
+				continue;
+			}
+
+			$basename = $file->getBasename();
+
+			// The "system" template is a special, unselectable case
+			if ($basename === 'system')
+			{
+				continue;
+			}
+
+			// The default template always goes straight to the top.
+			if ($basename === 'default')
+			{
+				array_unshift($templates, $basename);
+
+				continue;
+			}
+
+			$templates[] = $basename;
+		}
+
+		$templates = array_map(
+			fn($template) => $this->getTemplateName($template),
+			array_combine($templates, $templates)
+		);
+
+		return $this->getContainer()->html->select
+			->genericList(
+				$templates, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
 			);
 	}
 
@@ -410,5 +467,58 @@ class Setup extends AbstractHelper
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * Returns the name of a template
+	 *
+	 * @param   string  $template
+	 *
+	 * @return  string
+	 * @since   1.0.4
+	 */
+	private function getTemplateName(string $template): string
+	{
+		$defaultName = Text::_(
+			sprintf(
+				'PANOPTICON_APP_TEMPLATE_%s',
+				strtoupper(
+					preg_replace('#^[a-z0-9_]]#i', '', $template)
+				)
+			)
+		);
+
+		// Does the template have a template.json file?
+		$jsonFile = sprintf("%s/%s/template.json", APATH_THEMES, $template);
+
+		if (!is_file($jsonFile) || !is_readable($jsonFile))
+		{
+			return $defaultName;
+		}
+
+		$json = @file_get_contents($jsonFile);
+
+		if ($json === false)
+		{
+			return $defaultName;
+		}
+
+		try
+		{
+			$templateInfo = json_decode($json, flags: JSON_THROW_ON_ERROR);
+		}
+		catch (\JsonException $e)
+		{
+			return $defaultName;
+		}
+
+		$templateName = $templateInfo->name ?? null;
+
+		if (preg_match('#^[A-Z0-9_]*$#', $templateName))
+		{
+			return Text::_($templateName);
+		}
+
+		return $templateName ?: $defaultName;
 	}
 }

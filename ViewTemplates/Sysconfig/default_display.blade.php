@@ -18,6 +18,25 @@ $config = $this->container->appConfig;
     <h3 class="card-header h4">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DISPLAY')</h3>
     <div class="card-body">
 
+        {{-- template --}}
+        <div class="row mb-3">
+            <label for="template" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_TEMPLATE')
+            </label>
+            <div class="col-sm-9">
+                {{ $this->container->helper->setup->template(
+                    selected: $config->get('template', 'template'),
+                    name: 'options[template]',
+                    attribs: [
+						'class' => 'form-control'
+                    ]
+                ) }}
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_TEMPLATE_HELP')
+                </div>
+            </div>
+        </div>
+
         {{-- theme --}}
         <div class="row mb-3">
             <label for="theme" class="col-sm-3 col-form-label">
