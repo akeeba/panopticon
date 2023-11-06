@@ -21,17 +21,17 @@ This is a features, and bug-fix release.
 
 Changes in version 1.0.3
 
-+ ✨ .env support (gh-34)
-+ ✨ Anonymous usage statistics collection (gh-215)
-+ ✨ Link to self-update page even without any updates found (gh-209)
-+ ✨ Periodic database backup (gh-223)
-# 🐞 🔺 Regression: can't access Setup
-# 🐞 🔺 Old MariaDB versions don't support JSONPath (gh-201)
-# 🐞 🔺 Very low self-update timeout (5 seconds) (gh-185)
-# 🐞 🔺 Too tight permissions check
-# 🐞 ➖ Users with only Add Own and Edit Own privileges cannot add sites (gh-203)
-# 🐞 🔻 Some mail templates may be missing due to typo (gh-226)
-# 🐞 🔻 SCSS files were excluded (gh-233)
+* ✨ .env support (gh-34)
+* ✨ Anonymous usage statistics collection (gh-215)
+* ✨ Link to self-update page even without any updates found (gh-209)
+* ✨ Periodic database backup (gh-223)
+* 🐞 🔺 Regression: can't access Setup
+* 🐞 🔺 Old MariaDB versions don't support JSONPath (gh-201)
+* 🐞 🔺 Very low self-update timeout (5 seconds) (gh-185)
+* 🐞 🔺 Too tight permissions check
+* 🐞 ➖ Users with only Add Own and Edit Own privileges cannot add sites (gh-203)
+* 🐞 🔻 Some mail templates may be missing due to typo (gh-226)
+* 🐞 🔻 SCSS files were excluded (gh-233)
 
 Legend:
 * 🚨 Security update
