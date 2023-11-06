@@ -317,7 +317,7 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
                                 @lang('PANOPTICON_SITE_LBL_EXTENSIONS_DOWNLOADKEY_MISSING')
                             </span>
                         </div>
-                        @if ($user->authorise('panopticon.admin', $site->id))
+                        @if ($this->container->userManager->getUser()->authorise('panopticon.admin', $site->id))
                             <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $site->id, $extensionId, $token))"
                                class="ms-2 btn btn-outline-primary btn-sm" role="button">
                                 <span class="fa fa-pencil-square" aria-hidden="true"></span>
