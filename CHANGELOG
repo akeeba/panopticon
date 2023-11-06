@@ -1,7 +1,8 @@
 <?php die(); ?>
-Akeeba Panopticon __DEPLOY_VERSION__
+Akeeba Panopticon 1.0.4
 ================================================================================
 + Site reports (updates, backups, file scanner, Admin Tools actions) [gh-220]
+# [MEDIUM] Cannot access My Profile page [gh-241]
 
 Akeeba Panopticon 1.0.3
 ================================================================================

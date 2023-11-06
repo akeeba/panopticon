@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
-use Awf\Inflector\Inflector;
 use Awf\Mvc\DataController;
 use Awf\Text\Text;
 use Awf\Utils\ArrayHelper;
@@ -27,19 +26,15 @@ class Users extends DataController
 		return parent::execute($task);
 	}
 
-	private function isThisMyOwnUserOrAmISuper(): bool
+	protected function onBeforeEdit()
 	{
-		// If I am a superuser I can change any user account
-		$mySelf = $this->container->userManager->getUser();
+		return $this->isThisMyOwnUserOrAmISuper();
+	}
 
-		if ($mySelf->getPrivilege('panopticon.super'))
-		{
-			return true;
-		}
-
+	protected function onBeforeRead()
+	{
 		$model = $this->getModel();
 
-		// If there is no record loaded, try loading a record based on the id passed in the input object
 		if (!$model->getId())
 		{
 			$ids = $this->getIDsFromRequest($model, true);
@@ -47,9 +42,9 @@ class Users extends DataController
 			// No ID in the request? Force it to the current user, to make things simpler.
 			if (empty($ids))
 			{
-				$this->input->set('id', $mySelf->getId());
-				$ids = [$mySelf->getId()];
-				$model->find($mySelf->getId());
+				$this->input->set('id', $this->container->userManager->getUser()?->getId());
+				$ids = [$this->input->get('id', null)];
+				$model->find($ids[0]);
 			}
 
 			if ($model->getId() != reset($ids))
@@ -58,17 +53,6 @@ class Users extends DataController
 			}
 		}
 
-		// If I am not a superuser I can only read my own record
-		return $model->getId() == $mySelf->getId();
-	}
-
-	protected function onBeforeEdit()
-	{
-		return $this->isThisMyOwnUserOrAmISuper();
-	}
-
-	protected function onBeforeRead()
-	{
 		return $this->isThisMyOwnUserOrAmISuper();
 	}
 
@@ -93,20 +77,6 @@ class Users extends DataController
 		return $this->isThisMyOwnUserOrAmISuper();
 	}
 
-	private function overrideRedirectForNonSuper()
-	{
-		// If I am a superuser I can change any user account
-		$mySelf = $this->container->userManager->getUser();
-
-		if ($mySelf->getPrivilege('panopticon.super'))
-		{
-			return;
-		}
-
-		$returnUrl = $this->getContainer()->router->route('index.php?view=user&task=read');
-		$this->input->set('returnurl', base64_encode($returnUrl));
-	}
-
 	protected function applySave()
 	{
 		$id = $this->input->getInt('id', 0);
@@ -121,7 +91,8 @@ class Users extends DataController
 
 		// Get the applicable data
 		$data = [
-			'id'          => $id, 'username' => trim($this->input->post->getUsername('username', '')),
+			'id'          => $id,
+			'username'    => trim($this->input->post->getUsername('username', '')),
 			'name'        => trim($this->input->post->getString('name', '')),
 			'email'       => trim($this->input->post->get('email', '', 'raw')),
 			'password'    => $this->input->post->get('password', '', 'raw'),
@@ -156,9 +127,14 @@ class Users extends DataController
 				}
 
 				// Is there another user by the same username?
-				if ($savedUser->getUsername() !== $username && $this->container->userManager->getUserByUsername($username) !== null)
+				if ($savedUser->getUsername() !== $username
+				    && $this->container->userManager->getUserByUsername(
+						$username
+					) !== null)
 				{
-					throw new RuntimeException(Text::sprintf('PANOPTICON_USERS_ERR_USERNAME_EXISTS', htmlentities($username)), 403);
+					throw new RuntimeException(
+						Text::sprintf('PANOPTICON_USERS_ERR_USERNAME_EXISTS', htmlentities($username)), 403
+					);
 				}
 
 				$savedUser->setUsername($username);
@@ -202,7 +178,9 @@ class Users extends DataController
 
 			if (!$validishEmail)
 			{
-				$this->container->application->enqueueMessage(Text::sprintf('PANOPTICON_USERS_ERR_INVALID_EMAIL', htmlentities($email)), 'warning');
+				$this->container->application->enqueueMessage(
+					Text::sprintf('PANOPTICON_USERS_ERR_INVALID_EMAIL', htmlentities($email)), 'warning'
+				);
 			}
 
 			$savedUser->setEmail($email);
@@ -218,7 +196,10 @@ class Users extends DataController
 			{
 				$permissions = $data['permissions'];
 
-				if ($editingMyself && $myself->getPrivilege('panopticon.super') && !in_array('panopticon.super', $permissions))
+				if ($editingMyself && $myself->getPrivilege('panopticon.super')
+				    && !in_array(
+						'panopticon.super', $permissions
+					))
 				{
 					throw new RuntimeException(Text::_('PANOPTICON_USERS_ERR_CANT_REMOVE_SELF_SUPER'), 403);
 				}
@@ -280,6 +261,55 @@ class Users extends DataController
 		}
 
 		return $status;
+	}
+
+	private function isThisMyOwnUserOrAmISuper(): bool
+	{
+		// If I am a superuser I can change any user account
+		$mySelf = $this->container->userManager->getUser();
+
+		if ($mySelf->getPrivilege('panopticon.super'))
+		{
+			return true;
+		}
+
+		$model = $this->getModel();
+
+		// If there is no record loaded, try loading a record based on the id passed in the input object
+		if (!$model->getId())
+		{
+			$ids = $this->getIDsFromRequest($model, true);
+
+			// No ID in the request? Force it to the current user, to make things simpler.
+			if (empty($ids))
+			{
+				$this->input->set('id', $mySelf->getId());
+				$ids = [$mySelf->getId()];
+				$model->find($mySelf->getId());
+			}
+
+			if ($model->getId() != reset($ids))
+			{
+				return false;
+			}
+		}
+
+		// If I am not a superuser I can only read my own record
+		return $model->getId() == $mySelf->getId();
+	}
+
+	private function overrideRedirectForNonSuper()
+	{
+		// If I am a superuser I can change any user account
+		$mySelf = $this->container->userManager->getUser();
+
+		if ($mySelf->getPrivilege('panopticon.super'))
+		{
+			return;
+		}
+
+		$returnUrl = $this->getContainer()->router->route('index.php?view=user&task=read');
+		$this->input->set('returnurl', base64_encode($returnUrl));
 	}
 
 }
