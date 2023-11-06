@@ -12,6 +12,7 @@ use Akeeba\Panopticon\Helper\DefaultTemplate as TemplateHelper;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
+use Awf\Utils\Template;
 
 /** @var Awf\Document\Document $this */
 
@@ -32,8 +33,9 @@ TemplateHelper::applyFontSize();
 
 $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component';
 $isMenuEnabled = $this->getMenu()->isEnabled('main');
+$isDebug       = defined('AKEEBADEBUG') && AKEEBADEBUG;
+$themeColor    = TemplateHelper::getThemeColour();
 
-$themeColor = TemplateHelper::getThemeColour();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $langCode ?>">
@@ -43,15 +45,31 @@ $themeColor = TemplateHelper::getThemeColour();
 	<title><?= Text::_('PANOPTICON_APP_TITLE') ?></title>
 
 	<?php // See https://medium.com/swlh/are-you-using-svg-favicons-yet-a-guide-for-modern-browsers-836a6aace3df ?>
-	<link rel="icon" href="<?= Uri::base() ?>media/images/logo_colour.svg">
-	<link rel="mask-icon" href="<?= Uri::base() ?>media/images/logo_bw.svg" color="#000000">
+	<link rel="icon" href="<?= Template::parsePath('media://images/logo_colour.svg') ?>">
+	<link rel="mask-icon" href="<?= Template::parsePath('media://images/logo_bw.svg') ?>" color="#000000">
 
-	<?php include __DIR__ . '/includes/head.php' ?>
+	<?php // Client-side options ?>
+	<script type="application/json" class="akeeba-script-options new"><?= json_encode($this->getScriptOptions(), $isDebug ? JSON_PRETTY_PRINT : 0) ?: '{}' ?></script>
+	<?php // Stylesheet files ?>
+	<?php foreach ($this->getStyles() as $url => $params): ?>
+		<link rel="stylesheet" type="<?= $params['mime'] ?>" href="<?= $url ?>"<?= ($params['media']) ? " media=\"{$params['media']}\"" : '' ?><?= ($params['attribs'] ?? null) ? ' ' . \Awf\Utils\ArrayHelper::toString($params['attribs']) : '' ?>>
+	<?php endforeach ?>
+	<?php // Inline Stylesheets ?>
+	<?php foreach ($this->getStyleDeclarations() as $type => $content): ?>
+		<style type="<?= $type ?>"><?= $content ?></style>
+	<?php endforeach ?>
+	<?php // Script files ?>
+	<?php foreach ($this->getScripts() as $url => $params): ?>
+		<script type="<?= $params['mime'] ?>" src="<?= $url ?>"<?= ($params['defer'] ?? false) ? ' defer="defer"' : '' ?><?= ($params['async'] ?? false) ? ' async="async"' : '' ?>></script>
+	<?php endforeach ?>
+	<?php foreach ($this->getScriptDeclarations() as $type => $content): ?>
+		<script type="<?= $type ?>"><?= $content ?></script>
+	<?php endforeach ?>
 
-	<?php if($darkModeValue): ?>
+	<?php if ($darkModeValue): ?>
 	<meta name="color-scheme" content="<?= $darkModeValue ?>">
 	<?php endif ?>
-	<?php if(!empty($themeColor)): ?>
+	<?php if (!empty($themeColor)): ?>
 	<meta name="theme-color" content="<?= $themeColor ?>">
 	<?php endif; ?>
 </head>
@@ -64,7 +82,7 @@ $themeColor = TemplateHelper::getThemeColour();
 		<h1>
 			<?php if (!$isMenuEnabled): ?>
 				<div class="navbar-brand ps-2 d-flex flex-row">
-					<?= file_get_contents(APATH_MEDIA . '/images/logo_colour.svg') ?>
+					<?= file_get_contents(Template::parsePath('media://images/logo_colour.svg', true)) ?>
 					<div>
 						<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
 						<?php if (in_array($versionTag, [
@@ -158,7 +176,7 @@ $themeColor = TemplateHelper::getThemeColour();
 <?php if (!$isBareDisplay): ?>
 	<footer class="container-xl bg-dark text-light p-3 pb-3 text-light small sticky-bottom" data-bs-theme="dark">
 		<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= Version::create(AKEEBA_PANOPTICON_VERSION)->shortVersion(true) ?><?php if (Version::create(AKEEBA_PANOPTICON_VERSION)->hasTag()): ?><span class="text-muted small">.<?= Version::create(AKEEBA_PANOPTICON_VERSION)->tag() ?></span><?php endif; ?>
-		<?php if (defined('AKEEBADEBUG') && AKEEBADEBUG): ?>
+		<?php if ($isDebug): ?>
 			<span class="text-body-tertiary">on</span>
 			<span class="text-muted">PHP <?= PHP_VERSION ?>
 				<span class="text-body-tertiary">at</span>
@@ -198,7 +216,7 @@ $themeColor = TemplateHelper::getThemeColour();
 							About
 						</a>
 					</div>
-					<?php if (defined('AKEEBADEBUG') && AKEEBADEBUG): ?>
+					<?php if ($isDebug): ?>
 					<div>
 						<span class="fa fa-clock" title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?>"
 						      aria-hidden="true"></span>

@@ -219,6 +219,10 @@ class Application extends AWFApplication
 			$this->container->appConfig->loadConfiguration();
 		}
 
+		// Apply custom template, if one is defined
+		$this->applyCustomTemplate();
+
+		// Load the languages
 		$this->loadLanguages();
 
 		// Configure the user manager
@@ -719,6 +723,27 @@ class Application extends AWFApplication
 		)
 		{
 			$o = new $className($dispatcher);
+		}
+	}
+
+	/**
+	 * Apply a custom template
+	 *
+	 * @return  void
+	 * @since   1.0.4
+	 */
+	private function applyCustomTemplate(): void
+	{
+		$customTemplate = $this->container->appConfig->get('template', 'default');
+
+		if (!empty($customTemplate))
+		{
+			$this->setTemplate($customTemplate);
+
+			if (empty($this->getTemplate()) || $this->getTemplate() === 'Panopticon')
+			{
+				$this->setTemplate('default');
+			}
 		}
 	}
 
