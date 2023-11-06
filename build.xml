@@ -189,6 +189,8 @@
         <exclude name="vendor/league/config/CHANGELOG.md" />
 
         <exclude name="vendor/monolog/monolog/CHANGELOG.md" />
+        <exclude name="vendor/monolog/monolog/favicon.ico" />
+        <exclude name="vendor/monolog/monolog/logo.jpg" />
 
         <exclude name="vendor/nette/schema/contributing.md" />
 
