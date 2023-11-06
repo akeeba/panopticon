@@ -66,9 +66,6 @@
         <exclude name="Dockerfile" />
         <exclude name="*.md" />
 
-        <!-- Exclude SCSS -->
-        <exclude name="media/scss/**" />
-
         <!-- Exclude map files -->
         <exclude name="media/css/*.map" />
         <exclude name="media/js/*.map" />
@@ -192,6 +189,8 @@
         <exclude name="vendor/league/config/CHANGELOG.md" />
 
         <exclude name="vendor/monolog/monolog/CHANGELOG.md" />
+        <exclude name="vendor/monolog/monolog/favicon.ico" />
+        <exclude name="vendor/monolog/monolog/logo.jpg" />
 
         <exclude name="vendor/nette/schema/contributing.md" />
 

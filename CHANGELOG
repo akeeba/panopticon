@@ -15,6 +15,7 @@ Akeeba Panopticon 1.0.3
 # [HIGH] Too tight permissions check
 # [MEDIUM] Users with only Add Own and Edit Own privileges cannot add sites [gh-203]
 # [LOW] Some mail templates may be missing due to typo [gh-226]
+# [LOW] SCSS files were excluded [gh-233]
 
 Akeeba Panopticon 1.0.2
 ================================================================================
