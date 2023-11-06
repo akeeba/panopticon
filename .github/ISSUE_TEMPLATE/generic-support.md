@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+Help keep Issues free from distractions so that Panopticon developers can work more efficiently. Instead of submitting an issue, open a new Q&A Discussion instead: https://github.com/akeeba/panopticon/discussions/new?category=q-a-community-support
+
 ## Describe the problem
 
 What are you trying to do? What have you already tried? What did you expect? What happened?
