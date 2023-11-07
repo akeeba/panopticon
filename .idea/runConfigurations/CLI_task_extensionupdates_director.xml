@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CLI task:extensionupdates:director" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="task:extensionupdates:director --force --id=7 -vvv">
+  <configuration default="false" name="CLI task:extensionupdates:director" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="task:extensionupdates:director --force -vvv">
     <method v="2" />
   </configuration>
 </component>
