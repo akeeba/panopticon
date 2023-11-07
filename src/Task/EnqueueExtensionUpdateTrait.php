@@ -84,7 +84,7 @@ trait EnqueueExtensionUpdateTrait
 	}
 
 	private function enqueueExtensionUpdate(
-		Site $site, int $extensionId, string $effectivePreference = 'major', ?User $user
+		Site $site, int $extensionId, string $effectivePreference = 'major', ?User $user = null
 	): bool
 	{
 		// Enqueue necessary updates
