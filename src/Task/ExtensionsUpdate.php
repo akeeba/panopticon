@@ -17,7 +17,6 @@ use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
-use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -565,6 +564,7 @@ class ExtensionsUpdate extends AbstractCallback
 			? $site->getFieldValue('config')
 			: (new Registry($site->getFieldValue('config')));
 		$lastSeenVersions               = $siteConfig->get('director.extensionupdates.lastSeen', []) ?: [];
+		$lastSeenVersions               = is_object($lastSeenVersions) ? (array) $lastSeenVersions : $lastSeenVersions;
 		$lastSeenVersions               = is_array($lastSeenVersions) ? $lastSeenVersions : [];
 		$extensions                     = (array) $siteConfig->get('extensions.list');
 		$extensionItem                  = $extensions[$extensionId] ?? null;
