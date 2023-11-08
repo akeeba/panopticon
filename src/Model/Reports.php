@@ -522,6 +522,8 @@ class Reports extends DataModel
 		[$defFrom, $defTo] = $this->defaultDateFilters();
 		$fltDateFrom = $this->dateFromDateString($this->getState('from_date', null) ?? $defFrom);
 		$fltDateTo   = $this->dateFromDateString($this->getState('to_date', null) ?? $defTo);
+		$this->setState('from_date', $fltDateFrom);
+		$this->setState('to_date', $fltDateTo);
 
 		if (empty($fltDateFrom) && !empty($fltDateTo))
 		{
@@ -619,10 +621,10 @@ class Reports extends DataModel
 	protected function defaultDateFilters(): array
 	{
 		$firstOfMonth = $this->getContainer()->dateFactory();
-		$firstOfMonth->setDate($firstOfMonth->year, $firstOfMonth->month, $firstOfMonth->day);
-		$firstOfMonth->setTime(0, 0, 0, 0);
+		$firstOfMonth = $firstOfMonth->setDate($firstOfMonth->year, $firstOfMonth->month, 1);
+		$firstOfMonth = $firstOfMonth->setTime(0, 0, 0, 0);
 
-		$lastOfMonth = (clone $firstOfMonth)->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
+		$lastOfMonth = (clone $firstOfMonth)->add(new \DateInterval('P1M'));
 
 		return [$firstOfMonth, $lastOfMonth];
 	}

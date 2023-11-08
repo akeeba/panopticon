@@ -124,8 +124,8 @@ class JoomlaUpdate extends AbstractCallback
 
 				$report = Reports::fromCoreUpdateInstalled(
 					$site->id,
-					$config->get('core.current.version'),
-					$config->get('core.latest.version'),
+					$storage->get('oldVersion', null),
+					$storage->get('newVersion', null),
 					false,
 					$e
 				);
@@ -177,13 +177,14 @@ class JoomlaUpdate extends AbstractCallback
 
 			$report = Reports::fromCoreUpdateInstalled(
 				$site->id,
-				$config->get('core.current.version'),
-				$config->get('core.latest.version'),
-				true,
-				$e
+				$storage->get('oldVersion', null),
+				$storage->get('newVersion', null),
+				true
 			);
 
-			$context = $report->context;
+			$context        = $report->context;
+			$backupOnUpdate = $config->get('config.core_update.backup_on_update', 0);
+			$backupProfile  = $config->get('config.core_update.backup_profile', 1);
 			$context->set('start_time', $storage->get('start_timestamp', null));
 			$context->set('end_time', time());
 			$context->set('backup_on_update', (bool) $backupOnUpdate);
@@ -355,6 +356,9 @@ class JoomlaUpdate extends AbstractCallback
 		$params         = (($task->params ?? null) instanceof Registry) ?
 			($task->params ?? null) : new Registry($task->params ?? null);
 		$force          = $params->get('force', false);
+
+		$storage->set('oldVersion', $currentVersion);
+		$storage->set('newVersion', $latestVersion);
 
 		if (
 			!$force && !empty($currentVersion) && !empty($latestVersion)
@@ -724,7 +728,6 @@ class JoomlaUpdate extends AbstractCallback
 		}
 
 		// Run a chunk of the backup task.
-		/** @var AkeebaBackup $callback */
 		$callback = $this->container->taskRegistry->get('akeebabackup');
 
 		$callback->setLogger($this->logger);

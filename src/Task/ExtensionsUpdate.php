@@ -165,6 +165,10 @@ class ExtensionsUpdate extends AbstractCallback
 			)
 		);
 
+		// Cache the versions; we use them in reports
+		$oldVersion = $extensions[$extensionId]->version?->current;
+		$newVersion = $extensions[$extensionId]->version?->new;
+
 		// Send the HTTP request
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/update');
@@ -202,6 +206,8 @@ class ExtensionsUpdate extends AbstractCallback
 			$this->logReport(
 				$site,
 				$extensions[$extensionId],
+				$oldVersion,
+				$newVersion,
 				false,
 				$e,
 				$initiatingUser
@@ -243,6 +249,8 @@ class ExtensionsUpdate extends AbstractCallback
 			$this->logReport(
 				$site,
 				$extensions[$extensionId],
+				$oldVersion,
+				$newVersion,
 				false,
 				$e,
 				$initiatingUser
@@ -279,6 +287,8 @@ class ExtensionsUpdate extends AbstractCallback
 			$this->logReport(
 				$site,
 				$extensions[$extensionId],
+				$oldVersion,
+				$newVersion,
 				false,
 				[
 					'invalidJson' => $rawJSONData,
@@ -337,6 +347,8 @@ class ExtensionsUpdate extends AbstractCallback
 			$this->logReport(
 				$site,
 				$extensions[$extensionId],
+				$oldVersion,
+				$newVersion,
 				false,
 				[
 					'messages' => $messages,
@@ -427,9 +439,11 @@ class ExtensionsUpdate extends AbstractCallback
 		$this->logReport(
 			$site,
 			$extensions[$extensionId],
+			$oldVersion,
+			$newVersion,
 			true,
 			[
-				'messages' => $messages,
+				'messages' => $returnedAttributes?->messages ?? [],
 			],
 			$initiatingUser
 		);
@@ -448,7 +462,7 @@ class ExtensionsUpdate extends AbstractCallback
 	 * @since   __DEPLOY_VERSION__
 	 */
 	private function logReport(
-		Site $site, object $extension, bool $status = true, mixed $e = null, ?int $initiatingUser = null
+		Site $site, object $extension, string $oldVersion, string $newVersion, bool $status = true, mixed $e = null, ?int $initiatingUser = null
 	): void
 	{
 		$report = Reports::fromExtensionUpdateInstalled(
@@ -458,8 +472,8 @@ class ExtensionsUpdate extends AbstractCallback
 					$extension->type, $extension->element, $extension->folder, $extension->client_id
 				),
 			$extension->name,
-			$extension->version?->current,
-			$extension->version?->new,
+			$oldVersion,
+			$newVersion,
 			$status,
 			$e
 		);
