@@ -40,6 +40,46 @@ class Sysconfig extends Controller
 		return parent::execute($task);
 	}
 
+	public function testemail()
+	{
+		$this->csrfProtection();
+
+		try
+		{
+			$user   = $this->getContainer()->userManager->getUser();
+			$mailer = $this->getContainer()->mailer;
+
+			$mailer->addRecipient($user->getEmail(), $user->getName());
+			$mailer->setSubject(Text::_('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_SUBJECT'));
+			$mailer->setBody(Text::_('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY'));
+
+			$sent = $mailer->send();
+
+			if (!$sent)
+			{
+				$error = $mailer->ErrorInfo;
+
+				if (!$this->getContainer()->appConfig->get('mail_online'))
+				{
+					$error = $error ?: Text::_('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_IS_DISABLED');
+				}
+			}
+		}
+		catch (\Throwable $e)
+		{
+			$sent  = false;
+			$error = $e->getMessage();
+		}
+
+		$this->setRedirect(
+			$this->getContainer()->router->route('index.php?view=sysconfig'),
+			$sent
+				? Text::_('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_SENT')
+				: Text::sprintf('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_NOT_SENT', $error),
+			$sent ? 'success' : 'error'
+		);
+	}
+
 	public function save(): void
 	{
 		$this->csrfProtection();
@@ -108,6 +148,4 @@ class Sysconfig extends Controller
 
 		$this->setRedirect($url);
 	}
-
-	// TODO Implement testemail()
 }

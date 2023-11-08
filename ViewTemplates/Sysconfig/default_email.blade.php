@@ -12,7 +12,7 @@ defined('AKEEBA') || die;
  */
 
 $config = $this->container->appConfig;
-
+$user   = $this->container->userManager->getUser();
 ?>
 <div class="card">
     <h3 class="card-header h4">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL')</h3>
@@ -180,5 +180,27 @@ $config = $this->container->appConfig;
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="card border-warning">
+    <h3 class="card-header h4 bg-warning text-dark">
+        @lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL_TEST')
+    </h3>
+    <div class="card-body">
+        <p>
+            @lang('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_WATCH_OUT')
+        </p>
+        <div class="text-center my-4">
+            <a href="@route(sprintf('index.php?view=sysconfig&task=testemail&%s=1', $this->container->session->getCsrfToken()->getValue()))"
+               class="btn btn-outline-warning">
+                <span class="fa fa-fw fa-envelope" aria-hidden="true"></span>
+                @lang('PANOPTICON_SYSCONFIG_BTN_EMAILTEST_SEND')
+            </a>
+        </div>
+        <p class="small text-muted">
+            <span class="fa fa-fw fa-info-circle"></span>
+            @sprintf('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_WILL_SEND_TO', sprintf('<span class="text-body-tertiary">%s</span>', $this->escape($user->getEmail())))
+        </p>
     </div>
 </div>
