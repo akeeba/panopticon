@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Enumerations\ReportAction;
 use Akeeba\Panopticon\Library\User\User;
 use Awf\Container\Container;
+use Awf\Database\Query;
 use Awf\Date\Date;
 use Awf\Exception\App;
 use Awf\Mvc\DataModel;
@@ -500,6 +501,158 @@ class Reports extends DataModel
 
 		return $this->getClone()->reset(true, true)->bind($data);
 	}
+
+	public function buildQuery($overrideLimits = false)
+	{
+		$query = parent::buildQuery($overrideLimits);
+
+		$this->applySiteVisibilityFilter($query);
+
+		$db = $this->container->db;
+
+		// Filter: Site ID
+		$fltSiteId = $this->getState('site_id', null);
+
+		if (is_int($fltSiteId) && $fltSiteId > 0)
+		{
+			$query->where($db->quoteName('site_id') . ' = ' . (int) $fltSiteId);
+		}
+
+		// Filter: from / to dates
+		[$defFrom, $defTo] = $this->defaultDateFilters();
+		$fltDateFrom = $this->dateFromDateString($this->getState('from_date', null) ?? $defFrom);
+		$fltDateTo   = $this->dateFromDateString($this->getState('to_date', null) ?? $defTo);
+
+		if (empty($fltDateFrom) && !empty($fltDateTo))
+		{
+			$query->where($db->quoteName('created_on') . ' <= ' . $db->quote($fltDateTo->toSql()));
+		}
+		elseif (!empty($fltDateFrom) && empty($fltDateTo))
+		{
+			$query->where($db->quoteName('created_on') . ' >= ' . $db->quote($fltDateFrom->toSql()));
+		}
+		elseif (!empty($fltDateFrom) && !empty($fltDateTo))
+		{
+			$query->where(
+				$db->quoteName('created_on') . ' BETWEEN '
+				. $db->quote($fltDateFrom->toSql()) . ' AND '
+				. $db->quote($fltDateTo->toSql())
+			);
+		}
+
+		return $query;
+	}
+
+	protected function applySiteVisibilityFilter(Query $query): void
+	{
+		if (defined('AKEEBA_CLI'))
+		{
+			return;
+		}
+
+		// Get the user, so we can apply per group privilege checks
+		$user = $this->container->userManager->getUser();
+
+		// If the user has a global view privilege, we have no checks to make
+		if ($user->getPrivilege('panopticon.view'))
+		{
+			return;
+		}
+
+		// Get the subquery for the EXISTS clause
+		$db       = $this->getDbo();
+		$subQuery = $db->getQuery(true)
+			->select('1')
+			->from($db->quoteName('#__sites', 's'))
+			->where($db->quoteName('s.id') . ' = ' . $db->quoteName('#__reports.site_id'));
+
+		// In any other case, get the list of groups for the user and limit listing sites visible to these groups
+		$groupPrivileges = $user->getGroupPrivileges();
+
+		if (empty($groupPrivileges))
+		{
+			// There are no groups the user belongs to. Therefore, the user can only see their own sites.
+			$subQuery->where($db->quoteName('created_by') . ' = ' . $db->quote($user->getId()));
+
+			$query->where('EXISTS(' . $subQuery . ')');
+
+			return;
+		}
+
+		// Filter out groups with read privileges
+		$groupPrivileges = array_filter(
+			$groupPrivileges,
+			fn($privileges) => in_array('panopticon.view', $privileges)
+		);
+
+		if (empty($groupPrivileges))
+		{
+			// There are no groups with read privileges the user belongs to. Therefore, the user can only see their own sites.
+			$subQuery->where($db->quoteName('created_by') . ' = ' . $db->quote($user->getId()));
+
+			$query->where('EXISTS(' . $subQuery . ')');
+
+			return;
+		}
+
+		// We allow the user to view their own sites
+		$clauses = [
+			$db->quoteName('created_by') . ' = ' . $db->quote($user->getId()),
+		];
+
+		// Basically: a bunch of JSON_CONTAINS(`config`, '1', '$.config.groups') with ORs between them
+		foreach (array_keys($groupPrivileges) as $gid)
+		{
+			$clauses[] = $query->jsonContains(
+				$db->quoteName('config'), $db->quote('"' . (int) $gid . '"'), $db->quote('$.config.groups')
+			);
+			$clauses[] = $query->jsonContains(
+				$db->quoteName('config'), $db->quote((int) $gid), $db->quote('$.config.groups')
+			);
+		}
+
+		$subQuery->extendWhere('AND', $clauses, 'OR');
+
+		$query->where('EXISTS(' . $subQuery . ')');
+	}
+
+	protected function defaultDateFilters(): array
+	{
+		$firstOfMonth = $this->getContainer()->dateFactory();
+		$firstOfMonth->setDate($firstOfMonth->year, $firstOfMonth->month, $firstOfMonth->day);
+		$firstOfMonth->setTime(0, 0, 0, 0);
+
+		$lastOfMonth = (clone $firstOfMonth)->add(new \DateInterval('P1M'))->sub(new \DateInterval('P1D'));
+
+		return [$firstOfMonth, $lastOfMonth];
+	}
+
+	protected function dateFromDateString(?string $dateString): ?Date
+	{
+		// Make sure it's not completely empty
+		if (empty($dateString) || empty(trim($dateString)))
+		{
+			return null;
+		}
+
+		$dateString = trim($dateString);
+
+		// Make sure it kinda follows what we expect a date string to look like
+		if (!preg_match('#^\d{2,4}-\d{1,2}-\d{1,2}(\s+\d{1,2}:\d{1,2}(:\d{1,2})?)?$#', $dateString))
+		{
+			return null;
+		}
+
+		try
+		{
+			return $this->getContainer()->dateFactory($dateString, 'UTC');
+		}
+		catch (Throwable)
+		{
+			return null;
+		}
+	}
+
 
 	/**
 	 * Get the site_id value as a Site object instance.
