@@ -2,6 +2,7 @@
 Akeeba Panopticon 1.0.4
 ================================================================================
 + Support for custom templates [gh-249]
++ Send test email [gh-267]
 # [MEDIUM] Repeated notifications for updates if more than one extension with updates is found [gh-258]
 # [MEDIUM] Cannot access My Profile page [gh-241]
 # [MEDIUM] PHP error in the Extensions Updates page if you have extensions with missing Download Keys [gh-240]
