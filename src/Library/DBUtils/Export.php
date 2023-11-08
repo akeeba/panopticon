@@ -205,7 +205,7 @@ class Export implements \JsonSerializable
 		{
 			case 'init':
 				$this->logger?->info(sprintf('Database export: starting backup to %s', $this->outputFilename));
-				$this->initalise();
+				$this->initialise();
 				break;
 
 			case 'preamble':
@@ -291,7 +291,7 @@ class Export implements \JsonSerializable
 	 * @return  void
 	 * @since   1.0.3
 	 */
-	private function initalise(): void
+	private function initialise(): void
 	{
 		$this->tableStack    = static::$backupTables;
 		$this->currentTable  = null;
@@ -304,7 +304,7 @@ class Export implements \JsonSerializable
 		$dateTime = date('Y-m-d H:i:s T');
 		$header   = <<< MySQL
 -- Akeeba Panopticon $version
--- 
+--
 -- Base tables backup taken on $dateTime
 
 
@@ -411,7 +411,7 @@ MYSQL;
 			$this->currentOffset = 0;
 		}
 
-		// If the buffer is clean, initalise with an INSERT INTO for the current table
+		// If the buffer is clean, initialise with an INSERT INTO for the current table
 		if (empty($this->buffer))
 		{
 			$this->populateBufferWithInsertInto();
