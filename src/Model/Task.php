@@ -422,7 +422,7 @@ class Task extends DataModel
 				$callback->setLogger($logger);
 			}
 
-			if ($callback instanceof SymfonyStyleAwareInterface)
+			if ($callback instanceof SymfonyStyleAwareInterface && !empty($ioStyle))
 			{
 				$callback->setSymfonyStyle($ioStyle);
 			}
