@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "ee9960555dbd0d4447daf182658981a64d4283b0"
+                "reference": "88a5a45bcfc88c201c182a43d1ca6c98c5bffde6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/ee9960555dbd0d4447daf182658981a64d4283b0",
-                "reference": "ee9960555dbd0d4447daf182658981a64d4283b0",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/88a5a45bcfc88c201c182a43d1ca6c98c5bffde6",
+                "reference": "88a5a45bcfc88c201c182a43d1ca6c98c5bffde6",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "issues": "https://github.com/akeeba/awf/issues",
                 "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2023-11-06T22:07:39+00:00"
+            "time": "2023-11-09T07:49:23+00:00"
         },
         {
             "name": "akeeba/json-backup-api",
@@ -1385,16 +1385,16 @@
         },
         {
             "name": "kevinrob/guzzle-cache-middleware",
-            "version": "v5.0.0",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kevinrob/guzzle-cache-middleware.git",
-                "reference": "65f85ca874c7d9b357359c6d38c6cd56e942b58c"
+                "reference": "6bd64dbbe5155107d84a0f67140a8822a709c6d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kevinrob/guzzle-cache-middleware/zipball/65f85ca874c7d9b357359c6d38c6cd56e942b58c",
-                "reference": "65f85ca874c7d9b357359c6d38c6cd56e942b58c",
+                "url": "https://api.github.com/repos/Kevinrob/guzzle-cache-middleware/zipball/6bd64dbbe5155107d84a0f67140a8822a709c6d0",
+                "reference": "6bd64dbbe5155107d84a0f67140a8822a709c6d0",
                 "shasum": ""
             },
             "require": {
@@ -1464,9 +1464,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Kevinrob/guzzle-cache-middleware/issues",
-                "source": "https://github.com/Kevinrob/guzzle-cache-middleware/tree/v5.0.0"
+                "source": "https://github.com/Kevinrob/guzzle-cache-middleware/tree/v5.1.0"
             },
-            "time": "2023-11-05T12:31:18+00:00"
+            "time": "2023-11-09T06:53:45+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -1922,16 +1922,16 @@
         },
         {
             "name": "nette/utils",
-            "version": "v4.0.2",
+            "version": "v4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "cead6637226456b35e1175cc53797dd585d85545"
+                "reference": "a9d127dd6a203ce6d255b2e2db49759f7506e015"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/cead6637226456b35e1175cc53797dd585d85545",
-                "reference": "cead6637226456b35e1175cc53797dd585d85545",
+                "url": "https://api.github.com/repos/nette/utils/zipball/a9d127dd6a203ce6d255b2e2db49759f7506e015",
+                "reference": "a9d127dd6a203ce6d255b2e2db49759f7506e015",
                 "shasum": ""
             },
             "require": {
@@ -2002,9 +2002,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/utils/issues",
-                "source": "https://github.com/nette/utils/tree/v4.0.2"
+                "source": "https://github.com/nette/utils/tree/v4.0.3"
             },
-            "time": "2023-09-19T11:58:07+00:00"
+            "time": "2023-10-29T21:02:13+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
