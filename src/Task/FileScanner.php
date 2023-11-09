@@ -93,7 +93,7 @@ class FileScanner extends AbstractCallback
 			try
 			{
 				$report = Reports::fromFileScanner(
-					$site->id,
+					$this->site->id,
 					false
 				);
 
@@ -137,7 +137,7 @@ class FileScanner extends AbstractCallback
 			try
 			{
 				$report = Reports::fromFileScanner(
-					$site->id,
+					$this->site->id,
 					false,
 					[
 						'message' => $result->attributes?->error
@@ -173,7 +173,7 @@ class FileScanner extends AbstractCallback
 			try
 			{
 				$report = Reports::fromFileScanner(
-					$site->id,
+					$this->site->id,
 					true
 				);
 

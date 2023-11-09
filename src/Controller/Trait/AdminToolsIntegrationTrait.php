@@ -11,6 +11,7 @@ namespace Akeeba\Panopticon\Controller\Trait;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Utils\Ip;
+use Throwable;
 
 defined('AKEEBA') || die;
 
@@ -50,7 +51,7 @@ trait AdminToolsIntegrationTrait
 			try
 			{
 				Reports::fromSiteAction(
-					$id,
+					$model->getId(),
 					'admintools.pluginDisable',
 					true
 				);
@@ -60,7 +61,7 @@ trait AdminToolsIntegrationTrait
 				// Whatever
 			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -102,7 +103,7 @@ trait AdminToolsIntegrationTrait
 			try
 			{
 				Reports::fromSiteAction(
-					$id,
+					$model->getId(),
 					'admintools.pluginEnable',
 					true
 				);
@@ -112,7 +113,7 @@ trait AdminToolsIntegrationTrait
 				// Whatever
 			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -146,7 +147,7 @@ trait AdminToolsIntegrationTrait
 			try
 			{
 				Reports::fromSiteAction(
-					$id,
+					$model->getId(),
 					'admintools.htaccessDisable',
 					true
 				);
@@ -156,7 +157,7 @@ trait AdminToolsIntegrationTrait
 				// Whatever
 			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -190,7 +191,7 @@ trait AdminToolsIntegrationTrait
 			try
 			{
 				Reports::fromSiteAction(
-					$id,
+					$model->getId(),
 					'admintools.htaccessEnable',
 					true
 				);
@@ -200,7 +201,7 @@ trait AdminToolsIntegrationTrait
 				// Whatever
 			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -237,7 +238,7 @@ trait AdminToolsIntegrationTrait
 			try
 			{
 				Reports::fromSiteAction(
-					$id,
+					$model->getId(),
 					'admintools.unblockMyIP',
 					true,
 					$myIp
@@ -248,7 +249,7 @@ trait AdminToolsIntegrationTrait
 				// Whatever
 			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}

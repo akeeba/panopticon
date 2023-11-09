@@ -220,7 +220,7 @@ class ExtensionUpdatesDirector extends AbstractCallback
 					continue;
 				}
 
-				// Log extension update found: \Akeeba\Panopticon\Model\Reports::fromExtensionUpdateFound
+				// Log extension update found
 				try {
 					Reports::fromExtensionUpdateFound(
 						$site->getId(),
