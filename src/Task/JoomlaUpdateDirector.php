@@ -193,7 +193,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 				continue;
 			}
 
-			// Get the site's configuraiton
+			// Get the site's configuration
 			$siteConfig   = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
 
 			// Log a report entry: we found an update for the site
