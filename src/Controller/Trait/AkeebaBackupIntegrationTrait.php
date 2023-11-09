@@ -92,7 +92,7 @@ trait AkeebaBackupIntegrationTrait
 					'akeebabackup.delete',
 					true,
 					$backupId
-				);
+				)->save();
 			}
 			catch (Throwable)
 			{
@@ -158,7 +158,7 @@ trait AkeebaBackupIntegrationTrait
 					'akeebabackup.deleteFiles',
 					true,
 					$backupId
-				);
+				)->save();
 			}
 			catch (Throwable)
 			{

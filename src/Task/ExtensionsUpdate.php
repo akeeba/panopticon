@@ -459,7 +459,7 @@ class ExtensionsUpdate extends AbstractCallback
 	 * @param   int|null  $initiatingUser  The initiating user of this update installation
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	private function logReport(
 		Site $site, object $extension, string $oldVersion, string $newVersion, bool $status = true, mixed $e = null, ?int $initiatingUser = null

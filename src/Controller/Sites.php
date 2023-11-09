@@ -90,7 +90,7 @@ class Sites extends DataController
 				'jooomla.fixCoreUpdateSite',
 				$type !== 'error',
 				$e ?? null
-			);
+			)->save();
 		}
 		catch (Throwable $e)
 		{

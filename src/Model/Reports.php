@@ -45,7 +45,7 @@ use UnitEnum;
  *   appropriate scalar values. You don't need to care how to go from one type to the other; it's magic (at the expense
  *   of a bit of run time and a fair amount of memory).
  *
- * @since  __DEPLOY_VERSION__
+ * @since  1.0.4
  */
 class Reports extends DataModel
 {
@@ -56,6 +56,8 @@ class Reports extends DataModel
 		'admintools.pluginDisable'   => 'PANOPTICON_REPORTS_LBL_SITEACTION_ADMINTOOLS_PLUGIN_DISABLE',
 		'admintools.pluginEnable'    => 'PANOPTICON_REPORTS_LBL_SITEACTION_ADMINTOOLS_PLUGIN_ENABLE',
 		'admintools.unblockMyIP'     => 'PANOPTICON_REPORTS_LBL_SITEACTION_ADMINTOOLS_UNBLOCK_MY_IP',
+		'akeebabackup.delete'        => 'PANOPTICON_REPORTS_LBL_SITEACTION_AKEEBABACKUP_DELETE',
+		'akeebabackup.deleteFiles'   => 'PANOPTICON_REPORTS_LBL_SITEACTION_AKEEBABACKUP_DELETEFILES',
 	];
 
 	/** @inheritdoc */
@@ -76,7 +78,7 @@ class Reports extends DataModel
 	 * @param   string|null  $oldVersion  The old version of the CMS
 	 * @param   string|null  $newVersion  The latest available version of the CMS
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public static function fromCoreUpdateFound(
 		int $site_id, ?string $oldVersion, ?string $newVersion
@@ -105,7 +107,7 @@ class Reports extends DataModel
 	 * @param   bool|null    $success         Has the update completed successfully?
 	 * @param   mixed        $furtherContext  Additional context information
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public static function fromCoreUpdateInstalled(
 		int $site_id, ?string $oldVersion, ?string $newVersion, ?bool $success = null, mixed $furtherContext = null
@@ -136,7 +138,7 @@ class Reports extends DataModel
 	 * @param   string|null  $oldVersion     The old version of the CMS
 	 * @param   string|null  $newVersion     The latest available version of the CMS
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public static function fromExtensionUpdateFound(
 		int $site_id, string $extensionKey, string $extensionName, ?string $oldVersion, ?string $newVersion
@@ -165,7 +167,7 @@ class Reports extends DataModel
 	 * @param   bool|null    $success         Was the update successful?
 	 * @param   mixed        $furtherContext  Any further context
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public static function fromExtensionUpdateInstalled(
 		int $site_id, string $extensionKey, string $extensionName, ?string $oldVersion, ?string $newVersion,
@@ -192,7 +194,7 @@ class Reports extends DataModel
 	 * @param   bool   $status          Did the backup complete okay?
 	 * @param   mixed  $furtherContext  Any further context
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public static function fromBackup(
 		int $site_id, int $backupProfile, bool $status = true, mixed $furtherContext = null
@@ -220,7 +222,7 @@ class Reports extends DataModel
 	 * @param   bool|null  $status          Did the scanner complete okay?
 	 * @param   mixed      $furtherContext  Any further context info
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public static function fromFileScanner(
 		int $site_id, ?bool $status = null, mixed $furtherContext = null
@@ -248,7 +250,7 @@ class Reports extends DataModel
 	 * @param   bool|null  $status          Did the action complete okay?
 	 * @param   mixed      $furtherContext  Any further context
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public static function fromSiteAction(
 		int $site_id, string $action, bool $status = true, mixed $furtherContext = null
@@ -277,7 +279,7 @@ class Reports extends DataModel
 	 * @param   string  $languageKey  The language key e.g. `EXAMPLE_LBL_DID_A_THINGIE`
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public static function addSiteActionString(string $actionKey, string $languageKey): void
 	{
@@ -421,7 +423,7 @@ class Reports extends DataModel
 	 * The conversion uses the self::$siteActionStrings array for mapping.
 	 *
 	 * @return  string|null
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 * @see     self::addSiteActionString()
 	 */
 	public function siteActionAsString(): ?string
@@ -457,7 +459,7 @@ class Reports extends DataModel
 	 * This is only intended for debugging.
 	 *
 	 * @return  array
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public function getRawData(): array
 	{
@@ -473,7 +475,7 @@ class Reports extends DataModel
 	 *
 	 * @return  $this|null
 	 * @throws  Exception
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	public function findLatestRelevantEntry(int $site_id, ReportAction $action, array $contextMatches): ?static
 	{
@@ -662,7 +664,7 @@ class Reports extends DataModel
 	 * This method is automatically called by the getFieldValue, getData, and __get methods.
 	 *
 	 * @return  Site|null
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function getSiteIdAttribute(): ?Site
 	{
@@ -689,7 +691,7 @@ class Reports extends DataModel
 	 * @param   int|Site|null  $site_id
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function setSiteIdAttribute(int|Site|null $site_id): void
 	{
@@ -710,7 +712,7 @@ class Reports extends DataModel
 	 *
 	 * @return  DateTime
 	 * @throws  Exception
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function getCreatedOnAttribute(): DateTime
 	{
@@ -736,7 +738,7 @@ class Reports extends DataModel
 	 *
 	 * @return  void
 	 * @throws  App
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function setCreatedOnAttribute(DateTime|int|string|null $created_on): void
 	{
@@ -764,7 +766,7 @@ class Reports extends DataModel
 	 * This method is automatically called by the getFieldValue, getData, and __get methods.
 	 *
 	 * @return  User|null
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function getCreatedByAttribute(): ?User
 	{
@@ -780,7 +782,7 @@ class Reports extends DataModel
 	 * @param   int|User|null  $created_by
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function setCreatedByAttribute(int|User|null $created_by): void
 	{
@@ -798,7 +800,7 @@ class Reports extends DataModel
 	 * This method is automatically called by the getFieldValue, getData, and __get methods.
 	 *
 	 * @return  ReportAction|null
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function getActionAttribute(): ?ReportAction
 	{
@@ -813,7 +815,7 @@ class Reports extends DataModel
 	 * @param   ReportAction|string|null  $action
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function setActionAttribute(ReportAction|string|null $action): void
 	{
@@ -831,7 +833,7 @@ class Reports extends DataModel
 	 * This method is automatically called by the getFieldValue, getData, and __get methods.
 	 *
 	 * @return  Registry
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function getContextAttribute(): Registry
 	{
@@ -846,7 +848,7 @@ class Reports extends DataModel
 	 * @param   string|array|object  $context
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.0.4
 	 */
 	protected function setContextAttribute(string|array|object $context): void
 	{

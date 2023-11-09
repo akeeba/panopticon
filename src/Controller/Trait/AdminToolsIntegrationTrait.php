@@ -54,7 +54,7 @@ trait AdminToolsIntegrationTrait
 					$model->getId(),
 					'admintools.pluginDisable',
 					true
-				);
+				)->save();
 			}
 			catch (Throwable)
 			{
@@ -106,7 +106,7 @@ trait AdminToolsIntegrationTrait
 					$model->getId(),
 					'admintools.pluginEnable',
 					true
-				);
+				)->save();
 			}
 			catch (Throwable)
 			{
@@ -150,7 +150,7 @@ trait AdminToolsIntegrationTrait
 					$model->getId(),
 					'admintools.htaccessDisable',
 					true
-				);
+				)->save();
 			}
 			catch (Throwable)
 			{
@@ -194,7 +194,7 @@ trait AdminToolsIntegrationTrait
 					$model->getId(),
 					'admintools.htaccessEnable',
 					true
-				);
+				)->save();
 			}
 			catch (Throwable)
 			{
@@ -242,7 +242,7 @@ trait AdminToolsIntegrationTrait
 					'admintools.unblockMyIP',
 					true,
 					$myIp
-				);
+				)->save();
 			}
 			catch (Throwable)
 			{

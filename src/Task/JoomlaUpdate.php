@@ -1701,7 +1701,7 @@ class JoomlaUpdate extends AbstractCallback
 	 * @param   Registry  $storage
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__  Moved into its own method
+	 * @since   1.0.4  Moved into its own method
 	 */
 	private function sendSuccessEmail(object $task, Registry $storage): void
 	{

@@ -12,7 +12,7 @@ defined('AKEEBA') || die;
 /**
  * Report action enumeration
  *
- * @since  __DEPLOY_VERSION__
+ * @since  1.0.4
  */
 enum ReportAction: string
 {
