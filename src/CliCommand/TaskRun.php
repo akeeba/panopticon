@@ -87,11 +87,30 @@ class TaskRun extends AbstractCommand
 				break;
 			}
 
-			if (!$model->runNextTask($logger, $this->ioStyle) && !$loop)
+			$didRunATask = $model->runNextTask($logger, $this->ioStyle);
+
+			// I didn't run a task. If I'm not looping, I have nothing more to do.
+			if (!$didRunATask && !$loop)
 			{
 				break;
 			}
 
+			// I ran a task. Can I run some more?
+			if ($didRunATask)
+			{
+				// Not enough time? Time to go away.
+				if ($timer->getTimeLeft() < 5)
+				{
+					$logger->debug('Not enough time left; exiting');
+
+					break;
+				}
+
+				// Yes, I have enough time to run more tasks. Let's proceed.
+				continue;
+			}
+
+			// If I am here, I did not run a task and I was told to loop. But do I have enough time to do that?
 			if ($timer->getTimeLeft() < 5)
 			{
 				$logger->debug('Not enough time left; exiting');

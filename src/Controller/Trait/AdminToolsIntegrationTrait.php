@@ -8,8 +8,10 @@
 namespace Akeeba\Panopticon\Controller\Trait;
 
 
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Utils\Ip;
+use Throwable;
 
 defined('AKEEBA') || die;
 
@@ -44,8 +46,22 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$model->getId(),
+					'admintools.pluginDisable',
+					true
+				)->save();
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -82,8 +98,22 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$model->getId(),
+					'admintools.pluginEnable',
+					true
+				)->save();
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -112,8 +142,22 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$model->getId(),
+					'admintools.htaccessDisable',
+					true
+				)->save();
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -142,8 +186,22 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$model->getId(),
+					'admintools.htaccessEnable',
+					true
+				)->save();
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -175,8 +233,23 @@ trait AdminToolsIntegrationTrait
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);
+
+			// Add a report log entry
+			try
+			{
+				Reports::fromSiteAction(
+					$model->getId(),
+					'admintools.unblockMyIP',
+					true,
+					$myIp
+				)->save();
+			}
+			catch (Throwable)
+			{
+				// Whatever
+			}
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->setRedirectWithMessage($defaultRedirect, $e->getMessage(), 'error');
 		}
@@ -216,7 +289,7 @@ trait AdminToolsIntegrationTrait
 
 		try
 		{
-			$model->adminToolsScanEnqueue();
+			$model->adminToolsScanEnqueue($this->getContainer()->userManager->getUser());
 
 			// Redirect
 			$this->setRedirectWithMessage($defaultRedirect);

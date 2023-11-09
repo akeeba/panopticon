@@ -13,7 +13,9 @@ use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
+use Akeeba\Panopticon\Library\Enumerations\ReportAction;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Site as SiteModel;
 use Akeeba\Panopticon\Model\Task;
@@ -79,6 +81,20 @@ class Sites extends DataController
 		{
 			$type    = 'error';
 			$message = Text::sprintf('PANOPTICON_SITE_ERR_COREUPDATESITEFIX_FAILED', $e->getMessage());
+		}
+
+		try
+		{
+			Reports::fromSiteAction(
+				$site->getId(),
+				'jooomla.fixCoreUpdateSite',
+				$type !== 'error',
+				$e ?? null
+			)->save();
+		}
+		catch (Throwable $e)
+		{
+			// Whatever
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -226,7 +242,7 @@ class Sites extends DataController
 		try
 		{
 			/** @noinspection PhpParamsInspection */
-			$this->enqueueJoomlaUpdate($site, $this->container, $force);
+			$this->enqueueJoomlaUpdate($site, $this->container, $force, $this->container->userManager->getUser());
 
 			// Update the core.lastAutoUpdateVersion after enqueueing
 			$site->findOrFail($id);
@@ -294,10 +310,12 @@ class Sites extends DataController
 				throw new RuntimeException('PANOPTICON_SITE_LBL_JUPDATE_UNSCHEDULE_ERR_NOT_SCHEDULED');
 			}
 
-			if (in_array($task->last_exit_code, [
-				Status::WILL_RESUME->value,
-				Status::RUNNING->value
-			]))
+			if (in_array(
+				$task->last_exit_code, [
+					Status::WILL_RESUME->value,
+					Status::RUNNING->value,
+				]
+			))
 			{
 				throw new RuntimeException('PANOPTICON_SITE_LBL_JUPDATE_UNSCHEDULE_ERR_RUNNING');
 			}
@@ -479,7 +497,7 @@ class Sites extends DataController
 		try
 		{
 			/** @noinspection PhpParamsInspection */
-			if ($this->enqueueExtensionUpdate($site, $id))
+			if ($this->enqueueExtensionUpdate($site, $id, user: $this->container->userManager->getUser()))
 			{
 				/** @noinspection PhpParamsInspection */
 				$this->scheduleExtensionsUpdateForSite($site, $this->container);

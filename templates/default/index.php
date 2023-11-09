@@ -7,6 +7,7 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Helper\DarkModeEnum;
 use Akeeba\Panopticon\Helper\DefaultTemplate as TemplateHelper;
 use Akeeba\Panopticon\Library\Version\Version;
@@ -45,8 +46,8 @@ $themeColor    = TemplateHelper::getThemeColour();
 	<title><?= Text::_('PANOPTICON_APP_TITLE') ?></title>
 
 	<?php // See https://medium.com/swlh/are-you-using-svg-favicons-yet-a-guide-for-modern-browsers-836a6aace3df ?>
-	<link rel="icon" href="<?= Template::parsePath('media://images/logo_colour.svg') ?>">
-	<link rel="mask-icon" href="<?= Template::parsePath('media://images/logo_bw.svg') ?>" color="#000000">
+	<link rel="icon" href="<?= Template::parsePath('media://images/logo_colour.svg', app: Factory::getApplication()) ?>">
+	<link rel="mask-icon" href="<?= Template::parsePath('media://images/logo_bw.svg', app: Factory::getApplication()) ?>" color="#000000">
 
 	<?php // Client-side options ?>
 	<script type="application/json" class="akeeba-script-options new"><?= json_encode($this->getScriptOptions(), $isDebug ? JSON_PRETTY_PRINT : 0) ?: '{}' ?></script>
@@ -77,12 +78,12 @@ $themeColor    = TemplateHelper::getThemeColour();
 
 <?php // Top header ?>
 <?php if (!$isBareDisplay): ?>
-	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark pt-2 pb-1 px-2"
+	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark pt-2 pb-1 px-2 d-print-none"
 	     id="topNavbar">
 		<h1>
 			<?php if (!$isMenuEnabled): ?>
 				<div class="navbar-brand ps-2 d-flex flex-row">
-					<?= file_get_contents(Template::parsePath('media://images/logo_colour.svg', true)) ?>
+					<?= file_get_contents(Template::parsePath('media://images/logo_colour.svg', true, Factory::getApplication())) ?>
 					<div>
 						<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
 						<?php if (in_array($versionTag, [
@@ -149,7 +150,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 
 <?php // Toolbar / page title ?>
 <?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
-	<section class="navbar container-xl bg-secondary py-3 px-2" id="toolbar" data-bs-theme="dark"
+	<section class="navbar container-xl bg-secondary py-3 px-2 d-print-none" id="toolbar" data-bs-theme="dark"
 	         aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOOLBAR') ?>">
 		<div class="ms-2 me-auto d-flex flex-row gap-2">
 			<?= TemplateHelper::getRenderedToolbarButtons() ?>
@@ -174,7 +175,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 </main>
 
 <?php if (!$isBareDisplay): ?>
-	<footer class="container-xl bg-dark text-light p-3 pb-3 text-light small sticky-bottom" data-bs-theme="dark">
+	<footer class="container-xl bg-dark text-light p-3 pb-3 text-light small sticky-bottom d-print-none" data-bs-theme="dark">
 		<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= Version::create(AKEEBA_PANOPTICON_VERSION)->shortVersion(true) ?><?php if (Version::create(AKEEBA_PANOPTICON_VERSION)->hasTag()): ?><span class="text-muted small">.<?= Version::create(AKEEBA_PANOPTICON_VERSION)->tag() ?></span><?php endif; ?>
 		<?php if ($isDebug): ?>
 			<span class="text-body-tertiary">on</span>
@@ -189,7 +190,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 			</span>
 		<?php endif ?>
 	</footer>
-	<footer class="container-xl bg-dark text-light p-3 pt-1 text-light small" data-bs-theme="dark">
+	<footer class="container-xl bg-dark text-light p-3 pt-1 text-light small d-print-none" data-bs-theme="dark">
 		<div class="d-flex flex-column">
 			<p class="mb-2">
 				<?= Text::sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>

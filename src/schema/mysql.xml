@@ -191,6 +191,26 @@ CREATE TABLE IF NOT EXISTS `#__groups`
             ]]></query>
         </action>
 
+        <action table="#__reports" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__reports` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT,
+    `site_id` BIGINT UNSIGNED NOT NULL,
+    `created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created_by` BIGINT UNSIGNED NOT NULL DEFAULT '0',
+    `action` ENUM('core_update_found','core_update_installed','ext_update_found','ext_update_installed','backup','filescanner','site_action','misc_action') NOT NULL DEFAULT 'misc_action',
+    `context` JSON NOT NULL,
+    UNIQUE KEY `id` (`id`),
+    KEY `#__report_site_acton_index` (`site_id`,`action`),
+    KEY `#__report_site_index` (`site_id`),
+    CONSTRAINT `#__report_sites_fk` FOREIGN KEY (`site_id`) REFERENCES `#__sites` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+            ]]></query>
+        </action>
+
         <!-- Install the common SQL -->
         <action table="#__akeeba_common" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[

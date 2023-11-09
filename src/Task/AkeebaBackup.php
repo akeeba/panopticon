@@ -14,9 +14,8 @@ use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
-use Awf\Date\Date;
-use Awf\Mvc\Model;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 
@@ -38,15 +37,16 @@ class AkeebaBackup extends AbstractCallback
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		// Load the task configuration parameters
-		$params      = $task->params instanceof Registry ? $task->params : new Registry($task->params);
-		$profile     = $params->get('profile_id', 1);
-		$description = $params->get('description', Text::_('PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT'));
-		$comment     = $params->get('comment', '');
+		$params         = $task->params instanceof Registry ? $task->params : new Registry($task->params);
+		$profile        = $params->get('profile_id', 1);
+		$description    = $params->get('description', Text::_('PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT'));
+		$comment        = $params->get('comment', '');
+		$initiatingUser = $params->get('initiatingUser', 0);
 
 		// Replace the variables in the description and comment
-		$now = $this->container->dateFactory();
+		$now          = $this->container->dateFactory();
 		$replacements = [
-			'{DATE_FORMAT_LC}' => $now->format(Text::_('DATE_FORMAT_LC')),
+			'{DATE_FORMAT_LC}'  => $now->format(Text::_('DATE_FORMAT_LC')),
 			'{DATE_FORMAT_LC1}' => $now->format(Text::_('DATE_FORMAT_LC1')),
 			'{DATE_FORMAT_LC2}' => $now->format(Text::_('DATE_FORMAT_LC2')),
 			'{DATE_FORMAT_LC3}' => $now->format(Text::_('DATE_FORMAT_LC3')),
@@ -55,8 +55,8 @@ class AkeebaBackup extends AbstractCallback
 			'{DATE_FORMAT_LC6}' => $now->format(Text::_('DATE_FORMAT_LC6')),
 			'{DATE_FORMAT_LC7}' => $now->format(Text::_('DATE_FORMAT_LC7')),
 		];
-		$description = str_replace(array_keys($replacements), array_values($replacements), $description);
-		$comment = str_replace(array_keys($replacements), array_values($replacements), $comment);
+		$description  = str_replace(array_keys($replacements), array_values($replacements), $description);
+		$comment      = str_replace(array_keys($replacements), array_values($replacements), $comment);
 
 		// Load the temporary storage
 		$state          = $storage->get('state', 'init');
@@ -131,6 +131,33 @@ class AkeebaBackup extends AbstractCallback
 				$profile
 			);
 
+			// Log failed backup report
+			try
+			{
+				$report = Reports::fromBackup(
+					$site->id,
+					$profile,
+					false,
+					[
+						'backupId'     => $backupId,
+						'backupRecord' => $backupRecordId,
+						'archive'      => $archive,
+						'message'      => $errorMessage,
+					]
+				);
+
+				if ($initiatingUser)
+				{
+					$report->created_by = $initiatingUser;
+				}
+
+				$report->save();
+			}
+			catch (\Exception $e)
+			{
+				// Whatever
+			}
+
 			// Send email
 			$this->sendEmail(
 				'akeebabackup_fail',
@@ -179,6 +206,32 @@ class AkeebaBackup extends AbstractCallback
 		{
 			$this->logger->info('The backup finished successfully.');
 
+			// Log successful backup report
+			try
+			{
+				$report = Reports::fromBackup(
+					$site->id,
+					$profile,
+					true,
+					[
+						'backupId'     => $backupId,
+						'backupRecord' => $backupRecordId,
+						'archive'      => $archive,
+					]
+				);
+
+				if ($initiatingUser)
+				{
+					$report->created_by = $initiatingUser;
+				}
+
+				$report->save();
+			}
+			catch (\Exception $e)
+			{
+				// Whatever
+			}
+
 			// Send email
 			$this->sendEmail(
 				'akeebabackup_success',
@@ -194,6 +247,33 @@ class AkeebaBackup extends AbstractCallback
 		elseif (!empty($rawData?->Error))
 		{
 			$this->logger->critical('The backup finished with an error');
+
+			// Log failed backup report
+			try
+			{
+				$report = Reports::fromBackup(
+					$site->id,
+					$profile,
+					false,
+					[
+						'backupId'     => $backupId,
+						'backupRecord' => $backupRecordId,
+						'archive'      => $archive,
+						'message'      => $rawData?->Error,
+					]
+				);
+
+				if ($initiatingUser)
+				{
+					$report->created_by = $initiatingUser;
+				}
+
+				$report->save();
+			}
+			catch (\Exception $e)
+			{
+				// Whatever
+			}
 
 			// Send email
 			$this->sendEmail(

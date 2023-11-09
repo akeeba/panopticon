@@ -329,7 +329,7 @@ abstract class DefaultTemplate
 		$themeFile = Factory::getContainer()->appConfig->get('theme', 'theme') ?: 'theme';
 		$themeFile = (new Filter())->clean($themeFile, 'path');
 
-		if (!@file_exists(Template::parsePath('media://css/' . $themeFile . '.min.css')))
+		if (!@file_exists(Template::parsePath('media://css/' . $themeFile . '.min.css', app: Factory::getApplication())))
 		{
 			$themeFile = 'theme';
 		}

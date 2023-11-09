@@ -22,6 +22,7 @@ use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupNoInfoException;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel\Collection;
+use Awf\User\User;
 use Composer\CaBundle\CaBundle;
 use DateTimeZone;
 use Exception;
@@ -444,7 +445,7 @@ trait AkeebaBackupIntegrationTrait
 	 *
 	 * @return  void
 	 */
-	public function akeebaBackupEnqueue(int $profile = 1, ?string $description = null, ?string $comment = null): void
+	public function akeebaBackupEnqueue(int $profile = 1, ?string $description = null, ?string $comment = null, ?User $user = null): void
 	{
 		// Try to find an akeebabackup task object which is run once, not running / initial schedule, and matches the specifics
 		$tasks = $this->akeebaBackupGetEnqueuedTasks();
@@ -484,6 +485,7 @@ trait AkeebaBackupIntegrationTrait
 						'profile_id'      => $profile,
 						'description'     => $description,
 						'comment'         => $comment ?? '',
+						'initiatingUser'  => $user?->getId(),
 					]
 				),
 				'cron_expression' => $runDateTime->minute . ' ' . $runDateTime->hour . ' ' . $runDateTime->day . ' ' .

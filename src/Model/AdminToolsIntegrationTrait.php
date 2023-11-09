@@ -17,6 +17,7 @@ use Awf\Date\Date;
 use Awf\Exception\App;
 use Awf\Mvc\DataModel\Collection;
 use Awf\Uri\Uri;
+use Awf\User\User;
 use DateTimeZone;
 use Exception;
 use GuzzleHttp\Client;
@@ -288,8 +289,7 @@ trait AdminToolsIntegrationTrait
 		$controller = $this->getAdminToolsCacheController();
 
 		return $controller->get(
-			callback: function (int $scanAlertId): ?object
-			{
+			callback: function (int $scanAlertId): ?object {
 				/** @var Client $httpClient */
 				$httpClient = $this->container->httpFactory->makeClient(cache: false);
 				[$url, $options] = $this->getRequestOptions(
@@ -312,26 +312,6 @@ trait AdminToolsIntegrationTrait
 			id: sprintf('scanalert-%d', $scanAlertId),
 			expiration: ($this->container->dateFactory())->add(new \DateInterval('P1Y'))
 		);
-	}
-
-	/**
-	 * Get the cache controller for requests to Akeeba Backup
-	 *
-	 * @return  CallbackController
-	 * @since   1.0.0
-	 */
-	private function getAdminToolsCacheController(): CallbackController
-	{
-		if (empty($this->callbackControllerForAdminTools))
-		{
-			/** @var Container $container */
-			$container = $this->container;
-			$pool      = $container->cacheFactory->pool('admintools');
-
-			$this->callbackControllerForAdminTools = new CallbackController($container, $pool);
-		}
-
-		return $this->callbackControllerForAdminTools;
 	}
 
 	public function adminToolsGetAllScheduledTasks(): Collection
@@ -397,7 +377,7 @@ trait AdminToolsIntegrationTrait
 	 * @throws  App
 	 * @since   1.0.0
 	 */
-	public function adminToolsScanEnqueue(): void
+	public function adminToolsScanEnqueue(?User $user = null): void
 	{
 		// Try to find an akeebabackup task object which is run once, not running / initial schedule, and matches the specifics
 		$tasks = $this->adminToolsGetEnqueuedTasks();
@@ -432,8 +412,9 @@ trait AdminToolsIntegrationTrait
 				'type'            => 'filescanner',
 				'params'          => json_encode(
 					[
-						'run_once'      => 'disable',
-						'enqueued_scan' => 1,
+						'run_once'       => 'disable',
+						'enqueued_scan'  => 1,
+						'initiatingUser' => $user?->getId(),
 					]
 				),
 				'cron_expression' => $runDateTime->minute . ' ' . $runDateTime->hour . ' ' . $runDateTime->day . ' ' .
@@ -447,5 +428,25 @@ trait AdminToolsIntegrationTrait
 				'priority'        => 1,
 			]
 		);
+	}
+
+	/**
+	 * Get the cache controller for requests to Akeeba Backup
+	 *
+	 * @return  CallbackController
+	 * @since   1.0.0
+	 */
+	private function getAdminToolsCacheController(): CallbackController
+	{
+		if (empty($this->callbackControllerForAdminTools))
+		{
+			/** @var Container $container */
+			$container = $this->container;
+			$pool      = $container->cacheFactory->pool('admintools');
+
+			$this->callbackControllerForAdminTools = new CallbackController($container, $pool);
+		}
+
+		return $this->callbackControllerForAdminTools;
 	}
 }

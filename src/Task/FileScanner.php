@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
@@ -34,6 +35,10 @@ class FileScanner extends AbstractCallback
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->site = $this->container->mvcFactory->makeTempModel('Site');
 		$this->site->findOrFail($task->site_id);
+
+		// Load the task configuration parameters
+		$params         = $task->params instanceof Registry ? $task->params : new Registry($task->params);
+		$initiatingUser = $params->get('initiatingUser', 0);
 
 		// Add a site-specific logger
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->site->id));
@@ -84,6 +89,26 @@ class FileScanner extends AbstractCallback
 
 		if (empty($result) || !is_object($result))
 		{
+			// Log failed scan report
+			try
+			{
+				$report = Reports::fromFileScanner(
+					$this->site->id,
+					false
+				);
+
+				if ($initiatingUser)
+				{
+					$report->created_by = $initiatingUser;
+				}
+
+				$report->save();
+			}
+			catch (\Exception $e)
+			{
+				// Whatever
+			}
+
 			throw new \RuntimeException('Invalid response from the remote server.');
 		}
 
@@ -108,6 +133,29 @@ class FileScanner extends AbstractCallback
 
 		if ($result->attributes?->error)
 		{
+			// Log failed scan report
+			try
+			{
+				$report = Reports::fromFileScanner(
+					$this->site->id,
+					false,
+					[
+						'message' => $result->attributes?->error
+					]
+				);
+
+				if ($initiatingUser)
+				{
+					$report->created_by = $initiatingUser;
+				}
+
+				$report->save();
+			}
+			catch (\Exception $e)
+			{
+				// Whatever
+			}
+
 			throw new \RuntimeException($result->attributes?->error);
 		}
 
@@ -120,6 +168,26 @@ class FileScanner extends AbstractCallback
 					$this->site->name,
 				)
 			);
+
+			// Log successful scan report
+			try
+			{
+				$report = Reports::fromFileScanner(
+					$this->site->id,
+					true
+				);
+
+				if ($initiatingUser)
+				{
+					$report->created_by = $initiatingUser;
+				}
+
+				$report->save();
+			}
+			catch (\Exception $e)
+			{
+				// Whatever
+			}
 
 			return Status::OK->value;
 		}
