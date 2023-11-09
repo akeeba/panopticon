@@ -7,10 +7,10 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\Model\Reports     $item
  */
 
-$success    = $item->context->get('success');
-$oldVersion = $item->context->get('oldVersion');
-$newVersion = $item->context->get('newVersion');
-
+$success      = $item->context->get('success');
+$oldVersion   = $item->context->get('oldVersion');
+$newVersion   = $item->context->get('newVersion');
+$errorContext = $item->context->get('context');
 ?>
 
 @if ($success)
@@ -22,6 +22,9 @@ $newVersion = $item->context->get('newVersion');
     <div>
         <span class="fa fa-fw fa-xmark-circle text-danger" aria-hidden="true"></span>
         @lang('PANOPTICON_REPORTS_EXT_CORE_UPDATE_INSTALLED_FAILURE')
+    </div>
+    <div>
+        @yieldRepeatable('renderErrorContext', $errorContext)
     </div>
 @endif
 
@@ -37,5 +40,3 @@ $newVersion = $item->context->get('newVersion');
         {{{ $newVersion }}}
     </div>
 @endif
-
-{{-- TODO Show messages and errors, if applicable --}}

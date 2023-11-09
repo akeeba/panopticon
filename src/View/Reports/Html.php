@@ -14,6 +14,7 @@ use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
 use Awf\Pagination\Pagination;
+use Awf\Text\Text;
 use stdClass;
 
 class Html extends BaseHtmlView
@@ -27,6 +28,8 @@ class Html extends BaseHtmlView
 
 	protected function onBeforeMain(): bool
 	{
+		$this->setTitle(Text::_('PANOPTICON_REPORTS_TITLE'));
+
 		/** @var Reports $model */
 		$model = $this->getModel();
 		$model->savestate(1);

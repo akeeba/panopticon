@@ -58,6 +58,17 @@ class Application extends AWFApplication
 					'permissions' => [],
 					'icon'        => 'fa fa-fw fa-atom',
 				],
+				[
+					'url'         => null,
+					'name'        => 'separator05',
+					'title'       => '---',
+				],
+				[
+					'view'        => 'reports',
+					'permissions' => [],
+					'icon'        => 'fa fa-fw fa-table',
+				],
+
 			],
 		],
 		[

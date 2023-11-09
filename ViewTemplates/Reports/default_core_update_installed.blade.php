@@ -6,13 +6,14 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\View\Reports\Html $this
  * @var \Akeeba\Panopticon\Model\Reports     $item
  */
-$success    = $item->context->get('success');
-$oldVersion = $item->context->get('oldVersion');
-$newVersion = $item->context->get('newVersion');
-$startTime  = $item->context->get('start_time');
-$endTime    = $item->context->get('end_time');
-$duration   = (!empty($startTime) && !empty($endTime)) ? ($endTime - $startTime) : null;
-$hasBackup  = $item->context->get('backup_on_update');
+$success      = $item->context->get('success');
+$oldVersion   = $item->context->get('oldVersion');
+$newVersion   = $item->context->get('newVersion');
+$startTime    = $item->context->get('start_time');
+$endTime      = $item->context->get('end_time');
+$duration     = (!empty($startTime) && !empty($endTime)) ? ($endTime - $startTime) : null;
+$hasBackup    = $item->context->get('backup_on_update');
+$errorContext = $item->context->get('context');
 ?>
 
 @if ($success)
@@ -24,6 +25,9 @@ $hasBackup  = $item->context->get('backup_on_update');
     <div>
         <span class="fa fa-fw fa-xmark-circle text-danger" aria-hidden="true"></span>
         @lang('PANOPTICON_REPORTS_LBL_CORE_UPDATE_INSTALLED_FAILURE')
+    </div>
+    <div>
+        @yieldRepeatable('renderErrorContext', $errorContext)
     </div>
 @endif
 <div class="d-flex flex-column flex-lg-row gap-1 gap-lg-3">
@@ -49,5 +53,3 @@ $hasBackup  = $item->context->get('backup_on_update');
         </span>
     @endif
 </div>
-
-{{-- TODO Show errors, if applicable --}}
