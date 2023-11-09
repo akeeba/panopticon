@@ -7,6 +7,7 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Helper\DarkModeEnum;
 use Akeeba\Panopticon\Helper\DefaultTemplate as TemplateHelper;
 use Akeeba\Panopticon\Library\Version\Version;
@@ -45,8 +46,8 @@ $themeColor    = TemplateHelper::getThemeColour();
 	<title><?= Text::_('PANOPTICON_APP_TITLE') ?></title>
 
 	<?php // See https://medium.com/swlh/are-you-using-svg-favicons-yet-a-guide-for-modern-browsers-836a6aace3df ?>
-	<link rel="icon" href="<?= Template::parsePath('media://images/logo_colour.svg') ?>">
-	<link rel="mask-icon" href="<?= Template::parsePath('media://images/logo_bw.svg') ?>" color="#000000">
+	<link rel="icon" href="<?= Template::parsePath('media://images/logo_colour.svg', app: Factory::getApplication()) ?>">
+	<link rel="mask-icon" href="<?= Template::parsePath('media://images/logo_bw.svg', app: Factory::getApplication()) ?>" color="#000000">
 
 	<?php // Client-side options ?>
 	<script type="application/json" class="akeeba-script-options new"><?= json_encode($this->getScriptOptions(), $isDebug ? JSON_PRETTY_PRINT : 0) ?: '{}' ?></script>
@@ -82,7 +83,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 		<h1>
 			<?php if (!$isMenuEnabled): ?>
 				<div class="navbar-brand ps-2 d-flex flex-row">
-					<?= file_get_contents(Template::parsePath('media://images/logo_colour.svg', true)) ?>
+					<?= file_get_contents(Template::parsePath('media://images/logo_colour.svg', true, Factory::getApplication())) ?>
 					<div>
 						<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
 						<?php if (in_array($versionTag, [
