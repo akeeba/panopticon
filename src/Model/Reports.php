@@ -135,8 +135,8 @@ class Reports extends DataModel
 	 * @param   int          $site_id        The side ID
 	 * @param   string       $extensionKey   The extension key, e.g. com_example
 	 * @param   string       $extensionName  The human-readable extension name, e.g. "An Example"
-	 * @param   string|null  $oldVersion     The old version of the CMS
-	 * @param   string|null  $newVersion     The latest available version of the CMS
+	 * @param   string|null  $oldVersion     The old version of the extension
+	 * @param   string|null  $newVersion     The latest available version of the extension
 	 *
 	 * @since   1.0.4
 	 */
@@ -162,8 +162,8 @@ class Reports extends DataModel
 	 * @param   int          $site_id         The side ID
 	 * @param   string       $extensionKey    The extension key, e.g. com_example
 	 * @param   string       $extensionName   The human-readable extension name, e.g. "An Example"
-	 * @param   string|null  $oldVersion      The old version of the CMS
-	 * @param   string|null  $newVersion      The latest available version of the CMS
+	 * @param   string|null  $oldVersion      The old version of the extension
+	 * @param   string|null  $newVersion      The latest available version of the extension
 	 * @param   bool|null    $success         Was the update successful?
 	 * @param   mixed        $furtherContext  Any further context
 	 *
