@@ -394,7 +394,7 @@ class Reports extends DataModel
 			];
 		}
 
-		// Objects which can be JSON-serialised get coverted to arrays via their JSON-serialised representation.
+		// Objects which can be JSON-serialised get converted to arrays via their JSON-serialised representation.
 		if ($furtherContext instanceof JsonSerializable)
 		{
 			return json_decode(json_encode($furtherContext), true);
