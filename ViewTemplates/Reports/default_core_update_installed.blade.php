@@ -27,7 +27,7 @@ $errorContext = $item->context->get('context');
         @lang('PANOPTICON_REPORTS_LBL_CORE_UPDATE_INSTALLED_FAILURE')
     </div>
     <div>
-        @yieldRepeatable('renderErrorContext', $errorContext)
+        @include('Reports/error_cell', ['context' => $errorContext])
     </div>
 @endif
 <div class="d-flex flex-column flex-lg-row gap-1 gap-lg-3">

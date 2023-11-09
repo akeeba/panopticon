@@ -9,67 +9,6 @@ defined('AKEEBA') || die;
 $model = $this->getModel();
 ?>
 
-@repeatable('renderErrorContext', $context)
-<?php
-$context = is_object($context) ? (array) $context : $context;
-if (!is_array($context) || empty($context)) return;
-?>
-@if (isset($context['value']))
-    @if (is_bool($context['value']))
-        @if($context['value'])
-            @lang('AWF_YES')
-        @else
-            @lang('AWF_NO')
-        @endif
-        <?php return ?>
-    @elseif(is_scalar($context['value']))
-        {{{ $context['value'] }}}
-        <?php return ?>
-    @elseif(is_array($context['value']))
-        <?php $context = $context['value'] ?>
-    @elseif(is_object($context['value']))
-        <?php $context = (array) $context['value'] ?>
-    @else
-        <?php return ?>
-    @endif
-
-    @if (!empty($exception = ($context['exception'] ?? null)))
-        <details>
-            <summary>
-                <code>#{{{ $exception['code'] ?? 0 }}}.</code> {{{ $exception['message'] ?? '' }}}
-            </summary>
-            <pre>
-                {{{ $exception['file'] ?? '???' }}}:{{{ $exception['line'] ?? '???' }}}
-                {{{ $exception['trace'] }}}
-            </pre>
-        </details>
-    @else
-        <table class="table">
-        <tbody>
-        @foreach($context as $k => $v)
-            <tr>
-                <th>{{{ $k }}}</th>
-                <td>
-                    @if (is_scalar($v))
-                        {{{ $v }}}
-                    @elseif(is_array($v))
-                        {{{ print_r($v, true) }}}
-                    @elseif(is_object($v))
-                        {{{ print_r((array) $v, true) }}}
-                    @else
-                        (Not an array or object)
-                    @endif
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-        </table>
-    @endif
-@endif
-
-@endrepeatable
-
-
 <form action="@route('index.php?view=reports')" method="post" name="adminForm" id="adminForm">
     <!-- Filters -->
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary d-print-none">
@@ -184,7 +123,7 @@ if (!is_array($context) || empty($context)) return;
                     </div>
                     <div class="d-flex flex-column">
                         <div class="text-secondary small fw-medium">
-                            System Task
+                            @lang('PANOPTICON_APP_LBL_SYSTEM_TASK')
                         </div>
                         <div class="text-success small font-monospace text-">
                             system

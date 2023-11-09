@@ -23,9 +23,6 @@ $errorContext = $item->context->get('context');
         <span class="fa fa-fw fa-xmark-circle text-danger" aria-hidden="true"></span>
         @lang('PANOPTICON_REPORTS_EXT_CORE_UPDATE_INSTALLED_FAILURE')
     </div>
-    <div>
-        @yieldRepeatable('renderErrorContext', $errorContext)
-    </div>
 @endif
 
 <div>
@@ -39,4 +36,10 @@ $errorContext = $item->context->get('context');
         <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_CAN_BE_UPGRADED_SHORT')</span>
         {{{ $newVersion }}}
     </div>
+@endif
+
+@if (!$success)
+<div>
+    @include('Reports/error_cell', ['context' => $errorContext])
+</div>
 @endif
