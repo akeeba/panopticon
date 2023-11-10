@@ -31,17 +31,26 @@ $version       = Version::create(AKEEBA_PANOPTICON_VERSION);
     @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', $this->getContainer()->html->basic->date(AKEEBA_PANOPTICON_DATE, \Awf\Text\Text::_('DATE_FORMAT_LC1')))
 </p>
 
-<div class="mt-5 mb-3 d-flex flex-row justify-content-center">
+<div class="mt-5 mb-3 d-flex flex-row justify-content-center align-items-center gap-3">
     <a class="btn btn-lg btn-outline-secondary" role="button"
        href="@route('index.php?view=selfupdate&force=1')">
-        <span class="fa fa-refresh" aria-hidden="true"></span>
+        <span class="fa fa-fw fa-refresh" aria-hidden="true"></span>
         @lang('PANOPTICON_SELFUPDATE_BTN_RELOAD')
+    </a>
+
+    <a class="btn btn-sm btn-outline-warning" role="button"
+       href="@route(sprintf('index.php?view=selfupdate&task=postinstall&%s=1', $this->getContainer()->session->getCsrfToken()->getValue()))">
+        <span class="fa fa-fw fa-code" aria-hidden="true"></span>
+        @lang('PANOPTICON_SELFUPDATE_BTN_RUN_POSTUPGRADE')
     </a>
 </div>
 
 @if (is_int($this->updateInformation->lastCheckTimestamp))
     <div class="my-3 d-flex flex-row justify-content-center small text-body-tertiary">
-        Last checked for updates on
-        {{{ $this->getContainer()->html->basic->date('@' . $this->updateInformation->lastCheckTimestamp, \Awf\Text\Text::_('DATE_FORMAT_LC7')) }}}
+        @sprintf(
+            'PANOPTICON_SELFUPDATE_LBL_LAST_CHECK_AND_VERSION',
+            $this->getContainer()->html->basic->date('@' . $this->updateInformation->lastCheckTimestamp, \Awf\Text\Text::_('DATE_FORMAT_LC7')),
+            $this->latestversion->version
+           )
     </div>
 @endif

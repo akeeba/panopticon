@@ -419,7 +419,7 @@ class Selfupdate extends Model
 		$container = $this->getContainer();
 
 		/** @var \Akeeba\Panopticon\Model\Setup $model */
-		$model = $this->getModel('Setup');
+		$model = $this->getContainer()->mvcFactory->makeTempModel('Setup');
 		// Check the installed default tasks
 		$model->checkDefaultTasks();
 		// Make sure the DB tables are installed correctly
