@@ -264,7 +264,7 @@
 				]
 			}
 		],
-		"sass": [
+		"scss": [
 			{
 				"folder": "media/scss",
 				"outdir": "media/css",
