@@ -58,6 +58,24 @@ $config = $this->container->appConfig;
             </p>
         </div>
         @else
+        <div class="mt-3 mb-2 card card-body px-5 py-3 d-flex flex-column align-items-center justify-content-center gap-2">
+            <div class="input-group">
+                <span class="input-group-text">
+                    <label for="extensions-filter-search" class="visually-hidden">
+                        @lang('PANOPTICON_LBL_FORM_FILTER_EXTENSIONS')
+                    </label>
+                    <span class="fa fa-fw fa-search" aria-hidden="true"></span>
+                </span>
+                <input type="search" name="extensions-filter-search" id="extensions-filter-search"
+                       class="form-control"
+                >
+                <button type="button" class="btn btn-outline-secondary"
+                        id="extensions-filter-search-button">
+                    @lang('PANOPTICON_LBL_FORM_SEARCH')
+                </button>
+            </div>
+        </div>
+
         <table class="table table-hover table-responsive-sm">
             <caption class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION')</caption>
             <thead class="table-dark">
@@ -75,7 +93,7 @@ $config = $this->container->appConfig;
             </thead>
             <tbody>
             @foreach ($this->extUpdatePreferences as $key => $item)
-            <tr>
+            <tr class="extensions-filterable-row">
                 <td>
                     <span class="text-body-tertiary pe-2">
                         @if ($item->type === 'component')
@@ -101,11 +119,13 @@ $config = $this->container->appConfig;
                             <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE')</span>
                         @endif
                     </span>
-                     {{{ $item->name }}}
-                    <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
+                     <span class="extensions-filterable-name">
+                         {{{ $item->name }}}
+                     </span>
+                    <div class="small text-muted font-monospace extensions-filterable-key">{{{ ltrim($key, 'a') }}}</div>
                 </td>
                 <td class="d-none d-lg-table-cell">
-                    <div class="small">
+                    <div class="small extensions-filterable-author">
                         @if ($item->authorUrl)
                             <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
                                 {{{ $item->author }}}

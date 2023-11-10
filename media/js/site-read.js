@@ -37,10 +37,13 @@
         });
 
         const options = akeeba.System.getOptions("panopticon.siteRemember", {});
+
         if (options.extensionsFilters)
         {
             window.localStorage.setItem(options.extensionsFilters, JSON.stringify(allowedFilters));
         }
+
+        const filterString = document.getElementById("extensions-filter-search")?.value?.toLowerCase();
 
         filterRows.forEach((row) =>
         {
@@ -54,14 +57,39 @@
                 });
             }
 
-            if (row.classList.contains("d-none") && shouldShow)
-            {
-                row.classList.remove("d-none");
+            let matchesString = false;
 
-                return;
+            if (typeof filterString === "string" && filterString.length > 0)
+            {
+                const elName   = row.querySelectorAll(".extensions-filterable-name");
+                const elKey    = row.querySelectorAll(".extensions-filterable-key");
+                const elAuthor = row.querySelectorAll(".extensions-filterable-author");
+
+                if (elName.length)
+                {
+                    matchesString = matchesString || elName[0]?.innerText?.toLowerCase()?.includes(filterString);
+                }
+
+                if (elKey.length)
+                {
+                    matchesString = matchesString || elKey[0]?.innerText?.toLowerCase()?.includes(filterString);
+                }
+
+                if (elAuthor.length)
+                {
+                    matchesString = matchesString || elAuthor[0]?.innerText?.toLowerCase()?.includes(filterString);
+                }
+            }
+            else
+            {
+                matchesString = true;
             }
 
-            if (!row.classList.contains("d-none") && !shouldShow)
+            if (shouldShow && matchesString)
+            {
+                row.classList.remove("d-none");
+            }
+            else
             {
                 row.classList.add("d-none");
             }
@@ -173,7 +201,8 @@
         });
     };
 
-    const restoreCollapsibles = () => {
+    const restoreCollapsibles = () =>
+    {
         const options = akeeba.System.getOptions("panopticon.siteRemember", {});
 
         if (!options.collapsible)
@@ -199,14 +228,16 @@
             collapsed = [];
         }
 
-        [].slice.call(collapsed).forEach((id) => {
+        [].slice.call(collapsed).forEach((id) =>
+        {
             const elCollapsible = document.getElementById(id);
 
-            if (!elCollapsible) {
+            if (!elCollapsible)
+            {
                 return;
             }
 
-            elCollapsible.classList.remove('show');
+            elCollapsible.classList.remove("show");
         });
     };
 
@@ -240,7 +271,10 @@
         [].slice.call(document.querySelectorAll(".extensionFilter")).forEach((el) =>
         {
             el.addEventListener("click", applyExtensionFilters)
-        })
+        });
+
+        document.getElementById('extensions-filter-search-button')?.
+            addEventListener("click", applyExtensionFilters);
 
         applyExtensionFilters();
 

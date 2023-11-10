@@ -3,6 +3,7 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/filter_extensions.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/log.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/main.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-edit.min.js" />
@@ -24,6 +25,7 @@
       <root url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/system.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/webauthn-mfa.min.js" />
+      <root url="file://$PROJECT_DIR$/media/js/filter-extensions.min.js" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

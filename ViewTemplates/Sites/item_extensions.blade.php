@@ -174,22 +174,42 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
             {{ $lastUpdateTimestamp() }}
         </p>
 
-        <div class="mb-3 mx-1 p-2 border rounded-2 border-secondary bg-light-subtle d-flex flex-row gap-3 align-items-baseline justify-content-center">
-            <strong>@lang('PANOPTICON_SITE_LBL_EXTENSIONS_FILTERS')</strong>
+        <div class="mb-3 mx-1 border rounded-2 border-secondary bg-light-subtle">
+            <div class=" p-2 d-flex flex-row gap-3 align-items-baseline justify-content-center">
+                <strong>@lang('PANOPTICON_SITE_LBL_EXTENSIONS_FILTERS')</strong>
 
-            @foreach($this->extensionFilters as $filterName => $icon)
-                <button type="button"
-                        class="btn btn-outline-secondary extensionFilter"
-                        data-bs-toggle="button"
-                        data-ext-filter="{{ $filterName }}"
-                        data-toggle-tooltip="tooltip"
-                        data-bs-title="{{{ str_replace('"', '\'', \Awf\Text\Text::_('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))) }}}"
-                >
-                    <span class="fa {{ $icon }}" aria-hidden="true"></span>
-                    <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))</span>
-                </button>
+                @foreach($this->extensionFilters as $filterName => $icon)
+                    <button type="button"
+                            class="btn btn-outline-secondary extensionFilter"
+                            data-bs-toggle="button"
+                            data-ext-filter="{{ $filterName }}"
+                            data-toggle-tooltip="tooltip"
+                            data-bs-title="{{{ str_replace('"', '\'', \Awf\Text\Text::_('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))) }}}"
+                    >
+                        <span class="fa {{ $icon }}" aria-hidden="true"></span>
+                        <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))</span>
+                    </button>
 
-            @endforeach
+                @endforeach
+            </div>
+
+            <div class="mt-0 mb-2 px-5 py-3 d-flex flex-column align-items-center justify-content-center gap-2">
+                <div class="input-group">
+                <span class="input-group-text">
+                    <label for="extensions-filter-search" class="visually-hidden">
+                        @lang('PANOPTICON_LBL_FORM_FILTER_EXTENSIONS')
+                    </label>
+                    <span class="fa fa-fw fa-search" aria-hidden="true"></span>
+                </span>
+                    <input type="search" name="extensions-filter-search" id="extensions-filter-search"
+                           class="form-control"
+                    >
+                    <button type="button" class="btn btn-outline-secondary"
+                            id="extensions-filter-search-button">
+                        @lang('PANOPTICON_LBL_FORM_SEARCH')
+                    </button>
+                </div>
+            </div>
         </div>
 
         {{-- Show Update Schedule Information --}}
@@ -336,15 +356,17 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                             </span>
 
                             @if ($error)
-                                <span class="text-danger fw-medium">
+                                <span class="text-danger fw-medium extensions-filterable-name">
                                     {{{ $item->name }}}
                                 </span>
                             @elseif ($hasUpdate)
-                                <span class="text-warning-emphasis fw-bold">
+                                <span class="text-warning-emphasis fw-bold extensions-filterable-name">
                                     {{{ $item->name }}}
                                 </span>
                             @else
-                                {{{ $item->name }}}
+                                <span class="extensions-filterable-name">
+                                    {{{ $item->name }}}
+                                </span>
                             @endif
 
                             @if (in_array($item->extension_id, $scheduledExtensions))
@@ -367,7 +389,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_NOT_AUTOUPDATE')</span>
                             @endif
                         </div>
-                        <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
+                        <div class="small text-muted font-monospace extensions-filterable-key">{{{ ltrim($key, 'a') }}}</div>
                         @if ($error)
                             <div>
                                 @if ($naughtyUpdates)
@@ -418,7 +440,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                         @endif
                     </td>
                     <td class="small">
-                        <div>
+                        <div class="extensions-filterable-author">
                             @if ($item->authorUrl)
                                 <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
                                     {{{ $item->author }}}

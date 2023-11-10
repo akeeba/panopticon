@@ -46,6 +46,7 @@ class Html extends \Awf\Mvc\DataView\Html
 			'key' => 'panopticon.sysconfig.rememberTab'
 		]);
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
+		Template::addJs('media://js/filter-extensions.js', $this->getContainer()->application);
 
 		return true;
 	}
