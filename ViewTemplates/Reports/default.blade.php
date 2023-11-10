@@ -30,6 +30,7 @@ $model = $this->getModel();
             </div>
             <div>
                 <div class="input-group">
+                    <label class="visually-hidden" for="from_date">@lang('PANOPTICON_REPORTS_FIELD_CREATED_ON_FROM')</label>
                     <input type="datetime-local" name="from_date" id="from_date"
                            class="form-control"
                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
@@ -42,6 +43,7 @@ $model = $this->getModel();
             </div>
             <div>
                 <div class="input-group">
+                    <label class="visually-hidden" for="to_date">@lang('PANOPTICON_REPORTS_FIELD_CREATED_ON_TO')</label>
                     <input type="datetime-local" name="to_date" id="to_date"
                            class="form-control"
                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
