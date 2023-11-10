@@ -279,6 +279,9 @@
 
 	},
 	"scripts": {
+		"scss": [
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::sass"
+		],
 		"npm-deps": [
 			"npm install",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyNodeDependencies",

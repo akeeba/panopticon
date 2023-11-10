@@ -212,7 +212,7 @@ abstract class InstallationScript
 		$container = self::getAWFContainer();
 		$extras    = $event->getComposer()->getPackage()->getExtra();
 
-		foreach ($extras['scss'] ?? [] as $definition)
+		foreach ($extras['sass'] ?? [] as $definition)
 		{
 			$folder  = trim($definition['folder'], '/');
 			$outdir  = trim($definition['outdir'], '/');
@@ -248,7 +248,7 @@ abstract class InstallationScript
 			foreach ($finder as $file)
 			{
 				$inFile  = $file->getPathname();
-				$outFile = $file->getPath() . '/' . $file->getBasename('.js') . '.min.js';
+				$outFile = $outdir . '/' . $file->getBasename('.scss') . '.min.css';
 
 				if (file_exists($outFile) && filemtime($outFile) >= filemtime($inFile))
 				{
