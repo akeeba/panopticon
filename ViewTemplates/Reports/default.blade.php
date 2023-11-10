@@ -15,7 +15,7 @@ $model = $this->getModel();
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
             <!-- Site -->
             <div>
-                <label class="visually-hidden" for="manual">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_SITE')</label>
+                <label class="visually-hidden" for="site_id">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_SITE')</label>
                 {{  $this->container->html->select->genericList(
                         $this->getModel('main')->getSiteNamesForSelect(true, 'PANOPTICON_EXTUPDATES_LBL_SITE_SELECT'),
                         'site_id',

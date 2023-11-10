@@ -72,7 +72,7 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
             <!-- Site -->
             <div>
-                <label class="visually-hidden" for="manual">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_SITE')</label>
+                <label class="visually-hidden" for="site_id">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_SITE')</label>
                 {{  $this->container->html->select->genericList(
                         $mainModel->getSiteNamesForSelect(true, 'PANOPTICON_EXTUPDATES_LBL_SITE_SELECT'),
                         'site_id',
@@ -119,7 +119,7 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
         <!-- Extension Filters -->
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
             <div>
-                <label class="visually-hidden" for="manual">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_NAME')</label>
+                <label class="visually-hidden" for="extension_name">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_NAME')</label>
                 {{  $this->container->html->select->genericList(
                         $model->getExtensionNames(true),
                         'extension_name',
@@ -133,7 +133,7 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
                 }}
             </div>
             <div>
-                <label class="visually-hidden" for="manual">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR')</label>
+                <label class="visually-hidden" for="extension_author">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR')</label>
                 {{  $this->container->html->select->genericList(
                         $model->getExtensionAuthors(true),
                         'extension_author',
@@ -147,7 +147,7 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
                 }}
             </div>
             <div>
-                <label class="visually-hidden" for="manual">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_URL')</label>
+                <label class="visually-hidden" for="extension_author_url">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_URL')</label>
                 {{  $this->container->html->select->genericList(
                         $model->getExtensionAuthorURLs(true),
                         'extension_author_url',
