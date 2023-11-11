@@ -27,6 +27,13 @@ $danger: #cc3136;
 $light: #efefef;
 $dark: #373637;
 
+// Accessibility tweaks
+$link-color: #116969;
+$link-color-dark: #7dcaca;
+
+$code-color: #b12a6e;
+$code-color-dark: #c22774;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 @import "section/choices";
