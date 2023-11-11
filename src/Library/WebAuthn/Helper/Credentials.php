@@ -272,12 +272,14 @@ class Credentials
 			Uri::getInstance()->toString(['host'])
 		);
 
+		$hasAvatars = Factory::getContainer()->appConfig->get('avatars', false);
+
 		// User Entity
 		$userEntity = new PublicKeyCredentialUserEntity(
 			$user->getUsername(),
 			$user->getId(),
 			$user->getName(),
-			$user->getAvatar(64)
+			$hasAvatars ? $user->getAvatar(64) : null
 		);
 
 		// Challenge

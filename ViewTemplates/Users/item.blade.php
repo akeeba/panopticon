@@ -11,11 +11,14 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\View\Users\Html $this
  * @var \Akeeba\Panopticon\Model\Users     $item
  */
-$item = $this->getModel();
+$item       = $this->getModel();
+$hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
+$amISuper   = $this->getContainer()->userManager->getUser()->getPrivilege('panopticon.super');
 ?>
 
-<div class="d-flex flex-column flex-lg-row gap-4 p-2 my-3">
+<div class="d-flex flex-column flex-lg-row gap-4 p-2 my-3 align-items-center">
 
+    @if($hasAvatars)
     <div class="text-center flex-shrink-1 d-flex flex-column gap-2">
         <img src="{{{ $item->getAvatar(384) }}}" class="rounded-circle" alt="" style="max-width: 192px">
         <?php $editURL = $item->getAvatarEditUrl(); ?>
@@ -28,6 +31,13 @@ $item = $this->getModel();
         </div>
         @endunless
     </div>
+    @else
+        <div class="text-center flex-shrink-1 d-flex flex-column gap-2">
+            <div class="rounded-circle bg-light py-5 px-5">
+                <span class="fa fa-user-large display-1 rounded-circle bg-light"></span>
+            </div>
+        </div>
+    @endif
 
     <div class="flex-grow-1">
         <p class="display-4 text-center">

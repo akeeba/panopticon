@@ -191,7 +191,14 @@ class Application extends AWFApplication
 
 	public static function getUserMenuTitle(): string
 	{
-		$user = Factory::getContainer()->userManager->getUser();
+		$container = Factory::getContainer();
+		$hasAvatar = $container->appConfig->get('avatars', false);
+		$user      = $container->userManager->getUser();
+
+		if (!$hasAvatar)
+		{
+			return '<span class="fa fa-fw fa-user me-1" aria-hidden="true"></span>' . $user->getUsername();
+		}
 
 		$avatar = $user->getAvatar(64);
 

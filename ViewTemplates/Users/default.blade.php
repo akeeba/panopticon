@@ -12,9 +12,9 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\Model\Users     $model
  * @var \Akeeba\Panopticon\Model\Users     $user
  */
-$model = $this->getModel();
-$token = $this->container->session->getCsrfToken()->getValue();
-
+$model      = $this->getModel();
+$token      = $this->container->session->getCsrfToken()->getValue();
+$hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
 ?>
 <form action="@route('index.php?view=users')" method="post" name="adminForm" id="adminForm">
 
@@ -89,11 +89,13 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 </td>
                 <td>
                     <div class="d-flex flex-row gap-2">
+                        @if ($hasAvatars)
                         <div>
                             <img src="{{ $user->getAvatar(128) }}" alt=""
                                  class="rounded-3 border"
                                  style="max-width: 2.5em">
                         </div>
+                       @endif
                         <div class="d-flex flex-column" style="line-height: 1.2">
                             <div class="font-monospace fw-medium">
                                 <a href="@route(sprintf('index.php?view=users&task=edit&id=%d', $user->id))"

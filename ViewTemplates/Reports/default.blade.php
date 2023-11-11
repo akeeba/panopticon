@@ -6,7 +6,8 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\View\Reports\Html $this
  * @var \Akeeba\Panopticon\Model\Reports $model
  */
-$model = $this->getModel();
+$model      = $this->getModel();
+$hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
 ?>
 
 <form action="@route('index.php?view=reports')" method="post" name="adminForm" id="adminForm">
@@ -133,7 +134,11 @@ $model = $this->getModel();
                     </div>
                 @else
                     <div>
+                        @if($hasAvatars)
                         <img src="{{ $item->created_by->getAvatar(64) }}" alt="" class="rounded" style="height: 1.75em; filter: grayscale(80%)">
+                        @else
+                            <span class="fa fa-fw fa-user fs-4 text-body-tertiary" aria-hidden="true"></span>
+                        @endif
                     </div>
                     <div class="d-flex flex-column">
                         <div class="text-secondary small fw-medium">
