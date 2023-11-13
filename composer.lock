@@ -72,16 +72,16 @@
         },
         {
             "name": "akeeba/json-backup-api",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/json-backup-api.git",
-                "reference": "86b321a86b7c62b9b22018ea9d8baf5ea78c6e67"
+                "reference": "3eee2d8ae4b69b9e4e1845a81ed1d8d291da062f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/json-backup-api/zipball/86b321a86b7c62b9b22018ea9d8baf5ea78c6e67",
-                "reference": "86b321a86b7c62b9b22018ea9d8baf5ea78c6e67",
+                "url": "https://api.github.com/repos/akeeba/json-backup-api/zipball/3eee2d8ae4b69b9e4e1845a81ed1d8d291da062f",
+                "reference": "3eee2d8ae4b69b9e4e1845a81ed1d8d291da062f",
                 "shasum": ""
             },
             "require": {
@@ -125,9 +125,9 @@
             "description": "A PHP client library for talking to the Akeeba Backup and Akeeba Solo JSON API.",
             "support": {
                 "issues": "https://github.com/akeeba/json-backup-api/issues",
-                "source": "https://github.com/akeeba/json-backup-api/tree/1.0.0"
+                "source": "https://github.com/akeeba/json-backup-api/tree/1.0.1"
             },
-            "time": "2023-06-08T07:10:06+00:00"
+            "time": "2023-06-12T18:29:41+00:00"
         },
         {
             "name": "akeeba/stats_collector",
