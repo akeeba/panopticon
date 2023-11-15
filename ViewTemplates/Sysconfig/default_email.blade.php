@@ -157,7 +157,7 @@ $user   = $this->container->userManager->getUser();
             </div>
 
             {{--smtpuser--}}
-            <div class="row mb-3" data-showon='[{"field":"options[smtpauth]","values":["1"],"sign":"=","op":""}]'>
+            <div class="row mb-3">
                 <label for="smtpuser" class="col-sm-3 col-form-label">
                     @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPUSER')
                 </label>
@@ -169,7 +169,7 @@ $user   = $this->container->userManager->getUser();
             </div>
 
             {{--smtppass--}}
-            <div class="row mb-3" data-showon='[{"field":"options[smtpauth]","values":["1"],"sign":"=","op":""}]'>
+            <div class="row mb-3">
                 <label for="smtppass" class="col-sm-3 col-form-label">
                     @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_smtppass')
                 </label>

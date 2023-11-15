@@ -159,7 +159,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{--dbsslca--}}
-        <div class="row mb-3" data-showon='[{"field":"options[dbencryption]","values":["1"],"sign":"=","op":""}]'>
+        <div class="row mb-3">
             <label for="dbsslca" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DBSSLCA')
             </label>
@@ -171,7 +171,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{--dbsslkey--}}
-        <div class="row mb-3" data-showon='[{"field":"options[dbencryption]","values":["1"],"sign":"=","op":""}]'>
+        <div class="row mb-3">
             <label for="dbsslkey" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DBSSLKEY')
             </label>
@@ -183,7 +183,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{--dbsslcert--}}
-        <div class="row mb-3" data-showon='[{"field":"options[dbencryption]","values":["1"],"sign":"=","op":""}]'>
+        <div class="row mb-3">
             <label for="dbsslcert" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_dbsslcert')
             </label>
@@ -195,7 +195,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{--dbsslverifyservercert--}}
-        <div class="row mb-3" data-showon='[{"field":"options[dbencryption]","values":["1"],"sign":"=","op":""}]'>
+        <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[dbsslverifyservercert]" id="dbsslverifyservercert"
