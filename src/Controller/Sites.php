@@ -13,7 +13,7 @@ use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
-use Akeeba\Panopticon\Library\Enumerations\ReportAction;
+use Akeeba\Panopticon\Library\Queue\QueueInterface;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
@@ -431,6 +431,7 @@ class Sites extends DataController
 
 		try
 		{
+			// Delete the failed task
 			/** @var Task $task */
 			$task = $this->getModel('Task', $tempConfig);
 
@@ -442,6 +443,16 @@ class Sites extends DataController
 			);
 
 			$task->delete();
+
+			// If the updates queue is not empty, reschedule the task
+			$queueKey = sprintf('extensions.%d', $site->id);
+			/** @var QueueInterface $queue */
+			$queue    = $this->container->queueFactory->makeQueue($queueKey);
+
+			if ($queue->count())
+			{
+				$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
+			}
 
 			$type    = 'info';
 			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_CLEARED');
@@ -470,6 +481,68 @@ class Sites extends DataController
 		{
 			$returnUri = $this->container->router->route(
 				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
+	public function resetExtensionUpdate()
+	{
+		$this->csrfProtection();
+
+		$siteId = $this->input->get->getInt('id', 0);
+		$resetQueue = $this->input->get->getBool('resetqueue', 0);
+
+		/** @var SiteModel $site */
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
+
+		$site->findOrFail($siteId);
+
+		try
+		{
+			if ($resetQueue)
+			{
+				$queueKey = sprintf('extensions.%d', $site->id);
+				/** @var QueueInterface $queue */
+				$queue    = $this->container->queueFactory->makeQueue($queueKey);
+
+				$queue->clear();
+			}
+
+			$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
+
+			$type    = 'info';
+			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_OK');
+		}
+		catch (Throwable $e)
+		{
+			$type    = 'error';
+			$message = Text::sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $siteId)
 			);
 		}
 

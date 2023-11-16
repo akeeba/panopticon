@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
+use Awf\Text\Text;
 
 $user                 = $this->container->userManager->getUser();
 $config               = $this->item->getConfig();
@@ -55,7 +56,6 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
 		'patch' => $vOld->versionFamily() === $vNew->versionFamily(),
 	};
 };
-
 
 $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
 	$ret = (object) [
@@ -222,12 +222,36 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                     </div>
                 </div>
             @elseif ($extensionsUpdateTask->enabled && in_array($extensionsUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
+                @if ($this->cronStuckTime !== null && $extensionsUpdateTask->last_execution < $this->cronStuckTime)
+                    <div class="alert alert-warning">
+                        <h4 class="h5 alert-heading">
+                            @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_MAYBE_STUCK')
+                        </h4>
+                        <div>
+                            @sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_MAYBE_STUCK_HELP', $this->getContainer()->html->basic->date($extensionsUpdateTask->last_execution, Text::_('DATE_FORMAT_LC7')))
+                        </div>
+                        <div class="d-flex flex-row align-items-center gap-4 mt-3">
+                            <a href="@route(sprintf('index.php?view=site&task=resetExtensionUpdate&resetqueue=0&id=%d&%s=1', $this->item->id, $token))"
+                               class="btn btn-success" role="button">
+                                <span class="fa fa-refresh" aria-hidden="true"></span>
+                                @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_RESCHEDULE')
+                            </a>
+                            <a href="@route(sprintf('index.php?view=site&task=resetExtensionUpdate&resetqueue=1&id=%d&%s=1', $this->item->id, $token))"
+                               class="btn btn-outline-danger btn-sm" role="button">
+                                <span class="fa fa-fw fa-xmark-circle" aria-hidden="true"></span>
+                                @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_CANCEL')
+                            </a>
+                        </div>
+                    </div>
+
+                @else
                 <div class="alert alert-info">
                     <div class="text-center fs-5">
                         <span class="fa fa-play" aria-hidden="true"></span>
                         @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_RUNNING')
                     </div>
                 </div>
+                @endif
             @elseif ($extensionsUpdateTask->last_exit_code != Status::OK->value)
                 {{-- Task error condition --}}
                 <?php
@@ -264,6 +288,28 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                     </a>
                 </div>
             @endif
+        {{-- Show the Reset Extension Updates button if the task does not exist --}}
+        @elseif (count($scheduledExtensions))
+            <div class="alert alert-warning">
+                <h4 class="h5 alert-heading">
+                    @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_STUCK')
+                </h4>
+                <div>
+                    @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_STUCK_HELP')
+                </div>
+                <div class="d-flex flex-row align-items-center gap-4 mt-3">
+                    <a href="@route(sprintf('index.php?view=site&task=resetExtensionUpdate&resetqueue=0&id=%d&%s=1', $this->item->id, $token))"
+                       class="btn btn-success" role="button">
+                        <span class="fa fa-refresh" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_RESCHEDULE')
+                    </a>
+                    <a href="@route(sprintf('index.php?view=site&task=resetExtensionUpdate&resetqueue=1&id=%d&%s=1', $this->item->id, $token))"
+                       class="btn btn-outline-danger btn-sm" role="button">
+                        <span class="fa fa-fw fa-xmark-circle" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_CANCEL')
+                    </a>
+                </div>
+            </div>
         @endif
 
         <table class="table table-striped table-responsive">

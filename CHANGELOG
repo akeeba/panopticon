@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 1.0.5
+================================================================================
++ Detect stuck extension updates and allow rescheduling, or canceling [gh-304]
+
 Akeeba Panopticon 1.0.4
 ================================================================================
 + Site reports (updates, backups, file scanner, Admin Tools actions) [gh-220]

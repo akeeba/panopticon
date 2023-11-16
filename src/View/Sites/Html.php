@@ -19,6 +19,8 @@ use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Mvc\DataView\Html as DataViewHtml;
 use Awf\Text\Text;
 use Awf\Utils\Template;
+use DateInterval;
+use DateTime;
 use DateTimeZone;
 use Throwable;
 
@@ -67,8 +69,9 @@ class Html extends DataViewHtml
 		'filter-naughty'     => 'fa-bug',
 		'filter-scheduled'   => 'fa-hourglass-half',
 		'filter-unscheduled' => 'fa-bolt',
-
 	];
+
+	protected ?DateTime $cronStuckTime = null;
 
 	private array $backupProfiles = [];
 
@@ -163,7 +166,8 @@ class Html extends DataViewHtml
 						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
 					),
 					'refresh' => $this->getContainer()->router->route(
-						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId() . '&format=raw&'
+						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId()
+						. '&format=raw&'
 						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
 					),
 				]
@@ -211,7 +215,8 @@ class Html extends DataViewHtml
 						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
 					),
 					'refresh' => $this->getContainer()->router->route(
-						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId() . '&format=raw&'
+						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId()
+						. '&format=raw&'
 						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
 					),
 				]
@@ -270,6 +275,8 @@ class Html extends DataViewHtml
 				$this->scans = $e;
 			}
 		}
+
+		$this->cronStuckTime = $this->getCronStuckTime();
 
 		$document = $this->container->application->getDocument();
 
@@ -507,4 +514,34 @@ window.addEventListener('DOMContentLoaded', () => {
 JS;
 		$this->container->application->getDocument()->addScriptDeclaration($js);
 	}
+
+	/**
+	 * Returns the latest point in time a task may have last run while still enabled before it is considered "stuck".
+	 *
+	 * @return  DateTime|null
+	 * @since   1.0.5
+	 */
+	private function getCronStuckTime(): ?DateTime
+	{
+		$threshold = (int) $this->getContainer()->appConfig->get('cron_stuck_threshold', 3);
+
+		if ($threshold <= 0)
+		{
+			return null;
+		}
+
+		try
+		{
+			$interval = new DateInterval(sprintf('PT%uM', $threshold));
+		}
+		catch (\Exception $e)
+		{
+			return null;
+		}
+
+		$now  = new DateTime();
+
+		return $now->sub($interval);
+	}
+
 }

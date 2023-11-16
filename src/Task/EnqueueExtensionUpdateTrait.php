@@ -80,6 +80,7 @@ trait EnqueueExtensionUpdateTrait
 
 		$task->next_execution = $then->toSql();
 
+		$task->setState('disable_next_execution_recalculation', 1);
 		$task->save();
 	}
 

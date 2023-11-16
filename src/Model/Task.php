@@ -200,7 +200,16 @@ class Task extends DataModel
 			$relativeTime         = ($this->container->dateFactory($this->last_execution ?: 'now', 'UTC'))->format(DATE_W3C);
 			// The call to getNextRunDate must use our local timezone because the CRON expression is in local time
 			$nextRun              = $cron_expression->getNextRunDate($relativeTime, timeZone: $tz)->format(DATE_W3C);
-			$this->next_execution = ($this->container->dateFactory($nextRun, 'UTC'))->toSql();
+
+			/**
+			 * If the disable_next_execution_recalculation state is set to true we'll NOT override next_execution.
+			 *
+			 * This is used when scheduling tasks for the current date and time, having them run as soon as possible.
+			 */
+			if (!$this->getState('disable_next_execution_recalculation', false, 'bool'))
+			{
+				$this->next_execution = ($this->container->dateFactory($nextRun, 'UTC'))->toSql();
+			}
 		}
 		catch (Exception)
 		{
