@@ -2,13 +2,15 @@
 
 This is a features, and bug-fix release.
 
-**✨ .env support (gh-34)**. You can now use .env files to configure Panopticon. This is an advanced feature for automated deployments. 
+**✨ Site reports (updates, backups, file scanner, Admin Tools actions) [gh-220]**. Panopticon now logs when it has found and installed updates, taken backups, ran the PHP File Change Scanner, and executed Admin Tools actions on your sites. You can generate reports for a specific period of time (default: one month) and site. This is great if you want to show your clients that there is maintenance taking place on their sites.
 
-**✨ Anonymous usage statistics collection (gh-215)**. We periodically collect your Panopticon, PHP, and database server version. This information is collected completely anonymously and helps us understand which direction to go with future versions. You don't like it? No problem! You can opt-out, no questions asked.
+**✨ Support for custom templates [gh-249]**. If customising the CSS is not enough for your white-labelling needs you can now create a custom template. This lets you change the logos, the footer and so on.
 
-**✨ Link to self-update page even without any updates found (gh-209)**. You can view the self-update page even if there are no updates found. Moreover, you can click a single button to clear the updates cache and force Panopticon to reload the update information from GitHub.
+**✨ Send test email [gh-267]**. Getting the email configured on any site can be a pain, right? You will never know if you got the settings right unless you can send a test email. There's a new button in the System Configuration page to do exactly that.
 
-**✨ Periodic database backup (gh-223)**. Panopticon will take a daily backup of its critical database tables' contents. If something breaks, you can restore the backup using phpMyAdmin, Adminer, the MySQL command line, or any other database tool. You can also take manual database backups before makind big changes, just to be on the safe side.
+**✨ Major performance improvement for scheduled tasks**. The task runner used to pick up a task, run it, then wait for 5 seconds – even if the task itself took half a second. This made lengthy processes like updating lots of sites, backing up sites etc take much longer than they should. The task runner will now check for new tasks right after the previous one is done, as long as we're not within 5 seconds of the execution time limit. If no tasks are available, _only then_ it will wait for five seconds before checking for new tasks. This is a major performance boost. You will find that site updates that used to take ten minutes will now complete in a minute or less.
+
+**✨ Extension list search box [gh-247]**. Wherever there is a list of extensions you can now type into a search box to filter them by extension and author name. This will make finding the right extension faster and easier, especially on sites with _tons_ of extensions.
 
 ## 🖥️ System Requirements
 
@@ -19,19 +21,16 @@ This is a features, and bug-fix release.
 
 ## 📋 CHANGELOG
 
-Changes in version 1.0.3
-
-* ✨ .env support (gh-34)
-* ✨ Anonymous usage statistics collection (gh-215)
-* ✨ Link to self-update page even without any updates found (gh-209)
-* ✨ Periodic database backup (gh-223)
-* 🐞 🔺 Regression: can't access Setup
-* 🐞 🔺 Old MariaDB versions don't support JSONPath (gh-201)
-* 🐞 🔺 Very low self-update timeout (5 seconds) (gh-185)
-* 🐞 🔺 Too tight permissions check
-* 🐞 ➖ Users with only Add Own and Edit Own privileges cannot add sites (gh-203)
-* 🐞 🔻 Some mail templates may be missing due to typo (gh-226)
-* 🐞 🔻 SCSS files were excluded (gh-233)
+✨ Site reports (updates, backups, file scanner, Admin Tools actions) [gh-220]
+✨ Support for custom templates [gh-249]
+✨ Send test email [gh-267]
+✨ Major performance improvement for scheduled tasks
+✨ Extension list search box [gh-247]
+✂️ Removed avatars
+🐞 ➖ Repeated notifications for updates if more than one extension with updates is found [gh-258]
+🐞 ➖ Cannot access My Profile page [gh-241]
+🐞 ➖ PHP error in the Extensions Updates page if you have extensions with missing Download Keys [gh-240]
+🐞 🔺 Post-update code does not apply database changes [gh-283]
 
 Legend:
 * 🚨 Security update
