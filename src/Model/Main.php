@@ -70,6 +70,77 @@ class Main extends Model
 		}
 	}
 
+	/**
+	 * Are the CRON jobs working?
+	 *
+	 * We consider them to be working when there is a CRON job which has executed within the last minute.
+	 *
+	 * @return  bool
+	 * @since   1.0.5
+	 */
+	public function areCRONJobsWorking(): bool
+	{
+		$lastExecutionTime = $this->getLastCronExecutionTime();
+
+		if (empty($lastExecutionTime))
+		{
+			return false;
+		}
+
+		$lastPlausibleRun = ($this->container->dateFactory())->sub(new \DateInterval('PT55S'));
+		$lastPlausibleRun->setTime($lastPlausibleRun->hour, $lastPlausibleRun->minute, 0, 0);
+
+		return $lastPlausibleRun->diff($lastExecutionTime)->invert === 0;
+	}
+
+	/**
+	 * How far behind is the execution of CRON jobs, on average?
+	 *
+	 * @param   int  $threshold  The minimum number of seconds to report.
+	 *
+	 * @return  int|null  NULL if CRON jobs are not working
+	 * @since   1.0.5
+	 */
+	public function getCRONJobsSecondsBehind(int $threshold = 120): ?int
+	{
+		if (!$this->areCRONJobsWorking())
+		{
+			return null;
+		}
+
+		$now        = time();
+		$db         = $this->getContainer()->db;
+		$query      = $db->getQuery(true)
+			->select($db->quoteName('next_execution'))
+			->from('#__tasks')
+			->where(
+				[
+					$db->quoteName('enabled') . ' = 1',
+					$db->quoteName('next_execution') . ' < UNIX_TIMESTAMP()',
+				]
+			);
+		$timestamps = $db->setQuery($query)->loadColumn();
+
+		if (empty($timestamps))
+		{
+			return 0;
+		}
+
+		$timestamps = array_map(
+			fn(string $stamp) => $now - (new \DateTime($stamp))->format('U'),
+			$timestamps
+		);
+
+		$averageDelay = (int) ceil(array_sum($timestamps) / count($timestamps));
+
+		if ($averageDelay < $threshold)
+		{
+			return 0;
+		}
+
+		return $averageDelay;
+	}
+
 	public function getKnownJoomlaVersions(): array
 	{
 		/** @var Container $container */

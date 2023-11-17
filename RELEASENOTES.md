@@ -8,6 +8,8 @@ This is a features, and bug-fix release.
 
 **✨ Allow the global update preference of an extension to be "email" [gh-309]**. In the System Configuration page you could set the update preference for an individual extension only to global, none, patch, minor, or major. Now you can set it to email. Please note that it's recommended to use none and use the upcoming scheduled reports feature instead to minimize the amount of email you are receiving.
 
+**✨ Detect when scheduled tasks are falling behind [gh-315]**. If the scheduled tasks are falling behind more than 2 minutes on average and you are logged in as a Super User you will receive a warning recommending that you increase the number of CRON jobs you are using to execute scheduled tasks. This is linked to the documentation page of the CRON jobs, explaining why and how to do that.
+
 ## 🖥️ System Requirements
 
 * PHP 8.1, 8.2, or 8.3. PHP 8.2 recommended.

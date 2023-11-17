@@ -19,6 +19,8 @@ class Html extends \Awf\Mvc\DataView\Html
 {
 	public string $cronKey;
 
+	public ?int $cronSecondsBehind = 0;
+
 	protected function onBeforeMain()
 	{
 		$this->setStrictLayout(true);
@@ -47,6 +49,10 @@ class Html extends \Awf\Mvc\DataView\Html
 		$model->setState('filter_order_Dir', $this->lists->order_Dir);
 		$model->setState('limitstart', $this->lists->limitStart);
 		$model->setState('limit', $this->lists->limit);
+
+		// How far behind are the CRON jobs?
+		$this->cronSecondsBehind = $this->getContainer()->mvcFactory->makeTempModel('main')
+			->getCRONJobsSecondsBehind();
 
 		// Assign items to the view
 		$this->items      = $model->get();

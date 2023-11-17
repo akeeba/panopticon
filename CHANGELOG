@@ -4,6 +4,7 @@ Akeeba Panopticon 1.0.5
 + Detect stuck extension updates and allow rescheduling, or canceling [gh-304]
 + Allow immediate email sending [gh-306]
 + Allow the global update preference of an extension to be "email" [gh-309]
++ Detect when scheduled tasks are falling behind [gh-315]
 
 Akeeba Panopticon 1.0.4
 ================================================================================

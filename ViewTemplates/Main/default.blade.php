@@ -5,6 +5,8 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
+/** @var \Akeeba\Panopticon\View\Main\Html $this */
+
 defined('AKEEBA') || die;
 
 use Awf\Text\Text;
@@ -28,6 +30,7 @@ $isFiltered = array_reduce(
 
 @if($this->container->userManager->getUser()->getPrivilege('panopticon.super'))
     @include('Main/heartbeat')
+    @include('Main/cronfellbehind')
     @include('Main/php_warnings')
     @include('Main/selfupdate')
 @endif
@@ -88,7 +91,7 @@ $isFiltered = array_reduce(
                 <label class="form-label" for="cmsFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => \Awf\Text\Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
+                        '' => Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
                     ], $mainModel->getKnownJoomlaVersions()),
                     'cmsFamily',
                     [
@@ -103,7 +106,7 @@ $isFiltered = array_reduce(
                 <label class="form-label" for="phpFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => \Awf\Text\Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
+                        '' => Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
                     ], $mainModel->getKnownPHPVersions()),
                     'phpFamily',
                     [

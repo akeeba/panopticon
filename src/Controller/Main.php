@@ -40,20 +40,8 @@ class Main extends Controller
 	public function heartbeat()
 	{
 		/** @var MainModel $model */
-		$model             = $this->getModel('Main');
-		$lastExecutionTime = $model->getLastCronExecutionTime();
-
-		if (empty($lastExecutionTime))
-		{
-			$isValid = false;
-		}
-		else
-		{
-			$lastPlausibleRun = ($this->container->dateFactory())->sub(new \DateInterval('PT55S'));
-			$lastPlausibleRun->setTime($lastPlausibleRun->hour, $lastPlausibleRun->minute, 0, 0);
-
-			$isValid = $lastPlausibleRun->diff($lastExecutionTime)->invert === 0;
-		}
+		$model   = $this->getModel('Main');
+		$isValid = $model->areCRONJobsWorking();
 
 		/**
 		 * @var Application $app
