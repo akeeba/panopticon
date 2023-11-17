@@ -82,6 +82,7 @@ trait DefaultConfigurationTrait
 			'dbbackup_compress'        => true,
 			'dbbackup_maxfiles'        => 15,
 			'mail_online'              => false,
+			'immediate_email'          => true,
 			'mail_inline_images'       => false,
 			'mailer'                   => 'mail',
 			'mailfrom'                 => '',
