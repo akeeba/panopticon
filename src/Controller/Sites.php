@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Akeeba\Panopticon\Library\Queue\QueueInterface;
+use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
@@ -445,7 +446,7 @@ class Sites extends DataController
 			$task->delete();
 
 			// If the updates queue is not empty, reschedule the task
-			$queueKey = sprintf('extensions.%d', $site->id);
+			$queueKey = sprintf(QueueTypeEnum::EXTENSIONS->value, $site->id);
 			/** @var QueueInterface $queue */
 			$queue    = $this->container->queueFactory->makeQueue($queueKey);
 
@@ -509,7 +510,7 @@ class Sites extends DataController
 		{
 			if ($resetQueue)
 			{
-				$queueKey = sprintf('extensions.%d', $site->id);
+				$queueKey = sprintf(QueueTypeEnum::EXTENSIONS->value, $site->id);
 				/** @var QueueInterface $queue */
 				$queue    = $this->container->queueFactory->makeQueue($queueKey);
 

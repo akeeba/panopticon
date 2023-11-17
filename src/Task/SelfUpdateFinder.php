@@ -15,6 +15,7 @@ use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Selfupdate;
+use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Awf\Registry\Registry;
 use Awf\User\User;
 
@@ -24,6 +25,7 @@ use Awf\User\User;
 )]
 class SelfUpdateFinder extends AbstractCallback
 {
+	use EmailSendingTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -80,8 +82,8 @@ class SelfUpdateFinder extends AbstractCallback
 		// Schedule a mail for all Super Users.
 		$this->logger->info(sprintf('Notifying Super Users about the new Panopticon version %s', $latestVersion));
 
-		$queueItem = new QueueItem(
-			(new Registry())->loadArray(
+		$data      = (new Registry())
+			->loadArray(
 				[
 					'template'        => 'selfupdate_found',
 					'email_variables' => [
@@ -91,13 +93,9 @@ class SelfUpdateFinder extends AbstractCallback
 					],
 					'permissions'     => ['panopticon.super'],
 				]
-			)->toString(),
-			QueueTypeEnum::MAIL->value,
-			null
-		);
-		$queue     = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
+			);
 
-		$queue->push($queueItem, 'now');
+		$this->enqueueEmail($data, null, 'now');
 
 		// Update the last seen version.
 		$this->setLastSeenVersion($latestVersion);

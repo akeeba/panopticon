@@ -18,6 +18,7 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Registry\Registry;
@@ -38,6 +39,7 @@ class JoomlaUpdate extends AbstractCallback
 	use ApiRequestTrait;
 	use SiteNotificationEmailTrait;
 	use TimeAgoTrait;
+	use EmailSendingTrait;
 
 	protected string $currentState;
 
@@ -1627,15 +1629,7 @@ class JoomlaUpdate extends AbstractCallback
 		$data->set('permissions', $permissions);
 		$data->set('email_cc', $storage->get('email_cc', []));
 
-		$queueItem = new QueueItem(
-			$data->toString(),
-			QueueTypeEnum::MAIL->value,
-			$storage->get('site_id')
-		);
-
-		$queue = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
-
-		$queue->push($queueItem, 'now');
+		$this->enqueueEmail($data, $storage->get('site_id'), 'now');
 	}
 
 	/**
