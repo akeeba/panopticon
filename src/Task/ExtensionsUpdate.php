@@ -17,6 +17,9 @@ use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
+use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
 use Awf\Registry\Registry;
 use Exception;
@@ -28,6 +31,7 @@ class ExtensionsUpdate extends AbstractCallback
 {
 	use ApiRequestTrait;
 	use SiteNotificationEmailTrait;
+	use EmailSendingTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -39,7 +43,7 @@ class ExtensionsUpdate extends AbstractCallback
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		// Get the queue
-		$queueKey = sprintf('extensions.%d', $task->site_id);
+		$queueKey = sprintf(QueueTypeEnum::EXTENSIONS->value, $task->site_id);
 		$queue    = $this->container->queueFactory->makeQueue($queueKey);
 		$item     = $queue->pop();
 
@@ -607,14 +611,7 @@ class ExtensionsUpdate extends AbstractCallback
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
 
-		$queueItem = new QueueItem(
-			$data->toString(),
-			QueueTypeEnum::MAIL->value,
-			$site->id
-		);
-		$queue     = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
-
-		$queue->push($queueItem, 'now');
+		$this->enqueueEmail($data, $site->id, 'now');
 	}
 
 	private function enqueueUpdateEmail(Site $site, ?object $extension): void
@@ -650,14 +647,7 @@ class ExtensionsUpdate extends AbstractCallback
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $this->getSiteNotificationEmails($config));
 
-		$queueItem = new QueueItem(
-			$data->toString(),
-			QueueTypeEnum::MAIL->value,
-			$site->id
-		);
-		$queue     = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
-
-		$queue->push($queueItem, 'now');
+		$this->enqueueEmail($data, $site->id, 'now');
 	}
 
 	private function reloadExtensionInformation(Site $site): void

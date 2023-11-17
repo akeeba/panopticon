@@ -9,8 +9,8 @@ namespace Akeeba\Panopticon\View\Logs;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Model\FormatFilesizeTrait;
 use Akeeba\Panopticon\Model\Log;
+use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataView\Html as BaseHtml;

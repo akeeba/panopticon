@@ -12,4 +12,6 @@ defined('AKEEBA') || die;
 enum QueueTypeEnum: string
 {
 	case MAIL = 'mail';
+
+	case EXTENSIONS = 'extensions.%d';
 }

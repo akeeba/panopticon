@@ -18,6 +18,9 @@ use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
+use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use Exception;
@@ -30,6 +33,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 {
 	use EnqueueJoomlaUpdateTrait;
 	use SiteNotificationEmailTrait;
+	use EmailSendingTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -403,14 +407,8 @@ class JoomlaUpdateDirector extends AbstractCallback
 		$data->set('permissions', $permissions);
 		$data->set('email_cc', $cc);
 
-		$queueItem = new QueueItem(
-			$data->toString(),
-			QueueTypeEnum::MAIL->value,
-			$site->id
-		);
-		$queue     = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
 
-		$queue->push($queueItem, 'now');
+		$this->enqueueEmail($data, $site->id, 'now');
 	}
 
 	private function mustSchedule(Site $site, bool $emailOnly): bool

@@ -31,6 +31,20 @@ $user   = $this->container->userManager->getUser();
             </div>
         </div>
 
+        {{--immediate_email--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[immediate_email]" id="immediate_email"
+                            {{ $config->get('immediate_email', true) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="mail_online">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_IMMEDIATE_EMAIL')
+                    </label>
+                </div>
+            </div>
+        </div>
+
         {{--mail_inline_images--}}
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">

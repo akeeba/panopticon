@@ -11,7 +11,7 @@ namespace Akeeba\Panopticon\Controller;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
-use Akeeba\Panopticon\Task\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
 use Awf\Mvc\DataController;
 use Awf\Text\Text;
 use Awf\Uri\Uri;

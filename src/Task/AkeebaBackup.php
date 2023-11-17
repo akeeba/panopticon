@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Awf\Registry\Registry;
 use Awf\Text\Text;
 
@@ -25,6 +26,7 @@ use Awf\Text\Text;
 )]
 class AkeebaBackup extends AbstractCallback
 {
+	use EmailSendingTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -317,15 +319,7 @@ class AkeebaBackup extends AbstractCallback
 		$data->set('email_variables', $vars);
 		$data->set('permissions', ['panopticon.admin', 'panopticon.editown']);
 
-		$queueItem = new QueueItem(
-			$data->toString(),
-			QueueTypeEnum::MAIL->value,
-			$site->getId(),
-		);
-
-		$queue = $this->container->queueFactory->makeQueue(QueueTypeEnum::MAIL->value);
-
-		$queue->push($queueItem, 'now');
+		$this->enqueueEmail($data, $site->getId(), 'now');
 	}
 
 	private function backupRecordsCacheBuster(Site $site): void

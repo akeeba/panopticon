@@ -9,7 +9,7 @@ namespace Akeeba\Panopticon\Controller;
 
 
 use Akeeba\Panopticon\Model\Site;
-use Akeeba\Panopticon\Task\EnqueueExtensionUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Awf\Mvc\Controller;
 use Awf\Text\Text;
 use Awf\Uri\Uri;

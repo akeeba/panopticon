@@ -60,7 +60,18 @@ class Selfupdate extends Model
 	 */
 	private const REMOVE_FILES = [
 		// Obsolete file
-		'phpinfo.php'
+		'phpinfo.php',
+		// Moved traits in 1.0.5
+		'src/Application/DefaultConfigurationTrait.php',
+		'src/Model/AdminToolsIntegrationTrait.php',
+		'src/Model/AkeebaBackupIntegrationTrait.php',
+		'src/Model/FormatFilesizeTrait.php',
+		'src/Model/UserAvatarTrait.php',
+		'src/Task/AdminToolsTrait.php',
+		'src/Task/ApiRequestTrait.php',
+		'src/Task/EnqueueExtensionUpdateTrait.php',
+		'src/Task/EnqueueJoomlaUpdateTrait.php',
+		'src/Task/SiteNotificationemailTrait.php',
 	];
 
 	/**

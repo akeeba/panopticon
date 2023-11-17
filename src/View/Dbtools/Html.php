@@ -10,7 +10,7 @@ namespace Akeeba\Panopticon\View\Dbtools;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Model\Dbtools;
-use Akeeba\Panopticon\Model\FormatFilesizeTrait;
+use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
 use Awf\Text\Text;
 
