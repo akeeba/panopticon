@@ -5,7 +5,7 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-namespace Akeeba\Panopticon\Application;
+namespace Akeeba\Panopticon\Application\Trait;
 
 
 use DateTimeZone;

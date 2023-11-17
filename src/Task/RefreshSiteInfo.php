@@ -13,13 +13,12 @@ use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Utils;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(
 	name: 'refreshsiteinfo',

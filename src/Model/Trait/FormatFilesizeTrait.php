@@ -5,7 +5,7 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-namespace Akeeba\Panopticon\Model;
+namespace Akeeba\Panopticon\Model\Trait;
 
 
 defined('AKEEBA') || die;

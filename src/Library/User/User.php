@@ -11,10 +11,9 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Site;
-use Akeeba\Panopticon\Model\UserAvatarTrait;
+use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
 use Awf\Container\ContainerAwareInterface;
 use Awf\Container\ContainerAwareTrait;
-use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
 
 class User extends \Awf\User\User implements ContainerAwareInterface

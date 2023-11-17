@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
 use Awf\Container\Container;
 use Awf\Mvc\DataModel;
 use Awf\Text\Text;

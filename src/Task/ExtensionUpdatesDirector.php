@@ -16,11 +16,9 @@ use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
-use Awf\Mvc\Model;
+use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(
 	name: 'extensionupdatesdirector',

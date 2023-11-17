@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Application;
 
 defined('AKEEBA') or die;
 
+use Akeeba\Panopticon\Application\Trait\DefaultConfigurationTrait;
 use Akeeba\Panopticon\Exception\Configuration\ReadOnlyRepository;
 use Awf\Application\Configuration as AWFConfiguration;
 use Awf\Container\Container;

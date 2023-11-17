@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
+use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;

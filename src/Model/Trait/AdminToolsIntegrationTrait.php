@@ -5,14 +5,15 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-namespace Akeeba\Panopticon\Model;
+namespace Akeeba\Panopticon\Model\Trait;
 
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\Task\Status;
-use Akeeba\Panopticon\Task\AdminToolsTrait;
+use Akeeba\Panopticon\Model\Task;
+use Akeeba\Panopticon\Task\Trait\AdminToolsTrait;
 use Awf\Date\Date;
 use Awf\Exception\App;
 use Awf\Mvc\DataModel\Collection;

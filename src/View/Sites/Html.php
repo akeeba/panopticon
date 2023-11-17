@@ -9,10 +9,10 @@ namespace Akeeba\Panopticon\View\Sites;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Model\FormatFilesizeTrait;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
-use Akeeba\Panopticon\Task\AdminToolsTrait;
+use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
+use Akeeba\Panopticon\Task\Trait\AdminToolsTrait;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;

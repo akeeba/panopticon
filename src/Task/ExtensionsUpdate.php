@@ -17,6 +17,8 @@ use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
 use Awf\Registry\Registry;
 use Exception;

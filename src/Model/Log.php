@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
 use Awf\Exception\App;
 use Awf\Mvc\Model;
 use Awf\Pagination\Pagination;

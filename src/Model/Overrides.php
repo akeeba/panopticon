@@ -9,7 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Task\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Awf\Mvc\Model;
 use Awf\Pagination\Pagination;
 use Awf\Registry\Registry;

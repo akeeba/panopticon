@@ -18,6 +18,8 @@ use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
+use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use Exception;
