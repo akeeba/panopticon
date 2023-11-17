@@ -10,6 +10,8 @@ This is a features, and bug-fix release.
 
 **✨ Detect when scheduled tasks are falling behind [gh-315]**. If the scheduled tasks are falling behind more than 2 minutes on average and you are logged in as a Super User you will receive a warning recommending that you increase the number of CRON jobs you are using to execute scheduled tasks. This is linked to the documentation page of the CRON jobs, explaining why and how to do that.
 
+**✨ Site configuration management CLI commands [gh-153]**. A new set of CLI commands has been added to help you list, set, and get the configuration of each site.
+
 ## 🖥️ System Requirements
 
 * PHP 8.1, 8.2, or 8.3. PHP 8.2 recommended.

@@ -7,7 +7,11 @@
 
 namespace Akeeba\Panopticon\CliCommand\Trait;
 
-use Awf\Text\Text;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\YamlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 defined('AKEEBA') || die;
 
@@ -19,146 +23,174 @@ trait PrintFormattedArrayTrait
 	 * @param   array|null  $data    The data to format and print
 	 * @param   string      $format  One of table, json, yaml, csv, count
 	 *
-	 * @return  int
+	 * @return  void
 	 * @since   1.0.0
 	 */
-	private function printFormattedAndReturn(?array $data, string $format): int
+	private function printFormattedArray(?array $data, string $format): void
 	{
-		if (empty($data) && ($format != 'count'))
-		{
-			return 0;
-		}
-		elseif (empty($data))
-		{
-			$data = [];
-		}
+		$data = $data ?: [];
 
-		if (!empty($data))
-		{
-			$keys     = array_keys($data);
-			$firstKey = array_shift($keys);
-			$row      = $data[$firstKey];
-
-			if (is_array($row))
-			{
-				$headers = array_keys($row);
-			}
-			else
-			{
-				$headers = array_keys($data);
-
-				if (!in_array($format, ['json', 'yaml']))
-				{
-					$data = [$data];
-				}
-			}
-		}
+		$keys          = array_keys($data);
+		$isNumericKeys = array_reduce($keys, fn(bool $carry, mixed $item) => $carry && is_integer($item), true);
 
 		switch ($format)
 		{
 			default:
 			case 'table':
-				$this->ioStyle->table($headers, $data);
+				if ($isNumericKeys)
+				{
+					$this->ioStyle->table(array_keys(reset($data)), $data);
+
+					return;
+				}
+
+				$this->ioStyle->table(['Key', 'Value'], $this->reframeData($data));
 				break;
 
 			case 'json':
-				$this->ioStyle->writeln(json_encode($data, JSON_PRETTY_PRINT));
+				$encoders    = [new JsonEncoder()];
+				$normalizers = [new ObjectNormalizer()];
+				$serializer  = new Serializer($normalizers, $encoders);
+
+				$this->ioStyle->writeln(
+					$serializer->serialize(
+						$data,
+						'json',
+						[
+							'json_encode_options' => JSON_PRETTY_PRINT
+						]
+					)
+				);
 				break;
 
 			case 'yaml':
-				if (!function_exists('yaml_emit'))
-				{
-					$line1 = Text::_('COM_ADMINTOOLS_CLI_ERR_CANNOT_GENERATE_YAML');
-					$line2 = Text::_('COM_ADMINTOOLS_CLI_ERR_YAML_EXTENSION_NOT_FOUND');
+				$encoders    = [new YamlEncoder()];
+				$normalizers = [new ObjectNormalizer()];
+				$serializer  = new Serializer($normalizers, $encoders);
 
-					$this->ioStyle->error(<<< ERROR
-$line1
+				$this->ioStyle->writeln(
+					$serializer->serialize(
+						$data,
+						'yaml',
+						[
+							'yaml_inline' => 4
+						]
+					)
+				);
 
-$line2
-
-ERROR
-
-					);
-
-					return 1;
-				}
-
-				$this->ioStyle->writeln(yaml_emit($data));
+				//$this->ioStyle->writeln(Yaml::dump($data));
 				break;
 
 			case 'csv':
-				$this->ioStyle->writeln($this->toCsv($data));
+				$encoders    = [new CsvEncoder()];
+				$normalizers = [new ObjectNormalizer()];
+				$serializer  = new Serializer($normalizers, $encoders);
+
+				if ($isNumericKeys)
+				{
+					$this->ioStyle->writeln(
+						$serializer->serialize(
+							$data,
+							'csv'
+						)
+					);
+
+					return;
+				}
+
+				$this->ioStyle->writeln(
+					$serializer->serialize(
+						array_merge(
+							[['Key', 'Value']],
+							$this->reframeData($data)
+						),
+						'csv'
+					)
+				);
 				break;
 
 			case 'count':
 				$this->ioStyle->writeln(count($data));
 				break;
 		}
-
-		return 0;
 	}
 
 	/**
-	 * Converts an array to its CSV representation
+	 * Prints a formatted scalar value.
 	 *
-	 * @param   array  $data       The array data to convert to CSV
-	 * @param   bool   $csvHeader  Should I print a CSV header row?
+	 * If the value is not a scalar, it is cast to array and printed with the printFormattedArray() method.
 	 *
-	 * @return  string
-	 * @since   1.0.0
+	 * @param   mixed   $value  The value to print
+	 * @param   string  $format The format to use for printing it
+	 *
+	 * @return  void
+	 * @see     self::printFormattedArray
+	 *
+	 * @since   1.0.5
 	 */
-	private function toCsv(array $data, bool $csvHeader = true): string
+	private function printFormattedScalar(mixed $value, string $format)
 	{
-		$output = '';
-		$item   = array_pop($data);
-		$data[] = $item;
-		$keys   = array_keys($item);
-
-		if ($csvHeader)
+		if (!is_scalar($value))
 		{
-			$csv = [];
+			$this->printFormattedArray((array) $value, $format);
 
-			foreach ($keys as $k)
-			{
-				$k = str_replace('"', '""', $k);
-				$k = str_replace("\r", '\\r', $k);
-				$k = str_replace("\n", '\\n', $k);
-				$k = '"' . $k . '"';
-
-				$csv[] = $k;
-			}
-
-			$output .= implode(",", $csv) . "\r\n";
+			return;
 		}
 
-		foreach ($data as $item)
+		switch ($format)
 		{
-			$csv = [];
+			default:
+			case 'table':
+				$this->ioStyle->table(['Value'], [[$value]]);
+				break;
 
-			foreach ($keys as $k)
-			{
-				$v = $item[$k];
+			case 'csv':
+				$encoders    = [new CsvEncoder()];
+				$normalizers = [new ObjectNormalizer()];
+				$serializer  = new Serializer($normalizers, $encoders);
 
-				if (is_array($v))
-				{
-					$v = 'Array';
-				}
-				elseif (is_object($v))
-				{
-					$v = 'Object';
-				}
+				$this->ioStyle->writeln($serializer->serialize(['value' => $value], 'csv', ['no_headers' => true]));
+				break;
 
-				$v = str_replace('"', '""', $v);
-				$v = str_replace("\r", '\\r', $v);
-				$v = str_replace("\n", '\\n', $v);
-				$v = '"' . $v . '"';
+			case 'json':
+				$encoders    = [new JsonEncoder()];
+				$normalizers = [new ObjectNormalizer()];
+				$serializer  = new Serializer($normalizers, $encoders);
 
-				$csv[] = $v;
-			}
+				$this->ioStyle->writeln($serializer->serialize($value, 'json', ['json_encode_options' => JSON_PRETTY_PRINT]));
+				break;
 
-			$output .= implode(",", $csv) . "\r\n";
+			case 'yaml':
+				$encoders    = [new YamlEncoder()];
+				$normalizers = [new ObjectNormalizer()];
+				$serializer  = new Serializer($normalizers, $encoders);
+
+				$this->ioStyle->writeln($serializer->serialize($value, 'yaml', ['yaml_inline' => 4]));
+				break;
+
+			case 'count':
+				$this->ioStyle->writeln('1');
+				break;
+		}
+	}
+
+	/**
+	 * Re-frames the array data in a way that can be used for outputting a table or CSV file
+	 *
+	 * @param   array  $items
+	 *
+	 * @return  array
+	 * @since   1.0.5
+	 */
+	private function reframeData(array $items): array
+	{
+		$temp = [];
+
+		foreach ($items as $k => $v)
+		{
+			$temp[] = [$k, $v];
 		}
 
-		return $output;
+		return $temp;
 	}
 }

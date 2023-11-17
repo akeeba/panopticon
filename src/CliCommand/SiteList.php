@@ -94,7 +94,7 @@ class SiteList extends AbstractCommand
 				]
 			);
 
-		$this->printFormattedAndReturn(
+		$this->printFormattedArray(
 			$items->toArray(),
 			$input->getOption('format') ?: 'table'
 		);
@@ -106,7 +106,7 @@ class SiteList extends AbstractCommand
 	{
 		$this
 			->addOption(
-				'format', 'f', InputOption::VALUE_OPTIONAL, 'Output format (table, json, yaml, csv, count)', 'mysqli'
+				'format', 'f', InputOption::VALUE_OPTIONAL, 'Output format (table, json, yaml, csv, count)', 'table'
 			)
 			->addOption(
 				'enabled', 'e', InputOption::VALUE_NEGATABLE, 'Only show enabled sites'
