@@ -4826,7 +4826,7 @@
         },
         {
             "name": "web-auth/metadata-service",
-            "version": "4.7.4",
+            "version": "4.7.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-auth/webauthn-metadata-service.git",
@@ -4891,7 +4891,7 @@
                 "webauthn"
             ],
             "support": {
-                "source": "https://github.com/web-auth/webauthn-metadata-service/tree/4.7.4"
+                "source": "https://github.com/web-auth/webauthn-metadata-service/tree/4.7.7"
             },
             "funding": [
                 {
@@ -4907,16 +4907,16 @@
         },
         {
             "name": "web-auth/webauthn-lib",
-            "version": "4.7.4",
+            "version": "4.7.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-auth/webauthn-lib.git",
-                "reference": "944f70e4c578d44d496f8a12299a4d89bf58e3bb"
+                "reference": "4e1b877733e4cbd43101cf0ba07f0854e4cb23de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-auth/webauthn-lib/zipball/944f70e4c578d44d496f8a12299a4d89bf58e3bb",
-                "reference": "944f70e4c578d44d496f8a12299a4d89bf58e3bb",
+                "url": "https://api.github.com/repos/web-auth/webauthn-lib/zipball/4e1b877733e4cbd43101cf0ba07f0854e4cb23de",
+                "reference": "4e1b877733e4cbd43101cf0ba07f0854e4cb23de",
                 "shasum": ""
             },
             "require": {
@@ -4979,7 +4979,7 @@
                 "webauthn"
             ],
             "support": {
-                "source": "https://github.com/web-auth/webauthn-lib/tree/4.7.4"
+                "source": "https://github.com/web-auth/webauthn-lib/tree/4.7.7"
             },
             "funding": [
                 {
@@ -4991,7 +4991,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-11-12T07:41:19+00:00"
+            "time": "2023-11-17T11:42:57+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5073,5 +5073,5 @@
     "platform-overrides": {
         "php": "8.1.0"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
