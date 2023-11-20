@@ -15,7 +15,7 @@
 		"not ie < 11"
 	],
 	"devDependencies": {
-		"@babel/cli": "^7.23.0",
+		"@babel/cli": "^7.23.4",
 		"@babel/core": "^7.23.2",
 		"@babel/preset-env": "^7.23.2",
 		"@fortawesome/fontawesome-free": "^6.4.0",
