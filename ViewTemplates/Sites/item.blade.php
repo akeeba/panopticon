@@ -72,6 +72,14 @@ $connectorAPI     = $config->get('core.panopticon.api');
         </div>
     </div>
 
+    @if($connectorAPI >= 101 && $config->get('core.serverInfo') && $config->get('core.serverInfo.collected'))
+    <div class="row g-3 mb-3">
+        <div class="col-12">
+            @include('Sites/item_server')
+        </div>
+    </div>
+    @endif
+
     <div class="row g-3 mb-3">
         <div class="col-12">
             @include('Sites/item_extensions')

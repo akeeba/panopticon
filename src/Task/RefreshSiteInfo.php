@@ -234,6 +234,7 @@ class RefreshSiteInfo extends AbstractCallback
 							$config->set('core.lastUpdateTimestamp', $attributes->lastUpdateTimestamp ?? time());
 							$config->set('core.lastAttempt', time());
 							$config->set('core.overridesChanged', $attributes->overridesChanged ?? null);
+							$config->set('core.serverInfo', $attributes->serverInfo ?? null);
 
 							$stabilityCheck = match ($config->get('core.minimumStability', 'stable'))
 							{

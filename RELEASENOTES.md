@@ -8,9 +8,11 @@ This is a features, and bug-fix release.
 
 **✨ Allow the global update preference of an extension to be "email" [gh-309]**. In the System Configuration page you could set the update preference for an individual extension only to global, none, patch, minor, or major. Now you can set it to email. Please note that it's recommended to use none and use the upcoming scheduled reports feature instead to minimize the amount of email you are receiving.
 
-**✨ Detect when scheduled tasks are falling behind [gh-315]**. If the scheduled tasks are falling behind more than 2 minutes on average and you are logged in as a Super User you will receive a warning recommending that you increase the number of CRON jobs you are using to execute scheduled tasks. This is linked to the documentation page of the CRON jobs, explaining why and how to do that.
+**✨ Detect when scheduled tasks are falling behind [gh-315]**. If the scheduled tasks are falling behind more than 2 minutes on average, and you are logged in as a Super User you will receive a warning recommending that you increase the number of CRON jobs you are using to execute scheduled tasks. This is linked to the documentation page of the CRON jobs, explaining why and how to do that.
 
 **✨ Site configuration management CLI commands [gh-153]**. A new set of CLI commands has been added to help you list, set, and get the configuration of each site.
+
+**✨ Collection and display of basic server information [gh-307]**. Panopticon collects some basic server health information and presents them to you, but it does not log them. The idea is to present you with a moment-in-time view of your server; it won't monitor the server itself. If you want server monitoring and/or uptime monitoring we strongly recommend using a third party service, such as [HetrixTools](https://hetrixtools.com/). 
 
 ## 🖥️ System Requirements
 

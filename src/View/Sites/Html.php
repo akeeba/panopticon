@@ -22,6 +22,7 @@ use Awf\Utils\Template;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use Exception;
 use Throwable;
 
 class Html extends DataViewHtml
@@ -270,7 +271,7 @@ class Html extends DataViewHtml
 					$this->item->getState('adminToolsLimit', 20, 'int'),
 				)?->items ?? [];
 			}
-			catch (\Exception $e)
+			catch (Exception $e)
 			{
 				$this->scans = $e;
 			}
@@ -380,7 +381,7 @@ class Html extends DataViewHtml
 	 * @param   object  $record  A backup record
 	 *
 	 * @return  array  array(startTimeAsString, durationAsString)
-	 * @throws  \Exception
+	 * @throws  Exception
 	 * @since   1.0.0
 	 */
 	protected function getTimeInformation(object $record): array
@@ -391,7 +392,7 @@ class Html extends DataViewHtml
 		{
 			$startTime = clone $this->container->dateFactory($record->backupstart, $utcTimeZone);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$startTime = null;
 		}
@@ -400,7 +401,7 @@ class Html extends DataViewHtml
 		{
 			$endTime = clone $this->container->dateFactory($record->backupend, $utcTimeZone);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$endTime = null;
 		}
@@ -501,6 +502,46 @@ class Html extends DataViewHtml
 	}
 
 	/**
+	 * Converts a number of minutes to years, months, days, and HH:MM human notation
+	 *
+	 * @param   int  $minutes  The number of minutes to parse
+	 *
+	 * @return  string
+	 * @throws  Exception
+	 * @since   1.0.5
+	 */
+	protected function minutesToHumanReadable(int $minutes): string
+	{
+		$now  = new DateTime();
+		$then = (clone $now)->add(new DateInterval('PT' . $minutes . 'M'));
+		$diff = $then->diff($now);
+
+		$out = [];
+
+		if ($diff->y)
+		{
+			$out[] = Text::plural('PANOPTICON_LBL_YEAR', $diff->y);
+		}
+
+		if ($diff->m)
+		{
+			$out[] = Text::plural('PANOPTICON_LBL_MONTH', $diff->m);
+		}
+
+		if ($diff->d)
+		{
+			$out[] = Text::plural('PANOPTICON_LBL_DAY', $diff->d);
+		}
+
+		if ($diff->h > 0 || $diff->i > 0)
+		{
+			$out[] = sprintf('%02u:%02u', $diff->h, $diff->i);
+		}
+
+		return implode(', ', $out);
+	}
+
+	/**
 	 * @return void
 	 */
 	private function addTooltipJavaScript(): void
@@ -534,7 +575,7 @@ JS;
 		{
 			$interval = new DateInterval(sprintf('PT%uM', $threshold));
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			return null;
 		}
