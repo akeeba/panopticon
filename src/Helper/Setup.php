@@ -373,9 +373,21 @@ class Setup extends AbstractHelper
 		);
 	}
 
-	public function languageOptions(?string $selected, string $name, ?string $id = null, array $attribs = [])
+	public function languageOptions(?string $selected, string $name, ?string $id = null, array $attribs = [], bool $addUseDefault = false)
 	{
-		$options = $this->getLanguageOptions();
+		$defaultOptions = [];
+
+		if ($addUseDefault)
+		{
+			$defaultOptions = [
+				'' => sprintf(
+					'🌐 %s',
+					$this->getContainer()->language->text('PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_AUTO')
+				)
+			];
+		}
+
+		$options = array_merge($defaultOptions, $this->getLanguageOptions());
 
 		return $this->getContainer()->html->select
 			->genericList(
@@ -472,18 +484,108 @@ class Setup extends AbstractHelper
 				continue;
 			}
 
-			$retText = $strings['LANGUAGE_NAME_IN_ENGLISH'];
+			$retText = sprintf(
+				'%s&nbsp;%s',
+				$this->countryToEmoji($retKey),
+				$strings['LANGUAGE_NAME_IN_ENGLISH']
+			);
 
 			if (isset($strings['LANGUAGE_NAME_TRANSLATED'])
 			    && $strings['LANGUAGE_NAME_TRANSLATED'] != $strings['LANGUAGE_NAME_IN_ENGLISH'])
 			{
-				$retText = sprintf('%s (%s)', $retText, $strings['LANGUAGE_NAME_TRANSLATED']);
+				$retText = sprintf(
+					'%s (%s)',
+					$retText,
+					$strings['LANGUAGE_NAME_TRANSLATED']
+				);
 			}
 
 			$ret[$retKey] = $retText;
 		}
 
 		return $ret;
+	}
+
+	private function countryToEmoji(?string $cCode = null): string
+	{
+		// Convert the country code to all uppercase
+		$cCode = strtoupper(trim($cCode ?? ''));
+
+		// If there's a dash it's a language code, not a country code. Keep the country.
+		$cCode = str_replace('_', '-', $cCode);
+
+		if (str_contains($cCode, '-'))
+		{
+			[,$cCode] = explode('-', $cCode, 2);
+		}
+
+		// If the country code has a dot, ignore the part after the dot.
+		if (str_contains($cCode, '.'))
+		{
+			[$cCode, ] = explode('.', $cCode, 2);
+		}
+
+		// No country? Return a white flag emoji.
+		if (empty($cCode))
+		{
+			return '&#x1F3F3;';
+		}
+
+		// Valid country codes
+		$countryCodes = [
+			'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AW', 'AX', 'AZ', 'BA', 'BB',
+			'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BL', 'BM', 'BN', 'BO', 'BQ', 'BR', 'BS', 'BT', 'BV', 'BW', 'BY',
+			'BZ', 'CA', 'CC', 'CD', 'CF', 'CG', 'CH', 'CI', 'CK', 'CL', 'CM', 'CN', 'CO', 'CR', 'CU', 'CV', 'CW', 'CX',
+			'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'EH', 'ER', 'ES', 'ET', 'FI', 'FJ', 'FK',
+			'FM', 'FO', 'FR', 'GA', 'GB', 'GD', 'GE', 'GF', 'GG', 'GH', 'GI', 'GL', 'GM', 'GN', 'GP', 'GQ', 'GR', 'GS',
+			'GT', 'GU', 'GW', 'GY', 'HK', 'HM', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IM', 'IN', 'IO', 'IQ', 'IR',
+			'IS', 'IT', 'JE', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KP', 'KR', 'KW', 'KY', 'KZ', 'LA',
+			'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', 'MA', 'MC', 'MD', 'ME', 'MF', 'MG', 'MH', 'MK',
+			'ML', 'MM', 'MN', 'MO', 'MP', 'MQ', 'MR', 'MS', 'MT', 'MU', 'MV', 'MW', 'MX', 'MY', 'MZ', 'NA', 'NC', 'NE',
+			'NF', 'NG', 'NI', 'NL', 'NO', 'NP', 'NR', 'NU', 'NZ', 'OM', 'PA', 'PE', 'PF', 'PG', 'PH', 'PK', 'PL', 'PM',
+			'PN', 'PR', 'PS', 'PT', 'PW', 'PY', 'QA', 'RE', 'RO', 'RS', 'RU', 'RW', 'SA', 'SB', 'SC', 'SD', 'SE', 'SG',
+			'SH', 'SI', 'SJ', 'SK', 'SL', 'SM', 'SN', 'SO', 'SR', 'SS', 'ST', 'SV', 'SX', 'SY', 'SZ', 'TC', 'TD', 'TF',
+			'TG', 'TH', 'TJ', 'TK', 'TL', 'TM', 'TN', 'TO', 'TR', 'TT', 'TV', 'TW', 'TZ', 'UA', 'UG', 'UM', 'US', 'UY',
+			'UZ', 'VA', 'VC', 'VE', 'VG', 'VI', 'VN', 'VU', 'WF', 'WS', 'YE', 'YT', 'ZA', 'ZM', 'ZW',
+		];
+
+		// Invalid country? Return a black flag.
+		if (!in_array($cCode, $countryCodes))
+		{
+			return '&#x1F3F4;';
+		}
+
+		// Uppercase letter to Unicode Regional Indicator Symbol Letter
+		$letterToRISL = [
+			'A' => "&#x1F1E6;",
+			'B' => "&#x1F1E7;",
+			'C' => "&#x1F1E8;",
+			'D' => "&#x1F1E9;",
+			'E' => "&#x1F1EA;",
+			'F' => "&#x1F1EB;",
+			'G' => "&#x1F1EC;",
+			'H' => "&#x1F1ED;",
+			'I' => "&#x1F1EE;",
+			'J' => "&#x1F1EF;",
+			'K' => "&#x1F1F0;",
+			'L' => "&#x1F1F1;",
+			'M' => "&#x1F1F2;",
+			'N' => "&#x1F1F3;",
+			'O' => "&#x1F1F4;",
+			'P' => "&#x1F1F5;",
+			'Q' => "&#x1F1F6;",
+			'R' => "&#x1F1F7;",
+			'S' => "&#x1F1F8;",
+			'T' => "&#x1F1F9;",
+			'U' => "&#x1F1FA;",
+			'V' => "&#x1F1FB;",
+			'W' => "&#x1F1FC;",
+			'X' => "&#x1F1FD;",
+			'Y' => "&#x1F1FE;",
+			'Z' => "&#x1F1FF;",
+		];
+
+		return $letterToRISL[substr($cCode, 0, 1)] . $letterToRISL[substr($cCode, 1, 1)];
 	}
 
 	/**
