@@ -256,7 +256,9 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 		}
 		else
 		{
-			$this->container->application->enqueueMessage(Text::_('AWF_MAIL_FUNCTION_OFFLINE'));
+			$this->container->application->enqueueMessage(
+				$this->getContainer()->language->text('AWF_MAIL_FUNCTION_OFFLINE')
+			);
 
 			return false;
 		}

@@ -9,25 +9,45 @@ namespace Akeeba\Panopticon\Library\MultiFactorAuth\Plugin;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Library\View\FakeView;
 use Akeeba\Panopticon\Library\WebAuthn\Helper\Credentials;
 use Akeeba\Panopticon\Library\WebAuthn\Repository\MFA as PasskeyRepositoryMFA;
 use Akeeba\Panopticon\Model\Mfa;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
+use Awf\Event\Observable;
 use Awf\Event\Observer;
 use Awf\Input\Input;
+use Awf\Text\Language;
+use Awf\Text\LanguageAwareInterface;
+use Awf\Text\LanguageAwareTrait;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Exception;
 use RuntimeException;
 use Webauthn\PublicKeyCredentialRequestOptions;
 
-class PassKeys extends Observer
+class PassKeys
+	extends Observer
+	implements ContainerAwareInterface, LanguageAwareInterface
 {
+	use ContainerAwareTrait;
+	use LanguageAwareTrait;
+
 	private const METHOD_NAME = 'passkeys';
 
 	private const HELP_URL = 'https://github.com/akeeba/panopticon/wiki/MFA-PassKeys';
+
+	public function __construct(Observable &$subject, ?Container $container = null, ?Language $language = null)
+	{
+		parent::__construct($subject);
+
+		$this->setContainer($container ?? Factory::getContainer());
+		$this->setLanguage($language ?? $this->getContainer()->language);
+	}
 
 	/**
 	 * Gets the identity of this TFA method
@@ -38,8 +58,8 @@ class PassKeys extends Observer
 	{
 		return [
 			'name'               => self::METHOD_NAME,
-			'display'            => Text::_('PANOPTICON_MFA_PASSKEYS_LBL_DISPLAYEDAS'),
-			'shortinfo'          => Text::_('PANOPTICON_MFA_PASSKEYS_LBL_SHORTINFO'),
+			'display'            => $this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_LBL_DISPLAYEDAS'),
+			'shortinfo'          => $this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_LBL_SHORTINFO'),
 			//'image'              => 'media/mfa/images/final-webauthn-logo-webauthn-color.png',
 			'image'              => 'media/mfa/images/passkey.svg',
 			'allowMultiple'      => true,
@@ -68,7 +88,7 @@ class PassKeys extends Observer
 
 		// Get some values assuming that we are NOT setting up U2F (the key is already registered)
 		$submitClass = '';
-		$preMessage  = Text::_('PANOPTICON_MFA_PASSKEYS_LBL_CONFIGURED');
+		$preMessage  = $this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_LBL_CONFIGURED');
 		$type        = 'input';
 		$html        = '';
 		$htmlButton  = '';
@@ -87,7 +107,7 @@ class PassKeys extends Observer
 			|| empty($options['credentialId'])
 		)
 		{
-			$document = Factory::getContainer()->application->getDocument();
+			$document = $this->getContainer()->application->getDocument();
 
 			$document->addScript(
 				Uri::base() . 'media/js/webauthn-mfa.min.js',
@@ -95,7 +115,7 @@ class PassKeys extends Observer
 			);
 
 			$fakeView = new FakeView(
-				Factory::getContainer(), [
+				$this->getContainer(), [
 					'name' => 'Passkeymfa',
 				]
 			);
@@ -111,9 +131,9 @@ class PassKeys extends Observer
 			$document->addScriptOptions('mfa.pagetype', 'setup', false);
 
 			// Save the WebAuthn request to the session
-			$user        = Factory::getContainer()->userManager->getUser();
+			$user        = $this->getContainer()->userManager->getUser();
 			$repository  = new PasskeyRepositoryMFA($user->getId());
-			$credentials = new Credentials($repository, Factory::getContainer()->logger);
+			$credentials = new Credentials($repository, $this->getContainer()->logger, $this->getContainer(), $this->getLanguage());
 			/** @noinspection PhpParamsInspection */
 			$hiddenData['pkRequest'] = base64_encode($credentials->createPublicKey($user));
 
@@ -121,11 +141,11 @@ class PassKeys extends Observer
 			$submitClass = "mfa_passkey_setup";
 
 			// Message to display
-			$preMessage = Text::_('PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS');
+			$preMessage = $this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS');
 		}
 
 		return [
-			'default_title' => Text::_('PANOPTICON_MFA_PASSKEYS_LBL_DISPLAYEDAS'),
+			'default_title' => $this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_LBL_DISPLAYEDAS'),
 			'pre_message'   => $preMessage,
 			'table_heading' => '',
 			'tabular_data'  => [],
@@ -166,13 +186,13 @@ class PassKeys extends Observer
 		}
 
 		$code                = $input->get('code', null, 'base64');
-		$session             = Factory::getContainer()->segment;
+		$session             = $this->getContainer()->segment;
 		$registrationRequest = $session->get('mfa_webauthn.publicKeyCredentialCreationOptions', null);
 
 		// If there was no registration request BUT there is a registration response throw an error
 		if (empty($registrationRequest) && !empty($code))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		// If there is no registration request (and there isn't a registration response) we are just saving the title.
@@ -184,9 +204,9 @@ class PassKeys extends Observer
 		// In any other case try to authorize the registration
 		try
 		{
-			$user                      = Factory::getContainer()->userManager->getUser();
+			$user                      = $this->getContainer()->userManager->getUser();
 			$repository                = new PasskeyRepositoryMFA($user->getId());
-			$credentials               = new Credentials($repository, Factory::getContainer()->logger);
+			$credentials               = new Credentials($repository, $this->getContainer()->logger, $this->getContainer(), $this->getLanguage());
 			$publicKeyCredentialSource = $credentials->validateAuthenticationData($code);
 		}
 		catch (Exception $err)
@@ -257,10 +277,10 @@ class PassKeys extends Observer
 		 * That was fun to debug - for "poke your eyes with a rusty fork" values of fun.
 		 */
 
-		$session          = Factory::getContainer()->segment;
+		$session          = $this->getContainer()->segment;
 		$pkOptionsEncoded = $session->get('mfa_webauthn.publicKeyCredentialRequestOptions', null);
 
-		$force      = Factory::getContainer()->input->getInt('force', 0);
+		$force      = $this->getContainer()->input->getInt('force', 0);
 		$html       = '';
 		$htmlButton = '';
 
@@ -289,19 +309,19 @@ class PassKeys extends Observer
 		}
 		catch (Exception $e)
 		{
-			$user        = Factory::getContainer()->userManager->getUser();
+			$user        = $this->getContainer()->userManager->getUser();
 			$repository  = new PasskeyRepositoryMFA($user->getId());
-			$credentials = new Credentials($repository, Factory::getContainer()->logger);
+			$credentials = new Credentials($repository, $this->getContainer()->logger, $this->getContainer(), $this->getLanguage());
 			$pkRequest   = $credentials->createChallenge($record->user_id);
 		}
 
 		try
 		{
-			$document = Factory::getContainer()->application->getDocument();
+			$document = $this->getContainer()->application->getDocument();
 			$document->addScriptOptions('mfa.authData', base64_encode($pkRequest), false);
 
 			$fakeView = new FakeView(
-				Factory::getContainer(), [
+				$this->getContainer(), [
 					'name' => 'Passkeymfa',
 				]
 			);
@@ -314,7 +334,7 @@ class PassKeys extends Observer
 			return [];
 		}
 
-		$document = Factory::getContainer()->application->getDocument();
+		$document = $this->getContainer()->application->getDocument();
 		$document->addScript(
 			Uri::base() . 'media/js/webauthn-mfa.min.js',
 			defer: true
@@ -329,7 +349,7 @@ class PassKeys extends Observer
 		$helpURL = self::HELP_URL;
 
 		return [
-			'pre_message'        => Text::_('PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS'),
+			'pre_message'        => $this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS'),
 			'field_type'         => 'custom',
 			'input_type'         => '',
 			'placeholder'        => '',
@@ -370,16 +390,16 @@ class PassKeys extends Observer
 
 		try
 		{
-			$user        = Factory::getContainer()->userManager->getUser();
+			$user        = $this->getContainer()->userManager->getUser();
 			$repository  = new PasskeyRepositoryMFA($user->getId());
-			$credentials = new Credentials($repository, Factory::getContainer()->logger);
+			$credentials = new Credentials($repository, $this->getContainer()->logger, $this->getContainer(), $this->getLanguage());
 			$credentials->validateChallenge($code);
 		}
 		catch (Exception $e)
 		{
 			try
 			{
-				Factory::getContainer()->application->enqueueMessage($e->getMessage(), 'error');
+				$this->getContainer()->application->enqueueMessage($e->getMessage(), 'error');
 			}
 			catch (Exception $e)
 			{

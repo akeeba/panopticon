@@ -9,7 +9,6 @@ namespace Akeeba\Panopticon\View\Sysconfig;
 
 
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
-use Awf\Text\Text;
 use Awf\Utils\Template;
 
 defined('AKEEBA') || die;
@@ -32,7 +31,7 @@ class Html extends \Awf\Mvc\DataView\Html
 		$this->addButton('apply');
 		$this->addButtonFromDefinition([
 			'id'    => 'phpinfo',
-			'title' => Text::_('PANOPTICON_SYSCONFIG_BTN_PHPINFO'),
+			'title' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_BTN_PHPINFO'),
 			'class' => 'btn btn-warning',
 			'url'   => $this->container->router->route('index.php?view=phpinfo'),
 			'icon'  => 'fa fa-info-circle',

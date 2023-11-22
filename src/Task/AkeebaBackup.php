@@ -9,8 +9,6 @@ namespace Akeeba\Panopticon\Task;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Library\Queue\QueueItem;
-use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -18,7 +16,6 @@ use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 
 #[AsTask(
 	name: 'akeebabackup',
@@ -41,21 +38,21 @@ class AkeebaBackup extends AbstractCallback
 		// Load the task configuration parameters
 		$params         = $task->params instanceof Registry ? $task->params : new Registry($task->params);
 		$profile        = $params->get('profile_id', 1);
-		$description    = $params->get('description', Text::_('PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT'));
+		$description    = $params->get('description', $this->getLanguage()->text('PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT'));
 		$comment        = $params->get('comment', '');
 		$initiatingUser = $params->get('initiatingUser', 0);
 
 		// Replace the variables in the description and comment
 		$now          = $this->container->dateFactory();
 		$replacements = [
-			'{DATE_FORMAT_LC}'  => $now->format(Text::_('DATE_FORMAT_LC')),
-			'{DATE_FORMAT_LC1}' => $now->format(Text::_('DATE_FORMAT_LC1')),
-			'{DATE_FORMAT_LC2}' => $now->format(Text::_('DATE_FORMAT_LC2')),
-			'{DATE_FORMAT_LC3}' => $now->format(Text::_('DATE_FORMAT_LC3')),
-			'{DATE_FORMAT_LC4}' => $now->format(Text::_('DATE_FORMAT_LC4')),
-			'{DATE_FORMAT_LC5}' => $now->format(Text::_('DATE_FORMAT_LC5')),
-			'{DATE_FORMAT_LC6}' => $now->format(Text::_('DATE_FORMAT_LC6')),
-			'{DATE_FORMAT_LC7}' => $now->format(Text::_('DATE_FORMAT_LC7')),
+			'{DATE_FORMAT_LC}'  => $now->format($this->getLanguage()->text('DATE_FORMAT_LC')),
+			'{DATE_FORMAT_LC1}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC1')),
+			'{DATE_FORMAT_LC2}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC2')),
+			'{DATE_FORMAT_LC3}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC3')),
+			'{DATE_FORMAT_LC4}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC4')),
+			'{DATE_FORMAT_LC5}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC5')),
+			'{DATE_FORMAT_LC6}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC6')),
+			'{DATE_FORMAT_LC7}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC7')),
 		];
 		$description  = str_replace(array_keys($replacements), array_values($replacements), $description);
 		$comment      = str_replace(array_keys($replacements), array_values($replacements), $comment);

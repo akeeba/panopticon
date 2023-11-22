@@ -11,6 +11,12 @@ use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\CliCommand\Attribute\AppHeader;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
+use Awf\Container\Container;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
+use Awf\Text\Language;
+use Awf\Text\LanguageAwareInterface;
+use Awf\Text\LanguageAwareTrait;
 use Awf\Text\Text;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -20,11 +26,24 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 defined('AKEEBA') || die;
 
-abstract class AbstractCommand extends Command
+abstract class AbstractCommand extends Command implements ContainerAwareInterface, LanguageAwareInterface
 {
+	use ContainerAwareTrait;
+	use LanguageAwareTrait;
+
 	protected SymfonyStyle $ioStyle;
 
 	protected InputInterface $cliInput;
+
+	public function getContainer(): Container
+	{
+		return Factory::getContainer();
+	}
+
+	public function getLanguage(): Language
+	{
+		return $this->getContainer()->language;
+	}
 
 	protected function initialize(InputInterface $input, OutputInterface $output)
 	{
@@ -38,9 +57,6 @@ abstract class AbstractCommand extends Command
 		$this->assertConfigured();
 
 		parent::initialize($input, $output);
-
-		// Load the application language
-		Factory::getApplication()->loadLanguages();
 
 		// Conditionally emit header
 		$this->header($input);

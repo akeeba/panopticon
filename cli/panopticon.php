@@ -24,6 +24,12 @@ call_user_func(function () {
 	// Load prerequisites
 	require __DIR__ . '/../defines.php';
 	require APATH_ROOT . '/version.php';
+
+	if (file_exists(APATH_USER_CODE . '/early_bootstrap.php'))
+	{
+		require_once APATH_USER_CODE . '/early_bootstrap.php';
+	}
+
 	require APATH_ROOT . '/includes/bootstrap.php';
 
 	/**

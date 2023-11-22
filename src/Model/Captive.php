@@ -12,9 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\MultiFactorAuth\DataShape\CaptiveRenderOptions;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Helper as MfaHelper;
 use Akeeba\Panopticon\Library\User\User;
-use Awf\Mvc\DataModel;
 use Awf\Mvc\Model;
-use Awf\Text\Text;
 use Exception;
 
 /**
@@ -169,7 +167,7 @@ class Captive extends Model
 
 		if ($record->method === 'backupcodes')
 		{
-			$renderOptions->label = Text::_('PANOPTICON_MFA_LBL_BACKUPCODES_ENTRY_LABEL');
+			$renderOptions->label = $this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES_ENTRY_LABEL');
 		}
 
 		return $renderOptions;
@@ -203,7 +201,7 @@ class Captive extends Model
 
 		if ($name == 'backupcodes')
 		{
-			return Text::_('PANOPTICON_MFA_LBL_BACKUPCODES_METHOD_NAME');
+			return $this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES_METHOD_NAME');
 		}
 
 		return $map[$name] ?? $name;

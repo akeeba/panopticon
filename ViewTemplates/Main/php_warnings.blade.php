@@ -30,7 +30,7 @@ if ($phpVersionInfo->unknown) return;
             @sprintf(
                 'PANOPTICON_MAIN_PHP_EOL_BODY',
                 PHP_VERSION,
-                $phpVersionInfo->dates->eol->format(\Awf\Text\Text::_('DATE_FORMAT_LC')),
+                $phpVersionInfo->dates->eol->format($this->getLanguage()->text('DATE_FORMAT_LC')),
                 $phpVersion->getMinimumSupportedBranch(),
                 $phpVersion->getRecommendedSupportedBranch()
             )
@@ -47,7 +47,7 @@ if ($phpVersionInfo->unknown) return;
                 @sprintf(
                     'PANOPTICON_MAIN_PHP_SECURITY_BODY',
                     PHP_VERSION,
-                    $phpVersionInfo->dates->eol->format(\Awf\Text\Text::_('DATE_FORMAT_LC')),
+                    $phpVersionInfo->dates->eol->format($this->getLanguage()->text('DATE_FORMAT_LC')),
                     $phpVersion->getRecommendedSupportedBranch()
                 )
                 </p>

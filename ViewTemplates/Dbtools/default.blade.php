@@ -5,8 +5,6 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-use Awf\Text\Text;
-
 defined('AKEEBA') || die;
 
 /**
@@ -73,7 +71,7 @@ $totalSize  = 0;
             <code>{{{ $item->filename }}}</code>
         </td>
         <td>
-            {{ $this->getContainer()->html->basic->date($item->ctime->format(DATE_ATOM), Text::_('DATE_FORMAT_LC6')) }}
+            {{ $this->getContainer()->html->basic->date($item->ctime->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC6')) }}
         </td>
         <td>
             {{  $this->formatFilesize($item->size) }}

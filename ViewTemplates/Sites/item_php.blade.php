@@ -11,9 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Akeeba\Panopticon\Library\Version\Version;
-use Awf\Html\Html;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 
 $config = ($this->item->config instanceof Registry) ? $this->item->config : (new Registry($this->item->config));
 $phpVersion = new PhpVersion();
@@ -21,7 +19,7 @@ $phpVersion = new PhpVersion();
 $lastUpdateTimestamp = function () use ($config): string {
 	$timestamp = $config->get('core.lastAttempt');
 
-    return $timestamp ? $this->timeAgo($timestamp) : \Awf\Text\Text::_('PANOPTICON_LBL_NEVER');
+    return $timestamp ? $this->timeAgo($timestamp) : $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
 };
 
 $php                     = $config->get('core.php', '0.0.0');

@@ -14,7 +14,6 @@ use Akeeba\Panopticon\Library\SelfUpdate\VersionInformation;
 use Akeeba\Panopticon\Model\Selfupdate;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
-use Awf\Text\Text;
 
 class Html extends BaseHtmlView
 {
@@ -39,7 +38,7 @@ class Html extends BaseHtmlView
 
 		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=main')]);
 
-		$this->setTitle(Text::_('PANOPTICON_SELFUPDATE_TITLE'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_SELFUPDATE_TITLE'));
 
 		return true;
 	}

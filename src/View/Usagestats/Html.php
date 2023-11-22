@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Model\Usagestats;
 use Awf\Date\Date;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
-use Awf\Text\Text;
 use Exception;
 use Throwable;
 
@@ -30,7 +29,7 @@ class Html extends BaseHtmlView
 	{
 		$toolbar = $this->getContainer()->application->getDocument()->getToolbar();
 
-		$toolbar->setTitle(Text::_('PANOPTICON_USAGESTATS_TITLE'));
+		$toolbar->setTitle($this->getLanguage()->text('PANOPTICON_USAGESTATS_TITLE'));
 
 		/** @var Usagestats $model */
 		$model = $this->getModel();

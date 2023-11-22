@@ -8,8 +8,6 @@
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
-use Awf\Html\Html;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 
 /** @var \Akeeba\Panopticon\View\Users\Html $this */
@@ -129,7 +127,7 @@ $token = $container->session->getCsrfToken()->getValue();
                                             'PANOPTICON_MFA_LBL_CREATEDON',
                                             empty($record->created_on)
                                                 ? '&mdash;'
-                                                : $this->getContainer()->html->basic->date($record->created_on, Text::_('DATE_FORMAT_LC2'))
+                                                : $this->getContainer()->html->basic->date($record->created_on, $this->getLanguage()->text('DATE_FORMAT_LC2'))
                                             )
                                         </span>
                                         <span class="flex-grow-1">
@@ -137,7 +135,7 @@ $token = $container->session->getCsrfToken()->getValue();
                                                 'PANOPTICON_MFA_LBL_LASTUSED',
                                                 empty($record->last_used)
                                                 ? '&mdash;'
-                                                : $this->getContainer()->html->basic->date($record->last_used, Text::_('DATE_FORMAT_LC2'))
+                                                : $this->getContainer()->html->basic->date($record->last_used, $this->getLanguage()->text('DATE_FORMAT_LC2'))
                                             )
                                         </span>
                                         </div>

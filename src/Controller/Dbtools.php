@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Library\DBUtils\Export;
 use Awf\Mvc\Controller;
-use Awf\Text\Text;
 use Awf\Timer\Timer;
 
 class Dbtools extends Controller
@@ -51,8 +50,8 @@ class Dbtools extends Controller
 		$this->setRedirect(
 			$this->getContainer()->router->route('index.php?view=dbtools'),
 			$success
-				? Text::sprintf('PANOPTICON_DBTOOLS_LBL_DELETED', $escapedFile)
-				: Text::sprintf('PANOPTICON_DBTOOLS_LBL_NOT_DELETED', $escapedFile),
+				? $this->getLanguage()->sprintf('PANOPTICON_DBTOOLS_LBL_DELETED', $escapedFile)
+				: $this->getLanguage()->sprintf('PANOPTICON_DBTOOLS_LBL_NOT_DELETED', $escapedFile),
 			$success ? 'success' : 'error'
 		);
 	}
@@ -83,7 +82,7 @@ class Dbtools extends Controller
 
 		if (empty($json))
 		{
-			$this->setRedirect($returnUrl, Text::_('PANOPTICON_DBTOOLS_ERR_BACKUP_INVALID_STATE'), 'error');
+			$this->setRedirect($returnUrl, $this->getLanguage()->text('PANOPTICON_DBTOOLS_ERR_BACKUP_INVALID_STATE'), 'error');
 
 			return;
 		}
@@ -94,7 +93,7 @@ class Dbtools extends Controller
 		}
 		catch (\JsonException $e)
 		{
-			$this->setRedirect($returnUrl, Text::sprintf('PANOPTICON_DBTOOLS_ERR_BACKUP_JSON', $e->getMessage()), 'error');
+			$this->setRedirect($returnUrl, $this->getLanguage()->sprintf('PANOPTICON_DBTOOLS_ERR_BACKUP_JSON', $e->getMessage()), 'error');
 
 			return;
 		}
@@ -113,7 +112,7 @@ class Dbtools extends Controller
 
 		if ($lastStatus === false)
 		{
-			$this->setRedirect($returnUrl, Text::_('PANOPTICON_DBTOOLS_LBL_BACKUP_DONE'), 'success');
+			$this->setRedirect($returnUrl, $this->getLanguage()->text('PANOPTICON_DBTOOLS_LBL_BACKUP_DONE'), 'success');
 
 			return;
 		}

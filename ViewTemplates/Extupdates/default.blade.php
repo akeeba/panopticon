@@ -90,7 +90,7 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
                 <label class="visually-hidden" for="cmsFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => \Awf\Text\Text::_('PANOPTICON_EXTUPDATES_LBL_CMSVERSION_SELECT')
+                        '' => $this->getLanguage()->text('PANOPTICON_EXTUPDATES_LBL_CMSVERSION_SELECT')
                     ], $mainModel->getKnownJoomlaVersions()),
                     'cmsFamily',
                     [
@@ -105,7 +105,7 @@ $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersio
                 <label class="visually-hidden" for="phpFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => \Awf\Text\Text::_('PANOPTICON_EXTUPDATES_LBL_PHPVERSION_SELECT')
+                        '' => $this->getLanguage()->text('PANOPTICON_EXTUPDATES_LBL_PHPVERSION_SELECT')
                     ], $mainModel->getKnownPHPVersions()),
                     'phpFamily',
                     [

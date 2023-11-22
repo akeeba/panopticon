@@ -21,7 +21,8 @@ abstract class TaskUtils
 	{
 		if (($siteId ?? 0) === 0)
 		{
-			return Text::_('PANOPTICON_APP_LBL_SYSTEM_TASK');
+			return Factory::getContainer()->language
+				->text('PANOPTICON_APP_LBL_SYSTEM_TASK');
 		}
 
 		if (self::$siteNames === null)
@@ -37,7 +38,9 @@ abstract class TaskUtils
 			self::$siteNames = $db->setQuery($query)->loadAssocList('id', 'name');
 		}
 
-		return self::$siteNames[$siteId] ?? Text::_('PANOPTICON_APP_LBL_UNKNOWN_SITE');
+		return self::$siteNames[$siteId]
+		       ?? Factory::getContainer()->language
+			       ->text('PANOPTICON_APP_LBL_UNKNOWN_SITE');
 	}
 
 	public static function getTaskDescription(string $taskType): string
@@ -46,6 +49,7 @@ abstract class TaskUtils
 
 		return $container->taskRegistry->has($taskType)
 			? $container->taskRegistry->get($taskType)->getDescription()
-			: Text::_('PANOPTICON_APP_LBL_UNKNOWN_TASK_TYPE');
+			: Factory::getContainer()->language
+				->text('PANOPTICON_APP_LBL_UNKNOWN_TASK_TYPE');
 	}
 }

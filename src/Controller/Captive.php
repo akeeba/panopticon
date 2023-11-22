@@ -12,9 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Model\Backupcodes;
 use Awf\Container\Container;
-use Awf\Date\Date;
 use Awf\Mvc\Controller;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use RuntimeException;
 
@@ -52,7 +50,7 @@ class Captive extends Controller
 		// Only allow logged-in Users
 		if ($user->getId() <= 0)
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		// Get the view object
@@ -113,7 +111,7 @@ class Captive extends Controller
 
 		if (empty($record))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_ERR_INVALID_METHOD'), 500);
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_ERR_INVALID_METHOD'), 500);
 		}
 
 		// Validate the code
@@ -156,7 +154,7 @@ class Captive extends Controller
 					$record_id
 				)
 			);
-			$message    = Text::_('PANOPTICON_MFA_ERR_INVALID_CODE');
+			$message    = $this->getLanguage()->text('PANOPTICON_MFA_ERR_INVALID_CODE');
 			$this->setRedirect($captiveURL, $message, 'error');
 
 			return true;

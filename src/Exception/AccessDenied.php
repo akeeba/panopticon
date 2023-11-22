@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Exception;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
 use Awf\Text\Text;
 use JetBrains\PhpStorm\Pure;
 use RuntimeException;
@@ -18,7 +19,7 @@ class AccessDenied extends RuntimeException
 {
 	#[Pure] public function __construct(string $message = "", ?Throwable $previous = null)
 	{
-		$message = $message ?: Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN');
+		$message = $message ?: Factory::getContainer()->language->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN');
 
 		parent::__construct($message, 403, $previous);
 	}

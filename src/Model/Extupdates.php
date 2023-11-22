@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\Model;
 defined('AKEEBA') || die;
 
 use Awf\Mvc\Model;
-use Awf\Text\Text;
 
 class Extupdates extends Model
 {
@@ -147,7 +146,7 @@ class Extupdates extends Model
 		}
 
 		$ret = array_combine($this->extensionNames, $this->extensionNames);
-		$ret[''] = Text::_('PANOPTICON_EXTUPDATES_LBL_EXT_NAME_SELECT');
+		$ret[''] = $this->getLanguage()->text('PANOPTICON_EXTUPDATES_LBL_EXT_NAME_SELECT');
 
 		return $ret;
 	}
@@ -160,7 +159,7 @@ class Extupdates extends Model
 		}
 
 		$ret = array_combine($this->extensionAuthors, $this->extensionAuthors);
-		$ret[''] = Text::_('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_SELECT');
+		$ret[''] = $this->getLanguage()->text('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_SELECT');
 
 		return $ret;
 	}
@@ -173,7 +172,7 @@ class Extupdates extends Model
 		}
 
 		$ret = array_combine($this->extensionAuthorURLs, $this->extensionAuthorURLs);
-		$ret[''] = Text::_('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_URL_SELECT');
+		$ret[''] = $this->getLanguage()->text('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_URL_SELECT');
 
 		return $ret;
 	}
@@ -186,7 +185,7 @@ class Extupdates extends Model
 		}
 
 		$ret = array_combine($this->extensionAuthorEmails, $this->extensionAuthorEmails);
-		$ret[''] = Text::_('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_EMAIL_SELECT');
+		$ret[''] = $this->getLanguage()->text('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_EMAIL_SELECT');
 
 		return $ret;
 	}

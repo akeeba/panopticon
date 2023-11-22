@@ -11,8 +11,6 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
 
-use Awf\Text\Text;
-
 ?>
 @if (empty($this->extUpdatePreferences))
 <div class="alert alert-info">
@@ -44,10 +42,10 @@ use Awf\Text\Text;
     <?php
         $effectivePreference = $item->preference ?: $this->globalExtUpdatePreferences[$key]?->preference;
 		$effectivePreference = $effectivePreference ?: $this->defaultExtUpdatePreference;
-        $effectivePreferenceText = Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_' . $effectivePreference);
+        $effectivePreferenceText = $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_' . $effectivePreference);
 
 		$globalPreference = $this->globalExtUpdatePreferences[$key]?->preference ?: $this->defaultExtUpdatePreference;
-        $globalPreferenceText = Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_' . $globalPreference);
+        $globalPreferenceText = $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_' . $globalPreference);
     ?>
     <tr>
         <td>
@@ -109,14 +107,14 @@ use Awf\Text\Text;
             ?>
             {{ $this->container->html->select->genericList(
                 data: [
-                    ''      => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_GLOBAL_ALT') .
+                    ''      => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_GLOBAL_ALT') .
                         ' ' . $globalPreferenceText
                     ,
-                    'none'  => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_NONE'),
-                    'email' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_EMAIL'),
-                    'patch' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_PATCH'),
-                    'minor' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_MINOR'),
-                    'major' => Text::_('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_MAJOR'),
+                    'none'  => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_NONE'),
+                    'email' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_EMAIL'),
+                    'patch' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_PATCH'),
+                    'minor' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_MINOR'),
+                    'major' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_TASKS_COREUPDATE_INSTALL_MAJOR'),
                 ],
                 name: 'extupdates['.$key.']',
                 attribs: $attribs,

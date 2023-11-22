@@ -304,7 +304,11 @@ abstract class DefaultTemplate
 			}
 
 			$html .= sprintf('<div class="alert alert-%s alert-dismissible fade show">', $class);
-			$html .= sprintf('<h3 class="alert-heading visually-hidden">%s</h3>', Text::_('PANOPTICON_APP_LBL_MESSAGETYPE_' . $type));
+			$html .= sprintf(
+				'<h3 class="alert-heading visually-hidden">%s</h3>',
+				Factory::getContainer()->language
+					->text('PANOPTICON_APP_LBL_MESSAGETYPE_' . $type)
+			);
 
 			foreach ($messages as $message) {
 				$html .= sprintf('<div class="my-1">%s</div>', $message);
@@ -312,7 +316,8 @@ abstract class DefaultTemplate
 
 			$html .= sprintf(
 				'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="%s"></button>',
-				Text::_('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
+				Factory::getContainer()->language
+					->text('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
 			);
 
 

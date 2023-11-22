@@ -19,7 +19,6 @@ use Awf\Exception\App;
 use Awf\Mvc\DataModel;
 use Awf\Mvc\DataModel\Exception\RecordNotLoaded;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use Awf\User\UserInterface;
 use BackedEnum;
 use DateTime;
@@ -440,17 +439,17 @@ class Reports extends DataModel
 		// No site action. Something went off-script here!
 		if (empty($siteAction))
 		{
-			return Text::_('PANOPTICON_REPORTS_LBL_NO_ACTION');
+			return $this->getLanguage()->text('PANOPTICON_REPORTS_LBL_NO_ACTION');
 		}
 
 		// Unknown action?
 		if (isset(self::$siteActionStrings[$siteAction]))
 		{
-			return Text::_(self::$siteActionStrings[$siteAction]);
+			return $this->getLanguage()->text(self::$siteActionStrings[$siteAction]);
 		}
 
 		// Okay, we have a lang string to return.
-		return Text::sprintf('PANOPTICON_REPORTS_LBL_UNKNOWN_SITE_ACTION', $siteAction);
+		return $this->getLanguage()->sprintf('PANOPTICON_REPORTS_LBL_UNKNOWN_SITE_ACTION', $siteAction);
 	}
 
 	/**

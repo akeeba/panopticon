@@ -9,7 +9,6 @@ namespace Akeeba\Panopticon\View\Trait;
 
 
 use Awf\Inflector\Inflector;
-use Awf\Text\Text;
 
 defined('AKEEBA') || die;
 
@@ -21,7 +20,7 @@ trait CrudTasksTrait
 
 		if (empty($this->getTitle()))
 		{
-			$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
+			$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
 		}
 
 		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
@@ -40,7 +39,7 @@ trait CrudTasksTrait
 
 		if (empty($this->getTitle()))
 		{
-			$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_NEW'));
+			$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_NEW'));
 		}
 
 		return parent::onBeforeAdd();
@@ -55,7 +54,7 @@ trait CrudTasksTrait
 
 		if (empty($this->getTitle()))
 		{
-			$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_EDIT'));
+			$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_EDIT'));
 		}
 
 		return parent::onBeforeEdit();
@@ -77,77 +76,77 @@ trait CrudTasksTrait
 		{
 			'add' => [
 				'id'      => 'add',
-				'title'   => Text::_('PANOPTICON_BTN_ADD'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_ADD'),
 				'class'   => 'btn btn-success',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'add') . '\')',
 				'icon'    => 'fa fa-plus',
 			],
 			'edit' => [
 				'id'      => 'edit',
-				'title'   => Text::_('PANOPTICON_BTN_EDIT'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_EDIT'),
 				'class'   => 'btn btn-secondary border-light',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'edit') . '\')',
 				'icon'    => 'fa fa-pen-to-square',
 			],
 			'copy' => [
 				'id'      => 'copy',
-				'title'   => Text::_('PANOPTICON_BTN_COPY'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_COPY'),
 				'class'   => 'btn btn-secondary border-light',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'copy') . '\')',
 				'icon'    => 'fa fa-clone',
 			],
 			'delete' => [
 				'id'      => 'delete',
-				'title'   => Text::_('PANOPTICON_BTN_DELETE'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_DELETE'),
 				'class'   => 'btn btn-danger',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'remove') . '\')',
 				'icon'    => 'fa fa-trash-can',
 			],
 			'publish' => [
 				'id'      => 'publish',
-				'title'   => Text::_('PANOPTICON_BTN_ENABLE'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_ENABLE'),
 				'class'   => 'btn btn-dark',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'publish') . '\')',
 				'icon'    => 'fa fa-circle-check',
 			],
 			'unpublish' => [
 				'id'      => 'unpublish',
-				'title'   => Text::_('PANOPTICON_BTN_DISABLE'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_DISABLE'),
 				'class'   => 'btn btn-dark',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'unpublish') . '\')',
 				'icon'    => 'fa fa-circle-xmark',
 			],
 			'save' => [
 				'id'      => 'save',
-				'title'   => Text::_('PANOPTICON_BTN_SAVE'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_SAVE'),
 				'class'   => 'btn btn-primary',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'save') . '\');',
 				'icon'    => 'fa fa-save',
 			],
 			'apply' => [
 				'id'      => 'apply',
-				'title'   => Text::_('PANOPTICON_BTN_APPLY'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_APPLY'),
 				'class'   => 'btn btn-success',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'apply') . '\');',
 				'icon'    => 'fa fa-check',
 			],
 			'cancel' => [
 				'id'      => 'cancel',
-				'title'   => Text::_('PANOPTICON_BTN_CANCEL'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_BTN_CANCEL'),
 				'class'   => 'btn btn-danger',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'cancel') . '\');',
 				'icon'    => 'fa fa-cancel',
 			],
 			'back' => [
 				'id'    => 'back',
-				'title' => Text::_('PANOPTICON_BTN_PREV'),
+				'title' => $this->getLanguage()->text('PANOPTICON_BTN_PREV'),
 				'class' => 'btn btn-secondary border-light',
 				'url'   => $params['url'],
 				'icon'  => 'fa fa-chevron-left',
 			],
 			'inlineHelp' => [
 				'id'      => 'inlineHelp',
-				'title'   => Text::_('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_APP_LBL_SHOW_HIDE_HELP'),
 				'class'   => 'btn-info',
 				'onClick' => json_encode(
 					[

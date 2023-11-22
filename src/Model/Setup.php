@@ -10,15 +10,11 @@ namespace Akeeba\Panopticon\Model;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
-use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Task\Status;
 use Awf\Database\Driver;
 use Awf\Database\Installer;
-use Awf\Date\Date;
-use Awf\Mvc\DataModel;
 use Awf\Mvc\Model;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use Complexify\Complexify;
 use Delight\Alphabets\Alphabet;
 use Delight\Random\Random;
@@ -96,31 +92,31 @@ class Setup extends Model
 			$minPHPVersion = AKEEBA_PANOPTICON_MINPHP;
 
 			$phpOptions[] = [
-				'label'   => Text::sprintf('PANOPTICON_SETUP_LBL_REQ_PHP_VERSION', $minPHPVersion),
+				'label'   => $this->getLanguage()->sprintf('PANOPTICON_SETUP_LBL_REQ_PHP_VERSION', $minPHPVersion),
 				'current' => version_compare(phpversion(), $minPHPVersion, 'ge'),
 				'warning' => false,
 			];
 
 			$phpOptions[] = [
-				'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_REGGLOBALS'),
+				'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_REGGLOBALS'),
 				'current' => (ini_get('register_globals') == false),
 				'warning' => false,
 			];
 
 			$phpOptions[] = [
-				'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_CURL'),
+				'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_CURL'),
 				'current' => extension_loaded('curl'),
 				'warning' => false,
 			];
 
 			$phpOptions[] = [
-				'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_XML'),
+				'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_XML'),
 				'current' => extension_loaded('xml'),
 				'warning' => false,
 			];
 
 			$phpOptions[] = [
-				'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_DATABASE'),
+				'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_DATABASE'),
 				'current' => (
 					// MySQLi functions
 					function_exists('mysqli_connect')
@@ -133,30 +129,30 @@ class Setup extends Model
 			if (extension_loaded('mbstring'))
 			{
 				$option           = [
-					'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_MBLANGISDEFAULT'),
+					'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_MBLANGISDEFAULT'),
 					'current' => (strtolower(ini_get('mbstring.language')) == 'neutral'),
 					'warning' => false,
 				];
-				$option['notice'] = $option['current'] ? null : Text::_('PANOPTICON_SETUP_MSG_NOTICEMBLANGNOTDEFAULT');
+				$option['notice'] = $option['current'] ? null : $this->getLanguage()->text('PANOPTICON_SETUP_MSG_NOTICEMBLANGNOTDEFAULT');
 				$phpOptions[]     = $option;
 
 				$option           = [
-					'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_MBSTRINGOVERLOAD'),
+					'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_MBSTRINGOVERLOAD'),
 					'current' => (ini_get('mbstring.func_overload') == 0),
 					'warning' => false,
 				];
-				$option['notice'] = $option['current'] ? null : Text::_('PANOPTICON_SETUP_MSG_NOTICEMBSTRINGOVERLOAD');
+				$option['notice'] = $option['current'] ? null : $this->getLanguage()->text('PANOPTICON_SETUP_MSG_NOTICEMBSTRINGOVERLOAD');
 				$phpOptions[]     = $option;
 			}
 
 			$phpOptions[] = [
-				'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_INIPARSER'),
+				'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_INIPARSER'),
 				'current' => $this->getIniParserAvailability(),
 				'warning' => false,
 			];
 
 			$phpOptions[] = [
-				'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_JSON'),
+				'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_JSON'),
 				'current' => function_exists('json_encode') && function_exists('json_decode'),
 				'warning' => false,
 			];
@@ -166,9 +162,9 @@ class Setup extends Model
 			$configWriteable = (@file_exists($configPath) && @is_writable($configPath))
 				|| @is_writable(dirname($configPath));
 			$phpOptions[]    = [
-				'label'   => Text::_('PANOPTICON_SETUP_LBL_REQ_CONFIGJSON'),
+				'label'   => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REQ_CONFIGJSON'),
 				'current' => $configWriteable,
-				'notice'  => $configWriteable ? null : Text::_('PANOPTICON_SETUP_MSG_CONFIGURATIONPHP'),
+				'notice'  => $configWriteable ? null : $this->getLanguage()->text('PANOPTICON_SETUP_MSG_CONFIGURATIONPHP'),
 				'warning' => true,
 			];
 		}
@@ -183,31 +179,31 @@ class Setup extends Model
 		if (empty($phpOptions))
 		{
 			$phpOptions[] = [
-				'label'       => Text::_('PANOPTICON_SETUP_LBL_REC_DISPERRORS'),
+				'label'       => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REC_DISPERRORS'),
 				'current'     => (bool)ini_get('display_errors'),
 				'recommended' => false,
 			];
 
 			$phpOptions[] = [
-				'label'       => Text::_('PANOPTICON_SETUP_LBL_REC_OUTBUF'),
+				'label'       => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REC_OUTBUF'),
 				'current'     => (bool)ini_get('output_buffering'),
 				'recommended' => false,
 			];
 
 			$phpOptions[] = [
-				'label'       => Text::_('PANOPTICON_SETUP_LBL_REC_SESSIONAUTO'),
+				'label'       => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REC_SESSIONAUTO'),
 				'current'     => (bool)ini_get('session.auto_start'),
 				'recommended' => false,
 			];
 
 			$phpOptions[] = [
-				'label'       => Text::_('PANOPTICON_SETUP_LBL_REC_FTP'),
+				'label'       => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REC_FTP'),
 				'current'     => function_exists('ftp_connect'),
 				'recommended' => true,
 			];
 
 			$phpOptions[] = [
-				'label'       => Text::_('PANOPTICON_SETUP_LBL_REC_SSH2'),
+				'label'       => $this->getLanguage()->text('PANOPTICON_SETUP_LBL_REC_SSH2'),
 				'current'     => extension_loaded('ssh2') || extension_loaded('curl'),
 				'recommended' => true,
 			];
@@ -383,27 +379,27 @@ class Setup extends Model
 
 		if (empty($params['user.username']))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'), 500);
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'), 500);
 		}
 
 		if (empty($params['user.password']))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYPASSWORD'), 500);
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SETUP_ERR_USER_EMPTYPASSWORD'), 500);
 		}
 
 		if ($params['user.password'] != $params['user.password2'])
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_PASSWORDSDONTMATCH'), 500);
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SETUP_ERR_USER_PASSWORDSDONTMATCH'), 500);
 		}
 
 		if (empty($params['user.email']))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYEMAIL'), 500);
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SETUP_ERR_USER_EMPTYEMAIL'), 500);
 		}
 
 		if (empty($params['user.name']))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYNAME'), 500);
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SETUP_ERR_USER_EMPTYNAME'), 500);
 		}
 
 		$manager = $this->container->userManager;

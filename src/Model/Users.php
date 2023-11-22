@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
 use Awf\Container\Container;
 use Awf\Mvc\DataModel;
-use Awf\Text\Text;
 use RuntimeException;
 
 /**
@@ -80,7 +79,7 @@ class Users extends DataModel
 		// Cannot delete myself
 		if ($id == $mySelf->getId())
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_USERS_ERR_CANT_DELETE_YOURSELF'), 403);
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_USERS_ERR_CANT_DELETE_YOURSELF'), 403);
 		}
 
 		// Cannot delete the last Superuser

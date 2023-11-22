@@ -29,7 +29,6 @@ use Awf\Database\Query;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\User\User;
 use Awf\Utils\ArrayHelper;
@@ -233,12 +232,12 @@ class Site extends DataModel
 
 		if (empty($this->getFieldValue('name', '')))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_SITES_ERR_NO_TITLE'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_ERR_NO_TITLE'));
 		}
 
 		if (empty($this->url))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_SITES_ERR_NO_URL'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_ERR_NO_URL'));
 		}
 
 		parent::check();

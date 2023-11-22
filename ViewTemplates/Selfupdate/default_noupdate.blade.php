@@ -28,7 +28,7 @@ $version       = Version::create(AKEEBA_PANOPTICON_VERSION);
 	<span class="text-body-tertiary">({{ AKEEBA_PANOPTICON_CODENAME }})</span>
 </p>
 <p class="text-center fs-5">
-    @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', $this->getContainer()->html->basic->date(AKEEBA_PANOPTICON_DATE, \Awf\Text\Text::_('DATE_FORMAT_LC1')))
+    @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', $this->getContainer()->html->basic->date(AKEEBA_PANOPTICON_DATE, $this->getLanguage()->text('DATE_FORMAT_LC1')))
 </p>
 
 <div class="mt-5 mb-3 d-flex flex-row justify-content-center align-items-center gap-3">
@@ -49,7 +49,7 @@ $version       = Version::create(AKEEBA_PANOPTICON_VERSION);
     <div class="my-3 d-flex flex-row justify-content-center small text-body-tertiary">
         @sprintf(
             'PANOPTICON_SELFUPDATE_LBL_LAST_CHECK_AND_VERSION',
-            $this->getContainer()->html->basic->date('@' . $this->updateInformation->lastCheckTimestamp, \Awf\Text\Text::_('DATE_FORMAT_LC7')),
+            $this->getContainer()->html->basic->date('@' . $this->updateInformation->lastCheckTimestamp, $this->getLanguage()->text('DATE_FORMAT_LC7')),
             $this->latestversion->version
            )
     </div>

@@ -16,7 +16,6 @@ use Akeeba\Panopticon\Model\Backupcodes;
 use Akeeba\Panopticon\Model\Mfa;
 use Awf\Container\Container;
 use Awf\Mvc\Controller;
-use Awf\Text\Text;
 use RuntimeException;
 
 class Mfamethods extends Controller
@@ -88,7 +87,7 @@ class Mfamethods extends Controller
 
 		if ($this->isAlreadyRegistered($method, $user_id))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		/** @var \Akeeba\Panopticon\Model\Mfamethods $model */
@@ -132,7 +131,7 @@ class Mfamethods extends Controller
 
 		if ($id <= 0)
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		/** @var \Akeeba\Panopticon\Model\Mfamethods $model */
@@ -193,7 +192,7 @@ class Mfamethods extends Controller
 
 			if ($this->isAlreadyRegistered($methodName, $user_id))
 			{
-				throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+				throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 			}
 		}
 
@@ -359,7 +358,7 @@ class Mfamethods extends Controller
 
 		if ($id <= 0)
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		$type    = null;
@@ -413,7 +412,7 @@ class Mfamethods extends Controller
 
 		if (($record->id != $id) || ($record->user_id != $user->getId()))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		return $record;
@@ -430,7 +429,7 @@ class Mfamethods extends Controller
 
 		if (!MfaHelper::canEditUser($user))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 	}
 
@@ -449,7 +448,7 @@ class Mfamethods extends Controller
 
 		if (empty($method) || !$model->methodExists($method))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 	}
 
@@ -459,7 +458,7 @@ class Mfamethods extends Controller
 
 		if ($user->getId() <= 0)
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 	}
 

@@ -11,7 +11,6 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
-use Awf\Text\Text;
 
 class Html extends BaseHtmlView
 {
@@ -22,7 +21,7 @@ class Html extends BaseHtmlView
 	protected function onBeforeMain(): bool
 	{
 		$this->addButton('back', ['url' => 'javascript:history.back()']);
-		$this->setTitle(Text::_('PANOPTICON_ABOUT_TITLE'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_ABOUT_TITLE'));
 
 		$this->contributors = $this->getModel()->getContributors();
 

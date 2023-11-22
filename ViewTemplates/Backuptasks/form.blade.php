@@ -68,7 +68,7 @@ catch (InvalidArgumentException $e)
         <div class="col-sm-9">
             <input name="params[description]" id="description"
                    type="text" class="form-control"
-                   value="{{{ $params->get('description') ?? \Awf\Text\Text::_('PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT') }}}" required
+                   value="{{{ $params->get('description') ?? $this->getLanguage()->text('PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT') }}}" required
             >
             <div class="form-text collapse">
                 @lang('PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP')

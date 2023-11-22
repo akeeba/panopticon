@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Helper;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
 use Awf\Database\Driver;
 use Awf\Helper\AbstractHelper;
 use Awf\Text\Text;
@@ -319,7 +320,8 @@ class Setup extends AbstractHelper
 			array_unshift(
 				$users, (object) [
 				'value' => 0,
-				'text'  => Text::_('PANOPTICON_LBL_SELECT_USER'),
+				'text'  => Factory::getContainer()->language
+					->text('PANOPTICON_LBL_SELECT_USER'),
 			]
 			);
 		}
@@ -341,13 +343,28 @@ class Setup extends AbstractHelper
 		{
 			$siteList = array_combine(
 				array_merge([0], array_keys($siteList)),
-				array_merge([Text::_('PANOPTICON_APP_LBL_SYSTEM_TASK')], array_values($siteList)),
+				array_merge(
+					[
+						Factory::getContainer()->language
+							->text('PANOPTICON_APP_LBL_SYSTEM_TASK')
+					],
+					array_values($siteList)
+				),
 			);
 		}
 
 		$siteList = array_combine(
 			array_merge([''], array_keys($siteList)),
-			array_merge([sprintf('– %s –', Text::_('PANOPTICON_TASKS_LBL_FIELD_SITE_ID'))], array_values($siteList)),
+			array_merge(
+				[
+					sprintf(
+						'– %s –',
+						Factory::getContainer()->language
+							->text('PANOPTICON_TASKS_LBL_FIELD_SITE_ID')
+					)
+				],
+				array_values($siteList)
+			),
 		);
 
 		return $this->getContainer()->html->select->genericList(
@@ -479,7 +496,7 @@ class Setup extends AbstractHelper
 	 */
 	private function getTemplateName(string $template): string
 	{
-		$defaultName = Text::_(
+		$defaultName = Factory::getContainer()->language->text(
 			sprintf(
 				'PANOPTICON_APP_TEMPLATE_%s',
 				strtoupper(
@@ -516,7 +533,7 @@ class Setup extends AbstractHelper
 
 		if (preg_match('#^[A-Z0-9_]*$#', $templateName))
 		{
-			return Text::_($templateName);
+			return Factory::getContainer()->language->text($templateName);
 		}
 
 		return $templateName ?: $defaultName;

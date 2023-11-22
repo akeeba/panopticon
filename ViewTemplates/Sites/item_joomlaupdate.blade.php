@@ -12,10 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
-use Awf\Database\Driver;
-use Awf\Html\Html;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 
 $config           = $this->item->getConfig();
 $token            = $this->container->session->getCsrfToken()->getValue();
@@ -27,7 +24,7 @@ $hasError         = !empty($lastError);
 $lastUpdateTimestamp = function () use ($config): string {
 	$timestamp = $config->get('core.lastAttempt');
 
-	return $timestamp ? $this->timeAgo($timestamp) : \Awf\Text\Text::_('PANOPTICON_LBL_NEVER');
+	return $timestamp ? $this->timeAgo($timestamp) : $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
 };
 
 $jVersionHelper = new JoomlaVersion($this->getContainer())
@@ -197,7 +194,7 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                 @sprintf(
 	                'PANOPTICON_SITE_LBL_JUPDATE_EOL_DATE',
 	                $versionFamilyInfo->series,
-					$this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1'))
+					$this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC1'))
                 )
             </p>
         @elseif($jVersionHelper->isEOLBranch($config->get('core.current.version')))
@@ -253,8 +250,8 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                     @sprintf(
                         'PANOPTICON_SITE_LBL_JUPDATE_SECURITY_DATE',
                         $versionFamilyInfo->series,
-                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1')),
-                        $this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1'))
+                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC1')),
+                        $this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC1'))
                     )
                 </p>
             @elseif ($branchEolDate == $eolDate)
@@ -263,8 +260,8 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                     @sprintf(
                         'PANOPTICON_SITE_LBL_JUPDATE_LAST_STABLE_DATE',
                        $versionFamilyInfo->series,
-                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1')),
-                        $this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1'))
+                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC1')),
+                        $this->getContainer()->html->basic->date($eolDate->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC1'))
                     )
                 </p>
             @else
@@ -273,8 +270,8 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                     @sprintf(
                         'PANOPTICON_SITE_LBL_JUPDATE_STABLE_DATE',
                        $versionCurrent->versionFamily(),
-                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1')),
-                        $this->getContainer()->html->basic->date($branchEolDate->format(DATE_ATOM), Text::_('DATE_FORMAT_LC1'))
+                        $this->getContainer()->html->basic->date($supportDate->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC1')),
+                        $this->getContainer()->html->basic->date($branchEolDate->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC1'))
                     )
                 </p>
             @endif
@@ -301,7 +298,7 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                 {{-- Scheduled, will run --}}
                 <p>
                     @if ($joomlaUpdateTask?->next_execution)
-                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED', $this->getContainer()->html->basic->date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')))
+                        @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED', $this->getContainer()->html->basic->date($joomlaUpdateTask->next_execution, $this->getLanguage()->text('DATE_FORMAT_LC7')))
                     @else
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP')
                     @endif
@@ -413,7 +410,7 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                 @if ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
                     <div class="alert alert-info mt-2">
                         @if ($joomlaUpdateTask?->next_execution)
-                            @sprintf('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED', $this->getContainer()->html->basic->date($joomlaUpdateTask->next_execution, Text::_('DATE_FORMAT_LC7')))
+                            @sprintf('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED', $this->getContainer()->html->basic->date($joomlaUpdateTask->next_execution, $this->getLanguage()->text('DATE_FORMAT_LC7')))
                         @else
                             @lang('PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED_ASAP')
                         @endif

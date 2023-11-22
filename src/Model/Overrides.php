@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Awf\Mvc\Model;
 use Awf\Pagination\Pagination;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\Utils\Collection;
 use Jfcherng\Diff\Differ;
@@ -164,9 +163,9 @@ class Overrides extends Model
 		$rendererOptions = [
 			'detailLevel'    => 'line',
 			'language'       => [
-				"old_version" => Text::_('PANOPTICON_OVERRIDES_LBL_CORE'),
-				"new_version" => Text::_('PANOPTICON_OVERRIDES_LBL_OVERRIDE'),
-				"differences" => Text::_('PANOPTICON_OVERRIDES_LBL_DIFF'),
+				"old_version" => $this->getLanguage()->text('PANOPTICON_OVERRIDES_LBL_CORE'),
+				"new_version" => $this->getLanguage()->text('PANOPTICON_OVERRIDES_LBL_OVERRIDE'),
+				"differences" => $this->getLanguage()->text('PANOPTICON_OVERRIDES_LBL_DIFF'),
 			],
 			'lineNumbers'    => true,
 			'separateBlock'  => false,

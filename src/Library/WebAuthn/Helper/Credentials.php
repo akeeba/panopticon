@@ -9,7 +9,12 @@ namespace Akeeba\Panopticon\Library\WebAuthn\Helper;
 
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\User\User;
-use Awf\Text\Text;
+use Awf\Container\Container;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
+use Awf\Text\Language;
+use Awf\Text\LanguageAwareInterface;
+use Awf\Text\LanguageAwareTrait;
 use Awf\Uri\Uri;
 use Cose\Algorithm\Manager;
 use Cose\Algorithm\Signature\ECDSA;
@@ -52,13 +57,18 @@ use Webauthn\TokenBinding\TokenBindingNotSupportedHandler;
 
 defined('AKEEBA') || die;
 
-class Credentials
+class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 {
+	use ContainerAwareTrait;
+	use LanguageAwareTrait;
+
 	public function __construct(
-		private readonly PublicKeyCredentialSourceRepository $repository, private ?LoggerInterface $logger
+		private readonly PublicKeyCredentialSourceRepository $repository, private ?LoggerInterface $logger, ?Container $container = null, ?Language $language = null
 	)
 	{
-		$this->logger = $this->logger ?? Factory::getContainer()->loggerFactory->get('mfa_webauthn');
+		$this->setContainer($container ?? Factory::getContainer());
+		$this->setLanguage($language ?? $this->getContainer()->language);
+		$this->logger = $this->logger ?? $this->getContainer()->loggerFactory->get('mfa_webauthn');
 	}
 
 	/**
@@ -154,19 +164,19 @@ class Credentials
 
 		if (empty($userId))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
 		// Make sure the user exists
 		if (Factory::getContainer()->userManager->getUser($userId)->getId() != $userId)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
 		// Make sure the user is ourselves (we cannot perform 2SV on behalf of another user!)
 		if (Factory::getContainer()->userManager->getUser()->getId() != $userId)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
 		// Make sure the public key credential request options in the session are valid
@@ -176,7 +186,7 @@ class Credentials
 		if (!is_object($publicKeyCredentialRequestOptions) || empty($publicKeyCredentialRequestOptions) ||
 			!($publicKeyCredentialRequestOptions instanceof PublicKeyCredentialRequestOptions))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
 		// Unserialize the browser response data
@@ -264,7 +274,7 @@ class Credentials
 	 */
 	public function createPublicKey(User $user): string
 	{
-		$siteName = Text::_('PANOPTICON_APP_TITLE');
+		$siteName = $this->getLanguage()->text('PANOPTICON_APP_TITLE');
 
 		// Relaying Party -- Our site
 		$rpEntity = new PublicKeyCredentialRpEntity(
@@ -386,7 +396,7 @@ class Credentials
 
 		if (empty($encodedOptions))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_NO_PK'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_NO_PK'));
 		}
 
 		try
@@ -403,7 +413,7 @@ class Credentials
 			!($publicKeyCredentialCreationOptions instanceof PublicKeyCredentialCreationOptions)
 		)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_NO_PK'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_NO_PK'));
 		}
 
 		// Retrieve the stored user ID and make sure it's the same one in the request.
@@ -413,7 +423,7 @@ class Credentials
 
 		if (($myUser->getId() <= 0) || ($myUserId != $storedUserId))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_USER'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_USER'));
 		}
 
 		// Cose Algorithm Manager

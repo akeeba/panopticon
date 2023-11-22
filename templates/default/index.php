@@ -11,13 +11,14 @@ use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Helper\DarkModeEnum;
 use Akeeba\Panopticon\Helper\DefaultTemplate as TemplateHelper;
 use Akeeba\Panopticon\Library\Version\Version;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\Utils\Template;
 
 /** @var Awf\Document\Document $this */
 
-[$langCode,] = explode('-', Text::detectLanguage($this->getContainer()) ?: 'en-GB');
+$text = $this->getLanguage();
+
+[$langCode,] = explode('-', $this->getContainer()->language->getLangCode() ?: 'en-GB');
 $user          = $this->container->userManager->getUser();
 $darkMode      = TemplateHelper::getDarkMode();
 $darkModeValue = match ($darkMode)
@@ -43,7 +44,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?= Text::_('PANOPTICON_APP_TITLE') ?></title>
+	<title><?= $text->text('PANOPTICON_APP_TITLE') ?></title>
 
 	<?php // See https://medium.com/swlh/are-you-using-svg-favicons-yet-a-guide-for-modern-browsers-836a6aace3df ?>
 	<link rel="icon" href="<?= Template::parsePath('media://images/logo_colour.svg', app: Factory::getApplication()) ?>">
@@ -85,7 +86,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 				<div class="navbar-brand ps-2 d-flex flex-row">
 					<?= file_get_contents(Template::parsePath('media://images/logo_colour.svg', true, Factory::getApplication())) ?>
 					<div>
-						<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
+						<?= $text->text('PANOPTICON_APP_TITLE_SHORT') ?>
 						<?php if (in_array($versionTag, [
 							Version::TAG_TYPE_DEV, Version::TAG_TYPE_ALPHA, Version::TAG_TYPE_BETA,
 						])): ?>
@@ -108,7 +109,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 				   href="<?= Uri::base() ?>">
 					<?= file_get_contents(APATH_MEDIA . '/images/logo_colour.svg') ?>
 					<div>
-						<?= Text::_('PANOPTICON_APP_TITLE_SHORT') ?>
+						<?= $text->text('PANOPTICON_APP_TITLE_SHORT') ?>
 						<?php if (in_array($versionTag, [
 							Version::TAG_TYPE_DEV, Version::TAG_TYPE_ALPHA, Version::TAG_TYPE_BETA,
 						])): ?>
@@ -133,7 +134,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 			<button class="navbar-toggler" type="button"
 			        data-bs-toggle="collapse" data-bs-target="#topNavbarMenu"
 			        aria-controls="topNavbarMenu" aria-expanded="false"
-			        aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOGGLE_NAVIGATION') ?>">
+			        aria-label="<?= $text->text('PANOPTICON_APP_LBL_TOGGLE_NAVIGATION') ?>">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 		<?php endif ?>
@@ -151,7 +152,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 <?php // Toolbar / page title ?>
 <?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
 	<section class="navbar container-xl bg-secondary py-3 px-2 d-print-none" id="toolbar" data-bs-theme="dark"
-	         aria-label="<?= Text::_('PANOPTICON_APP_LBL_TOOLBAR') ?>">
+	         aria-label="<?= $text->text('PANOPTICON_APP_LBL_TOOLBAR') ?>">
 		<div class="ms-2 me-auto d-flex flex-row gap-2">
 			<?= TemplateHelper::getRenderedToolbarButtons() ?>
 		</div>
@@ -167,7 +168,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 <main class="container-xl py-2 min-vh-100">
 	<?php // Messages ?>
 	<?php if ($messages = TemplateHelper::getRenderedMessages()): ?>
-		<section aria-label="<?= Text::_('PANOPTICON_APP_LBL_MESSAGES') ?>">
+		<section aria-label="<?= $text->text('PANOPTICON_APP_LBL_MESSAGES') ?>">
 			<?= $messages ?>
 		</section>
 	<?php endif ?>
@@ -176,7 +177,7 @@ $themeColor    = TemplateHelper::getThemeColour();
 
 <?php if (!$isBareDisplay): ?>
 	<footer class="container-xl bg-dark text-light p-3 pb-3 text-light small sticky-bottom d-print-none" data-bs-theme="dark">
-		<?= Text::_('PANOPTICON_APP_TITLE') ?> <?= Version::create(AKEEBA_PANOPTICON_VERSION)->shortVersion(true) ?><?php if (Version::create(AKEEBA_PANOPTICON_VERSION)->hasTag()): ?><span class="text-muted small">.<?= Version::create(AKEEBA_PANOPTICON_VERSION)->tag() ?></span><?php endif; ?>
+		<?= $text->text('PANOPTICON_APP_TITLE') ?> <?= Version::create(AKEEBA_PANOPTICON_VERSION)->shortVersion(true) ?><?php if (Version::create(AKEEBA_PANOPTICON_VERSION)->hasTag()): ?><span class="text-muted small">.<?= Version::create(AKEEBA_PANOPTICON_VERSION)->tag() ?></span><?php endif; ?>
 		<?php if ($isDebug): ?>
 			<span class="text-body-tertiary">on</span>
 			<span class="text-muted">PHP <?= PHP_VERSION ?>
@@ -193,22 +194,22 @@ $themeColor    = TemplateHelper::getThemeColour();
 	<footer class="container-xl bg-dark text-light p-3 pt-1 text-light small d-print-none" data-bs-theme="dark">
 		<div class="d-flex flex-column">
 			<p class="mb-2">
-				<?= Text::sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>
+				<?= $text->sprintf('PANOPTICON_APP_LBL_COPYRIGHT', date('Y')) ?>
 			</p>
 			<p class="mb-2">
-				<?= Text::sprintf('PANOPTICON_APP_LBL_LICENSE', Text::_('PANOPTICON_APP_TITLE')) ?>
+				<?= $text->sprintf('PANOPTICON_APP_LBL_LICENSE', $text->text('PANOPTICON_APP_TITLE')) ?>
 			</p>
 				<div class="mt-0 mb-0 text-muted d-flex flex-row gap-2">
 					<div>
 						<span class="fab fa-github text-white" aria-hidden="true"></span>
 						<a href="https://github.com/akeeba/panopticon" target="_blank">
-							<?= Text::_('PANOPTICON_APP_LBL_SOURCE_CODE') ?>
+							<?= $text->text('PANOPTICON_APP_LBL_SOURCE_CODE') ?>
 						</a>
 					</div>
 					<div>
 						<span class="fa fa-language text-white" aria-hidden="true"></span>
 						<a href="https://akee.ba/panlang" target="_blank">
-							<?= Text::_('PANOPTICON_APP_LBL_LANGUAGES') ?>
+							<?= $text->text('PANOPTICON_APP_LBL_LANGUAGES') ?>
 						</a>
 					</div>
 					<div>
@@ -219,20 +220,20 @@ $themeColor    = TemplateHelper::getThemeColour();
 					</div>
 					<?php if ($isDebug): ?>
 					<div>
-						<span class="fa fa-clock" title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?>"
+						<span class="fa fa-clock" title="<?= $text->text('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?>"
 						      aria-hidden="true"></span>
 						<span
-							class="visually-hidden"><?= Text::_('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?></span>
+							class="visually-hidden"><?= $text->text('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?></span>
 						<?= sprintf('%0.3f', $this->getApplication()->getTimeElapsed()) ?> <abbr
-							title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_SECONDS') ?>">s</abbr>
+							title="<?= $text->text('PANOPTICON_APP_LBL_DEBUG_SECONDS') ?>">s</abbr>
 					</div>
 
 					<div>
-						<span class="fa fa-memory" title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_PEAK_MEM_USAGE') ?>"
+						<span class="fa fa-memory" title="<?= $text->text('PANOPTICON_APP_LBL_DEBUG_PEAK_MEM_USAGE') ?>"
 						      aria-hidden="true"></span>
-						<span class="visually-hidden"><?= Text::_('PANOPTICON_APP_LBL_DEBUG_PEAK_MEM_USAGE') ?></span>
+						<span class="visually-hidden"><?= $text->text('PANOPTICON_APP_LBL_DEBUG_PEAK_MEM_USAGE') ?></span>
 						<?= sprintf('%0.1f', memory_get_peak_usage() / 1048576) ?> <abbr
-							title="<?= Text::_('PANOPTICON_APP_LBL_DEBUG_MEGABYTES') ?>">MiB</abbr>
+							title="<?= $text->text('PANOPTICON_APP_LBL_DEBUG_MEGABYTES') ?>">MiB</abbr>
 					</div>
 					<?php endif; ?>
 				</div>

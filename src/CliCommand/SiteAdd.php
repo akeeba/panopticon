@@ -17,7 +17,6 @@ use Akeeba\Panopticon\Model\Sites;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Awf\Input\Filter;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use RuntimeException;
 use stdClass;
@@ -77,7 +76,7 @@ class SiteAdd extends AbstractCommand
 		// Basic validation rules
 		if (empty($token))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_SITES_ERR_NO_TOKEN'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_ERR_NO_TOKEN'));
 		}
 
 		// Check if the URL already exists

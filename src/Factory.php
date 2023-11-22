@@ -7,6 +7,8 @@
 
 namespace Akeeba\Panopticon;
 
+use Awf\Text\Text;
+
 defined('AKEEBA') || die;
 
 class Factory
@@ -17,9 +19,16 @@ class Factory
 
 	public static function getContainer(): Container
 	{
+		$firstRun = empty(self::$container);
+
 		self::$container ??=
 			(function_exists('user_get_container') ? user_get_container() : null)
 			?? new Container();
+
+		if ($firstRun)
+		{
+			Text::setContainer(self::$container);
+		}
 
 		return self::$container;
 	}

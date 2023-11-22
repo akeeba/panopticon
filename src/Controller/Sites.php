@@ -26,7 +26,6 @@ use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataController;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -81,7 +80,7 @@ class Sites extends DataController
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_ERR_COREUPDATESITEFIX_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_COREUPDATESITEFIX_FAILED', $e->getMessage());
 		}
 
 		try
@@ -141,12 +140,12 @@ class Sites extends DataController
 			$this->doRefreshSiteInformation($site);
 
 			$type    = 'info';
-			$message = Text::_('PANOPTICON_SITE_LBL_REFRESHED_OK');
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_REFRESHED_OK');
 		}
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_ERR_REFRESHED_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_REFRESHED_FAILED', $e->getMessage());
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -192,12 +191,12 @@ class Sites extends DataController
 			$this->doRefreshExtensionsInformation($site);
 
 			$type    = 'info';
-			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSIONS_REFRESHED_OK');
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_EXTENSIONS_REFRESHED_OK');
 		}
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_ERR_EXTENSIONS_REFRESHED_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_EXTENSIONS_REFRESHED_FAILED', $e->getMessage());
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -253,12 +252,12 @@ class Sites extends DataController
 			$site->save();
 
 			$type    = 'info';
-			$message = Text::_('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_OK');
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_OK');
 		}
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_ERR_JUPDATE_SCHEDULE_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_JUPDATE_SCHEDULE_FAILED', $e->getMessage());
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -328,7 +327,7 @@ class Sites extends DataController
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_ERR_JUPDATE_UNSCHEDULE_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_JUPDATE_UNSCHEDULE_FAILED', $e->getMessage());
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -384,12 +383,12 @@ class Sites extends DataController
 			$task->delete();
 
 			$type    = 'info';
-			$message = Text::_('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_CLEARED');
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_CLEARED');
 		}
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage());
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -456,12 +455,12 @@ class Sites extends DataController
 			}
 
 			$type    = 'info';
-			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_CLEARED');
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_CLEARED');
 		}
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf(
+			$message = $this->getLanguage()->sprintf(
 				'PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage()
 			);
 		}
@@ -520,12 +519,12 @@ class Sites extends DataController
 			$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
 
 			$type    = 'info';
-			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_OK');
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_OK');
 		}
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -578,12 +577,12 @@ class Sites extends DataController
 			}
 
 			$type    = 'info';
-			$message = Text::_('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_OK');
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_OK');
 		}
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = Text::sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -622,7 +621,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		// Does the site record exist?
@@ -665,7 +664,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		// Does the site record exist?
@@ -778,7 +777,7 @@ class Sites extends DataController
 				: $router->route(
 					'index.php?&view=' . Inflector::pluralize($this->view)
 				);
-			$this->setRedirect($url, Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 'error');
+			$this->setRedirect($url, $this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 'error');
 
 			$this->redirect();
 
@@ -830,7 +829,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model, true))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		return parent::onBeforeApply();
@@ -873,7 +872,7 @@ class Sites extends DataController
 
 		if (!$this->canAddEditOrSave($model, true))
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		return parent::onBeforeSave();
@@ -1032,7 +1031,7 @@ class Sites extends DataController
 
 			if (empty($token))
 			{
-				throw new RuntimeException(Text::_('PANOPTICON_SITES_ERR_NO_TOKEN'));
+				throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_ERR_NO_TOKEN'));
 			}
 
 			$config = new Registry($model?->config ?? '{}');
@@ -1123,7 +1122,7 @@ class Sites extends DataController
 			 */
 			if (!$canAdmin && ($canEditOwn || $canAddOwn) && ($user->getId() !== $model->created_by))
 			{
-				throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+				throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 			}
 
 			// Get the connection-relevant information AFTER making changes to the site
@@ -1203,13 +1202,13 @@ class Sites extends DataController
 		{
 			$status = false;
 			$this->container->segment->setFlash('site_connection_error', get_class($e));
-			$error = Text::_('PANOPTICON_SITES_ERR_CONNECTION_ERROR');
+			$error = $this->getLanguage()->text('PANOPTICON_SITES_ERR_CONNECTION_ERROR');
 		}
 		catch (GuzzleException $e)
 		{
 			$status = false;
 			$this->container->segment->setFlash('site_connection_error', GuzzleException::class);
-			$error = Text::_('PANOPTICON_SITES_ERR_CONNECTION_ERROR');
+			$error = $this->getLanguage()->text('PANOPTICON_SITES_ERR_CONNECTION_ERROR');
 		}
 		catch (Throwable $e)
 		{

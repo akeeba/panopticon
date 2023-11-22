@@ -11,7 +11,6 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\DataController;
-use Awf\Text\Text;
 use Awf\Utils\ArrayHelper;
 use RuntimeException;
 
@@ -123,7 +122,7 @@ class Users extends DataController
 
 				if (empty($username))
 				{
-					throw new RuntimeException(Text::_('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'), 403);
+					throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'), 403);
 				}
 
 				// Is there another user by the same username?
@@ -133,7 +132,7 @@ class Users extends DataController
 					) !== null)
 				{
 					throw new RuntimeException(
-						Text::sprintf('PANOPTICON_USERS_ERR_USERNAME_EXISTS', htmlentities($username)), 403
+						$this->getLanguage()->sprintf('PANOPTICON_USERS_ERR_USERNAME_EXISTS', htmlentities($username)), 403
 					);
 				}
 
@@ -152,11 +151,11 @@ class Users extends DataController
 
 				if ($isNewUser && ($emptyPassword || $emptyPassword2))
 				{
-					throw new RuntimeException(Text::_('PANOPTICON_USERS_ERR_NEEDS_PASSWORD'), 403);
+					throw new RuntimeException($this->getLanguage()->text('PANOPTICON_USERS_ERR_NEEDS_PASSWORD'), 403);
 				}
 				elseif (!$passwordsMatch)
 				{
-					throw new RuntimeException(Text::_('PANOPTICON_USERS_ERR_PASSWORD_MISMATCH'), 403);
+					throw new RuntimeException($this->getLanguage()->text('PANOPTICON_USERS_ERR_PASSWORD_MISMATCH'), 403);
 				}
 
 				$savedUser->setPassword($password);
@@ -167,7 +166,7 @@ class Users extends DataController
 
 			if (empty($name))
 			{
-				throw new RuntimeException(Text::_('PANOPTICON_USERS_ERR_EMPTY_NAME'), 403);
+				throw new RuntimeException($this->getLanguage()->text('PANOPTICON_USERS_ERR_EMPTY_NAME'), 403);
 			}
 
 			$savedUser->setName($name);
@@ -179,7 +178,7 @@ class Users extends DataController
 			if (!$validishEmail)
 			{
 				$this->container->application->enqueueMessage(
-					Text::sprintf('PANOPTICON_USERS_ERR_INVALID_EMAIL', htmlentities($email)), 'warning'
+					$this->getLanguage()->sprintf('PANOPTICON_USERS_ERR_INVALID_EMAIL', htmlentities($email)), 'warning'
 				);
 			}
 
@@ -201,7 +200,7 @@ class Users extends DataController
 						'panopticon.super', $permissions
 					))
 				{
-					throw new RuntimeException(Text::_('PANOPTICON_USERS_ERR_CANT_REMOVE_SELF_SUPER'), 403);
+					throw new RuntimeException($this->getLanguage()->text('PANOPTICON_USERS_ERR_CANT_REMOVE_SELF_SUPER'), 403);
 				}
 
 				foreach (['super', 'admin', 'view', 'run', 'addown', 'editown'] as $k)

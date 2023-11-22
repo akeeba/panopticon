@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\View\Main;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Usagestats;
 use Awf\Pagination\Pagination;
-use Awf\Text\Text;
 use Awf\Utils\Template;
 
 defined('AKEEBA') || die;
@@ -69,7 +68,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition([
 				'id'    => 'prev',
-				'title' => Text::_('PANOPTICON_BTN_PREV'),
+				'title' => $this->getLanguage()->text('PANOPTICON_BTN_PREV'),
 				'class' => 'btn btn-secondary border-light',
 				'url'   => $this->container->router->route('index.php'),
 				'icon'  => 'fa fa-chevron-left',
@@ -94,10 +93,10 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		// Toolbar
 		$toolbar = $doc->getToolbar();
-		$toolbar->setTitle(Text::_('PANOPTICON_MAIN_TITLE'));
+		$toolbar->setTitle($this->getLanguage()->text('PANOPTICON_MAIN_TITLE'));
 		$toolbar->addButtonFromDefinition([
 			'id'      => 'manageSites',
-			'title' => Text::_('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE'),
+			'title' => $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE'),
 			'class' => 'btn btn-secondary border-light',
 			'url'   => $this->container->router->route('index.php?view=sites'),
 			'icon'  => 'fa fa-gears',

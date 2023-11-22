@@ -7,8 +7,6 @@
 
 defined('AKEEBA') || die;
 
-use Awf\Text\Text;
-
 /**
  * @var \Akeeba\Panopticon\View\Main\Html $this
  */
@@ -34,7 +32,7 @@ use Awf\Text\Text;
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_HOSTNAME')
                 </th>
                 <td>
-                    {{{ $_SERVER['HTTP_HOST'] ?: '<span class="badge bg-danger">' . Text::_('PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL') . '</span>' }}}
+                    {{{ $_SERVER['HTTP_HOST'] ?: '<span class="badge bg-danger">' . $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL') . '</span>' }}}
                 </td>
             </tr>
             <tr>
@@ -43,7 +41,7 @@ use Awf\Text\Text;
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_IP')
                 </th>
                 <td>
-                    {{{ gethostbyname($_SERVER['HTTP_HOST']) ?: '<span class="badge bg-danger">' . Text::_('PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL') . '</span>' }}}
+                    {{{ gethostbyname($_SERVER['HTTP_HOST']) ?: '<span class="badge bg-danger">' . $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL') . '</span>' }}}
                 </td>
             </tr>
             <tr>
@@ -52,7 +50,7 @@ use Awf\Text\Text;
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_SYS_HOSTNAME')
                 </th>
                 <td>
-                    {{{ php_uname('n') ?: '<span class="badge bg-danger">' . Text::_('PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL') . '</span>' }}}
+                    {{{ php_uname('n') ?: '<span class="badge bg-danger">' . $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL') . '</span>' }}}
                 </td>
             </tr>
             <tr>
@@ -61,7 +59,7 @@ use Awf\Text\Text;
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_SYS_IP')
                 </th>
                 <td>
-                    {{{ gethostbyname(php_uname('n')) ?: '<span class="badge bg-danger">' . Text::_('PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL') . '</span>' }}}
+                    {{{ gethostbyname(php_uname('n')) ?: '<span class="badge bg-danger">' . $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL') . '</span>' }}}
                 </td>
             </tr>
             <tr>

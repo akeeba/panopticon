@@ -14,7 +14,6 @@ use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataView\Html as BaseHtml;
-use Awf\Text\Text;
 use Awf\Utils\Template;
 
 /**
@@ -35,7 +34,7 @@ class Html extends BaseHtml
 
 	public function onBeforeMain(): bool
 	{
-		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
 
 		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
 		$limit = $this->getModel()->getState('limit', 50, 'int');
@@ -54,7 +53,7 @@ class Html extends BaseHtml
 
 	public function onBeforeRead(): bool
 	{
-		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_READ'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE_READ'));
 		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=logs')]);
 
 		/** @var Log $model */

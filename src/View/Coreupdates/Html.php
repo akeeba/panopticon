@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
-use Awf\Text\Text;
 
 class Html extends BaseHtmlView
 {
@@ -23,7 +22,7 @@ class Html extends BaseHtmlView
 		$this->addButtonFromDefinition(
 			[
 				'id'      => 'updateSelected',
-				'title'   => Text::_('PANOPTICON_COREUPDATES_BTN_UPDATE'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_COREUPDATES_BTN_UPDATE'),
 				'class'   => 'btn btn-success',
 				'onClick' => 'akeeba.System.submitForm(\'scheduledUpdates\')',
 				'icon'    => 'fa fa-wand-magic-sparkles',
@@ -32,14 +31,14 @@ class Html extends BaseHtmlView
 		$this->addButtonFromDefinition(
 			[
 				'id'      => 'cancelSelected',
-				'title'   => Text::_('PANOPTICON_COREUPDATES_BTN_CANCEL'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_COREUPDATES_BTN_CANCEL'),
 				'class'   => 'btn btn-danger',
 				'onClick' => 'akeeba.System.submitForm(\'cancelUpdates\')',
 				'icon'    => 'fa fa-stop',
 			]
 		);
 
-		$this->setTitle(Text::_('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
 
 		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
 		$limit = $this->getModel()->getState('limit', 50, 'int');

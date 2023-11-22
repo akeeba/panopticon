@@ -10,8 +10,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Main\Html;
-use Awf\Date\Date;
-use Awf\Text\Text;
 
 /**
  * @var Html                  $this
@@ -60,7 +58,7 @@ $phpVersion = new PhpVersion;
     <span class="badge bg-secondary-subtle">Unknown</span>
 @elseif ($phpVersion->isEOL($php))
     <?php $eolDate = ($this->container->dateFactory($phpVersion->getVersionInformation($php)->dates->eol->format(DATE_RFC3339)))
-        ->format(Text::_('DATE_FORMAT_LC3')) ?>
+        ->format($this->getLanguage()->text('DATE_FORMAT_LC3')) ?>
     <div class="text-danger"
          data-bs-toggle="tooltip" data-bs-placement="bottom"
          data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE', $eolDate)
@@ -71,7 +69,7 @@ $phpVersion = new PhpVersion;
     </div>
 @elseif ($phpVersion->isSecurity($php))
     <?php $eolDate = ($this->container->dateFactory($phpVersion->getVersionInformation($php)->dates->eol->format(DATE_RFC3339)))
-		->format(Text::_('DATE_FORMAT_LC3')) ?>
+		->format($this->getLanguage()->text('DATE_FORMAT_LC3')) ?>
     <div class="text-body-tertiary"
          data-bs-toggle="tooltip" data-bs-placement="bottom"
          data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_SECURITY_MAINTENANCE', $eolDate)"

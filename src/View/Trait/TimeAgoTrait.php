@@ -8,7 +8,6 @@
 namespace Akeeba\Panopticon\View\Trait;
 
 use Awf\Date\Date;
-use Awf\Text\Text;
 use DateTime;
 
 defined('AKEEBA') || die;
@@ -97,10 +96,10 @@ trait TimeAgoTrait
 
 		if ($referenceTimestamp != 0)
 		{
-			return Text::sprintf($textSuffix, Text::plural($calc[$effectiveTimeUnit][1], $timeDifference));
+			return $this->getLanguage()->sprintf($textSuffix, $this->getLanguage()->plural($calc[$effectiveTimeUnit][1], $timeDifference));
 		}
 
-		return Text::_('PANOPTICON_LBL_RELTIME_NO_REFERENCE');
+		return $this->getLanguage()->text('PANOPTICON_LBL_RELTIME_NO_REFERENCE');
 	}
 
 }

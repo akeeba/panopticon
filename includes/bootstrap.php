@@ -30,5 +30,9 @@ BootstrapUtilities::conditionallyForceBladeRecompilation();
 BootstrapUtilities::applyLoadBalancerConfiguration();
 BootstrapUtilities::applyCustomCAFile();
 
+// Load the configuration file, if it exists
+BootstrapUtilities::loadConfiguration();
+BootstrapUtilities::setUpUserManager();
+
 // Apply user-supplied code and miscellaneous files
 BootstrapUtilities::loadUserCode();

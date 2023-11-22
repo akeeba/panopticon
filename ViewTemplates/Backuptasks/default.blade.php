@@ -8,10 +8,7 @@
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Task\Status;
-use Awf\Html\Select;
 use Awf\Registry\Registry;
-use Awf\Html\Html as HtmlHelper;
-use Awf\Text\Text;
 
 /**
  * @var \Akeeba\Panopticon\View\Backuptasks\Html $this
@@ -50,7 +47,7 @@ $profileOptions = $this->getProfileOptions();
             <div>
                 <label class="visually-hidden" for="profile">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
                 {{ $this->container->html->select->genericList(
-	                array_merge(['' => Text::_('PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE')], $profileOptions),
+	                array_merge(['' => $this->getLanguage()->text('PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE')], $profileOptions),
 	                'profile',
 	                [
 						'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
@@ -276,7 +273,7 @@ $profileOptions = $this->getProfileOptions();
                                   data-bs-title="@lang('PANOPTICON_TASKS_LBL_LAST_RUN')"
                             ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_TASKS_LBL_LAST_RUN')</span>
-                            {{ $task->last_execution ? $this->getContainer()->html->basic->date($task->last_execution, Text::_('DATE_FORMAT_LC6') . ' T') : '&mdash;' }}
+                            {{ $task->last_execution ? $this->getContainer()->html->basic->date($task->last_execution, $this->getLanguage()->text('DATE_FORMAT_LC6') . ' T') : '&mdash;' }}
                         </div>
                     @endif
                     @if ($task->enabled)
@@ -286,7 +283,7 @@ $profileOptions = $this->getProfileOptions();
                                   data-bs-title="@lang('PANOPTICON_TASKS_LBL_NEXT_RUN')"
                             ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_TASKS_LBL_NEXT_RUN')</span>
-                            {{ $task->next_execution ? $this->getContainer()->html->basic->date($task->next_execution, Text::_('DATE_FORMAT_LC6') . ' T') : '&mdash;' }}
+                            {{ $task->next_execution ? $this->getContainer()->html->basic->date($task->next_execution, $this->getLanguage()->text('DATE_FORMAT_LC6') . ' T') : '&mdash;' }}
                         </div>
                     @endif
                     @if ($duration = $task->getDuration())

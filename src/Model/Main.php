@@ -14,7 +14,6 @@ use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
-use Awf\Text\Text;
 
 /**
  * Main Page Model. Used to get the sites overview information.
@@ -209,7 +208,7 @@ class Main extends Model
 		{
 			$ret = array_combine(
 				array_merge([''], array_keys($ret)),
-				array_merge([Text::_($emptyLabel)], array_values($ret))
+				array_merge([$this->getLanguage()->text($emptyLabel)], array_values($ret))
 			);
 		}
 

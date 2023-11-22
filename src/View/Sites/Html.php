@@ -17,7 +17,6 @@ use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Mvc\DataView\Html as DataViewHtml;
-use Awf\Text\Text;
 use Awf\Utils\Template;
 use DateInterval;
 use DateTime;
@@ -81,7 +80,7 @@ class Html extends DataViewHtml
 		$this->setStrictLayout(true);
 		$this->setStrictTpl(true);
 
-		$this->setTitle(Text::_('PANOPTICON_SITES_LBL_DLKEY_EDIT_TITLE'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_LBL_DLKEY_EDIT_TITLE'));
 		$this->addButton(
 			'back', [
 				'url' => $this->container->router->route(
@@ -237,7 +236,7 @@ class Html extends DataViewHtml
 
 		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=main')]);
 
-		$this->setTitle(Text::_('PANOPTICON_SITES_TITLE_READ'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_TITLE_READ'));
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();
@@ -322,7 +321,7 @@ class Html extends DataViewHtml
 	protected function getOriginInformation(object $record): array
 	{
 		$originLanguageKey = 'PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_' . ($record?->origin ?? '');
-		$originDescription = Text::_($originLanguageKey);
+		$originDescription = $this->getLanguage()->text($originLanguageKey);
 
 		switch (strtolower($record?->origin ?? ''))
 		{
@@ -366,7 +365,7 @@ class Html extends DataViewHtml
 
 		if (empty($originLanguageKey) || ($originDescription == $originLanguageKey))
 		{
-			$originDescription = Text::_('PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_UNKNOWN');
+			$originDescription = $this->getLanguage()->text('PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_UNKNOWN');
 			$originIcon        = 'fa fa-question-circle';
 
 			return [$originDescription, $originIcon];
@@ -434,7 +433,7 @@ class Html extends DataViewHtml
 		$timeZoneSuffix = $startTime->format('T', true);
 
 		return [
-			is_null($startTime) ? '&nbsp;' : $startTime->format(Text::_('DATE_FORMAT_LC6'), true),
+			is_null($startTime) ? '&nbsp;' : $startTime->format($this->getLanguage()->text('DATE_FORMAT_LC6'), true),
 			$duration,
 			$timeZoneSuffix,
 		];
@@ -520,17 +519,17 @@ class Html extends DataViewHtml
 
 		if ($diff->y)
 		{
-			$out[] = Text::plural('PANOPTICON_LBL_YEAR', $diff->y);
+			$out[] = $this->getLanguage()->plural('PANOPTICON_LBL_YEAR', $diff->y);
 		}
 
 		if ($diff->m)
 		{
-			$out[] = Text::plural('PANOPTICON_LBL_MONTH', $diff->m);
+			$out[] = $this->getLanguage()->plural('PANOPTICON_LBL_MONTH', $diff->m);
 		}
 
 		if ($diff->d)
 		{
-			$out[] = Text::plural('PANOPTICON_LBL_DAY', $diff->d);
+			$out[] = $this->getLanguage()->plural('PANOPTICON_LBL_DAY', $diff->d);
 		}
 
 		if ($diff->h > 0 || $diff->i > 0)

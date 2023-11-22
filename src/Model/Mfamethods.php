@@ -7,12 +7,9 @@
 
 namespace Akeeba\Panopticon\Model;
 
-use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Helper;
 use Akeeba\Panopticon\Library\User\User;
-use Awf\Mvc\DataModel;
 use Awf\Mvc\Model;
-use Awf\Text\Text;
 use Exception;
 use RuntimeException;
 
@@ -100,7 +97,7 @@ class Mfamethods extends Model
 
 		if ($user->getId() <= 0)
 		{
-			throw new RuntimeException(Text::_('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		$db    = $this->container->db;
@@ -349,8 +346,8 @@ class Mfamethods extends Model
 		// We also need to add the backup codes method
 		$this->mfaMethods['backupcodes'] = [
 			'name'          => 'backupcodes',
-			'display'       => Text::_('PANOPTICON_MFA_LBL_BACKUPCODES'),
-			'shortinfo'     => Text::_('PANOPTICON_MFA_LBL_BACKUPCODES_DESCRIPTION'),
+			'display'       => $this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES'),
+			'shortinfo'     => $this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES_DESCRIPTION'),
 			'image'         => 'media/mfa/images/emergency.svg',
 			'canDisable'    => false,
 			'allowMultiple' => false,

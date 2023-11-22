@@ -215,38 +215,19 @@ class Application extends AWFApplication
 
 	public function initialise()
 	{
-		$this->getContainer()->html->grid->setJavascriptPrefix('akeeba.System.');
-
-		$this->discoverSessionSavePath();
-		$this->setTemplate('default');
-
-		$this->registerMultifactorAuthentication();
-
 		// Will I have to redirect to the setup page?
 		$redirectToSetup = $this->redirectToSetup();
 
-		/**
-		 * DO NOT MOVE BELOW THE USER MANAGER INSTANTIATION.
-		 *
-		 * I need to tell the user manager to use a custom User class. The only way to do that is through the
-		 * application configuration. Therefore, I need to load the application configuration, if it exists, before
-		 * instantiating the user manager object.
-		 */
-		if (!$redirectToSetup)
-		{
-			$this->container->appConfig->loadConfiguration();
-		}
+		// Set up the Grid JS prefix
+		$this->getContainer()->html->grid->setJavascriptPrefix('akeeba.System.');
 
-		// Apply custom template, if one is defined
+		// Initialisation
+		$this->discoverSessionSavePath();
+		$this->setTemplate('default');
+		$this->registerMultifactorAuthentication();
+
+		// Apply the custom template, if one is defined
 		$this->applyCustomTemplate();
-
-		// Load the languages
-		$this->loadLanguages();
-
-		// Configure the user manager
-		$this->container->appConfig->set('user_class', User::class);
-		$manager = $this->container->userManager;
-		$this->attachUserManagerPlugins($manager);
 
 		if (!$redirectToSetup)
 		{
@@ -272,6 +253,7 @@ class Application extends AWFApplication
 			}
 		}
 
+		// Load routing information (reserved for future use)
 		$this->loadRoutes();
 
 		// Show the login page when necessary
@@ -336,35 +318,6 @@ class Application extends AWFApplication
 		}
 	}
 
-	public function loadLanguages(): void
-	{
-		try
-		{
-			$defaultLanguage = $this->container->appConfig->get('language', 'en-GB');
-		}
-		catch (Exception $e)
-		{
-			$defaultLanguage = 'en-GB';
-		}
-
-		$detectedLanguage = Text::detectLanguage($this->container, '.ini', $this->container->languagePath);
-
-		// Always load the English (Great Britain) language. It contains all the strings.
-		Text::loadLanguage('en-GB', $this->container, '.ini', true, $this->container->languagePath);
-
-		// Load the site's default language, if it's different from en-GB.
-		if ($defaultLanguage != 'en-GB')
-		{
-			Text::loadLanguage($defaultLanguage, $this->container, '.ini', true, $this->container->languagePath);
-		}
-
-		// Load the auto-detected preferred language (per browser settings), as long as it's not one we already loaded.
-		if (!in_array($detectedLanguage, [$defaultLanguage, 'en-GB']))
-		{
-			Text::loadLanguage($detectedLanguage, $this->container, '.ini', true, $this->container->languagePath);
-		}
-	}
-
 	private function initialiseMenu(array $items = self::MAIN_MENU, ?Item $parent = null): void
 	{
 		$menu  = $this->getDocument()->getMenu();
@@ -402,7 +355,7 @@ class Application extends AWFApplication
 			$options = [
 				'show'         => $params['show'] ?? ['main'],
 				'name'         => $params['name'] ?? $params['view'],
-				'title'        => Text::_(
+				'title'        => $this->getLanguage()->text(
 					$params['title'] ?? sprintf('%s_%s_TITLE', $this->getName(), $params['view'])
 				),
 				'order'        => $params['order'] ?? $order,
@@ -740,7 +693,7 @@ class Application extends AWFApplication
 			] as $className
 		)
 		{
-			$o = new $className($dispatcher);
+			$o = new $className($dispatcher, $this->getContainer(), $this->getLanguage());
 		}
 	}
 

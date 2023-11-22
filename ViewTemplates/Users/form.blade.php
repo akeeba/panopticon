@@ -116,7 +116,7 @@ JS;
                             {{ $this->container->html->select->genericList(
                                 data: array_merge([(object) [
                                     'value' => '',
-                                    'text' => \Awf\Text\Text::_('PANOPTICON_SITES_LBL_GROUPS_PLACEHOLDER')
+                                    'text' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_GROUPS_PLACEHOLDER')
                                 ]], $this->getModel()->getGroupsForSelect()),
                                 name: 'groups[]',
                                 attribs: [

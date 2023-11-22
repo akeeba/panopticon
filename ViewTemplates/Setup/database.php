@@ -7,17 +7,15 @@
 
 defined('AKEEBA') or die;
 
-use Awf\Text\Text;
-
 /** @var \Akeeba\Panopticon\View\Setup\Html $this */
 
 ?>
 <p class="h4">
-	<?= Text::_('PANOPTICON_SETUP_SUBTITLE_DATABASE') ?>
+	<?= $this->getLanguage()->text('PANOPTICON_SETUP_SUBTITLE_DATABASE') ?>
 </p>
 
 <p class="mt-2 mb-5 col-lg-6">
-	<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_HEAD_TEXT') ?>
+	<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_HEAD_TEXT') ?>
 </p>
 
 <form action="<?= $this->container->router->route('index.php?view=setup&task=installDatabase') ?>"
@@ -26,78 +24,78 @@ use Awf\Text\Text;
 
 	<div class="row mb-3">
 		<label for="driver" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DRIVER') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DRIVER') ?>
 		</label>
 		<div class="col-sm-9">
 			<?= $this->getContainer()->helper->setup->databaseTypesSelect($this->connectionParameters['driver']) ?>
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DRIVER_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DRIVER_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="host-wrapper">
 		<label for="host" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_HOST') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_HOST') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="text" class="form-control" id="host" name="host"
 			       value="<?= $this->escape($this->connectionParameters['host']) ?>">
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_HOST_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_HOST_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="user-wrapper">
 		<label for="user" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_USER') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_USER') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="text" class="form-control" id="user" name="user"
 			       value="<?= $this->escape($this->connectionParameters['user']) ?>">
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_USER_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_USER_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="pass-wrapper">
 		<label for="pass" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_PASS') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_PASS') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="password" class="form-control" id="pass" name="pass"
 			       value="<?= $this->escape($this->connectionParameters['pass'])?>">
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_PASS_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_PASS_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="name-wrapper">
 		<label for="name" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_NAME') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_NAME') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="text" id="name" name="name" class="form-control"
 			       value="<?= $this->escape($this->connectionParameters['name'])?>">
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_NAME_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_NAME_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="prefix-wrapper">
 		<label for="prefix" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_PREFIX') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_PREFIX') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="text" id="prefix" name="prefix" class="form-control"
 			       value="<?= $this->escape($this->connectionParameters['prefix'])?>">
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_PREFIX_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_PREFIX_HELP') ?>
 		</div>
 	</div>
 
@@ -109,18 +107,18 @@ use Awf\Text\Text;
 					value="1"
 				>
 				<label for="dbencryption">
-					<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION') ?>
+					<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION') ?>
 				</label>
 			</div>
 		</div>
 		<div class="form-text">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="prefix-dbsslcipher" <?= $this->showOn('dbencryption:1') ?>>
 		<label for="dbsslcipher" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCIPHER') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCIPHER') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="text" id="dbsslcipher" name="dbsslcipher" class="form-control"
@@ -128,46 +126,46 @@ use Awf\Text\Text;
 			       value="<?= $this->escape($this->connectionParameters['ssl']['cipher'] ?? '')?>">
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCIPHER_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCIPHER_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="prefix-dbsslca" <?= $this->showOn('dbencryption:1') ?>>
 		<label for="dbsslca" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCA') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCA') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="text" id="dbsslca" name="dbsslca" class="form-control"
 			       value="<?= $this->escape($this->connectionParameters['ssl']['ca'] ?? '')?>">
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCA_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCA_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="prefix-dbsslkey" <?= $this->showOn('dbencryption:1') ?>>
 		<label for="dbsslkey" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="text" id="dbsslkey" name="dbsslkey" class="form-control"
 			       value=<?= $this->escape($this->connectionParameters['ssl']['key'] ?? '')?>>
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY_HELP') ?>
 		</div>
 	</div>
 
 	<div class="row mb-3" id="prefix-dbsslcert" <?= $this->showOn('dbencryption:1') ?>>
 		<label for="dbsslcert" class="col-sm-3 col-form-label">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCERT') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCERT') ?>
 		</label>
 		<div class="col-sm-9">
 			<input type="text" id="dbsslcert" name="dbsslcert" class="form-control"
 			       value="<?= $this->escape($this->connectionParameters['ssl']['cert'] ?? '')?>">
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCERT_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLCERT_HELP') ?>
 		</div>
 	</div>
 
@@ -179,12 +177,12 @@ use Awf\Text\Text;
 				       value="1"
 				>
 				<label for="dbsslverifyservercert">
-					<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLVERIFYSERVERCERT') ?>
+					<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLVERIFYSERVERCERT') ?>
 				</label>
 			</div>
 		</div>
 		<div class="form-text collapse">
-			<?= Text::_('PANOPTICON_SETUP_LBL_DATABASE_DBSSLVERIFYSERVERCERT_HELP') ?>
+			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_DATABASE_DBSSLVERIFYSERVERCERT_HELP') ?>
 		</div>
 	</div>
 
@@ -193,7 +191,7 @@ use Awf\Text\Text;
 			<button type="submit" id="dbFormSubmit"
 			        class="btn btn-primary">
 				<span class="fa fa-chevron-right" aria-hidden="true"></span>
-				<?= Text::_('PANOPTICON_BTN_NEXT') ?>
+				<?= $this->getLanguage()->text('PANOPTICON_BTN_NEXT') ?>
 			</button>
 		</div>
 	</div>

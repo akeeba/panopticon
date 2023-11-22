@@ -9,8 +9,6 @@
 
 defined('AKEEBA') || die;
 
-use Awf\Text\Text;
-
 /**
  * @var \Akeeba\Panopticon\View\Main\Html $this
  * @var \Akeeba\Panopticon\Model\Site $model
@@ -91,7 +89,7 @@ $isFiltered = array_reduce(
                 <label class="form-label" for="cmsFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
+                        '' => $this->getLanguage()->text('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
                     ], $mainModel->getKnownJoomlaVersions()),
                     'cmsFamily',
                     [
@@ -106,7 +104,7 @@ $isFiltered = array_reduce(
                 <label class="form-label" for="phpFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => Text::_('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
+                        '' => $this->getLanguage()->text('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
                     ], $mainModel->getKnownPHPVersions()),
                     'phpFamily',
                     [

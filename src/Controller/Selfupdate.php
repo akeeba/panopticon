@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Awf\Mvc\Controller;
-use Awf\Text\Text;
 
 class Selfupdate extends Controller
 {
@@ -85,7 +84,7 @@ class Selfupdate extends Controller
 
 			$this->setRedirect(
 				$url,
-				Text::_('PANOPTICON_SELFUPDATE_ERR_DOWNLOADFAILED') . ' ' . $e->getMessage()
+				$this->getLanguage()->text('PANOPTICON_SELFUPDATE_ERR_DOWNLOADFAILED') . ' ' . $e->getMessage()
 			);
 		}
 
@@ -113,7 +112,7 @@ class Selfupdate extends Controller
 
 			$this->setRedirect(
 				$url,
-				Text::_('PANOPTICON_SELFUPDATE_ERR_EXTRACTFAILED') . ' ' . $e->getMessage()
+				$this->getLanguage()->text('PANOPTICON_SELFUPDATE_ERR_EXTRACTFAILED') . ' ' . $e->getMessage()
 			);
 		}
 
@@ -139,11 +138,13 @@ class Selfupdate extends Controller
 
 			$this->setRedirect(
 				$url,
-				Text::_('PANOPTICON_SELFUPDATE_ERR_POSTINSTALLFAILED') . ' ' . $e->getMessage()
+				$this->getLanguage()->text('PANOPTICON_SELFUPDATE_ERR_POSTINSTALLFAILED') . ' ' . $e->getMessage()
 			);
 		}
 
-		$url = $this->container->router->route('index.php?view=selfupdate', Text::_('PANOPTICON_SELFUPDATE_LBL_SUCCESS'));
+		$url = $this->container->router->route(
+			'index.php?view=selfupdate', $this->getLanguage()->text('PANOPTICON_SELFUPDATE_LBL_SUCCESS')
+		);
 
 		$this->setRedirect($url);
 	}

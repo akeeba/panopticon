@@ -11,7 +11,6 @@ namespace Akeeba\Panopticon\Controller;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Awf\Mvc\Controller;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 
 defined('AKEEBA') || die;
@@ -83,7 +82,7 @@ class Extupdates extends Controller
 		// If I do not have any extensions left, redirect with an error
 		if (empty($extensionIDs))
 		{
-			$this->setRedirect($returnUri, Text::_('PANOPTICON_EXTUPDATES_ERR_INVALID_SELECTION'), 'error');
+			$this->setRedirect($returnUri, $this->getLanguage()->text('PANOPTICON_EXTUPDATES_ERR_INVALID_SELECTION'), 'error');
 		}
 
 		// Schedule the updates
@@ -113,7 +112,7 @@ class Extupdates extends Controller
 			}
 		}
 
-		$message = Text::plural('PANOPTICON_EXTUPDATES_LBL_SCHEDULED_N', $numScheduled);
+		$message = $this->getLanguage()->plural('PANOPTICON_EXTUPDATES_LBL_SCHEDULED_N', $numScheduled);
 		$messageType = $numScheduled ? 'success' : 'warning';
 
 		$this->setRedirect($returnUri, $message, $messageType);

@@ -9,19 +9,40 @@ namespace Akeeba\Panopticon\Library\MultiFactorAuth\Plugin;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Container;
+use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Model\Mfa;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
+use Awf\Event\Observable;
 use Awf\Event\Observer;
 use Awf\Input\Input;
+use Awf\Text\Language;
+use Awf\Text\LanguageAwareInterface;
+use Awf\Text\LanguageAwareTrait;
 use Awf\Text\Text;
 use RuntimeException;
 use stdClass;
 
-class FixedCodeDemo extends Observer
+class FixedCodeDemo
+	extends Observer
+	implements ContainerAwareInterface, LanguageAwareInterface
 {
+	use ContainerAwareTrait;
+	use LanguageAwareTrait;
+
 	private const METHOD_NAME = 'fixed';
 
 	private const HELP_URL = 'https://github.com/akeeba/panopticon/wiki/MFA-Fixed-Code';
+
+	public function __construct(Observable &$subject, ?Container $container = null, ?Language $language = null)
+	{
+		parent::__construct($subject);
+
+		$this->setContainer($container ?? Factory::getContainer());
+		$this->setLanguage($language ?? $this->getContainer()->language);
+	}
 
 	/**
 	 * Gets the identity of this TFA method
@@ -34,9 +55,9 @@ class FixedCodeDemo extends Observer
 			// Internal code of this TFA method
 			'name'          => self::METHOD_NAME,
 			// User-facing name for this TFA method
-			'display'       => Text::_('PANOPTICON_MFA_FIXED_LBL_DISPLAYEDAS'),
+			'display'       => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_DISPLAYEDAS'),
 			// Short description of this TFA method displayed to the user
-			'shortinfo'     => Text::_('PANOPTICON_MFA_FIXED_LBL_SHORTINFO'),
+			'shortinfo'     => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_SHORTINFO'),
 			// URL to the logo image for this method
 			'image'         => 'media/mfa/images/fixed.svg',
 			// Are we allowed to disable it?
@@ -67,19 +88,19 @@ class FixedCodeDemo extends Observer
 
 		return [
 			// Custom HTML to display above the TFA form
-			'pre_message'  => Text::_('PANOPTICON_MFA_FIXED_LBL_PREMESSAGE'),
+			'pre_message'  => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_PREMESSAGE'),
 			// How to render the TFA code field. "input" (HTML input element) or "custom" (custom HTML)
 			'field_type'   => 'input',
 			// The type attribute for the HTML input box. Typically, "text" or "password". Use any HTML5 input type.
 			'input_type'   => 'password',
 			// Placeholder text for the HTML input box. Leave empty if you don't need it.
-			'placeholder'  => Text::_('PANOPTICON_MFA_FIXED_LBL_PLACEHOLDER'),
+			'placeholder'  => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_PLACEHOLDER'),
 			// Label to show above the HTML input box. Leave empty if you don't need it.
-			'label'        => Text::_('PANOPTICON_MFA_FIXED_LBL_LABEL'),
+			'label'        => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_LABEL'),
 			// Custom HTML. Only used when field_type = custom.
 			'html'         => '',
 			// Custom HTML to display below the TFA form
-			'post_message' => Text::_('PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE'),
+			'post_message' => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE'),
 			// URL for help content
 			'help_url'     => self::HELP_URL,
 		];
@@ -119,9 +140,9 @@ class FixedCodeDemo extends Observer
 		 */
 		return [
 			// Default title if you are setting up this TFA method for the first time
-			'default_title'  => Text::_('PANOPTICON_MFA_FIXED_LBL_DEFAULTTITLE'),
+			'default_title'  => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_DEFAULTTITLE'),
 			// Custom HTML to display above the TFA setup form
-			'pre_message'    => Text::_('PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE'),
+			'pre_message'    => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE'),
 			// Heading for displayed tabular data. Typically used to display a list of fixed TFA codes, TOTP setup parameters etc
 			'table_heading'  => '',
 			// Any tabular data to display (label => custom HTML). See above
@@ -135,9 +156,9 @@ class FixedCodeDemo extends Observer
 			// Pre-filled value for the HTML input box. Typically used for fixed codes, the fixed YubiKey ID etc.
 			'input_value'    => $options->fixed_code,
 			// Placeholder text for the HTML input box. Leave empty if you don't need it.
-			'placeholder'    => Text::_('PANOPTICON_MFA_FIXED_LBL_PLACEHOLDER'),
+			'placeholder'    => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_PLACEHOLDER'),
 			// Label to show above the HTML input box. Leave empty if you don't need it.
-			'label'          => Text::_('PANOPTICON_MFA_FIXED_LBL_LABEL'),
+			'label'          => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_LABEL'),
 			// Custom HTML. Only used when field_type = custom.
 			'html'           => '',
 			// Should I show the submit button (apply the TFA setup)? Only applies in the Add page.
@@ -145,7 +166,7 @@ class FixedCodeDemo extends Observer
 			// onclick handler for the submit button (apply the TFA setup)?
 			'submit_onclick' => '',
 			// Custom HTML to display below the TFA setup form
-			'post_message'   => Text::_('PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE'),
+			'post_message'   => $this->getLanguage()->text('PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE'),
 			// URL for help content
 			'help_url'       => self::HELP_URL,
 		];
@@ -183,7 +204,7 @@ class FixedCodeDemo extends Observer
 		// Make sure the code is not empty
 		if (empty($code))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_MFA_FIXED_ERR_EMPTYCODE'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_MFA_FIXED_ERR_EMPTYCODE'));
 		}
 
 		// Return the configuration to be serialized

@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Helper as MfaHelper;
 use Awf\Mvc\DataModel;
-use Awf\Text\Text;
 use Joomla\Database\ParameterType;
 use RuntimeException;
 
@@ -155,7 +154,7 @@ class Mfa extends DataModel
 		// You can only delete your own records, unless you're a superuser
 		if (($record->user_id != $user->getId()) && !MfaHelper::canEditUser($user))
 		{
-			throw new RuntimeException(Text::_('canEditUser'), 403);
+			throw new RuntimeException($this->getLanguage()->text('canEditUser'), 403);
 		}
 
 		// Save flags used onAfterDelete

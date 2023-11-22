@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 
 $user                 = $this->container->userManager->getUser();
 $config               = $this->item->getConfig();
@@ -25,7 +24,7 @@ $lastUpdateTimestamp = function () use ($config): string
 {
 	$timestamp = $config->get('extensions.lastAttempt');
 
-	return $timestamp ? $this->timeAgo($timestamp) : \Awf\Text\Text::_('PANOPTICON_LBL_NEVER');
+	return $timestamp ? $this->timeAgo($timestamp) : $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
 };
 
 $willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersion): bool
@@ -184,7 +183,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                             data-bs-toggle="button"
                             data-ext-filter="{{ $filterName }}"
                             data-toggle-tooltip="tooltip"
-                            data-bs-title="{{{ str_replace('"', '\'', \Awf\Text\Text::_('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))) }}}"
+                            data-bs-title="{{{ str_replace('"', '\'', $this->getLanguage()->text('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))) }}}"
                     >
                         <span class="fa {{ $icon }}" aria-hidden="true"></span>
                         <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_' . str_replace('-', '_', $filterName))</span>
@@ -228,7 +227,7 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                             @lang('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_MAYBE_STUCK')
                         </h4>
                         <div>
-                            @sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_MAYBE_STUCK_HELP', $this->getContainer()->html->basic->date($extensionsUpdateTask->last_execution, Text::_('DATE_FORMAT_LC7')))
+                            @sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_MAYBE_STUCK_HELP', $this->getContainer()->html->basic->date($extensionsUpdateTask->last_execution, $this->getLanguage()->text('DATE_FORMAT_LC7')))
                         </div>
                         <div class="d-flex flex-row align-items-center gap-4 mt-3">
                             <a href="@route(sprintf('index.php?view=site&task=resetExtensionUpdate&resetqueue=0&id=%d&%s=1', $this->item->id, $token))"

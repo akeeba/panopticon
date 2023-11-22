@@ -12,7 +12,6 @@ use Akeeba\Panopticon\Model\Extupdates;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Pagination\Pagination;
-use Awf\Text\Text;
 
 defined('AKEEBA') || die;
 
@@ -26,11 +25,11 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public function onBeforeMain()
 	{
-		$this->setTitle(Text::_('PANOPTICON_EXTUPDATES_TITLE'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_EXTUPDATES_TITLE'));
 		$this->addButtonFromDefinition(
 			[
 				'id'      => 'updateSelected',
-				'title'   => Text::_('PANOPTICON_EXTUPDATES_BTN_UPDATE'),
+				'title'   => $this->getLanguage()->text('PANOPTICON_EXTUPDATES_BTN_UPDATE'),
 				'class'   => 'btn btn-success',
 				'onClick' => 'akeeba.System.submitForm(\'' . ($params['task'] ?? 'update') . '\')',
 				'icon'    => 'fa fa-wand-magic-sparkles',

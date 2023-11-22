@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Awf\Mvc\Controller;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -103,7 +102,7 @@ class Login extends Controller
 
 		if ($this->container->userManager->getUser()->getId() > 0)
 		{
-			$this->setRedirect($returnUrl ?: $this->container->router->route('index.php?view=main'), Text::_('PANOPTICON_APP_ERR_ALREADY_LOGGED_IN'), 'error');
+			$this->setRedirect($returnUrl ?: $this->container->router->route('index.php?view=main'), $this->getLanguage()->text('PANOPTICON_APP_ERR_ALREADY_LOGGED_IN'), 'error');
 
 			$this->redirect();
 

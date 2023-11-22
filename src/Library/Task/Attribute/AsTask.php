@@ -7,6 +7,7 @@
 
 namespace Akeeba\Panopticon\Library\Task\Attribute;
 
+use Akeeba\Panopticon\Factory;
 use Awf\Text\Text;
 
 defined('AKEEBA') || die;
@@ -25,6 +26,6 @@ class AsTask
 
 	public function getDescription(): string
 	{
-		return Text::_($this->description);
+		return Factory::getContainer()->language->text($this->description);
 	}
 }

@@ -55,7 +55,7 @@ $i     = 1;
             <div>
                 <label class="visually-hidden" for="type">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
                 {{ $this->container->html->select->genericList(
-	                array_merge(['' => Text::_('PANOPTICON_TASKS_LBL_SELECT_TYPE')], $this->getTaskTypeOptions()),
+	                array_merge(['' => $this->getLanguage()->text('PANOPTICON_TASKS_LBL_SELECT_TYPE')], $this->getTaskTypeOptions()),
 	                'type',
 	                [
 						'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
@@ -243,7 +243,7 @@ $i     = 1;
                                   data-bs-title="@lang('PANOPTICON_TASKS_LBL_LAST_RUN')"
                             ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_TASKS_LBL_LAST_RUN')</span>
-                            {{ $task->last_execution ? $this->getContainer()->html->basic->date($task->last_execution, Text::_('DATE_FORMAT_LC6') . ' T') : '&mdash;' }}
+                            {{ $task->last_execution ? $this->getContainer()->html->basic->date($task->last_execution, $this->getLanguage()->text('DATE_FORMAT_LC6') . ' T') : '&mdash;' }}
                         </div>
                     @endif
                     @if ($task->enabled)
@@ -253,7 +253,7 @@ $i     = 1;
                                   data-bs-title="@lang('PANOPTICON_TASKS_LBL_NEXT_RUN')"
                             ></span>
                             <span class="visually-hidden">@lang('PANOPTICON_TASKS_LBL_NEXT_RUN')</span>
-                            {{ $task->next_execution ? $this->getContainer()->html->basic->date($task->next_execution, Text::_('DATE_FORMAT_LC6') . ' T') : '&mdash;' }}
+                            {{ $task->next_execution ? $this->getContainer()->html->basic->date($task->next_execution, $this->getLanguage()->text('DATE_FORMAT_LC6') . ' T') : '&mdash;' }}
                         </div>
                     @endif
                     @if ($duration = $task->getDuration())

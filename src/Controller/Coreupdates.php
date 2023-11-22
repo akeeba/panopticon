@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
 use Awf\Mvc\DataController;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 
 defined('AKEEBA') || die;
@@ -47,7 +46,7 @@ class Coreupdates extends DataController
 		// If I do not have any extensions left, redirect with an error
 		if (empty($siteIDs))
 		{
-			$this->setRedirect($returnUri, Text::_('PANOPTICON_COREUPDATES_ERR_INVALID_SELECTION'), 'error');
+			$this->setRedirect($returnUri, $this->getLanguage()->text('PANOPTICON_COREUPDATES_ERR_INVALID_SELECTION'), 'error');
 		}
 
 		// Schedule the requested updates
@@ -77,7 +76,7 @@ class Coreupdates extends DataController
 			$numScheduled++;
 		}
 
-		$message = Text::plural('PANOPTICON_COREUPDATES_SCHEDULED_N', $numScheduled);
+		$message = $this->getLanguage()->plural('PANOPTICON_COREUPDATES_SCHEDULED_N', $numScheduled);
 		$messageType = $numScheduled ? 'success' : 'warning';
 
 		$this->setRedirect($returnUri, $message, $messageType);
@@ -108,7 +107,7 @@ class Coreupdates extends DataController
 		// If I do not have any extensions left, redirect with an error
 		if (empty($siteIDs))
 		{
-			$this->setRedirect($returnUri, Text::_('PANOPTICON_COREUPDATES_ERR_INVALID_SELECTION'), 'error');
+			$this->setRedirect($returnUri, $this->getLanguage()->text('PANOPTICON_COREUPDATES_ERR_INVALID_SELECTION'), 'error');
 		}
 
 		// Cancel the requested updates
@@ -156,7 +155,7 @@ class Coreupdates extends DataController
 			$numCanceled++;
 		}
 
-		$message = Text::plural('PANOPTICON_COREUPDATES_CANCELED_N', $numCanceled);
+		$message = $this->getLanguage()->plural('PANOPTICON_COREUPDATES_CANCELED_N', $numCanceled);
 		$messageType = $numCanceled ? 'success' : 'warning';
 
 		$this->setRedirect($returnUri, $message, $messageType);

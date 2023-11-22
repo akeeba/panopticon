@@ -11,7 +11,6 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Model\Log;
 use Awf\Mvc\Controller;
-use Awf\Text\Text;
 
 /**
  * Log management controller
@@ -69,7 +68,7 @@ class Logs extends Controller
 
 		if (empty($filePath))
 		{
-			$this->setRedirect($returnUrl, Text::_('PANOPTICON_LOGS_LBL_NOT_DELETED'), 'error');
+			$this->setRedirect($returnUrl, $this->getLanguage()->text('PANOPTICON_LOGS_LBL_NOT_DELETED'), 'error');
 
 			return;
 		}
@@ -81,7 +80,7 @@ class Logs extends Controller
 
 		$this->setRedirect(
 			$returnUrl,
-			Text::sprintf('PANOPTICON_LOGS_LBL_DELETED', basename($filePath)),
+			$this->getLanguage()->sprintf('PANOPTICON_LOGS_LBL_DELETED', basename($filePath)),
 			'success'
 		);
 	}
@@ -103,7 +102,7 @@ class Logs extends Controller
 
 		if (empty($filePath))
 		{
-			$this->setRedirect($returnUrl, Text::_('PANOPTICON_LOGS_LBL_CANNOT_DOWNLOAD'), 'error');
+			$this->setRedirect($returnUrl, $this->getLanguage()->text('PANOPTICON_LOGS_LBL_CANNOT_DOWNLOAD'), 'error');
 
 			return;
 		}

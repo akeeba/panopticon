@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Model\Dbtools;
 use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
-use Awf\Text\Text;
 
 class Html extends BaseHtmlView
 {
@@ -36,7 +35,7 @@ class Html extends BaseHtmlView
 	{
 		$toolbar = $this->getContainer()->application->getDocument()->getToolbar();
 
-		$toolbar->setTitle(Text::_('PANOPTICON_DBTOOLS_TITLE'));
+		$toolbar->setTitle($this->getLanguage()->text('PANOPTICON_DBTOOLS_TITLE'));
 
 		/** @var Dbtools $model */
 		$model       = $this->getModel();

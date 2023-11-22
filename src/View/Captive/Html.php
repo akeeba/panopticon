@@ -16,7 +16,6 @@ use Akeeba\Panopticon\Model\Captive;
 use Akeeba\Panopticon\Model\Mfa;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlview;
-use Awf\Text\Text;
 
 class Html extends BaseHtmlview
 {
@@ -80,7 +79,7 @@ class Html extends BaseHtmlview
 
 			if (!is_null($backupCodesRecord))
 			{
-				$backupCodesRecord->title = Text::_('PANOPTICON_MFA_LBL_BACKUPCODES');
+				$backupCodesRecord->title = $this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES');
 				$this->records[]          = $backupCodesRecord;
 			}
 		}
@@ -119,7 +118,7 @@ class Html extends BaseHtmlview
 		switch ($this->getLayout())
 		{
 			case 'select':
-				$this->setTitle(Text::_('PANOPTICON_MFA_HEAD_SELECT_PAGE'));
+				$this->setTitle($this->getLanguage()->text('PANOPTICON_MFA_HEAD_SELECT_PAGE'));
 				$this->allowEntryBatching = 1;
 				break;
 
@@ -127,7 +126,7 @@ class Html extends BaseHtmlview
 			default:
 				$this->renderOptions      = $model->loadCaptiveRenderOptions($this->record);
 				$this->allowEntryBatching = $this->renderOptions['allowEntryBatching'] ?? 0;
-				$this->setTitle(Text::_('PANOPTICON_MFA_HEAD_MFA_PAGE'));
+				$this->setTitle($this->getLanguage()->text('PANOPTICON_MFA_HEAD_MFA_PAGE'));
 
 			break;
 		}

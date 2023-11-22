@@ -5,9 +5,9 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
+use Akeeba\Panopticon\Factory;
 use Awf\Pagination\Pagination;
 use Awf\Pagination\PaginationObject;
-use Awf\Text\Text;
 
 /**
  * Method to create an active pagination link to the item
@@ -120,11 +120,13 @@ HTML;
  */
 function _akeeba_pagination_preprocess_arrows($text)
 {
+	$lang = Factory::getContainer()->language;
+
 	$replacements = [
-		'&laquo;'  => Text::_('PANOPTICON_LBL_LIST_START'),
-		'&lsaquo;' => Text::_('PANOPTICON_LBL_LIST_PREV'),
-		'&raquo;'  => Text::_('PANOPTICON_LBL_LIST_NEXT'),
-		'&rsaquo;' => Text::_('PANOPTICON_LBL_LIST_END'),
+		'&laquo;'  => $lang->text('PANOPTICON_LBL_LIST_START'),
+		'&lsaquo;' => $lang->text('PANOPTICON_LBL_LIST_PREV'),
+		'&raquo;'  => $lang->text('PANOPTICON_LBL_LIST_NEXT'),
+		'&rsaquo;' => $lang->text('PANOPTICON_LBL_LIST_END'),
 	];
 
 	foreach ($replacements as $icon => $label)
@@ -156,7 +158,7 @@ function _akeeba_pagination_preprocess_arrows($text)
  */
 function _akeeba_pagination_list_footer($list)
 {
-	$textNum = Text::_('AWF_COMMON_LBL_DISPLAY_NUM');
+	$textNum = Factory::getContainer()->language->text('AWF_COMMON_LBL_DISPLAY_NUM');
 
 	return <<< HTML
 <div class="d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-baseline gap-2 my-2">

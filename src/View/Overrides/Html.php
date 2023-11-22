@@ -14,7 +14,6 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
 use Awf\Pagination\Pagination;
-use Awf\Text\Text;
 use Awf\Utils\Template;
 
 class Html extends BaseHtmlView
@@ -36,7 +35,7 @@ class Html extends BaseHtmlView
 				)
 			]
 		);
-		$this->setTitle(Text::_('PANOPTICON_OVERRIDES_TITLE'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_OVERRIDES_TITLE'));
 
 		$this->getModel()->setSite($this->site);
 
@@ -68,7 +67,7 @@ class Html extends BaseHtmlView
 				)
 			]
 		);
-		$this->setTitle(Text::_('PANOPTICON_OVERRIDES_TITLE_READ'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_OVERRIDES_TITLE_READ'));
 
 		/** @var Overrides $model */
 		$model = $this->getModel();

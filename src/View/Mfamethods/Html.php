@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Model\Mfamethods;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
-use Awf\Text\Text;
 
 class Html extends BaseHtmlView
 {
@@ -67,7 +66,7 @@ class Html extends BaseHtmlView
 		// Set the page title
 		$toolbar = $this->container->application->getDocument()->getToolbar();
 		$toolbar->setTitle(
-			Text::_(($this->doTask !== 'add') ? 'PANOPTICON_MFA_LBL_TITLE_EDIT' : 'PANOPTICON_MFA_LBL_TITLE_ADD')
+			$this->getLanguage()->text(($this->doTask !== 'add') ? 'PANOPTICON_MFA_LBL_TITLE_EDIT' : 'PANOPTICON_MFA_LBL_TITLE_ADD')
 		);
 
 		if ($this->record->method == 'backupcodes')
@@ -88,12 +87,12 @@ class Html extends BaseHtmlView
 				)
 			);
 
-			$toolbar->setTitle(Text::_('PANOPTICON_MFA_LBL_BACKUPCODES_METHOD_NAME'));
+			$toolbar->setTitle($this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES_METHOD_NAME'));
 
 			$this->addButton('back', ['url' => $cancelURL]);
 			$toolbar->addButtonFromDefinition([
 				'id'    => 'reset',
-				'title' => Text::_('PANOPTICON_MFA_LBL_BACKUPCODES_RESET'),
+				'title' => $this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES_RESET'),
 				'class' => 'btn btn-danger',
 				'url'   => $refreshURL,
 				'icon'  => 'fa fa-refresh',

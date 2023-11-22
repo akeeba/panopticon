@@ -12,26 +12,33 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Logger\ForkedLogger;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
+use Awf\Text\Language;
+use Awf\Text\LanguageAwareInterface;
+use Awf\Text\LanguageAwareTrait;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
+use ReflectionObject;
 
-abstract class AbstractCallback implements CallbackInterface, LoggerAwareInterface
+abstract class AbstractCallback
+	implements CallbackInterface, LoggerAwareInterface, ContainerAwareInterface, LanguageAwareInterface
 {
+	use ContainerAwareTrait;
+	use LanguageAwareTrait;
+
 	protected readonly string $name;
 
 	protected readonly string $description;
 
 	protected ForkedLogger $logger;
 
-	public function setLogger(LoggerInterface $logger): void
+	public function __construct(Container $container, ?Language $language = null)
 	{
-		$this->logger->pushLogger($logger);
-	}
+		$this->setContainer($container);
+		$this->setLanguage($language ?? $container->language);
 
-	public function __construct(protected readonly Container $container)
-	{
-		$refObj     = new \ReflectionObject($this);
+		$refObj     = new ReflectionObject($this);
 		$attributes = $refObj->getAttributes(AsTask::class);
 
 		if (!empty($attributes))
@@ -42,9 +49,16 @@ abstract class AbstractCallback implements CallbackInterface, LoggerAwareInterfa
 			$this->description = $attribute->getDescription();
 		}
 
-		$this->logger = new ForkedLogger([
-			$this->container->loggerFactory->get($this->name)
-		]);
+		$this->logger = new ForkedLogger(
+			[
+				$this->getContainer()->loggerFactory->get($this->name),
+			]
+		);
+	}
+
+	public function setLogger(LoggerInterface $logger): void
+	{
+		$this->logger->pushLogger($logger);
 	}
 
 	final public function getTaskType(): string

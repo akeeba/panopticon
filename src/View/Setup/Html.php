@@ -11,7 +11,6 @@ namespace Akeeba\Panopticon\View\Setup;
 use Akeeba\Panopticon\Model\Setup;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
-use Awf\Text\Text;
 use Awf\Utils\Template;
 
 defined('AKEEBA') || die;
@@ -39,7 +38,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public function onBeforePrecheck(): bool
 	{
-		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_PRECHECK'));
+		$this->setupPageHeader(subTitle: $this->getLanguage()->text('PANOPTICON_SETUP_SUBTITLE_PRECHECK'));
 
 		/** @var Setup $model */
 		$model = $this->getModel();
@@ -58,7 +57,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		$this->addButton('inlineHelp');
 
-		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_DATABASE'));
+		$this->setupPageHeader(subTitle: $this->getLanguage()->text('PANOPTICON_SETUP_SUBTITLE_DATABASE'));
 
 		$this->connectionParameters = $this->getModel()->getDatabaseParameters();
 
@@ -80,7 +79,7 @@ class Html extends \Awf\Mvc\DataView\Html
 	{
 		$this->addButton('inlineHelp');
 
-		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_SETUP'));
+		$this->setupPageHeader(subTitle: $this->getLanguage()->text('PANOPTICON_SETUP_SUBTITLE_SETUP'));
 
 		$this->params = $this->getModel()->getSetupParameters();
 
@@ -97,7 +96,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public function onBeforeCron()
 	{
-		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_CRON'));
+		$this->setupPageHeader(subTitle: $this->getLanguage()->text('PANOPTICON_SETUP_SUBTITLE_CRON'));
 
 		$this->cronKey = $this->container->appConfig->get('webcron_key', '');
 
@@ -106,7 +105,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public function onBeforeFinish()
 	{
-		$this->setupPageHeader(subTitle: Text::_('PANOPTICON_SETUP_SUBTITLE_FINISH'));
+		$this->setupPageHeader(subTitle: $this->getLanguage()->text('PANOPTICON_SETUP_SUBTITLE_FINISH'));
 
 		return true;
 	}
@@ -120,7 +119,7 @@ class Html extends \Awf\Mvc\DataView\Html
 	 */
 	private function setupPageHeader(array $buttons = [], string $subTitle = ''): void
 	{
-		$title = Text::_('PANOPTICON_SETUP_TITLE');
+		$title = $this->getLanguage()->text('PANOPTICON_SETUP_TITLE');
 
 		if ($subTitle)
 		{

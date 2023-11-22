@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
-use Awf\Text\Text;
 
 class Sysconfig extends Controller
 {
@@ -30,7 +29,7 @@ class Sysconfig extends Controller
 		{
 			$this->setRedirect(
 				$this->getContainer()->router->route('index.php'),
-				Text::_('PANOPTICON_SYSCONFIG_ERR_USING_DOTENV'),
+				$this->getLanguage()->text('PANOPTICON_SYSCONFIG_ERR_USING_DOTENV'),
 				'error'
 			);
 
@@ -50,8 +49,8 @@ class Sysconfig extends Controller
 			$mailer = $this->getContainer()->mailer;
 
 			$mailer->addRecipient($user->getEmail(), $user->getName());
-			$mailer->setSubject(Text::_('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_SUBJECT'));
-			$mailer->setBody(Text::_('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY'));
+			$mailer->setSubject($this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_SUBJECT'));
+			$mailer->setBody($this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY'));
 
 			$sent = $mailer->send();
 
@@ -61,7 +60,7 @@ class Sysconfig extends Controller
 
 				if (!$this->getContainer()->appConfig->get('mail_online'))
 				{
-					$error = $error ?: Text::_('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_IS_DISABLED');
+					$error = $error ?: $this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_IS_DISABLED');
 				}
 			}
 		}
@@ -74,8 +73,8 @@ class Sysconfig extends Controller
 		$this->setRedirect(
 			$this->getContainer()->router->route('index.php?view=sysconfig'),
 			$sent
-				? Text::_('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_SENT')
-				: Text::sprintf('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_NOT_SENT', $error),
+				? $this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_SENT')
+				: $this->getLanguage()->sprintf('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_NOT_SENT', $error),
 			$sent ? 'success' : 'error'
 		);
 	}
@@ -130,7 +129,7 @@ class Sysconfig extends Controller
 
 		$url = $urlRedirect ? base64_decode($urlRedirect) : $this->container->router->route('index.php');
 
-		$this->setRedirect($url, Text::_('PANOPTICON_SYSCONFIG_MSG_SAVED'));
+		$this->setRedirect($url, $this->getLanguage()->text('PANOPTICON_SYSCONFIG_MSG_SAVED'));
 	}
 
 	public function apply()
@@ -139,7 +138,7 @@ class Sysconfig extends Controller
 
 		$url = $this->container->router->route('index.php?view=sysconfig');
 
-		$this->setRedirect($url, Text::_('PANOPTICON_SYSCONFIG_MSG_SAVED'));
+		$this->setRedirect($url, $this->getLanguage()->text('PANOPTICON_SYSCONFIG_MSG_SAVED'));
 	}
 
 	public function cancel()

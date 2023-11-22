@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Model\Task;
 use Awf\Mvc\DataController;
-use Awf\Text\Text;
 
 class Tasks extends DataController
 {
@@ -46,7 +45,7 @@ class Tasks extends DataController
 				$router = $this->container->router;
 				$url = !empty($customURL) ? $customURL : $router->route('index.php?view=tasks');
 
-				$this->setRedirect($url, Text::_('PANOPTICON_TASKS_ERR_NO_DELETE_SYSTEM'), 'error');
+				$this->setRedirect($url, $this->getLanguage()->text('PANOPTICON_TASKS_ERR_NO_DELETE_SYSTEM'), 'error');
 
 				$this->redirect();
 			}
@@ -76,7 +75,7 @@ class Tasks extends DataController
 				$router = $this->container->router;
 				$url = !empty($customURL) ? $customURL : $router->route('index.php?view=tasks');
 
-				$this->setRedirect($url, Text::_('PANOPTICON_TASKS_ERR_NO_DISABLE_SYSTEM'), 'error');
+				$this->setRedirect($url, $this->getLanguage()->text('PANOPTICON_TASKS_ERR_NO_DISABLE_SYSTEM'), 'error');
 
 				$this->redirect();
 			}

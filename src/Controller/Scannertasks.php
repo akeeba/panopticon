@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Awf\Container\Container;
 use Awf\Mvc\DataController;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 
 defined('AKEEBA') || die;
@@ -88,7 +87,7 @@ class Scannertasks extends DataController
 						$this->site->getId()
 					)
 				),
-				Text::_('PANOPTICON_SCANTASKS_ERR_CANNOT_EDIT_MANUAL'),
+				$this->getLanguage()->text('PANOPTICON_SCANTASKS_ERR_CANNOT_EDIT_MANUAL'),
 				'error'
 			);
 

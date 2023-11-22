@@ -11,7 +11,6 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Mvc\DataView\Html as DataViewHtml;
-use Awf\Text\Text;
 
 class Html extends DataViewHtml
 {
@@ -29,7 +28,7 @@ class Html extends DataViewHtml
 
 		$this->addButtonFromDefinition([
 			'id'    => 'editCss',
-			'title' => Text::_('PANOPTICON_MAILTEMPLATES_BTN_CSS'),
+			'title' => $this->getLanguage()->text('PANOPTICON_MAILTEMPLATES_BTN_CSS'),
 			'class' => 'btn btn-primary',
 			'url'   => $this->container->router->route('index.php?view=mailtemplates&task=editcss'),
 			'icon'  => 'fab fa-css3-alt',
@@ -60,7 +59,7 @@ class Html extends DataViewHtml
 	{
 		$this->addButtons(['save', 'cancel']);
 
-		$this->setTitle(Text::_('PANOPTICON_MAILTEMPLATES_TITLE_CSS'));
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_MAILTEMPLATES_TITLE_CSS'));
 
 		$this->css = $this->getModel()->getCommonCss();
 

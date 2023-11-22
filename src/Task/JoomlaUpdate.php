@@ -10,8 +10,6 @@ namespace Akeeba\Panopticon\Task;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Aes\Ctr;
-use Akeeba\Panopticon\Library\Queue\QueueItem;
-use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -22,7 +20,6 @@ use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Registry\Registry;
-use Awf\Text\Text;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
@@ -316,9 +313,9 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		// Initialise the email variables
 		$storage->set('email_variables', [
-			'NEW_VERSION' => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
-			'OLD_VERSION' => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
-			'SITE_NAME'   => Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
+			'NEW_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
+			'OLD_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
+			'SITE_NAME'   => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
 			'SITE_URL'    => 'https://www.example.com',
 		]);
 
@@ -333,10 +330,10 @@ class JoomlaUpdate extends AbstractCallback
 		// Is the site enabled?
 		if (!$site->enabled)
 		{
-			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED', $task->site_id));
+			throw new RuntimeException($this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED', $task->site_id));
 		}
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREPARING',
 			$site->id,
 			$site->name
@@ -368,12 +365,12 @@ class JoomlaUpdate extends AbstractCallback
 			&& version_compare($currentVersion, $latestVersion, 'ge')
 		)
 		{
-			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_UPDATE_AVAILABLE', $site->id,
+			throw new RuntimeException($this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_UPDATE_AVAILABLE', $site->id,
 				$site->name, $currentVersion, $latestVersion));
 		}
 		elseif (!empty($currentVersion) && !empty($latestVersion))
 		{
-			$this->logger->info(Text::sprintf(
+			$this->logger->info($this->getLanguage()->sprintf(
 				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_WILL_BE_UPDATED',
 				$site->id,
 				$site->name,
@@ -415,7 +412,7 @@ class JoomlaUpdate extends AbstractCallback
 		// Do we have a site?
 		if ($task->site_id <= 0)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_INVALIDID'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_INVALIDID'));
 		}
 
 		// Does the site exist?
@@ -425,7 +422,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($site->id != $task->site_id)
 		{
-			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_NOT_EXIST',
+			throw new RuntimeException($this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_NOT_EXIST',
 				$task->site_id));
 		}
 
@@ -460,12 +457,12 @@ class JoomlaUpdate extends AbstractCallback
 				$offsetInt = $offsetInt <= 0 ? 0 : $offset;
 				$this->logger->info(
 					$offsetInt <= 0
-						? Text::sprintf(
+						? $this->getLanguage()->sprintf(
 						'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_START',
 						$site->id,
 						$site->name
 					)
-						: Text::sprintf(
+						: $this->getLanguage()->sprintf(
 						'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_CONTINUE',
 						$site->id,
 						$site->name,
@@ -483,7 +480,7 @@ class JoomlaUpdate extends AbstractCallback
 
 					if ($response->getStatusCode() !== 200)
 					{
-						throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
+						throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
 					}
 				}
 
@@ -547,7 +544,7 @@ class JoomlaUpdate extends AbstractCallback
 				catch (GuzzleException $e)
 				{
 					$this->logger->notice(
-						Text::sprintf(
+						$this->getLanguage()->sprintf(
 							'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED',
 							$site->id,
 							$site->name
@@ -574,7 +571,7 @@ class JoomlaUpdate extends AbstractCallback
 				if (empty($raw) || empty($raw->data?->attributes?->basename))
 				{
 					$this->logger->notice(
-						Text::sprintf(
+						$this->getLanguage()->sprintf(
 							'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED',
 							$site->id,
 							$site->name
@@ -600,7 +597,7 @@ class JoomlaUpdate extends AbstractCallback
 				{
 					$this->logger->notice($error);
 					$this->logger->notice(
-						Text::sprintf(
+						$this->getLanguage()->sprintf(
 							'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED',
 							$site->id,
 							$site->name
@@ -641,7 +638,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_EVENTS',
 			$site->id,
 			$site->name
@@ -649,14 +646,14 @@ class JoomlaUpdate extends AbstractCallback
 
 		if (!$this->runEvent('onBeforeJoomlaUpdate', $task, $storage))
 		{
-			$this->logger->info(Text::sprintf(
+			$this->logger->info($this->getLanguage()->sprintf(
 				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_WILL_CONTINUE',
 				$site->id,
 				$site->name
 			));
 		}
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_FINISHED',
 			$site->id,
 			$site->name
@@ -682,7 +679,7 @@ class JoomlaUpdate extends AbstractCallback
 		if (!in_array($lastStatus, [Status::OK->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]))
 		{
 			$this->logger->info(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DONE',
 					$site->id,
 					$site->name
@@ -697,7 +694,7 @@ class JoomlaUpdate extends AbstractCallback
 		if (!$backupOnUpdate)
 		{
 			$this->logger->info(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_NOT',
 					$site->id,
 					$site->name
@@ -712,7 +709,7 @@ class JoomlaUpdate extends AbstractCallback
 		if ($lastStatus === Status::WILL_RESUME->value)
 		{
 			$this->logger->info(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_RESUME',
 					$site->id,
 					$site->name
@@ -722,7 +719,7 @@ class JoomlaUpdate extends AbstractCallback
 		else
 		{
 			$this->logger->info(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_START',
 					$site->id,
 					$site->name
@@ -741,13 +738,13 @@ class JoomlaUpdate extends AbstractCallback
 			'params'  => (new Registry())->loadArray(
 				[
 					'profile_id'  => $backupProfile,
-					'description' => Text::sprintf(
+					'description' => $this->getLanguage()->sprintf(
 						'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DESCRIPTION',
 						$config->get(
 							'core.latest.version',
 							$config->get(
 								'core.current.version',
-								Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION')
+								$this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION')
 							)
 						)
 					),
@@ -765,7 +762,7 @@ class JoomlaUpdate extends AbstractCallback
 		if ($return === Status::OK->value)
 		{
 			$this->logger->info(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DONE',
 					$site->id,
 					$site->name
@@ -784,7 +781,7 @@ class JoomlaUpdate extends AbstractCallback
 		}
 
 		// If I am here, the backup has failed; throw an exception, so we can cancel the update
-		throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_FAIL'));
+		throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_FAIL'));
 	}
 
 	/**
@@ -804,7 +801,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT',
 			$site->id,
 			$site->name
@@ -827,7 +824,7 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			$this->logger->debug(json_encode($raw));
 
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_ENABLE_FAILED'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_ENABLE_FAILED'));
 		}
 
 		$baseName = $raw->data?->attributes?->file;
@@ -838,14 +835,14 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			$this->logger->debug(json_encode($raw));
 
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED'));
 		}
 
 		if (empty($password))
 		{
 			$this->logger->debug(json_encode($raw));
 
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_PASSWORD'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_PASSWORD'));
 		}
 
 		$storage->set('update.password', $password);
@@ -882,7 +879,7 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			if ($step == 'start')
 			{
-				$this->logger->info(Text::sprintf(
+				$this->logger->info($this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START',
 					$site->id,
 					$site->name
@@ -896,7 +893,7 @@ class JoomlaUpdate extends AbstractCallback
 			}
 			else
 			{
-				$this->logger->info(Text::sprintf(
+				$this->logger->info($this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE',
 					$site->id,
 					$site->name
@@ -909,7 +906,7 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			if ($step == 'start')
 			{
-				$this->logger->info(Text::sprintf(
+				$this->logger->info($this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START',
 					$site->id,
 					$site->name
@@ -921,7 +918,7 @@ class JoomlaUpdate extends AbstractCallback
 			}
 			else
 			{
-				$this->logger->info(Text::sprintf(
+				$this->logger->info($this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE',
 					$site->id,
 					$site->name
@@ -933,7 +930,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($done)
 		{
-			$this->logger->info(Text::sprintf(
+			$this->logger->info($this->getLanguage()->sprintf(
 				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_FINISH',
 				$site->id,
 				$site->name
@@ -980,7 +977,7 @@ class JoomlaUpdate extends AbstractCallback
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
@@ -993,7 +990,7 @@ class JoomlaUpdate extends AbstractCallback
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
@@ -1004,7 +1001,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($factory === null)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
 		}
 
 		$storage->set('restore.factory', $factory);
@@ -1028,7 +1025,7 @@ class JoomlaUpdate extends AbstractCallback
 		// If it's extract.php, not restore.php, we have done something wrong!
 		if (!str_ends_with($url, '/restore.php'))
 		{
-			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J40'));
+			throw new LogicException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J40'));
 		}
 
 		// Encrypt the request data with AES-128-CTR
@@ -1050,7 +1047,7 @@ class JoomlaUpdate extends AbstractCallback
 		// We must always get HTTP 200
 		if ($response->getStatusCode() !== 200)
 		{
-			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UNEXPECTED_HTTP',
+			throw new RuntimeException($this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UNEXPECTED_HTTP',
 				$response->getStatusCode()));
 		}
 
@@ -1063,7 +1060,7 @@ class JoomlaUpdate extends AbstractCallback
 			$this->logger->debug('Invalid JSON response:');
 			$this->logger->debug($json);
 
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
 		}
 
 		$json = substr($json, $firstHashes + 3);
@@ -1075,7 +1072,7 @@ class JoomlaUpdate extends AbstractCallback
 			$this->logger->debug('Invalid JSON response:');
 			$this->logger->debug($json);
 
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
 		}
 
 		$json = substr($json, 0, $secondHashes);
@@ -1109,7 +1106,7 @@ class JoomlaUpdate extends AbstractCallback
 			$this->logger->debug('Invalid JSON response:');
 			$this->logger->debug($json);
 
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
 		}
 
 		return $raw;
@@ -1130,7 +1127,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($factory === null)
 		{
-			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
+			throw new LogicException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
 		}
 
 		$data = [
@@ -1143,7 +1140,7 @@ class JoomlaUpdate extends AbstractCallback
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
@@ -1155,7 +1152,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if (!$isDone && $factory === null)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
 		}
 		elseif ($factory !== null)
 		{
@@ -1218,7 +1215,7 @@ class JoomlaUpdate extends AbstractCallback
 		// If it's restore.php, not extract.php, we have done something wrong!
 		if (!str_ends_with($url, '/extract.php'))
 		{
-			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J404'));
+			throw new LogicException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NOT_J404'));
 		}
 
 		// Prepare the POST data
@@ -1251,7 +1248,7 @@ class JoomlaUpdate extends AbstractCallback
 		// We must always get HTTP 200
 		if ($response->getStatusCode() !== 200)
 		{
-			throw new RuntimeException(Text::sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UNEXPECTED_HTTP',
+			throw new RuntimeException($this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_UNEXPECTED_HTTP',
 				$response->getStatusCode()));
 		}
 
@@ -1272,7 +1269,7 @@ class JoomlaUpdate extends AbstractCallback
 			$this->logger->debug('Invalid JSON response:');
 			$this->logger->debug($json);
 
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON'));
 		}
 
 		return $raw;
@@ -1291,7 +1288,7 @@ class JoomlaUpdate extends AbstractCallback
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
@@ -1303,7 +1300,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if (!$isDone && $factory === null)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY'));
 		}
 		elseif ($factory !== null)
 		{
@@ -1349,7 +1346,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($factory === null)
 		{
-			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
+			throw new LogicException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
 		}
 
 		$data = $this->doExtractAjax($site, $storage, [
@@ -1383,7 +1380,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$url = $this->getExtractUrl($site);
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTEXTRACT',
 			$site->id,
 			$site->name
@@ -1416,7 +1413,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($factory === null)
 		{
-			throw new LogicException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
+			throw new LogicException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FACTORY_GONE'));
 		}
 
 		$data = [
@@ -1445,7 +1442,7 @@ class JoomlaUpdate extends AbstractCallback
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
-				Text::sprintf(
+				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED',
 					$data?->message ?? 'Unknown error'
 				)
@@ -1478,7 +1475,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_FINALISE',
 			$site->id,
 			$site->name
@@ -1489,7 +1486,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($response->getStatusCode() !== 200)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FINALISE_FAILED'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FINALISE_FAILED'));
 		}
 
 		$this->advanceState();
@@ -1516,7 +1513,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_UPDATES',
 			$site->id,
 			$site->name
@@ -1527,7 +1524,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($response->getStatusCode() !== 200)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
 		}
 
 		$this->advanceState();
@@ -1545,7 +1542,7 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$site = $this->getSite($task);
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_SITEINFO',
 			$site->id,
 			$site->name
@@ -1580,7 +1577,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_EVENTS',
 			$site->id,
 			$site->name
@@ -1588,14 +1585,14 @@ class JoomlaUpdate extends AbstractCallback
 
 		if (!$this->runEvent('onAfterJoomlaUpdate', $task, $storage))
 		{
-			$this->logger->info(Text::sprintf(
+			$this->logger->info($this->getLanguage()->sprintf(
 				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_WILL_CONTINUE',
 				$site->id,
 				$site->name
 			));
 		}
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_FINISHED',
 			$site->id,
 			$site->name
@@ -1643,7 +1640,7 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
-		$this->logger->info(Text::sprintf(
+		$this->logger->info($this->getLanguage()->sprintf(
 			'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING',
 			$site->id,
 			$site->name
@@ -1655,7 +1652,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($response->getStatusCode() !== 200)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED'));
 		}
 
 		// Then, download the update
@@ -1674,7 +1671,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if (empty($raw) || empty($raw->data?->attributes?->basename))
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_DOWNLOAD_FAILED'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_DOWNLOAD_FAILED'));
 		}
 
 		$baseName = $raw->data?->attributes?->basename;
@@ -1682,7 +1679,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		if (!$check)
 		{
-			throw new RuntimeException(Text::_('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_CHECKSUM'));
+			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_CHECKSUM'));
 		}
 
 		$storage->set('update.basename', $baseName);
@@ -1730,15 +1727,15 @@ class JoomlaUpdate extends AbstractCallback
 
 		if ($startTime === null)
 		{
-			$vars['START_TIME'] = Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_TIME');
-			$vars['END_TIME'] = Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_TIME');
-			$vars['DURATION'] = Text::_('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_DURATION');
+			$vars['START_TIME'] = $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_TIME');
+			$vars['END_TIME'] = $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_TIME');
+			$vars['DURATION'] = $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_DURATION');
 		}
 		else
 		{
 			$basicHtmlHelper    = $this->container->html->basic;
-			$vars['START_TIME'] = $basicHtmlHelper->date('@' . $startTime, Text::_('DATE_FORMAT_LC7'));
-			$vars['END_TIME']   = $basicHtmlHelper->date('@' . $endTime, Text::_('DATE_FORMAT_LC7'));
+			$vars['START_TIME'] = $basicHtmlHelper->date('@' . $startTime, $this->getLanguage()->text('DATE_FORMAT_LC7'));
+			$vars['END_TIME']   = $basicHtmlHelper->date('@' . $endTime, $this->getLanguage()->text('DATE_FORMAT_LC7'));
 			$vars['DURATION']   = $this->timeAgo($startTime, $endTime);
 		}
 

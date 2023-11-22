@@ -12,9 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Model\Users;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
-use Awf\Mvc\DataModel;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
-use Awf\Text\Text;
 use Awf\Utils\Template;
 
 class Html extends BaseHtmlView
@@ -168,8 +166,8 @@ JS;
 		{
 			$this->methods['backupcodes'] = [
 				'name'          => 'backupcodes',
-				'display'       => Text::_('PANOPTICON_MFA_LBL_BACKUPCODES'),
-				'shortinfo'     => Text::_('PANOPTICON_MFA_LBL_BACKUPCODES_DESCRIPTION'),
+				'display'       => $this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES'),
+				'shortinfo'     => $this->getLanguage()->text('PANOPTICON_MFA_LBL_BACKUPCODES_DESCRIPTION'),
 				'image'         => 'media/mfa/images/emergency.svg',
 				'canDisable'    => false,
 				'allowMultiple' => false,

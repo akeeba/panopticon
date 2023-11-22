@@ -7,8 +7,6 @@
 
 defined('AKEEBA') || die;
 
-use Awf\Text\Text;
-
 /**
  * @var \Akeeba\Panopticon\View\Overrides\Html $this
  * @var \Akeeba\Panopticon\Model\Overrides     $model
@@ -91,11 +89,11 @@ $i     = 1;
                 </td>
                 {{-- Created --}}
                 <td>
-                    {{{ $this->getContainer()->html->basic->date($item->created_date, Text::_('DATE_FORMAT_LC5')) }}}
+                    {{{ $this->getContainer()->html->basic->date($item->created_date, $this->getLanguage()->text('DATE_FORMAT_LC5')) }}}
                 </td>
                 {{-- Modified --}}
                 <td>
-                    {{{ $this->getContainer()->html->basic->date($item->modified_date, Text::_('DATE_FORMAT_LC5')) }}}
+                    {{{ $this->getContainer()->html->basic->date($item->modified_date, $this->getLanguage()->text('DATE_FORMAT_LC5')) }}}
                 </td>
                 {{-- Action --}}
                 <td>

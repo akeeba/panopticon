@@ -6,7 +6,6 @@
  */
 
 use Akeeba\Panopticon\Application\BootstrapUtilities;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 
 /**
@@ -59,7 +58,7 @@ $token = $this->getContainer()->session->getCsrfToken()->getValue();
         @else
             @sprintf(
 	            'PANOPTICON_USAGESTATS_LBL_LAST_COLLECTION_DATE',
-                $this->getContainer()->html->basic->date($this->lastCollectionDate, Text::_('DATE_FORMAT_LC7'))
+                $this->getContainer()->html->basic->date($this->lastCollectionDate, $this->getLanguage()->text('DATE_FORMAT_LC7'))
             )
         @endif
     </p>
@@ -90,7 +89,7 @@ $token = $this->getContainer()->session->getCsrfToken()->getValue();
                     <code>{{{$v}}}</code>
                 </td>
                 <td>
-                    @if(\Awf\Text\Text::hasKey('PANOPTICON_USAGESTATS_LBL_DATAINFO_' . $k))
+                    @if($this->getLanguage()->hasKey('PANOPTICON_USAGESTATS_LBL_DATAINFO_' . $k))
                         @lang('PANOPTICON_USAGESTATS_LBL_DATAINFO_' . $k)
                     @endif
                 </td>

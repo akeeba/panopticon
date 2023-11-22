@@ -5,8 +5,6 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-use Akeeba\Panopticon\Library\Version\Version;
-
 defined('AKEEBA') || die;
 
 /**
@@ -44,7 +42,7 @@ $token     = $this->container->session->getCsrfToken()->getValue();
                 <label class="visually-hidden" for="cmsFamily">@lang('PANOPTICON_COREUPDATES_FIELD_CURRENT')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => \Awf\Text\Text::_('PANOPTICON_COREUPDATES_LBL_SELECT_CURRENT')
+                        '' => $this->getLanguage()->text('PANOPTICON_COREUPDATES_LBL_SELECT_CURRENT')
                     ], $mainModel->getKnownJoomlaVersions()),
                     'cmsFamily',
                     [
@@ -59,7 +57,7 @@ $token     = $this->container->session->getCsrfToken()->getValue();
                 <label class="visually-hidden" for="latestFamily">@lang('PANOPTICON_COREUPDATES_FIELD_LATEST')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => \Awf\Text\Text::_('PANOPTICON_COREUPDATES_LBL_SELECT_LATEST')
+                        '' => $this->getLanguage()->text('PANOPTICON_COREUPDATES_LBL_SELECT_LATEST')
                     ], $mainModel->getKnownJoomlaVersions()),
                     'latestFamily',
                     [
@@ -74,7 +72,7 @@ $token     = $this->container->session->getCsrfToken()->getValue();
                 <label class="visually-hidden" for="phpFamily">@lang('PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY')</label>
                 {{ $this->container->html->select->genericList(
                     array_merge([
-                        '' => \Awf\Text\Text::_('PANOPTICON_EXTUPDATES_LBL_PHPVERSION_SELECT')
+                        '' => $this->getLanguage()->text('PANOPTICON_EXTUPDATES_LBL_PHPVERSION_SELECT')
                     ], $mainModel->getKnownPHPVersions()),
                     'phpFamily',
                     [

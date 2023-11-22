@@ -9,12 +9,19 @@ namespace Akeeba\Panopticon\Library\MultiFactorAuth\Plugin;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Library\View\FakeView;
 use Akeeba\Panopticon\Model\Mfa;
+use Awf\Container\ContainerAwareInterface;
+use Awf\Container\ContainerAwareTrait;
+use Awf\Event\Observable;
 use Awf\Event\Observer;
 use Awf\Input\Input;
+use Awf\Text\Language;
+use Awf\Text\LanguageAwareInterface;
+use Awf\Text\LanguageAwareTrait;
 use Awf\Text\Text;
 use Awf\Uri\Uri;
 use chillerlan\QRCode\Common\EccLevel;
@@ -33,11 +40,24 @@ use stdClass;
  * @since  1.0.2
  * @see    https://datatracker.ietf.org/doc/html/rfc6238
  */
-class TOTP extends Observer
+class TOTP
+	extends Observer
+	implements ContainerAwareInterface, LanguageAwareInterface
 {
+	use ContainerAwareTrait;
+	use LanguageAwareTrait;
+
 	private const METHOD_NAME = 'totp';
 
 	private const HELP_URL = 'https://github.com/akeeba/panopticon/wiki/MFA-TOTP';
+
+	public function __construct(Observable &$subject, ?Container $container = null, ?Language $language = null)
+	{
+		parent::__construct($subject);
+
+		$this->setContainer($container ?? Factory::getContainer());
+		$this->setLanguage($language ?? $this->getContainer()->language);
+	}
 
 	/**
 	 * Gets the identity of this TFA method
@@ -49,8 +69,8 @@ class TOTP extends Observer
 	{
 		return [
 			'name'               => self::METHOD_NAME,
-			'display'            => Text::_('PANOPTICON_MFA_TOTP_LBL_DISPLAYEDAS'),
-			'shortinfo'          => Text::_('PANOPTICON_MFA_TOTP_LBL_SHORTINFO'),
+			'display'            => $this->getLanguage()->text('PANOPTICON_MFA_TOTP_LBL_DISPLAYEDAS'),
+			'shortinfo'          => $this->getLanguage()->text('PANOPTICON_MFA_TOTP_LBL_SHORTINFO'),
 			'image'              => 'media/mfa/images/totp.svg',
 			'allowMultiple'      => false,
 			'allowEntryBatching' => false,
@@ -78,7 +98,7 @@ class TOTP extends Observer
 
 		// Load the options from the record (if any)
 		$options   = $this->decodeRecordOptions($record);
-		$container = Factory::getContainer();
+		$container = $this->getContainer();
 
 		if (empty($options->totp_secret ?? ''))
 		{
@@ -104,7 +124,7 @@ class TOTP extends Observer
 		 * user.
 		 */
 		return [
-			'default_title'  => Text::_('PANOPTICON_MFA_TOTP_LBL_DEFAULTTITLE'),
+			'default_title'  => $this->getLanguage()->text('PANOPTICON_MFA_TOTP_LBL_DEFAULTTITLE'),
 			'pre_message'    => $this->renderTemplate(
 				'Totpmfa/setup',
 				[
@@ -146,8 +166,8 @@ SVG
 			'input_type'     => 'number',
 			'autocomplete'   => 'one-time-code',
 			'input_value'    => '',
-			'placeholder'    => Text::_('PANOPTICON_MFA_TOTP_LBL_PLACEHOLDER'),
-			'label'          => Text::_('PANOPTICON_MFA_TOTP_LBL_CODE'),
+			'placeholder'    => $this->getLanguage()->text('PANOPTICON_MFA_TOTP_LBL_PLACEHOLDER'),
+			'label'          => $this->getLanguage()->text('PANOPTICON_MFA_TOTP_LBL_CODE'),
 			'html'           => '',
 			'show_submit'    => true,
 			'submit_onclick' => '',
@@ -181,7 +201,7 @@ SVG
 
 		// Load the options from the record (if any) and merge with submitted form data
 		$options   = $this->decodeRecordOptions($record);
-		$container = Factory::getContainer();
+		$container = $this->getContainer();
 		$secret    = $input->get(
 			'secret',
 			$container->segment->get('totp.secret', $options->totp_secret),
@@ -231,8 +251,8 @@ SVG
 			'field_type'   => 'input',
 			'input_type'   => 'number',
 			'autocomplete' => 'one-time-code',
-			'placeholder'  => Text::_('PANOPTICON_MFA_TOTP_LBL_PLACEHOLDER'),
-			'label'        => Text::_('PANOPTICON_MFA_TOTP_LBL_CODE'),
+			'placeholder'  => $this->getLanguage()->text('PANOPTICON_MFA_TOTP_LBL_PLACEHOLDER'),
+			'label'        => $this->getLanguage()->text('PANOPTICON_MFA_TOTP_LBL_CODE'),
 			'help_url'     => self::HELP_URL,
 		];
 	}
@@ -303,7 +323,7 @@ SVG
 		[$view,] = explode('/', $template, 2);
 
 		$fakeView = new FakeView(
-			Factory::getContainer(), [
+			$this->getContainer(), [
 				'name' => ucfirst($view),
 			]
 		);

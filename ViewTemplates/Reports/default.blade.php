@@ -116,7 +116,7 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
             </td>
             @endunless
             <td class="font-monospace small" style="width: 10em">
-                {{{ $this->getContainer()->html->basic->date($item->created_on->format(DATE_ATOM), \Awf\Text\Text::_('DATE_FORMAT_LC6')) }}}
+                {{{ $this->getContainer()->html->basic->date($item->created_on->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC6')) }}}
             </td>
             <td class="d-none d-lg-table-cell">
                 <div class="d-flex flex-row gap-2 align-items-center">

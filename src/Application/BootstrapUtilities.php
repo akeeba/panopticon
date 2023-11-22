@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Application;
 
 use AConfig;
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\User\User;
 use Awf\Registry\Registry;
 use Awf\Utils\Buffer;
 use Awf\Utils\Ip;
@@ -335,6 +336,40 @@ final class BootstrapUtilities
 		/** @noinspection PhpExpressionResultUnusedInspection */
 		$refProp->setAccessible(true);
 		$refProp->setValue(Factory::getContainer()->blade, false);
+	}
+
+	/**
+	 * Loads the application configuration, if it exists.
+	 *
+	 * @return  void
+	 * @since   1.0.5
+	 */
+	public static function loadConfiguration(): void
+	{
+		// Only try to load the configuration file if we have one to begin with.
+		if (!self::hasConfiguration())
+		{
+			return;
+		}
+
+		Factory::getContainer()->appConfig->loadConfiguration();
+	}
+
+	/**
+	 * Set up the User Manager, the user privileges, and the user authentication.
+	 *
+	 * @return  void
+	 * @since   1.0.5
+	 */
+	public static function setUpUserManager(): void
+	{
+		$container = Factory::getContainer();
+
+		$container->appConfig->set('user_class', User::class);
+		$manager = $container->userManager;
+
+		$manager->registerPrivilegePlugin('panopticon', UserPrivileges::class);
+		$manager->registerAuthenticationPlugin('password', UserAuthenticationPassword::class);
 	}
 
 	/**
