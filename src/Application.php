@@ -59,9 +59,9 @@ class Application extends AWFApplication
 					'icon'        => 'fa fa-fw fa-atom',
 				],
 				[
-					'url'         => null,
-					'name'        => 'separator05',
-					'title'       => '---',
+					'url'   => null,
+					'name'  => 'separator05',
+					'title' => '---',
 				],
 				[
 					'view'        => 'reports',
@@ -242,7 +242,10 @@ class Application extends AWFApplication
 			{
 				$this->conditionalRedirectToCronSetup();
 
-				if (!$this->getMfaCheckedFlag() && $manager->getUser()->getId() > 0)
+				if (
+					!$this->getMfaCheckedFlag()
+					&& $this->getContainer()->userManager->getUser()->getId() > 0
+				)
 				{
 					$this->setMfaCheckedFlag(true);
 				}
@@ -563,12 +566,6 @@ class Application extends AWFApplication
 		{
 			require_once $routesPHPPath;
 		}
-	}
-
-	private function attachUserManagerPlugins(ManagerInterface $manager): void
-	{
-		$manager->registerPrivilegePlugin('panopticon', UserPrivileges::class);
-		$manager->registerAuthenticationPlugin('password', UserAuthenticationPassword::class);
 	}
 
 	private function redirectToLogin(): void
