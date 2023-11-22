@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\View\Login;
 defined('AKEEBA') || die;
 
 use Awf\Mvc\View;
+use Awf\Utils\Template;
 
 class Html extends View
 {
@@ -25,6 +26,14 @@ class Html extends View
 
 	public function onBeforeMain()
 	{
+		Template::addJs('media://js/login.min.js', $this->getContainer()->application, defer: true);
+
+		$this->getContainer()->application->getDocument()
+			->addScriptOptions(
+				'login.url',
+				$this->getContainer()->router->route('index.php?view=login&lang=')
+			);
+
 		$this->container->input->set('tmpl', 'component');
 
 		$this->username  = $this->container->segment->getFlash('auth_username');

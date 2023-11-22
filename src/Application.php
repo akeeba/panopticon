@@ -576,6 +576,16 @@ class Application extends AWFApplication
 		// Get the user manager
 		$manager = $this->container->userManager;
 
+		if ($view === 'login')
+		{
+			$lang = $this->getContainer()->input->getCmd('lang', '');
+
+			if (!empty($lang))
+			{
+				$this->getLanguage()->loadLanguage($lang);
+			}
+		}
+
 		/**
 		 * Show the login page if there is no logged-in user, and we're not in the setup or login page already,
 		 * and we're not using the remote (front-end backup), json (remote JSON API) views of the (S)FTP

@@ -373,7 +373,7 @@ class Setup extends AbstractHelper
 		);
 	}
 
-	public function languageOptions(?string $selected, string $name, ?string $id = null, array $attribs = [], bool $addUseDefault = false)
+	public function languageOptions(?string $selected, string $name, ?string $id = null, array $attribs = [], bool $addUseDefault = false, bool $namesAlsoInEnglish = true)
 	{
 		$defaultOptions = [];
 
@@ -387,7 +387,7 @@ class Setup extends AbstractHelper
 			];
 		}
 
-		$options = array_merge($defaultOptions, $this->getLanguageOptions());
+		$options = array_merge($defaultOptions, $this->getLanguageOptions($namesAlsoInEnglish));
 
 		return $this->getContainer()->html->select
 			->genericList(
@@ -451,7 +451,7 @@ class Setup extends AbstractHelper
 			);
 	}
 
-	private function getLanguageOptions()
+	private function getLanguageOptions(bool $namesAlsoInEnglish = true)
 	{
 		$ret = [];
 
@@ -493,11 +493,22 @@ class Setup extends AbstractHelper
 			if (isset($strings['LANGUAGE_NAME_TRANSLATED'])
 			    && $strings['LANGUAGE_NAME_TRANSLATED'] != $strings['LANGUAGE_NAME_IN_ENGLISH'])
 			{
-				$retText = sprintf(
-					'%s (%s)',
-					$retText,
-					$strings['LANGUAGE_NAME_TRANSLATED']
-				);
+				if ($namesAlsoInEnglish)
+				{
+					$retText = sprintf(
+						'%s (%s)',
+						$retText,
+						$strings['LANGUAGE_NAME_TRANSLATED']
+					);
+				}
+				else
+				{
+					$retText = sprintf(
+						'%s&nbsp;%s',
+						$this->countryToEmoji($retKey),
+						$strings['LANGUAGE_NAME_TRANSLATED']
+					);
+				}
 			}
 
 			$ret[$retKey] = $retText;

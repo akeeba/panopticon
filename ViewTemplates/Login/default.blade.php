@@ -51,6 +51,19 @@ CSS;
             @lang('PANOPTICON_LOGIN_LBL_LOGIN')
         </button>
 
+        <div class="mt-4 mb-1 d-flex flex-row justify-content-end">
+            <label for="language" class="visually-hidden">
+                @lang('PANOPTICON_LOGIN_LBL_LANGUAGE')
+            </label>
+            {{ $this->getContainer()->helper->setup->languageOptions(
+                $this->getLanguage()->getLangCode(),
+                name: 'language',
+                id: 'language',
+                attribs: ['class' => 'form-select', 'style' => 'width: min(19em, 100%)'],
+                namesAlsoInEnglish: false
+            ) }}
+        </div>
+
         <input type="hidden" name="token" value="@token()">
         <input type="hidden" name="return" value="<?= empty($this->returnUrl) ? '' : base64_encode($this->returnUrl) ?>">
     </div>
