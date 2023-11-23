@@ -14,6 +14,8 @@ This is a features, and bug-fix release.
 
 **✨ Collection and display of basic server information [gh-307]**. Panopticon collects some basic server health information and presents them to you, but it does not log them. The idea is to present you with a moment-in-time view of your server; it won't monitor the server itself. If you want server monitoring and/or uptime monitoring we strongly recommend using a third party service, such as [HetrixTools](https://hetrixtools.com/). 
 
+**✨ Per-user language preference [gh-326]**. You asked, we delivered. Panopticon now allows each user to set their preferred language. The interface will appear in this language. Emails will be sent in this language, assuming mail templates exist for it. If a user has not selected a language the interface will appear in the language they have set up as their preferred in their browser, and emails will be sent in the default language you have set up in the System Configuration page. Mail templates can now be set up for a specific language, not just "All". Each user appears in the Users page with a small flag, and the (localised) language they prefer – as long as this preference is set. Finally, do note that the login page allows you to select a language, but this applied _only_ to the login screen.
+
 ## 🖥️ System Requirements
 
 * PHP 8.1, 8.2, or 8.3. PHP 8.2 recommended.
