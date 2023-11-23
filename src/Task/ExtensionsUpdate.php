@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Task;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Helper\Html2Text;
+use Akeeba\Panopticon\Helper\LanguageListTrait;
 use Akeeba\Panopticon\Library\Queue\QueueItem;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
@@ -32,6 +33,7 @@ class ExtensionsUpdate extends AbstractCallback
 	use ApiRequestTrait;
 	use SiteNotificationEmailTrait;
 	use EmailSendingTrait;
+	use LanguageListTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -518,76 +520,22 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
-		$language                = 'en-GB';
-		$possibleTemplates       = [
-			'Mailtemplates/mail_extensions_update_done.' . $language,
-			'Mailtemplates/mail_extensions_update_done',
-		];
-		$container               = clone $this->container;
-		$container['mvc_config'] = [
-			'template_path' => [
-				APATH_ROOT . '/ViewTemplates/Mailtemplates',
-				APATH_USER_CODE . '/ViewTemplates/Mailtemplates',
-			],
-		];
-		$fakeView                = new Html($container);
-		$rendered                = '';
+		$perLanguageVars = [];
 
-		foreach ($possibleTemplates as $template)
+		foreach ($this->getAllKnownLanguages() as $language)
 		{
-			try
-			{
-				$rendered = $fakeView->loadAnyTemplate(
-					$template,
-					[
-						'updateStatus' => $updateStatus,
-						'site'         => $site,
-					]
-				);
-			}
-			catch (Exception $e)
-			{
-				// Expected, as the language override may not be in place.
-			}
-		}
+			[$rendered, $renderedText] = $this->getRenderedResultsForEmail($language, $updateStatus, $site);
 
-		// Render the messages as plain text
-		$possibleTemplates = [
-			'Mailtemplates/mail_extensions_update_done.' . $language . 'text',
-			'Mailtemplates/mail_extensions_update_done.text',
-		];
-		$renderedText      = '';
-
-		foreach ($possibleTemplates as $template)
-		{
-			try
-			{
-				$renderedText = $fakeView->loadAnyTemplate(
-					$template,
-					[
-						'updateStatus' => $updateStatus,
-						'site'         => $site,
-					]
-				);
-			}
-			catch (Exception $e)
-			{
-				// Expected, as the language override may not be in place.
-			}
-		}
-
-		// Fall back to automatic HTML to plain text conversion
-		if (empty($renderedText))
-		{
-			$renderedText = (new Html2Text($rendered))->getText();
+			$perLanguageVars[$language] = [
+				'RENDERED_HTML' => $rendered,
+				'RENDERED_TEXT' => $renderedText,
+			];
 		}
 
 		$emailKey  = 'extensions_update_done';
 		$variables = [
 			'SITE_NAME'     => $site->name,
 			'SITE_URL'      => $site->getBaseUrl(),
-			'RENDERED_HTML' => $rendered,
-			'RENDERED_TEXT' => $renderedText,
 		];
 
 		// Get the CC email addresses
@@ -608,6 +556,7 @@ class ExtensionsUpdate extends AbstractCallback
 		$data = new Registry();
 		$data->set('template', $emailKey);
 		$data->set('email_variables', $variables);
+		$data->set('email_variables_by_lang', $perLanguageVars);
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
 
@@ -697,5 +646,79 @@ class ExtensionsUpdate extends AbstractCallback
 		$siteConfig->set('director.extensionupdates.lastSeen', $lastSeenVersions);
 		$site->setFieldValue('config', $siteConfig->toString());
 		$site->save();
+	}/**
+ * @param   string  $language
+ * @param   array   $updateStatus
+ * @param   Site    $site
+ *
+ * @return array
+ * @throws \Awf\Exception\App
+ */
+	private function getRenderedResultsForEmail(string $language, array $updateStatus, Site $site): array
+	{
+		$possibleTemplates       = [
+			'Mailtemplates/mail_extensions_update_done.' . $language,
+			'Mailtemplates/mail_extensions_update_done',
+		];
+		$container               = clone $this->container;
+		$container['mvc_config'] = [
+			'template_path' => [
+				APATH_ROOT . '/ViewTemplates/Mailtemplates',
+				APATH_USER_CODE . '/ViewTemplates/Mailtemplates',
+			],
+		];
+		$fakeView                = new Html($container);
+		$rendered                = '';
+
+		foreach ($possibleTemplates as $template)
+		{
+			try
+			{
+				$rendered = $fakeView->loadAnyTemplate(
+					$template,
+					[
+						'updateStatus' => $updateStatus,
+						'site'         => $site,
+					]
+				);
+			}
+			catch (Exception $e)
+			{
+				// Expected, as the language override may not be in place.
+			}
+		}
+
+		// Render the messages as plain text
+		$possibleTemplates = [
+			'Mailtemplates/mail_extensions_update_done.' . $language . 'text',
+			'Mailtemplates/mail_extensions_update_done.text',
+		];
+		$renderedText      = '';
+
+		foreach ($possibleTemplates as $template)
+		{
+			try
+			{
+				$renderedText = $fakeView->loadAnyTemplate(
+					$template,
+					[
+						'updateStatus' => $updateStatus,
+						'site'         => $site,
+					]
+				);
+			}
+			catch (Exception $e)
+			{
+				// Expected, as the language override may not be in place.
+			}
+		}
+
+		// Fall back to automatic HTML to plain text conversion
+		if (empty($renderedText))
+		{
+			$renderedText = (new Html2Text($rendered))->getText();
+		}
+
+		return [$rendered, $renderedText];
 	}
 }

@@ -264,7 +264,7 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 		}
 	}
 
-	public function initialiseWithTemplate(string $type, string $language = 'en-GB', array $replacements = [])
+	public function initialiseWithTemplate(string $type, string $language = 'en-GB', array $replacements = []): void
 	{
 		/** @var Mailtemplates $model */
 		$model = $this->container->mvcFactory->makeModel('Mailtemplates');

@@ -15,6 +15,8 @@ use Awf\Helper\AbstractHelper;
 use Awf\Text\Text;
 use Awf\Utils\ParseIni;
 use DateTimeZone;
+use DirectoryIterator;
+use JsonException;
 
 class Setup extends AbstractHelper
 {
@@ -22,32 +24,26 @@ class Setup extends AbstractHelper
 	{
 		$connectors = Driver::getConnectors();
 		$connectors = array_filter(
-			$connectors,
-			fn(?string $driverName) => !empty($driverName)
-			                           && in_array(
-				                           strtolower($driverName), [
-					                           'mysql',
-					                           'mysqli',
-					                           'pdomysql',
-				                           ]
-			                           )
+			$connectors, fn(?string $driverName) => !empty($driverName)
+			                                        && in_array(
+				                                        strtolower($driverName), [
+					                                        'mysql',
+					                                        'mysqli',
+					                                        'pdomysql',
+				                                        ]
+			                                        )
 		);
 
 		$options = array_map(
-			fn(string $driver) => $this->getContainer()->html->select
-				->option($driver, 'PANOPTICON_SETUP_LBL_DATABASE_DRIVER_' . $driver),
-			$connectors
+			fn(string $driver) => $this->getContainer()->html->select->option(
+				$driver, 'PANOPTICON_SETUP_LBL_DATABASE_DRIVER_' . $driver
+			), $connectors
 		);
 
-		return $this->getContainer()->html->select
-			->genericList(
-				data: $options,
-				name: $name,
-				attribs: ['class' => 'form-select'],
-				selected: $selected,
-				idTag: $name,
-				translate: true
-			);
+		return $this->getContainer()->html->select->genericList(
+			data: $options, name: $name, attribs: ['class' => 'form-select'], selected: $selected, idTag: $name,
+			translate: true
+		);
 	}
 
 	public function mailerSelect(string $selected = '', string $name = 'mailer'): string
@@ -58,19 +54,15 @@ class Setup extends AbstractHelper
 
 		foreach ($scriptTypes as $scriptType)
 		{
-			$options[] = $this->getContainer()->html->select
-				->option($scriptType, 'PANOPTICON_SYSCONFIG_EMAIL_MAILER_' . $scriptType);
+			$options[] = $this->getContainer()->html->select->option(
+				$scriptType, 'PANOPTICON_SYSCONFIG_EMAIL_MAILER_' . $scriptType
+			);
 		}
 
-		return $this->getContainer()->html->select
-			->genericList(
-				data: $options,
-				name: $name,
-				attribs: ['class' => 'form-select'],
-				selected: $selected,
-				idTag: $name,
-				translate: true
-			);
+		return $this->getContainer()->html->select->genericList(
+			data: $options, name: $name, attribs: ['class' => 'form-select'], selected: $selected, idTag: $name,
+			translate: true
+		);
 	}
 
 	public function smtpSecureSelect(string $selected = '', string $name = 'smtpsecure'): string
@@ -82,22 +74,14 @@ class Setup extends AbstractHelper
 		$options[] = $selectHelper->option(1, 'PANOPTICON_SYSCONFIG_EMAIL_SMTPSECURE_SSL');
 		$options[] = $selectHelper->option(2, 'PANOPTICON_SYSCONFIG_EMAIL_SMTPSECURE_TLS');
 
-		return $selectHelper
-			->genericList(
-				data: $options,
-				name: $name,
-				attribs: ['class' => 'form-select'],
-				selected: $selected,
-				idTag: $name,
-				translate: true
-			);
+		return $selectHelper->genericList(
+			data: $options, name: $name, attribs: ['class' => 'form-select'], selected: $selected, idTag: $name,
+			translate: true
+		);
 	}
 
 	public function timezoneSelect(
-		string $selected = '',
-		string $name = 'timezone',
-		$disabled = false,
-		?string $id = null
+		string $selected = '', string $name = 'timezone', $disabled = false, ?string $id = null
 	): string
 	{
 		$groups      = [];
@@ -134,11 +118,9 @@ class Setup extends AbstractHelper
 			}
 
 			$groups[$group]        ??= [];
-			$groups[$group][$zone] = $this->getContainer()->html->select
-				->option(
-					$zone,
-					str_replace('_', ' ', $locale)
-				);
+			$groups[$group][$zone] = $this->getContainer()->html->select->option(
+				$zone, str_replace('_', ' ', $locale)
+			);
 		}
 
 		// Sort the group lists.
@@ -171,12 +153,9 @@ class Setup extends AbstractHelper
 			$options['list.attr'] = ['disabled' => 'disabled'];
 		}
 
-		return $this->getContainer()->html->select
-			->groupedList(
-				data: $groups,
-				name: $name,
-				options: $options
-			);
+		return $this->getContainer()->html->select->groupedList(
+			data: $groups, name: $name, options: $options
+		);
 	}
 
 	public function timezoneFormatSelect(string $selected = ''): string
@@ -188,21 +167,14 @@ class Setup extends AbstractHelper
 		];
 
 		$options = array_map(
-			fn($text, $value) => $this->getContainer()->html->select->option($value, $text)
-			,
-			array_keys($rawOptions),
+			fn($text, $value) => $this->getContainer()->html->select->option($value, $text), array_keys($rawOptions),
 			array_values($rawOptions),
 		);
 
-		return $this->getContainer()->html->select
-			->genericList(
-				data: $options,
-				name: 'timezonetext',
-				attribs: ['class' => 'form-select'],
-				selected: $selected,
-				idTag: 'timezonetext',
-				translate: true
-			);
+		return $this->getContainer()->html->select->genericList(
+			data: $options, name: 'timezonetext', attribs: ['class' => 'form-select'], selected: $selected,
+			idTag: 'timezonetext', translate: true
+		);
 	}
 
 	public function fsDriverSelect(string $selected = '', bool $showDirect = true): string
@@ -225,20 +197,15 @@ class Setup extends AbstractHelper
 		}
 
 		$options = array_map(
-			fn($driver) => $this->getContainer()->html->select
-				->option($driver, 'PANOPTICON_SETUP_LBL_FS_DRIVER_' . $driver),
-			$drivers
+			fn($driver) => $this->getContainer()->html->select->option(
+				$driver, 'PANOPTICON_SETUP_LBL_FS_DRIVER_' . $driver
+			), $drivers
 		);
 
-		return $this->getContainer()->html->select
-			->genericList(
-				data: $options,
-				name: 'fs_driver',
-				attribs: ['class' => 'form-select'],
-				selected: $selected,
-				idTag: 'fs_driver',
-				translate: true
-			);
+		return $this->getContainer()->html->select->genericList(
+			data: $options, name: 'fs_driver', attribs: ['class' => 'form-select'], selected: $selected,
+			idTag: 'fs_driver', translate: true
+		);
 	}
 
 	public function minstabilitySelect(string $selected = ''): string
@@ -246,20 +213,15 @@ class Setup extends AbstractHelper
 		$levels = ['alpha', 'beta', 'rc', 'stable'];
 
 		$options = array_map(
-			fn($level) => $this->getContainer()->html->select
-				->option($level, 'PANOPTICON_CONFIG_MINSTABILITY_' . $level),
-			$levels
+			fn($level) => $this->getContainer()->html->select->option(
+				$level, 'PANOPTICON_CONFIG_MINSTABILITY_' . $level
+			), $levels
 		);
 
-		return $this->getContainer()->html->select
-			->genericList(
-				data: $options,
-				name: 'minstability',
-				attribs: ['class' => 'form-select'],
-				selected: $selected,
-				idTag: 'minstability',
-				translate: true
-			);
+		return $this->getContainer()->html->select->genericList(
+			data: $options, name: 'minstability', attribs: ['class' => 'form-select'], selected: $selected,
+			idTag: 'minstability', translate: true
+		);
 	}
 
 	/**
@@ -275,20 +237,14 @@ class Setup extends AbstractHelper
 		$methods = ['none', 'yubikey', 'google'];
 
 		$options = array_map(
-			fn($method) => $this->getContainer()->html->select
-				->option($method, 'PANOPTICON_USERS_TFA_' . $method),
+			fn($method) => $this->getContainer()->html->select->option($method, 'PANOPTICON_USERS_TFA_' . $method),
 			$methods
 		);
 
-		return $this->getContainer()->html->select
-			->genericList(
-				data: $options,
-				name: $name,
-				attribs: ['class' => 'form-select'],
-				selected: $selected,
-				idTag: $name,
-				translate: true
-			);
+		return $this->getContainer()->html->select->genericList(
+			data: $options, name: $name, attribs: ['class' => 'form-select'], selected: $selected, idTag: $name,
+			translate: true
+		);
 	}
 
 	public function userSelect(
@@ -300,16 +256,12 @@ class Setup extends AbstractHelper
 		$users ??= call_user_func(
 			function () {
 				$db    = $this->getContainer()->db;
-				$query = $db
-					->getQuery(true)
-					->select(
-						[
-							$db->quoteName('id', 'value'),
-							$db->quoteName('username', 'text'),
-						]
-					)
-					->from($db->quoteName('#__users'))
-					->order($db->quoteName('username') . ' ASC');
+				$query = $db->getQuery(true)->select(
+					[
+						$db->quoteName('id', 'value'),
+						$db->quoteName('username', 'text'),
+					]
+				)->from($db->quoteName('#__users'))->order($db->quoteName('username') . ' ASC');
 
 				return $db->setQuery($query)->loadObjectList();
 			}
@@ -320,16 +272,14 @@ class Setup extends AbstractHelper
 			array_unshift(
 				$users, (object) [
 				'value' => 0,
-				'text'  => Factory::getContainer()->language
-					->text('PANOPTICON_LBL_SELECT_USER'),
+				'text'  => Factory::getContainer()->language->text('PANOPTICON_LBL_SELECT_USER'),
 			]
 			);
 		}
 
-		return $this->getContainer()->html->select
-			->genericList(
-				$users, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
-			);
+		return $this->getContainer()->html->select->genericList(
+			$users, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
+		);
 	}
 
 	public function siteSelect(
@@ -342,57 +292,39 @@ class Setup extends AbstractHelper
 		if ($withSystem)
 		{
 			$siteList = array_combine(
-				array_merge([0], array_keys($siteList)),
-				array_merge(
-					[
-						Factory::getContainer()->language
-							->text('PANOPTICON_APP_LBL_SYSTEM_TASK')
-					],
-					array_values($siteList)
-				),
+				array_merge([0], array_keys($siteList)), array_merge(
+				[
+					Factory::getContainer()->language->text('PANOPTICON_APP_LBL_SYSTEM_TASK'),
+				], array_values($siteList)
+			),
 			);
 		}
 
 		$siteList = array_combine(
-			array_merge([''], array_keys($siteList)),
-			array_merge(
-				[
-					sprintf(
-						'– %s –',
-						Factory::getContainer()->language
-							->text('PANOPTICON_TASKS_LBL_FIELD_SITE_ID')
-					)
-				],
-				array_values($siteList)
-			),
+			array_merge([''], array_keys($siteList)), array_merge(
+			[
+				sprintf(
+					'– %s –', Factory::getContainer()->language->text('PANOPTICON_TASKS_LBL_FIELD_SITE_ID')
+				),
+			], array_values($siteList)
+		),
 		);
 
 		return $this->getContainer()->html->select->genericList(
-			$siteList,
-			$name, $attribs, selected: $selected ?? '', idTag: $id ?? $name, translate: false
+			$siteList, $name, $attribs, selected: $selected ?? '', idTag: $id ?? $name, translate: false
 		);
 	}
 
-	public function languageOptions(?string $selected, string $name, ?string $id = null, array $attribs = [], bool $addUseDefault = false, bool $namesAlsoInEnglish = true)
+	public function languageOptions(
+		?string $selected, string $name, ?string $id = null, array $attribs = [], bool $addUseDefault = false,
+		bool $namesAlsoInEnglish = true, bool $addAllLanguages = false
+	)
 	{
-		$defaultOptions = [];
+		$options = $this->getLanguageOptions($namesAlsoInEnglish, $addAllLanguages, $addUseDefault);
 
-		if ($addUseDefault)
-		{
-			$defaultOptions = [
-				'' => sprintf(
-					'🌐 %s',
-					$this->getContainer()->language->text('PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_AUTO')
-				)
-			];
-		}
-
-		$options = array_merge($defaultOptions, $this->getLanguageOptions($namesAlsoInEnglish));
-
-		return $this->getContainer()->html->select
-			->genericList(
-				$options, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
-			);
+		return $this->getContainer()->html->select->genericList(
+			$options, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
+		);
 	}
 
 	/**
@@ -412,8 +344,8 @@ class Setup extends AbstractHelper
 	{
 		// List all folders under APATH_THEMES
 		$templates = [];
-		$di        = new \DirectoryIterator(APATH_THEMES);
-		/** @var \DirectoryIterator $file */
+		$di        = new DirectoryIterator(APATH_THEMES);
+		/** @var DirectoryIterator $file */
 		foreach ($di as $file)
 		{
 			if ($file->isDot() || !$file->isDir())
@@ -441,22 +373,48 @@ class Setup extends AbstractHelper
 		}
 
 		$templates = array_map(
-			fn($template) => $this->getTemplateName($template),
-			array_combine($templates, $templates)
+			fn($template) => $this->getTemplateName($template), array_combine($templates, $templates)
 		);
 
-		return $this->getContainer()->html->select
-			->genericList(
-				$templates, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
-			);
+		return $this->getContainer()->html->select->genericList(
+			$templates, $name, $attribs, selected: $selected ?? 0, idTag: $id ?? $name, translate: false
+		);
 	}
 
-	private function getLanguageOptions(bool $namesAlsoInEnglish = true)
+	public function getLanguagesAsFlagInfo(
+		bool $namesAlsoInEnglish = true, bool $addAllLanguages = false, bool $addUseDefault = false
+	)
+	{
+		return array_map(
+			function (string $description): array {
+				return explode('&nbsp;', $description);
+			},
+			$this->getLanguageOptions($namesAlsoInEnglish, $addAllLanguages, $addUseDefault)
+		);
+	}
+
+	public function getLanguageOptions(
+		bool $namesAlsoInEnglish = true, bool $addAllLanguages = false, bool $addUseDefault = false
+	): array
 	{
 		$ret = [];
 
-		$di = new \DirectoryIterator($this->getContainer()->languagePath);
-		/** @var \DirectoryIterator $file */
+		if ($addAllLanguages)
+		{
+			$ret['*'] = sprintf(
+				'⭐&nbsp;%s', $this->getContainer()->language->text('PANOPTICON_MAILTEMPLATES_OPT_LANGUAGE_ALL')
+			);
+		}
+
+		if ($addUseDefault)
+		{
+			$ret[''] = sprintf(
+				'🌐&nbsp;%s', $this->getContainer()->language->text('PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_AUTO')
+			);
+		}
+
+		$di = new DirectoryIterator($this->getContainer()->languagePath);
+		/** @var DirectoryIterator $file */
 		foreach ($di as $file)
 		{
 			if (!$file->isFile() || $file->getExtension() !== 'ini')
@@ -485,9 +443,7 @@ class Setup extends AbstractHelper
 			}
 
 			$retText = sprintf(
-				'%s&nbsp;%s',
-				$this->countryToEmoji($retKey),
-				$strings['LANGUAGE_NAME_IN_ENGLISH']
+				'%s&nbsp;%s', $this->countryToEmoji($retKey), $strings['LANGUAGE_NAME_IN_ENGLISH']
 			);
 
 			if (isset($strings['LANGUAGE_NAME_TRANSLATED'])
@@ -496,17 +452,13 @@ class Setup extends AbstractHelper
 				if ($namesAlsoInEnglish)
 				{
 					$retText = sprintf(
-						'%s (%s)',
-						$retText,
-						$strings['LANGUAGE_NAME_TRANSLATED']
+						'%s (%s)', $retText, $strings['LANGUAGE_NAME_TRANSLATED']
 					);
 				}
 				else
 				{
 					$retText = sprintf(
-						'%s&nbsp;%s',
-						$this->countryToEmoji($retKey),
-						$strings['LANGUAGE_NAME_TRANSLATED']
+						'%s&nbsp;%s', $this->countryToEmoji($retKey), $strings['LANGUAGE_NAME_TRANSLATED']
 					);
 				}
 			}
@@ -527,13 +479,13 @@ class Setup extends AbstractHelper
 
 		if (str_contains($cCode, '-'))
 		{
-			[,$cCode] = explode('-', $cCode, 2);
+			[, $cCode] = explode('-', $cCode, 2);
 		}
 
 		// If the country code has a dot, ignore the part after the dot.
 		if (str_contains($cCode, '.'))
 		{
-			[$cCode, ] = explode('.', $cCode, 2);
+			[$cCode,] = explode('.', $cCode, 2);
 		}
 
 		// No country? Return a white flag emoji.
@@ -544,20 +496,255 @@ class Setup extends AbstractHelper
 
 		// Valid country codes
 		$countryCodes = [
-			'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AW', 'AX', 'AZ', 'BA', 'BB',
-			'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BL', 'BM', 'BN', 'BO', 'BQ', 'BR', 'BS', 'BT', 'BV', 'BW', 'BY',
-			'BZ', 'CA', 'CC', 'CD', 'CF', 'CG', 'CH', 'CI', 'CK', 'CL', 'CM', 'CN', 'CO', 'CR', 'CU', 'CV', 'CW', 'CX',
-			'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'EH', 'ER', 'ES', 'ET', 'FI', 'FJ', 'FK',
-			'FM', 'FO', 'FR', 'GA', 'GB', 'GD', 'GE', 'GF', 'GG', 'GH', 'GI', 'GL', 'GM', 'GN', 'GP', 'GQ', 'GR', 'GS',
-			'GT', 'GU', 'GW', 'GY', 'HK', 'HM', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IM', 'IN', 'IO', 'IQ', 'IR',
-			'IS', 'IT', 'JE', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KP', 'KR', 'KW', 'KY', 'KZ', 'LA',
-			'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', 'MA', 'MC', 'MD', 'ME', 'MF', 'MG', 'MH', 'MK',
-			'ML', 'MM', 'MN', 'MO', 'MP', 'MQ', 'MR', 'MS', 'MT', 'MU', 'MV', 'MW', 'MX', 'MY', 'MZ', 'NA', 'NC', 'NE',
-			'NF', 'NG', 'NI', 'NL', 'NO', 'NP', 'NR', 'NU', 'NZ', 'OM', 'PA', 'PE', 'PF', 'PG', 'PH', 'PK', 'PL', 'PM',
-			'PN', 'PR', 'PS', 'PT', 'PW', 'PY', 'QA', 'RE', 'RO', 'RS', 'RU', 'RW', 'SA', 'SB', 'SC', 'SD', 'SE', 'SG',
-			'SH', 'SI', 'SJ', 'SK', 'SL', 'SM', 'SN', 'SO', 'SR', 'SS', 'ST', 'SV', 'SX', 'SY', 'SZ', 'TC', 'TD', 'TF',
-			'TG', 'TH', 'TJ', 'TK', 'TL', 'TM', 'TN', 'TO', 'TR', 'TT', 'TV', 'TW', 'TZ', 'UA', 'UG', 'UM', 'US', 'UY',
-			'UZ', 'VA', 'VC', 'VE', 'VG', 'VI', 'VN', 'VU', 'WF', 'WS', 'YE', 'YT', 'ZA', 'ZM', 'ZW',
+			'AD',
+			'AE',
+			'AF',
+			'AG',
+			'AI',
+			'AL',
+			'AM',
+			'AO',
+			'AQ',
+			'AR',
+			'AS',
+			'AT',
+			'AU',
+			'AW',
+			'AX',
+			'AZ',
+			'BA',
+			'BB',
+			'BD',
+			'BE',
+			'BF',
+			'BG',
+			'BH',
+			'BI',
+			'BJ',
+			'BL',
+			'BM',
+			'BN',
+			'BO',
+			'BQ',
+			'BR',
+			'BS',
+			'BT',
+			'BV',
+			'BW',
+			'BY',
+			'BZ',
+			'CA',
+			'CC',
+			'CD',
+			'CF',
+			'CG',
+			'CH',
+			'CI',
+			'CK',
+			'CL',
+			'CM',
+			'CN',
+			'CO',
+			'CR',
+			'CU',
+			'CV',
+			'CW',
+			'CX',
+			'CY',
+			'CZ',
+			'DE',
+			'DJ',
+			'DK',
+			'DM',
+			'DO',
+			'DZ',
+			'EC',
+			'EE',
+			'EG',
+			'EH',
+			'ER',
+			'ES',
+			'ET',
+			'FI',
+			'FJ',
+			'FK',
+			'FM',
+			'FO',
+			'FR',
+			'GA',
+			'GB',
+			'GD',
+			'GE',
+			'GF',
+			'GG',
+			'GH',
+			'GI',
+			'GL',
+			'GM',
+			'GN',
+			'GP',
+			'GQ',
+			'GR',
+			'GS',
+			'GT',
+			'GU',
+			'GW',
+			'GY',
+			'HK',
+			'HM',
+			'HN',
+			'HR',
+			'HT',
+			'HU',
+			'ID',
+			'IE',
+			'IL',
+			'IM',
+			'IN',
+			'IO',
+			'IQ',
+			'IR',
+			'IS',
+			'IT',
+			'JE',
+			'JM',
+			'JO',
+			'JP',
+			'KE',
+			'KG',
+			'KH',
+			'KI',
+			'KM',
+			'KN',
+			'KP',
+			'KR',
+			'KW',
+			'KY',
+			'KZ',
+			'LA',
+			'LB',
+			'LC',
+			'LI',
+			'LK',
+			'LR',
+			'LS',
+			'LT',
+			'LU',
+			'LV',
+			'LY',
+			'MA',
+			'MC',
+			'MD',
+			'ME',
+			'MF',
+			'MG',
+			'MH',
+			'MK',
+			'ML',
+			'MM',
+			'MN',
+			'MO',
+			'MP',
+			'MQ',
+			'MR',
+			'MS',
+			'MT',
+			'MU',
+			'MV',
+			'MW',
+			'MX',
+			'MY',
+			'MZ',
+			'NA',
+			'NC',
+			'NE',
+			'NF',
+			'NG',
+			'NI',
+			'NL',
+			'NO',
+			'NP',
+			'NR',
+			'NU',
+			'NZ',
+			'OM',
+			'PA',
+			'PE',
+			'PF',
+			'PG',
+			'PH',
+			'PK',
+			'PL',
+			'PM',
+			'PN',
+			'PR',
+			'PS',
+			'PT',
+			'PW',
+			'PY',
+			'QA',
+			'RE',
+			'RO',
+			'RS',
+			'RU',
+			'RW',
+			'SA',
+			'SB',
+			'SC',
+			'SD',
+			'SE',
+			'SG',
+			'SH',
+			'SI',
+			'SJ',
+			'SK',
+			'SL',
+			'SM',
+			'SN',
+			'SO',
+			'SR',
+			'SS',
+			'ST',
+			'SV',
+			'SX',
+			'SY',
+			'SZ',
+			'TC',
+			'TD',
+			'TF',
+			'TG',
+			'TH',
+			'TJ',
+			'TK',
+			'TL',
+			'TM',
+			'TN',
+			'TO',
+			'TR',
+			'TT',
+			'TV',
+			'TW',
+			'TZ',
+			'UA',
+			'UG',
+			'UM',
+			'US',
+			'UY',
+			'UZ',
+			'VA',
+			'VC',
+			'VE',
+			'VG',
+			'VI',
+			'VN',
+			'VU',
+			'WF',
+			'WS',
+			'YE',
+			'YT',
+			'ZA',
+			'ZM',
+			'ZW',
 		];
 
 		// Invalid country? Return a black flag.
@@ -611,8 +798,7 @@ class Setup extends AbstractHelper
 	{
 		$defaultName = Factory::getContainer()->language->text(
 			sprintf(
-				'PANOPTICON_APP_TEMPLATE_%s',
-				strtoupper(
+				'PANOPTICON_APP_TEMPLATE_%s', strtoupper(
 					preg_replace('#^[a-z0-9_]]#i', '', $template)
 				)
 			)
@@ -637,7 +823,7 @@ class Setup extends AbstractHelper
 		{
 			$templateInfo = json_decode($json, flags: JSON_THROW_ON_ERROR);
 		}
-		catch (\JsonException $e)
+		catch (JsonException $e)
 		{
 			return $defaultName;
 		}

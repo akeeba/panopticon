@@ -37,12 +37,13 @@ class SendMail extends AbstractCallback
 		while ($queueItem = $mailQueue->pop())
 		{
 			// Get the parameters for sending an email
-			$sendingParams = new Registry($queueItem->getData() ?? '{}');
-			$template      = $sendingParams->get('template');
-			$language      = $sendingParams->get('language', 'en-GB');
-			$variables     = $sendingParams->get('email_variables', []);
-			$permissions   = $sendingParams->get('permissions');
-			$cc            = $sendingParams->get('email_cc');
+			$sendingParams    = new Registry($queueItem->getData() ?? '{}');
+			$template         = $sendingParams->get('template');
+			$fallbackLanguage = $sendingParams->get('language', 'en-GB');
+			$variables        = $sendingParams->get('email_variables', []);
+			$variablesByLang  = $sendingParams->get('email_variables_by_lang', []);
+			$permissions      = $sendingParams->get('permissions');
+			$cc               = $sendingParams->get('email_cc');
 
 			if (empty($template))
 			{
@@ -63,33 +64,6 @@ class SendMail extends AbstractCallback
 				)
 			);
 
-			$mailer = clone $this->container->mailer;
-			$mailer->initialiseWithTemplate($template, $language, (array) $variables);
-
-			if (empty($mailer->Body))
-			{
-				$this->logger->debug(
-					sprintf(
-						'Not sending email template %s for site %d; mail template empty',
-						$template, $queueItem->getSiteId()
-					)
-				);
-
-				continue;
-			}
-
-			/** @var Site $site */
-			$site = $this->container->mvcFactory->makeTempModel('Site');
-
-			try
-			{
-				$site->findOrFail($queueItem->getSiteId());
-			}
-			catch (\Exception $e)
-			{
-				$site = null;
-			}
-
 			$recipients = $this->getRecipientsByPermissions($permissions, $site);
 
 			if (empty($recipients))
@@ -103,41 +77,141 @@ class SendMail extends AbstractCallback
 				continue;
 			}
 
+			// Distribute recipients by language
+			$defaultLanguage      = $fallbackLanguage
+				?: $this->getContainer()->appConfig->get('language', 'en-GB')
+					?: 'en-GB';
+			$recipientsByLanguage = [
+				// Carbon Copied recipients always receive email in the default language
+				'en-GB' => $cc,
+			];
+
 			foreach ($recipients as $recipient)
 			{
-				[$email, $name] = $recipient;
+				[$email, $name, $paramsJson] = $recipient;
 
-				$mailer->addRecipient($email, $name);
+				try
+				{
+					$params = json_decode($paramsJson ?? '{}', flags: JSON_THROW_ON_ERROR);
+				}
+				catch (\JsonException $e)
+				{
+					continue;
+				}
+
+				$language                          = $params?->language ?? $defaultLanguage;
+				$recipientsByLanguage[$language]   ??= [];
+				$recipientsByLanguage[$language][] = [$email, $name];
 			}
 
-			// Add CC'ed users by configuration
-			foreach ($cc as $recipient)
-			{
-				[$email, $name] = $recipient;
+			// Get the site object
+			/** @var Site $site */
+			$site = $this->container->mvcFactory->makeTempModel('Site');
 
-				$mailer->addCC($email, $name);
-			}
-
-			// Send the email
 			try
 			{
-				$mailer->Send();
-
-				$this->logger->debug(
-					sprintf(
-						'Sent email template %s for site %d',
-						$template, $queueItem->getSiteId()
-					)
-				);
+				$site->findOrFail($queueItem->getSiteId());
 			}
-			catch (\PHPMailer\PHPMailer\Exception $e)
+			catch (\Exception $e)
 			{
-				$this->logger->error(
-					sprintf(
-						'Not sent email template %s for site %d: %s',
-						$template, $queueItem->getSiteId(), $e->getMessage()
-					)
+				$site = null;
+			}
+
+			// Send emails by language
+			$hasMultipleLanguages = count($recipientsByLanguage) > 1;
+
+			foreach ($recipientsByLanguage as $language => $recipients)
+			{
+				if ($hasMultipleLanguages)
+				{
+					$this->logger->info(
+						sprintf(
+							'Sending email template %s for site %d and language %s',
+							$template, $queueItem->getSiteId(), $language
+						)
+					);
+				}
+
+				$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
+				$mailer          = clone $this->container->mailer;
+				$mailer->initialiseWithTemplate(
+					$template, $language, array_merge((array) $variables, $varsForThisLang)
 				);
+
+				if (empty($mailer->Body) && $language != 'en-GB' && $language != $defaultLanguage)
+				{
+					$this->logger->notice(
+						sprintf(
+							'Email template %s does not exist for language %s; I will retry using the default language (%s).',
+							$template, $language, $defaultLanguage
+						)
+					);
+
+					$language        = $defaultLanguage;
+					$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
+					$mailer          = clone $this->container->mailer;
+					$mailer->initialiseWithTemplate(
+						$template, $language, array_merge((array) $variables, $varsForThisLang)
+					);
+				}
+
+				if (empty($mailer->Body) && $language != 'en-GB' && $language == $defaultLanguage)
+				{
+					$this->logger->notice(
+						sprintf(
+							'Email template %s does not exist for the default language %s; I will retry using en-GB.',
+							$template, $language
+						)
+					);
+
+					$language        = 'en-GB';
+					$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
+					$mailer          = clone $this->container->mailer;
+					$mailer->initialiseWithTemplate(
+						$template, $language, array_merge((array) $variables, $varsForThisLang)
+					);
+				}
+
+				if (empty($mailer->Body))
+				{
+					$this->logger->debug(
+						sprintf(
+							'Not sending email template %s for site %d; mail template empty',
+							$template, $queueItem->getSiteId()
+						)
+					);
+
+					continue;
+				}
+
+				foreach ($recipients as $recipient)
+				{
+					[$email, $name] = $recipient;
+
+					$mailer->addRecipient($email, $name);
+				}
+
+				// Send the email
+				try
+				{
+					$mailer->Send();
+
+					$this->logger->debug(
+						sprintf(
+							'Sent email template %s for site %d',
+							$template, $queueItem->getSiteId()
+						)
+					);
+				}
+				catch (\PHPMailer\PHPMailer\Exception $e)
+				{
+					$this->logger->error(
+						sprintf(
+							'Not sent email template %s for site %d: %s',
+							$template, $queueItem->getSiteId(), $e->getMessage()
+						)
+					);
+				}
 			}
 
 			// Check for timeout
@@ -175,7 +249,7 @@ class SendMail extends AbstractCallback
 			$query->andWhere(
 				array_map(
 					fn($permission) => 'JSON_SEARCH(' . $db->quoteName('privileges') . ', ' . $db->quote('one') . ',' .
-						$db->quote($permission) . ')',
+					                   $db->quote($permission) . ')',
 					$permissions
 				)
 			);
@@ -188,6 +262,7 @@ class SendMail extends AbstractCallback
 				[
 					$db->quoteName('name'),
 					$db->quoteName('email'),
+					$db->quoteName('parameters'),
 				]
 			)
 			->from($db->quoteName('#__users'));

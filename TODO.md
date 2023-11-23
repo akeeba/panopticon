@@ -1,38 +1,14 @@
 # Documentation notes
 
+Users: show language under full name.
+
+Test multi-language mail sending.
+
 ## Pages in need of documentation
 
 * Mail templates
 * Global configuration
 * Overview
-
-## CRON jobs
-
-Describe how to set up
-
-You can have more than one CRON jobs. You need one CRON job for every ~100 sites you manage. If any site take more than 10 seconds to respond, you need one CRON job for every ~25 sites you manage. CRON jobs have a maximum memory utilisation in the area of 20MiB with minimal CPU utilisation.
-
-## Automated tasks and when things run
-
-Explain the types of system tasks and their frequency:
-
-* `logrotate` Daily
-* `refreshsiteinfo` Every 15'
-* `refreshinstalledextensions` Every 15'
-* `joomlaupdatedirector` Every 3'
-* `extensionupdatesdirector` Every 10'
-* `sendmail` Every minute
-
-You cannot disable them. If they are disabled, visiting the main page of Panopticon will re-enable them. 
-
-Each site can have one or more of these run-once task types:
-
-* `joomlaupdate` Created by system task `joomlaupdatedirector`, or when you click the button to update / refresh your Joomla installation.
-* `extensionsupdate` Created by system task `extensionupdatesdirector`, or when click the button to update an extension.
-
-After they finish running they are automatically disabled. If they get stuck, you can delete them, and they will be created afresh.
-
-You can see last run time and status of all tasks in the Tasks page.
 
 ## Users, Groups, and Permissions
 
@@ -95,11 +71,3 @@ The `operator` user can only see the `Main Site`. They can also execute updates 
 The `secretary` user can only see the `Main Site`. They can neither edit its configuration, nor execute updates on it.
 
 **Your takeaway**: By creating appropriate groups and assigning them to your users and sites, you can give your clients' staff access to the Panopticon pages for their sites. You are not exposing your other clients' sites to them - Panopticon remains mum about these other sites to these users. By varying the per-group privileges you can prevent your clients from carrying out potentially problematic operations on their sites in Panopticon.
-
-## Why no uptime monitoring
-
-Does not make sense from a single location
-
-Monitoring works best if you can also monitor the server's operating parameters
-
-You can use [HetrixTools](https://hetrixtools.com), (UptimeRobot)[https://uptimerobot.com], or any similar service.
