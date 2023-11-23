@@ -1,9 +1,5 @@
 # Documentation notes
 
-Users: show language under full name.
-
-Test multi-language mail sending.
-
 ## Pages in need of documentation
 
 * Mail templates

@@ -277,18 +277,29 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 			return;
 		}
 
-		/** @var Mailtemplates $template */
+		// Try to find an exact language match
+		/** @var ?Mailtemplates $template */
 		$template = $templates->reduce(
-			function (?Mailtemplates $carry, Mailtemplates $item): ?Mailtemplates {
-				if (empty($carry) || $carry->language !== '*' || $item->language === '*')
-				{
-					return $item;
-				}
-
-				return $carry;
-			},
-			null
+			fn(?Mailtemplates $carry, Mailtemplates $item): ?Mailtemplates =>
+				$carry ?? ($item->language === $language ? $item : null)
 		);
+
+		// Fall back to the "All languages" match
+		$template ??= $templates->reduce(
+			fn(?Mailtemplates $carry, Mailtemplates $item): ?Mailtemplates =>
+				$carry ?? ($item->language === '*' ? $item : null)
+		);
+
+		// Fall back to en-GB
+		$template ??= $templates->reduce(
+			fn(?Mailtemplates $carry, Mailtemplates $item): ?Mailtemplates =>
+				$carry ?? ($item->language === 'en-GB' ? $item : null)
+		);
+
+		if (empty($template))
+		{
+			return;
+		}
 
 		$replacements = array_merge([
 			'URL' => Uri::base(false, $this->getContainer()),

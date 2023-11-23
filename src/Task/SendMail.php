@@ -289,7 +289,7 @@ class SendMail extends AbstractCallback
 		}
 
 		return array_map(
-			fn(object $o) => [$o->email, $o->name],
+			fn(object $o) => [$o->email, $o->name, $o->parameters],
 			$db->setQuery($query)->loadObjectList() ?: []
 		);
 	}
