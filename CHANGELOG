@@ -7,6 +7,7 @@ Akeeba Panopticon 1.0.5
 + Detect when scheduled tasks are falling behind [gh-315]
 + Site configuration management CLI commands [gh-153]
 + Collection and display of basic server information [gh-307]
+# [LOW] Test email message showed %s instead of the Panopticon URL
 
 Akeeba Panopticon 1.0.4
 ================================================================================

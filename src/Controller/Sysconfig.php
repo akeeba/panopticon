@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
+use Awf\Uri\Uri;
 
 class Sysconfig extends Controller
 {
@@ -50,7 +51,7 @@ class Sysconfig extends Controller
 
 			$mailer->addRecipient($user->getEmail(), $user->getName());
 			$mailer->setSubject($this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_SUBJECT'));
-			$mailer->setBody($this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY'));
+			$mailer->setBody($this->getLanguage()->sprintf('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY', Uri::base()));
 
 			$sent = $mailer->send();
 
