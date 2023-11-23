@@ -12,8 +12,11 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\Model\Mailtemplates     $model
  * @var \Akeeba\Panopticon\Model\Mailtemplates     $mailtemplate
  */
-$model = $this->getModel();
-$token = $this->container->session->getCsrfToken()->getValue();
+$model    = $this->getModel();
+$token    = $this->container->session->getCsrfToken()->getValue();
+$langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
+	addAllLanguages: true
+);
 ?>
 
 <form action="@route('index.php?view=mailtemplates')" method="post" name="adminForm" id="adminForm">
@@ -75,8 +78,13 @@ $token = $this->container->session->getCsrfToken()->getValue();
                     </a>
                 </td>
                 <td>
-                    @if ($mailtemplate->language === '*')
-                        @lang('PANOPTICON_MAILTEMPLATES_OPT_LANGUAGE_ALL')
+                    @if ($langInfo[$mailtemplate->language] ?? null)
+                        <div title="{{{ $langInfo[$mailtemplate->language][1]  }}}">
+                            {{ $langInfo[$mailtemplate->language][0] }}
+                            <span class="visually-hidden">
+                                {{{ $langInfo[$mailtemplate->language][1]  }}}
+                            </span>
+                        </div>
                     @else
                         {{ $mailtemplate->language }}
                     @endif

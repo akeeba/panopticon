@@ -16,6 +16,7 @@ $user       = $model->getId()
     ? $this->container->userManager->getUser($model->getId())
     : new \Akeeba\Panopticon\Library\User\User();
 $token      = $this->container->session->getCsrfToken()->getValue();
+$params     = $user->getParameters();
 
 $js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {
@@ -127,9 +128,26 @@ JS;
                             ) }}
                         </div>
                     </div>
-
                 @endif
 
+                {{-- language --}}
+                <div class="row mb-3">
+                    <label for="language" class="col-sm-3 col-form-label">
+                        @lang('PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE')
+                    </label>
+                    <div class="col-sm-9">
+                        {{ $this->getContainer()->helper->setup->languageOptions(
+                            $params->get('language', ''),
+                            name: 'language',
+                            id: 'language',
+                            attribs: ['class' => 'form-select'],
+                            addUseDefault: true
+                        ) }}
+                        <div class="form-text">
+                            @sprintf('PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_HELP', $this->getContainer()->appConfig->get('language', 'en-GB'))
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

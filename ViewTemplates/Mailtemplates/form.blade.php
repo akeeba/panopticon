@@ -41,9 +41,13 @@ $item = $this->getModel();
             @lang('PANOPTICON_MAILTEMPLATE_FIELD_LANGUAGE')
         </label>
         <div class="col-sm-9">
-            <select name="language" id="language" class="form-select" disabled required>
-                <option value="*">@lang('PANOPTICON_MAILTEMPLATES_OPT_LANGUAGE_ALL')</option>
-            </select>
+            {{ $this->getContainer()->helper->setup->languageOptions(
+                    $item->language,
+                    name: 'language',
+                    id: 'language',
+                    attribs: ['class' => 'form-select'],
+                    addAllLanguages: true
+                ) }}
         </div>
     </div>
 

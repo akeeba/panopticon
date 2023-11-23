@@ -100,6 +100,10 @@ class Users extends DataController
 			'permissions' => array_keys($this->input->post->get('permissions', [], 'raw')),
 		];
 
+		$params = [
+			'language' => $this->input->post->getCmd('language', ''),
+		];
+
 		if (!$myself->getPrivilege('panopticon.super'))
 		{
 			$data['username']    = $savedUser->getUsername();
@@ -212,6 +216,12 @@ class Users extends DataController
 				{
 					$savedUser->setPrivilege($k, true);
 				}
+			}
+
+			// Apply the parameters
+			foreach ($params as $k => $v)
+			{
+				$savedUser->getParameters()->set($k, $v);
 			}
 
 			$this->container->userManager->saveUser($savedUser);

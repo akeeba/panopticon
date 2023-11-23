@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\View\Trait;
 
 use Awf\Date\Date;
+use Awf\Text\Language;
 use DateTime;
 
 defined('AKEEBA') || die;
@@ -26,9 +27,11 @@ trait TimeAgoTrait
 	 */
 	protected function timeAgo(
 		int|Date|DateTime $referenceTimestamp = 0, int|Date|DateTime $currentTimestamp = null, string $timeUnit = '',
-		bool $autoSuffix = true
+		bool $autoSuffix = true, ?Language $languageObject = null
 	): string
 	{
+		$languageObject ??= $this->getLanguage();
+
 		if ($referenceTimestamp instanceof DateTime)
 		{
 			$referenceTimestamp = $referenceTimestamp->getTimestamp();
@@ -96,10 +99,10 @@ trait TimeAgoTrait
 
 		if ($referenceTimestamp != 0)
 		{
-			return $this->getLanguage()->sprintf($textSuffix, $this->getLanguage()->plural($calc[$effectiveTimeUnit][1], $timeDifference));
+			return $languageObject->sprintf($textSuffix, $languageObject->plural($calc[$effectiveTimeUnit][1], $timeDifference));
 		}
 
-		return $this->getLanguage()->text('PANOPTICON_LBL_RELTIME_NO_REFERENCE');
+		return $languageObject->text('PANOPTICON_LBL_RELTIME_NO_REFERENCE');
 	}
 
 }

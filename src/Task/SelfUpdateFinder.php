@@ -18,6 +18,8 @@ use Akeeba\Panopticon\Model\Selfupdate;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Awf\Registry\Registry;
 use Awf\User\User;
+use Psr\Cache\CacheException;
+use Psr\Cache\InvalidArgumentException;
 
 #[AsTask(
 	name: 'selfupdatefinder',
@@ -44,7 +46,16 @@ class SelfUpdateFinder extends AbstractCallback
 			return Status::OK->value;
 		}
 
-		$updateInfo = $model->getUpdateInformation();
+		try
+		{
+			$updateInfo = $model->getUpdateInformation();
+		}
+		catch (\Throwable)
+		{
+			$this->logger->debug('Could not retrieve update information.');
+
+			return Status::OK->value;
+		}
 
 		if ($updateInfo->stuck)
 		{
@@ -72,7 +83,7 @@ class SelfUpdateFinder extends AbstractCallback
 		// Check if this is the same as the last seen version. If so, no action will be taken.
 		$lastSeenVersion = $this->getLastSeenVersion();
 
-		if ($lastSeenVersion === $latestVersion)
+		if ($lastSeenVersion === $latestVersion->version)
 		{
 			$this->logger->debug('An email about this version has already been sent.');
 
@@ -80,14 +91,14 @@ class SelfUpdateFinder extends AbstractCallback
 		}
 
 		// Schedule a mail for all Super Users.
-		$this->logger->info(sprintf('Notifying Super Users about the new Panopticon version %s', $latestVersion));
+		$this->logger->info(sprintf('Notifying Super Users about the new Panopticon version %s', $latestVersion->version));
 
 		$data      = (new Registry())
 			->loadArray(
 				[
 					'template'        => 'selfupdate_found',
 					'email_variables' => [
-						'NEW_VERSION' => $latestVersion,
+						'NEW_VERSION' => $latestVersion->version,
 						'OLD_VERSION' => defined('AKEEBA_PANOPTICON_VERSION')
 							? AKEEBA_PANOPTICON_VERSION : 'dev',
 					],
@@ -98,7 +109,9 @@ class SelfUpdateFinder extends AbstractCallback
 		$this->enqueueEmail($data, null, 'now');
 
 		// Update the last seen version.
-		$this->setLastSeenVersion($latestVersion);
+		$this->setLastSeenVersion($latestVersion->version);
+
+		return Status::OK->value;
 	}
 
 	private function getLastSeenVersion(): ?string

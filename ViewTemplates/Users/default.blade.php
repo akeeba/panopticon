@@ -15,6 +15,9 @@ defined('AKEEBA') || die;
 $model      = $this->getModel();
 $token      = $this->container->session->getCsrfToken()->getValue();
 $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
+$langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
+	namesAlsoInEnglish: false, addUseDefault: true
+);
 ?>
 <form action="@route('index.php?view=users')" method="post" name="adminForm" id="adminForm">
 
@@ -118,6 +121,16 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
                             {{{ $user->name }}}
                         </a>
                     </div>
+                    @if ($params->get('language'))
+                    <div class="small mt-1">
+                        @if($langInfo[$params->get('language')] ?? null)
+                            {{ $langInfo[$params->get('language')][0] }}
+                            &nbsp;
+                            {{{ $langInfo[$params->get('language')][1] }}}
+                        @else
+                        @endif
+                    </div>
+                    @endif
                 </td>
                 <td style="max-width: 20vw">
                     <div class="d-flex flex-row flex-wrap gap-3 align-items-start">
