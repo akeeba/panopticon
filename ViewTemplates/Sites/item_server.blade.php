@@ -89,8 +89,10 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
             @if ($serverInfo->cpuInfo?->cores ?? null)
             <div class="d-flex flex-column flex-md-row align-items-center gap-2">
                 <div class="fs-5">
-                    <span class="fa fa-fw fa-microchip" aria-hidden="true"></span>
-                    <span class="visually-hidden">CPU</span>
+                    <span class="fa fa-fw fa-microchip" aria-hidden="true"
+                          data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_CPU')"
+                    ></span>
+                    <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_CPU')</span>
                 </div>
                 <div>
                     <span class="text-secondary">
@@ -102,7 +104,7 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
                     @if ($serverInfo->cpuInfo?->model ?? null)
                         {{{ $serverInfo->cpuInfo->model }}}
                     @else
-                        Unknown CPU
+                        @lang('PANOPTICON_SITE_LBL_SERVER_CPU_UNKNOWN')
                     @endif
                 </div>
             </div>
@@ -115,7 +117,9 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
             {{-- Uptime --}}
             @if($serverInfo->load?->uptime ?? '')
             <div>
-                <span class="fa fa-fw fa-clock" aria-hidden="true"></span>
+                <span class="fa fa-fw fa-clock" aria-hidden="true"
+                      data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_UPTIME')"
+                ></span>
                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_UPTIME')</span>
                 {{ $this->minutesToHumanReadable($serverInfo->load->uptime) }}
             </div>
@@ -124,7 +128,9 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
             {{-- CPU Utilisation --}}
             @if(!empty(trim($serverInfo->cpuUsage?->user ?? '')))
             <div class="d-flex flex-row align-items-center gap-2 flex-grow-1">
-                <span class="fa fa-fw fa-gauge" aria-hidden="true"></span>
+                <span class="fa fa-fw fa-gauge" aria-hidden="true"
+                      data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_CPU_UTILISATION')"
+                ></span>
                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_CPU_UTILISATION')</span>
 
                 <div class="progress-stacked w-100">
@@ -226,6 +232,74 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
             </div>
         @endif
 
+        {{-- Memory information --}}
+        @if (($serverInfo?->memory?->total ?? null) !== null)
+        <?php
+	    $used  = floatval($serverInfo->memory?->used ?? 0);
+	    $cache = floatval($serverInfo->memory?->cache ?? 0);
+	    $free  = floatval($serverInfo->memory?->free ?? 0);
+	    $total = floatval($serverInfo->memory?->total ?? 0) ?: ($used + $cache + $free);
+
+	    $usedPercent  = 100 * ($used / $total);
+	    $cachePercent = 100 * ($cache / $total);
+	    $freePercent  = 100 * ($free / $total);
+
+		$class = '';
+
+		if ($usedPercent > 70)
+        {
+            $class = 'bg-warning';
+        }
+
+		if ($usedPercent >= 85)
+        {
+            $class = 'bg-danger';
+        }
+	    ?>
+        <div class="d-flex flex-row align-items-center gap-2 flex-grow-1 mb-2">
+            <span class="fa fa-fw fa-memory" aria-hidden="true"
+                  data-bs-toggle="tooltip"
+                  data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_RAM_UTILISATION')"
+            ></span>
+            <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_RAM_UTILISATION')</span>
+
+            <div class="progress-stacked w-100">
+                <div class="progress" role="progressbar"
+                     aria-label="@lang('PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_USED')"
+                     aria-valuenow="{{{ sprintf('%0.2f', $usedPercent) }}}"
+                     style="width: {{{ sprintf('%0.2f', floatval($usedPercent)) }}}%"
+                     aria-valuemin="0" aria-valuemax="100"
+                     data-bs-toggle="tooltip" data-bs-placement="bottom"
+                     data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_USED'): {{{ sprintf('%u MiB', $used) }}}"
+                >
+                    <div class="progress-bar {{ $class }}"></div>
+                </div>
+
+                <div class="progress" role="progressbar"
+                     aria-label="@lang('PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_CACHE')"
+                     aria-valuenow="{{{ sprintf('%0.2f', $cachePercent) }}}"
+                     style="width: {{{ sprintf('%0.2f', floatval($cachePercent)) }}}%"
+                     aria-valuemin="0" aria-valuemax="100"
+                     data-bs-toggle="tooltip" data-bs-placement="bottom"
+                     data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_CACHE'): {{{ sprintf('%u MiB', floatval($cache)) }}}"
+                >
+                    <div class="progress-bar progress-bar-striped bg-info"></div>
+                </div>
+
+                <div class="progress" role="progressbar"
+                     aria-label="@lang('PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_FREE')"
+                     aria-valuenow="{{{ sprintf('%0.2f', $freePercent) }}}"
+                     style="width: {{{ sprintf('%0.2f', floatval($freePercent)) }}}%"
+                     aria-valuemin="0" aria-valuemax="100"
+                     data-bs-toggle="tooltip" data-bs-placement="bottom"
+                     data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_FREE'): {{{ sprintf('%u MiB', floatval($free)) }}}"
+                >
+                    <div class="progress-bar bg-body-secondary"></div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         {{-- Disk usage --}}
         <table class="table table-borderless">
             <comment class="visually-hidden">
@@ -238,7 +312,7 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
             $total   = $serverInfo->siteDisk->total;
             $free    = $serverInfo->siteDisk->free;
             $used    = $total - $free;
-            $percent = 100 * ($used / $free);
+            $percent = 100 * ($used / $total);
             ?>
             <tr>
                 <th scope="row">
@@ -280,7 +354,7 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
             $total   = $serverInfo->dbDisk->total;
             $free    = $serverInfo->dbDisk->free;
             $used    = $total - $free;
-            $percent = 100 * ($used / $free);
+            $percent = 100 * ($used / $total);
             ?>
             <tr>
                 <th scope="row">
