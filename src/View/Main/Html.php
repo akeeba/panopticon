@@ -20,10 +20,15 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public ?int $cronSecondsBehind = 0;
 
+	public array $groupMap = [];
+
 	protected function onBeforeMain()
 	{
 		$this->setStrictLayout(true);
 		$this->setStrictTpl(true);
+
+		// Groups map
+		$this->groupMap = $this->getModel('groups')->getGroupMap();
 
 		// Create the lists object
 		$this->lists = new \stdClass();

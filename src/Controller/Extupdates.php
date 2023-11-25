@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\Controller;
 
 
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Awf\Mvc\Controller;
@@ -18,12 +19,31 @@ defined('AKEEBA') || die;
 class Extupdates extends Controller
 {
 	use EnqueueExtensionUpdateTrait;
+	use ACLTrait;
+
+	public function execute($task)
+	{
+		$this->aclCheck($task);
+
+		return parent::execute($task);
+	}
 
 	public function main()
 	{
 		$view      = $this->getView();
 		$siteModel = $this->getModel('site');
 		$view->setModel('site', $siteModel);
+
+		// When no group filter is selected we are POSTed no value. In this case, we need to unset the filter.
+		if (strtoupper($this->input->getMethod() ?? '') === 'POST')
+		{
+			$groups = $this->input->post->getRaw('group');
+
+			if ($groups === null)
+			{
+				$this->input->set('group', []);
+			}
+		}
 
 		parent::main();
 	}
@@ -82,11 +102,14 @@ class Extupdates extends Controller
 		// If I do not have any extensions left, redirect with an error
 		if (empty($extensionIDs))
 		{
-			$this->setRedirect($returnUri, $this->getLanguage()->text('PANOPTICON_EXTUPDATES_ERR_INVALID_SELECTION'), 'error');
+			$this->setRedirect(
+				$returnUri, $this->getLanguage()->text('PANOPTICON_EXTUPDATES_ERR_INVALID_SELECTION'), 'error'
+			);
 		}
 
 		// Schedule the updates
 		$numScheduled = 0;
+		$user         = $this->container->userManager->getUser();
 
 		foreach ($extensionIDs as $info)
 		{
@@ -104,7 +127,17 @@ class Extupdates extends Controller
 				continue;
 			}
 
-			if ($this->enqueueExtensionUpdate($site, $extensionId, 'major', $this->container->userManager->getUser()))
+			// You can only schedule updates if you have the admin or editown privilege on the site
+			$haveGlobalPrivilege = !$user->authorise('panopticon.admin', $site);
+			$canEditOwn          = $user->authorise('panopticon.editown', $site) && $site->created_by == $user->getId();
+
+			if (!$haveGlobalPrivilege && !$canEditOwn)
+			{
+				continue;
+			}
+
+			// Enqueue the update
+			if ($this->enqueueExtensionUpdate($site, $extensionId, 'major', $user))
 			{
 				$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
 
@@ -112,7 +145,7 @@ class Extupdates extends Controller
 			}
 		}
 
-		$message = $this->getLanguage()->plural('PANOPTICON_EXTUPDATES_LBL_SCHEDULED_N', $numScheduled);
+		$message     = $this->getLanguage()->plural('PANOPTICON_EXTUPDATES_LBL_SCHEDULED_N', $numScheduled);
 		$messageType = $numScheduled ? 'success' : 'warning';
 
 		$this->setRedirect($returnUri, $message, $messageType);

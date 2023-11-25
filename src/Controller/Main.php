@@ -56,6 +56,11 @@ class Main extends Controller
 		$app->close();
 	}
 
+	public function onBeforeBrowse(): bool
+	{
+		return $this->onBeforeDefault();
+	}
+
 	public function onBeforeDefault(): bool
 	{
 		if ($this->getTasksPausedFlag())
@@ -82,6 +87,17 @@ class Main extends Controller
 		// Pass the Selfupdate model to the view
 		$selfUpdateModel = $this->getModel('selfupdate');
 		$this->getView()->setModel('selfupdate', $selfUpdateModel);
+
+		// When no group filter is selected we are POSTed no value. In this case, we need to unset the filter.
+		if (strtoupper($this->input->getMethod() ?? '') === 'POST')
+		{
+			$groups = $this->input->post->getRaw('group');
+
+			if ($groups === null)
+			{
+				$this->input->set('group', []);
+			}
+		}
 
 		return true;
 	}

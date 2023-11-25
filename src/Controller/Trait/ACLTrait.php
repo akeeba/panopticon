@@ -42,6 +42,15 @@ trait ACLTrait
 			// We use per-site privileges in this controller
 			'*' => ['*'],
 		],
+		'coreupdates'   => [
+			''          => ['*'],
+			'default'          => ['*'],
+			'browse'           => ['*'],
+			'main'             => ['*'],
+			'scheduledupdates' => ['*'],
+			'cancelupdates'    => ['*'],
+			'*'                => ['ø'],
+		],
 		'cron'          => [
 			'*' => ['#'],
 		],
@@ -50,6 +59,12 @@ trait ACLTrait
 		],
 		'emails'        => [
 			'*' => ['super'],
+		],
+		'extupdates'    => [
+			'default' => ['*'],
+			'main'    => ['*'],
+			'update'  => ['*'],
+			'*'       => ['ø'],
 		],
 		'groups'        => [
 			'*' => ['super'],

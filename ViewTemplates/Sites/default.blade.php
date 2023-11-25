@@ -14,11 +14,23 @@ defined('AKEEBA') || die;
  */
 $model = $this->getModel();
 $token = $this->container->session->getCsrfToken()->getValue();
+
+$js = <<< JS
+window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.js-choice').forEach((element) => {
+        new Choices(element, {allowHTML: false, removeItemButton: true, placeholder: true, placeholderValue: ""});
+    });
+});
+
+JS;
 ?>
+@js('choices/choices.min.js', $this->getContainer()->application)
+@inlinejs($js)
 
 <form action="@route('index.php?view=sites')" method="post" name="adminForm" id="adminForm">
-    <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
-        <div class="input-group" style="max-width: max(50%, 25em)">
+    <div class="my-2 d-flex flex-column flex-lg-row gap-2 gap-lg-3 justify-content-center border rounded-1 p-2 bg-body-tertiary">
+        {{-- Search --}}
+        <div class="input-group" @if(empty($this->groupMap)) style="max-width: max(25em, 50%)" @endif>
             <input type="search" class="form-control" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="name" value="{{{ $model->getState('name', '') }}}">
@@ -31,7 +43,32 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 </span>
             </button>
         </div>
-
+        {{-- Groups --}}
+        @if (!empty($this->groupMap))
+        <div class="input-group choice-large">
+            <label for="group" class="form-label visually-hidden">@lang('PANOPTICON_MAIN_LBL_FILTER_GROUPS')</label>
+            {{ $this->container->html->select->genericList(
+                data: array_combine(
+                    array_merge([''], array_keys($this->groupMap)),
+                    array_merge([$this->getLanguage()->text('PANOPTICON_MAIN_LBL_FILTER_GROUPS_PLACEHOLDER')], array_values($this->groupMap)),
+                ),
+                name: 'group[]',
+                attribs: array_merge([
+                    'class' => 'form-select js-choice',
+                    'multiple' => 'multiple',
+                    'style' => 'min-width: min(20em, 50%)'
+                ]),
+                selected: array_filter($this->getModel()->getState('group', []) ?: [])
+            ) }}
+            <button type="submit"
+                    class="btn btn-primary">
+                <span class="fa fa-search" aria-hidden="true"></span>
+                <span class="visually-hidden">
+                    @lang('PANOPTICON_LBL_FORM_SEARCH')
+                </span>
+            </button>
+        </div>
+        @endif
     </div>
 
     <table class="table table-striped align-middle" id="adminList" role="table">
@@ -75,6 +112,18 @@ $token = $this->container->session->getCsrfToken()->getValue();
                             {{{ $site->getBaseUrl() }}}
                         </span>
                     </div>
+                    {{-- Show group labels --}}
+                    @if (!empty($groups = $site->getConfig()->get('config.groups')))
+                        <div>
+                            @foreach($groups as $gid)
+                                @if (isset($this->groupMap[$gid]))
+                                    <span class="badge bg-secondary">
+                                    {{{ $this->groupMap[$gid] }}}
+                                </span>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
                 </td>
                 <td>
                     @if ($site->enabled)

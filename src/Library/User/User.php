@@ -45,6 +45,7 @@ class User extends \Awf\User\User implements ContainerAwareInterface
 
 	public function authorise(string $privilege, int|Site $site): bool
 	{
+		// Am I a Super User, or have this privilege globally?
 		if ($this->getPrivilege($privilege))
 		{
 			return true;

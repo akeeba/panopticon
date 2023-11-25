@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\Controller;
 
 
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
@@ -20,6 +21,30 @@ defined('AKEEBA') || die;
 class Coreupdates extends DataController
 {
 	use EnqueueJoomlaUpdateTrait;
+	use ACLTrait;
+
+	public function execute($task)
+	{
+		$this->aclCheck($task);
+
+		return parent::execute($task);
+	}
+
+	public function onBeforeBrowse(): bool
+	{
+		// When no group filter is selected we are POSTed no value. In this case, we need to unset the filter.
+		if (strtoupper($this->input->getMethod() ?? '') === 'POST')
+		{
+			$groups = $this->input->post->getRaw('group');
+
+			if ($groups === null)
+			{
+				$this->input->set('group', []);
+			}
+		}
+
+		return parent::onBeforeBrowse();
+	}
 
 	public function scheduledUpdates()
 	{
@@ -51,6 +76,7 @@ class Coreupdates extends DataController
 
 		// Schedule the requested updates
 		$numScheduled = 0;
+		$user = $this->container->userManager->getUser();
 
 		foreach ($siteIDs as $siteId)
 		{
@@ -66,12 +92,22 @@ class Coreupdates extends DataController
 				continue;
 			}
 
+			// You can only schedule updates if you have the admin or editown privilege on the site
+			$haveGlobalPrivilege = !$user->authorise('panopticon.admin', $site);
+			$canEditOwn          = $user->authorise('panopticon.editown', $site) && $site->created_by == $user->getId();
+
+			if (!$haveGlobalPrivilege && !$canEditOwn)
+			{
+				continue;
+			}
+
+			// Enqueue the update
 			if ($site->isJoomlaUpdateTaskScheduled() || $site->isJoomlaUpdateTaskRunning())
 			{
 				continue;
 			}
 
-			$this->enqueueJoomlaUpdate($site, $this->getContainer(), user: $this->container->userManager->getUser());
+			$this->enqueueJoomlaUpdate($site, $this->getContainer(), user: $user);
 
 			$numScheduled++;
 		}
@@ -112,6 +148,7 @@ class Coreupdates extends DataController
 
 		// Cancel the requested updates
 		$numCanceled = 0;
+		$user = $this->container->userManager->getUser();
 
 		foreach ($siteIDs as $siteId)
 		{
@@ -127,6 +164,16 @@ class Coreupdates extends DataController
 				continue;
 			}
 
+			// You can only cancel updates if you have the admin or editown privilege on the site
+			$haveGlobalPrivilege = !$user->authorise('panopticon.admin', $site);
+			$canEditOwn          = $user->authorise('panopticon.editown', $site) && $site->created_by == $user->getId();
+
+			if (!$haveGlobalPrivilege && !$canEditOwn)
+			{
+				continue;
+			}
+
+			// Dequeue (cancel) the update
 			if (!$site->isJoomlaUpdateTaskScheduled() || $site->isJoomlaUpdateTaskRunning())
 			{
 				continue;

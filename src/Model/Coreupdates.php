@@ -7,10 +7,15 @@
 
 namespace Akeeba\Panopticon\Model;
 
+use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
+use Awf\Utils\ArrayHelper;
+
 defined('AKEEBA') || die;
 
 class Coreupdates extends Site
 {
+	use ApplyUserGroupsToSiteQueryTrait;
+
 	public function buildQuery($overrideLimits = false)
 	{
 		// Get a "select all" query
@@ -78,6 +83,21 @@ class Coreupdates extends Site
 				]
 			);
 
+		// Filter: search
+		$fltSearch = $this->getState('search', null, 'string');
+
+		if (!empty(trim($fltSearch ?? '')))
+		{
+			$fltSearch = trim($fltSearch ?? '');
+
+			$query->andWhere(
+				[
+					$db->quoteName('name') . ' LIKE ' . $db->quote('%' . $fltSearch . '%'),
+					$db->quoteName('url') . ' LIKE ' . $db->quote('%' . $fltSearch . '%'),
+				]
+			);
+		}
+
 		// Filters: site
 		$fltSiteId = $this->getState('site_id', 0, 'int');
 
@@ -119,6 +139,36 @@ class Coreupdates extends Site
 				)
 			);
 		}
+
+		// Filter: group
+		$fltGroup = $this->getState('group', null) ?: [];
+
+		if (!empty($fltGroup))
+		{
+			$fltGroup = is_string($fltGroup) && str_contains($fltGroup, ',') ? explode(',', $fltGroup) : $fltGroup;
+			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim($fltGroup)];
+			$fltGroup = ArrayHelper::toInteger($fltGroup);
+			$fltGroup = array_filter($fltGroup);
+			$clauses  = [];
+
+			foreach ($fltGroup as $gid)
+			{
+				$clauses[] = $query->jsonContains(
+					$query->quoteName('config'), $query->quote('"' . (int) $gid . '"'), $query->quote('$.config.groups')
+				);
+				$clauses[] = $query->jsonContains(
+					$query->quoteName('config'), $query->quote((int) $gid), $query->quote('$.config.groups')
+				);
+			}
+
+			if (!empty($clauses))
+			{
+				$query->extendWhere('AND', $clauses, 'OR');
+			}
+		}
+
+		// Filter sites for everyone who is not a Super User
+		$this->applyUserGroupsToQuery($query);
 
 		return $query;
 	}

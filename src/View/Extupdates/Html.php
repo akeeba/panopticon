@@ -23,6 +23,8 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public array $scheduledPerSite = [];
 
+	public array $groupMap = [];
+
 	public function onBeforeMain()
 	{
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_EXTUPDATES_TITLE'));
@@ -35,6 +37,9 @@ class Html extends \Awf\Mvc\DataView\Html
 				'icon'    => 'fa fa-wand-magic-sparkles',
 			]
 		);
+
+		// Groups map
+		$this->groupMap = $this->getModel('groups')->getGroupMap();
 
 		$this->lists = new \stdClass();
 

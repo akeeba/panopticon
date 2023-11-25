@@ -22,10 +22,10 @@ use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\AkeebaBackupIntegrationTrait;
+use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Awf\Container\Container;
-use Awf\Database\Query;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
@@ -64,6 +64,7 @@ class Site extends DataModel
 	use ApiRequestTrait;
 	use AkeebaBackupIntegrationTrait;
 	use AdminToolsIntegrationTrait;
+	use ApplyUserGroupsToSiteQueryTrait;
 
 	public function __construct(Container $container = null)
 	{
@@ -196,6 +197,33 @@ class Site extends DataModel
 			);
 		}
 
+		// Filter: group
+		$fltGroup = $this->getState('group', null) ?: [];
+
+		if (!empty($fltGroup))
+		{
+			$fltGroup = is_string($fltGroup) && str_contains($fltGroup, ',') ? explode(',', $fltGroup) : $fltGroup;
+			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim($fltGroup)];
+			$fltGroup = ArrayHelper::toInteger($fltGroup);
+			$fltGroup = array_filter($fltGroup);
+			$clauses  = [];
+
+			foreach ($fltGroup as $gid)
+			{
+				$clauses[] = $query->jsonContains(
+					$query->quoteName('config'), $query->quote('"' . (int) $gid . '"'), $query->quote('$.config.groups')
+				);
+				$clauses[] = $query->jsonContains(
+					$query->quoteName('config'), $query->quote((int) $gid), $query->quote('$.config.groups')
+				);
+			}
+
+			if (!empty($clauses))
+			{
+				$query->extendWhere('AND', $clauses, 'OR');
+			}
+		}
+
 		return $query;
 	}
 
@@ -212,8 +240,8 @@ class Site extends DataModel
 
 		if (empty($createdBy))
 		{
-			$createdOn = $currentDate;
-			$createdBy = $uid;
+			$createdOn  = $currentDate;
+			$createdBy  = $uid;
 			$modifiedBy = null;
 			$modifiedOn = null;
 		}
@@ -651,7 +679,6 @@ class Site extends DataModel
 		return $this->isSiteSpecificTaskRunning('extensionsupdate');
 	}
 
-
 	public function getExtensionsList(bool $sortByName = true): array
 	{
 		$config     = $this->getConfig();
@@ -972,66 +999,6 @@ class Site extends DataModel
 		$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Tasks');
 		$taskModel->setState('site_id', $id);
 		$taskModel->get(true)->delete();
-	}
-
-	private function applyUserGroupsToQuery(Query $query): void
-	{
-		if (defined('AKEEBA_CLI'))
-		{
-			return;
-		}
-
-		// Get the user, so we can apply per group privilege checks
-		$user = $this->container->userManager->getUser();
-
-		// If the user is a Super User, or has a global view privilege, we have no checks to make
-		if ($user->getPrivilege('panopticon.view'))
-		{
-			return;
-		}
-
-		// In any other case, get the list of groups for the user and limit listing sites visible to these groups
-		$groupPrivileges = $user->getGroupPrivileges();
-
-		if (empty($groupPrivileges))
-		{
-			// There are no groups the user belongs to. Therefore, the user can only see their own sites.
-			$query->where($query->quoteName('created_by') . ' = ' . $query->quote($user->getId()));
-
-			return;
-		}
-
-		// Filter out groups with read privileges
-		$groupPrivileges = array_filter(
-			$groupPrivileges,
-			fn($privileges) => in_array('panopticon.view', $privileges)
-		);
-
-		if (empty($groupPrivileges))
-		{
-			// There are no groups with read privileges the user belongs to. Therefore, the user can only see their own sites.
-			$query->where($query->quoteName('created_by') . ' = ' . $query->quote($user->getId()));
-
-			return;
-		}
-
-		// We allow the user to view their own sites
-		$clauses = [
-			$query->quoteName('created_by') . ' = ' . $query->quote($user->getId()),
-		];
-
-		// Basically: a bunch of JSON_CONTAINS(`config`, '1', '$.config.groups') with ORs between them
-		foreach (array_keys($groupPrivileges) as $gid)
-		{
-			$clauses[] = $query->jsonContains(
-				$query->quoteName('config'), $query->quote('"' . (int) $gid . '"'), $query->quote('$.config.groups')
-			);
-			$clauses[] = $query->jsonContains(
-				$query->quoteName('config'), $query->quote((int) $gid), $query->quote('$.config.groups')
-			);
-		}
-
-		$query->extendWhere('AND', $clauses, 'OR');
 	}
 
 	private function cleanUrl(?string $url): string

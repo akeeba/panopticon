@@ -61,6 +61,21 @@ $connectorAPI     = $config->get('core.panopticon.api');
     </div>
 </div>
 
+{{-- Show group labels --}}
+@if (!empty($groups = $config->get('config.groups')))
+<div class="my-1">
+    <span class="fa fa-fw fa-user-group text-secondary" aria-hidden="true"></span>
+    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_GROUPS')</span>
+    @foreach($groups as $gid)
+        @if (isset($this->groupMap[$gid]))
+            <span class="badge bg-secondary">
+                {{{ $this->groupMap[$gid] }}}
+            </span>
+        @endif
+    @endforeach
+</div>
+@endif
+
 <div class="container my-3">
     <div class="row g-3 mb-3">
         <div class="col-12 col-lg-6 order-1 order-lg-0">

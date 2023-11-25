@@ -8,6 +8,7 @@ Akeeba Panopticon 1.0.5
 + Site configuration management CLI commands [gh-153]
 + Collection and display of basic server information [gh-307]
 + Per-user language preference [gh-326]
++ Groups act as tags for site filtering [gh-333]
 # [LOW] Test email message showed %s instead of the Panopticon URL
 
 Akeeba Panopticon 1.0.4

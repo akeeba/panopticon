@@ -731,6 +731,17 @@ class Sites extends DataController
 			$this->input->set('savestate', true);
 		}
 
+		// When no group filter is selected we are POSTed no value. In this case, we need to unset the filter.
+		if (strtoupper($this->input->getMethod() ?? '') === 'POST')
+		{
+			$groups = $this->input->post->getRaw('group');
+
+			if ($groups === null)
+			{
+				$this->input->set('group', []);
+			}
+		}
+
 		return parent::onBeforeBrowse();
 	}
 

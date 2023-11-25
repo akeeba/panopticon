@@ -75,6 +75,8 @@ class Html extends DataViewHtml
 
 	private array $backupProfiles = [];
 
+	public array $groupMap = [];
+
 	public function onBeforeDlkey(): bool
 	{
 		$this->setStrictLayout(true);
@@ -96,6 +98,9 @@ class Html extends DataViewHtml
 	public function onBeforeBrowse(): bool
 	{
 		$result = $this->onBeforeBrowseCrud();
+
+		// Groups map
+		$this->groupMap = $this->getModel('groups')->getGroupMap();
 
 		$user      = $this->container->userManager->getUser();
 		$canAdd    = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.addown');
@@ -237,6 +242,9 @@ class Html extends DataViewHtml
 		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=main')]);
 
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_TITLE_READ'));
+
+		// Groups map
+		$this->groupMap = $this->getModel('groups')->getGroupMap();
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();

@@ -9,10 +9,14 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
 use Awf\Mvc\Model;
+use Awf\Utils\ArrayHelper;
 
 class Extupdates extends Model
 {
+	use ApplyUserGroupsToSiteQueryTrait;
+
 	private int $totalExtensions = 0;
 
 	private array $extensionNames = [''];
@@ -46,6 +50,7 @@ class Extupdates extends Model
 				]
 			);
 
+		// Filter: Specific site
 		$fltSiteId = $this->getState('site_id', 0, 'int');
 
 		if ($fltSiteId > 0)
@@ -53,6 +58,7 @@ class Extupdates extends Model
 			$query->where($db->quoteName('id') . ' = ' . $db->quote($fltSiteId));
 		}
 
+		// Filter: CMS family
 		$fltCmsFamily = $this->getState('cmsFamily', null, 'cmd');
 
 		if ($fltCmsFamily)
@@ -63,6 +69,7 @@ class Extupdates extends Model
 			);
 		}
 
+		// Filter: PHP family
 		$fltPHPFamily = $this->getState('phpFamily', null, 'cmd');
 
 		if ($fltPHPFamily)
@@ -74,6 +81,37 @@ class Extupdates extends Model
 			);
 		}
 
+		// Filter: group
+		$fltGroup = $this->getState('group', null) ?: [];
+
+		if (!empty($fltGroup))
+		{
+			$fltGroup = is_string($fltGroup) && str_contains($fltGroup, ',') ? explode(',', $fltGroup) : $fltGroup;
+			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim($fltGroup)];
+			$fltGroup = ArrayHelper::toInteger($fltGroup);
+			$fltGroup = array_filter($fltGroup);
+			$clauses  = [];
+
+			foreach ($fltGroup as $gid)
+			{
+				$clauses[] = $query->jsonContains(
+					$query->quoteName('config'), $query->quote('"' . (int) $gid . '"'), $query->quote('$.config.groups')
+				);
+				$clauses[] = $query->jsonContains(
+					$query->quoteName('config'), $query->quote((int) $gid), $query->quote('$.config.groups')
+				);
+			}
+
+			if (!empty($clauses))
+			{
+				$query->extendWhere('AND', $clauses, 'OR');
+			}
+		}
+
+		// Filter sites for everyone who is not a Super User
+		$this->applyUserGroupsToQuery($query);
+
+		// Get an iterator
 		$iterator   = $db->setQuery($query)->getIterator();
 		$extensions = [];
 
@@ -246,11 +284,11 @@ class Extupdates extends Model
 		{
 			$extensions = array_filter(
 				$extensions,
-				fn($extension) => str_contains($extension->name ?? null, $fltSearch)
-				                  || str_contains($extension->description ?? null, $fltSearch)
-				                  || str_contains($extension->author ?? null, $fltSearch)
-				                  || str_contains($extension->authorUrl ?? null, $fltSearch)
-				                  || str_contains($extension->authorEmail ?? null, $fltSearch)
+				fn($extension) => stripos($extension->name ?? '', $fltSearch) !== false
+				                  || stripos($extension->description ?? '', $fltSearch) !== false
+				                  || stripos($extension->author ?? '', $fltSearch) !== false
+				                  || stripos($extension->authorUrl ?? '', $fltSearch) !== false
+				                  || stripos($extension->authorEmail ?? '', $fltSearch) !== false
 			);
 		}
 

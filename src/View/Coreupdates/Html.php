@@ -17,6 +17,8 @@ class Html extends BaseHtmlView
 {
 	use CrudTasksTrait;
 
+	public array $groupMap = [];
+
 	public function onBeforeBrowse(): bool
 	{
 		$this->addButtonFromDefinition(
@@ -39,6 +41,9 @@ class Html extends BaseHtmlView
 		);
 
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
+
+		// Groups map
+		$this->groupMap = $this->getModel('groups')->getGroupMap();
 
 		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
 		$limit = $this->getModel()->getState('limit', 50, 'int');

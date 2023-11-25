@@ -8,3 +8,16 @@ $choices-icon-cross: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdo
 $choices-icon-cross-inverse: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJ2YXIoLS1icy1saWdodCkiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PHBhdGggZD0iTTIuNTkyLjA0NGwxOC4zNjQgMTguMzY0LTIuNTQ4IDIuNTQ4TC4wNDQgMi41OTJ6Ii8+PHBhdGggZD0iTTAgMTguMzY0TDE4LjM2NCAwbDIuNTQ4IDIuNTQ4TDIuNTQ4IDIwLjkxMnoiLz48L2c+PC9zdmc+") !default;
 
 @import "../3pd/choices";
+
+.choice-large {
+  .choices {
+    min-width: max(25em, 50%);
+  }
+
+  &.input-group {
+    .choices {
+      min-width: unset;
+      width: calc(100% - 2.5em);
+    }
+  }
+}
