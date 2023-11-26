@@ -27,15 +27,8 @@ class Groups extends DataController
 	{
 		$data = (array)$data;
 
-		if (!isset($data['permissions']))
-		{
-			return;
-		}
-
-		$permissions = array_keys($data['permissions']);
+		$permissions = array_keys($data['permissions'] ?? []);
 		$this->getModel()->setPrivileges($permissions);
 		unset($data['permissions']);
 	}
-
-
 }
