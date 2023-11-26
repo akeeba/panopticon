@@ -224,7 +224,7 @@ JS;
                         </a>
                     </div>
                     {{-- Show group labels --}}
-                    @if (!empty($groups = $site->getConfig()->get('config.groups')))
+                    @if (!empty($groups = $item->getConfig()->get('config.groups')))
                         <div>
                             @foreach($groups as $gid)
                                 @if (isset($this->groupMap[$gid]))
