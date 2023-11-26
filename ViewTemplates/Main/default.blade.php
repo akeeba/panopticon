@@ -55,7 +55,7 @@ JS;
         <div class="d-flex flex-column flex-lg-row gap-2 gap-lg-3 justify-content-center align-items-center">
             {{-- Search --}}
             <div class="input-group" @if(empty($this->groupMap)) style="max-width: max(25em, 50%)" @endif>
-                <input type="search" class="form-control" id="search"
+                <input type="search" class="form-control form-control-lg" id="search"
                        placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                        name="search" value="{{{ $model->getState('search', '') }}}">
                 <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>

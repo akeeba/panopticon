@@ -22,7 +22,7 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
 <form action="@route('index.php?view=mailtemplates')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
         <div class="input-group" style="max-width: max(50%, 25em)">
-            <input type="search" class="form-control" id="search"
+            <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="name" value="{{{ $model->getState('subject', '') }}}">
             <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>

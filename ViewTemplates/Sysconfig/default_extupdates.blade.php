@@ -67,7 +67,7 @@ $config = $this->container->appConfig;
                     <span class="fa fa-fw fa-search" aria-hidden="true"></span>
                 </span>
                 <input type="search" name="extensions-filter-search" id="extensions-filter-search"
-                       class="form-control"
+                       class="form-control form-control-lg"
                 >
                 <button type="button" class="btn btn-outline-secondary"
                         id="extensions-filter-search-button">

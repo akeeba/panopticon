@@ -23,7 +23,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
 
     <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
         <div class="input-group" style="max-width: max(50%, 25em)">
-            <input type="search" class="form-control" id="search"
+            <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="search" value="{{{ $model->getState('search', '') }}}">
             <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>

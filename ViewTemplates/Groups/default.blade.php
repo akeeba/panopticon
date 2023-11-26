@@ -18,7 +18,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 <form action="@route('index.php?view=groups')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
         <div class="input-group" style="max-width: max(50%, 25em)">
-            <input type="search" class="form-control" id="search"
+            <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="title" value="{{{ $model->getState('title', '') }}}">
             <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
