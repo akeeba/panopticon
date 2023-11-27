@@ -468,7 +468,8 @@ class ExtensionsUpdate extends AbstractCallback
 	 * @since   1.0.4
 	 */
 	private function logReport(
-		Site $site, object $extension, string $oldVersion, string $newVersion, bool $status = true, mixed $e = null, ?int $initiatingUser = null
+		Site $site, object $extension, string $oldVersion, string $newVersion, bool $status = true, mixed $e = null,
+		?int $initiatingUser = null
 	): void
 	{
 		$report = Reports::fromExtensionUpdateInstalled(
@@ -534,8 +535,8 @@ class ExtensionsUpdate extends AbstractCallback
 
 		$emailKey  = 'extensions_update_done';
 		$variables = [
-			'SITE_NAME'     => $site->name,
-			'SITE_URL'      => $site->getBaseUrl(),
+			'SITE_NAME' => $site->name,
+			'SITE_URL'  => $site->getBaseUrl(),
 		];
 
 		// Get the CC email addresses
@@ -646,14 +647,16 @@ class ExtensionsUpdate extends AbstractCallback
 		$siteConfig->set('director.extensionupdates.lastSeen', $lastSeenVersions);
 		$site->setFieldValue('config', $siteConfig->toString());
 		$site->save();
-	}/**
- * @param   string  $language
- * @param   array   $updateStatus
- * @param   Site    $site
- *
- * @return array
- * @throws \Awf\Exception\App
- */
+	}
+
+	/**
+	 * @param   string  $language
+	 * @param   array   $updateStatus
+	 * @param   Site    $site
+	 *
+	 * @return array
+	 * @throws \Awf\Exception\App
+	 */
 	private function getRenderedResultsForEmail(string $language, array $updateStatus, Site $site): array
 	{
 		$possibleTemplates       = [

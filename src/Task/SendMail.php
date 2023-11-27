@@ -41,7 +41,7 @@ class SendMail extends AbstractCallback
 			$template         = $sendingParams->get('template');
 			$fallbackLanguage = $sendingParams->get('language', 'en-GB');
 			$variables        = $sendingParams->get('email_variables', []);
-			$variablesByLang  = $sendingParams->get('email_variables_by_lang', []);
+			$variablesByLang  = (array) $sendingParams->get('email_variables_by_lang', []);
 			$permissions      = $sendingParams->get('permissions');
 			$cc               = $sendingParams->get('email_cc');
 
@@ -63,6 +63,19 @@ class SendMail extends AbstractCallback
 					$template, $queueItem->getSiteId()
 				)
 			);
+
+			// Get the site object
+			/** @var Site $site */
+			$site = $this->container->mvcFactory->makeTempModel('Site');
+
+			try
+			{
+				$site->findOrFail($queueItem->getSiteId());
+			}
+			catch (\Exception $e)
+			{
+				$site = null;
+			}
 
 			$recipients = $this->getRecipientsByPermissions($permissions, $site);
 
@@ -102,19 +115,6 @@ class SendMail extends AbstractCallback
 				$language                          = $params?->language ?? $defaultLanguage;
 				$recipientsByLanguage[$language]   ??= [];
 				$recipientsByLanguage[$language][] = [$email, $name];
-			}
-
-			// Get the site object
-			/** @var Site $site */
-			$site = $this->container->mvcFactory->makeTempModel('Site');
-
-			try
-			{
-				$site->findOrFail($queueItem->getSiteId());
-			}
-			catch (\Exception $e)
-			{
-				$site = null;
 			}
 
 			// Send emails by language
