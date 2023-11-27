@@ -272,16 +272,41 @@ class RefreshInstalledExtensions extends AbstractCallback
 							$config->set('extensions.hasUpdates', $hasUpdates);
 							$config->set('extensions.lastErrorMessage', null);
 
-							try
+							// Save the configuration (three tries)
+							$retry = -1;
+
+							do
 							{
-								$site->save([
-									'config' => $config->toString(),
-								]);
-							}
-							catch (\Exception $e)
-							{
-								// Ah, shucks.
-							}
+								try
+								{
+									$retry++;
+
+									$site->save([
+										'config' => $config->toString(),
+									]);
+
+									break;
+								}
+								catch (\Exception $e)
+								{
+									if ($retry >= 3)
+									{
+										$this->logger->error(sprintf(
+											'Error saving the extensions information for site #%d (%s) upon successful API call: %s',
+											$site->id, $site->name, $e->getMessage()
+										));
+
+										break;
+									}
+
+									$this->logger->warning(sprintf(
+										'Failed saving the extensions information for site #%d (%s) upon successful API call (will retry): %s',
+										$site->id, $site->name, $e->getMessage()
+									));
+
+									sleep($retry);
+								}
+							} while ($retry < 3);
 
 							// Finally, clear the cache of known extensions for the specific site
 							$cacheKey = 'site.' . $site->id;
@@ -312,7 +337,10 @@ class RefreshInstalledExtensions extends AbstractCallback
 							}
 							catch (\Exception $e)
 							{
-								// Ah, shucks.
+								$this->logger->error(sprintf(
+									'Error saving the extension information for site #%d (%s) upon failed API call: %s',
+									$site->id, $site->name, $e->getMessage()
+								));
 							}
 						}
 					);

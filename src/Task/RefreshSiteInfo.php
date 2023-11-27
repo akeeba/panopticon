@@ -288,20 +288,41 @@ class RefreshSiteInfo extends AbstractCallback
 							// Clear the last error message
 							$config->set('core.lastErrorMessage', null);
 
-							// Save the configuration
-							try
+							// Save the configuration (three tries)
+							$retry = -1;
+
+							do
 							{
-								$site->save([
-									'config' => $config->toString(),
-								]);
-							}
-							catch (\Exception $e)
-							{
-								$this->logger->error(sprintf(
-									'Error saving the information for site #%d (%s): %s',
-									$site->id, $site->name, $e->getMessage()
-								));
-							}
+								try
+								{
+									$retry++;
+
+									$site->save([
+										'config' => $config->toString(),
+									]);
+
+									break;
+								}
+								catch (\Exception $e)
+								{
+									if ($retry >= 3)
+									{
+										$this->logger->error(sprintf(
+											'Error saving the information for site #%d (%s) upon successful API call: %s',
+											$site->id, $site->name, $e->getMessage()
+										));
+
+										break;
+									}
+
+									$this->logger->warning(sprintf(
+										'Failed saving the information for site #%d (%s) upon successful API call (will retry): %s',
+										$site->id, $site->name, $e->getMessage()
+									));
+
+									sleep($retry);
+								}
+							} while ($retry < 3);
 						},
 						function (RequestException $e) use ($site) {
 							$this->logger->error(sprintf(
@@ -325,7 +346,7 @@ class RefreshSiteInfo extends AbstractCallback
 							catch (\Exception $e)
 							{
 								$this->logger->error(sprintf(
-									'Error saving the information for site #%d (%s): %s',
+									'Error saving the information for site #%d (%s) upon failed API call: %s',
 									$site->id, $site->name, $e->getMessage()
 								));
 							}
