@@ -15,6 +15,7 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;
@@ -28,6 +29,7 @@ use Psr\Http\Message\ResponseInterface;
 class RefreshInstalledExtensions extends AbstractCallback
 {
 	use ApiRequestTrait;
+	use JsonSanitizerTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -40,10 +42,10 @@ class RefreshInstalledExtensions extends AbstractCallback
 			$params = new Registry();
 		}
 
-		$limitStart   = (int)$storage->get('limitStart', 0);
-		$limit        = (int)$storage->get('limit', $params->get('limit', 10));
-		$force        = (bool)$storage->get('force', $params->get('force', false));
-		$forceUpdates = (bool)$storage->get('forceUpdates', $params->get('forceUpdates', false));
+		$limitStart   = (int) $storage->get('limitStart', 0);
+		$limit        = (int) $storage->get('limit', $params->get('limit', 10));
+		$force        = (bool) $storage->get('force', $params->get('force', false));
+		$forceUpdates = (bool) $storage->get('forceUpdates', $params->get('forceUpdates', false));
 		$filterIDs    = $storage->get('filter.ids', $params->get('ids', []));
 
 		$siteIDs = $this->getSiteIDsForExtensionsRefresh(
@@ -60,10 +62,12 @@ class RefreshInstalledExtensions extends AbstractCallback
 			return Status::OK->value;
 		}
 
-		$this->logger->info(sprintf(
-			'Found a further %d site(s) to retrieve updated extensions information for.',
-			count($siteIDs)
-		));
+		$this->logger->info(
+			sprintf(
+				'Found a further %d site(s) to retrieve updated extensions information for.',
+				count($siteIDs)
+			)
+		);
 
 		$this->fetchExtensionsForSiteIDs($siteIDs, $forceUpdates);
 
@@ -93,19 +97,23 @@ class RefreshInstalledExtensions extends AbstractCallback
 		$db->lockTable('#__sites');
 
 		$query = $db->getQuery(true)
-					->select($db->quoteName('id'))
-					->from($db->quoteName('#__sites'))
-					->where($db->quoteName('enabled') . ' = 1');
+			->select($db->quoteName('id'))
+			->from($db->quoteName('#__sites'))
+			->where($db->quoteName('enabled') . ' = 1');
 
 		if (!$force)
 		{
-			$frequency = (int)$this->container->appConfig->get('siteinfo_freq', 60);
+			$frequency = (int) $this->container->appConfig->get('siteinfo_freq', 60);
 			$frequency = min(1440, max(15, $frequency));
 
-			$query->andWhere([
-				'JSON_EXTRACT(' . $db->quoteName('config') . ', ' . $db->quote('$.extensions.lastAttempt') . ') IS NULL',
-				'JSON_EXTRACT(' . $db->quoteName('config') . ', ' . $db->quote('$.extensions.lastAttempt') . ') < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL ' . $frequency . ' MINUTE))',
-			], 'OR');
+			$query->andWhere(
+				[
+					'JSON_EXTRACT(' . $db->quoteName('config') . ', ' . $db->quote('$.extensions.lastAttempt')
+					. ') IS NULL',
+					'JSON_EXTRACT(' . $db->quoteName('config') . ', ' . $db->quote('$.extensions.lastAttempt')
+					. ') < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL ' . $frequency . ' MINUTE))',
+				], 'OR'
+			);
 		}
 
 		$onlyTheseIDs = ArrayHelper::toInteger($onlyTheseIDs, []);
@@ -149,12 +157,12 @@ class RefreshInstalledExtensions extends AbstractCallback
 		if (!empty($siteIDs))
 		{
 			$updateQuery = $db->getQuery(true)
-							  ->update($db->quoteName('#__sites'))
-							  ->set(
-								  $db->quoteName('config') . ' = JSON_SET(' . $db->quoteName('config') . ', ' .
-								  $db->quote('$.extensions.lastAttempt') . ', UNIX_TIMESTAMP(NOW()))'
-							  )
-							  ->where($db->quoteName('id')) . 'IN(' . implode(',', $siteIDs) . ')';
+				               ->update($db->quoteName('#__sites'))
+				               ->set(
+					               $db->quoteName('config') . ' = JSON_SET(' . $db->quoteName('config') . ', ' .
+					               $db->quote('$.extensions.lastAttempt') . ', UNIX_TIMESTAMP(NOW()))'
+				               )
+				               ->where($db->quoteName('id')) . 'IN(' . implode(',', $siteIDs) . ')';
 			$db->setQuery($updateQuery)->execute();
 		}
 
@@ -178,8 +186,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$promises = array_map(
-			function (int $id) use ($httpClient, $forceUpdates)
-			{
+			function (int $id) use ($httpClient, $forceUpdates) {
 				$site = new Site($this->container);
 
 				try
@@ -191,10 +198,12 @@ class RefreshInstalledExtensions extends AbstractCallback
 					return null;
 				}
 
-				$this->logger->debug(sprintf(
-					'Enqueueing site #%d (%s) for extensions list update.',
-					$site->id, $site->name
-				));
+				$this->logger->debug(
+					sprintf(
+						'Enqueueing site #%d (%s) for extensions list update.',
+						$site->id, $site->name
+					)
+				);
 
 				$uriPath = '/index.php/v1/panopticon/extensions?page[limit]=10000';
 
@@ -209,11 +218,13 @@ class RefreshInstalledExtensions extends AbstractCallback
 					// See https://docs.guzzlephp.org/en/stable/quickstart.html#async-requests and https://docs.guzzlephp.org/en/stable/request-options.html
 					->getAsync($url, $options)
 					->then(
-						function (ResponseInterface $response) use ($site)
-						{
+						function (ResponseInterface $response) use ($site) {
+							$config = $site->getConfig();
+
 							try
 							{
-								$document = @json_decode($response->getBody()->getContents());
+								$rawData  = $this->sanitizeJson($response->getBody()->getContents());
+								$document = @json_decode($rawData);
 							}
 							catch (\Exception $e)
 							{
@@ -222,55 +233,64 @@ class RefreshInstalledExtensions extends AbstractCallback
 
 							$data = $document?->data;
 
+							$config->set('extensions.lastErrorMessage', null);
+
 							if (empty($data))
 							{
-								$this->logger->notice(sprintf(
-									'Could not retrieve information for site #%d (%s). Invalid data returned from API call.',
-									$site->id, $site->name
-								));
+								$this->logger->notice(
+									sprintf(
+										'Could not retrieve information for site #%d (%s). Invalid data returned from API call.',
+										$site->id, $site->name
+									)
+								);
 
-								return;
+								$config->set(
+									'extensions.lastErrorMessage',
+									sprintf(
+										"Invalid (non-JSON) data returned from the Joomla! API. Probably a third party plugin is breaking the API application? Raw data as follows:\n\n%s",
+										$rawData ?: '(no data)'
+									)
+								);
 							}
+							else
+							{
+								$this->logger->debug(
+									sprintf(
+										'Retrieved information for site #%d (%s).',
+										$site->id,
+										$site->name
+									)
+								);
 
-							$this->logger->debug(
-								sprintf(
-									'Retrieved information for site #%d (%s).',
-									$site->id,
-									$site->name
-								)
-							);
+								$extensions = $this->mapExtensionsList(
+									array_filter(
+										array_map(fn($item) => $item?->attributes, $data)
+									)
+								);
+								$config->set(
+									'extensions.list',
+									$extensions
+								);
 
-							$config = new Registry($site->getFieldValue('config') ?: '{}');
+								// Save a flag for the existence of updates
+								$hasUpdates = array_reduce(
+									$extensions,
+									function (bool $carry, object $item): int {
+										$current = $item?->version?->current;
+										$new     = $item?->version?->new;
 
-							$extensions = $this->mapExtensionsList(
-								array_filter(
-									array_map(fn($item) => $item?->attributes, $data)
-								)
-							);
-							$config->set(
-								'extensions.list',
-								$extensions
-							);
+										if ($carry || empty($current) || empty($new))
+										{
+											return $carry;
+										}
 
-							// Save a flag for the existence of updates
-							$hasUpdates    = array_reduce(
-								$extensions,
-								function (bool $carry, object $item): int {
-									$current = $item?->version?->current;
-									$new     = $item?->version?->new;
+										return version_compare($current, $new, 'lt');
+									},
+									false
+								);
 
-									if ($carry || empty($current) || empty($new))
-									{
-										return $carry;
-									}
-
-									return version_compare($current, $new, 'lt');
-								},
-								false
-							);
-
-							$config->set('extensions.hasUpdates', $hasUpdates);
-							$config->set('extensions.lastErrorMessage', null);
+								$config->set('extensions.hasUpdates', $hasUpdates);
+							}
 
 							// Save the configuration (three tries)
 							$retry = -1;
@@ -281,9 +301,21 @@ class RefreshInstalledExtensions extends AbstractCallback
 								{
 									$retry++;
 
-									$site->save([
-										'config' => $config->toString(),
-									]);
+									$site->save(
+										[
+											'config' => $config->toString(),
+										]
+									);
+
+									if ($retry > 0)
+									{
+										$this->logger->error(
+											sprintf(
+												'Succeeded saving the extensions information for site #%d (%s) upon successful API call on retry number %u',
+												$site->id, $site->name, $retry
+											)
+										);
+									}
 
 									break;
 								}
@@ -291,18 +323,22 @@ class RefreshInstalledExtensions extends AbstractCallback
 								{
 									if ($retry >= 3)
 									{
-										$this->logger->error(sprintf(
-											'Error saving the extensions information for site #%d (%s) upon successful API call: %s',
-											$site->id, $site->name, $e->getMessage()
-										));
+										$this->logger->error(
+											sprintf(
+												'Error saving the extensions information for site #%d (%s) upon successful API call: %s',
+												$site->id, $site->name, $e->getMessage()
+											)
+										);
 
 										break;
 									}
 
-									$this->logger->warning(sprintf(
-										'Failed saving the extensions information for site #%d (%s) upon successful API call (will retry): %s',
-										$site->id, $site->name, $e->getMessage()
-									));
+									$this->logger->warning(
+										sprintf(
+											'Failed saving the extensions information for site #%d (%s) upon successful API call (will retry): %s',
+											$site->id, $site->name, $e->getMessage()
+										)
+									);
 
 									sleep($retry);
 								}
@@ -319,28 +355,33 @@ class RefreshInstalledExtensions extends AbstractCallback
 							);
 							$this->container->cacheFactory->pool('extensions')->delete($cacheKey);
 						},
-						function (RequestException $e) use ($site)
-						{
-							$this->logger->error(sprintf(
-								'Could not retrieve extensions information for site #%d (%s). The server replied with the following error: %s',
-								$site->id, $site->name, $e->getMessage()
-							));
+						function (RequestException $e) use ($site) {
+							$this->logger->error(
+								sprintf(
+									'Could not retrieve extensions information for site #%d (%s). The server replied with the following error: %s',
+									$site->id, $site->name, $e->getMessage()
+								)
+							);
 
-							$config = new Registry($site->getFieldValue('config') ?: '{}');
+							$config = $site->getConfig();
 							$config->set('extensions.lastErrorMessage', $e->getMessage());
 
 							try
 							{
-								$site->save([
-									'config' => $config->toString(),
-								]);
+								$site->save(
+									[
+										'config' => $config->toString(),
+									]
+								);
 							}
 							catch (\Exception $e)
 							{
-								$this->logger->error(sprintf(
-									'Error saving the extension information for site #%d (%s) upon failed API call: %s',
-									$site->id, $site->name, $e->getMessage()
-								));
+								$this->logger->error(
+									sprintf(
+										'Error saving the extension information for site #%d (%s) upon failed API call: %s',
+										$site->id, $site->name, $e->getMessage()
+									)
+								);
 							}
 						}
 					);
@@ -378,7 +419,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 		);
 
 		return array_map(
-			fn($item) => (object)[
+			fn($item) => (object) [
 				'extension_id'   => $item?->extension_id ?? null,
 				'name'           => $item?->name ?? null,
 				'description'    => $item?->description ?? null,
@@ -392,7 +433,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 				'enabled'        => $item?->enabled ?? null,
 				'protected'      => $item?->protected ?? null,
 				'locked'         => $item?->locked ?? null,
-				'version'        => (object)[
+				'version'        => (object) [
 					'current' => $item?->version ?? null,
 					'new'     => $item?->new_version ?? null,
 				],
@@ -401,7 +442,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 				'authorEmail'    => $item?->authorEmail ?? null,
 				'hasUpdateSites' => !empty($item?->updatesites ?? null),
 				'naughtyUpdates' => $item?->naughtyUpdates ?? null,
-				'downloadkey' => (object) [
+				'downloadkey'    => (object) [
 					'supported'   => $item?->downloadkey?->supported ?? false,
 					'valid'       => $item?->downloadkey?->valid ?? false,
 					'value'       => $item?->downloadkey?->value ?? '',
@@ -411,7 +452,8 @@ class RefreshInstalledExtensions extends AbstractCallback
 						? []
 						: array_filter(
 							array_map(
-								fn($updatesite) => $updatesite?->update_site_id ?? null, (array)($item?->updatesites ?: [])
+								fn($updatesite) => $updatesite?->update_site_id ?? null,
+								(array) ($item?->updatesites ?: [])
 							)
 						),
 				],

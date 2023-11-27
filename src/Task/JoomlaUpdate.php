@@ -18,6 +18,7 @@ use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Registry\Registry;
@@ -39,6 +40,7 @@ class JoomlaUpdate extends AbstractCallback
 	use TimeAgoTrait;
 	use EmailSendingTrait;
 	use LanguageListTrait;
+	use JsonSanitizerTrait;
 
 	protected string $currentState;
 
@@ -587,7 +589,7 @@ class JoomlaUpdate extends AbstractCallback
 					return;
 				}
 
-				$json = $response->getBody()->getContents();
+				$json = $this->sanitizeJson($response->getBody()->getContents());
 
 				try
 				{
@@ -847,7 +849,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/activate');
 		$response = $httpClient->post($url, $options);
-		$json     = $response->getBody()->getContents();
+		$json     = $this->sanitizeJson($response->getBody()->getContents());
 
 		try
 		{
@@ -1110,7 +1112,7 @@ class JoomlaUpdate extends AbstractCallback
 		}
 
 		// The response is enclosed in '###'. Make sure of that and extract the actual response.
-		$json        = $response->getBody()->getContents();
+		$json        = $this->sanitizeJson($response->getBody()->getContents());
 		$firstHashes = strpos($json, '###');
 
 		if ($firstHashes === false)
@@ -1319,7 +1321,7 @@ class JoomlaUpdate extends AbstractCallback
 		}
 
 		// Get the JSON response and decode it
-		$json = $response->getBody()->getContents();
+		$json = $this->sanitizeJson($response->getBody()->getContents());
 
 		try
 		{
@@ -1748,7 +1750,7 @@ class JoomlaUpdate extends AbstractCallback
 		// Then, download the update
 		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/download');
 		$response = $httpClient->post($url, $options);
-		$json     = $response->getBody()->getContents();
+		$json     = $this->sanitizeJson($response->getBody()->getContents());
 
 		try
 		{

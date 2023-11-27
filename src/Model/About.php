@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Awf\Mvc\Model;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -22,6 +23,8 @@ use JsonException;
  */
 class About extends Model
 {
+	use JsonSanitizerTrait;
+
 	private const GITHUB_REPO = 'akeeba/panopticon';
 
 	/**
@@ -60,7 +63,7 @@ class About extends Model
 
 		try
 		{
-			$users = @json_decode($response->getBody()->getContents(), flags: JSON_THROW_ON_ERROR);
+			$users = @json_decode($this->sanitizeJson($response->getBody()->getContents()), flags: JSON_THROW_ON_ERROR);
 		}
 		catch (JsonException $e)
 		{

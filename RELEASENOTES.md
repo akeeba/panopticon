@@ -18,6 +18,8 @@
 
 **✨ Groups act as tags for site filtering [gh-333]**. Up until now, you could use Groups to set up advanced site access control, with different users having different view / admin permissions on different sites. As of this version, you can now filter all lists of sites and updates by one or more Groups, effectively having Groups perform double duty as tags. If you want to use Groups only as tags, just create Groups without giving them any privileges and without assigning users to any of these Groups. It's as simple as that!
 
+**✨ Automatic API data sanitization** [gh-341]. The most common connection failure mode is a third party plugin soiling the API output either directly (outputting HTML), or by causing PHP to emit messages (warnings, notices, …) because the plugin, or Joomla! itself, are not fully compatible with newer PHP 8 versions. The thing is, once you get past the junk data in the response there's a perfectly usable JSON response we can use. Instead of failing outright, complaining the data is corrupt (which, technically, is true) we can attempt to clean up the data, which in most cases results in something perfectly usable. So, this is what we're doing in this version!
+
 ## 🖥️ System Requirements
 
 * PHP 8.1, 8.2, or 8.3. PHP 8.2 recommended.

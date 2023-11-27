@@ -9,6 +9,7 @@ Akeeba Panopticon 1.0.5
 + Collection and display of basic server information [gh-307]
 + Per-user language preference [gh-326]
 + Groups act as tags for site filtering [gh-333]
++ Automatic API data sanitization [gh-341]
 # [LOW] Test email message showed %s instead of the Panopticon URL
 # [LOW] Can't create a group without permissions [gh-335]
 # [LOW] Work around possible deadlocks trying to save site or extension information

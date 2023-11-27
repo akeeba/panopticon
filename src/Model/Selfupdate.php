@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\SelfUpdate\UpdateInformation;
 use Akeeba\Panopticon\Library\SelfUpdate\VersionInformation;
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Awf\Mvc\Model;
 use DateInterval;
 use GuzzleHttp\Client;
@@ -29,6 +30,8 @@ use Symfony\Contracts\Cache\CacheInterface;
  */
 class Selfupdate extends Model
 {
+	use JsonSanitizerTrait;
+
 	/**
 	 * Third-party dependency files which need to be removed before extracting the update package.
 	 *
@@ -154,7 +157,7 @@ class Selfupdate extends Model
 			$updateInfo->errorLocation    = null;
 			$updateInfo->errorTraceString = null;
 
-			$json = $response->getBody()->getContents();
+			$json = $this->sanitizeJson($response->getBody()->getContents());
 
 			try
 			{
