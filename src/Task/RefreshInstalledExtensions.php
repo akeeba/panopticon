@@ -419,7 +419,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 		);
 
 		return array_map(
-			fn($item) => (object) [
+			fn($item) => (object)[
 				'extension_id'   => $item?->extension_id ?? null,
 				'name'           => $item?->name ?? null,
 				'description'    => $item?->description ?? null,
@@ -433,7 +433,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 				'enabled'        => $item?->enabled ?? null,
 				'protected'      => $item?->protected ?? null,
 				'locked'         => $item?->locked ?? null,
-				'version'        => (object) [
+				'version'        => (object)[
 					'current' => $item?->version ?? null,
 					'new'     => $item?->new_version ?? null,
 				],
@@ -442,7 +442,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 				'authorEmail'    => $item?->authorEmail ?? null,
 				'hasUpdateSites' => !empty($item?->updatesites ?? null),
 				'naughtyUpdates' => $item?->naughtyUpdates ?? null,
-				'downloadkey'    => (object) [
+				'downloadkey' => (object) [
 					'supported'   => $item?->downloadkey?->supported ?? false,
 					'valid'       => $item?->downloadkey?->valid ?? false,
 					'value'       => $item?->downloadkey?->value ?? '',
@@ -452,8 +452,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 						? []
 						: array_filter(
 							array_map(
-								fn($updatesite) => $updatesite?->update_site_id ?? null,
-								(array) ($item?->updatesites ?: [])
+								fn($updatesite) => $updatesite?->update_site_id ?? null, (array)($item?->updatesites ?: [])
 							)
 						),
 				],

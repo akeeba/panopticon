@@ -90,6 +90,8 @@ class Mailtemplates extends DataModel
 			'extensions_update_done' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSIONS_UPDATE_DONE',
 			'akeebabackup_success' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_SUCCESS',
 			'akeebabackup_fail' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_FAIL',
+			'selfupdate_found' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SELFUPDATE_FOUND',
+			'scheduled_update_summary' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SCHEDULED_UPDATE_SUMMARY',
 		];
 	}
 }

@@ -160,6 +160,9 @@ trait ACLTrait
 		'usagestats'    => [
 			'*' => ['super'],
 		],
+		'updatesummarytasks' => [
+			'*' => ['*']
+		],
 	];
 
 	protected function aclCheck(string $task): void

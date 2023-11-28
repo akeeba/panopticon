@@ -66,6 +66,16 @@ class Scannertasks extends DataController
 			throw new AccessDenied();
 		}
 
+		$user = $this->getContainer()->userManager->getUser();
+
+		if (
+			!$user->authorise('panopticon.admin', $this->site)
+			&& !$user->authorise('panopticon.editown', $this->site)
+		)
+		{
+			throw new AccessDenied();
+		}
+
 		return parent::execute($task);
 	}
 
