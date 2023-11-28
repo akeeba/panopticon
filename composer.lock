@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08377999678f4a9a85a39669100fe628",
+    "content-hash": "9b5a515f1dbdccdb142128084d6d8f61",
     "packages": [
         {
             "name": "akeeba/awf",
@@ -287,24 +287,25 @@
         },
         {
             "name": "chillerlan/php-qrcode",
-            "version": "5.0-beta",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chillerlan/php-qrcode.git",
-                "reference": "ae0f31241554b509b62b54e7cd14ebd4d384ec16"
+                "reference": "a301af5b7faa7fcd690b29f38b283616a7d93b89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chillerlan/php-qrcode/zipball/ae0f31241554b509b62b54e7cd14ebd4d384ec16",
-                "reference": "ae0f31241554b509b62b54e7cd14ebd4d384ec16",
+                "url": "https://api.github.com/repos/chillerlan/php-qrcode/zipball/a301af5b7faa7fcd690b29f38b283616a7d93b89",
+                "reference": "a301af5b7faa7fcd690b29f38b283616a7d93b89",
                 "shasum": ""
             },
             "require": {
-                "chillerlan/php-settings-container": "^2.1.4",
+                "chillerlan/php-settings-container": "^2.1.4 || ^3.1",
                 "ext-mbstring": "*",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
+                "chillerlan/php-authenticator": "^4.0 || ^5.0",
                 "phan/phan": "^5.4",
                 "phpmd/phpmd": "^2.13",
                 "phpunit/phpunit": "^9.6",
@@ -362,8 +363,9 @@
                 "qrcode-reader"
             ],
             "support": {
+                "docs": "https://php-qrcode.readthedocs.io",
                 "issues": "https://github.com/chillerlan/php-qrcode/issues",
-                "source": "https://github.com/chillerlan/php-qrcode/tree/5.0-beta"
+                "source": "https://github.com/chillerlan/php-qrcode"
             },
             "funding": [
                 {
@@ -375,7 +377,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2023-03-22T20:24:54+00:00"
+            "time": "2023-11-24T15:47:26+00:00"
         },
         {
             "name": "chillerlan/php-settings-container",
@@ -5057,8 +5059,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "akeeba/awf": 20,
-        "akeeba/stats_collector": 20,
-        "chillerlan/php-qrcode": 10
+        "akeeba/stats_collector": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
@@ -5073,5 +5074,5 @@
     "platform-overrides": {
         "php": "8.1.0"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
