@@ -25,6 +25,7 @@ use Akeeba\Panopticon\Model\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Awf\Container\Container;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
@@ -65,6 +66,7 @@ class Site extends DataModel
 	use AkeebaBackupIntegrationTrait;
 	use AdminToolsIntegrationTrait;
 	use ApplyUserGroupsToSiteQueryTrait;
+	use JsonSanitizerTrait;
 
 	public function __construct(Container $container = null)
 	{
@@ -785,7 +787,7 @@ class Site extends DataModel
 						function (ResponseInterface $response) use ($key) {
 							try
 							{
-								$document = @json_decode($response->getBody()->getContents());
+								$document = @json_decode($this->sanitizeJson($response->getBody()->getContents()));
 							}
 							catch (\Exception $e)
 							{

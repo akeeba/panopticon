@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\AdminToolsTrait;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Awf\Registry\Registry;
 use GuzzleHttp\RequestOptions;
 
@@ -27,6 +28,7 @@ class FileScanner extends AbstractCallback
 {
 	use ApiRequestTrait;
 	use AdminToolsTrait;
+	use JsonSanitizerTrait;
 
 	private Site $site;
 
@@ -211,7 +213,7 @@ class FileScanner extends AbstractCallback
 
 		$response = $httpClient->post($url, $options);
 
-		$json = $response->getBody()->getContents();
+		$json = $this->sanitizeJson($response->getBody()->getContents());
 
 		$this->logger->debug('Got response', ['body' => $json]);
 
@@ -235,7 +237,7 @@ class FileScanner extends AbstractCallback
 
 		$response = $httpClient->post($url, $options);
 
-		$json = $response->getBody()->getContents();
+		$json = $this->sanitizeJson($response->getBody()->getContents());
 
 		$this->logger->debug('Got response', ['body' => $json]);
 

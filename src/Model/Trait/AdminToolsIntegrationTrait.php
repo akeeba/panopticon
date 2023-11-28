@@ -87,7 +87,7 @@ trait AdminToolsIntegrationTrait
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/plugin/disable');
 
 		$result = json_decode(
-			$httpClient->post($url, $options)->getBody()->getContents()
+			$this->sanitizeJson($httpClient->post($url, $options)->getBody()->getContents())
 		);
 		$return = $result?->data?->attributes ?? null;
 
@@ -116,7 +116,7 @@ trait AdminToolsIntegrationTrait
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/plugin/enable');
 
 		$result = json_decode(
-			$httpClient->post($url, $options)->getBody()->getContents()
+			$this->sanitizeJson($httpClient->post($url, $options)->getBody()->getContents())
 		);
 		$return = $result?->data?->attributes ?? null;
 
@@ -145,7 +145,7 @@ trait AdminToolsIntegrationTrait
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/htaccess/disable');
 
 		$result = json_decode(
-			$httpClient->post($url, $options)->getBody()->getContents()
+			$this->sanitizeJson($httpClient->post($url, $options)->getBody()->getContents())
 		);
 
 		return $result?->data?->attributes ?? null;
@@ -163,7 +163,7 @@ trait AdminToolsIntegrationTrait
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/admintools/htaccess/enable');
 
 		$result = json_decode(
-			$httpClient->post($url, $options)->getBody()->getContents()
+			$this->sanitizeJson($httpClient->post($url, $options)->getBody()->getContents())
 		);
 
 		return $result?->data?->attributes ?? null;
@@ -188,7 +188,7 @@ trait AdminToolsIntegrationTrait
 		}
 
 		$result = json_decode(
-			$httpClient->post($url, $options)->getBody()->getContents()
+			$this->sanitizeJson($httpClient->post($url, $options)->getBody()->getContents())
 		);
 
 		return $result?->data?->attributes ?? null;
@@ -214,7 +214,7 @@ trait AdminToolsIntegrationTrait
 				$uri->setVar('page[limit]', $limit);
 
 				$result = json_decode(
-					$httpClient->get($uri->toString(), $options)->getBody()->getContents()
+					$this->sanitizeJson($httpClient->get($uri->toString(), $options)->getBody()->getContents())
 				);
 
 				if (empty($result) || !is_object($result))
@@ -259,7 +259,7 @@ trait AdminToolsIntegrationTrait
 				$uri->setVar('page[limit]', $limit);
 
 				$result = json_decode(
-					$httpClient->get($uri->toString(), $options)->getBody()->getContents()
+					$this->sanitizeJson($httpClient->get($uri->toString(), $options)->getBody()->getContents())
 				);
 
 				if (empty($result) || !is_object($result))
@@ -299,7 +299,7 @@ trait AdminToolsIntegrationTrait
 				);
 
 				$result = json_decode(
-					$httpClient->get($url, $options)->getBody()->getContents()
+					$this->sanitizeJson($httpClient->get($url, $options)->getBody()->getContents())
 				);
 
 				if (empty($result) || !is_object($result))

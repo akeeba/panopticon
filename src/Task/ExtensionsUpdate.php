@@ -20,6 +20,7 @@ use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
 use Awf\Registry\Registry;
@@ -34,6 +35,7 @@ class ExtensionsUpdate extends AbstractCallback
 	use SiteNotificationEmailTrait;
 	use EmailSendingTrait;
 	use LanguageListTrait;
+	use JsonSanitizerTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -222,7 +224,7 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
-		$rawJSONData = $response->getBody()->getContents();
+		$rawJSONData = $this->sanitizeJson($response->getBody()->getContents());
 
 		try
 		{

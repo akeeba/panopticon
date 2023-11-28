@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;
@@ -27,6 +28,7 @@ use Psr\Http\Message\ResponseInterface;
 class RefreshSiteInfo extends AbstractCallback
 {
 	use ApiRequestTrait;
+	use JsonSanitizerTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -193,7 +195,8 @@ class RefreshSiteInfo extends AbstractCallback
 						function (ResponseInterface $response) use ($site) {
 							try
 							{
-								$document = @json_decode($response->getBody()->getContents());
+								$rawData = $this->sanitizeJson($response->getBody()->getContents());
+								$document = @json_decode($rawData);
 							}
 							catch (\Exception $e)
 							{

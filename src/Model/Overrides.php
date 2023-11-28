@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Model;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Awf\Mvc\Model;
 use Awf\Pagination\Pagination;
 use Awf\Registry\Registry;
@@ -26,6 +27,7 @@ use Jfcherng\Diff\DiffHelper;
 class Overrides extends Model
 {
 	use ApiRequestTrait;
+	use JsonSanitizerTrait;
 
 	private ?Site $site = null;
 
@@ -77,7 +79,7 @@ class Overrides extends Model
 
 		try
 		{
-			$rawData = @json_decode($response->getBody()->getContents());
+			$rawData = @json_decode($this->sanitizeJson($response->getBody()->getContents()));
 		}
 		catch (\Exception $e)
 		{
@@ -138,7 +140,7 @@ class Overrides extends Model
 
 		try
 		{
-			$rawData = @json_decode($response->getBody()->getContents());
+			$rawData = @json_decode($this->sanitizeJson($response->getBody()->getContents()));
 		}
 		catch (\Exception $e)
 		{

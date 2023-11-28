@@ -70,7 +70,7 @@ trait AkeebaBackupIntegrationTrait
 		$refreshResponse = (object) [
 			'statusCode'   => $response->getStatusCode(),
 			'reasonPhrase' => $response->getReasonPhrase(),
-			'body'         => $response->getBody()->getContents() ?? '',
+			'body'         => $this->sanitizeJson($response->getBody()->getContents() ?? ''),
 		];
 
 		try
