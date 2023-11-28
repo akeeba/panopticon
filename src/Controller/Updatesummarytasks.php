@@ -7,6 +7,8 @@
 
 namespace Akeeba\Panopticon\Controller;
 
+defined('AKEEBA') || die;
+
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Exception\AccessDenied;
 use Akeeba\Panopticon\Model\Site;
@@ -15,9 +17,7 @@ use Awf\Container\Container;
 use Awf\Mvc\DataController;
 use Awf\Uri\Uri;
 
-defined('AKEEBA') || die;
-
-class Backuptasks extends DataController
+class Updatesummarytasks extends DataController
 {
 	use ACLTrait;
 
@@ -37,7 +37,7 @@ class Backuptasks extends DataController
 		{
 			$uri = new Uri($this->redirect);
 
-			if (in_array(strtolower($uri->getVar('view')), ['backuptasks', 'backuptask']))
+			if (in_array(strtolower($uri->getVar('view')), ['updatesummarytasks', 'updatesummarytask']))
 			{
 				$uri->setVar('site_id', $this->site->getId());
 
@@ -54,7 +54,8 @@ class Backuptasks extends DataController
 		$this->aclCheck($task);
 
 		// In all cases we need a site_id in the request and ensure the current user has admin privileges on the site
-		$siteId     = $this->input->getInt('site_id', null);
+		$siteId = $this->input->getInt('site_id', null);
+		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->site = $this->getModel('Site');
 
 		try
@@ -89,39 +90,8 @@ class Backuptasks extends DataController
 			$model->setState('site_id', $this->site->id);
 			$model->where('site_id', '=', $this->site->id);
 
-			$model->setState('type', 'akeebabackup');
-			$model->where('type', '=', 'akeebabackup');
-
-			/**
-			 * I am totally cheating here. I am applying filters without subclassing the model.
-			 */
-			$db         = $model->getDbo();
-			$fltProfile = $model->getState('profile');
-
-			if ($fltProfile)
-			{
-				$model->whereRaw(
-					"JSON_EXTRACT(" . $db->quoteName('params') . ', ' . $db->quote('$.profile_id') . ') = '
-					. $db->quote((string) $fltProfile)
-				);
-			}
-
-			$fltManual = $model->getState('manual');
-
-			if (is_numeric($fltManual) && $fltManual)
-			{
-				$model->whereRaw(
-					"JSON_EXTRACT(" . $db->quoteName('params') . ', ' . $db->quote('$.enqueued_backup') . ') = 1'
-				);
-			}
-			elseif (is_numeric($fltManual) && !$fltManual)
-			{
-				$model->whereRaw(
-					"NOT JSON_CONTAINS_PATH(" . $db->quoteName('params') . ', ' . $db->quote('one') . ', ' . $db->quote(
-						'$.enqueued_backup'
-					) . ')'
-				);
-			}
+			$model->setState('type', 'updatesummaryemail');
+			$model->where('type', '=', 'updatesummaryemail');
 		}
 
 		return $model;
@@ -137,41 +107,23 @@ class Backuptasks extends DataController
 		return $view;
 	}
 
-	protected function onBeforeEdit()
-	{
-		$model = $this->getModel();
-
-		if (!$model->getId())
-		{
-			$this->getIDsFromRequest($model, true);
-		}
-
-		if ($model->getParams()->get('enqueued_backup'))
-		{
-			$this->setRedirect(
-				$this->container->router->route(
-					sprintf(
-						'index.php?view=backuptasks&site_id=%d',
-						$this->site->getId()
-					)
-				),
-				$this->getLanguage()->text('PANOPTICON_BACKUPTASKS_ERR_CANNOT_EDIT_MANUAL'),
-				'error'
-			);
-
-			$this->redirect();
-		}
-
-		return true;
-	}
-
 	protected function onBeforeApplySave(array &$data): void
 	{
+		$data['core_updates']       = $data['core_updates'] ?? 0;
+		$data['extension_updates']  = $data['extension_updates'] ?? 0;
+		$data['prevent_duplicates'] = $data['prevent_duplicates'] ?? 0;
+		$data['enabled']            = $data['enabled'] ?? 0;
+
 		// Construct the JSON params from $data['params']
-		$params                = $data['params'] ?? [];
-		$params['profile_id']  ??= 1;
-		$params['description'] ??= null;
-		$data['params']        = json_encode($params);
+		$params                       = $data['params'] ?: [];
+		$params['core_updates']       = boolval($data['core_updates']);
+		$params['extension_updates']  = boolval($data['extension_updates']);
+		$params['prevent_duplicates'] = boolval($data['prevent_duplicates']);
+		$data['params']               = json_encode($params);
+
+		unset($data['core_updates']);
+		unset($data['extension_updates']);
+		unset($data['prevent_duplicates']);
 
 		// Construct the cron_expression from $data['cron']
 		$cron = $data['cron'];
@@ -186,6 +138,6 @@ class Backuptasks extends DataController
 
 		// Force the site_id and type
 		$data['site_id'] = $this->site->getId();
-		$data['type']    = 'akeebabackup';
+		$data['type']    = 'updatesummaryemail';
 	}
 }

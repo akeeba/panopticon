@@ -4,7 +4,6 @@
   ~ @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
   ~ @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
   -->
-
 <schema>
     <meta>
         <drivers>
@@ -415,7 +414,6 @@ SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` 
 INSERT INTO panopticon.#__mailtemplates (type, language, subject, html, plaintext) VALUES ('selfupdate_found', '*', '✨ Panopticon [NEW_VERSION] is now available', '<div class="akemail-outer-wrapper">\n	<table>\n		<tbody>\n		<tr>\n			<td width="10%">&nbsp;</td>\n			<td>\n				<div class="akemail-wrapper">\n					<div class="akemail-container"><!-- Logo Header -->\n						<div class="akemail-logo"><a href="[URL]">&nbsp;<img src="[URL]/media/images/logo_bw.svg" alt="Panopticon &mdash; Site Monitoring">&nbsp;</a></div>\n						<!-- Hello -->\n						<div class="akemail-hello">\n							<p>Hello,</p>\n						</div>\n						<!-- Main-Topic -->\n						<div class="akemail-main-topic">\n							<p>Akeeba Panopticon [NEW_VERSION] is available</p>\n						</div>\n						<!-- Message -->\n						<div class="akemail-message">\n							<p>Akeeba Panopticon version [NEW_VERSION] is now available for installation. You are currently running the older version [OLD_VERSION].</p>\n						</div>\n						<!-- Area Offer/Announcement -->\n						<div class="akemail-announcement">\n							<div class="akemail-announcement-box">\n								<h3>Action required</h3>\n								<p>Panopticon does not update itself automatically. It\'s up to you to choose when is the best time to update it.</p>\n							</div>\n						</div>\n						<!-- Bye, Bye -->\n						<div class="akemail-outro">\n							<p>Have a great day!</p>\n						</div>\n						<!-- Footer -->\n						<div class="akemail-footer">\n							<p class="akemail-footer-sitelink">&nbsp;<a href="[URL]">Panopticon &mdash; Site Monitoring</a></p>\n						</div>\n					</div>\n					<!-- Legal info -->\n					<div class="akemail-legalinfo">\n						<p>This is an automated email. Please do not reply to it.</p>\n					</div>\n				</div>\n			</td>\n			<td width="10%">&nbsp;</td>\n		</tr>\n		</tbody>\n	</table>\n</div>', 'Hello,\n\n\nAkeeba Panopticon [NEW_VERSION] is available\n\n\nAkeeba Panopticon version [NEW_VERSION] is now available for installation. \nYou are currently running the older version [OLD_VERSION].\n\n==============================================================================\n! ! ! ! !  ACTION REQUIRED  ! ! ! ! !\n==============================================================================\n\nPanopticon does not update itself automatically. It\'s up to you to choose when\nis the best time to update it.\n\n==============================================================================\n\nHave a great day!\n\n------------------------------------------------------------------------------\n\nThis email was sent by the Panopticon installation on [URL].\nThis is an automated email. Please do not reply to it.\n');
 ]]></query>
         </action>
-    </sql>
 
         <!-- Install mail template: scheduled_update_summary -->
         <action table="#__mailtemplates" canfail="1">

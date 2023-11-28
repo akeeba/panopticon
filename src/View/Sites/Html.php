@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\Sites;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Toolbar\DropdownButton;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
 use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
@@ -16,7 +17,9 @@ use Akeeba\Panopticon\Task\Trait\AdminToolsTrait;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
+use Awf\Document\Toolbar\Button;
 use Awf\Mvc\DataView\Html as DataViewHtml;
+use Awf\Text\Text;
 use Awf\Utils\Template;
 use DateInterval;
 use DateTime;
@@ -40,6 +43,8 @@ class Html extends DataViewHtml
 	public object $extension;
 
 	public array|Throwable $backupRecords;
+
+	public array $groupMap = [];
 
 	protected Site $item;
 
@@ -74,8 +79,6 @@ class Html extends DataViewHtml
 	protected ?DateTime $cronStuckTime = null;
 
 	private array $backupProfiles = [];
-
-	public array $groupMap = [];
 
 	public function onBeforeDlkey(): bool
 	{
@@ -239,7 +242,8 @@ class Html extends DataViewHtml
 		$this->setStrictLayout(true);
 		$this->setStrictTpl(true);
 
-		$this->addButton('back', ['url' => $this->container->router->route('index.php?view=main')]);
+		$router = $this->container->router;
+		$this->addButton('back', ['url' => $router->route('index.php?view=main')]);
 
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_TITLE_READ'));
 
@@ -284,6 +288,81 @@ class Html extends DataViewHtml
 			}
 		}
 
+		$hasAkeebaBackup = $this->item->hasAkeebaBackup();
+		$hasAkeebaSoftware = $hasAkeebaBackup || $this->hasAdminToolsPro;
+
+		$dropdown = (new DropdownButton(
+			[
+				'id'    => 'dropdown-automations',
+				'icon'  => 'fa fa-fw fa-bolt-lightning',
+				'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS'),
+				'class' => 'btn btn-info ms-2',
+			]
+		))
+			->addButton(
+				new Button([
+					'class' => 'header',
+					'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_EMAILS')
+				])
+			)
+			->addButton(
+				new Button(
+					[
+						'id'    => 'updatesummarytasks',
+						'icon'  => 'fa fa-fw fa-envelope',
+						'title' => $this->getContainer()->language->text('PANOPTICON_UPDATESUMMARYTASKS_TITLE'),
+						'url'   => $router->route(
+							sprintf("index.php?view=updatesummarytasks&site_id=%s", $this->item->getId())
+						),
+					]
+				)
+			)
+//			->addButton(
+//				new Button(
+//					[
+//						'id'    => 'actionsummarytasks',
+//						'icon'  => 'fa fa-fw fa-envelope-open-text',
+//						'title' => 'Scheduled Action Summary',
+//						'url'   => $router->route(
+//							sprintf("index.php?view=actionsummarytasks&site_id=%s", $this->item->getId())
+//						),
+//					]
+//				)
+//			)
+			->addButton(
+				new Button([
+					'class' => 'header ' . ($hasAkeebaSoftware ? '' : 'd-none'),
+					'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_BACKUP_SECURITY')
+				])
+			)
+			->addButton(
+				new Button(
+					[
+						'id'    => 'backuptasks',
+						'icon'  => 'fa fa-fw fa-hard-drive',
+						'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_AKEEBABACKUP_SCHEDULE'),
+						'url'   => $router->route(
+							sprintf("index.php?view=backuptasks&site_id=%s&manual=0", $this->item->getId())
+						),
+					]
+				)
+			)
+			->addButton(
+				new Button(
+					[
+						'id'    => 'scannertasks',
+						'icon'  => 'fa fa-fw fa-shield-halved',
+						'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_ADMINTOOLS_SCHEDULE'),
+						'url'   => $router->route(
+							sprintf("index.php?view=scannertasks&site_id=%s&manual=0", $this->item->getId())
+						),
+					]
+				)
+			)
+		;
+
+		$this->container->application->getDocument()->getToolbar()->addButton($dropdown);
+
 		$this->cronStuckTime = $this->getCronStuckTime();
 
 		$document = $this->container->application->getDocument();
@@ -306,7 +385,7 @@ class Html extends DataViewHtml
 
 		$document->addScriptOptions(
 			'akeebabackup', [
-				'enqueue' => $this->container->router->route(
+				'enqueue' => $router->route(
 					sprintf(
 						'index.php?view=sites&task=akeebaBackupEnqueue&id=%d&%s=1',
 						$this->item->id, $this->container->session->getCsrfToken()->getValue()
@@ -587,7 +666,7 @@ JS;
 			return null;
 		}
 
-		$now  = new DateTime();
+		$now = new DateTime();
 
 		return $now->sub($interval);
 	}

@@ -9,13 +9,14 @@ namespace Akeeba\Panopticon\Helper;
 
 
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Toolbar\DropdownButton;
 use Awf\Document\Menu\Item;
 use Awf\Document\Toolbar\Button;
 use Awf\Input\Filter;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use Awf\Utils\ArrayHelper;
 use Awf\Utils\Template;
+use Exception;
 
 defined('AKEEBA') || die;
 
@@ -25,7 +26,9 @@ abstract class DefaultTemplate
 	{
 		$container    = Factory::getContainer();
 		$user         = $container->userManager->getUser();
-		$baseFontSize = $container->appConfig->get('fontsize', $user->getParameters()->get('display.base_font_size', null));
+		$baseFontSize = $container->appConfig->get(
+			'fontsize', $user->getParameters()->get('display.base_font_size', null)
+		);
 
 		if (!is_numeric($baseFontSize))
 		{
@@ -51,7 +54,7 @@ abstract class DefaultTemplate
 		{
 			$userDarkMode = DarkModeEnum::from($user->getParameters()->get('display.darkmode', 0) ?: 0);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$userDarkMode = DarkModeEnum::APPLICATION;
 		}
@@ -60,7 +63,7 @@ abstract class DefaultTemplate
 		{
 			$appDarkMode = DarkModeEnum::from($container->appConfig->get('darkmode', 1) ?: 1);
 		}
-		catch (\Exception $e)
+		catch (Exception $e)
 		{
 			$appDarkMode = DarkModeEnum::BROWSER;
 		}
@@ -88,29 +91,15 @@ abstract class DefaultTemplate
 		Factory::getApplication()->getDocument()->addScript(Uri::base() . 'media/js/darkmode.min.js', defer: true);
 	}
 
-	private static function isSubmenuActive(Item $item): bool
-	{
-		if (count($item->getChildren()) === 0)
-		{
-			return $item->isActive();
-		}
-
-		return array_reduce(
-			$item->getChildren(),
-			fn(bool $carry, Item $item) => $carry || self::isSubmenuActive($item),
-			false
-		);
-	}
-
-	public static function getRenderedMenuItem(Item $item, string $listItemClass = 'nav-item', $anchorClass = 'nav-link', bool $onlyChildren = false): string
+	public static function getRenderedMenuItem(
+		Item $item, string $listItemClass = 'nav-item', $anchorClass = 'nav-link', bool $onlyChildren = false
+	): string
 	{
 		// If it's the root menu item render its children without wrapping in a dropdown
 		if ($onlyChildren)
 		{
 			return array_reduce(
-				$item->getChildren(),
-				fn($html, $item) => $html . self::getRenderedMenuItem($item),
-				''
+				$item->getChildren(), fn($html, $item) => $html . self::getRenderedMenuItem($item), ''
 			);
 		}
 
@@ -118,14 +107,12 @@ abstract class DefaultTemplate
 		$hasChildren = count($item->getChildren()) > 0;
 
 		$isActiveItem = self::isSubmenuActive($item);
-		$isDivider = $item->getTitle() === '---';
+		$isDivider    = $item->getTitle() === '---';
 
 		$liClass = $listItemClass . ($hasChildren ? ' dropdown' : '');
 		$liClass .= $isActiveItem ? ' active' : '';
 		$html    .= sprintf(
-			"<li class=\"%s\"%s>",
-			$liClass,
-			$isDivider ? ' role="presentation"' : ''
+			"<li class=\"%s\"%s>", $liClass, $isDivider ? ' role="presentation"' : ''
 		);
 
 		$icon = $item->getIcon();
@@ -137,33 +124,25 @@ abstract class DefaultTemplate
 
 		if (!$hasChildren)
 		{
-            $isDisabled = str_ends_with($item->getUrl(), '#!disabled!');
-			$aClass = $anchorClass . ($isActiveItem ? ' active' : '') . ($isDisabled ? ' disabled' : '');
+			$isDisabled = str_ends_with($item->getUrl(), '#!disabled!');
+			$aClass     = $anchorClass . ($isActiveItem ? ' active' : '') . ($isDisabled ? ' disabled' : '');
 
-			$aria   = $isActiveItem ? ' aria-current="page"' : '';
+			$aria = $isActiveItem ? ' aria-current="page"' : '';
 
 			if ($isDivider)
 			{
 				$html .= '<hr class="dropdown-divider" />';
 			}
-            elseif ($isDisabled)
-            {
-                $html .= sprintf(
-                    '<span class="%s">%s%s</span>',
-                    $aClass,
-                    $icon,
-                    $item->getTitle()
-                );
-            }
+			elseif ($isDisabled)
+			{
+				$html .= sprintf(
+					'<span class="%s">%s%s</span>', $aClass, $icon, $item->getTitle()
+				);
+			}
 			else
 			{
 				$html .= sprintf(
-					'<a class="%s"%s href="%s">%s%s</a>',
-					$aClass,
-					$aria,
-					$item->getUrl(),
-					$icon,
-					$item->getTitle()
+					'<a class="%s"%s href="%s">%s%s</a>', $aClass, $aria, $item->getUrl(), $icon, $item->getTitle()
 				);
 			}
 		}
@@ -174,16 +153,12 @@ abstract class DefaultTemplate
 
 			$html .= sprintf(
 				'<a class="nav-link dropdown-toggle %s" href="#" role="button" data-bs-toggle="dropdown"%s>%s%s</a>',
-				$aClass,
-				$aria,
-				$icon,
-				$item->getTitle()
+				$aClass, $aria, $icon, $item->getTitle()
 			);
 			$html .= '<ul class="dropdown-menu dropdown-menu-end">';
 			$html .= array_reduce(
 				$item->getChildren(),
-				fn(string $carry, Item $item) => $carry . self::getRenderedMenuItem($item, '', 'dropdown-item'),
-				''
+				fn(string $carry, Item $item) => $carry . self::getRenderedMenuItem($item, '', 'dropdown-item'), ''
 			);
 			$html .= '</ul>';
 		}
@@ -193,10 +168,10 @@ abstract class DefaultTemplate
 		return $html;
 	}
 
-	public static function getRenderedToolbarButtons(): string
+	public static function getRenderedToolbarButtons(?array $buttons = null): string
 	{
 		$document = Factory::getApplication()->getDocument();
-		$buttons = $document->getToolbar()->getButtons();
+		$buttons  ??= $document->getToolbar()->getButtons();
 
 		if (empty($buttons))
 		{
@@ -204,92 +179,111 @@ abstract class DefaultTemplate
 		}
 
 		return array_reduce(
-			$buttons,
-			function (string $html, Button $button) {
-				$icon = !empty($button->getIcon())
-					? sprintf(
-						'<span class="%s pe-2" aria-hidden="true"></span>',
-						$button->getIcon(),
-					)
-					: '';
+			$buttons, function (string $html, Button $button) {
+			$icon = !empty($button->getIcon()) ? sprintf(
+				'<span class="%s pe-2" aria-hidden="true"></span>', $button->getIcon(),
+			) : '';
 
-				if (!empty($button->getUrl()))
-				{
-					$html .= sprintf(
-						'<a class="btn btn-sm %s" href="%s" id="%s">',
-						$button->getClass(),
-						$button->getUrl(),
-						$button->getId(),
-					);
-					$html .= $icon . $button->getTitle();
-					$html .= '</a>';
-
-					return $html;
-				}
-				elseif (!empty($button->getOnClick()))
-				{
-					try
-					{
-						$decoded = @json_decode($button->getOnClick(), true);
-					}
-					catch (\Exception $e)
-					{
-						$decoded = null;
-					}
-
-					if ($decoded)
-					{
-						$attribs = array_merge(
-							[
-								'class' => 'btn btn-sm ' . $button->getClass(),
-								'id' => $button->getId(),
-							],
-							$decoded
-						);
-
-						$html .= sprintf(
-							'<button type="button" %s>%s%s</button>',
-							ArrayHelper::toString($attribs),
-							$icon,
-							$button->getTitle()
-						);
-					}
-					else
-					{
-						$html .= sprintf(
-							'<button class="btn btn-sm %s" id="%s" onclick="%s">',
-							$button->getClass(),
-							$button->getId(),
-							$button->getOnClick(),
-						);
-						$html .= $icon . $button->getTitle();
-						$html .= '</button>';
-					}
-
-					return $html;
-				}
-
+			if (!empty($button->getUrl()))
+			{
 				$html .= sprintf(
-					'<button class="btn btn-sm %s" id="%s">',
-					$button->getClass(),
+					'<a class="btn btn-sm %s" href="%s" id="%s">', $button->getClass(), $button->getUrl(),
 					$button->getId(),
 				);
 				$html .= $icon . $button->getTitle();
-				$html .= '</button>';
+				$html .= '</a>';
 
 				return $html;
-			},
-			''
+			}
+			elseif (!empty($button->getOnClick()))
+			{
+				try
+				{
+					$decoded = @json_decode($button->getOnClick(), true);
+				}
+				catch (Exception $e)
+				{
+					$decoded = null;
+				}
+
+				if ($decoded)
+				{
+					$attribs = array_merge(
+						[
+							'class' => 'btn btn-sm ' . $button->getClass(),
+							'id'    => $button->getId(),
+						], $decoded
+					);
+
+					$html .= sprintf(
+						'<button type="button" %s>%s%s</button>', ArrayHelper::toString($attribs), $icon,
+						$button->getTitle()
+					);
+				}
+				else
+				{
+					$html .= sprintf(
+						'<button class="btn btn-sm %s" id="%s" onclick="%s">', $button->getClass(), $button->getId(),
+						$button->getOnClick(),
+					);
+					$html .= $icon . $button->getTitle();
+					$html .= '</button>';
+				}
+
+				return $html;
+			}
+
+			// Get the additional attributes, used in drop-down buttons
+			$additionalAttributes = [];
+
+			if ($button instanceof DropdownButton)
+			{
+				$additionalAttributes = [
+					'data-bs-toggle' => 'dropdown',
+					'aria-expanded'  => 'false',
+					'role'           => 'button',
+				];
+			}
+
+			// Get the CSS classes of the button
+			$classes = array_filter(explode(' ', $button->getClass()));
+
+			// Drop-down buttons always need the dropdown-toggle CSS class
+			if ($button instanceof DropdownButton && !in_array('dropdown-toggle', $classes))
+			{
+				$classes[] = 'dropdown-toggle';
+			}
+
+			if ($button instanceof DropdownButton)
+			{
+				$html .= '<div class="dropdown">';
+			}
+
+			$html .= sprintf(
+				'<button class="btn btn-sm %s" id="%s"%s>', implode(' ', $classes), $button->getId(),
+				ArrayHelper::toString($additionalAttributes)
+			);
+			$html .= $icon . $button->getTitle();
+			$html .= '</button>';
+
+			if ($button instanceof DropdownButton)
+			{
+				$html .= self::getRenderedDropdownButtonMenu($button->getButtons());
+				$html .= '</div>';
+			}
+
+			return $html;
+		}, ''
 		);
 	}
 
 	public static function getRenderedMessages(): string
 	{
 		static $messageTypes = [
-			'error' => 'danger',
+			'error'   => 'danger',
 			'warning' => 'warning',
 			'success' => 'success',
-			'info' => 'info',
+			'info'    => 'info',
 		];
 
 		$html = '';
@@ -306,18 +300,17 @@ abstract class DefaultTemplate
 			$html .= sprintf('<div class="alert alert-%s alert-dismissible fade show">', $class);
 			$html .= sprintf(
 				'<h3 class="alert-heading visually-hidden">%s</h3>',
-				Factory::getContainer()->language
-					->text('PANOPTICON_APP_LBL_MESSAGETYPE_' . $type)
+				Factory::getContainer()->language->text('PANOPTICON_APP_LBL_MESSAGETYPE_' . $type)
 			);
 
-			foreach ($messages as $message) {
+			foreach ($messages as $message)
+			{
 				$html .= sprintf('<div class="my-1">%s</div>', $message);
 			}
 
 			$html .= sprintf(
 				'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="%s"></button>',
-				Factory::getContainer()->language
-					->text('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
+				Factory::getContainer()->language->text('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
 			);
 
 
@@ -334,7 +327,9 @@ abstract class DefaultTemplate
 		$themeFile = Factory::getContainer()->appConfig->get('theme', 'theme') ?: 'theme';
 		$themeFile = (new Filter())->clean($themeFile, 'path');
 
-		if (!@file_exists(Template::parsePath('media://css/' . $themeFile . '.min.css', app: Factory::getApplication())))
+		if (!@file_exists(
+			Template::parsePath('media://css/' . $themeFile . '.min.css', app: Factory::getApplication())
+		))
 		{
 			$themeFile = 'theme';
 		}
@@ -371,5 +366,135 @@ abstract class DefaultTemplate
 		}
 
 		return '';
+	}
+
+	/**
+	 * Render a Bootstrap drop-down given an array of Button objects
+	 *
+	 * @param   array  $buttons  The array of button object to render
+	 *
+	 * @return  string
+	 * @since   1.0.5
+	 */
+	public static function getRenderedDropdownButtonMenu(array $buttons): string
+	{
+		$buttons = array_filter($buttons, fn($x) => $x instanceof Button);
+
+		if (empty($buttons))
+		{
+			return '';
+		}
+
+		$html = '<ul class="dropdown-menu">';
+
+		/** @var Button $button */
+		foreach ($buttons as $button)
+		{
+			$icon = !empty($button->getIcon()) ? sprintf(
+				'<span class="%s pe-2" aria-hidden="true"></span>', $button->getIcon(),
+			) : '';
+
+			$classes   = explode(' ', $button->getClass());
+			$isHeader  = false;
+			$isDivider = $button->getTitle() === '---';
+
+			if (in_array('header', $classes))
+			{
+				$isHeader = true;
+				$classes  = array_filter($classes, fn($x) => $x !== 'header');
+			}
+
+			if (in_array('divider', $classes))
+			{
+				$isDivider = true;
+				$classes   = array_filter($classes, fn($x) => $x !== 'divider');
+			}
+
+			$html .= '<li>';
+
+			if ($isHeader)
+			{
+				$html .= sprintf(
+					'<h6 class="dropdown-header %s">%s</h6>', implode(' ', $classes), $icon . $button->getTitle()
+				);
+			}
+			elseif ($isDivider)
+			{
+				$html .= '<hr class="dropdown-divider">';
+			}
+			elseif (!empty($button->getUrl()))
+			{
+				$html .= sprintf(
+					'<a class="dropdown-item %s" href="%s" id="%s">', implode(' ', $classes), $button->getUrl(),
+					$button->getId(),
+				);
+				$html .= $icon . $button->getTitle();
+				$html .= '</a>';
+			}
+			elseif (!empty($button->getOnClick()))
+			{
+				try
+				{
+					$decoded = @json_decode($button->getOnClick(), true);
+				}
+				catch (Exception $e)
+				{
+					$decoded = null;
+				}
+
+				if ($decoded)
+				{
+					$attribs = array_merge(
+						[
+							'class' => 'dropdown-item ' . implode(' ', $classes),
+							'id'    => $button->getId(),
+						], $decoded
+					);
+
+					$html .= sprintf(
+						'<a %s>%s%s</a>', ArrayHelper::toString($attribs), $icon, $button->getTitle()
+					);
+				}
+				else
+				{
+					$html .= sprintf(
+						'<a class="dropdown-item %s" id="%s" onclick="%s">', implode(' ', $classes), $button->getId(),
+						$button->getOnClick(),
+					);
+					$html .= $icon . $button->getTitle();
+					$html .= '</a>';
+				}
+			}
+			else
+			{
+				$html .= sprintf(
+					'<a class="dropdown-item %s" id="%s" href="#">%s%s</a>', implode(' ', $classes), $button->getId(),
+					$icon, $button->getTitle()
+				);
+
+				if ($button instanceof DropdownButton)
+				{
+					$html .= self::getRenderedDropdownButtonMenu($button->getButtons());
+				}
+			}
+
+			$html .= '</li>';
+		}
+
+		$html .= '</ul>';
+
+		return $html;
+	}
+
+	private static function isSubmenuActive(Item $item): bool
+	{
+		if (count($item->getChildren()) === 0)
+		{
+			return $item->isActive();
+		}
+
+		return array_reduce(
+			$item->getChildren(), fn(bool $carry, Item $item) => $carry || self::isSubmenuActive($item), false
+		);
 	}
 }
