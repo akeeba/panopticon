@@ -1,0 +1,46 @@
+name: Feature Request
+description: Suggest an idea for this project
+labels: ["request"]
+assignees:
+  - nikosdion
+body:
+  - type: markdown
+    attributes:
+      value: "ℹ️ Help keep Issues free from distractions so that Panopticon developers can work more efficiently. Instead of submitting an issue, open [a new Ideas discussion thread](https://github.com/akeeba/panopticon/discussions/new?category=ideas) instead."
+  - type: textarea
+    id: usecase
+    attributes:
+      label: What is your use case?
+      description: "What are you trying to accomplish? Make sure to describe _what_ you are trying to do, not _how_ you are trying to do it."
+      placeholder: |
+        I'm always frustrated when I try to…
+        My clients ask me for…
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: The solution you'd like to see
+      description: "A clear and concise description of what you would think we could implement to help you succeed in your use case."
+      placeholder: |
+        I think that Panopticon should allow me to…
+        Perhaps you could let me…
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you have considered
+      description: "What other alternatives have you considered to meet your use case?"
+      placholder: |
+        I have tried to…
+        I have been manually doing…
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+    validations:
+      required: false
