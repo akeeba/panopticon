@@ -1,6 +1,6 @@
 ## 🔎 Release highlights
 
-🎅🏽 Ho, ho, ho! 🎄 The Akeeba Santa Claus(e) – see what we did there? – is coming early this year, carrying a bag full of feature updates and requested improvements to Akeeba Panopticon! Get your holiday season cheer on, and let's explore together the new features in version 1.0.5.
+🎅🏽 Ho, ho, ho! 🎄 The Santa Claus(e) is coming early this year, carrying a bag full of feature updates and requested improvements to Akeeba Panopticon! Get your holiday season cheer on, and let's explore together the new features in version 1.0.5.
 
 **✨ Scheduled Available Update Summary Emails** [gh-301]. You can now schedule an email with a summary of all pending updates (core and extension) per site. This can be used with, or instead of, the individual site core update, and extension update email messages. You can even have multiple schedules per site, choosing which kinds of updates to include, and whether or not to be resent an email with an identical report of updates as the last one.
 
@@ -43,7 +43,20 @@ Kindly remember that the order and timeframe for implementation largely depends 
 
 ## 📋 CHANGELOG
 
-[//]: # (TODO)
+* ✨ Scheduled Available Update Summary Emails [gh-301]
+* ✨ Detect stuck extension updates and allow rescheduling, or canceling [gh-304]
+* ✨ Allow immediate email sending [gh-306]
+* ✨ Allow the global update preference of an extension to be "email" [gh-309]
+* ✨ Detect when scheduled tasks are falling behind [gh-315]
+* ✨ Site configuration management CLI commands [gh-153]
+* ✨ Collection and display of basic server information [gh-307]
+* ✨ Per-user language preference [gh-326]
+* ✨ Groups act as tags for site filtering [gh-333]
+* ✨ Automatic API data sanitization [gh-341]
+* ✏️ Strip HTML tags from extension names, and their author names [gh-349]
+* 🐞🔻 Test email message showed %s instead of the Panopticon URL
+* 🐞🔻 Can't create a group without permissions [gh-335]
+* 🐞🔻 Work around possible deadlocks trying to save site or extension information
 
 Legend:
 * 🚨 Security update
