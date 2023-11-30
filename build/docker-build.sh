@@ -55,3 +55,5 @@ docker buildx build -t ghcr.io/akeeba/panopticon:latest --no-cache --platform=li
 docker buildx build -t ghcr.io/akeeba/panopticon:$PANOPTICON_LATEST_TAG --platform=linux/amd64,linux/arm64 --push .
 docker buildx stop
 docker buildx use default
+docker push ghcr.io/akeeba/panopticon:latest
+docker push ghcr.io/akeeba/panopticon:$PANOPTICON_LATEST_TAG
