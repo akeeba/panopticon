@@ -60,7 +60,7 @@ There are {{ count($extensionUpdates) }} pending extension updates.
 
 @endif
 @foreach($extensionUpdates as $item)
- * @if($cmsType === 'wordpress')@if($item['type'] === 'plugin')[Plugin]@else[Theme]@endif@else#{{ $item['id'] }}@endif “{{{ $item['name'] }}}” @if (!empty(trim($item['author_url'] ?? ''))) by {{{ $item['author'] }}} @endif – from {{{ $item['current'] }}} to {{{ $item['new'] }}}
+ * @if($cmsType === 'wordpress')@if($item['type'] === 'plugin')[Plugin]@else[Theme]@endif@else#{{ $item['id'] }}@endif “{{{ strip_tags($item['name']) }}}” @if (!empty(trim($item['author_url'] ?? ''))) by {{{ strip_tags($item['author']) }}} @endif – from {{{ $item['current'] }}} to {{{ $item['new'] }}}
 @endforeach
 @endif
 

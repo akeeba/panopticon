@@ -66,11 +66,11 @@ $moreThanOne = count($updateStatus) > 1;
                 $type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
                 $type = is_string($type) ? $type : 'info';
 
-                return sprintf('[%s] %s', strtoupper($type), $message);
+                return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
             }, $info['messages']);
             ?>
             <p>
-                <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”</strong>.
+                <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ strip_tags($info['name']) }}}”</strong>.
                 @if (!empty($info['messages']))
                     <br/>
                     &nbsp;&nbsp;Update messages:
@@ -94,11 +94,11 @@ $moreThanOne = count($updateStatus) > 1;
                 $type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
                 $type = is_string($type) ? $type : 'info';
 
-                return sprintf('[%s] %s', strtoupper($type), $message);
+                return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
             }, $info['messages']);
             ?>
             <p>
-                <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”</strong>.
+                <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ strip_tags($info['name']) }}}”</strong>.
                 @if ($info['status'] === 'exception')
                     An application or network error occurred.
                 @elseif ($info['status'] === 'invalid_json')

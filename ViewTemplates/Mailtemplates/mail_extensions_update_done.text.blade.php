@@ -65,11 +65,11 @@ The following extensions have been updated successfully:
 		$type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
 		$type = is_string($type) ? $type : 'info';
 
-		return sprintf('[%s] %s', strtoupper($type), $message);
+		return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
     }, $info['messages']);
 ?>
 
-@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”.
+@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ strip_tags($info['name']) }}}”.
 
 @if (!empty($info['messages']))
   Update messages:
@@ -95,10 +95,10 @@ $messages = array_map(function($item) {
     $type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
     $type = is_string($type) ? $type : 'info';
 
-    return sprintf('[%s] %s', strtoupper($type), $message);
+    return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
 }, $info['messages']);
 ?>
-@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ $info['name'] }}}”.
+@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ strip_tags($info['name']) }}}”.
 
 @if ($info['status'] === 'exception')
   An application or network error occurred.

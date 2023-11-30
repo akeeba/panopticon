@@ -120,7 +120,7 @@ $config = $this->container->appConfig;
                         @endif
                     </span>
                      <span class="extensions-filterable-name">
-                         {{{ $item->name }}}
+                         {{{ strip_tags($item->name) }}}
                      </span>
                     <div class="small text-muted font-monospace extensions-filterable-key">{{{ ltrim($key, 'a') }}}</div>
                 </td>
@@ -128,21 +128,21 @@ $config = $this->container->appConfig;
                     <div class="small extensions-filterable-author">
                         @if ($item->authorUrl)
                             <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
-                                {{{ $item->author }}}
+                                {{{ strip_tags($item->author) }}}
                             </a>
                         @else
-                            {{{ $item->author }}}
+                            {{{ strip_tags($item->author) }}}
                         @endif
                     </div>
                     @if ($item->authorEmail)
                     <div class="small text-muted">
-                        {{{ $item->authorEmail }}}
+                        {{{ strip_tags($item->authorEmail) }}}
                     </div>
                     @endif
                 </td>
                 <td>
                     <label for="extupdates_{{ $key }}" class="visually-hidden">
-                        @sprintf('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_PREFERENCE_SELECT', $item->name)
+                        @sprintf('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_PREFERENCE_SELECT', strip_tags($item->name))
                     </label>
                     <?php
                         $attribs = [

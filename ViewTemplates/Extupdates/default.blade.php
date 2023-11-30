@@ -249,7 +249,7 @@ JS;
             <tr>
                 <td>
                     <label for="cb{{{ $i }}}" class="visually-hidden">
-                        @sprintf('PANOPTICON_EXTUPDATES_LBL_SELECT_EXTENSION', $item->name, $site->name)
+                        @sprintf('PANOPTICON_EXTUPDATES_LBL_SELECT_EXTENSION', strip_tags($item->name), $site->name)
                     </label>
                     <input type="checkbox" id="cb{{{ $i }}}" name="eid[]"
                            value="{{{ (int)$item->site_id . '_' . (int)$item->extension_id  }}}"
@@ -330,14 +330,14 @@ JS;
                     </span>
                         @if ($error)
                             <span class="text-danger fw-medium">
-                            {{{ $item->name }}}
+                            {{{ strip_tags($item->name) }}}
                         </span>
                         @elseif ($hasUpdate)
                             <span class="fw-bold">
-                            {{{ $item->name }}}
+                            {{{ strip_tags($item->name) }}}
                         </span>
                         @else
-                            <s>{{{ $item->name }}}</s>
+                            <s>{{{ strip_tags($item->name) }}}</s>
                         @endif
 
                         @if (in_array($item->extension_id, $this->scheduledPerSite[$site->getId()]))
@@ -408,15 +408,15 @@ JS;
                     <div>
                         @if ($item->authorUrl)
                             <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
-                                {{{ $item->author }}}
+                                {{{ strip_tags($item->author) }}}
                             </a>
                         @else
-                            {{{ $item->author }}}
+                            {{{ strip_tags($item->author) }}}
                         @endif
                     </div>
                     @if ($item->authorEmail)
                         <div class="text-muted">
-                            {{{ $item->authorEmail }}}
+                            {{{ strip_tags($item->authorEmail) }}}
                         </div>
                     @endif
                 </td>

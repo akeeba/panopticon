@@ -73,22 +73,22 @@ defined('AKEEBA') || die;
                     <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE')</span>
                 @endif
             </span>
-            {{{ $item->name }}}
+            {{{ strip_tags($item->name) }}}
             <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
         </td>
         <td class="d-none d-lg-table-cell">
             <div class="small">
                 @if ($item->authorUrl)
                     <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
-                        {{{ $item->author }}}
+                        {{{ strip_tags($item->author) }}}
                     </a>
                 @else
-                    {{{ $item->author }}}
+                    {{{ strip_tags($item->author) }}}
                 @endif
             </div>
             @if ($item->authorEmail)
                 <div class="small text-muted">
-                    {{{ $item->authorEmail }}}
+                    {{{ strip_tags($item->authorEmail) }}}
                 </div>
             @endif
         </td>

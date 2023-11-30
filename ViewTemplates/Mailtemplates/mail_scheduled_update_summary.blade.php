@@ -75,17 +75,17 @@ $extensionNameHuman = match ($cmsType)
                     @else
                         #{{ $item['id'] }}
                     @endif
-                    “{{{ $item['name'] }}}”
+                    “{{{ strip_tags($item['name']) }}}”
                     @if (!empty(trim($item['author'] ?? '')))
                         by
                         @if (!empty(trim($item['author_url'] ?? '')))
 								<?php
-								$uri = new \Awf\Uri\Uri(trim($item['author_url'] ?? ''));
+								$uri = new \Awf\Uri\Uri(trim(strip_tags($item['author_url'] ?? '')));
 								$uri->setScheme($uri->getScheme() ?: 'http://');
 								?>
-                            <a href="{{{ $uri->toString() }}}">{{{ $item['author'] }}}</a>
+                            <a href="{{{ $uri->toString() }}}">{{{ strip_tags($item['author']) }}}</a>
                         @else
-                            {{{ $item['author'] }}}
+                            {{{ strip_tags($item['author']) }}}
                         @endif
                     @endif
                     – from {{{ $item['current'] }}} to {{{ $item['new'] }}}
