@@ -51,9 +51,11 @@ fi
 docker rmi ghcr.io/akeeba/panopticon:latest
 docker rmi ghcr.io/akeeba/panopticon:$PANOPTICON_LATEST_TAG
 docker buildx use mybuilder
+pushd ..
 docker buildx build -t ghcr.io/akeeba/panopticon:latest --no-cache --platform=linux/amd64,linux/arm64 --push .
-docker buildx build -t ghcr.io/akeeba/panopticon:$PANOPTICON_LATEST_TAG --platform=linux/amd64,linux/arm64 --push .
-docker buildx stop
-docker buildx use default
-docker push ghcr.io/akeeba/panopticon:latest
+docker pull ghcr.io/akeeba/panopticon:latest
+docker tag ghcr.io/akeeba/panopticon:latest ghcr.io/akeeba/panopticon:$PANOPTICON_LATEST_TAG
 docker push ghcr.io/akeeba/panopticon:$PANOPTICON_LATEST_TAG
+popd
+docker buildx stop
+docker context use default
