@@ -1,0 +1,111 @@
+name: Generic support
+description: Looking for help, but you're not sure if it's a bug?
+labels: ["support"]
+body:
+  - type: markdown
+    attributes:
+      value: "ℹ️ Help keep Issues free from distractions so that Panopticon developers can work more efficiently. Instead of submitting an issue, [open a new Q&A Discussion](https://github.com/akeeba/panopticon/discussions/new?category=q-a-community-support) instead."
+  - type: markdown
+    attributes:
+      value: "## The Basics"
+  - type: checkboxes
+    id: basic-checks
+    attributes:
+      label: Due diligence
+      description: Please make sure you have performed all of the following due diligence checks, and mark the boxes to indicate so. You cannot submit a Bug Report issue without doing so.
+      options:
+        - label: I have searched all open and closed issues for this problem.
+          required: true
+        - label: I have searched all open and closed discussions for this problem.
+          required: true
+        - label: I have looked at the CHANGELOG to make sure this problem has not already been addressed.
+          required: true
+        - label: I agree to the Code of Conduct of this repository
+          required: true
+  - type: markdown
+    attributes:
+      value: "## Issue Description"
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the issue
+      description: What are you trying to do? What have you already tried? What did you expect? What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: "## Environment information"
+  - type: input
+    id: panopticon_version
+    attributes:
+      label: Panopticon version
+      placeholder: e.g. 1.2.3
+    validations:
+      required: true
+  - type: input
+    id: php_version
+    attributes:
+      label: PHP version
+      placeholder: e.g. 8.1.2
+    validations:
+      required: true
+  - type: dropdown
+    id: db_type
+    attributes:
+      label: Database type
+      options:
+        - MySQL
+        - MariaDB
+        - Other (specify with version)
+    validations:
+      required: true
+  - type: input
+    id: db_version
+    attributes:
+      label: Database version
+      placeholder: e.g. 8.0.10
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - iOS / WebKit (any browser)
+        - Firefox
+        - Safari
+        - Chrome
+        - Edge
+        - Opera
+        - Brave
+        - Vivaldi
+        - Konqueror
+        - Epiphany (GNOME Web)
+        - Other Chromium
+        - Other (specify in issue description)
+    validations:
+      required: false
+  - type: input
+    id: browser_version
+    attributes:
+      label: Browser version
+      placeholder: e.g. 103
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: "## Additional context"
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional information
+      description: If applicable, any additional information to help us understand your issue, or pertinent information for which there are no fields available.
+    validations:
+      required: false
