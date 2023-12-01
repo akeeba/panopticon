@@ -22,7 +22,7 @@ class Factory
 		$firstRun = empty(self::$container);
 
 		self::$container ??=
-			(function_exists('user_get_container') ? user_get_container() : null)
+			(function_exists('user_get_container') ? \user_get_container() : null)
 			?? new Container();
 
 		if ($firstRun)
@@ -36,7 +36,7 @@ class Factory
 	public static function getApplication(): Application
 	{
 		self::$application ??=
-			(function_exists('user_get_application') ? user_get_application() : null)
+			(function_exists('user_get_application') ? \user_get_application() : null)
 			?? self::getContainer()->application;
 
 		return self::$application;
