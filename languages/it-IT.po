@@ -215,7 +215,7 @@ msgstr "Abilitato"
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_PUBLISHED_SR"
-msgid "Toggle state for item %s"
+msgid "Toggle state for item %s; currently enabled"
 msgstr "Cambia stato per l\'elemento %s; attualmente abilitato"
 
 #, phpformat
@@ -225,7 +225,7 @@ msgstr "Disabilitato"
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_UNPUBLISHED_SR"
-msgid "Toggle state for item %s"
+msgid "Toggle state for item %s; currently disabled"
 msgstr "Cambia stato per l\'elemento %s; attualmente disabilitato"
 
 #, phpformat
@@ -530,23 +530,18 @@ msgstr "Megabyte"
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_COPYRIGHT"
-msgid "Copyright © 2023–%s <a href=\\\"https://www.akeeba.com\\\" target=\"_blank\">Akeeba Ltd</a>. All legal rights reserved."
-msgstr "Copyright © 2023–%s <a href=\"_QQ_\"https://www.akeeba.com\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">Akeeba Ltd</a>. Tutti i diritti legali riservati."
+msgid "Copyright © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. All legal rights reserved."
+msgstr "Copyright © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. Tutti i diritti legali riservati."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_LICENSE"
 msgid "%s is Free Software distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\">GNU Affero GPL version 3</a> or any later version published by the Free Software Foundation."
-msgstr "%s è un software gratuito distribuito sotto la <a href=\"_QQ_\"https://www.gnu.org/licenses/agpl-3.0.html\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">GNU Affero GPL versione 3</a> o qualsiasi versione successiva pubblicata dalla Free Software Foundation."
+msgstr "%s è un software gratuito distribuito sotto la <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\">GNU Affero GPL versione 3</a> o qualsiasi versione successiva pubblicata dalla Free Software Foundation."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_SOURCE_CODE"
 msgid "Source code on GitHub"
 msgstr "Codice sorgente su GitHub"
-
-#, phpformat
-msgctxt "PANOPTICON_APP_LBL_LANGUAGES"
-msgid "Translations on Weblate"
-msgstr "Traduzioni su Weblate"
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_SYSTEM_TASK"
@@ -910,7 +905,7 @@ msgstr "Download multi-parte completato del pacchetto di aggiornamento per il si
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED"
-msgid "The multi-part download of the update package to site %d (%s) has failed"
+msgid "The multi-part download of the update package to site %d (%s) has failed; will try a single-part download instead"
 msgstr "Il download multi-parte del pacchetto di aggiornamento per il sito %d (%s) è fallito; proverà un download singolo"
 
 #, phpformat
@@ -972,11 +967,6 @@ msgstr "Inizio dell\'estrazione del pacchetto di aggiornamento per il sito %d (%
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE"
 msgid "Continuing the update package extraction for site %d (%s)"
 msgstr "Continuazione dell\'estrazione del pacchetto di aggiornamento per il sito %d (%s)"
-
-#, phpformat
-msgctxt "c"
-msgid "Finished the update package extraction for site %d (%s)"
-msgstr "Terminata l\'estrazione del pacchetto di aggiornamento per il sito %d (%s)"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_FINISH"
@@ -1380,8 +1370,8 @@ msgstr "Tipo di database"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_HELP"
-msgid "This is usually MySQLi (<em>with</em> the trailing \\\"i\\\")"
-msgstr "Di solito è MySQLi (<em>con</em> la \"_QQ_\"i\"_QQ_\" finale)"
+msgid "This is usually MySQLi (<em>with</em> the trailing \"i\")"
+msgstr "Di solito è MySQLi (<em>con</em> la \"i\" finale)"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_MYSQL"
@@ -1570,8 +1560,8 @@ msgstr "Usa FTP su SSL (FTPS)"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_FTPS_DESCRIPTION"
-msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \\\"Secure FTP\\\"</strong>. If your server doesn\'t support this method you will get connection errors."
-msgstr "Connettiti al tuo server FTP utilizzando una connessione criptata SSL. <strong>Non è la stessa cosa di SFTP, SCP o \"_QQ_\"FTP sicuro\"_QQ_\"</strong>. Se il tuo server non supporta questo metodo riceverai errori di connessione."
+msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \"Secure FTP\"</strong>. If your server doesn\'t support this method you will get connection errors."
+msgstr "Connettiti al tuo server FTP utilizzando una connessione criptata SSL. <strong>Non è la stessa cosa di SFTP, SCP o \"FTP sicuro\"</strong>. Se il tuo server non supporta questo metodo riceverai errori di connessione."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_INITDIR_TITLE"
@@ -1776,7 +1766,7 @@ msgstr "Usa un editor di testo semplice come Notepad su Windows, BBEdit su macOS
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP2"
 msgid "Come back to this window and click on the “Copy to Clipboard” button."
-msgstr "Torna a questa finestra e clicca sul pulsante \"_QQ_\"Copia negli appunti\"_QQ_\"."
+msgstr "Torna a questa finestra e clicca sul pulsante \"Copia negli appunti\"."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP3"
@@ -1796,7 +1786,7 @@ msgstr "Carica nella cartella in cui stai installando Panopticon. È la cartella
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP5"
 msgid "Come back to this window and click on the “Continue” button."
-msgstr "Torna a questa finestra e clicca sul pulsante \"_QQ_\"Continua\"_QQ_\"."
+msgstr "Torna a questa finestra e clicca sul pulsante \"Continua\"."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_BTN_COPY_TO_CLIPBOARD"
@@ -1906,7 +1896,7 @@ msgstr "Se anche dopo ciò non sembra succedere nulla, contatta il tuo host. O i
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_HEAD"
 msgid "I get “Status: 403 Forbidden” running the CRON job"
-msgstr "Ricevo \"_QQ_\"Status: 403 Forbidden\"_QQ_\" eseguendo il CRON job"
+msgstr "Ricevo \"Status: 403 Forbidden\" eseguendo il CRON job"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_1"
@@ -2080,8 +2070,8 @@ msgstr "Cosa fare ora?"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
-msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\\\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\\\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "Alcuni secondi o un minuto dopo aver configurato il tuo CRON job, questa pagina cambierà in un benchmark. Non chiudere questa scheda del browser, non passare a una diversa scheda del browser/finestra o applicazione, non spegnere o lasciare che il tuo dispositivo vada in standby, non dare da mangiare al tuo <em title=\"_QQ_\"Questi sono i gremlins prima che diventino gremlins. Stiamo mostrando la nostra età con questo riferimento obsoleto alla cultura popolare?\"_QQ_\">mogwai</em> dopo la mezzanotte. Semplice, vero?"
+msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
+msgstr "Alcuni secondi o un minuto dopo aver configurato il tuo CRON job, questa pagina cambierà in un benchmark. Non chiudere questa scheda del browser, non passare a una diversa scheda del browser/finestra o applicazione, non spegnere o lasciare che il tuo dispositivo vada in standby, non dare da mangiare al tuo <em title=\"Questi sono i gremlins prima che diventino gremlins. Stiamo mostrando la nostra età con questo riferimento obsoleto alla cultura popolare?\">mogwai</em> dopo la mezzanotte. Semplice, vero?"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER"
@@ -2561,7 +2551,7 @@ msgstr "Problemi di connessione?"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_ALERT_BODY"
 msgid "Use the information below to explicitly allow (“whitelist”) requests originating from Panopticon through any Web Application Firewall (WAF), Content Delivery Network (CDN), or security product installed on, or in front of, your site. Please consult with the author or operator of the respective product to determine how to do that."
-msgstr "Usa le informazioni sottostanti per permettere esplicitamente (\"_QQ_\"whitelist\"_QQ_\") le richieste provenienti da Panopticon attraverso qualsiasi firewall di applicazioni web (WAF), rete di distribuzione di contenuti (CDN), o prodotto di sicurezza installato sul tuo sito o davanti ad esso. Consulta l\'autore o l\'operatore del prodotto per capire come fare."
+msgstr "Usa le informazioni sottostanti per permettere esplicitamente (\"whitelist\") le richieste provenienti da Panopticon attraverso qualsiasi firewall di applicazioni web (WAF), rete di distribuzione di contenuti (CDN), o prodotto di sicurezza installato sul tuo sito o davanti ad esso. Consulta l\'autore o l\'operatore del prodotto per capire come fare."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_HOSTNAME"
@@ -2826,7 +2816,7 @@ msgstr "Protezione con password della directory dell\'Amministratore"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1"
 msgid "If your site\'s <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!™ updates will fail with an error mentioning “401 Unauthorized”."
-msgstr "Se la directory <code>administrator</code> del tuo sito è protetta da password, inserisci l\'username e la password usati per questa protezione. Altrimenti, gli aggiornamenti di Joomla!™ falliranno con un errore \"_QQ_\"401 Non autorizzato\"_QQ_\"."
+msgstr "Se la directory <code>administrator</code> del tuo sito è protetta da password, inserisci l\'username e la password usati per questa protezione. Altrimenti, gli aggiornamenti di Joomla!™ falliranno con un errore \"401 Non autorizzato\"."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_2"
@@ -2846,7 +2836,7 @@ msgstr "Questo è necessario solo se hai protetto con password la tua directory 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2"
 msgid "You used a third party extension, e.g. Admin Tools\' “Password-protect Administrator” feature."
-msgstr "Hai usato un\'estensione di terze parti, ad es. la funzione \"_QQ_\"Password-protect Administrator\"_QQ_\" di Admin Tools."
+msgstr "Hai usato un\'estensione di terze parti, ad es. la funzione \"Password-protect Administrator\" di Admin Tools."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3"
@@ -2970,7 +2960,7 @@ msgstr "Se hai bisogno di modificare le informazioni sulla proprietà del sito, 
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_GROUPS_INFO"
-msgid "This section is only relevant to multi–user installations with different access per site"
+msgid "This section is only relevant to multi–user installations with different access per site; please consult the documentation for more information. If you are managing a single–user installation, or if all users have equal access to all sites, you can ignore it."
 msgstr "Questa sezione è pertinente solo per installazioni multi-utente con accessi diversi per sito; consulta la documentazione per maggiori informazioni. Se stai gestendo un\'installazione singolo utente, o se tutti gli utenti hanno pari accesso a tutti i siti, puoi ignorarla."
 
 #, phpformat
@@ -3096,7 +3086,7 @@ msgstr "Il record dell\'estensione Joomla! manca nel tuo sito. Joomla! non può 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SEEK_HELP_JFORUM"
 msgid "Try asking for help on the <a href=\"https://forum.joomla.org\" target=\"_blank\">Joomla! Forum</a>."
-msgstr "Prova a chiedere aiuto nel <a href=\"_QQ_\"https://forum.joomla.org\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">Forum di Joomla!</a>."
+msgstr "Prova a chiedere aiuto nel <a href=\"https://forum.joomla.org\" target=\"_blank\">Forum di Joomla!</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_ALT_FIX"
@@ -3211,22 +3201,22 @@ msgstr "Vai nel backend dell\'amministratore del tuo sito, Sistema, Aggiorna, Jo
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED"
 msgid "The update is <span class=\"text-danger fw-semibold\">not scheduled</span> to run automatically. You can run the update manually on your site, or click on the button below."
-msgstr "L\'aggiornamento non è <span class=\"_QQ_\"text-danger fw-semibold\"_QQ_\">programmato</span> per essere eseguito automaticamente. Puoi eseguire l\'aggiornamento manualmente sul tuo sito, o fare clic sul pulsante sottostante."
+msgstr "L\'aggiornamento non è <span class=\"text-danger fw-semibold\">programmato</span> per essere eseguito automaticamente. Puoi eseguire l\'aggiornamento manualmente sul tuo sito, o fare clic sul pulsante sottostante."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED"
 msgid "The update is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically after %s."
-msgstr "L\'aggiornamento è <span class=\"_QQ_\"fw-semibold text-success\"_QQ_\">programmato</span> per essere eseguito automaticamente dopo %s."
+msgstr "L\'aggiornamento è <span class=\"fw-semibold text-success\">programmato</span> per essere eseguito automaticamente dopo %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP"
 msgid "The update is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically as soon as possible."
-msgstr "L\'aggiornamento è <span class=\"_QQ_\"fw-semibold text-success\"_QQ_\">programmato</span> per essere eseguito automaticamente il prima possibile."
+msgstr "L\'aggiornamento è <span class=\"fw-semibold text-success\">programmato</span> per essere eseguito automaticamente il prima possibile."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_RUNNING"
 msgid "The update is <span class=\"fw-semibold text-success\">currently taking place</span>"
-msgstr "L\'aggiornamento è <span class=\"_QQ_\"fw-semibold text-success\"_QQ_\">in corso</span>"
+msgstr "L\'aggiornamento è <span class=\"fw-semibold text-success\">in corso</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_ERRORED"
@@ -3291,17 +3281,17 @@ msgstr "Aggiornare i file core di Joomla! è <em>sempre sicuro</em>. I contenuti
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED"
 msgid "The core files refresh is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically after %s."
-msgstr "Il refresh dei file core è <span class=\"_QQ_\"fw-semibold text-success\"_QQ_\">programmato</span> per essere eseguito automaticamente dopo %s."
+msgstr "Il refresh dei file core è <span class=\"fw-semibold text-success\">programmato</span> per essere eseguito automaticamente dopo %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED_ASAP"
 msgid "The core files refresh is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically as soon as possible."
-msgstr "Il refresh dei file core è <span class=\"_QQ_\"fw-semibold text-success\"_QQ_\">programmato</span> per essere eseguito automaticamente il prima possibile."
+msgstr "Il refresh dei file core è <span class=\"fw-semibold text-success\">programmato</span> per essere eseguito automaticamente il prima possibile."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_RUNNING"
 msgid "The core files refresh is <span class=\"fw-semibold text-success\">currently taking place</span>"
-msgstr "Il refresh dei file core è <span class=\"_QQ_\"fw-semibold text-success\"_QQ_\">in corso</span>"
+msgstr "Il refresh dei file core è <span class=\"fw-semibold text-success\">in corso</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_ERRORED"
@@ -3901,7 +3891,7 @@ msgstr "Ricarica lista estensioni"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_PLUGIN_DISABLED"
 msgid "The “System – Admin Tools” plugin is disabled"
-msgstr "Il plugin \"_QQ_\"System – Admin Tools\"_QQ_\" è disabilitato"
+msgstr "Il plugin \"System – Admin Tools\" è disabilitato"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_PLUGIN_DISABLED_ACTION"
@@ -4355,13 +4345,13 @@ msgstr "L\'Applicazione API di Joomla! è bloccata (errore HTTP 403)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
-msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\\\"font-monospace\\\">%s</span>)."
-msgstr "Qualcosa sul tuo server, come la configurazione del server gestita dal tuo host, un file di configurazione del server come <code>.htaccess</code>, o un plugin del tuo sito, sta bloccando Panopticon dall\'accesso all\'applicazione API del tuo sito (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>)."
+msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\"font-monospace\">%s</span>)."
+msgstr "Qualcosa sul tuo server, come la configurazione del server gestita dal tuo host, un file di configurazione del server come <code>.htaccess</code>, o un plugin del tuo sito, sta bloccando Panopticon dall\'accesso all\'applicazione API del tuo sito (<span class=\"font-monospace\">%s</span>)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS_J3"
-msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing the URL of the API plugin (<span class=\\\"font-monospace\\\">%s</span>) on your site."
-msgstr "Qualcosa sul tuo server - come la configurazione del server controllata dal tuo host, un file di configurazione del server come <code>.htaccess</code>, o un plugin del tuo sito - sta bloccando Panopticon dall\'accesso all\'URL del plugin API (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>) sul tuo sito."
+msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing the URL of the API plugin (<span class=\"font-monospace\">%s</span>) on your site."
+msgstr "Qualcosa sul tuo server - come la configurazione del server controllata dal tuo host, un file di configurazione del server come <code>.htaccess</code>, o un plugin del tuo sito - sta bloccando Panopticon dall\'accesso all\'URL del plugin API (<span class=\"font-monospace\">%s</span>) sul tuo sito."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_TOCHECK"
@@ -4370,23 +4360,23 @@ msgstr "Cose da controllare:"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1"
-msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the Joomla! API Application endpoint (<span class=\\\"font-monospace\\\">%s</span>) altogether?"
-msgstr "Il tuo host o il tuo file di configurazione del server (ad es. <code>.htaccess</code>) blocca l\'accesso al punto finale dell\'Applicazione API di Joomla! (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>)?"
+msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
+msgstr "Il tuo host o il tuo file di configurazione del server (ad es. <code>.htaccess</code>) blocca l\'accesso al punto finale dell\'Applicazione API di Joomla! (<span class=\"font-monospace\">%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1_J3"
-msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the API plugin endpoint (<span class=\\\"font-monospace\\\">%s</span>) altogether?"
-msgstr "Il tuo host, o il tuo file di configurazione del server (ad es. <code>.htaccess</code>), blocca completamente l\'accesso all\'endpoint del plugin API (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>)?"
+msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the API plugin endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
+msgstr "Il tuo host, o il tuo file di configurazione del server (ad es. <code>.htaccess</code>), blocca completamente l\'accesso all\'endpoint del plugin API (<span class=\"font-monospace\">%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
-msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
-msgstr "Il tuo host ha una soluzione di protezione server-side (come mod_security2 di Apache) che potrebbe bloccare il punto finale dell\'Applicazione API di Joomla! (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>), il tuo token API (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>), o l\'User-Agent di Panopticon (<span class=\"_QQ_\"font-monospace\"_QQ_\">panopticon/%s</span>)?"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Il tuo host ha una soluzione di protezione server-side (come mod_security2 di Apache) che potrebbe bloccare il punto finale dell\'Applicazione API di Joomla! (<span class=\"font-monospace\">%s</span>), il tuo token API (<span class=\"font-monospace\">%s</span>), o l\'User-Agent di Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
-msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
-msgstr "Il tuo host usa una soluzione di protezione lato server (come il mod_security2 di Apache) che potrebbe bloccare l\'endpoint del plugin API (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>), il tuo token API (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>), o l\'User-Agent di Panopticon (<span class=\"_QQ_\"font-monospace\"_QQ_\">panopticon/%s</span>)?"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Il tuo host usa una soluzione di protezione lato server (come il mod_security2 di Apache) che potrebbe bloccare l\'endpoint del plugin API (<span class=\"font-monospace\">%s</span>), il tuo token API (<span class=\"font-monospace\">%s</span>), o l\'User-Agent di Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK3"
@@ -4415,8 +4405,8 @@ msgstr "Il codice di stato HTTP %s indica che si è verificato un errore del ser
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400"
-msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\\\"font-monospace\\\">%s</span>) may not be one of them."
-msgstr "Il codice di stato HTTP 400 di solito indica che il tuo sito può essere accesso solo da un numero limitato di nomi di dominio; quello che hai provato a usare (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>) potrebbe non essere uno di questi."
+msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them."
+msgstr "Il codice di stato HTTP 400 di solito indica che il tuo sito può essere accesso solo da un numero limitato di nomi di dominio; quello che hai provato a usare (<span class=\"font-monospace\">%s</span>) potrebbe non essere uno di questi."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
@@ -4446,7 +4436,7 @@ msgstr "Assicurati che i plugin “API Authentication - Web Services Joomla Toke
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH2_J3"
 msgid "Make sure that the plugin “System - Panopticon Connector for Joomla 3” is enabled on your site."
-msgstr "Assicurati che il plugin \"_QQ_\"System - Panopticon Connector per Joomla 3\"_QQ_\" sia attivato sul tuo sito."
+msgstr "Assicurati che il plugin \"System - Panopticon Connector per Joomla 3\" sia attivato sul tuo sito."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH3"
@@ -4496,7 +4486,7 @@ msgstr "Assicurati che i plugin “API Authentication - Web Services Joomla Toke
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH2_J3"
 msgid "Make sure that the plugin “System - Panopticon Connector for Joomla 3” is enabled on your site."
-msgstr "Assicurati che il plugin \"_QQ_\"System - Panopticon Connector per Joomla 3\"_QQ_\" sia attivato sul tuo sito."
+msgstr "Assicurati che il plugin \"System - Panopticon Connector per Joomla 3\" sia attivato sul tuo sito."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH3"
@@ -4520,8 +4510,8 @@ msgstr "La libreria di comunicazione utilizzata da PHP (cURL) ha segnalato il se
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"
-msgid "Please consult the <a href=\\\"https://curl.se/libcurl/c/libcurl-errors.html\\\" target=\\\"_blank\\\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your Joomla! site is on - which requires contacting the respective host to help you address."
-msgstr "Consulta il <a href=\"_QQ_\"https://curl.se/libcurl/c/libcurl-errors.html\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">riferimento al codice di errore della libreria cURL</a> per maggiori informazioni sull\'errore. Nella maggior parte dei casi il problema è relativo alla configurazione della rete o del server —sia il server su cui hai installato Panopticon, sia il server su cui è installato il tuo sito Joomla!— che richiede di contattare l\'host di riferimento."
+msgid "Please consult the <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your Joomla! site is on - which requires contacting the respective host to help you address."
+msgstr "Consulta il <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">riferimento al codice di errore della libreria cURL</a> per maggiori informazioni sull\'errore. Nella maggior parte dei casi il problema è relativo alla configurazione della rete o del server —sia il server su cui hai installato Panopticon, sia il server su cui è installato il tuo sito Joomla!— che richiede di contattare l\'host di riferimento."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_HEAD"
@@ -4530,18 +4520,18 @@ msgstr "C\'è stato un errore di comunicazione con il tuo sito."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH1"
-msgid "The communication library used by Panopticon (<a href=\\\"https://github.com/guzzle/guzzle\\\" target=\\\"_blank\\\">Guzzle HTTP</a>) has reported the following error:"
-msgstr "La libreria di comunicazione utilizzata da Panopticon (<a href=\"_QQ_\"https://github.com/guzzle/guzzle\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">Guzzle HTTP</a>) ha segnalato il seguente errore:"
+msgid "The communication library used by Panopticon (<a href=\"https://github.com/guzzle/guzzle\" target=\"_blank\">Guzzle HTTP</a>) has reported the following error:"
+msgstr "La libreria di comunicazione utilizzata da Panopticon (<a href=\"https://github.com/guzzle/guzzle\" target=\"_blank\">Guzzle HTTP</a>) ha segnalato il seguente errore:"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
-msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\\\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\\\" target=\\\"_blank\\\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr "Questa è una condizione inaspettata che potrebbe indicare un errore di comunicazione che non abbiamo ancora visto, un problema con Guzzle stesso, un problema con il server su cui hai installato Panopticon, o un problema di Panopticon stesso. Cerca tra le segnalazioni <em>aperte e chiuse</em> <a href=\"_QQ_\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">nel nostro repository GitHub</a>. Se nessun altro lo ha segnalato, apri una segnalazione e ci daremo un\'occhiata."
+msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
+msgstr "Questa è una condizione inaspettata che potrebbe indicare un errore di comunicazione che non abbiamo ancora visto, un problema con Guzzle stesso, un problema con il server su cui hai installato Panopticon, o un problema di Panopticon stesso. Cerca tra le segnalazioni <em>aperte e chiuse</em> <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">nel nostro repository GitHub</a>. Se nessun altro lo ha segnalato, apri una segnalazione e ci daremo un\'occhiata."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"
-msgid "The host name of your site (<span class=\\\"font-monospace\\\">%s</span>) cannot be resolved to an IP address."
-msgstr "Il nome host del tuo sito (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>) non può essere risolto in un indirizzo IP."
+msgid "The host name of your site (<span class=\"font-monospace\">%s</span>) cannot be resolved to an IP address."
+msgstr "Il nome host del tuo sito (<span class=\"font-monospace\">%s</span>) non può essere risolto in un indirizzo IP."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK"
@@ -4606,7 +4596,7 @@ msgstr "Il plugin “System - Panopticon Connector per Joomla 3” non è abilit
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_BLAH"
 msgid "Your Joomla! site needs to have the “System - Panopticon Connector for Joomla 3” plugin installed and enabled for Akeeba Panopticon to work with it."
-msgstr "Il tuo sito Joomla! deve avere il plugin \"_QQ_\"System - Panopticon Connector per Joomla 3\"_QQ_\" installato e attivato affinché Akeeba Panopticon possa funzionare."
+msgstr "Il tuo sito Joomla! deve avere il plugin \"System - Panopticon Connector per Joomla 3\" installato e attivato affinché Akeeba Panopticon possa funzionare."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_HEAD"
@@ -4630,13 +4620,13 @@ msgstr "Utilizza HTTP semplice. Questa è l\'opzione meno sicura, quindi forteme
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
-msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\\\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
-msgstr "Installa un certificato SSL/TLS firmato da una nota Autorità di Certificazione commerciale. La maggior parte dei server ti permette di utilizzare <a href=\"_QQ_\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">Let\'s Encrypt</a> che rilascia certificati SSL/TLS validi, firmati e perfettamente funzionanti gratuitamente."
+msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
+msgstr "Installa un certificato SSL/TLS firmato da una nota Autorità di Certificazione commerciale. La maggior parte dei server ti permette di utilizzare <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> che rilascia certificati SSL/TLS validi, firmati e perfettamente funzionanti gratuitamente."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
-msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\\\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\\\" target=\\\"_blank\\\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
-msgstr "Se sei su una Intranet, extranet o hai bisogno di mantenere la tua propria Autorità di Certificazione, puoi dire a Panopticon di riconoscere la tua Autorità di Certificazione personalizzata. Crea il file <code>cacert.pem</code> nella cartella <code>user_code</code> della tua installazione Panopticon. Copia e incolla il/le certificato/i pubblico/i della tua Autorità di Certificazione (CA) in formato <a href=\"_QQ_\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">PEM</a>. Questo viene caricato <em>sopra</em> ai file CA standard automaticamente, permettendo a Panopticon di accedere al tuo sito."
+msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
+msgstr "Se sei su una Intranet, extranet o hai bisogno di mantenere la tua propria Autorità di Certificazione, puoi dire a Panopticon di riconoscere la tua Autorità di Certificazione personalizzata. Crea il file <code>cacert.pem</code> nella cartella <code>user_code</code> della tua installazione Panopticon. Copia e incolla il/le certificato/i pubblico/i della tua Autorità di Certificazione (CA) in formato <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a>. Questo viene caricato <em>sopra</em> ai file CA standard automaticamente, permettendo a Panopticon di accedere al tuo sito."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
@@ -4655,8 +4645,8 @@ msgstr "Per favore, verifica quanto segue:"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
-msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\\\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
-msgstr "Il certificato SSL/TLS è per il nome di dominio corretto? Se stai utilizzando il certificato SSL/TLS predefinito fornito dal tuo host, è limitato al nome di dominio temporaneo che utilizzi per configurare il tuo sito, non al tuo vero nome di dominio. Dovrai installare un certificato SSL/TLS firmato da una nota Autorità di Certificazione commerciale. La maggior parte dei server ti permette di utilizzare <a href=\"_QQ_\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">Let\'s Encrypt</a>, che rilascia certificati SSL/TLS validi, firmati e perfettamente funzionanti gratuitamente. Ricorda che alcuni pannelli di controllo di hosting self-service (come cPanel o Plesk) ti permettono di selezionare quale è il certificato SSL/TLS attivo per un nome di dominio. Controlla che il certificato corretto sia effettivamente in uso."
+msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
+msgstr "Il certificato SSL/TLS è per il nome di dominio corretto? Se stai utilizzando il certificato SSL/TLS predefinito fornito dal tuo host, è limitato al nome di dominio temporaneo che utilizzi per configurare il tuo sito, non al tuo vero nome di dominio. Dovrai installare un certificato SSL/TLS firmato da una nota Autorità di Certificazione commerciale. La maggior parte dei server ti permette di utilizzare <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a>, che rilascia certificati SSL/TLS validi, firmati e perfettamente funzionanti gratuitamente. Ricorda che alcuni pannelli di controllo di hosting self-service (come cPanel o Plesk) ti permettono di selezionare quale è il certificato SSL/TLS attivo per un nome di dominio. Controlla che il certificato corretto sia effettivamente in uso."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
@@ -4665,13 +4655,13 @@ msgstr "Il certificato SSL/TLS è scaduto? In questo caso devi rinnovarlo. Tieni
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
-msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\\\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\\\" target=\\\"_blank\\\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
-msgstr "Il certificato SSL/TLS è stato revocato? A volte le Autorità di Certificazione, o i proprietari di un certificato SSL/TLS, possono decidere di revocarlo. Ad esempio, le Autorità di Certificazione lo faranno se sospettano frodi, o se ritengono che la loro infrastruttura utilizzata per rilasciare un certificato sia stata compromessa. <a href=\"_QQ_\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">Controlla lo stato di revoca del tuo certificato</a>. Se è stato revocato avrai bisogno di un nuovo certificato."
+msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
+msgstr "Il certificato SSL/TLS è stato revocato? A volte le Autorità di Certificazione, o i proprietari di un certificato SSL/TLS, possono decidere di revocarlo. Ad esempio, le Autorità di Certificazione lo faranno se sospettano frodi, o se ritengono che la loro infrastruttura utilizzata per rilasciare un certificato sia stata compromessa. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Controlla lo stato di revoca del tuo certificato</a>. Se è stato revocato avrai bisogno di un nuovo certificato."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
 msgid "Is it possible that your server serves the wrong SSL/TLS certificate? This may happen if you have recently switched to a new certificate, either manually or as part of an automated certificate rotation process (e.g. when your host issues a new certificate through Let\'s Encrypt). When the certificate changes the web server needs to be reloaded or restarted. In some rare cases this might not happen - or an inexperienced systems administrator may forget to do it. Please contact your host / systems administrator to check that and, if necessary, reload or restart the web server process."
-msgstr "È possibile che il tuo server fornisca il certificato SSL/TLS sbagliato? Questo può accadere se hai recentemente cambiato certificato, manualmente o attraverso un\'opzione automatica come Let\'s Encrypt. Puoi controllare quale certificato viene fornito dal tuo server utilizzando un servizio online come <a href=\"_QQ_\"https://www.ssllabs.com/ssltest/\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">SSL Labs\' SSL Server Test</a>. Se il certificato fornito dal tuo server non è quello che ti aspetti, dovrai correggere la configurazione del tuo server o contattare il tuo host per aiuto."
+msgstr "È possibile che il tuo server fornisca il certificato SSL/TLS sbagliato? Questo può accadere se hai recentemente cambiato certificato, manualmente o attraverso un\'opzione automatica come Let\'s Encrypt. Puoi controllare quale certificato viene fornito dal tuo server utilizzando un servizio online come <a href=\"https://www.ssllabs.com/ssltest/\" target=\"_blank\">SSL Labs\' SSL Server Test</a>. Se il certificato fornito dal tuo server non è quello che ti aspetti, dovrai correggere la configurazione del tuo server o contattare il tuo host per aiuto."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_HEAD"
@@ -4691,17 +4681,17 @@ msgstr "Vai sul backend del tuo sito e clicca su Sistema, Gestisci, Estensioni. 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
 msgid "Cannot communicate to the “System - Panopticon Connector for Joomla 3” plugin on your site"
-msgstr "Non è possibile comunicare con il plugin \"_QQ_\"System - Panopticon Connector per Joomla 3\"_QQ_\" sul tuo sito"
+msgstr "Non è possibile comunicare con il plugin \"System - Panopticon Connector per Joomla 3\" sul tuo sito"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH1"
 msgid "Panopticon uses its own plugin, “System - Panopticon Connector for Joomla 3”, to provide the necessary API"
-msgstr "Panopticon utilizza il suo plugin, \"_QQ_\"System - Panopticon Connector per Joomla 3\"_QQ_\", per fornire l\'API necessaria"
+msgstr "Panopticon utilizza il suo plugin, \"System - Panopticon Connector per Joomla 3\", per fornire l\'API necessaria"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2"
 msgid "Please go to your site\'s backend and click on Extensions, Plugins. Search for the “System - Panopticon Connector for Joomla 3” plugin and enable it."
-msgstr "Per favore, vai nel backend del tuo sito e clicca su Estensioni, Plugin. Cerca il plugin \"_QQ_\"System - Panopticon Connector per Joomla 3\"_QQ_\" e attivalo."
+msgstr "Per favore, vai nel backend del tuo sito e clicca su Estensioni, Plugin. Cerca il plugin \"System - Panopticon Connector per Joomla 3\" e attivalo."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH3"
@@ -4716,7 +4706,7 @@ msgstr "Il tuo sito sembra essere protetto da password a livello di webserver"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH1"
 msgid "Your site replied with an HTTP 401 Unauthorized status code when trying to access the API. This typically means that you have applied password protection at the web server level."
-msgstr "Il tuo sito ha risposto con un codice di stato \"_QQ_\"HTTP 401 Non autorizzato\"_QQ_\" quando ha tentato di accedere all\'API. Ciò significa tipicamente che hai applicato una protezione con password a livello del server web."
+msgstr "Il tuo sito ha risposto con un codice di stato \"HTTP 401 Non autorizzato\" quando ha tentato di accedere all\'API. Ciò significa tipicamente che hai applicato una protezione con password a livello del server web."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH2"
@@ -4745,8 +4735,8 @@ msgstr "Di solito possiamo rilevare la natura dell\'errore di connessione e forn
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
-msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\\\"font-monospace\\\">%s</span>), but we don\'t have the code for it. This should have not happened."
-msgstr "Invece, abbiamo ricevuto un errore per il quale dovremmo essere in grado di fornire informazioni per la risoluzione dei problemi (<span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>), ma non abbiamo il codice per farlo. Questo non avrebbe dovuto accadere."
+msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
+msgstr "Invece, abbiamo ricevuto un errore per il quale dovremmo essere in grado di fornire informazioni per la risoluzione dei problemi (<span class=\"font-monospace\">%s</span>), ma non abbiamo il codice per farlo. Questo non avrebbe dovuto accadere."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
@@ -5016,7 +5006,7 @@ msgstr "Nome Origine Dati Redis (DSN)"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_REDIS_DSN_HELP"
 msgid "How to connect to your Redis server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Redis adapter documentation</a> for information on the syntax."
-msgstr "Come connettersi al tuo server Redis. Si prega di leggere <a href=\"_QQ_\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">la documentazione dell\'adattatore Cache Redis di Symfony</a> per informazioni sulla sintassi."
+msgstr "Come connettersi al tuo server Redis. Si prega di leggere <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">la documentazione dell\'adattatore Cache Redis di Symfony</a> per informazioni sulla sintassi."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN"
@@ -5026,7 +5016,7 @@ msgstr "Nome Origine Dati Memcached (DSN)"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN_HELP"
 msgid "How to connect to your Memcached server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Memcached adapter documentation</a> for information on the syntax."
-msgstr "Come connettersi al tuo server Memcached. Si prega di leggere <a href=\"_QQ_\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">la documentazione dell\'adattatore Cache Memcached di Symfony</a> per informazioni sulla sintassi."
+msgstr "Come connettersi al tuo server Memcached. Si prega di leggere <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">la documentazione dell\'adattatore Cache Memcached di Symfony</a> per informazioni sulla sintassi."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_LEVEL"
@@ -5896,7 +5886,7 @@ msgstr "Gli aggiornamenti non possono essere caricati"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_NOT_LOADED_BODY"
 msgid "The update information source URL, <span class=\"font-monospace\">%s</span>, does not seem to contain update information for this application."
-msgstr "L\'URL sorgente delle informazioni sull\'aggiornamento, <span class=\"_QQ_\"font-monospace\"_QQ_\">%s</span>, non sembra contenere informazioni sull\'aggiornamento per questa applicazione."
+msgstr "L\'URL sorgente delle informazioni sull\'aggiornamento, <span class=\"font-monospace\">%s</span>, non sembra contenere informazioni sull\'aggiornamento per questa applicazione."
 
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_UPTODATE_HEAD"
@@ -6156,7 +6146,7 @@ msgstr "Email"
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
 msgid "The email address is used to email the user, as well as displaying the user\'s picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
-msgstr "L\'indirizzo email è utilizzato per inviare email all\'utente, così come per visualizzare l\'immagine dell\'utente utilizzando il servizio terzo <a href=\"_QQ_\"https://en.gravatar.com\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">Gravatar</a>."
+msgstr "L\'indirizzo email è utilizzato per inviare email all\'utente, così come per visualizzare l\'immagine dell\'utente utilizzando il servizio terzo <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD"
@@ -6211,7 +6201,7 @@ msgstr "Usa predefinito"
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_HELP"
 msgid "The language to display Panopticon and send you emails in. “Use Default” uses the language set in your browser preferences for the web interface, and the default language (<tt>%s</tt>) for emails."
-msgstr "Il linguaggio per visualizzare Panopticon e inviare email a te. \"_QQ_\"Usa predefinito\"_QQ_\" utilizza il linguaggio impostato nelle preferenze del tuo browser per l\'interfaccia web e il linguaggio predefinito (<tt>%s</tt>) per le email."
+msgstr "Il linguaggio per visualizzare Panopticon e inviare email a te. \"Usa predefinito\" utilizza il linguaggio impostato nelle preferenze del tuo browser per l\'interfaccia web e il linguaggio predefinito (<tt>%s</tt>) per le email."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_TITLE"
@@ -6235,8 +6225,8 @@ msgstr "Copyright &copy; %s Akeeba Ltd"
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_PLEASE_READ_LICENSE"
-msgid "For the complete text of the software license, please read the <a class=\\\"text-body-tertiary\\\" href=\\\"%sLICENSE.txt\\\">LICENSE.txt</a> file supplied with the software."
-msgstr "Per il testo completo della licenza software, si prega di leggere il file <a class=\"_QQ_\"text-body-tertiary\"_QQ_\" href=\"_QQ_\"%sLICENSE.txt\"_QQ_\">LICENSE.txt</a> fornito con il software."
+msgid "For the complete text of the software license, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
+msgstr "Per il testo completo della licenza software, si prega di leggere il file <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> fornito con il software."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_3PD_SOFTWARE"
@@ -6295,8 +6285,8 @@ msgstr "Avatar per l\'utente %s"
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_CONTRIBUTIONS"
-msgid "Contributions: <span class=\\\"font-monospace text-success\\\">%d</span>"
-msgstr "Contributi: <span class=\"_QQ_\"font-monospace text-success\"_QQ_\">%d</span>"
+msgid "Contributions: <span class=\"font-monospace text-success\">%d</span>"
+msgstr "Contributi: <span class=\"font-monospace text-success\">%d</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_GITHUB_PROFILE"
@@ -6310,8 +6300,8 @@ msgstr "Profilo GitHub per l\'utente %s"
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_VISIT_GITHUB"
-msgid "For a complete list of Panopticon\'s contributors please visit <a href=\\\"%s\\\">its GitHub repository</a>."
-msgstr "Per un elenco completo dei collaboratori di Panopticon, si prega di visitare <a href=\"_QQ_\"%s\"_QQ_\">il suo repository GitHub</a>."
+msgid "For a complete list of Panopticon\'s contributors please visit <a href=\"%s\">its GitHub repository</a>."
+msgstr "Per un elenco completo dei collaboratori di Panopticon, si prega di visitare <a href=\"%s\">il suo repository GitHub</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
@@ -6751,7 +6741,7 @@ msgstr "I metodi di Autenticazione Multi-fattore sono utilizzati <em>in aggiunta
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_IS_ACTIVE"
 msgid "Multi-factor Authentication is <span class=\"%s\">enabled</span> on your account."
-msgstr "L\'Autenticazione Multi-fattore è <span class=\"_QQ_\"%s\"_QQ_\">abilitata</span> sul tuo account."
+msgstr "L\'Autenticazione Multi-fattore è <span class=\"%s\">abilitata</span> sul tuo account."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_TURN_OFF"
@@ -6761,7 +6751,7 @@ msgstr "Disattiva"
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_IS_DISABLED"
 msgid "Multi-factor Authentication is <span class=\"%s\">disabled</span> on your account."
-msgstr "L\'Autenticazione Multi-fattore è <span class=\"_QQ_\"%s\"_QQ_\">disabilitata</span> sul tuo account."
+msgstr "L\'Autenticazione Multi-fattore è <span class=\"%s\">disabilitata</span> sul tuo account."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_LIST_DEFAULTTAG"
@@ -6850,8 +6840,8 @@ msgstr "Seleziona come desideri verificare il tuo accesso a questo sito."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES"
-msgid "Backup Codes (Emergency Access)<br/><small class=\\\"text-muted\\\">Use these if you get locked out.</small>"
-msgstr "Codici di Backup (Accesso di Emergenza)<br/><small class=\"_QQ_\"text-muted\"_QQ_\">Usali se vieni bloccato.</small>"
+msgid "Backup Codes (Emergency Access)<br/><small class=\"text-muted\">Use these if you get locked out.</small>"
+msgstr "Codici di Backup (Accesso di Emergenza)<br/><small class=\"text-muted\">Usali se vieni bloccato.</small>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_METHOD_NAME"
@@ -6865,8 +6855,8 @@ msgstr "Codici monouso per permetterti di accedere al sito se nessuno degli altr
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_PRINT_PROMPT"
-msgid "<strong><a href=\\\"%s\\\">Print these codes</a> and keep them in your wallet</strong>. <span class=\\\"text-muted\\\">Backup codes let you log into the site if your regular Multi-factor Authentication method does not work or you no longer have access to it. Each code can be used <em>only once</em>.</span>"
-msgstr "<strong><a href=\"_QQ_\"%s\"_QQ_\">Stampa questi codici</a> e conservali nel tuo portafoglio</strong>. <span class=\"_QQ_\"text-muted\"_QQ_\">I codici di backup ti permettono di accedere al sito se il tuo metodo regolare di Autenticazione Multi-fattore non funziona o non ci hai più accesso. Ogni codice può essere utilizzato <em>solo una volta</em>.</span>"
+msgid "<strong><a href=\"%s\">Print these codes</a> and keep them in your wallet</strong>. <span class=\"text-muted\">Backup codes let you log into the site if your regular Multi-factor Authentication method does not work or you no longer have access to it. Each code can be used <em>only once</em>.</span>"
+msgstr "<strong><a href=\"%s\">Stampa questi codici</a> e conservali nel tuo portafoglio</strong>. <span class=\"text-muted\">I codici di backup ti permettono di accedere al sito se il tuo metodo regolare di Autenticazione Multi-fattore non funziona o non ci hai più accesso. Ogni codice può essere utilizzato <em>solo una volta</em>.</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_INSTRUCTIONS"
@@ -6920,8 +6910,8 @@ msgstr "<p>Questo è un plugin di Autenticazione Multi-fattore dimostrativo per 
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE"
-msgid "<p class=\\\"alert alert-info\\\">The messages appearing above and below the code area can be customized by overriding the language strings <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
-msgstr "<p class=\"_QQ_\"alert alert-info\"_QQ_\">I messaggi che appaiono sopra e sotto l\'area del codice possono essere personalizzati sovrascrivendo le stringhe di lingua <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> e <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
+msgid "<p class=\"alert alert-info\">The messages appearing above and below the code area can be customized by overriding the language strings <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
+msgstr "<p class=\"alert alert-info\">I messaggi che appaiono sopra e sotto l\'area del codice possono essere personalizzati sovrascrivendo le stringhe di lingua <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> e <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_DEFAULTTITLE"
@@ -6935,8 +6925,8 @@ msgstr "<p>Inserisci una password qui sotto. Questa password sarà richiesta dop
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE"
-msgid "<p class=\\\"alert alert-info\\\">The messages appearing above and below the setup area can be customized by overriding the language strings <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
-msgstr "<p class=\"_QQ_\"alert alert-info\"_QQ_\">I messaggi che appaiono sopra e sotto l\'area di configurazione possono essere personalizzati sovrascrivendo le stringhe di lingua <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> e <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
+msgid "<p class=\"alert alert-info\">The messages appearing above and below the setup area can be customized by overriding the language strings <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
+msgstr "<p class=\"alert alert-info\">I messaggi che appaiono sopra e sotto l\'area di configurazione possono essere personalizzati sovrascrivendo le stringhe di lingua <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> e <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_ERR_EMPTYCODE"

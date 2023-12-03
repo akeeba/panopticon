@@ -215,7 +215,7 @@ msgstr "Omogućeno"
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_PUBLISHED_SR"
-msgid "Toggle state for item %s"
+msgid "Toggle state for item %s; currently enabled"
 msgstr "Uključi/isključi stanje za stavku %s; trenutno omogućeno"
 
 #, phpformat
@@ -225,7 +225,7 @@ msgstr "Onemogućen"
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_UNPUBLISHED_SR"
-msgid "Toggle state for item %s"
+msgid "Toggle state for item %s; currently disabled"
 msgstr "Uključi/isključi stanje za stavku %s; trenutno omogućeno"
 
 #, phpformat
@@ -530,23 +530,18 @@ msgstr "Megabajti"
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_COPYRIGHT"
-msgid "Copyright © 2023–%s <a href=\\\"https://www.akeeba.com\\\" target=\"_blank\">Akeeba Ltd</a>. All legal rights reserved."
-msgstr "Autorska prava © 2023–%s <a href=\"_QQ_\"https://www.akeeba.com\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">Akeeba Ltd</a>. Sva zakonska prava pridržana."
+msgid "Copyright © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. All legal rights reserved."
+msgstr "Autorska prava © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. Sva zakonska prava pridržana."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_LICENSE"
 msgid "%s is Free Software distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\">GNU Affero GPL version 3</a> or any later version published by the Free Software Foundation."
-msgstr "%s je besplatni softver koji se distribuira pod <a href=\"_QQ_\"https://www.gnu.org/licenses/agpl-3.0.html\"_QQ_\" target=\"_QQ_\"_blank\"_QQ_\">GNU Affero GPL verzija 3</a> ili bilo kojom novijom verzijom koju je objavio Free Software Foundation."
+msgstr "%s je besplatni softver koji se distribuira pod <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\">GNU Affero GPL verzija 3</a> ili bilo kojom novijom verzijom koju je objavio Free Software Foundation."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_SOURCE_CODE"
 msgid "Source code on GitHub"
 msgstr "Izvorni kod na GitHubu"
-
-#, phpformat
-msgctxt "PANOPTICON_APP_LBL_LANGUAGES"
-msgid "Translations on Weblate"
-msgstr "Prijevod na Weblate"
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_SYSTEM_TASK"
@@ -910,7 +905,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED"
-msgid "The multi-part download of the update package to site %d (%s) has failed"
+msgid "The multi-part download of the update package to site %d (%s) has failed; will try a single-part download instead"
 msgstr ""
 
 #, phpformat
@@ -971,11 +966,6 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE"
 msgid "Continuing the update package extraction for site %d (%s)"
-msgstr ""
-
-#, phpformat
-msgctxt "c"
-msgid "Finished the update package extraction for site %d (%s)"
 msgstr ""
 
 #, phpformat
@@ -1380,7 +1370,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_HELP"
-msgid "This is usually MySQLi (<em>with</em> the trailing \\\"i\\\")"
+msgid "This is usually MySQLi (<em>with</em> the trailing \"i\")"
 msgstr ""
 
 #, phpformat
@@ -1570,7 +1560,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_FTPS_DESCRIPTION"
-msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \\\"Secure FTP\\\"</strong>. If your server doesn\'t support this method you will get connection errors."
+msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \"Secure FTP\"</strong>. If your server doesn\'t support this method you will get connection errors."
 msgstr ""
 
 #, phpformat
@@ -2080,7 +2070,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
-msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\\\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\\\">mogwai</em> after midnight. Pretty straightforward, right?"
+msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
 msgstr ""
 
 #, phpformat
@@ -2970,7 +2960,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_GROUPS_INFO"
-msgid "This section is only relevant to multi–user installations with different access per site"
+msgid "This section is only relevant to multi–user installations with different access per site; please consult the documentation for more information. If you are managing a single–user installation, or if all users have equal access to all sites, you can ignore it."
 msgstr ""
 
 #, phpformat
@@ -4355,12 +4345,12 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
-msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\\\"font-monospace\\\">%s</span>)."
+msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\"font-monospace\">%s</span>)."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS_J3"
-msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing the URL of the API plugin (<span class=\\\"font-monospace\\\">%s</span>) on your site."
+msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing the URL of the API plugin (<span class=\"font-monospace\">%s</span>) on your site."
 msgstr ""
 
 #, phpformat
@@ -4370,22 +4360,22 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1"
-msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the Joomla! API Application endpoint (<span class=\\\"font-monospace\\\">%s</span>) altogether?"
+msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1_J3"
-msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the API plugin endpoint (<span class=\\\"font-monospace\\\">%s</span>) altogether?"
+msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the API plugin endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
-msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
-msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 msgstr ""
 
 #, phpformat
@@ -4415,7 +4405,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400"
-msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\\\"font-monospace\\\">%s</span>) may not be one of them."
+msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them."
 msgstr ""
 
 #, phpformat
@@ -4520,7 +4510,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"
-msgid "Please consult the <a href=\\\"https://curl.se/libcurl/c/libcurl-errors.html\\\" target=\\\"_blank\\\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your Joomla! site is on - which requires contacting the respective host to help you address."
+msgid "Please consult the <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your Joomla! site is on - which requires contacting the respective host to help you address."
 msgstr ""
 
 #, phpformat
@@ -4530,17 +4520,17 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH1"
-msgid "The communication library used by Panopticon (<a href=\\\"https://github.com/guzzle/guzzle\\\" target=\\\"_blank\\\">Guzzle HTTP</a>) has reported the following error:"
+msgid "The communication library used by Panopticon (<a href=\"https://github.com/guzzle/guzzle\" target=\"_blank\">Guzzle HTTP</a>) has reported the following error:"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
-msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\\\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\\\" target=\\\"_blank\\\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
+msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"
-msgid "The host name of your site (<span class=\\\"font-monospace\\\">%s</span>) cannot be resolved to an IP address."
+msgid "The host name of your site (<span class=\"font-monospace\">%s</span>) cannot be resolved to an IP address."
 msgstr ""
 
 #, phpformat
@@ -4630,12 +4620,12 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
-msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\\\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
+msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
-msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\\\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\\\" target=\\\"_blank\\\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
+msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
 msgstr ""
 
 #, phpformat
@@ -4655,7 +4645,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
-msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\\\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
+msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
 msgstr ""
 
 #, phpformat
@@ -4665,7 +4655,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
-msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\\\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\\\" target=\\\"_blank\\\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
+msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
 msgstr ""
 
 #, phpformat
@@ -4745,7 +4735,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
-msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\\\"font-monospace\\\">%s</span>), but we don\'t have the code for it. This should have not happened."
+msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
 msgstr ""
 
 #, phpformat
@@ -6235,7 +6225,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_PLEASE_READ_LICENSE"
-msgid "For the complete text of the software license, please read the <a class=\\\"text-body-tertiary\\\" href=\\\"%sLICENSE.txt\\\">LICENSE.txt</a> file supplied with the software."
+msgid "For the complete text of the software license, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
 msgstr ""
 
 #, phpformat
@@ -6295,7 +6285,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_CONTRIBUTIONS"
-msgid "Contributions: <span class=\\\"font-monospace text-success\\\">%d</span>"
+msgid "Contributions: <span class=\"font-monospace text-success\">%d</span>"
 msgstr ""
 
 #, phpformat
@@ -6310,7 +6300,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_VISIT_GITHUB"
-msgid "For a complete list of Panopticon\'s contributors please visit <a href=\\\"%s\\\">its GitHub repository</a>."
+msgid "For a complete list of Panopticon\'s contributors please visit <a href=\"%s\">its GitHub repository</a>."
 msgstr ""
 
 #, phpformat
@@ -6850,7 +6840,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES"
-msgid "Backup Codes (Emergency Access)<br/><small class=\\\"text-muted\\\">Use these if you get locked out.</small>"
+msgid "Backup Codes (Emergency Access)<br/><small class=\"text-muted\">Use these if you get locked out.</small>"
 msgstr ""
 
 #, phpformat
@@ -6865,7 +6855,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_PRINT_PROMPT"
-msgid "<strong><a href=\\\"%s\\\">Print these codes</a> and keep them in your wallet</strong>. <span class=\\\"text-muted\\\">Backup codes let you log into the site if your regular Multi-factor Authentication method does not work or you no longer have access to it. Each code can be used <em>only once</em>.</span>"
+msgid "<strong><a href=\"%s\">Print these codes</a> and keep them in your wallet</strong>. <span class=\"text-muted\">Backup codes let you log into the site if your regular Multi-factor Authentication method does not work or you no longer have access to it. Each code can be used <em>only once</em>.</span>"
 msgstr ""
 
 #, phpformat
@@ -6920,7 +6910,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE"
-msgid "<p class=\\\"alert alert-info\\\">The messages appearing above and below the code area can be customized by overriding the language strings <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
+msgid "<p class=\"alert alert-info\">The messages appearing above and below the code area can be customized by overriding the language strings <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
 msgstr ""
 
 #, phpformat
@@ -6935,7 +6925,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE"
-msgid "<p class=\\\"alert alert-info\\\">The messages appearing above and below the setup area can be customized by overriding the language strings <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
+msgid "<p class=\"alert alert-info\">The messages appearing above and below the setup area can be customized by overriding the language strings <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
 msgstr ""
 
 #, phpformat
