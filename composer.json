@@ -112,6 +112,8 @@
 			"/docker-compose.yml",
 			"/docker-run.sh",
 			"/Dockerfile",
+			"/languages/*.po",
+			"/languages/*.pot",
 			"/log",
 			"!/log/.htaccess",
 			"!/log/web.config",

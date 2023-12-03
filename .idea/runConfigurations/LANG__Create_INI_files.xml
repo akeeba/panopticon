@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="LANG: Create INI files" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/assets/po_to_ini.php" scriptParameters="--all">
+    <method v="2" />
+  </configuration>
+</component>

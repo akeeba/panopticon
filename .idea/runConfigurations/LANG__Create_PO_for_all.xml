@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="LANG: Create PO for all" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/assets/ini_to_po.php" scriptParameters="--all">
+    <method v="2" />
+  </configuration>
+</component>

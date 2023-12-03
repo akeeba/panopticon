@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="LANG: Create POT" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/assets/ini_to_po.php" scriptParameters="--pot">
+    <method v="2" />
+  </configuration>
+</component>

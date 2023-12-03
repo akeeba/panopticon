@@ -66,6 +66,10 @@
         <exclude name="Dockerfile" />
         <exclude name="*.md" />
 
+        <!-- Exclude translation sources (PO / POT files) -->
+        <exclude name="language/*.po" />
+        <exclude name="language/*.pot" />
+
         <!-- Exclude map files -->
         <exclude name="media/css/*.map" />
         <exclude name="media/js/*.map" />
@@ -252,7 +256,7 @@
     </target>
 
     <target name="git-app" description="Makes only the application package"
-            depends="new-release,setup-properties,app-package">
+            depends="new-release,setup-properties,create-pot,language,app-package">
     </target>
 
     <target name="setup-properties" description="Set up version and build properties">
@@ -276,6 +280,20 @@
                 <token key="PRO" value="1"/>
             </replacetokens>
         </filterchain>
+    </target>
+
+    <target name="create-pot" description="Create the main language .POT file">
+        <exec executable="php" passthru="true">
+            <arg file="${dirs.root}/assets/ini_to_po.php"/>
+            <arg value="--pot"/>
+        </exec>
+    </target>
+
+    <target name="language" description="Create the INI language files from the PO files">
+        <exec executable="php" passthru="true">
+            <arg file="${dirs.root}/assets/po_to_ini.php"/>
+            <arg value="--all"/>
+        </exec>
     </target>
 
     <!--
