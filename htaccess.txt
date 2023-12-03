@@ -107,7 +107,7 @@
     ## -------------------------------------------------------------------------
     ## Tight control over static files
     ## -------------------------------------------------------------------------
-    ## Allow limited access to static files in the media ans user_code folders
+    ## Allow limited access to static files in the media and user_code folders
    RewriteRule ^(media|user_code)/.*\.(7z|bmp|bz2|css|eot|gif|gz|ico|jpe|jpeg|jpg|js|json|map|mov|mp3|mp4|mpeg|mpg|ogg|ogv|pdf|png|rar|svg|tar|tbz|tgz|ttf|txt|tz|wav|webp|woff|woff2|xml|xsl|zip)$ - [L,NC]
    RewriteRule ^(media|user_code)/ - [F]
    ## Disallow front-end access for system folders and files
