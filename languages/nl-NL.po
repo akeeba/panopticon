@@ -3151,7 +3151,7 @@ msgstr "Het wordt sterk aangeraden om een back-up van je site te maken en deze u
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UP_TO_DATE"
 msgid "Joomla! %s is up-to-date"
-msgstr "Joomla! % is up-to-date"
+msgstr "Joomla! %s is up-to-date"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_EOL"

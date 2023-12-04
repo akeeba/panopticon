@@ -21,12 +21,12 @@ msgstr ""
 #, phpformat
 msgctxt "AWF_100"
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #, phpformat
 msgctxt "AWF_50"
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #, phpformat
 msgctxt "AWF_ALL"
@@ -531,7 +531,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_COPYRIGHT"
 msgid "Copyright © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. All legal rights reserved."
-msgstr ""
+msgstr "© 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. Все права защищены."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_LICENSE"
@@ -646,7 +646,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_BTN_EDIT"
 msgid "Edit"
-msgstr ""
+msgstr "Редактировать"
 
 #, phpformat
 msgctxt "PANOPTICON_BTN_COPY"
@@ -696,7 +696,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_AKEEBABACKUP"
 msgid "Take a backup with Akeeba Backup"
-msgstr ""
+msgstr "Сделайте резервную копию с помощью Akeeba Backup"
 
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_EXTENSIONSUPDATE"
@@ -786,17 +786,17 @@ msgstr "Сайт %d не существует"
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_DOWNLOAD_FAILED"
 msgid "Downloading the update package has failed"
-msgstr ""
+msgstr "Не удалось загрузить пакет обновления"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_CHECKSUM"
 msgid "The downloaded update package has an invalid checksum."
-msgstr ""
+msgstr "Загруженный пакет обновления содержит недопустимую контрольную сумму."
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_ENABLE_FAILED"
 msgid "Enabling the Joomla Update extraction script has failed"
-msgstr ""
+msgstr "Не удалось включить скрипт извлечения обновлений Joomla"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED"
@@ -886,7 +886,7 @@ msgstr "Подготовка к обновлению сайта %d (%s)"
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING"
 msgid "Downloading update package to site %d (%s)"
-msgstr ""
+msgstr "Загрузка пакета обновлений на сайт %d (%s)"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_START"
@@ -1251,12 +1251,12 @@ msgstr "Вам необходимо устранить эти проблемы �
 #, phpformat
 msgctxt "PANOPTICON_SETUP_BTN_RETRY_PRECHECK"
 msgid "Check again"
-msgstr ""
+msgstr "Проверить еще раз"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_BTN_IGNORE_AND_NEXT"
 msgid "Ignore the errors <em>at your own risk</em>"
-msgstr ""
+msgstr "Игнорировать ошибки <em>на свой страх и риск</em>"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_REQUIRED"
@@ -1311,7 +1311,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_REQ_CONFIGJSON"
 msgid "Configuration file is writeable"
-msgstr ""
+msgstr "Файл конфигурации доступен для записи"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_RECOMMENDED"
@@ -1546,7 +1546,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_PASSWORD_TITLE"
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_PASSWORD_DESCRIPTION"
@@ -1636,7 +1636,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTSFTP_PASSWORD_TITLE"
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTSFTP_PASSWORD_DESCRIPTION"
@@ -1701,7 +1701,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD"
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD_HELP"
@@ -1711,7 +1711,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD2"
 msgid "Repeat Password"
-msgstr ""
+msgstr "Повторите пароль"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD2_HELP"
@@ -1741,37 +1741,37 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NO_CONFIG_WRITTEN_ALERT_HEAD"
 msgid "Panopticon is not ready yet"
-msgstr ""
+msgstr "Panopticon еще не готов"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NO_CONFIG_WRITTEN_ALERT_BODY"
 msgid "Saving the configuration file <code>config.php</code> in the folder you are installing Panopticon has failed. You will need to create this file manually."
-msgstr ""
+msgstr "Не удалось сохранить файл конфигурации <code>config.php</code> в папке, в которую вы устанавливаете Panopticon. Вам нужно будет создать этот файл вручную."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_HEAD"
 msgid "Create the configuration file"
-msgstr ""
+msgstr "Создать файл конфигурации"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP1"
 msgid "Create a file named <code>config.php</code> and keep it open in your editor."
-msgstr ""
+msgstr "Создайте файл с именем <code>config.php</code> и держите его открытым в вашем редакторе."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP1_DETAIL"
 msgid "Use a plain text editor such as Notepad on Windows, BBEdit on macOS, gEdit or Kate on Linux."
-msgstr ""
+msgstr "Используйте обычный текстовый редактор, такой как Notepad в Windows, BBEdit в Mac OS, gEdit или Kate в Linux."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP2"
 msgid "Come back to this window and click on the “Copy to Clipboard” button."
-msgstr ""
+msgstr "Вернитесь в это окно и нажмите на кнопку “Скопировать в буфер обмена”."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP3"
 msgid "Switch back to your editor and paste. Then, save the file."
-msgstr ""
+msgstr "Вернитесь в свой редактор и вставьте. Затем сохраните файл."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP4"
@@ -1781,17 +1781,17 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP4_DETAIL"
 msgid "Upload into the folder you\'re installing Panopticon. That\'s the folder with the Panopticon <code>index.php</code> file in it."
-msgstr ""
+msgstr "Загрузите в папку, в которую вы устанавливаете Panopticon. Это папка, в которой находится файл Panopticon <code>index.php</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP5"
 msgid "Come back to this window and click on the “Continue” button."
-msgstr ""
+msgstr "Вернитесь в это окно и нажмите на кнопку “Продолжить”."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_BTN_COPY_TO_CLIPBOARD"
 msgid "Copy to Clipboard"
-msgstr ""
+msgstr "Скопировать в буфер обмена"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_HEAD"
@@ -1811,12 +1811,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_SUBHEAD_BREATHE"
 msgid "Take a breath. This is the last installation step. You\'re almost done."
-msgstr ""
+msgstr "Сделайте вдох. Это последний шаг установки. Вы почти закончили."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_TABHEAD"
 msgid "CLI"
-msgstr ""
+msgstr "CLI"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_TABHEAD"
@@ -1831,7 +1831,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_TROUBLESHOOTING"
 msgid "Problem? Meet solution!"
-msgstr ""
+msgstr "Проблема? Встречайте решение!"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_IS_THIS_RIGHT_FOR_ME"
@@ -1841,17 +1841,17 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_PROS"
 msgid "Pros"
-msgstr ""
+msgstr "Плюсы"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_CONS"
 msgid "Cons"
-msgstr ""
+msgstr "Минусы"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_TARGET_AUDIENCE"
 msgid "Target Audience"
-msgstr ""
+msgstr "Целевая аудитория"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_EVERY_MINUTE_ALERT_HEAD"
@@ -1961,7 +1961,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_PROS_1"
 msgid "More reliable"
-msgstr ""
+msgstr "Более надежный"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_PROS_2"
@@ -2126,12 +2126,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_BENCHMARK_FAILED_BTN_RETRY"
 msgid "Retry"
-msgstr ""
+msgstr "Повторить"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_BENCHMARK_FAILED_SKIP"
 msgid "Skip this step (not recommended)"
-msgstr ""
+msgstr "Пропустить этот шаг (не рекомендуется)"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_CRON_ERR_NO_MAXEXEC_TASK"
@@ -2151,12 +2151,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_CRON_ERR_AJAX_HEAD"
 msgid "<strong>AJAX Loading Error</strong>"
-msgstr ""
+msgstr "<strong>Ошибка загрузки AJAX</strong>"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_STATUS"
 msgid "HTTP Status:"
-msgstr ""
+msgstr "Статус HTTP:"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_INTERNAL"
@@ -2176,12 +2176,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_CRON_ERR_INVALID_JSON"
 msgid "Invalid response from your server (response is not JSON data). The data received was:"
-msgstr ""
+msgstr "Неверный ответ от вашего сервера (ответ не является данными в формате JSON). Полученные данные были:"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_FINISH_HEAD"
 msgid "Panopticon is ready"
-msgstr ""
+msgstr "Panopticon готов"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_FINISH_HEAD_WITH_WARNING"
@@ -2191,7 +2191,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_FINISH_SUBTITLE"
 msgid "You can now start using Panopticon to monitor your Joomla!™ sites."
-msgstr ""
+msgstr "Теперь вы можете начать использовать Panopticon для мониторинга ваших сайтов на Joomla!™."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_FINISH_MAXEXEC_TOOLOW_HEAD"
@@ -2276,7 +2276,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_DONE"
 msgid "You have successfully set up Akeeba Panopticon. You may now start using it."
-msgstr ""
+msgstr "Вы успешно настроили Akeeba Panopticon. Теперь вы можете начать им пользоваться."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_START_USING"
@@ -2296,7 +2296,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_LOGIN_LBL_PASSWORD"
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #, phpformat
 msgctxt "PANOPTICON_LOGIN_LBL_SECRETCODE"
@@ -2336,22 +2336,22 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_THEAD_SITE"
 msgid "Site"
-msgstr ""
+msgstr "Сайт"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_THEAD_JOOMLA"
 msgid "Joomla™ version"
-msgstr ""
+msgstr "Версия Joomla™"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS"
 msgid "Extensions status"
-msgstr ""
+msgstr "Статус расширений"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_THEAD_PHP"
 msgid "PHP version"
-msgstr ""
+msgstr "Версия PHP"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER"
@@ -2361,7 +2361,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_DEV_SHORT"
 msgid "DEV"
-msgstr ""
+msgstr "DEV"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_DEV_LONG"
@@ -2411,17 +2411,17 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPDATES_BROKEN"
 msgid "Joomla Update is not working correctly on this site"
-msgstr ""
+msgstr "Обновление Joomla некорректно работает на этом сайте"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO"
 msgid "An error occurred updating the site information."
-msgstr ""
+msgstr "Произошла ошибка при обновлении информации о сайте."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS"
 msgid "An error occurred loading the site extensions information."
-msgstr ""
+msgstr "Произошла ошибка при загрузке информации о расширениях сайта."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JVERSION_UNKNOWN"
@@ -2431,12 +2431,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPGRADABLE_TO"
 msgid "Can be upgraded to %s"
-msgstr ""
+msgstr "Может быть обновлен до %s"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_CAN_BE_UPGRADED_SHORT"
 msgid "Can be upgraded to"
-msgstr ""
+msgstr "Может быть обновлен до"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_BRANCH"
@@ -2466,7 +2466,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADES_FOUND"
 msgid "Updates found:"
-msgstr ""
+msgstr "Найдены обновления:"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_NO_UPGRADES"
@@ -2491,7 +2491,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_PHP_SHOULD_UPGRADE"
 msgid "Should be upgraded to %s"
-msgstr ""
+msgstr "Должен быть обновлен до %s"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE"
@@ -2586,17 +2586,17 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_NOSITES_HEAD"
 msgid "Add a Site"
-msgstr ""
+msgstr "Добавить сайт"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_NOSITES_CTA"
 msgid "Monitor and remotely manage your sites by adding them here."
-msgstr ""
+msgstr "Контролируйте свои сайты и удаленно управляйте ими, добавляя их сюда."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_NOSITES_BUTTON"
 msgid "Add a Site"
-msgstr ""
+msgstr "Добавить сайт"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_COREUPDATES"
@@ -2611,12 +2611,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY"
 msgid "Joomla!™"
-msgstr ""
+msgstr "Joomla!™"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY"
 msgid "PHP"
-msgstr ""
+msgstr "PHP"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT"
@@ -2626,12 +2626,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_GROUPS"
 msgid "Groups"
-msgstr ""
+msgstr "Группы"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_GROUPS_PLACEHOLDER"
 msgid "Select Site Groups"
-msgstr ""
+msgstr "Выберите группы сайтов"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_CRON_SUBHEAD_CTA"
@@ -2681,7 +2681,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_HEARTBEAT_BTN_READ_INSTRUCTIONS"
 msgid "Read the instructions"
-msgstr ""
+msgstr "Ознакомьтесь c инструкцией"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND"
@@ -2696,27 +2696,27 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_READ_DOCS"
 msgid "Read the documentation"
-msgstr ""
+msgstr "Ознакомьтесь с документацией"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_TITLE"
 msgid "Sites"
-msgstr ""
+msgstr "Сайты"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_TITLE_NEW"
 msgid "Add a New Site"
-msgstr ""
+msgstr "Добавить новый сайт"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_TITLE_EDIT"
 msgid "Edit a Site"
-msgstr ""
+msgstr "Редактировать сайт"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_ERR_NO_TITLE"
 msgid "The site must have a title."
-msgstr ""
+msgstr "У сайта должно быть название."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_ERR_NO_URL"
@@ -2741,17 +2741,17 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_TABLE_HEAD_NAME"
 msgid "Site"
-msgstr ""
+msgstr "Сайт"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_TAB_CONNECTION"
 msgid "Connection"
-msgstr ""
+msgstr "Соединение"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_TAB_PROPERTIES"
 msgid "Properties"
-msgstr ""
+msgstr "Свойства"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE"
@@ -2781,7 +2781,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_CONNECTOR_HEAD"
 msgid "Panopticon Connector"
-msgstr ""
+msgstr "Panopticon Connector"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_HEAD"
@@ -2806,7 +2806,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_J3"
 msgid "Joomla 3.9 and 3.10"
-msgstr ""
+msgstr "Joomla 3.9 и 3.10"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_HEAD"
@@ -2876,12 +2876,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_WHEN"
 msgid "When Should Updates Be Installed"
-msgstr ""
+msgstr "Когда следует устанавливать обновления"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_OPT_CONFIG_CORE_UPDATE_WHEN_IMMEDIATELY"
 msgid "Immediately"
-msgstr ""
+msgstr "Немедленно"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_OPT_CONFIG_CORE_UPDATE_WHEN_TIME"
@@ -2921,17 +2921,17 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_ERROR"
 msgid "Send Email after Update Failure"
-msgstr ""
+msgstr "Отправить электронное письмо после сбоя обновления"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_AFTER"
 msgid "Send Email after Update Success"
-msgstr ""
+msgstr "Отправить электронное письмо после успешного обновления"
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_SITE_SAVED"
 msgid "The Site definition has been saved."
-msgstr ""
+msgstr "Определение сайта было сохранено."
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_SITE_COPIED"
@@ -2966,12 +2966,12 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_GROUPS"
 msgid "Groups"
-msgstr ""
+msgstr "Группы"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_GROUPS_PLACEHOLDER"
 msgid "Select one or more groups (optional)"
-msgstr ""
+msgstr "Выберите одну или несколько групп (необязательно)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_DLKEY_EDIT_TITLE"
@@ -2986,22 +2986,22 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_TITLE_READ"
 msgid "Site Information"
-msgstr ""
+msgstr "Информация о сайте"
 
 #, phpformat
 msgctxt "PANOPTICON_ERR_SITES_NOTFOUND"
 msgid "Site Record Not Found"
-msgstr ""
+msgstr "Запись сайта не найдена"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_REFRESHED_OK"
 msgid "The site information has been refreshed."
-msgstr ""
+msgstr "Информация о сайте была обновлена."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_ERR_REFRESHED_FAILED"
 msgid "The site information refresh has failed: %s"
-msgstr ""
+msgstr "Не удалось обновить информацию о сайте: %s"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_ERR_COREUPDATESITEFIX_FAILED"
@@ -3076,7 +3076,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED"
 msgid "Last checked:"
-msgstr ""
+msgstr "Последняя проверка:"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_ERR_JOOMLA_FILES_EXT_MISSING"
@@ -3086,7 +3086,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SEEK_HELP_JFORUM"
 msgid "Try asking for help on the <a href=\"https://forum.joomla.org\" target=\"_blank\">Joomla! Forum</a>."
-msgstr ""
+msgstr "Попробуйте обратиться за помощью на <a href=\"https://forum.joomla.org\" target=\"_blank\">форум Joomla! </a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_ALT_FIX"
@@ -3121,7 +3121,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_CURRENT_VERSION"
 msgid "Your site is currently using Joomla! %s."
-msgstr ""
+msgstr "В данный момент ваш сайт использует Joomla! %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_IS_PATCH_RELEASE"

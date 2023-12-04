@@ -3646,7 +3646,7 @@ msgstr "Utilizzo massimo del disco per il database (%0.2f%%)"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_DB_DISK_WHAT"
 msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, leading to your site being unable to function properly."
-msgstr "Lo spazio di archiviazione del tuo server è quasi completamente utilizzato. Quando superi questo limite non sarai in grado di eseguire operazioni sul database che eliminano o creano dati, il che potrebbe causare il malfunzionamento del tuo sito"
+msgstr "Lo spazio di archiviazione del tuo server è quasi completamente utilizzato. Quando superi questo limite non sarai in grado di eseguire operazioni sul database che eliminano o creano dati, il che potrebbe causare il malfunzionamento del tuo sito."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_EXTENSIONS_HEAD"
@@ -5971,7 +5971,7 @@ msgstr "Ultimo controllo aggiornamenti effettuato il %s. La versione più recent
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_BTN_RUN_POSTUPGRADE"
 msgid "Run the Post-upgrade code"
-msgstr "Esegui il codice post-aggiornamento."
+msgstr "Esegui il codice post-aggiornamento"
 
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_TITLE"

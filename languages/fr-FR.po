@@ -306,12 +306,12 @@ msgstr "%d jour"
 #, phpformat
 msgctxt "PANOPTICON_LBL_MONTH"
 msgid "%d months"
-msgstr ""
+msgstr "%d mois"
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_MONTH_1"
 msgid "%d month"
-msgstr ""
+msgstr "%d mois"
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_YEAR"
@@ -351,7 +351,7 @@ msgstr "(aucun horodatage de référence n\'a été fourni)"
 #, phpformat
 msgctxt "PANOPTICON_LBL_UNSELECT"
 msgid "(No Selection)"
-msgstr ""
+msgstr "(Aucune Sélection)"
 
 #, phpformat
 msgctxt "PANOPTICON_PRIVILEGE_SUPER"
@@ -726,7 +726,7 @@ msgstr "Test du temps d\'exécution maximum"
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_JOOMLAUPDATE"
 msgid "Update Joomla! Core"
-msgstr "Mettre à jour noyau Joomla!"
+msgstr "Mettre à jour le noyau de Joomla!"
 
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_REFRESHSITEINFO"
@@ -766,7 +766,7 @@ msgstr "Sauvegarde de la base de données"
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_UPDATESUMMARYEMAIL"
 msgid "Update summary email"
-msgstr ""
+msgstr "E-mail de résumé de mise à jour"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED"
@@ -1411,7 +1411,7 @@ msgstr "Nom d\'hôte du serveur de base de données"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_HOST_HELP"
 msgid "The host name or IP address of the database server (usually: localhost). Please note that localhost and 127.0.0.1 are <em>very</em> different as far as MySQL is concerned; you may have to try both to see which works with your database server. If your server is using a non-standard port, append it after the hostname prefixed with a colon, e.g. 127.0.0.1:1234 to use a database server on 127.0.0.1 listening to port 1234."
-msgstr "Le nom d\'hôte ou l\'adresse IP du serveur de base de données (généralement : localhost). Veuillez noter que localhost et 127.0.0.1 sont <em>très</em> différents en ce qui concerne MySQL ; vous devrez peut-être essayer les deux pour voir lequel fonctionne avec votre serveur de base de données. Si votre serveur utilise un port non standard, ajoutez-le après le nom d\'hôte préfixé par deux points, par exemple 127.0.0.1:1234 pour utiliser un serveur de base de données sur 127.0.0.1 écoutant le port 1234. \""
+msgstr "Le nom d\'hôte ou l\'adresse IP du serveur de base de données (généralement : localhost). Veuillez noter que localhost et 127.0.0.1 sont <em>très</em> différents en ce qui concerne MySQL ; vous devrez peut-être essayer les deux pour voir lequel fonctionne avec votre serveur de base de données. Si votre serveur utilise un port non standard, ajoutez-le après le nom d\'hôte préfixé par deux points, par exemple 127.0.0.1:1234 pour utiliser un serveur de base de données sur 127.0.0.1 écoutant le port 1234."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_NAME"
@@ -2311,7 +2311,7 @@ msgstr "Connexion"
 #, phpformat
 msgctxt "PANOPTICON_LOGIN_LBL_LANGUAGE"
 msgid "Login Language"
-msgstr ""
+msgstr "Langue de connexion"
 
 #, phpformat
 msgctxt "PANOPTICON_APP_MENU_TITLE_OVERVIEW"
@@ -2626,12 +2626,12 @@ msgstr "(Tous)"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_GROUPS"
 msgid "Groups"
-msgstr ""
+msgstr "Groupes"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_GROUPS_PLACEHOLDER"
 msgid "Select Site Groups"
-msgstr ""
+msgstr "Sélectionnez les groupes de sites"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_CRON_SUBHEAD_CTA"
@@ -2686,17 +2686,17 @@ msgstr "Lire les instructions"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND"
 msgid "Automated tasks are falling behind"
-msgstr ""
+msgstr "Les tâches automatisées prennent du retard"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_MESSAGE"
 msgid "Your automated tasks have been falling behind their scheduled time for an average of %d seconds. This means there is more work to be done than they can handle. You need to increase the number of CRON jobs you have set up."
-msgstr ""
+msgstr "Vos tâches automatisées ont diminué derrière leur temps prévu pour une moyenne de %d secondes. Cela signifie qu\'il y a plus de travail à faire qu\'ils peuvent gérer. Vous devez augmenter le nombre d\'emplois CRON que vous avez mis en place."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_READ_DOCS"
 msgid "Read the documentation"
-msgstr ""
+msgstr "Lisez la documentation"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_TITLE"
@@ -3356,17 +3356,17 @@ msgstr "Les mises à jour automatiques d\'extension peuvent être bloquées"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_EXTENSION_UPDATE_MAYBE_STUCK_HELP"
 msgid "Automatic extension updates are running, but the last time we detected any progress was at %s. If you have reasons to believe that this is not just because of a rather slow server, you can try resetting the updates by clicking the button below."
-msgstr ""
+msgstr "Les mises à jour automatiques de l\'extension sont en cours, mais la dernière fois que nous avons détecté une progression, c\'était à %s. Si vous avez des raisons de penser que cela n\'est pas simplement dû à un serveur plutôt lent, vous pouvez essayer de réinitialiser les mises à jour en cliquant sur le bouton ci-dessous."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_EXTENSION_UPDATE_RESCHEDULE"
 msgid "Reschedule Automatic Extension Updates"
-msgstr ""
+msgstr "Reprogrammer les mises à jour automatiques de l\'extension"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_EXTENSION_UPDATE_CANCEL"
 msgid "Cancel Automatic Extension Updates"
-msgstr ""
+msgstr "Annuler les mises à jour automatiques de l\'extension"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_HEAD"
@@ -3466,137 +3466,137 @@ msgstr "Une famille de versions PHP plus récentes est disponible, PHP %s. Il es
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_HEAD"
 msgid "Server Information"
-msgstr ""
+msgstr "Informations sur le Serveur"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_OS_LINUX"
 msgid "Linux"
-msgstr ""
+msgstr "Linux"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_OS_BSD"
 msgid "BSD"
-msgstr ""
+msgstr "BSD"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_OS_MACOS"
 msgid "macOS"
-msgstr ""
+msgstr "macOS"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_OS_WINDOWS"
 msgid "Microsoft Windows"
-msgstr ""
+msgstr "Microsoft Windows"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_OS_OTHER"
 msgid "Unknown OS"
-msgstr ""
+msgstr "OS inconnu"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_CPU"
 msgid "CPU"
-msgstr ""
+msgstr "CPU"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_CPU_UNKNOWN"
 msgid "Unknown CPU"
-msgstr ""
+msgstr "CPU inconnu"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_UPTIME"
 msgid "Uptime"
-msgstr ""
+msgstr "Temps de disponibilité"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_LOAD"
 msgid "Server Load"
-msgstr ""
+msgstr "Charge du serveur"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_CPU_UTILISATION"
 msgid "CPU Utilisation"
-msgstr ""
+msgstr "Utilisation CPU"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_CPU_TYPE_USER"
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_CPU_TYPE_SYS"
 msgid "System"
-msgstr ""
+msgstr "Système"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_CPU_TYPE_IOWAIT"
 msgid "I/O Wait"
-msgstr ""
+msgstr "Attente E/S"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_CPU_TYPE_IDLE"
 msgid "Idle"
-msgstr ""
+msgstr "Au repos"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_RAM_UTILISATION"
 msgid "Memory utilisation"
-msgstr ""
+msgstr "Utilisation Mémoire"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_USED"
 msgid "Used"
-msgstr ""
+msgstr "Utilisé"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_CACHE"
 msgid "Cache"
-msgstr ""
+msgstr "Cache"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_RAM_TYPE_FREE"
 msgid "Free"
-msgstr ""
+msgstr "Gratuit"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_DISK_TABLE_COMMENT"
 msgid "Table of disk usage on the server"
-msgstr ""
+msgstr "Tableau d\'utilisation des disques serveur"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_DISK_SITE"
 msgid "Site Storage"
-msgstr ""
+msgstr "Stockage du site"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_DISK_DB"
 msgid "Database Storage"
-msgstr ""
+msgstr "Stockage de bases de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_DISK_COMMON"
 msgid "Site &amp; Database Storage"
-msgstr ""
+msgstr "Stockage Site &amp; Base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_MOUNT_POINT"
 msgid "Mount Point"
-msgstr ""
+msgstr "Point d\'observation"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_USED"
 msgid "Used: %u MiB of %u MiB"
-msgstr ""
+msgstr "Utilisé : %u MiB de %u MiB"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_FREE"
 msgid "Free: %u MiB"
-msgstr ""
+msgstr "Libre : %u Mio"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_CALL_YOUR_HOST"
 msgid "If this keeps happening frequently you may want to contact your host about moving your site to a bigger hosting package, or otherwise upgrading your site\'s server."
-msgstr ""
+msgstr "Si cela se produit fréquemment, vous pouvez contacter votre hébergeur pour qu\'il déplace votre site vers un forfait d\'hébergement plus important ou qu\'il mette à niveau le serveur de votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_IOWAIT"
@@ -3606,47 +3606,47 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_IOWAIT_WHAT"
 msgid "Your server is spending a lot of time waiting for disk operations, as expressed by the I/O Wait time (it is expressed as a percentage of the total CPU time available). This means that your server\'s storage is struggling to keep up with the demand."
-msgstr ""
+msgstr "Votre serveur passe beaucoup de temps à attendre les opérations sur le disque, comme l\'indique le temps d\'attente E/S (exprimé en pourcentage du temps total de l\'unité centrale disponible). Cela signifie que le stockage de votre serveur peine à répondre à la demande."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_CPU"
 msgid "High CPU Utilisation (%0.2f%%)"
-msgstr ""
+msgstr "Utilisation élevée de l\'unité centrale (%0.2f%%)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_CPU_WHAT"
 msgid "Your server is closing to using its processor (CPU) to the maximum capacity available. This means that your server is struggling under the load."
-msgstr ""
+msgstr "Votre serveur se ferme pour utiliser son processeur (CPU) au maximum de sa capacité. Cela signifie que votre serveur peine à supporter la charge."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_SITE_DISK"
 msgid "High Site Disk Usage (%0.2f%%)"
-msgstr ""
+msgstr "Utilisation élevée du disque du site (%0.2f%%)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_COMMON_DISK"
 msgid "High Site &amp; Database Disk Usage (%0.2f%%)"
-msgstr ""
+msgstr "Utilisation élevé de la base de données (%0.2f%%)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_SITE_DISK_WHAT"
 msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
-msgstr ""
+msgstr "La capacité de stockage de votre serveur est presque atteinte. Si vous dépassez cette limite, vous ne pourrez pas créer de fichiers (y compris les fichiers de cache et les fichiers temporaires), ce qui empêchera votre site de fonctionner correctement."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_COMMON_DISK_WHAT"
 msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
-msgstr ""
+msgstr "La capacité de stockage de votre serveur est presque atteinte. Si vous dépassez cette limite, vous ne pourrez pas effectuer d\'opérations de base de données qui suppriment ou créent des données, vous ne pourrez pas créer de fichiers (y compris des fichiers cache et temporaires), ce qui empêchera votre site de fonctionner correctement."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_DB_DISK"
 msgid "High Database Disk Usage (%0.2f%%)"
-msgstr ""
+msgstr "Utilisation élevée du disque de base de données (%0.2f%%)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_DB_DISK_WHAT"
 msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, leading to your site being unable to function properly."
-msgstr ""
+msgstr "La capacité de stockage de votre serveur est presque atteinte. Si vous dépassez cette limite, vous ne pourrez pas effectuer les opérations de base de données qui suppriment ou créent des données, ce qui empêchera votre site de fonctionner correctement."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_EXTENSIONS_HEAD"
@@ -3931,7 +3931,7 @@ msgstr "Réactiver le plugin"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_PLUGIN_ENABLE_TIP"
 msgid "Renames the plugins/system/admintools/services/provider-disable.php file back to provider.php"
-msgstr ""
+msgstr "Renomme le fichier plugins/system/admintools/services/provider-disable.php en provider.php"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_HTACCESS_DISABLE"
@@ -3956,17 +3956,17 @@ msgstr "Renommer le fichier .htaccess.admintools (s\'il existe) en .htaccess"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SCANNER_HEAD"
 msgid "PHP File Change Scanner"
-msgstr ""
+msgstr "Scanner de changement de fichier PHP"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SCANNER_TIP"
 msgid "Admin Tools Professional\'s PHP File Change Scanner monitors your site\'s .php files for changes, additions, and suspicious content. Click on the number of the scan attempt to open its results in the administrator backend of your site."
-msgstr ""
+msgstr "Le scanner de modifications de fichiers PHP d\'Admin Tools Professional surveille les fichiers .php de votre site pour détecter les modifications, les ajouts et les contenus suspects. Cliquez sur le numéro de la tentative d\'analyse pour ouvrir les résultats dans le backend de l\'administrateur de votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SCANNER_ERROR_HEAD"
 msgid "Admin Tools API Error"
-msgstr ""
+msgstr "Erreur de l\'API des outils d\'administration"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SCANNER_ERROR_BODY"
@@ -4011,22 +4011,22 @@ msgstr "Suspect"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_BACKEND"
 msgid "Backend"
-msgstr ""
+msgstr "Back-end"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_CLI"
 msgid "CLI"
-msgstr ""
+msgstr "CLI"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_JOOMLA"
 msgid "Joomla!&trade; CLI"
-msgstr ""
+msgstr "Joomla!&trade; CLI"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_PANOPTICON"
 msgid "Panopticon"
-msgstr ""
+msgstr "Panopticon"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_UNKNOWN"
@@ -4036,12 +4036,12 @@ msgstr "Inconnu"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_COMPLETE"
 msgid "Complete"
-msgstr ""
+msgstr "Terminé"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_RUNNING"
 msgid "Running"
-msgstr ""
+msgstr "En fonctionnement"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_STATUS_FAILED"
@@ -4056,7 +4056,7 @@ msgstr "Voir le rapport"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_ACTIONS"
 msgid "Actions"
-msgstr ""
+msgstr "Mesures à prendre"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_HEAD"
@@ -4096,12 +4096,12 @@ msgstr "Relier avec Akeeba Backup"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN"
 msgid "Backup origin"
-msgstr ""
+msgstr "Origine de sauvegarde"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_BACKEND"
 msgid "Backend"
-msgstr ""
+msgstr "Backend"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_FRONTEND"
@@ -4116,7 +4116,7 @@ msgstr "API JSON"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLACLI"
 msgid "Joomla!™ CLI"
-msgstr ""
+msgstr "Joomla!™ CLI"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLA"
@@ -4136,7 +4136,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_XMLRPC"
 msgid "XML-RPC 💀"
-msgstr ""
+msgstr "XML-RPC 💀"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_LAZY"
@@ -4171,12 +4171,12 @@ msgstr "Profil de sauvegarde"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN"
 msgid "Frozen"
-msgstr ""
+msgstr "Gelé"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_UNFROZEN"
 msgid "Not Frozen"
-msgstr ""
+msgstr "Non Gelé"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_DESCRIPTION"
@@ -4191,7 +4191,7 @@ msgstr "État"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ACTIONS"
 msgid "Actions"
-msgstr ""
+msgstr "Mesures à prendre"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS_COMPLETE"
@@ -4221,7 +4221,7 @@ msgstr "En attente"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS_REMOTE"
 msgid "Remote"
-msgstr ""
+msgstr "À distance"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_DELETE"
@@ -4301,7 +4301,7 @@ msgstr "Akeeba Backup Professionnel n\'a pas encore été lié"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_BOU_NO_LINK_BODY"
 msgid "Akeeba Backup Professional has not been linked to Akeeba Panopticon, or the link has broken (for example, your Secret Word may have changed). Click the Link button below to re–establish the link."
-msgstr ""
+msgstr "Akeeba Backup Professional n\'a pas été lié à Akeeba Panopticon, ou le lien a rompu (par exemple, votre mot secret peut avoir changé). Cliquez sur le bouton Lien ci-dessous pour rétablir le lien."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_BOU_BTN_LINK"
@@ -4316,7 +4316,7 @@ msgstr "Sauvegarder lors de la mise à jour"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_BOU_TOGGLE_HELP"
 msgid "Takes a backup of your site using the specified Akeeba Backup profile before applying the update."
-msgstr ""
+msgstr "Effectuer une sauvegarde de votre site en utilisant le profil de sauvegarde Akeeba spécifié avant d\'appliquer la mise à jour."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_BOU_PROFILE"
@@ -4326,7 +4326,7 @@ msgstr "Profil de sauvegarde"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_BOU_PROFILE_HELP"
 msgid "The backup profile to use for taking a backup of your site before applying the update."
-msgstr ""
+msgstr "Le profil de sauvegarde à utiliser pour prendre une sauvegarde de votre site avant d\'appliquer la mise à jour."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_BOU_RELOAD_PROFILES"
@@ -4336,167 +4336,167 @@ msgstr "Recharger les profils"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HEAD"
 msgid "Troubleshooting Information"
-msgstr ""
+msgstr "Informations de Dépannage"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_HEAD"
 msgid "The Joomla! API Application is blocked (HTTP error 403)"
-msgstr ""
+msgstr "L\'application API de Joomla ! est bloquée (erreur HTTP 403)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
 msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\"font-monospace\">%s</span>)."
-msgstr ""
+msgstr "Quelque chose sur votre serveur - comme la configuration du serveur contrôlée par votre hébergeur, un fichier de configuration du serveur tel que <code>.htaccess</code> ou un plugin de votre site - empêche Panopticon d\'accéder à l\'application API de votre site (<span class=\"font-monospace\">%s</span>)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS_J3"
 msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing the URL of the API plugin (<span class=\"font-monospace\">%s</span>) on your site."
-msgstr ""
+msgstr "Quelque chose sur votre serveur - comme la configuration du serveur contrôlée par votre hébergeur, un fichier de configuration du serveur tel que <code>.htaccess</code> ou un plugin de votre site - empêche Panopticon d\'accéder à l\'URL du plugin API ( <span class=\"font-monospace\">%s</span>) sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_TOCHECK"
 msgid "Things to check:"
-msgstr ""
+msgstr "Choses à vérifier :"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr ""
+msgstr "Votre hôte, ou le fichier de configuration de votre serveur (par exemple <code>.htaccess</code>), bloque-t-il complètement l\'accès au point de terminaison de l\'application API Joomla (<span class=\"font-monospace\">%s</span>) ?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1_J3"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the API plugin endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr ""
+msgstr "Votre hôte, ou le fichier de configuration de votre serveur (par exemple <code>.htaccess</code>), bloque-t-il complètement l\'accès au point de terminaison du plugin API (<span class=\"font-monospace\">%s</span>) ?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr ""
+msgstr "Votre hôte dispose-t-il d\'une solution de protection côté serveur (telle que mod_security2 d\'Apache) qui pourrait bloquer le point de terminaison de l\'application API Joomla (<span class=\"font-monospace\">%s</span>), votre jeton API (<span class=\"font-monospace\">%s</span>), ou l\'agent utilisateur de Panopticon (<span class=\"font-monospace\">panopticon/%s</span>) ?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr ""
+msgstr "Votre hôte dispose-t-il d\'une solution de protection côté serveur (telle que mod_security2 d\'Apache) qui pourrait bloquer le point de terminaison du plugin API (<span class=\"font-monospace\">%s</span>), votre jeton API (<span class =\"font-monospace\">%s</span>), ou l\'agent utilisateur de Panopticon (<span class=\"font-monospace\">panopticon/%s</span>) ?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK3"
 msgid "Do you have a security, SEO, or other similar plugin which may be blocking the above?"
-msgstr ""
+msgstr "Avez-vous un plugin de sécurité, de référencement ou autre plugin similaire qui pourrait bloquer ce qui précède ?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_HEAD"
 msgid "The Joomla! API Application responded with an unexpected HTTP status code (%s)"
-msgstr ""
+msgstr "L\'application API Joomla a répondu avec un code d\'état HTTP inattendu (%s)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_HEAD_J3"
 msgid "The API plugin responded with an unexpected HTTP status code (%s)"
-msgstr ""
+msgstr "Le plugin API a répondu avec un code d\'état HTTP inattendu (%s)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_5XX"
 msgid "The HTTP status code %s means there has been a server error. Check if there are any third party plugins, especially system plugins, which may be accidentally breaking the Joomla! API Application and contact their author."
-msgstr ""
+msgstr "Le code d\'état HTTP %s signifie qu\'il y a eu une erreur de serveur. Vérifiez s\'il existe des plugins tiers, en particulier des plugins système, qui pourraient accidentellement casser l\'application API Joomla et contactez leur auteur."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_5XX_J3"
 msgid "The HTTP status code %s means there has been a server error. Check if there are any third party plugins, especially system plugins, which may be accidentally breaking the API plugin and contact their author."
-msgstr ""
+msgstr "Le code d\'état HTTP %s signifie qu\'il y a eu une erreur de serveur. Vérifiez s\'il existe des plugins tiers, en particulier des plugins système, qui pourraient accidentellement casser le plugin API et contactez leur auteur."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them."
-msgstr ""
+msgstr "Le code d\'état HTTP 400 signifie généralement que votre site n\'est accessible que par un nombre limité de noms de domaine ; celui que vous avez essayé d\'utiliser (<span class=\"font-monospace\">%s</span>) n\'en fait peut-être pas partie."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
 msgid "If you are using Admin Tools Professional please go to your site\'s backend and click on Components, Admin Tools for Joomla!, Web Application Firewall, Configure WAF, Request Filtering. Check the list of <em>Allowed Domains</em> towards the bottom of the page."
-msgstr ""
+msgstr "Si vous utilisez Admin Tools Professional, accédez au backend de votre site et cliquez sur Composants, Outils d\'administration pour Joomla, Pare-feu d\'application Web, Configurer WAF, Filtrage des demandes. Consultez la liste des <em>Domaines autorisés</em> en bas de la page."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_WHATEVER"
 msgid "If this was not the case, please contact your host."
-msgstr ""
+msgstr "Si ce n\'était pas le cas, veuillez contacter votre hébergeur web."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_HEAD"
 msgid "Joomla! believes that your API Token is incorrect, corrupt, or otherwise cannot log you in."
-msgstr ""
+msgstr "Joomla pense que votre jeton API est incorrect, corrompu ou ne peut pas vous connecter."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH1"
 msgid "Make sure that the API Token you are using belongs to a user account which belongs to the Super User group and the user is enabled. Do note that asking for a password reset disables the user temporarily. Do not trust your recollection, or your assumptions; double-check the user on your site."
-msgstr ""
+msgstr "Assurez-vous que le jeton API que vous utilisez appartient à un compte utilisateur qui appartient au groupe Super User et que l\'utilisateur est activé. Notez que demander une réinitialisation du mot de passe désactive temporairement l\'utilisateur. Ne vous fiez pas à vos souvenirs ou à vos hypothèses ; revérifiez l’utilisateur sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH2"
 msgid "Make sure that the plugins “API Authentication - Web Services Joomla Token” and “User - Joomla API Token” are enabled on your site."
-msgstr ""
+msgstr "Assurez-vous que les plugins « Authentification API - Jeton Joomla des services Web » et « Utilisateur - Jeton API Joomla » sont activés sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH2_J3"
 msgid "Make sure that the plugin “System - Panopticon Connector for Joomla 3” is enabled on your site."
-msgstr ""
+msgstr "Assurez-vous que le plugin « Système - Panopticon Connector for Joomla 3 » est activé sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH3"
 msgid "It is also possible that something on your server, or a plugin on your site, is corrupting the API Token as it is transmitted to your site."
-msgstr ""
+msgstr "Il est également possible que quelque chose sur votre serveur, ou un plugin sur votre site, corrompt le jeton API lors de sa transmission à votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH4"
 msgid "Please check your installed Joomla! plugins. Kindly note that no, Admin Tools Professional for Joomla! <em>does not</em> interfere with the Joomla! API Token. If this does not help please contact your host."
-msgstr ""
+msgstr "Veuillez vérifier vos plugins Joomla installés. Veuillez noter que non, Admin Tools Professional pour Joomla! <em>n\'interfère pas</em> avec le Jeton API Joomla. Si cela ne résout pas le problème, veuillez contacter votre hébergeur."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_406_BLAH1"
 msgid "The HTTP status code 406 (Not Acceptable) means that Joomla! does not see our HTTP <code>Accept</code> header, or a plugin on your site modified it in a way which resulted in an error."
-msgstr ""
+msgstr "Le code d\'état HTTP 406 (Non acceptable) signifie que Joomla ne voit pas notre en-tête HTTP <code>Accepter</code>, ou qu\'un plugin sur votre site l\'a modifié d\'une manière qui a entraîné une erreur."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_406_BLAH2"
 msgid "Please check that there are no <code>system</code> or <code>webservices</code> plugins which may be corrupting the HTTP Accept header."
-msgstr ""
+msgstr "Veuillez vérifier qu\'il n\'y a pas de plugins <code>system</code> ou <code>webservices</code> qui pourraient corrompre l\'en-tête HTTP Accept."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_406_BLAH3"
 msgid "If this does not help, please contact your host and ask them to check if the Accept header is forwarded correctly to PHP. It should be <code>Accept: application/vnd.api+json</code>."
-msgstr ""
+msgstr "Si cela ne résout pas le problème, veuillez contacter votre hébergeur et demandez-lui de vérifier si l\'en-tête Accept est correctement transmis à PHP. Il doit s\'agir de <code>Accept: application/vnd.api+json</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HUH_GENERIC"
 msgid "Most likely a <code>system</code> or <code>webservices</code> plugin on your server modified the request we sent, resulting in an error. Please check your installed plugins."
-msgstr ""
+msgstr "Il est fort probable qu\'un plugin <code>system</code> ou <code>webservices</code> sur votre serveur ait modifié la requête que nous avons envoyée, entraînant une erreur. Veuillez vérifier vos plugins installés."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_HEAD"
 msgid "Joomla! believes that your API Token is incorrect, corrupt, or otherwise cannot log you in."
-msgstr ""
+msgstr "Joomla pense que votre jeton API est incorrect, corrompu ou ne peut pas vous connecter."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH1"
 msgid "Make sure that the API Token you are using belongs to a user account which belongs to the Super User group and the user is enabled. Do note that asking for a password reset disables the user temporarily. Do not trust your recollection, or your assumptions; double-check the user on your site."
-msgstr ""
+msgstr "Assurez-vous que le jeton API que vous utilisez appartient à un compte utilisateur qui appartient au groupe Super User et que l\'utilisateur est activé. Notez que demander une réinitialisation du mot de passe désactive temporairement l\'utilisateur. Ne vous fiez pas à vos souvenirs ou à vos hypothèses ; revérifiez l’utilisateur sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH2"
 msgid "Make sure that the plugins “API Authentication - Web Services Joomla Token” and “User - Joomla API Token” are enabled on your site."
-msgstr ""
+msgstr "Assurez-vous que les plugins « Authentification API - Jeton Joomla des services Web » et « Utilisateur - Jeton API Joomla » sont activés sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH2_J3"
 msgid "Make sure that the plugin “System - Panopticon Connector for Joomla 3” is enabled on your site."
-msgstr ""
+msgstr "Assurez-vous que le plugin « Système - Panopticon Connector for Joomla 3 » est activé sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH3"
 msgid "It is also possible that something on your server, or a plugin on your site, is corrupting the API Token as it is transmitted to your site."
-msgstr ""
+msgstr "Il est également possible que quelque chose sur votre serveur, ou un plugin sur votre site, corrompt le jeton API lors de sa transmission à votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH4"
 msgid "Please check your installed Joomla! plugins. Kindly note that no, Admin Tools Professional for Joomla! <em>does not</em> interfere with the Joomla! API Token. If this does not help please contact your host."
-msgstr ""
+msgstr "Veuillez vérifier vos plugins Joomla installés. Veuillez noter que non, Admin Tools Professional pour Joomla <em>n\'interfère pas</em> avec Joomla! Jeton API. Si cela ne résout pas le problème, veuillez contacter votre hôte."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_HEAD"
@@ -4506,12 +4506,12 @@ msgstr "Il y a eu une erreur de communication avec votre site."
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH1"
 msgid "The communication library used by PHP (cURL) has reported the following error:"
-msgstr ""
+msgstr "La bibliothèque de communication utilisée par PHP (cURL) a signalé l\'erreur suivante :"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"
 msgid "Please consult the <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your Joomla! site is on - which requires contacting the respective host to help you address."
-msgstr ""
+msgstr "Veuillez consulter la <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">référence du code d\'erreur de la bibliothèque cURL</a> pour plus d\'informations sur l\'erreur. Dans la plupart des cas, le problème est un problème de configuration du réseau ou du serveur - soit le serveur sur lequel vous avez installé Panopticon, soit le serveur sur lequel se trouve votre site Joomla - qui nécessite de contacter l\'hébergeur concerné pour vous aider à le résoudre."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_HEAD"
@@ -4521,182 +4521,182 @@ msgstr "Il y a eu une erreur de communication avec votre site."
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH1"
 msgid "The communication library used by Panopticon (<a href=\"https://github.com/guzzle/guzzle\" target=\"_blank\">Guzzle HTTP</a>) has reported the following error:"
-msgstr ""
+msgstr "La bibliothèque de communication utilisée par Panopticon (<a href=\"https://github.com/guzzle/guzzle\" target=\"_blank\">Guzzle HTTP</a>) a signalé l\'erreur suivante :"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
 msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr ""
+msgstr "Il s\'agit d\'une condition inattendue qui peut indiquer une erreur de communication que nous n\'avons pas encore vue, un problème au sein de Guzzle lui-même, un problème avec le serveur sur lequel vous avez installé Panopticon ou un problème dans Panopticon lui-même. Veuillez rechercher les problèmes ouverts <em>et fermés</em> <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">sur notre référentiel GitHub< /a>. Si personne d\'autre n\'a signalé cela, veuillez ouvrir un problème et nous y jetterons un œil."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"
 msgid "The host name of your site (<span class=\"font-monospace\">%s</span>) cannot be resolved to an IP address."
-msgstr ""
+msgstr "Le nom d\'hôte de votre site (<span class=\"font-monospace\">%s</span>) ne peut pas être résolu en adresse IP."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK"
 msgid "Please check the following:"
-msgstr ""
+msgstr "Veuillez vérifier ce qui suit :"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK1"
 msgid "Have you typed the URL correctly? Check carefully, misspellings are easy to make and hard to catch!"
-msgstr ""
+msgstr "Avez-vous saisi correctement l\'URL ? Vérifiez attentivement, les fautes d’orthographe sont faciles à faire et difficiles à détecter !"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK2"
 msgid "Have you recently bought the domain, assigned the domain to a server, or transferred your site between hosts? Keep in mind that DNS propagation takes anywhere from 5 minutes to several days. Moreover, due to the distributed nature of DNS, it is possible that you can see your site <em>from your device</em> but the server you have installed Panopticon on can\'t."
-msgstr ""
+msgstr "Avez-vous récemment acheté le domaine, attribué le domaine à un serveur ou transféré votre site entre hébergeurs ? Gardez à l’esprit que la propagation DNS prend entre 5 minutes et plusieurs jours. De plus, en raison de la nature distribuée du DNS, il est possible que vous puissiez voir votre site <em>depuis votre appareil</em> mais que le serveur sur lequel vous avez installé Panopticon ne le puisse pas."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3"
 msgid "If your site\'s domain resolves to an IPv6 address - but not an IPv4 address - make sure that the server you have installed Panopticon on supports IPv6. You may have to ask your host to confirm that this is the case."
-msgstr ""
+msgstr "Si le domaine de votre site est résolu en une adresse IPv6 - mais pas en une adresse IPv4 - assurez-vous que le serveur sur lequel vous avez installé Panopticon prend en charge IPv6. Vous devrez peut-être demander à votre hôte de confirmer que c\'est bien le cas."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_HEAD"
 msgid "The Akeeba Panopticon Connector is not enabled on your site"
-msgstr ""
+msgstr "Le connecteur Akeeba Panopticon n\'est pas activé sur votre site"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_BLAH"
 msgid "Your Joomla! site needs to have the Akeeba Panopticon Connector installed and enabled for Akeeba Panopticon to work with it."
-msgstr ""
+msgstr "Votre site Joomla doit avoir le connecteur Akeeba Panopticon installé et activé pour qu\'Akeeba Panopticon puisse fonctionner avec lui."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK"
 msgid "Please check the following:"
-msgstr ""
+msgstr "Veuillez vérifier ce qui suit :"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK1"
 msgid "Have you installed the Akeeba Panopticon Connector package on your site?"
-msgstr ""
+msgstr "Avez-vous installé le paquet Akeeba Panopticon Connector sur votre site?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK2"
 msgid "Go to System, Manage, Extensions. Is the “Akeeba Panopticon Connector” <em>component</em> installed and enabled?"
-msgstr ""
+msgstr "Allez dans System, Gérer, Extensions. Le \"Akeeba Panopticon Connector\" <em>component</em> est-il installé et activé?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK3"
 msgid "Go to System, Manage, Extensions. Is the “Akeeba Panopticon Connector” <em>package</em> installed and enabled?"
-msgstr ""
+msgstr "Allez dans System, Gérer, Extensions. Le «Akeeba Panopticon Connector» <em>package</em> est-il installé et activé?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK4"
 msgid "Go to System, Manage, Plugins. Is the “Web Services - Panopticon” plugin enabled?"
-msgstr ""
+msgstr "Allez dans System, Gérer, Plugins. Le plugin “Web Services - Panopticon” est-il activé?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_HEAD"
 msgid "The “System - Panopticon Connector for Joomla 3” plugin is not enabled on your site"
-msgstr ""
+msgstr "Le plugin “System - Panopticon Connector pour Joomla 3” n’est pas activé sur votre site"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_BLAH"
 msgid "Your Joomla! site needs to have the “System - Panopticon Connector for Joomla 3” plugin installed and enabled for Akeeba Panopticon to work with it."
-msgstr ""
+msgstr "Votre site Joomla doit avoir le plugin « Système - Panopticon Connector for Joomla 3 » installé et activé pour qu\'Akeeba Panopticon puisse fonctionner avec lui."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_HEAD"
 msgid "You are using a self-signed SSL/TLS certificate"
-msgstr ""
+msgstr "Vous utilisez un certificat SSL/TLS autosigné"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_WHAT"
 msgid "You are using HTTPS to access your site, but the SSL/TLS certificate you are using is not signed by a commercial, well-known Certification Authority."
-msgstr ""
+msgstr "Vous utilisez HTTPS pour accéder à votre site, mais le certificat SSL/TLS que vous utilisez n\'est pas signé par une autorité de certification commerciale connue."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK"
 msgid "You can address this issue by doing <em>one</em> of the following:"
-msgstr ""
+msgstr "Vous pouvez résoudre ce problème en effectuant <em>une</em> des opérations suivantes :"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK1"
 msgid "Use plain HTTP. This is the least secure option, therefore strongly not recommended."
-msgstr ""
+msgstr "Utilisez le HTTP simple. C\'est l\'option la moins sûre, donc fortement pas recommandée."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
 msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
-msgstr ""
+msgstr "Installer un certificat SSL/TLS signé par une autorité de certification commerciale connue. La plupart des serveurs vous permettent d\'utiliser <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Encrypt</a> qui délivre gratuitement des certificats SSL/TLS valides, signés et entièrement fonctionnels."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
 msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
-msgstr ""
+msgstr "Si vous êtes sur un Intranet, extranet ou si vous avez besoin de maintenir votre propre autorité de certification, vous pouvez dire à Panopticon de reconnaître votre autorité de certification personnalisée. Créez le fichier <code>cacert.pem</code> à l\'intérieur du dossier <code>user_code</code> de votre installation Panopticon. Copiez et collez le ou les certificats publics de l\'autorité de certification (CA) au format <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a>. Ceci est chargé <em> en haut de</em> les fichiers CA standard automatiquement, permettant à Panopticon d\'accéder à votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
 msgid "Your site\'s SSL/TLS certificate has a problem"
-msgstr ""
+msgstr "Le certificat SSL/TLS de votre site a un problème"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_WHAT"
 msgid "You are using HTTPS to access your site, but the SSL/TLS certificate you are using appears to have a problem."
-msgstr ""
+msgstr "Vous utilisez HTTPS pour accéder à votre site, mais le certificat SSL/TLS que vous utilisez semble avoir un problème."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK"
 msgid "Please check the following:"
-msgstr ""
+msgstr "Veuillez vérifier ce qui suit :"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
 msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
-msgstr ""
+msgstr "Est-ce le certificat SSL/TLS pour le bon nom de domaine? Si vous utilisez le certificat SSL/TLS par défaut fourni par votre hôte, il est limité au nom de domaine temporaire que vous utilisez pour configurer votre site, pas votre vrai nom de domaine. Vous devrez installer un certificat SSL/TLS signé par une autorité de certification commerciale connue. La plupart des serveurs vous permettent d\'utiliser <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Encrypt</a> qui délivre gratuitement des certificats SSL/TLS valides, signés et entièrement fonctionnels. Rappelez-vous que certains panneaux de contrôle d\'hébergement en libre-service (comme cPanel, ou Plesk) vous permettent de sélectionner le certificat SSL/TLS actif pour un nom de domaine. Vérifiez que le bon certificat est, en effet, utilisé."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
 msgid "Has the SSL/TLS certificate expired? In this case you need to renew it. Please note that if you are using Let\'s Encrypt the certificate has a short validity period (usually 90 days) and it should be renewed automatically by your host. If this did not happen, you will need to contact your host."
-msgstr ""
+msgstr "Le certificat SSL/TLS a-t-il expiré? Dans ce cas, vous devez le renouveler. Veuillez noter que si vous utilisez Let\'s Encrypt le certificat a une courte période de validité (généralement 90 jours) et qu\'il devrait être renouvelé automatiquement par votre hébergeur. Si cela n\'est pas arrivé, vous devrez contacter votre hôte."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
 msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
-msgstr ""
+msgstr "Le certificat SSL/TLS a-t-il été révoqué? Parfois, les autorités de certification, ou les propriétaires d\'un certificat SSL/TLS, peuvent choisir de le révoquer. Par exemple, les autorités de certification le feront s\'ils soupçonnent la fraude, ou s\'ils croient que leur infrastructure utilisée pour délivrer un certificat a été compromise. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Vérifiez le statut de révocation de votre certificat</a>. S\'il a été révoqué, vous aurez besoin d\'un nouveau certificat."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
 msgid "Is it possible that your server serves the wrong SSL/TLS certificate? This may happen if you have recently switched to a new certificate, either manually or as part of an automated certificate rotation process (e.g. when your host issues a new certificate through Let\'s Encrypt). When the certificate changes the web server needs to be reloaded or restarted. In some rare cases this might not happen - or an inexperienced systems administrator may forget to do it. Please contact your host / systems administrator to check that and, if necessary, reload or restart the web server process."
-msgstr ""
+msgstr "Est-il possible que votre serveur serve le mauvais certificat SSL/TLS? Cela peut se produire si vous avez récemment passé à un nouveau certificat, soit manuellement, soit dans le cadre d\'un processus de rotation automatique du certificat (p. ex. lorsque votre hôte délivre un nouveau certificat via Let\'s Encrypt). Lorsque le certificat modifie le serveur web doit être rechargé ou redémarré. Dans certains cas rares, cela pourrait ne pas se produire - ou un administrateur de systèmes inexpérimentés peut oublier de le faire. Veuillez contacter l\'administrateur de votre hôte / système pour vérifier cela et, si nécessaire, recharger ou redémarrer le processus du serveur web."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_HEAD"
 msgid "The “Web Services - Installer” plugin is disabled on your site"
-msgstr ""
+msgstr "Le plugin “Web Services - Installer” est désactivé sur votre site"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH1"
 msgid "Panopticon uses the Joomla! API Application services provided by the “Web Services - Installer” plugin to ensure that all necessary extensions are installed and published on your site."
-msgstr ""
+msgstr "Panopticon utilise les services d\'application API Joomla fournis par le plugin « Web Services - Installer » pour garantir que toutes les extensions nécessaires sont installées et publiées sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2"
 msgid "Please go to your site\'s backend and click on System, Manage, Extensions. Search for the “Web Services - Installer” plugin and enable it."
-msgstr ""
+msgstr "Veuillez accéder au backend de votre site et cliquer sur Système, Gérer, Extensions. Recherchez le plugin « Web Services - Installer » et activez-le."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
 msgid "Cannot communicate to the “System - Panopticon Connector for Joomla 3” plugin on your site"
-msgstr ""
+msgstr "Impossible de communiquer avec le plugin « Système - Panopticon Connector for Joomla 3 » sur votre site"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH1"
 msgid "Panopticon uses its own plugin, “System - Panopticon Connector for Joomla 3”, to provide the necessary API"
-msgstr ""
+msgstr "Panopticon utilise son propre plugin, « System - Panopticon Connector for Joomla 3 », pour fournir l\'API nécessaire"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2"
 msgid "Please go to your site\'s backend and click on Extensions, Plugins. Search for the “System - Panopticon Connector for Joomla 3” plugin and enable it."
-msgstr ""
+msgstr "Veuillez accéder au backend de votre site et cliquer sur Extensions, Plugins. Recherchez le plugin « Système - Panopticon Connector for Joomla 3 » et activez-le."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH3"
 msgid "If you have already enabled this plugin, please change the Endpoint URL below to <code>%s</code>"
-msgstr ""
+msgstr "Si vous avez déjà activé ce plugin, veuillez modifier l\'URL du point de terminaison ci-dessous par <code>%s</code>"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_HEAD"
@@ -4706,7 +4706,7 @@ msgstr "Votre site semble être protégé par mot de passe au niveau du serveur 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH1"
 msgid "Your site replied with an HTTP 401 Unauthorized status code when trying to access the API. This typically means that you have applied password protection at the web server level."
-msgstr ""
+msgstr "Votre site a répondu avec un code de statut non autorisé HTTP 401 lorsqu\'il essayait d\'accéder à l\'API. Cela signifie généralement que vous avez appliqué la protection de mot de passe au niveau du serveur Web."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH2"
@@ -4716,67 +4716,67 @@ msgstr "Veuillez supprimer la protection par mot de passe."
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3"
 msgid "Kindly note that the password protection may have been applied only to your site\'s <code>api</code> folder, or the root folder of your site. Look in both places, in this order."
-msgstr ""
+msgstr "Veuillez noter que la protection par mot de passe peut avoir été appliquée uniquement au dossier <code>api</code> de votre site ou au dossier racine de votre site. Regardez aux deux endroits, dans cet ordre."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3_J3"
 msgid "Kindly note that the password protection has been applied to the root folder of your site."
-msgstr ""
+msgstr "Veuillez noter que la protection du mot de passe a été appliquée au dossier racine de votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_HEAD"
 msgid "Uh oh. Something is totally broken here…"
-msgstr ""
+msgstr "Euh oh. Quelque chose est totalement cassé ici…"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH1"
 msgid "Normally we can detect the nature of the connection error and provide some useful troubleshooting information here, or at least point you to some kind of useful, third party troubleshooting resource. When this is not the case, we can at least print out an error message which will help us help you troubleshoot it."
-msgstr ""
+msgstr "Normalement, nous pouvons détecter la nature de l\'erreur de connexion et fournir ici des informations de dépannage utiles, ou au moins vous orienter vers une sorte de ressource de dépannage tierce utile. Lorsque ce n\'est pas le cas, nous pouvons au moins imprimer un message d\'erreur qui nous aidera à vous aider à résoudre le problème."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
 msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
-msgstr ""
+msgstr "Au lieu de cela, nous avons obtenu une erreur pour laquelle nous devrions être en mesure de fournir des informations de dépannage (<span class=\"font-monospace\">%s</span>), mais nous n\'avons pas le code correspondant. Cela n\'aurait pas dû arriver."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
 msgid "Please delete all files and folders inside the <code>tmp</code> folder of Akeeba Panopticon. This addresses the problem of this page\'s cached copy being severely out of date. If this doesn\'t help, please let us know."
-msgstr ""
+msgstr "Veuillez supprimer tous les fichiers et dossiers du dossier <code>tmp</code> d\'Akeeba Panopticon. Cela résout le problème de la copie en cache de cette page qui est gravement obsolète. Si cela ne résout pas le problème, veuillez nous le faire savoir."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_INFO"
 msgid "Troubleshooting information"
-msgstr ""
+msgstr "Informations de dépannage"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_STATUS"
 msgid "HTTP Status"
-msgstr ""
+msgstr "Statut HTTP"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_BODY"
 msgid "HTTP Body"
-msgstr ""
+msgstr "HTTP Corps"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_HEADERS"
 msgid "HTTP Headers"
-msgstr ""
+msgstr "HTTP Headers"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_HEADER_NO_STRING"
 msgid "(header content is not a string)"
-msgstr ""
+msgstr "(le contenu de l\'en-tête n\'est pas une chaîne)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_HEADER_NO_PRINTABLE"
 msgid "(header content is not an array or string)"
-msgstr ""
+msgstr "(le contenu de l\'en-tête n\'est pas un tableau ou une chaîne)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_MUST_ENABLE_FOR_ISSUE"
 msgid "Before you attempt to submit an issue about this connection issue please go to Administration, System Configuration, System and enable Debug System. Then come back here and retry the same connection. You will receive detailed troubleshooting information which you need to include in your issue."
-msgstr ""
+msgstr "Avant d\'essayer de soumettre un problème concernant ce problème de connexion, veuillez accéder à Administration, Configuration du système, Système et activer le système de débogage. Revenez ensuite ici et réessayez la même connexion. Vous recevrez des informations de dépannage détaillées que vous devrez inclure dans votre problème."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_TITLE"
@@ -4791,7 +4791,7 @@ msgstr "Vous ne pouvez pas afficher ou modifier la configuration système dans P
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_BTN_PHPINFO"
 msgid "PHP Information"
-msgstr ""
+msgstr "PHP Information"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_SYSTEM"
@@ -4801,32 +4801,32 @@ msgstr "Système"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_DISPLAY"
 msgid "Display"
-msgstr ""
+msgstr "Afficher"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_AUTOMATION"
 msgid "Automatic Tasks"
-msgstr ""
+msgstr "Tâches automatiques"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_EMAIL"
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_AUTOMATION"
 msgid "Automatic Execution of Tasks"
-msgstr ""
+msgstr "Exécution automatique des tâches"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_CACHING"
 msgid "Caching"
-msgstr ""
+msgstr "Mise en cache"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES"
 msgid "Joomla!™ Updates"
-msgstr ""
+msgstr "Joomla ! Mises à jour"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DATABASE"
@@ -7736,7 +7736,7 @@ msgstr "Taille"
 #, phpformat
 msgctxt "PANOPTICON_DBTOOLS_LBL_ACTIONS"
 msgid "Actions"
-msgstr "Actions"
+msgstr "Mesures à prendre"
 
 #, phpformat
 msgctxt "PANOPTICON_DBTOOLS_LBL_FILETYPE_GZ"
@@ -7926,7 +7926,7 @@ msgstr "Mise à jour du SGC trouvée"
 #, phpformat
 msgctxt "PANOPTICON_REPORTS_LBL_CORE_UPDATE_INSTALLED_SUCCESS"
 msgid "Updated the core CMS"
-msgstr "Système de base mis à jour"
+msgstr "Mise à jour du CMS de base"
 
 #, phpformat
 msgctxt "PANOPTICON_REPORTS_LBL_CORE_UPDATE_INSTALLED_FAILURE"
