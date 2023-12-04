@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2023-12-01 22:16:45\n"
-"PO-Revision-Date: 2023-12-01 22:16:45\n"
+"POT-Creation-Date: 2023-12-04 18:54:50\n"
+"PO-Revision-Date: 2023-12-04 18:54:50\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4826,52 +4826,52 @@ msgstr "Mise en cache"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES"
 msgid "Joomla!™ Updates"
-msgstr "Joomla ! Mises à jour"
+msgstr "Mises à jour Joomla !"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DATABASE"
 msgid "Database Connection"
-msgstr ""
+msgstr "Connexion à la base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DBTOOLS"
 msgid "Database Backup"
-msgstr ""
+msgstr "Sauvegarde de base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DISPLAY"
 msgid "Display Preferences"
-msgstr ""
+msgstr "Préférences d\'affichage"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL"
 msgid "Email Sending"
-msgstr ""
+msgstr "Envoi d\'e-mails"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL_TEST"
 msgid "Test Email Sending"
-msgstr ""
+msgstr "Tester l\'envoi d\'e-mails"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EXTUPDATES"
 msgid "Extension Updates"
-msgstr ""
+msgstr "Mises à jour des extensions"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_LOGGING"
 msgid "Log Files"
-msgstr ""
+msgstr "Fichiers journaux"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PROXY"
 msgid "Proxy Server"
-msgstr ""
+msgstr "Serveur proxy"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SITE_INFO"
 msgid "Collecting Site Information"
-msgstr ""
+msgstr "Collecte d\'informations sur le site"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SYSTEM"
@@ -4881,32 +4881,32 @@ msgstr "Préférences système"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_HEAD"
 msgid "No extensions found"
-msgstr ""
+msgstr "Aucune extension trouvée"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_BODY"
 msgid "Set up your sites and wait until their extension update information refreshes - up to 15 minutes later. You will then see all of their installed extensions here."
-msgstr ""
+msgstr "Configurez vos sites et attendez que les informations de mise à jour de leurs extensions s\'actualisent - jusqu\'à 15 minutes plus tard. Vous verrez alors toutes leurs extensions installées ici."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LIVE_SITE"
 msgid "Panopticon URL"
-msgstr ""
+msgstr "URL de Panopticon"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LIVE_SITE_HELP"
 msgid "The base URL of your Panopticon installation. Used when sending email from unattended tasks."
-msgstr ""
+msgstr "L\'URL de base de votre installation Panopticon. Utilisé lors de l\'envoi d\'e-mails à partir de tâches sans surveillance."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TIMEOUT"
 msgid "Session Timeout"
-msgstr ""
+msgstr "Expiration de la session"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE"
 msgid "Time Zone"
-msgstr ""
+msgstr "Fuseau horaire"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DEBUG"
@@ -4916,497 +4916,497 @@ msgstr "Débogage système"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
 msgid "Anonymous Usage Statistics Collection"
-msgstr ""
+msgstr "Collecte de statistiques d\'utilisation anonyme"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP"
 msgid "Akeeba Panopticon collects anonymous information about the Panopticon, PHP, and database server version. This aggregated information allows Akeeba to determine which versions of PHP and database servers to support in future releases."
-msgstr ""
+msgstr "Akeeba Panopticon collecte des informations anonymes sur la version de Panopticon, PHP et du serveur de base de données. Ces informations agrégées permettent à Akeeba de déterminer quelles versions de PHP et des serveurs de bases de données prendre en charge dans les versions futures."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP_LEARN_MORE"
 msgid "Learn more"
-msgstr ""
+msgstr "En savoir plus"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ERROR_REPORTING"
 msgid "Error Reporting"
-msgstr ""
+msgstr "Rapport d\'erreur"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TEMPLATE"
 msgid "Template"
-msgstr ""
+msgstr "Modèle"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TEMPLATE_HELP"
 msgid "Custom templates must be installed in the <code>templates</code> folder."
-msgstr ""
+msgstr "Les modèles personnalisés doivent être installés dans le dossier <code>templates</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_THEME"
 msgid "CSS Theme File"
-msgstr ""
+msgstr "Fichier de thème CSS"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DARKMODE"
 msgid "Dark Mode"
-msgstr ""
+msgstr "Mode sombre"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FONTSIZE"
 msgid "Font size"
-msgstr ""
+msgstr "Taille de police"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PHPWARNINGS"
 msgid "PHP Version Messages in Main Page"
-msgstr ""
+msgstr "Messages de version PHP dans la page principale"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
 msgid "Web CRON Key"
-msgstr ""
+msgstr "Clé CRON Web"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CRON_STUCK_THRESHOLD"
 msgid "Stuck Task Threshold"
-msgstr ""
+msgstr "Seuil de tâche bloquée"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MAX_EXECUTION"
 msgid "Maximum Execution Time"
-msgstr ""
+msgstr "Temps d\'exécution maximum"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_EXECUTION_BIAS"
 msgid "Execution Time Bias"
-msgstr ""
+msgstr "Délai d\'exécution"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SITEINFO_FREQ"
 msgid "Frequency of Site Information Collection"
-msgstr ""
+msgstr "Fréquence de la collecte d\'information sur le site"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_TIME"
 msgid "Default Cache Time"
-msgstr ""
+msgstr "Temps de cache par défaut"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHE_ADAPTER"
 msgid "Storage"
-msgstr ""
+msgstr "Stockage"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_REDIS_DSN"
 msgid "Redis Data Source Name (DSN)"
-msgstr ""
+msgstr "Nom de la source de données Redis (DSN)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_REDIS_DSN_HELP"
 msgid "How to connect to your Redis server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Redis adapter documentation</a> for information on the syntax."
-msgstr ""
+msgstr "Comment vous connecter à votre serveur Redis. Veuillez lire la <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\"> documentation de l\'adaptateur Symfony Cache Redis</a > pour plus d\'informations sur la syntaxe."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN"
 msgid "Memcached Data Source Name (DSN)"
-msgstr ""
+msgstr "Nom de la source de données Memcached (DSN)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN_HELP"
 msgid "How to connect to your Memcached server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Memcached adapter documentation</a> for information on the syntax."
-msgstr ""
+msgstr "Comment vous connecter à votre serveur Memcached. Veuillez lire la <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">documentation de l\'adaptateur Symfony Cache Memcached</a > pour plus d\'informations sur la syntaxe."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_LEVEL"
 msgid "Log Level"
-msgstr ""
+msgstr "Niveau de journalisation"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ROTATE_COMPRESS"
 msgid "Compress Rotated Logs"
-msgstr ""
+msgstr "Compresser les journaux tournants"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ROTATE_FILES"
 msgid "Number of Rotated Logs"
-msgstr ""
+msgstr "Nombre de journaux tournants"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_BACKUP_THRESHOLD"
 msgid "Log File Retention"
-msgstr ""
+msgstr "Rétention des fichiers journaux"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_AUTO"
 msgid "Automatic Database Backups"
-msgstr ""
+msgstr "Sauvegardes automatiques de bases de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_AUTO_HELP"
 msgid "Should I take daily, automatic backups of the important database tables?"
-msgstr ""
+msgstr "Dois-je effectuer des sauvegardes quotidiennes et automatiques des tables importantes de la base de données ?"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_COMPRESS"
 msgid "Compress Database Backups"
-msgstr ""
+msgstr "Compresser les sauvegardes de base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_COMPRESS_HELP"
 msgid "Should I compress the database backups with GZip?"
-msgstr ""
+msgstr "Dois-je compresser les sauvegardes de la base de données avec GZip ?"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_MAXFILES"
 msgid "Maximum Number Of Database Backups"
-msgstr ""
+msgstr "Nombre maximum de sauvegardes de base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_MAXFILES_HELP"
 msgid "How many database backup files should I keep? Only applies to backups taken automatically, backups taken manually from the Database Backups page, and backups taken from the CLI to the default directory."
-msgstr ""
+msgstr "Combien de fichiers de sauvegarde de base de données dois-je conserver ? S\'applique uniquement aux sauvegardes effectuées automatiquement, aux sauvegardes effectuées manuellement à partir de la page Sauvegardes de base de données et aux sauvegardes effectuées depuis la CLI vers le répertoire par défaut."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_DATABASE_WARNING_HEAD"
 msgid "Do not change without adequate preparation"
-msgstr ""
+msgstr "Ne pas changer sans une préparation adéquate"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_DATABASE_WARNING_BODY"
 msgid "Always make a copy of your <code>config.php</code> file, e.g. by copying it as <code>config.bak.php</code> before changing anything here. Always prepare the new database, database user, and/or database tables before making changes here. Remember that Panopticon will <em>not</em> move or rename database tables for you. If things break, restore your old copy of your <code>config.php</code> file."
-msgstr ""
+msgstr "Faites toujours une copie de votre fichier <code>config.php</code>, par ex. en le copiant sous <code>config.bak.php</code> avant de modifier quoi que ce soit ici. Préparez toujours la nouvelle base de données, l\'utilisateur de la base de données et/ou les tables de la base de données avant d\'apporter des modifications ici. N\'oubliez pas que Panopticon ne déplacera ni ne renommera les tables de base de données pour vous. Si les choses tombent en panne, restaurez votre ancienne copie de votre fichier <code>config.php</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBDRIVER"
 msgid "Database Driver"
-msgstr ""
+msgstr "Pilote de base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBHOST"
 msgid "Database Hostname"
-msgstr ""
+msgstr "Nom d\'hôte de la base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBUSER"
 msgid "Database Username"
-msgstr ""
+msgstr "Nom d\'utilisateur de la base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBPASS"
 msgid "Database Password"
-msgstr ""
+msgstr "Mot de passe de la base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBNAME"
 msgid "Database Name"
-msgstr ""
+msgstr "Nom de la base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBPREFIX"
 msgid "Database Prefix"
-msgstr ""
+msgstr "Préfixe de base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBCHARSET"
 msgid "Connection Character Set"
-msgstr ""
+msgstr "Jeu de caractères de connexion"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBCHARSET_HELP"
 msgid "Best use the utf8mb4 option. The utf8 option will prevent you from using some characters, such as Emoji, some extended Chinese characters, etc."
-msgstr ""
+msgstr "Il est préférable d\'utiliser l\'option utf8mb4. L\'option utf8 vous empêchera d\'utiliser certains caractères, comme Emoji, certains caractères chinois étendus, etc."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBENCRYPTION"
 msgid "Database Encryption"
-msgstr ""
+msgstr "Cryptage de base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBENCRYPTION_HELP"
 msgid "Only enable if your database driver requires authentication with an SSL/TLS certificate. Most users can and should leave this disabled."
-msgstr ""
+msgstr "Activez-la uniquement si votre pilote de base de données nécessite une authentification avec un certificat SSL/TLS. La plupart des utilisateurs peuvent et doivent laisser cette option désactivée."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBSSLCA"
 msgid "Path to SSL/TLS CA Certificate"
-msgstr ""
+msgstr "Chemin d\'accès au certificat SSL/TLS CA"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBSSLKEY"
 msgid "Path to SSL/TLS Key File"
-msgstr ""
+msgstr "Chemin d\'accès au fichier de clé SSL/TLS"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBSSLCERT"
 msgid "Path to SSL/TLS Certificate File"
-msgstr ""
+msgstr "Chemin d\'accès au fichier de certificat SSL/TLS"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBSSLVERIFYSERVERCERT"
 msgid "Verify SSL/TLS Server Certificates"
-msgstr ""
+msgstr "Vérifier les certificats de serveur SSL/TLS"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MAIL_ONLINE"
 msgid "Mail Sending"
-msgstr ""
+msgstr "Envoi de courrier"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_IMMEDIATE_EMAIL"
 msgid "Immediate Email Sending"
-msgstr ""
+msgstr "Envoi immédiat d\'e-mails"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_IMMEDIATE_EMAIL_HELP"
 msgid "Enable to sends emails right when they are generated. Disable to enqueue emails for batch sending at a later time. If you have dozens to hundreds of recipients for every email you should disable this option to prevent timeouts."
-msgstr ""
+msgstr "Activer l\'envoi d\'e-mails dès leur génération. Désactivez la mise en file d\'attente des e-mails pour un envoi par lots ultérieur. Si vous avez des dizaines, voire des centaines de destinataires pour chaque e-mail, vous devez désactiver cette option pour éviter les délais d\'attente."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MAIL_INLINE_IMAGES"
 msgid "Inline Images in Email"
-msgstr ""
+msgstr "Images en ligne dans le courrier électronique"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MAILER"
 msgid "Mail Handler"
-msgstr ""
+msgstr "Gestionnaire de courrier"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MAILFROM"
 msgid "Sender Address"
-msgstr ""
+msgstr "Adresse de l\'expéditeur"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FROMNAME"
 msgid "Sender Name"
-msgstr ""
+msgstr "Nom de l\'expéditeur"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPHOST"
 msgid "SMTP Host"
-msgstr ""
+msgstr "Hôte SMTP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPPORT"
 msgid "SMTP Port"
-msgstr ""
+msgstr "Port SMTP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPSECURE"
 msgid "SMTP Security"
-msgstr ""
+msgstr "Sécurité SMTP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPAUTH"
 msgid "SMTP Authentication"
-msgstr ""
+msgstr "Authentification SMTP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPUSER"
 msgid "SMTP Username"
-msgstr ""
+msgstr "Nom d\'utilisateur SMTP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPPASS"
 msgid "SMTP Password"
-msgstr ""
+msgstr "Mot de passe SMTP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_COREUPDATE_INSTALL"
 msgid "When An Update Is Found"
-msgstr ""
+msgstr "Lorsqu\'une mise à jour est trouvée"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_COREUPDATE_INSTALL_HELP"
 msgid "Do nothing: no action is taken. Send email: An email is sent, nothing is installed. Patch: Only patch versions (e.g. 1.2.<strong>3</strong> to 1.2.<strong>4</strong>) are installed; an email is sent otherwise. Minor: Only path and minor versions (e.g. 1.<strong>2</strong>.x to 1.<strong>3</strong>.x) are installed; an email is sent otherwise. Any version: installs all updates, even if the major version changes (e.g. <strong>1</strong>.x to <strong>2</strong>.x)."
-msgstr ""
+msgstr "Ne rien faire : aucune action n’est entreprise. Envoyer email : Un email est envoyé, rien n\'est installé. Patch : seules les versions de correctifs (par exemple 1.2.<strong>3</strong> à 1.2.<strong>4</strong>) sont installées ; un email est envoyé sinon. Mineur : seuls les chemins d\'accès et les versions mineures (par exemple 1.<strong>2</strong>.x à 1.<strong>3</strong>.x) sont installés ; un email est envoyé sinon. N\'importe quelle version : installe toutes les mises à jour, même si la version majeure change (par exemple, <strong>1</strong>.x vers <strong>2</strong>.x)."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL"
 msgid "When An Extension Update Is Found"
-msgstr ""
+msgstr "Lorsqu\'une mise à jour d\'extension est trouvée"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL_HELP"
 msgid "This preference can be overridden for any individual extension below. You can also override this for any individual extension and site in each site\'s configuration page."
-msgstr ""
+msgstr "Cette préférence peut être remplacée pour n’importe quelle extension individuelle ci-dessous. Vous pouvez également remplacer cela pour n’importe quelle extension et site individuel dans la page de configuration de chaque site."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM"
 msgid "Anti-CSRF Token Algorithm"
-msgstr ""
+msgstr "Algorithme de jeton anti-CSRF"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM_HELP"
 msgid "The hash algorithm for creating an anti-CSRF token. SHA-512 offers the best security, but may not work on some hosts because it\'s very long. MD5 offers the least security but is compatible with all hosts. Only change if you have problems when clicking action buttons in Panopticon."
-msgstr ""
+msgstr "L\'algorithme de hachage pour créer un jeton anti-CSRF. SHA-512 offre la meilleure sécurité, mais peut ne pas fonctionner sur certains hôtes car il est très long. MD5 offre le moins de sécurité mais est compatible avec tous les hôtes. Ne changez que si vous rencontrez des problèmes lorsque vous cliquez sur les boutons d\'action dans Panopticon."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LANGUAGE"
 msgid "Default language"
-msgstr ""
+msgstr "Langage par défaut"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_ENABLED"
 msgid "Use a Proxy Server for Outgoing Connections"
-msgstr ""
+msgstr "Utiliser un serveur proxy pour les connexions sortantes"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_HOST"
 msgid "Proxy hostname or IP Address"
-msgstr ""
+msgstr "Nom d\'hôte ou adresse IP du proxy"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_PORT"
 msgid "Proxy Port"
-msgstr ""
+msgstr "Port proxy"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_USER"
 msgid "Proxy Username (optional)"
-msgstr ""
+msgstr "Nom d\'utilisateur du proxy (facultatif)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_PASS"
 msgid "Proxy Password (optional)"
-msgstr ""
+msgstr "Mot de passe proxy (facultatif)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_NO"
 msgid "Do Not Proxy These Domains"
-msgstr ""
+msgstr "Ne pas passer par le Proxy ces domaines"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_NO_HELP"
 msgid "Enter a comma–separated list of full, or partial domain names which should not go through the proxy, e.g. <code>www.example.com, .mit.edu, .dev</code>."
-msgstr ""
+msgstr "Saisissez une liste de noms de domaine complets ou partiels, séparés par des virgules, qui ne doivent pas passer par le proxy, par ex. <code>www.example.com, .mit.edu, .dev</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
 msgid "Table of known extensions and their automatic update preferences"
-msgstr ""
+msgstr "Tableau des extensions connues et leurs préférences de mise à jour automatique"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_NAME"
 msgid "Extension name"
-msgstr ""
+msgstr "Nom d\'extension"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_AUTHOR"
 msgid "Author"
-msgstr ""
+msgstr "Auteur"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_PREFERENCE"
 msgid "Update preference"
-msgstr ""
+msgstr "Préférence de mise à jour"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_PREFERENCE_SELECT"
 msgid "Select update preference for %s"
-msgstr ""
+msgstr "Sélectionnez la préférence de mise à jour pour %s"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_COMPONENT"
 msgid "Component"
-msgstr ""
+msgstr "Composant"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_FILE"
 msgid "Files Package"
-msgstr ""
+msgstr "Paquet de fichiers"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_LIBRARY"
 msgid "Library"
-msgstr ""
+msgstr "Bibliothèque"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_PACKAGE"
 msgid "Package"
-msgstr ""
+msgstr "Paquets"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_PLUGIN"
 msgid "Plugin"
-msgstr ""
+msgstr "Plugin"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_MODULE"
 msgid "Module"
-msgstr ""
+msgstr "Module"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE"
 msgid "Template"
-msgstr ""
+msgstr "Modèle"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_SHA512"
 msgid "SHA-512 (best security)"
-msgstr ""
+msgstr "SHA-512 (meilleure sécurité)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_SHA384"
 msgid "SHA-384"
-msgstr ""
+msgstr "SHA-384"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_SHA256"
 msgid "SHA-256"
-msgstr ""
+msgstr "SHA-256"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_SHA224"
 msgid "SHA-224"
-msgstr ""
+msgstr "SHA-224"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_SHA1"
 msgid "SHA-1"
-msgstr ""
+msgstr "SHA-1"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_MD5"
 msgid "MD5 (best compatibility)"
-msgstr ""
+msgstr "MD5 (meilleure compatibilité)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_DEFAULT"
 msgid "Default"
-msgstr ""
+msgstr "Par défaut"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_NONE"
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_SIMPLE"
 msgid "Simple"
-msgstr ""
+msgstr "Simple"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_ERROR_REPORTING_MAXIMUM"
 msgid "Maximum"
-msgstr ""
+msgstr "Maximum"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_DARKMODE_BROWSER"
 msgid "Browser preference"
-msgstr ""
+msgstr "Préférence du navigateur"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_DARKMODE_LIGHT"
 msgid "Always light"
-msgstr ""
+msgstr "Toujours léger"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_DARKMODE_DARK"
 msgid "Always dark"
-msgstr ""
+msgstr "Toujours sombre"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_CACHE_ADAPTER_FILESYSTEM"
@@ -5416,52 +5416,52 @@ msgstr "Fichiers"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_CACHE_ADAPTER_LINUXFS"
 msgid "Files and Symlinks (Linux and macOS only)"
-msgstr ""
+msgstr "Fichiers et liens symboliques (Linux et macOS uniquement)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_CACHE_ADAPTER_DB"
 msgid "Database"
-msgstr ""
+msgstr "Base de données"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_CACHE_ADAPTER_MEMCACHED"
 msgid "Memcached"
-msgstr ""
+msgstr "Memcached"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_CACHE_ADAPTER_REDIS"
 msgid "Redis"
-msgstr ""
+msgstr "Redis"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_LOG_LEVEL_ERROR"
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_LOG_LEVEL_WARNING"
 msgid "Warning"
-msgstr ""
+msgstr "Avertissement"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_LOG_LEVEL_NOTICE"
 msgid "Notice"
-msgstr ""
+msgstr "Avis"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_LOG_LEVEL_INFO"
 msgid "Information"
-msgstr ""
+msgstr "Information"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_LOG_LEVEL_DEBUG"
 msgid "Debugging"
-msgstr ""
+msgstr "Débogage"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_MAILER_MAIL"
 msgid "PHP Mail"
-msgstr ""
+msgstr "PHP Mail"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_MAILER_SENDMAIL"
