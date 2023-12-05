@@ -46,17 +46,18 @@ use Throwable;
 /**
  * Defines a site known to Panopticon
  *
- * @property int       $id              Task ID.
- * @property string    $name            The name of the site (user-visible).
- * @property string    $url             The URL to the site (with the /api part).
- * @property int       $enabled         Is this site enabled?
- * @property Date      $created_on      When was this site created?
- * @property int       $created_by      Who created this site?
- * @property null|Date $modified_on     When was this site last modified?
- * @property null|int  $modified_by     Who last modified this site?
- * @property null|Date $locked_on       When was this site last locked for writing?
- * @property null|int  $locked_by       Who last locked this site for writing?
- * @property Registry  $config          The configuration for this site.
+ * @property int         $id           Task ID.
+ * @property string      $name         The name of the site (user-visible).
+ * @property string      $url          The URL to the site (with the /api part).
+ * @property int         $enabled      Is this site enabled?
+ * @property Date        $created_on   When was this site created?
+ * @property int         $created_by   Who created this site?
+ * @property null|Date   $modified_on  When was this site last modified?
+ * @property null|int    $modified_by  Who last modified this site?
+ * @property null|Date   $locked_on    When was this site last locked for writing?
+ * @property null|int    $locked_by    Who last locked this site for writing?
+ * @property Registry    $config       The configuration for this site.
+ * @property null|string $notes        Freeform notes (in HTML).
  *
  * @since  1.0.0
  */

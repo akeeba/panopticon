@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `#__sites`
     `locked_on`   DATETIME         NULL,
     `locked_by`   BIGINT UNSIGNED  NULL,
     `config`      JSON,
+    `notes`       LONGTEXT         NULL,
     FOREIGN KEY `#__sites_users_created` (`created_by`) REFERENCES `#__users` (`id`) ON DELETE CASCADE,
     FOREIGN KEY `#__sites_users_modified` (`modified_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL,
     FOREIGN KEY `#__sites_users_locked` (`locked_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL,
@@ -70,6 +71,13 @@ CREATE TABLE IF NOT EXISTS `#__sites`
     DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
             ]]></query>
+        </action>
+
+        <action table="#__sites" canfail="1">
+            <condition type="missing">notes</condition>
+            <query><![CDATA[
+ALTER TABLE `#__sites` ADD COLUMN `notes` LONGTEXT NULL AFTER `config`;
+]]></query>
         </action>
 
         <action table="#__sites" canfail="1">

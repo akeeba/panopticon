@@ -1,8 +1,13 @@
 ## 🔎 Release highlights
 
-🔣 This release is focused on improving the translation experience.
+🔣 This release is focused on improving the translation experience, and brings small improvements to the application.
 
-**✏️ Translations now use PO files instead of a third party service**.
+**✨ Site notes** [gh-363]. You can now add notes to your sites. They are visible only to users who can edit the site. DO NOT STORE SENSITIVE INFORMATION, the notes are stored unencrypted.
+
+**✏️ Translations now use PO files instead of a third party service**. The struggle is real, y'all! Hosted Weblate was great, but it seemed to be forgetting about the existence of some language strings in translated languages. Different strings in different languages. Alternatives were expensive, or we couldn't trust that their debatable definition of what constitutes FOSS deserving of free service form them would not change (we're not paranoid; it's happened before). Instead of trying to shoehorn our translations around the restrictions of proprietary services we decided to use standard PO files and FOSS to translate them, then use our own, custom-built FOSS to convert them to a format we can use. Openness all around; _we practice what we preach_. You can take a look in [our brand-new translation instructions](https://github.com/akeeba/panopticon/wiki/Translator-Resources) and start, or resume, translating now. 
+
+**✏️ Light and Dark Mode for the TinyMCE and ACE editors**. We had this weird situation where the TinyMCE (HTML) editor was always in light mode, and the ACE (plain text) editor was always in dark mode, ensuring that _everyone_ was unhappy. Not any more! When your interface is in light mode, so are both editors. When your interface is in dark mode, so are both editors. Law and order has been restored across the land! 
+
 
 ## 🖥️ System Requirements
 

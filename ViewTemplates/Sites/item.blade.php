@@ -112,4 +112,12 @@ $connectorAPI     = $config->get('core.panopticon.api');
             @include('Sites/item_admintools')
         </div>
     </div>
+
+    @if($canEdit)
+        <div class="row g-3 mb-3">
+            <div class="col-12">
+                @include('Sites/item_notes')
+            </div>
+        </div>
+    @endif
 </div>
