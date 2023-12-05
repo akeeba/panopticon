@@ -47,9 +47,23 @@ abstract class TinyMCE
 			[
 				'selector'                    => '#' . $id,
 				'plugins'                     => [
-					'advlist', 'autolink', 'autoresize', 'code', 'directionality', 'fullscreen', 'image',
-					'importcss', 'link', 'lists', 'media', 'preview', 'quickbars', 'searchreplace', 'table',
-					'visualblocks', 'wordcount',
+					'advlist',
+					'autolink',
+					'autoresize',
+					'code',
+					'directionality',
+					'fullscreen',
+					'image',
+					'importcss',
+					'link',
+					'lists',
+					'media',
+					'preview',
+					'quickbars',
+					'searchreplace',
+					'table',
+					'visualblocks',
+					'wordcount',
 				],
 				'toolbar_mode'                => 'sliding',
 				'toolbar'                     => [
@@ -63,7 +77,8 @@ abstract class TinyMCE
 				'promotion'                   => false,
 				'branding'                    => false,
 				'content_security_policy'     => "script-src 'none'",
-				'skin'                        => 'akeeba',
+				'skin'                        => '(window.matchMedia("(prefers-color-scheme: dark)").matches ? "oxide-dark" : "akeeba")',
+				'content_css'                 => '(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "akeeba")',
 				'importcss_exclusive'         => false,
 				'browser_spellcheck'          => true,
 				'relative_urls'               => false,
@@ -77,16 +92,28 @@ abstract class TinyMCE
 		// Allow plugins to modify the editor configuration
 		$container->eventDispatcher->trigger('onTinyMCEConfig', [$name, $id, &$options]);
 
-		$document->addScriptOptions('panopticon.tinymce.config', [
-			$id => $options
-		]);
+		$document->addScriptOptions(
+			'panopticon.tinymce.config', [
+			$id => $options,
+		]
+		);
 
 		$js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {
     const panopticonTinyMceInit = () => {
         if (typeof tinymce === "undefined") return;
         window.clearInterval(waitHandlerTimeout);
-        tinymce.init(akeeba.System.getOptions('panopticon.tinymce.config')['$id']);
+        let myConfig = akeeba.System.getOptions('panopticon.tinymce.config')['$id'];
+        
+        if (myConfig['skin'].includes('window.matchMedia')) {
+            myConfig['skin'] = eval(myConfig['skin']);
+        }
+        
+        if (myConfig['content_css'].includes('window.matchMedia')) {
+            myConfig['content_css'] = eval(myConfig['content_css']);
+        }
+        
+        tinymce.init(myConfig);
     };
     
     const waitHandlerTimeout = window.setInterval(panopticonTinyMceInit, 100);

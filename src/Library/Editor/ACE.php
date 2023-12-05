@@ -76,7 +76,8 @@ abstract class ACE
 				'copyWithEmptySelection'    => true,
 				'highlightGutterLine'       => true,
 				'showPrintMargin'           => false,
-				'theme'                     => 'ace/theme/dracula',
+				'themeLight'                => 'ace/theme/github',
+				'themeDark'                 => 'ace/theme/dracula',
 				'newLineMode'               => 'unix',
 				'mode'                      => 'ace/mode/' . $mode,
 				'enableBasicAutocompletion' => true,
@@ -98,7 +99,13 @@ window.addEventListener('DOMContentLoaded', () => {
         window.clearInterval(waitHandlerTimeout);
 
         const editor = ace.edit('$id');
-        const options = akeeba.System.getOptions('panopticon.aceEditor')['$id'];
+        let options = akeeba.System.getOptions('panopticon.aceEditor')['$id'];
+        
+        if (options['themeLight'] && options['themeDark'])
+        {
+            options['theme'] = (window.matchMedia("(prefers-color-scheme: dark)").matches ? options['themeDark'] : options['themeLight'])
+        }
+        
         editor.setOptions(options);
         editor.session.on('change', (delta) => {
             document.getElementById('{$id}_textarea').value = editor.getValue();
