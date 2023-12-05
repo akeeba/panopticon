@@ -606,7 +606,7 @@ class Site extends DataModel
 	 *
 	 * @return  array Keyed array of id=>title, i.e. [id=>title, ...]
 	 */
-	public function getGroupsForSelect(?User $user = null): array
+	public function getGroupsForSelect(?User $user = null, bool $includeEmpty = false): array
 	{
 		$user        ??= $this->container->userManager->getUser();
 		$groupFilter = [];
@@ -638,7 +638,14 @@ class Site extends DataModel
 			$query->where($db->quoteName('id') . ' IN(' . implode(',', array_map([$db, 'quote'], $groupFilter)) . ')');
 		}
 
-		return array_map(fn($x) => $x->title, $db->setQuery($query)->loadObjectList('id') ?: []);
+		$ret = array_map(fn($x) => $x->title, $db->setQuery($query)->loadObjectList('id') ?: []);
+
+		if ($includeEmpty)
+		{
+			$ret[''] = $this->getLanguage()->text('PANOPTICON_SITES_LBL_GROUPS_PLACEHOLDER');
+		}
+
+		return $ret;
 	}
 
 	public function getExtensionsUpdateTask(): ?Task

@@ -73,10 +73,7 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
     </label>
     <div class="col-sm-9">
         {{ $this->container->html->select->genericList(
-            data: array_merge([(object) [
-				'value' => '',
-				'text' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_GROUPS_PLACEHOLDER')
-            ]], $this->getModel()->getGroupsForSelect()),
+            data: $this->getModel()->getGroupsForSelect(includeEmpty: true),
             name: 'groups[]',
             attribs: array_merge($attribs, [
                 'class' => 'form-select js-choice',
