@@ -215,6 +215,14 @@ class Application extends AWFApplication
 
 	public function initialise()
 	{
+		// Apply a forced language – but only if there is no logged-in user, or they have no language preference.
+		$forcedLanguage = $this->getContainer()->segment->get('panopticon.forced_language', null);
+
+		if ($forcedLanguage && empty($this->getContainer()->userManager->getUser()->getParameters()->get('language')))
+		{
+			$this->getLanguage()->loadLanguage($forcedLanguage);
+		}
+
 		// Will I have to redirect to the setup page?
 		$redirectToSetup = $this->redirectToSetup();
 
@@ -570,7 +578,7 @@ class Application extends AWFApplication
 
 	private function redirectToLogin(): void
 	{
-		// Get the view. Necessary to go through $this->getContainer()->input as it may have already changed
+		// Get the view. Necessary to go through $this->getContainer()->input as it may have already changed.
 		$view = $this->getContainer()->input->getCmd('view', '');
 
 		// Get the user manager
@@ -578,11 +586,13 @@ class Application extends AWFApplication
 
 		if ($view === 'login')
 		{
-			$lang = $this->getContainer()->input->getCmd('lang', '');
+			$lang = $this->getContainer()->input->getCmd('lang', null);
 
-			if (!empty($lang))
+			if ($lang !== null)
 			{
-				$this->getLanguage()->loadLanguage($lang);
+				$this->getContainer()->segment->set('panopticon.forced_language', $lang);
+
+				$this->getLanguage()->loadLanguage($lang ?: 'en-GB');
 			}
 		}
 

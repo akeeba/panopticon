@@ -8,6 +8,7 @@
 
 **✏️ Light and Dark Mode for the TinyMCE and ACE editors**. We had this weird situation where the TinyMCE (HTML) editor was always in light mode, and the ACE (plain text) editor was always in dark mode, ensuring that _everyone_ was unhappy. Not any more! When your interface is in light mode, so are both editors. When your interface is in dark mode, so are both editors. Law and order has been restored across the land! 
 
+**✏️ Improve login language selection**. The language selection in the login page "sticks" between user sessions, and is applied after logging into Panopticon as long as the logged-in user does not have an explicit language preference already set up.
 
 ## 🖥️ System Requirements
 

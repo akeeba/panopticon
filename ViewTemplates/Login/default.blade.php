@@ -56,10 +56,11 @@ CSS;
                 @lang('PANOPTICON_LOGIN_LBL_LANGUAGE')
             </label>
             {{ $this->getContainer()->helper->setup->languageOptions(
-                $this->getLanguage()->getLangCode(),
+                $this->getContainer()->segment->get('panopticon.forced_language', ''),
                 name: 'language',
                 id: 'language',
                 attribs: ['class' => 'form-select', 'style' => 'width: min(19em, 100%)'],
+                addUseDefault: true,
                 namesAlsoInEnglish: false
             ) }}
         </div>
