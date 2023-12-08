@@ -373,6 +373,26 @@ final class BootstrapUtilities
 	}
 
 	/**
+	 * Make sure the fallback language (en-GB) is always loaded
+	 *
+	 * @return  void
+	 * @since   1.0.6
+	 */
+	public static function fallbackLanguage()
+	{
+		$language = Factory::getContainer()->language;
+		$langCode = $language->getLangCode();
+
+		if ($langCode === 'en-GB')
+		{
+			return;
+		}
+
+		$language->loadLanguage('en-GB');
+		$language->loadLanguage($langCode);
+	}
+
+	/**
 	 * Overrides the Symfony HtmlErrorRenderer for customisation reasons.
 	 *
 	 * Overrides the Symfony HtmlErrorRenderer:

@@ -30,9 +30,10 @@ BootstrapUtilities::conditionallyForceBladeRecompilation();
 BootstrapUtilities::applyLoadBalancerConfiguration();
 BootstrapUtilities::applyCustomCAFile();
 
-// Load the configuration file, if it exists
+// Apply options which require access to the DI container
 BootstrapUtilities::loadConfiguration();
 BootstrapUtilities::setUpUserManager();
+BootstrapUtilities::fallbackLanguage();
 
 // Apply user-supplied code and miscellaneous files
 BootstrapUtilities::loadUserCode();
