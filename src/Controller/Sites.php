@@ -12,10 +12,13 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
+use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNotInstalled;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Akeeba\Panopticon\Library\Queue\QueueInterface;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Exception\AkeebaBackupCannotConnectException;
+use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Site as SiteModel;
@@ -54,6 +57,15 @@ class Sites extends DataController
 		return parent::execute($task);
 	}
 
+	/**
+	 * Run the connection doctor on a site.
+	 *
+	 * This method tests the connection to the Panopticon API, as well as the connection to the Akeeba Backup API.
+	 *
+	 * @return  void
+	 * @throws  Exception
+	 * @since   1.6.0
+	 */
 	public function connectionDoctor(): void
 	{
 		$id = $this->input->get->getInt('id', 0);
@@ -64,14 +76,63 @@ class Sites extends DataController
 			->makeTempModel('Site')
 			->findOrFail($id);
 
+		if (!$this->canAddEditOrSave($site, false))
+		{
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
 		try
 		{
-			$site->testConnection(false);
+			$warnings        = $site->testConnection(true);
 			$connectionError = null;
 		}
 		catch (Throwable $e)
 		{
+			$warnings        = null;
 			$connectionError = $e;
+		}
+
+		$akeebaBackupConnectionError = null;
+
+		if (is_array($warnings) && in_array('akeebabackup', $warnings))
+		{
+			$akeebaBackupConnectionError = new AkeebaBackupNotInstalled();
+		}
+
+		if (is_array($warnings) && !in_array('akeebabackup', $warnings))
+		{
+			try
+			{
+				$site->testAkeebaBackupConnection(true, true);
+
+				$session = $this->getContainer()->segment;
+				$session->set('testconnection.akeebabackup.step', 'Verifying the existence of Akeeba Backup JSON API connection options');
+
+				$config          = $site->getConfig();
+				$info            = $config->get('akeebabackup.info');
+				$endpointOptions = $config->get('akeebabackup.endpoint');
+
+				if (empty($info?->api))
+				{
+					throw new AkeebaBackupIsNotPro();
+				}
+
+				if (empty($endpointOptions))
+				{
+					throw new AkeebaBackupCannotConnectException();
+				}
+
+				$session->set('testconnection.akeebabackup.step', 'Testing the connection with the Akeeba Backup JSON API');
+
+				$info                        = $site->akeebaBackupGetInfoForDebug();
+				$akeebaBackupConnectionError = $info['exception'] ?? null;
+
+				$session->set('testconnection.akeebabackup.log', $info['log'] ?? null);
+			}
+			catch (Throwable $e)
+			{
+				$akeebaBackupConnectionError = $e;
+			}
 		}
 
 		/** @var Html $view */
@@ -79,7 +140,8 @@ class Sites extends DataController
 		$view->setTask($this->task);
 		$view->setDoTask($this->doTask);
 		$view->setDefaultModel($site);
-		$view->connectionError = $connectionError;
+		$view->connectionError             = $connectionError;
+		$view->akeebaBackupConnectionError = $akeebaBackupConnectionError;
 
 		if (!is_null($this->layout))
 		{

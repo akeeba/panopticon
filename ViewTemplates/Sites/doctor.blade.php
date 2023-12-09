@@ -9,9 +9,20 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
+use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNotInstalled;
+use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
 use Awf\Uri\Uri;
 
-$canEdit = $this->getContainer()?->userManager?->getUser()?->getPrivilege('panopticon.admin');
+$baseUri              = Uri::getInstance($this->item->getBaseUrl());
+$adminUri             = Uri::getInstance($this->item->getAdminUrl());
+$canEdit              = $this->getContainer()?->userManager?->getUser()?->getPrivilege('panopticon.admin');
+$config               = $this->item->getConfig();
+$connectorVersion     = $config->get('core.panopticon.version');
+$connectorAPI         = $config->get('core.panopticon.api');
+$hasAkeebaBackupError = $this->akeebaBackupConnectionError instanceof Throwable
+                        && !$this->akeebaBackupConnectionError instanceof AkeebaBackupNotInstalled
+                        && !$this->akeebaBackupConnectionError instanceof AkeebaBackupIsNotPro;
+
 ?>
 
 <h3 class="mt-2 pb-1 border-bottom border-3 border-primary-subtle d-flex flex-row align-items-center gap-2">
@@ -25,6 +36,34 @@ $canEdit = $this->getContainer()?->userManager?->getUser()?->getPrivilege('panop
         </a>
     @endif
 </h3>
+<div class="d-flex flex-column flex-md-row gap-1 gap-md-2">
+    @if (!empty($connectorVersion))
+        <div class="flex-md-grow-1 small text-muted d-flex flex-column">
+            <div>
+                @sprintf('PANOPTICON_SITES_LBL_CONNECTOR_VERSION', $this->escape($connectorVersion))
+            </div>
+            @if ($connectorAPI)
+                <div>
+                    @sprintf('PANOPTICON_SITES_LBL_CONNECTOR_API', (int) $connectorAPI)
+                </div>
+            @endif
+        </div>
+    @endif
+    <div class="{{ empty($connectorVersion) ? 'flex-md-grow-1 text-end' : '' }} d-flex flex-column">
+        <a href="{{{ $this->item->getBaseUrl() }}}" target="_blank" class="text-decoration-none">
+            <span class="fa fa-users fa-fw text-secondary me-1" aria-hidden="true"></span>
+            <span class="{{ ($baseUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $baseUri->getScheme() }}}://</span><span
+                    class="fw-medium">{{{ $baseUri->toString(['user', 'pass', 'host', 'port', 'path', 'query', 'fragment']) }}}</span>
+            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+        </a>
+        <a href="{{{ $this->item->getAdminUrl() }}}" target="_blank" class="text-decoration-none">
+            <span class="fa fa-user-secret fa-fw text-secondary me-1" aria-hidden="true"></span>
+            <span class="{{ ($adminUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $adminUri->getScheme() }}}://</span><span
+                    class="fw-medium">{{{ $adminUri->toString(['user', 'pass', 'host', 'port', 'path']) }}}</span>@if(!empty($adminUri->getQuery()))<span class="text-body-tertiary">{{{ $adminUri->toString(['query', 'fragment']) }}}</span>@endif
+            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+        </a>
+    </div>
+</div>
 
 @if ($this->connectionError !== null)
     @include('Sites/troubleshoot', [
@@ -33,8 +72,10 @@ $canEdit = $this->getContainer()?->userManager?->getUser()?->getPrivilege('panop
         'background' => '',
         'showHeader' => false,
     ])
-@else
-    <div class="px-4 py-5 my-0 text-center">
+@endif
+
+@if ($this->connectionError === null && !$hasAkeebaBackupError)
+    <div class="px-4 py-5 mt-0 mb-4 text-center">
         <div class="mx-auto mb-4">
 			<span class="badge bg-success rounded-5">
 				<span class="far fa-check-circle display-5" aria-hidden="true"></span>
@@ -50,4 +91,8 @@ $canEdit = $this->getContainer()?->userManager?->getUser()?->getPrivilege('panop
             </p>
         </div>
     </div>
+@endif
+
+@if ($this->akeebaBackupConnectionError !== null)
+    @include('Sites/troubleshoot_akeebabackup')
 @endif

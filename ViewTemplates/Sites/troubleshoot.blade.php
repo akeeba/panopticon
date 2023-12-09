@@ -7,7 +7,7 @@
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Exception\APIApplicationHasPHPMessages;
+use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationHasPHPMessages;
 use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBlocked;
 use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBroken;
 use Akeeba\Panopticon\Exception\SiteConnection\APIInvalidCredentials;
@@ -37,10 +37,10 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
 ?>
 <div class="card my-3 {{ $border }}">
     @if($showHeader)
-    <h3 class="card-header bg-info text-white">
-        <span class="fa fa-bug-slash"></span>
-        @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_HEAD')
-    </h3>
+        <h3 class="card-header bg-info text-white">
+            <span class="fa fa-bug-slash"></span>
+            @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_HEAD')
+        </h3>
     @endif
     <div class="card-body {{ $background }}">
         @if($connectionError instanceof APIApplicationIsBlocked)
@@ -340,11 +340,11 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
 				$http_status       = $session->get('testconnection.http_status', null);
 				$body              = $session->get('testconnection.body', null);
 				$headers           = $session->get('testconnection.headers', null);
-				$exceptionType     = $session->get('testconnection.exception.type', null);
-				$exceptionMessage  = $session->get('testconnection.exception.message', null);
-				$exceptionFile     = $session->get('testconnection.exception.file', null);
-				$exceptionLine     = $session->get('testconnection.exception.line', null);
-				$exceptionTrace    = $session->get('testconnection.exception.trace', null);
+				$exceptionType     = $session->get('testconnection.exception.type', $connectionError instanceof Throwable ? get_class($connectionError) : null);
+				$exceptionMessage  = $session->get('testconnection.exception.message', $connectionError instanceof Throwable ? $connectionError->getMessage() : null);
+				$exceptionFile     = $session->get('testconnection.exception.file', $connectionError instanceof Throwable ? $connectionError->getFile() : null);
+				$exceptionLine     = $session->get('testconnection.exception.line', $connectionError instanceof Throwable ? $connectionError->getLine() : null);
+				$exceptionTrace    = $session->get('testconnection.exception.trace', $connectionError instanceof Throwable ? $connectionError->getTraceAsString() : null);
 				$hasRequestDebug   = is_int($http_status) || is_string($body)
 				                     || (is_array($headers)
 				                         && !empty($headers));

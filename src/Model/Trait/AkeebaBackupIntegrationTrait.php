@@ -15,7 +15,11 @@ use Akeeba\BackupJsonApi\HttpAbstraction\HttpClientGuzzle;
 use Akeeba\BackupJsonApi\HttpAbstraction\HttpClientInterface;
 use Akeeba\BackupJsonApi\Options as JsonApiOptions;
 use Akeeba\Panopticon\Container;
+use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupInvalidBody;
+use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNoEndpoint;
+use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNotInstalled;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
+use Akeeba\Panopticon\Library\Logger\MemoryLogger;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupCannotConnectException;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
@@ -30,6 +34,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 use stdClass;
 use Throwable;
 
@@ -49,39 +54,74 @@ trait AkeebaBackupIntegrationTrait
 	 *
 	 * If so, we test the endpoints returned by the API to see to which one and how we can connect.
 	 *
+	 * Note: When `$throw` is enabled we throw an exception immediately upon encountering an error.
+	 *
 	 * @param   bool  $withEndpoints  Should I also test the endpoints?
+	 * @param   bool  $throw          Throw exceptions describing the error conditions.
 	 *
 	 * @return  bool  True if the site's configuration must be saved.
-	 * @throws GuzzleException If the API request fails.
 	 * @since   1.0.0
 	 */
-	public function testAkeebaBackupConnection(bool $withEndpoints = true): bool
+	public function testAkeebaBackupConnection(bool $withEndpoints = true, bool $throw = false): bool
 	{
 		/** @var \Akeeba\Panopticon\Container $container */
 		$container = $this->container;
-		$client    = $container->httpFactory->makeClient(cache: false, singleton: false);
+		$session   = $container->segment;
+
+		// Initialise debug information
+		$session->set('testconnection.akeebabackup.step', null);
+		$session->set('testconnection.akeebabackup.http_status', null);
+		$session->set('testconnection.akeebabackup.body', null);
+		$session->set('testconnection.akeebabackup.headers', null);
+		$throwThis = null;
+
+		// Get the information from the API
+		$session->set('testconnection.akeebabackup.step', 'Retrieve Akeeba Backup connection information from the API');
+
+		$client = $container->httpFactory->makeClient(cache: false, singleton: false);
 
 		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/akeebabackup/info');
 
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
-		$response = $client->get($url, $options);
+		try
+		{
+			$response = $client->get($url, $options);
+		}
+		catch (GuzzleException $e)
+		{
+			$throwThis ??= $e;
+		}
+		finally
+		{
+			$bodyContent = $response?->getBody()?->getContents();
+		}
 
 		$refreshResponse = (object) [
-			'statusCode'   => $response->getStatusCode(),
-			'reasonPhrase' => $response->getReasonPhrase(),
-			'body'         => $this->sanitizeJson($response->getBody()->getContents() ?? ''),
+			'statusCode'   => $response?->getStatusCode(),
+			'reasonPhrase' => $response?->getReasonPhrase(),
+			'body'         => $this->sanitizeJson($bodyContent ?? ''),
 		];
 
 		try
 		{
-			$results = @json_decode($refreshResponse->body ?? '{}');
+			$results = @json_decode($refreshResponse->body ?? '{}', flags: JSON_THROW_ON_ERROR);
 		}
 		catch (Throwable)
 		{
 			$results = null;
+
+			$throwThis ??= new AkeebaBackupInvalidBody();
 		}
 
+		if (method_exists($this, 'updateDebugInfoInSession'))
+		{
+			$this->updateDebugInfoInSession(
+				$response ?? null, $bodyContent, $throwThis, 'testconnection.akeebabackup.'
+			);
+		}
+
+		// Do I have updated information?
 		$config      = $this->getConfig();
 		$info        = $results?->data?->attributes ?? null;
 		$currentInfo = $config->get('akeebabackup.info') ?: new stdClass();
@@ -121,15 +161,30 @@ trait AkeebaBackupIntegrationTrait
 			$dirtyFlag = true;
 		}
 
+		if (is_array($results?->errors ?? null))
+		{
+			$firstError = reset($results->errors);
+
+			$throwThis ??= new \RuntimeException(
+				$firstError->title ?? 'Unknown API error',
+				$firstError->code ?? 500
+			);
+		}
+
 		// If `installed` is not true we cannot proceed with auto-detection.
 		if ($info?->installed !== true)
 		{
 			$config->set('akeebabackup.endpoint', null);
 
 			$dirtyFlag = true;
+
+			$throwThis ??= new AkeebaBackupNotInstalled();
 		}
 		elseif ($withEndpoints)
 		{
+			// Find an endpoint for the Akeeba Backup JSON API
+			$session->set('testconnection.akeebabackup.step', 'Find the most suitable Akeeba Backup JSON API endpoint');
+
 			// Auto-detect best endpoint.
 			$endpoints                = array_merge(
 				$info?->endpoints?->v2 ?? [],
@@ -176,6 +231,11 @@ trait AkeebaBackupIntegrationTrait
 				break;
 			}
 
+			if ($newEndpointConfiguration === null && $throw)
+			{
+				$throwThis ??= new AkeebaBackupNoEndpoint();
+			}
+
 			$oldEndpointConfiguration = $config->get('akeebabackup.endpoint');
 
 			if ($oldEndpointConfiguration != $newEndpointConfiguration)
@@ -184,12 +244,24 @@ trait AkeebaBackupIntegrationTrait
 
 				$dirtyFlag = true;
 			}
+
+			if (method_exists($this, 'updateDebugInfoInSession'))
+			{
+				$this->updateDebugInfoInSession(
+					$response ?? null, $bodyContent, $throwThis, 'testconnection.akeebabackup.'
+				);
+			}
 		}
 
 		// Commit any detected changes to the site object
 		if ($dirtyFlag)
 		{
 			$this->setFieldValue('config', $config->toString());
+		}
+
+		if ($throw && !empty($throwThis))
+		{
+			throw $throwThis;
 		}
 
 		return $dirtyFlag;
@@ -213,6 +285,30 @@ trait AkeebaBackupIntegrationTrait
 		);
 
 		return count($extensions) > 0;
+	}
+
+	/**
+	 * Get the information of the remote Akeeba Backup installation for debugging purposes.
+	 *
+	 * @return  array
+	 * @since   1.0.6
+	 */
+	public function akeebaBackupGetInfoForDebug(): array
+	{
+		$logger    = new MemoryLogger();
+		$connector = $this->getAkeebaBackupAPIConnector($logger);
+
+		try
+		{
+			return (array) $connector->information();
+		}
+		catch (Exception $e)
+		{
+			return [
+				'exception' => $e,
+				'log'       => $logger->getItems(),
+			];
+		}
 	}
 
 	/**
@@ -445,7 +541,9 @@ trait AkeebaBackupIntegrationTrait
 	 *
 	 * @return  void
 	 */
-	public function akeebaBackupEnqueue(int $profile = 1, ?string $description = null, ?string $comment = null, ?User $user = null): void
+	public function akeebaBackupEnqueue(
+		int $profile = 1, ?string $description = null, ?string $comment = null, ?User $user = null
+	): void
 	{
 		// Try to find an akeebabackup task object which is run once, not running / initial schedule, and matches the specifics
 		$tasks = $this->akeebaBackupGetEnqueuedTasks();
@@ -489,7 +587,7 @@ trait AkeebaBackupIntegrationTrait
 					]
 				),
 				'cron_expression' => $runDateTime->minute . ' ' . $runDateTime->hour . ' ' . $runDateTime->day . ' ' .
-					$runDateTime->month . ' ' . $runDateTime->dayofweek,
+				                     $runDateTime->month . ' ' . $runDateTime->dayofweek,
 				'enabled'         => 1,
 				'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
 				'last_execution'  => (clone $runDateTime)->sub(new \DateInterval('PT1M'))->toSql(),
@@ -507,7 +605,7 @@ trait AkeebaBackupIntegrationTrait
 	 * @return  void
 	 * @since   1.0.0
 	 */
-	private function ensureAkeebaBackupConnectionOptions(): void
+	public function ensureAkeebaBackupConnectionOptions(): void
 	{
 		$config          = $this->getConfig();
 		$info            = $config->get('akeebabackup.info');
@@ -583,9 +681,9 @@ trait AkeebaBackupIntegrationTrait
 	 * @return  Connector
 	 * @since   1.0.0
 	 */
-	private function getAkeebaBackupAPIConnector(): Connector
+	private function getAkeebaBackupAPIConnector(?LoggerInterface $logger = null): Connector
 	{
-		return new Connector($this->getAkeebaBackupAPIClient());
+		return new Connector($this->getAkeebaBackupAPIClient($logger));
 	}
 
 	/**
@@ -593,7 +691,7 @@ trait AkeebaBackupIntegrationTrait
 	 *
 	 * @return  HttpClientInterface
 	 */
-	private function getAkeebaBackupAPIClient(): HttpClientInterface
+	private function getAkeebaBackupAPIClient(?LoggerInterface $logger = null): HttpClientInterface
 	{
 		$config            = $this->getConfig();
 		$connectionOptions = (array) $config->get('akeebabackup.endpoint', null);
@@ -605,6 +703,11 @@ trait AkeebaBackupIntegrationTrait
 		}
 
 		$connectionOptions['capath'] = defined('AKEEBA_CACERT_PEM') ? AKEEBA_CACERT_PEM : null;
+
+		if ($logger)
+		{
+			$connectionOptions['logger'] = $logger;
+		}
 
 		$options = new JsonApiOptions($connectionOptions);
 

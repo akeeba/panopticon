@@ -7,11 +7,9 @@
 
 namespace Akeeba\Panopticon\Exception;
 
-use Akeeba\Panopticon\Exception\SiteConnectionException;
-
 defined('AKEEBA') || die;
 
-class APIApplicationHasPHPMessages extends SiteConnectionException
+class AkeebaBackupConnectionException extends \RuntimeException
 {
 
 }

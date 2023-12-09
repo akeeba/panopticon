@@ -112,6 +112,8 @@ trait ACLTrait
 			'apply'                              => ['*'],
 			'save'                               => ['*'],
 			'cancel'                             => ['addown', 'editown', 'admin'],
+			// The connection doctor needs the same permissions as the `save` task.
+			'connectionDoctor'                   => ['*'],
 			// Reloading a site's information requires the read privilege on it
 			'refreshSiteInformation'             => ['read'],
 			'refreshExtensionsInformation'       => ['read'],

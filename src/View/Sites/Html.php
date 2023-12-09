@@ -47,11 +47,13 @@ class Html extends DataViewHtml
 
 	public string|Throwable|null $connectionError = null;
 
-	public ?string $curlError = null;
+	public Throwable|null $akeebaBackupConnectionError = null;
 
-	public ?string $guzzleError = null;
+	private ?string $curlError = null;
 
-	public ?int $httpCode;
+	private ?string $guzzleError = null;
+
+	private ?int $httpCode;
 
 	protected Site $item;
 
@@ -271,6 +273,9 @@ class Html extends DataViewHtml
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();
 
+		$user    = $this->getContainer()->userManager->getUser();
+		$canEdit = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.editown');
+
 		try
 		{
 			$useCache             = !$this->item->getState('akeebaBackupForce', false, 'bool');
@@ -382,15 +387,18 @@ class Html extends DataViewHtml
 
 		$this->container->application->getDocument()->getToolbar()->addButton($dropdown);
 
-		$this->addButtonFromDefinition([
-			'id'    => 'doctor',
-			'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
-			'class' => 'btn btn-secondary border-light',
-			'url'   => $router->route(
-				sprintf("index.php?view=site&task=connectionDoctor&id=%s", $this->item->getId())
-			),
-			'icon'  => 'fa fa-fw fa-stethoscope',
-		]);
+		if ($canEdit)
+		{
+			$this->addButtonFromDefinition([
+				'id'    => 'doctor',
+				'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
+				'class' => 'btn btn-secondary border-light',
+				'url'   => $router->route(
+					sprintf("index.php?view=site&task=connectionDoctor&id=%s", $this->item->getId())
+				),
+				'icon'  => 'fa fa-fw fa-stethoscope',
+			]);
+		}
 
 		$this->cronStuckTime = $this->getCronStuckTime();
 
