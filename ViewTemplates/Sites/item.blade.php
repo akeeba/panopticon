@@ -27,7 +27,7 @@ $connectorAPI     = $config->get('core.panopticon.api');
         <a class="btn btn-secondary" role="button"
            href="@route(sprintf('index.php?view=site&id=%d&returnurl=%s', $this->item->id, base64_encode(Uri::getInstance()->toString())))">
             <span class="fa fa-pencil-alt"></span>
-            <span class="visually-hidden">Edit</span>
+            <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
         </a>
     @endif
 </h3>

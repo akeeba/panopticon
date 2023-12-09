@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Exception\APIApplicationHasPHPMessages;
 use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBlocked;
 use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBroken;
 use Akeeba\Panopticon\Exception\SiteConnection\APIInvalidCredentials;
@@ -377,9 +378,19 @@ class Site extends DataModel
 		{
 			$this->container->segment->setFlash('site_connection_http_code', $response->getStatusCode());
 
-			throw new APIApplicationIsBroken(
-				sprintf('The API application does not work property (HTTP %d)', $response->getStatusCode())
-			);
+			if (!str_contains($bodyContent, '{"errors":[{"title":"Forbidden"}]}'))
+			{
+				throw new APIApplicationIsBroken(
+					sprintf('The API application does not work property (HTTP %d)', $response->getStatusCode())
+				);
+			}
+
+			$canWorkAround = $this->jsonValidate($this->sanitizeJson($bodyContent));
+
+			if (!$canWorkAround)
+			{
+				throw new APIApplicationHasPHPMessages();
+			}
 		}
 
 		// Try to access index.php/v1/extensions **authenticated**
@@ -421,7 +432,7 @@ class Site extends DataModel
 		{
 			try
 			{
-				$temp = @json_decode($bodyContent, true);
+				$temp = @json_decode($this->sanitizeJson($bodyContent), true);
 			}
 			catch (Exception $e)
 			{
@@ -452,7 +463,7 @@ class Site extends DataModel
 
 		try
 		{
-			$results = @json_decode($bodyContent ?? '{}');
+			$results = @json_decode($this->sanitizeJson($bodyContent ?? '{}'));
 		}
 		catch (Throwable $e)
 		{
@@ -473,7 +484,7 @@ class Site extends DataModel
 				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Panopticon')
 			),
 			fn(bool $carry, object $data) => $carry
-			                                 && ($data->attributes?->status == 1
+			                                 && (($data->attributes?->status ?? null) == 1
 			                                     || $data->attributes?->enabled == 1),
 			true
 		);
@@ -497,8 +508,10 @@ class Site extends DataModel
 				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Akeeba Backup')
 				                    && (
 					                    $data->attributes?->type === 'component'
-					                    || ($data->attributes?->type === 'plugin'
-					                        && $data->attributes?->folder === 'webservices')
+					                    || (
+						                    $data->attributes?->type === 'plugin'
+						                    && $data->attributes?->folder === 'webservices'
+					                    )
 				                    )
 			),
 			fn(bool $carry, object $data) => $carry && $data->attributes?->status == 1,
@@ -510,7 +523,28 @@ class Site extends DataModel
 			$warnings[] = 'akeebabackup';
 		}
 
-		// TODO Check for Admin Tools component and its Web Services plugins
+		// Check for Admin Tools component
+		$allEnabled = array_reduce(
+			array_filter(
+				$results->data,
+				fn(object $data) => str_contains($data->attributes?->name ?? '', 'Admin Tools')
+				                    && (
+					                    $data->attributes?->type === 'component'
+					                    || (
+						                    $data->attributes?->type === 'plugin'
+						                    && $data->attributes?->folder === 'system'
+					                    )
+				                    )
+			),
+			fn(bool $carry, object $data) => $carry && $data->attributes?->status == 1,
+			true
+		);
+
+		if (!$allEnabled)
+		{
+			$warnings[] = 'admintools';
+		}
+
 
 		$session->set('testconnection.step', null);
 		$this->updateDebugInfoInSession(null, null, null);

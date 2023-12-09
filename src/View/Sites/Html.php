@@ -19,7 +19,6 @@ use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Document\Toolbar\Button;
 use Awf\Mvc\DataView\Html as DataViewHtml;
-use Awf\Text\Text;
 use Awf\Utils\Template;
 use DateInterval;
 use DateTime;
@@ -46,15 +45,15 @@ class Html extends DataViewHtml
 
 	public array $groupMap = [];
 
+	public string|Throwable|null $connectionError = null;
+
+	public ?string $curlError = null;
+
+	public ?string $guzzleError = null;
+
+	public ?int $httpCode;
+
 	protected Site $item;
-
-	protected ?string $connectionError = null;
-
-	protected ?string $curlError = null;
-
-	protected ?string $guzzleError = null;
-
-	protected ?int $httpCode;
 
 	protected array $extUpdatePreferences = [];
 
@@ -79,6 +78,31 @@ class Html extends DataViewHtml
 	protected ?DateTime $cronStuckTime = null;
 
 	private array $backupProfiles = [];
+
+	public function onBeforeConnectionDoctor(): bool
+	{
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'));
+		$this->addButton(
+			'back', [
+				'url' => $this->container->router->route(
+					sprintf('index.php?view=site&task=read&id=%d', $this->getModel()->getId())
+				),
+			]
+		);
+
+		$this->setLayout('doctor');
+
+		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+		$this->item = $this->getModel();
+
+		$this->connectionError = $this->container->segment->getFlash('site_connection_error', $this->connectionError) ?? $this->connectionError;
+
+		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
+		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
+		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
+
+		return true;
+	}
 
 	public function onBeforeDlkey(): bool
 	{
@@ -143,7 +167,7 @@ class Html extends DataViewHtml
 		return $ret;
 	}
 
-	protected function onBeforeAdd()
+	public function onBeforeAdd()
 	{
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
 
@@ -156,14 +180,12 @@ class Html extends DataViewHtml
 		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
 
 		$document = $this->container->application->getDocument();
-		$document
-			->addScriptOptions(
+		$document->addScriptOptions(
 				'panopticon.rememberTab', [
 					'key' => 'panopticon.siteAdd.rememberTab',
 				]
 			);
-		$document
-			->addScriptOptions(
+		$document->addScriptOptions(
 				'panopticon.backupOnUpdate', [
 					'reload'  => $this->getContainer()->router->route(
 						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&extensions=1&format=raw&'
@@ -175,8 +197,7 @@ class Html extends DataViewHtml
 					),
 					'refresh' => $this->getContainer()->router->route(
 						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId()
-						. '&format=raw&'
-						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+						. '&format=raw&' . $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
 					),
 				]
 			);
@@ -186,7 +207,7 @@ class Html extends DataViewHtml
 		return $this->onBeforeAddCrud();
 	}
 
-	protected function onBeforeEdit()
+	public function onBeforeEdit()
 	{
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
 
@@ -205,14 +226,12 @@ class Html extends DataViewHtml
 		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
 
 		$document = $this->container->application->getDocument();
-		$document
-			->addScriptOptions(
+		$document->addScriptOptions(
 				'panopticon.rememberTab', [
 					'key' => 'panopticon.siteEdit.' . $this->getModel()->id . '.rememberTab',
 				]
 			);
-		$document
-			->addScriptOptions(
+		$document->addScriptOptions(
 				'panopticon.backupOnUpdate', [
 					'reload'  => $this->getContainer()->router->route(
 						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&extensions=1&format=raw&'
@@ -224,8 +243,7 @@ class Html extends DataViewHtml
 					),
 					'refresh' => $this->getContainer()->router->route(
 						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId()
-						. '&format=raw&'
-						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+						. '&format=raw&' . $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
 					),
 				]
 			);
@@ -235,7 +253,7 @@ class Html extends DataViewHtml
 		return $this->onBeforeEditCrud();
 	}
 
-	protected function onBeforeRead(): bool
+	public function onBeforeRead(): bool
 	{
 		Template::addJs('media://js/site-read.js', $this->getContainer()->application, defer: true);
 
@@ -257,13 +275,12 @@ class Html extends DataViewHtml
 		{
 			$useCache             = !$this->item->getState('akeebaBackupForce', false, 'bool');
 			$this->backupRecords  = $this->item->akeebaBackupGetBackups(
-				$useCache,
-				$this->item->getState('akeebaBackupFrom', 0, 'int'),
+				$useCache, $this->item->getState('akeebaBackupFrom', 0, 'int'),
 				$this->item->getState('akeebaBackupLimit', 20, 'int'),
 			);
 			$this->backupProfiles = $this->item->akeebaBackupGetProfiles($useCache);
 		}
-		catch (\Throwable $e)
+		catch (Throwable $e)
 		{
 			$this->backupRecords = $e;
 		}
@@ -277,8 +294,7 @@ class Html extends DataViewHtml
 			{
 				$useCache    = !$this->item->getState('adminToolsForce', false, 'bool');
 				$this->scans = $this->getModel()->adminToolsGetScans(
-					$useCache,
-					$this->item->getState('adminToolsFrom', 0, 'int'),
+					$useCache, $this->item->getState('adminToolsFrom', 0, 'int'),
 					$this->item->getState('adminToolsLimit', 20, 'int'),
 				)?->items ?? [];
 			}
@@ -288,7 +304,7 @@ class Html extends DataViewHtml
 			}
 		}
 
-		$hasAkeebaBackup = $this->item->hasAkeebaBackup();
+		$hasAkeebaBackup   = $this->item->hasAkeebaBackup();
 		$hasAkeebaSoftware = $hasAkeebaBackup || $this->hasAdminToolsPro;
 
 		$dropdown = (new DropdownButton(
@@ -298,14 +314,16 @@ class Html extends DataViewHtml
 				'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS'),
 				'class' => 'btn btn-info ms-2',
 			]
-		))
-			->addButton(
-				new Button([
-					'class' => 'header',
-					'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_EMAILS')
-				])
-			)
-			->addButton(
+		))->addButton(
+				new Button(
+					[
+						'class' => 'header',
+						'title' => $this->getContainer()->language->text(
+							'PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_EMAILS'
+						),
+					]
+				)
+			)->addButton(
 				new Button(
 					[
 						'id'    => 'updatesummarytasks',
@@ -330,12 +348,15 @@ class Html extends DataViewHtml
 //				)
 //			)
 			->addButton(
-				new Button([
-					'class' => 'header ' . ($hasAkeebaSoftware ? '' : 'd-none'),
-					'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_BACKUP_SECURITY')
-				])
-			)
-			->addButton(
+				new Button(
+					[
+						'class' => 'header ' . ($hasAkeebaSoftware ? '' : 'd-none'),
+						'title' => $this->getContainer()->language->text(
+							'PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_BACKUP_SECURITY'
+						),
+					]
+				)
+			)->addButton(
 				new Button(
 					[
 						'id'    => 'backuptasks',
@@ -346,8 +367,7 @@ class Html extends DataViewHtml
 						),
 					]
 				)
-			)
-			->addButton(
+			)->addButton(
 				new Button(
 					[
 						'id'    => 'scannertasks',
@@ -358,10 +378,19 @@ class Html extends DataViewHtml
 						),
 					]
 				)
-			)
-		;
+			);
 
 		$this->container->application->getDocument()->getToolbar()->addButton($dropdown);
+
+		$this->addButtonFromDefinition([
+			'id'    => 'doctor',
+			'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
+			'class' => 'btn btn-secondary border-light',
+			'url'   => $router->route(
+				sprintf("index.php?view=site&task=connectionDoctor&id=%s", $this->item->getId())
+			),
+			'icon'  => 'fa fa-fw fa-stethoscope',
+		]);
 
 		$this->cronStuckTime = $this->getCronStuckTime();
 
@@ -387,8 +416,8 @@ class Html extends DataViewHtml
 			'akeebabackup', [
 				'enqueue' => $router->route(
 					sprintf(
-						'index.php?view=sites&task=akeebaBackupEnqueue&id=%d&%s=1',
-						$this->item->id, $this->container->session->getCsrfToken()->getValue()
+						'index.php?view=sites&task=akeebaBackupEnqueue&id=%d&%s=1', $this->item->id,
+						$this->container->session->getCsrfToken()->getValue()
 					)
 				),
 			]
