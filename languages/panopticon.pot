@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2023-12-03 22:30:54\n"
+"Project-Id-Version: 1.0.5\n"
+"POT-Creation-Date: 2023-12-09 18:20:58\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.0.6-dev202312011316\n"
+"X-Generator: Panopticon ini_to_po 1.0.5\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -2983,6 +2983,21 @@ msgid "Download Key"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE"
+msgid "Connection Doctor"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY"
+msgid "All good!"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY_MORE"
+msgid "The connection to your site was tested, and found to be working fine."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_TITLE_READ"
 msgid "Site Information"
 msgstr ""
@@ -3793,6 +3808,11 @@ msgid "You need to install Akeeba Backup Professional on your site to schedule a
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTFOUND_NOTE_FOR_AFTERWARDS"
+msgid "After installing Akeeba Backup Professional please go back to the site overview page to link Akeeba Backup with Panopticon."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTFOUND_SOLUTION"
 msgid "After installing Akeeba Backup Professional please click the button below to tell Panopticon to relink with the Akeeba Backup installation on your site."
 msgstr ""
@@ -3840,6 +3860,46 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_COMSERROR_HEAD"
 msgid "There has been a communication error with the Akeeba Panopticon Connector on the remote site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_GUZZLE"
+msgid "We tried asking the Panopticon API on your site to provide information about the installation status of Akeeba Backup, but we received an error instead."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI_HEAD"
+msgid "Invalid response from the API when checking for the status of Akeeba Backup"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI"
+msgid "We tried asking the Panopticon API on your site to provide information about the installation status of Akeeba Backup, but it did not respond correctly."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI_PLEASE_CHECK_VERSION"
+msgid "Please make sure you have a version of Akeeba Backup newer than 9.6.0."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI_PLEASE_CHECK_VERSION_J3"
+msgid "Please make sure you have a version of Akeeba Backup newer than 8.3.0."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI_OR_CHECK_ERRORS"
+msgid "If that does not help, please check below for any errors, or irregular response from the API."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_JSONAPI_ERROR_HEAD"
+msgid "There has been a communication error with the Akeeba Backup JSON API on your site"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_JSONAPI_ERROR"
+msgid "The API indicated there is an error. Please make sure that you have entered the correct API Token, and that your site\'s server does not block or otherwise interfere with the request."
 msgstr ""
 
 #, phpformat
@@ -4383,6 +4443,31 @@ msgid "Do you have a security, SEO, or other similar plugin which may be blockin
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_HEAD"
+msgid "The Joomla! API Application response includes non-API output"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_HEAD_J3"
+msgid "The API Plugin response includes includes non-API output"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH1"
+msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party software. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
+msgid "Make sure “Error Reporting” is set to None, and “Debug Site” is set to No in your site\'s Global Configuration page. This prevents PHP from printing messages which pollute the API response."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH3"
+msgid "If this is not enough, it is possible that a third party plugin is causing an error in the API application. Check if there are any third party plugins, especially system plugins, which may be accidentally breaking the API plugin and contact their author."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_HEAD"
 msgid "The Joomla! API Application responded with an unexpected HTTP status code (%s)"
 msgstr ""
@@ -4775,6 +4860,31 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_MUST_ENABLE_FOR_ISSUE"
 msgid "Before you attempt to submit an issue about this connection issue please go to Administration, System Configuration, System and enable Debug System. Then come back here and retry the same connection. You will receive detailed troubleshooting information which you need to include in your issue."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_NOTES_HEAD"
+msgid "Notes"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_NOTES_HELP"
+msgid "Freeform notes about the site only shown to users who have edit privileges on the site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_NOTES_HELP_NO_PRIVILEGED"
+msgid "<strong>DO NOT INCLUDE PRIVILEGED INFORMATION</strong>, such as passwords, in Notes. The contents of this field are stored <em>unencrypted</em> in the database. If you want to store privileged information we strongly recommend using a password manager with the ability to store arbitrary information such as KeePassXC, Strongbox, 1Password, etc."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_NOTES_NONE"
+msgid "There are no notes."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_NOTES_EDIT"
+msgid "Edit site to edit notes"
 msgstr ""
 
 #, phpformat
