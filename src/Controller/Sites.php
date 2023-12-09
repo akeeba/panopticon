@@ -12,10 +12,13 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
+use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNotInstalled;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
 use Akeeba\Panopticon\Library\Queue\QueueInterface;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\Exception\AkeebaBackupCannotConnectException;
+use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Site as SiteModel;
@@ -23,6 +26,7 @@ use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\View\Sites\Html;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataController;
 use Awf\Registry\Registry;
@@ -51,6 +55,100 @@ class Sites extends DataController
 		$this->aclCheck($task);
 
 		return parent::execute($task);
+	}
+
+	/**
+	 * Run the connection doctor on a site.
+	 *
+	 * This method tests the connection to the Panopticon API, as well as the connection to the Akeeba Backup API.
+	 *
+	 * @return  void
+	 * @throws  Exception
+	 * @since   1.6.0
+	 */
+	public function connectionDoctor(): void
+	{
+		$id = $this->input->get->getInt('id', 0);
+		/** @var SiteModel $site */
+		$site = $this
+			->getContainer()
+			->mvcFactory
+			->makeTempModel('Site')
+			->findOrFail($id);
+
+		if (!$this->canAddEditOrSave($site, false))
+		{
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
+		try
+		{
+			$warnings        = $site->testConnection(true);
+			$connectionError = null;
+		}
+		catch (Throwable $e)
+		{
+			$warnings        = null;
+			$connectionError = $e;
+		}
+
+		$akeebaBackupConnectionError = null;
+
+		if (is_array($warnings) && in_array('akeebabackup', $warnings))
+		{
+			$akeebaBackupConnectionError = new AkeebaBackupNotInstalled();
+		}
+
+		if (is_array($warnings) && !in_array('akeebabackup', $warnings))
+		{
+			try
+			{
+				$site->testAkeebaBackupConnection(true, true);
+
+				$session = $this->getContainer()->segment;
+				$session->set('testconnection.akeebabackup.step', 'Verifying the existence of Akeeba Backup JSON API connection options');
+
+				$config          = $site->getConfig();
+				$info            = $config->get('akeebabackup.info');
+				$endpointOptions = $config->get('akeebabackup.endpoint');
+
+				if (empty($info?->api))
+				{
+					throw new AkeebaBackupIsNotPro();
+				}
+
+				if (empty($endpointOptions))
+				{
+					throw new AkeebaBackupCannotConnectException();
+				}
+
+				$session->set('testconnection.akeebabackup.step', 'Testing the connection with the Akeeba Backup JSON API');
+
+				$info                        = $site->akeebaBackupGetInfoForDebug();
+				$akeebaBackupConnectionError = $info['exception'] ?? null;
+
+				$session->set('testconnection.akeebabackup.log', $info['log'] ?? null);
+			}
+			catch (Throwable $e)
+			{
+				$akeebaBackupConnectionError = $e;
+			}
+		}
+
+		/** @var Html $view */
+		$view = $this->getView();
+		$view->setTask($this->task);
+		$view->setDoTask($this->doTask);
+		$view->setDefaultModel($site);
+		$view->connectionError             = $connectionError;
+		$view->akeebaBackupConnectionError = $akeebaBackupConnectionError;
+
+		if (!is_null($this->layout))
+		{
+			$view->setLayout($this->layout);
+		}
+
+		$view->display();
 	}
 
 	public function fixJoomlaCoreUpdateSite(): void
@@ -196,7 +294,9 @@ class Sites extends DataController
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_EXTENSIONS_REFRESHED_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf(
+				'PANOPTICON_SITE_ERR_EXTENSIONS_REFRESHED_FAILED', $e->getMessage()
+			);
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -388,7 +488,9 @@ class Sites extends DataController
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf(
+				'PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_ERROR_NOT_CLEARED', $e->getMessage()
+			);
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -447,7 +549,7 @@ class Sites extends DataController
 			// If the updates queue is not empty, reschedule the task
 			$queueKey = sprintf(QueueTypeEnum::EXTENSIONS->value, $site->id);
 			/** @var QueueInterface $queue */
-			$queue    = $this->container->queueFactory->makeQueue($queueKey);
+			$queue = $this->container->queueFactory->makeQueue($queueKey);
 
 			if ($queue->count())
 			{
@@ -491,7 +593,7 @@ class Sites extends DataController
 	{
 		$this->csrfProtection();
 
-		$siteId = $this->input->get->getInt('id', 0);
+		$siteId     = $this->input->get->getInt('id', 0);
 		$resetQueue = $this->input->get->getBool('resetqueue', 0);
 
 		/** @var SiteModel $site */
@@ -511,7 +613,7 @@ class Sites extends DataController
 			{
 				$queueKey = sprintf(QueueTypeEnum::EXTENSIONS->value, $site->id);
 				/** @var QueueInterface $queue */
-				$queue    = $this->container->queueFactory->makeQueue($queueKey);
+				$queue = $this->container->queueFactory->makeQueue($queueKey);
 
 				$queue->clear();
 			}
@@ -524,7 +626,9 @@ class Sites extends DataController
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf(
+				'PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage()
+			);
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');
@@ -582,7 +686,9 @@ class Sites extends DataController
 		catch (Throwable $e)
 		{
 			$type    = 'error';
-			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage());
+			$message = $this->getLanguage()->sprintf(
+				'PANOPTICON_SITE_ERR_EXTENSION_UPDATE_SCHEDULE_FAILED', $e->getMessage()
+			);
 		}
 
 		$returnUri = $this->input->get->getBase64('return', '');

@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.0.6
 ================================================================================
++ Connection Doctor [gh-345]
 + Site notes [gh-363]
 + Improve login language selection [gh-367]
 ~ Translations now use PO files instead of a third party service

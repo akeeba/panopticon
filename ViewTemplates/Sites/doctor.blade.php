@@ -9,14 +9,19 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
+use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNotInstalled;
+use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
 use Awf\Uri\Uri;
 
-$baseUri          = Uri::getInstance($this->item->getBaseUrl());
-$adminUri         = Uri::getInstance($this->item->getAdminUrl());
-$canEdit          = $this->container->userManager->getUser()->getPrivilege('panopticon.admin');
-$config           = $this->item->getConfig();
-$connectorVersion = $config->get('core.panopticon.version');
-$connectorAPI     = $config->get('core.panopticon.api');
+$baseUri              = Uri::getInstance($this->item->getBaseUrl());
+$adminUri             = Uri::getInstance($this->item->getAdminUrl());
+$canEdit              = $this->getContainer()?->userManager?->getUser()?->getPrivilege('panopticon.admin');
+$config               = $this->item->getConfig();
+$connectorVersion     = $config->get('core.panopticon.version');
+$connectorAPI         = $config->get('core.panopticon.api');
+$hasAkeebaBackupError = $this->akeebaBackupConnectionError instanceof Throwable
+                        && !$this->akeebaBackupConnectionError instanceof AkeebaBackupNotInstalled
+                        && !$this->akeebaBackupConnectionError instanceof AkeebaBackupIsNotPro;
 
 ?>
 
@@ -31,7 +36,6 @@ $connectorAPI     = $config->get('core.panopticon.api');
         </a>
     @endif
 </h3>
-
 <div class="d-flex flex-column flex-md-row gap-1 gap-md-2">
     @if (!empty($connectorVersion))
         <div class="flex-md-grow-1 small text-muted d-flex flex-column">
@@ -39,9 +43,9 @@ $connectorAPI     = $config->get('core.panopticon.api');
                 @sprintf('PANOPTICON_SITES_LBL_CONNECTOR_VERSION', $this->escape($connectorVersion))
             </div>
             @if ($connectorAPI)
-            <div>
-                @sprintf('PANOPTICON_SITES_LBL_CONNECTOR_API', (int) $connectorAPI)
-            </div>
+                <div>
+                    @sprintf('PANOPTICON_SITES_LBL_CONNECTOR_API', (int) $connectorAPI)
+                </div>
             @endif
         </div>
     @endif
@@ -61,63 +65,34 @@ $connectorAPI     = $config->get('core.panopticon.api');
     </div>
 </div>
 
-{{-- Show group labels --}}
-@if (!empty($groups = $config->get('config.groups')))
-<div class="my-1">
-    <span class="fa fa-fw fa-user-group text-secondary" aria-hidden="true"></span>
-    <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_GROUPS')</span>
-    @foreach($groups as $gid)
-        @if (isset($this->groupMap[$gid]))
-            <span class="badge bg-secondary">
-                {{{ $this->groupMap[$gid] }}}
-            </span>
-        @endif
-    @endforeach
-</div>
+@if ($this->connectionError !== null)
+    @include('Sites/troubleshoot', [
+        'forceDebug' => true,
+        'border' => 'border-0',
+        'background' => '',
+        'showHeader' => false,
+    ])
 @endif
 
-<div class="container my-3">
-    <div class="row g-3 mb-3">
-        <div class="col-12 col-lg-6 order-1 order-lg-0">
-            @include('Sites/item_joomlaupdate')
+@if ($this->connectionError === null && !$hasAkeebaBackupError)
+    <div class="px-4 py-5 mt-0 mb-4 text-center">
+        <div class="mx-auto mb-4">
+			<span class="badge bg-success rounded-5">
+				<span class="far fa-check-circle display-5" aria-hidden="true"></span>
+			</span>
         </div>
 
-        <div class="col-12 col-lg-6 order-0 order-lg-1">
-            @include('Sites/item_php')
+        <h3 class="display-5 fw-bold text-success">
+            @lang('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY')
+        </h3>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">
+                @lang('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY_MORE')
+            </p>
         </div>
     </div>
+@endif
 
-    @if($connectorAPI >= 101 && $config->get('core.serverInfo') && $config->get('core.serverInfo.collected'))
-    <div class="row g-3 mb-3">
-        <div class="col-12">
-            @include('Sites/item_server')
-        </div>
-    </div>
-    @endif
-
-    <div class="row g-3 mb-3">
-        <div class="col-12">
-            @include('Sites/item_extensions')
-        </div>
-    </div>
-
-    <div class="row g-3 mb-3">
-        <div class="col-12">
-            @include('Sites/item_backup')
-        </div>
-    </div>
-
-    <div class="row g-3 mb-3">
-        <div class="col-12">
-            @include('Sites/item_admintools')
-        </div>
-    </div>
-
-    @if($canEdit)
-        <div class="row g-3 mb-3">
-            <div class="col-12">
-                @include('Sites/item_notes')
-            </div>
-        </div>
-    @endif
-</div>
+@if ($this->akeebaBackupConnectionError !== null)
+    @include('Sites/troubleshoot_akeebabackup')
+@endif
