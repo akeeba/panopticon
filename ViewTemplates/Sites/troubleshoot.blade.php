@@ -356,7 +356,7 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
 				?>
 
             @if ($hasRequestDebug || $hasExceptionDebug)
-                <hr class="my-3" />
+                <hr class="my-3">
                 <p class="fw-semibold">
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_INFO')
                 </p>

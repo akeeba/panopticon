@@ -158,7 +158,7 @@ $hasError                = !empty($lastError);
                 @sprintf('PANOPTICON_SITE_LBL_PHP_SECURITY_ONLY', $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RFC7231)))
             </p>
 
-            <hr/>
+            <hr>
             <p class="text-warning-emphasis">
                 @sprintf('PANOPTICON_SITE_LBL_PHP_SHOULD_UPGRADE', $this->escape($phpVersion->getRecommendedSupportedBranch()))
             </p>
@@ -182,7 +182,7 @@ $hasError                = !empty($lastError);
             </p>
 
             @if (!$isLatestBranch)
-                <hr/>
+                <hr>
                 <p class="text-warning-emphasis">
                     @sprintf('PANOPTICON_SITE_LBL_PHP_NEWER_BRANCH_AVAILABLE', $this->escape($phpVersion->getLatestBranch()), $this->getContainer()->html->basic->date($versionInfo?->dates?->activeSupport?->format(DATE_RFC7231)))
                 </p>

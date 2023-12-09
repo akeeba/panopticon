@@ -180,7 +180,7 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                 </p>
                 {{-- Is there a new version available, which cannot be installed? --}}
                 @if (version_compare($config->get('core.latest.version'), $config->get('core.current.version'), 'lt'))
-                    <hr />
+                    <hr>
                     <p class="my-2 text-warning-emphasis fw-semibold">
                         @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CANNOT_INSTALL', $this->escape($config->get('core.latest.version')))
                     </p>
@@ -211,7 +211,7 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                 </p>
                 {{-- Is there a new version available, which cannot be installed? --}}
                 @if (version_compare($config->get('core.latest.version'), $config->get('core.current.version'), 'lt'))
-                    <hr />
+                    <hr>
                     <p class="my-2 text-warning-emphasis fw-semibold">
                         @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CANNOT_INSTALL', $this->escape($config->get('core.latest.version')))
                     </p>
@@ -235,7 +235,7 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
                 </h4>
                 {{-- Is there a new version available, which cannot be installed? --}}
                 @if (version_compare($config->get('core.latest.version'), $config->get('core.current.version'), 'lt'))
-                    <hr />
+                    <hr>
                     <p class="my-2 text-warning-emphasis fw-semibold">
                         @sprintf('PANOPTICON_SITE_LBL_JUPDATE_CANNOT_INSTALL', $this->escape($config->get('core.latest.version')))
                     </p>
@@ -381,7 +381,7 @@ $jVersionHelper = new JoomlaVersion($this->getContainer())
         @endif
 
         @if (!$config->get('core.canUpgrade', false) && $config->get('core.extensionAvailable', true) && $config->get('core.updateSiteAvailable', true))
-            <hr class="mt-4" />
+            <hr class="mt-4">
 
             <details>
                 <summary class="text-info">
