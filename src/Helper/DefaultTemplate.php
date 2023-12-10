@@ -131,7 +131,7 @@ abstract class DefaultTemplate
 
 			if ($isDivider)
 			{
-				$html .= '<hr class="dropdown-divider" />';
+				$html .= '<hr class="dropdown-divider">';
 			}
 			elseif ($isDisabled)
 			{

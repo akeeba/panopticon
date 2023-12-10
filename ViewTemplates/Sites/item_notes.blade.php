@@ -33,7 +33,7 @@ defined('AKEEBA') || die;
         @else
             {{ $this->item->notes }}
         @endif
-        <hr/>
+        <hr>
         <a href="@route(sprintf('index.php?view=site&task=edit&id=%u', $this->item->getId()))#siteTabContentNotes">
             <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
             @lang('PANOPTICON_SITE_LBL_NOTES_EDIT')
