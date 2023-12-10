@@ -60,7 +60,7 @@ if ($releaseDate instanceof DateTime)
     </h4>
     <p>
         @sprintf('PANOPTICON_SELFUPDATE_LBL_UPTODATE_RELEASED', $this->getContainer()->html->basic->date($releaseDate, $this->getLanguage()->text('DATE_FORMAT_LC1')))
-        <br />
+        <br>
         @lang('PANOPTICON_SELFUPDATE_LBL_WILL_BE_DOWNLOADED_FROM')
         <a href="{{{ $this->latestversion->downloadUrl }}}" target="_blank" class="font-monospace small text-decoration-none text-secondary">
             {{{ $this->latestversion->downloadUrl }}}

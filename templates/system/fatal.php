@@ -40,7 +40,7 @@ $replacements = [
 				array_keys($parts), array_values($parts)
 			);
 
-			return implode('<br />', $parts);
+			return implode('<br>', $parts);
 		},
 		$exception->getMessage()
 	),

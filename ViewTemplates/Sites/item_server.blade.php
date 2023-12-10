@@ -322,7 +322,7 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
                         @lang('PANOPTICON_SITE_LBL_SERVER_DISK_SITE')
                     @endif
                     @if (!empty($serverInfo->siteDisk->mount ?? ''))
-                    <br/>
+                    <br>
                     <span class="fw-light small">
                         @lang('PANOPTICON_SITE_LBL_SERVER_MOUNT_POINT') <code>{{{ $serverInfo->siteDisk->mount }}}</code>
                     </span>
@@ -360,7 +360,7 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
                 <th scope="row">
                     @lang('PANOPTICON_SITE_LBL_SERVER_DISK_DB')
                     @if (!empty($serverInfo->dbDisk->mount ?? ''))
-                        <br/>
+                        <br>
                         <span class="fw-light small">
                         @lang('PANOPTICON_SITE_LBL_SERVER_MOUNT_POINT') <code>{{{ $serverInfo->dbDisk->mount }}}</code>
                     </span>

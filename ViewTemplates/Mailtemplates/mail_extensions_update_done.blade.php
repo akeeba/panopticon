@@ -72,10 +72,10 @@ $moreThanOne = count($updateStatus) > 1;
             <p>
                 <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ strip_tags($info['name']) }}}”</strong>.
                 @if (!empty($info['messages']))
-                    <br/>
+                    <br>
                     &nbsp;&nbsp;Update messages:
-                    <br />
-                    {{ implode("<br/>&nbsp;&nbsp;", $messages ) }}
+                    <br>
+                    {{ implode("<br>&nbsp;&nbsp;", $messages ) }}
                 @endif
             </p>
         @endforeach
@@ -107,10 +107,10 @@ $moreThanOne = count($updateStatus) > 1;
                     Your Joomla! site encountered an error trying to install the updated version.
                 @endif
                 @if (!empty($info['messages']))
-                    <br/>
+                    <br>
                     &nbsp;&nbsp;Update messages:
-                    <br />
-                    {{ implode("<br/>&nbsp;&nbsp;", $messages ) }}
+                    <br>
+                    {{ implode("<br>&nbsp;&nbsp;", $messages ) }}
                 @endif
             </p>
         @endforeach

@@ -2185,8 +2185,8 @@ msgstr "Panopticon è pronto"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_FINISH_HEAD_WITH_WARNING"
-msgid "Panopticon is ready,<br/>attention required"
-msgstr "Panopticon è pronto,<br/>attenzione richiesta"
+msgid "Panopticon is ready,<br>attention required"
+msgstr "Panopticon è pronto,<br>attenzione richiesta"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_FINISH_SUBTITLE"
@@ -6385,8 +6385,8 @@ msgstr "Giorno del Mese"
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
-msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br />Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Numero <code>1</code> a <code>31</code>, <code>L</code> per l\'ultimo giorno del mese (non può essere utilizzato in elenchi di valori!), intervallo continuo ad es. <code>1-15</code>, elenco separato da virgole dei valori ad es. <code>1,7,14,21,28</code>, ogni giorno come <code>*</code>, ogni X giorni usando la barra ad es.<code>*/3</code> (ogni 3 giorni).<br />Usa un numero con <code>W</code> per il giorno più vicino nello stesso mese che non sia un sabato o una domenica, ad es. <code>15W</code> è il giorno più vicino (dal 13 al 17) che non è un sabato o una domenica."
+msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
+msgstr "Numero <code>1</code> a <code>31</code>, <code>L</code> per l\'ultimo giorno del mese (non può essere utilizzato in elenchi di valori!), intervallo continuo ad es. <code>1-15</code>, elenco separato da virgole dei valori ad es. <code>1,7,14,21,28</code>, ogni giorno come <code>*</code>, ogni X giorni usando la barra ad es.<code>*/3</code> (ogni 3 giorni).<br>Usa un numero con <code>W</code> per il giorno più vicino nello stesso mese che non sia un sabato o una domenica, ad es. <code>15W</code> è il giorno più vicino (dal 13 al 17) che non è un sabato o una domenica."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH"
@@ -6395,8 +6395,8 @@ msgstr "Mese"
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH_HELP"
-msgid "Number <code>1</code> (January) to <code>12</code> (December), contiguous range e.g. <code>3-7</code>, comma–separated list of values e.g. <code>3,6,9,12</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/2</code> (every 2 months).<br />Instead of numbers you may use the abbreviated, three–letter, English names of the months: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
-msgstr "Numero <code>1</code> (Gennaio) a <code>12</code> (Dicembre), intervallo continuo ad es. <code>3-7</code>, elenco separato da virgole dei valori ad es. <code>3,6,9,12</code>, ogni mese come <code>*</code>, ogni X mesi usando la barra ad es. <code>*/2</code> (ogni 2 mesi).<br />Invece dei numeri puoi utilizzare i nomi abbreviati, in inglese, dei mesi: <code>GEN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAG</code>, <code>GIU</code>, <code>LUG</code>, <code>AGO</code>, <code>SET</code>, <code>OTT</code>, <code>NOV</code>, <code>DIC</code>."
+msgid "Number <code>1</code> (January) to <code>12</code> (December), contiguous range e.g. <code>3-7</code>, comma–separated list of values e.g. <code>3,6,9,12</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/2</code> (every 2 months).<br>Instead of numbers you may use the abbreviated, three–letter, English names of the months: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
+msgstr "Numero <code>1</code> (Gennaio) a <code>12</code> (Dicembre), intervallo continuo ad es. <code>3-7</code>, elenco separato da virgole dei valori ad es. <code>3,6,9,12</code>, ogni mese come <code>*</code>, ogni X mesi usando la barra ad es. <code>*/2</code> (ogni 2 mesi).<br>Invece dei numeri puoi utilizzare i nomi abbreviati, in inglese, dei mesi: <code>GEN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAG</code>, <code>GIU</code>, <code>LUG</code>, <code>AGO</code>, <code>SET</code>, <code>OTT</code>, <code>NOV</code>, <code>DIC</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOW"
@@ -6405,8 +6405,8 @@ msgstr "Giorno della Settimana"
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOW_HELP"
-msgid "Number <code>0</code> (Sunday) to <code>6</code> (Saturday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>.<br /> Instead of numbers you may use the abbreviated, three–letter, English names of the days of the week: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br />A number followed by <code>L</code> for the last day of the week in the month, e.g. <code>5L</code> is the last Friday of the month.<br />Two numbers separated by <code>#</code> for n-th day of the week in the month, e.g. <code>5#3</code> is the 3rd Friday of the month."
-msgstr "Numero <code>0</code> (Domenica) a <code>6</code> (Sabato), intervallo continuo ad es. <code>1-5</code>, elenco separato da virgole dei valori ad es. <code>1,3,5</code>, ogni giorno come <code>*</code>.<br />Invece dei numeri puoi utilizzare i nomi abbreviati, in inglese, dei giorni della settimana: <code>DOM</code>, <code>LUN</code>, <code>MAR</code>, <code>MER</code>, <code>GIO</code>, <code>VEN</code>, <code>SAB</code><br />Un numero seguito da <code>L</code> per l\'ultimo giorno della settimana nel mese, ad es. <code>5L</code> è l\'ultimo venerdì del mese.<br />Due numeri separati da <code>#</code> per il n-esimo giorno della settimana nel mese, ad es. <code>5#3</code> è il 3° venerdì del mese."
+msgid "Number <code>0</code> (Sunday) to <code>6</code> (Saturday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>.<br> Instead of numbers you may use the abbreviated, three–letter, English names of the days of the week: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br>A number followed by <code>L</code> for the last day of the week in the month, e.g. <code>5L</code> is the last Friday of the month.<br>Two numbers separated by <code>#</code> for n-th day of the week in the month, e.g. <code>5#3</code> is the 3rd Friday of the month."
+msgstr "Numero <code>0</code> (Domenica) a <code>6</code> (Sabato), intervallo continuo ad es. <code>1-5</code>, elenco separato da virgole dei valori ad es. <code>1,3,5</code>, ogni giorno come <code>*</code>.<br>Invece dei numeri puoi utilizzare i nomi abbreviati, in inglese, dei giorni della settimana: <code>DOM</code>, <code>LUN</code>, <code>MAR</code>, <code>MER</code>, <code>GIO</code>, <code>VEN</code>, <code>SAB</code><br>Un numero seguito da <code>L</code> per l\'ultimo giorno della settimana nel mese, ad es. <code>5L</code> è l\'ultimo venerdì del mese.<br>Due numeri separati da <code>#</code> per il n-esimo giorno della settimana nel mese, ad es. <code>5#3</code> è il 3° venerdì del mese."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_PROFILE"
@@ -6565,8 +6565,8 @@ msgstr "Giorno del Mese"
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
-msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br />Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Numero <code>1</code> a <code>31</code>, <code>L</code> per l\'ultimo giorno del mese (non può essere usato in elenchi!), intervallo contiguo es. <code>1-15</code>, elenco separato da virgole es. <code>1,7,14,21,28</code>, ogni giorno come <code>*</code>, ogni X giorni usando la barra es. <code>*/3</code> (ogni 3 giorni).<br />Usa un numero con <code>W</code> per il giorno più vicino dello stesso mese che non sia sabato o domenica, es. <code>15W</code> è il giorno più vicino (dal 13 al 17) che non sia sabato o domenica."
+msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
+msgstr "Numero <code>1</code> a <code>31</code>, <code>L</code> per l\'ultimo giorno del mese (non può essere usato in elenchi!), intervallo contiguo es. <code>1-15</code>, elenco separato da virgole es. <code>1,7,14,21,28</code>, ogni giorno come <code>*</code>, ogni X giorni usando la barra es. <code>*/3</code> (ogni 3 giorni).<br>Usa un numero con <code>W</code> per il giorno più vicino dello stesso mese che non sia sabato o domenica, es. <code>15W</code> è il giorno più vicino (dal 13 al 17) che non sia sabato o domenica."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MONTH"
@@ -6575,8 +6575,8 @@ msgstr "Mese"
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MONTH_HELP"
-msgid "Number <code>1</code> (January) to <code>12</code> (December), contiguous range e.g. <code>3-7</code>, comma–separated list of values e.g. <code>3,6,9,12</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/2</code> (every 2 months).<br />Instead of numbers you may use the abbreviated, three–letter, English names of the months: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
-msgstr "Numero <code>1</code> (Gennaio) a <code>12</code> (Dicembre), intervallo contiguo es. <code>3-7</code>, elenco separato da virgole es. <code>3,6,9,12</code>, ogni mese come <code>*</code>, ogni X mesi usando la barra es. <code>*/2</code> (ogni 2 mesi).<br />Invece dei numeri, puoi usare i nomi abbreviati e in inglese dei mesi: <code>GEN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAG</code>, <code>GIU</code>, <code>LUG</code>, <code>AGO</code>, <code>SET</code>, <code>OTT</code>, <code>NOV</code>, <code>DIC</code>."
+msgid "Number <code>1</code> (January) to <code>12</code> (December), contiguous range e.g. <code>3-7</code>, comma–separated list of values e.g. <code>3,6,9,12</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/2</code> (every 2 months).<br>Instead of numbers you may use the abbreviated, three–letter, English names of the months: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
+msgstr "Numero <code>1</code> (Gennaio) a <code>12</code> (Dicembre), intervallo contiguo es. <code>3-7</code>, elenco separato da virgole es. <code>3,6,9,12</code>, ogni mese come <code>*</code>, ogni X mesi usando la barra es. <code>*/2</code> (ogni 2 mesi).<br>Invece dei numeri, puoi usare i nomi abbreviati e in inglese dei mesi: <code>GEN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAG</code>, <code>GIU</code>, <code>LUG</code>, <code>AGO</code>, <code>SET</code>, <code>OTT</code>, <code>NOV</code>, <code>DIC</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOW"
@@ -6585,8 +6585,8 @@ msgstr "Giorno della Settimana"
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOW_HELP"
-msgid "Number <code>0</code> (Sunday) to <code>6</code> (Saturday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>.<br /> Instead of numbers you may use the abbreviated, three–letter, English names of the days of the week: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br />A number followed by <code>L</code> for the last day of the week in the month, e.g. <code>5L</code> is the last Friday of the month.<br />Two numbers separated by <code>#</code> for n-th day of the week in the month, e.g. <code>5#3</code> is the 3rd Friday of the month."
-msgstr "Numero <code>0</code> (Domenica) a <code>6</code> (Sabato), intervallo contiguo es. <code>1-5</code>, elenco separato da virgole es. <code>1,3,5</code>, ogni giorno come <code>*</code>.<br />Invece dei numeri, puoi usare i nomi abbreviati e in inglese dei giorni della settimana: <code>DOM</code>, <code>LUN</code>, <code>MAR</code>, <code>MER</code>, <code>GIO</code>, <code>VEN</code>, <code>SAB</code><br />Un numero seguito da <code>L</code> per l\'ultimo giorno della settimana nel mese, es. <code>5L</code> è l\'ultimo venerdì del mese.<br />Due numeri separati da <code>#</code> per l\'n-esimo giorno della settimana nel mese, es. <code>5#3</code> è il terzo venerdì del mese."
+msgid "Number <code>0</code> (Sunday) to <code>6</code> (Saturday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>.<br> Instead of numbers you may use the abbreviated, three–letter, English names of the days of the week: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br>A number followed by <code>L</code> for the last day of the week in the month, e.g. <code>5L</code> is the last Friday of the month.<br>Two numbers separated by <code>#</code> for n-th day of the week in the month, e.g. <code>5#3</code> is the 3rd Friday of the month."
+msgstr "Numero <code>0</code> (Domenica) a <code>6</code> (Sabato), intervallo contiguo es. <code>1-5</code>, elenco separato da virgole es. <code>1,3,5</code>, ogni giorno come <code>*</code>.<br>Invece dei numeri, puoi usare i nomi abbreviati e in inglese dei giorni della settimana: <code>DOM</code>, <code>LUN</code>, <code>MAR</code>, <code>MER</code>, <code>GIO</code>, <code>VEN</code>, <code>SAB</code><br>Un numero seguito da <code>L</code> per l\'ultimo giorno della settimana nel mese, es. <code>5L</code> è l\'ultimo venerdì del mese.<br>Due numeri separati da <code>#</code> per l\'n-esimo giorno della settimana nel mese, es. <code>5#3</code> è il terzo venerdì del mese."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_FIELD_SCHEDULE"
@@ -6840,8 +6840,8 @@ msgstr "Seleziona come desideri verificare il tuo accesso a questo sito."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES"
-msgid "Backup Codes (Emergency Access)<br/><small class=\"text-muted\">Use these if you get locked out.</small>"
-msgstr "Codici di Backup (Accesso di Emergenza)<br/><small class=\"text-muted\">Usali se vieni bloccato.</small>"
+msgid "Backup Codes (Emergency Access)<br><small class=\"text-muted\">Use these if you get locked out.</small>"
+msgstr "Codici di Backup (Accesso di Emergenza)<br><small class=\"text-muted\">Usali se vieni bloccato.</small>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_METHOD_NAME"

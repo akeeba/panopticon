@@ -53,7 +53,7 @@ $this->container->application->getDocument()->addScriptDeclaration($js);
 		<ol>
 			<li class="mb-2">
 				<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP1') ?>
-				<br/><span class="text-muted">
+				<br><span class="text-muted">
 				<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP1_DETAIL') ?>
 				</span>
 			</li>
@@ -65,7 +65,7 @@ $this->container->application->getDocument()->addScriptDeclaration($js);
 			</li>
 			<li class="mb-2">
 				<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP4') ?>
-				<br/><span class="text-muted">
+				<br><span class="text-muted">
 					<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP4_DETAIL') ?>
 				</span>
 			</li>

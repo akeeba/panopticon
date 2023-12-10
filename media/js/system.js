@@ -404,11 +404,11 @@ akeeba.System.doAjax = function (data, successCallback, errorCallback, useCachin
         }, error: function (Request, textStatus, errorThrown)
                   {
                       var text    = Request.responseText ? Request.responseText : "";
-                      var message = "<strong>AJAX Loading Error</strong><br/>HTTP Status: " + Request.status + " (" + Request.statusText + ")<br/>";
+                      var message = "<strong>AJAX Loading Error</strong><br>HTTP Status: " + Request.status + " (" + Request.statusText + ")<br>";
 
-                      message = message + "Internal status: " + textStatus + "<br/>";
-                      message = message + "XHR ReadyState: " + Request.readyState + "<br/>";
-                      message = message + "Raw server response:<br/>" + akeeba.System.sanitizeErrorMessage(text);
+                      message = message + "Internal status: " + textStatus + "<br>";
+                      message = message + "XHR ReadyState: " + Request.readyState + "<br>";
+                      message = message + "Raw server response:<br>" + akeeba.System.sanitizeErrorMessage(text);
 
                       if (errorCallback == null)
                       {

@@ -123,11 +123,11 @@
                                  case 'error':
                                      const doc = new DOMParser().parseFromString(Request.responseText ? Request.responseText : "", "text/html");
 
-                                     error = akeeba.System.Text._('PANOPTICON_SETUP_CRON_ERR_AJAX_HEAD') + '<br/>'
+                                     error = akeeba.System.Text._('PANOPTICON_SETUP_CRON_ERR_AJAX_HEAD') + '<br>'
                                          + akeeba.System.Text._('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_STATUS') +
-                                         xhr.status + ' (' + xhr.statusText + ')<br/>' +
+                                         xhr.status + ' (' + xhr.statusText + ')<br>' +
                                          akeeba.System.Text._('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_READYSTATE') +
-                                         xhr.readyState + '<br/>' +
+                                         xhr.readyState + '<br>' +
                                          akeeba.System.Text._('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_RAW') +
                                          '<div class="p-2 m-2 border rounded bg-light-subtle text-muted">' +
                                          doc.documentElement.textContent

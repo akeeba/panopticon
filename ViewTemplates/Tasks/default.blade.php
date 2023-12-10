@@ -126,7 +126,7 @@ $i     = 1;
                     @else
                         <span class="fa fa-globe text-body-tertiary" aria-hidden="true"></span>
                         <span class="fw-medium">{{{ $this->siteNames[$task->site_id] }}}</span>
-                        <br />
+                        <br>
                         <span class="text-secondary">#{{ (int) $task->site_id }}</span>
                     @endif
                 </td>

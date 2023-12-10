@@ -196,17 +196,17 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 					</p>
 					<p>
 						<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_WEB_WGET') ?>
-						<br/>
+						<br>
 						<code>wget --no-check-certificate --max-redirect=20 "<?= Uri::base() ?>index.php?view=cron&key=<?= $this->cronKey ?>" -O - >/dev/null 2>&1</code>
 					</p>
 					<p>
 						<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_WEB_CURL') ?>
-						<br/>
+						<br>
 						<code>curl -k -L "<?= Uri::base() ?>index.php?view=cron&key=<?= $this->cronKey ?>" >/dev/null 2>&1</code>
 					</p>
 					<p>
 						<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_WEB_POWERSHELL') ?>
-						<br/>
+						<br>
 						<code>Invoke-WebRequest -SkipCertificateCheck -URI <?= Uri::base() ?>index.php?view=cron&key=<?= $this->cronKey ?></code>
 					</p>
 
@@ -269,7 +269,7 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 		</p>
 		<p class="text-muted">
 			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER') ?>
-			<br/>
+			<br>
 			<a href="<?= $this->getContainer()->router->route('index.php?view=setup&task=skipcron') ?>" class="link-secondary">
 				<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_SKIP_CRON') ?>
 			</a>
