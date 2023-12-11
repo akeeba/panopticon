@@ -53,7 +53,8 @@ trait EnqueueExtensionUpdateTrait
 		$task->last_exit_code = Status::INITIAL_SCHEDULE->value;
 		$task->locked         = null;
 
-		$siteConfig = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
+		$siteConfig = $site->getConfig() ?? new Registry();
+
 		switch ($siteConfig->get('config.extensions_update.when', 'immediately'))
 		{
 			default:

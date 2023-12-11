@@ -205,7 +205,7 @@ JS;
         @foreach($this->items as $item)
             <?php
             $url    = $item->getBaseUrl();
-            $config = new Awf\Registry\Registry($item->config);
+            $config = $item->getConfig();
             ?>
             <tr>
                 <td>

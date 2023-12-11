@@ -9,8 +9,6 @@ namespace Akeeba\Panopticon\Task;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Library\Queue\QueueItem;
-use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -198,16 +196,19 @@ class JoomlaUpdateDirector extends AbstractCallback
 			}
 
 			// Get the site's configuration
-			$siteConfig   = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
+			$siteConfig = $site->getConfig() ?? new Registry();
 
 			// Log a report entry: we found an update for the site
-			try {
+			try
+			{
 				Reports::fromCoreUpdateFound(
 					$site->getId(),
 					$siteConfig->get('core.current.version'),
 					$siteConfig->get('core.latest.version')
 				)->save();
-			} catch (\Throwable $e) {
+			}
+			catch (\Throwable $e)
+			{
 				$this->logger->error(
 					sprintf(
 						'Problem saving report log entry [%s:%s]: %d %s',
@@ -381,7 +382,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 			)
 		);
 
-		$siteConfig = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
+		$siteConfig = $site->getConfig() ?? new Registry();
 
 		$variables = [
 			'NEW_VERSION' => $siteConfig->get('core.latest.version'),
@@ -413,7 +414,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 
 	private function mustSchedule(Site $site, bool $emailOnly): bool
 	{
-		$siteConfig = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
+		$siteConfig = $site->getConfig() ?? new Registry();
 
 		// We must not send emails or schedule anything if an update is already running
 		if ($site->isJoomlaUpdateTaskRunning())
@@ -429,9 +430,9 @@ class JoomlaUpdateDirector extends AbstractCallback
 		// When scheduling updates we must make sure there is no update task to the same version already active.
 		if ($mustSchedule && !$emailOnly && $site->isJoomlaUpdateTaskScheduled())
 		{
-			$task = $site->getJoomlaUpdateTask();
+			$task       = $site->getJoomlaUpdateTask();
 			$taskParams = ($task->params instanceof Registry) ? $task->params : new Registry($task->params ?? '{}');
-			$toVersion = $taskParams->get('toVersion');
+			$toVersion  = $taskParams->get('toVersion');
 
 			$mustSchedule = $toVersion != $latestVersion;
 		}

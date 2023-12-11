@@ -10,7 +10,7 @@ defined('AKEEBA') || die;
 /**
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
-$config  = new \Awf\Registry\Registry($this->item?->config ?? '{}');
+$config  = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 $isSuper = $this->container->userManager->getUser()->getPrivilege('panopticon.admin');
 
 $js = <<< JS

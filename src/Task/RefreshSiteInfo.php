@@ -223,7 +223,7 @@ class RefreshSiteInfo extends AbstractCallback
 								)
 							);
 
-							$config = new Registry($site->getFieldValue('config') ?: '{}');
+							$config = $site?->getConfig() ?? new Registry();
 
 							$config->set('core.current.version', $attributes->current);
 							$config->set('core.current.stability', $attributes->currentStability);
@@ -334,7 +334,7 @@ class RefreshSiteInfo extends AbstractCallback
 							));
 
 							// Save the last error message
-							$config = new Registry($site->getFieldValue('config') ?: '{}');
+							$config = $site?->getConfig() ?? new Registry();
 
 							$config->set('core.lastErrorMessage', $e->getMessage());
 

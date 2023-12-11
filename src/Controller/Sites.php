@@ -346,7 +346,7 @@ class Sites extends DataController
 
 			// Update the core.lastAutoUpdateVersion after enqueueing
 			$site->findOrFail($id);
-			$config = new Registry($site->config);
+			$config = $site->getConfig();
 			$config->set('core.lastAutoUpdateVersion', $config->get('core.current.version'));
 			$site->config = $config->toString();
 			$site->save();
@@ -1151,7 +1151,7 @@ class Sites extends DataController
 				throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_ERR_NO_TOKEN'));
 			}
 
-			$config = new Registry($model?->config ?? '{}');
+			$config = $model->getConfig() ?? new Registry();
 			$config->set('config.apiKey', $token);
 
 			// Get the connection-relevant information BEFORE making any changes to the site

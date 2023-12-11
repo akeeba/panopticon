@@ -10,7 +10,6 @@ defined('AKEEBA') || die;
 /**
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
-$config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
 $returnUrl = $this->input->getBase64('returnurl', '');
 ?>
 

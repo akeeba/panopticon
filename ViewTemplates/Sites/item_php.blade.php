@@ -13,7 +13,7 @@ use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
 
-$config = ($this->item->config instanceof Registry) ? $this->item->config : (new Registry($this->item->config));
+$config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 $phpVersion = new PhpVersion();
 
 $lastUpdateTimestamp = function () use ($config): string {

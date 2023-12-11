@@ -114,9 +114,7 @@ class ExtensionUpdatesDirector extends AbstractCallback
 				continue;
 			}
 
-			$siteConfig =
-				($site->getFieldValue('config') instanceof Registry) ? $site->getFieldValue('config')
-					: new Registry($site->getFieldValue('config') ?? '{}');
+			$siteConfig = $site->getConfig() ?? new Registry();
 			$extensions = (array)$siteConfig->get('extensions.list');
 
 			if (empty($extensions))

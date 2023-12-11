@@ -48,8 +48,7 @@ trait ApiRequestTrait
 
 	protected function getAuthenticationHeaders(Site $site): array
 	{
-		$config   = $site->getFieldValue('config') ?? '{}';
-		$config   = ($config instanceof Registry) ? $config : new Registry($config);
+		$config   = $site->getConfig();
 		$apiKey   = $config->get('config.apiKey', '');
 		$username = $config->get('config.username', '');
 		$password = $config->get('config.password', '');

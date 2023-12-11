@@ -10,7 +10,7 @@ defined('AKEEBA') || die;
 /**
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
-$config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
+$config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 $updateTime = sprintf(
 	'%02u:%02u',
 	$config->get('config.core_update.time.hour', '0'),

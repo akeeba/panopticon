@@ -74,7 +74,8 @@ trait EnqueueJoomlaUpdateTrait
 			$tz = 'UTC';
 		}
 
-		$siteConfig = ($site->config instanceof Registry) ? $site->config : new Registry($site->config ?? '{}');
+		$siteConfig = $site->getConfig() ?? new Registry();
+
 		switch ($siteConfig->get('config.core_update.when', 'immediately'))
 		{
 			default:

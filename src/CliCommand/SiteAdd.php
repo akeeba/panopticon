@@ -85,7 +85,7 @@ class SiteAdd extends AbstractCommand
 		/** @var Sites $model */
 		$model = Factory::getContainer()->mvcFactory->makeTempModel('Sites');
 
-		$config = new Registry($model?->config ?? '{}');
+		$config = $model?->getConfig() ?? new Registry();
 		$config->set('config.apiKey', $token);
 
 		// Create an array of values to apply to the model

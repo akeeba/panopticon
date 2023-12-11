@@ -10,7 +10,8 @@ defined('AKEEBA') || die;
 /**
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
-$config = new \Awf\Registry\Registry($this->item?->config ?? '{}');
+
+$config = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 
 ?>
 <h4>@lang('PANOPTICON_SITES_LBL_CONNECTOR_HEAD')</h4>

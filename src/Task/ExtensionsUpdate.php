@@ -129,9 +129,7 @@ class ExtensionsUpdate extends AbstractCallback
 		}
 
 		// Try to get the extension information from the site's config
-		$siteConfig = ($site->getFieldValue('config') instanceof Registry)
-			? $site->getFieldValue('config')
-			: (new Registry($site->getFieldValue('config')));
+		$siteConfig = $site->getConfig() ?? new Registry();
 		$extensions = (array) $siteConfig->get('extensions.list');
 
 		if (!isset($extensions[$extensionId]))
@@ -385,9 +383,7 @@ class ExtensionsUpdate extends AbstractCallback
 			$site->findOrFail($site->id);
 
 			// Get the extensions list
-			$siteConfig = ($site->getFieldValue('config') instanceof Registry)
-				? $site->getFieldValue('config')
-				: (new Registry($site->getFieldValue('config')));
+			$siteConfig = $site->getConfig() ?? new Registry();;
 			$extensions = (array) $siteConfig->get('extensions.list');
 
 			// Make sure our updated extension didn't get uninstalled in the meantime
@@ -635,9 +631,7 @@ class ExtensionsUpdate extends AbstractCallback
 	 */
 	private function recordLastSeenVersion(Site $site, int $extensionId): void
 	{
-		$siteConfig                     = ($site->getFieldValue('config') instanceof Registry)
-			? $site->getFieldValue('config')
-			: (new Registry($site->getFieldValue('config')));
+		$siteConfig                     = $site->getConfig() ?? new Registry();
 		$lastSeenVersions               = $siteConfig->get('director.extensionupdates.lastSeen', []) ?: [];
 		$lastSeenVersions               = is_object($lastSeenVersions) ? (array) $lastSeenVersions : $lastSeenVersions;
 		$lastSeenVersions               = is_array($lastSeenVersions) ? $lastSeenVersions : [];
