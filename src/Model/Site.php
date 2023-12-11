@@ -20,6 +20,7 @@ use Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled;
 use Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL;
 use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
 use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\AkeebaBackupIntegrationTrait;
@@ -912,6 +913,13 @@ class Site extends DataModel
 		{
 			$return = $callback($dummy, $registry);
 		} while ($return === Status::WILL_RESUME->value);
+	}
+
+	public function cmsType(): CMSType
+	{
+		$cmsType = $this->getConfig()->get('cmsType', 'joomla') ?: 'joomla';
+
+		return CMSType::from($cmsType);
 	}
 
 	protected function getSiteSpecificTask(string $type): ?Task

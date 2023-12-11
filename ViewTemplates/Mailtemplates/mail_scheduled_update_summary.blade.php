@@ -14,17 +14,18 @@
  * @var \Akeeba\Panopticon\Model\Site              $site
  */
 
-$config             = $site->getConfig();
-$cmsType            = $config->get('cmsType', 'joomla');
-$cmsTypeHuman       = match ($cmsType)
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
+
+$config       = $site->getConfig();
+$cmsTypeHuman = match ($site->cmsType())
 {
 	default => 'Joomla!™',
-	'wordpress' => 'WordPress',
+	CMSType::WORDPRESS => 'WordPress',
 };
-$extensionNameHuman = match ($cmsType)
+$extensionNameHuman = match ($site->cmsType())
 {
 	default => 'extension',
-	'wordpress' => 'plugin and theme',
+	CMSType::WORDPRESS => 'plugin and theme',
 };
 ?>
 
@@ -66,7 +67,7 @@ $extensionNameHuman = match ($cmsType)
         <ul>
             @foreach($extensionUpdates as $item)
                 <li>
-                    @if ($cmsType === 'wordpress')
+                    @if ($site->cmsType() === CMSType::WORDPRESS)
                         @if ($item['type'] === 'plugin')
                             [Plugin]
                         @else

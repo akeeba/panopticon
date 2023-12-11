@@ -14,17 +14,18 @@
  * @var \Akeeba\Panopticon\Model\Site              $site
  */
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
+
 $config             = $site->getConfig();
-$cmsType            = $config->get('cmsType', 'joomla');
-$cmsTypeHuman       = match ($cmsType)
+$cmsTypeHuman       = match ($site->cmsType())
 {
 	default => 'Joomla!™',
-	'wordpress' => 'WordPress',
+	CMSType::WORDPRESS => 'WordPress',
 };
-$extensionNameHuman = match ($cmsType)
+$extensionNameHuman = match ($site->cmsType())
 {
 	default => 'extension',
-	'wordpress' => 'plugin and theme',
+	CMSType::WORDPRESS => 'plugin and theme',
 };
 ?>
 
@@ -60,7 +61,7 @@ There are {{ count($extensionUpdates) }} pending extension updates.
 
 @endif
 @foreach($extensionUpdates as $item)
- * @if($cmsType === 'wordpress')@if($item['type'] === 'plugin')[Plugin]@else[Theme]@endif@else#{{ $item['id'] }}@endif “{{{ strip_tags($item['name']) }}}” @if (!empty(trim($item['author_url'] ?? ''))) by {{{ strip_tags($item['author']) }}} @endif – from {{{ $item['current'] }}} to {{{ $item['new'] }}}
+ * @if($site->cmsType() === CMSType::WORDPRESS)@if($item['type'] === 'plugin')[Plugin]@else[Theme]@endif@else#{{ $item['id'] }}@endif “{{{ strip_tags($item['name']) }}}” @if (!empty(trim($item['author_url'] ?? ''))) by {{{ strip_tags($item['author']) }}} @endif – from {{{ $item['current'] }}} to {{{ $item['new'] }}}
 @endforeach
 @endif
 

@@ -7,6 +7,7 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\Status;
 use Awf\Registry\Registry;
 
@@ -130,7 +131,7 @@ $i     = 1;
                         @endif
 
                         @if($params->get('core_updates', true))
-                            @if($this->site->getConfig()->get('cmsType', 'joomla') === 'wordpress')
+                            @if($this->site->cmsType() === CMSType::WORDPRESS)
                                 <span class="fab fa-fw fa-stack fa-wordpress" aria-hidden="true"
                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                                       data-bs-title="@lang('PANOPTICON_UPDATESUMMARYTASKS_LBL_CORE_UPDATES')"></span>
