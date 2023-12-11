@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\About;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\About;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
 
@@ -18,12 +19,20 @@ class Html extends BaseHtmlView
 
 	protected ?array $contributors;
 
+	protected array $npmInfo;
+
+	protected array $dependecies;
+
 	protected function onBeforeMain(): bool
 	{
 		$this->addButton('back', ['url' => 'javascript:history.back()']);
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_ABOUT_TITLE'));
 
-		$this->contributors = $this->getModel()->getContributors();
+		/** @var About $model */
+		$model              = $this->getModel();
+		$this->contributors = $model->getContributors();
+		$this->npmInfo      = $model->getNPMInformation();
+		$this->dependecies  = $model->getDependencies();
 
 		return true;
 	}

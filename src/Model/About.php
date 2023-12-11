@@ -86,4 +86,60 @@ class About extends Model
 
 		return $users;
 	}
+
+	/**
+	 * Get the information from the npm package-lock.json file.
+	 *
+	 * Reads the contents of the package-lock.json file and returns it as an associative array.
+	 *
+	 * @return  array  The contents of the package-lock.json file as an associative array.
+	 * @since   1.0.6
+	 */
+	public function getNPMInformation(): array
+	{
+		$filePath = $this->container->basePath . '/vendor/composer/package-lock.json';
+
+		if (!is_readable($filePath) || !is_file($filePath))
+		{
+			return [];
+		}
+
+		$contents = @file_get_contents($filePath);
+
+		if (!$contents)
+		{
+			return [];
+		}
+
+		$return = json_decode($contents, true);
+
+		if (!is_array($return))
+		{
+			return [];
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Get the list of Composer dependencies.
+	 *
+	 * Retrieves all the installed dependencies using Composer's InstalledVersions class and returns an array of version numbers.
+	 *
+	 * @return  array  An array of dependency version numbers.
+	 * @since   1.0.6
+	 */
+	public function getDependencies(): array
+	{
+		$dependencies = [];
+
+		foreach (\Composer\InstalledVersions::getAllRawData() as $item)
+		{
+			$dependencies = array_merge($dependencies, $item['versions']);
+		}
+
+		ksort($dependencies);
+
+		return $dependencies;
+	}
 }
