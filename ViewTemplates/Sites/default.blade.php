@@ -14,18 +14,7 @@ defined('AKEEBA') || die;
  */
 $model = $this->getModel();
 $token = $this->container->session->getCsrfToken()->getValue();
-
-$js = <<< JS
-window.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.js-choice').forEach((element) => {
-        new Choices(element, {allowHTML: false, removeItemButton: true, placeholder: true, placeholderValue: ""});
-    });
-});
-
-JS;
 ?>
-@js('choices/choices.min.js', $this->getContainer()->application)
-@inlinejs($js)
 
 <form action="@route('index.php?view=sites')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 d-flex flex-column flex-lg-row gap-2 gap-lg-3 justify-content-center border rounded-1 p-2 bg-body-tertiary">

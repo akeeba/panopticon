@@ -74,7 +74,7 @@
 
         BoUShowSpinner();
 
-        window.akeeba.Ajax.ajax(url + '&selected=' + profilesSelect.value, {
+        window.akeeba.Ajax.ajax(url + "&selected=" + profilesSelect.value, {
             method:  "GET",
             success: (text) =>
                      {
@@ -87,12 +87,35 @@
         });
     }
 
+    const onDOMContentLoaded = () =>
+    {
+        BoUInitialise();
+
+        // Enable Choices.js
+        if (typeof Choices !== "undefined")
+        {
+            document.querySelectorAll(".js-choice")
+                    .forEach((element) =>
+                    {
+                        new Choices(
+                            element,
+                            {
+                                allowHTML:        false,
+                                placeholder:      true,
+                                placeholderValue: "",
+                                removeItemButton: true
+                            }
+                        );
+                    });
+        }
+    }
+
     if (document.readyState === "loading")
     {
-        document.addEventListener("DOMContentLoaded", BoUInitialise);
+        document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
     }
     else
     {
-        BoUInitialise();
+        onDOMContentLoaded();
     }
 })();

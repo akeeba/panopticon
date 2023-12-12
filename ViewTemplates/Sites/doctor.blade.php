@@ -15,7 +15,6 @@ use Awf\Uri\Uri;
 
 $baseUri              = Uri::getInstance($this->item->getBaseUrl());
 $adminUri             = Uri::getInstance($this->item->getAdminUrl());
-$canEdit              = $this->getContainer()?->userManager?->getUser()?->getPrivilege('panopticon.admin');
 $config               = $this->item->getConfig();
 $connectorVersion     = $config->get('core.panopticon.version');
 $connectorAPI         = $config->get('core.panopticon.api');
@@ -28,7 +27,7 @@ $hasAkeebaBackupError = $this->akeebaBackupConnectionError instanceof Throwable
 <h3 class="mt-2 pb-1 border-bottom border-3 border-primary-subtle d-flex flex-row align-items-center gap-2">
     <span class="text-muted fw-light fs-4">#{{ $this->item->id }}</span>
     <span class="flex-grow-1">{{{ $this->item->name }}}</span>
-    @if($canEdit)
+    @if($this->canEdit)
         <a class="btn btn-secondary" role="button"
            href="@route(sprintf('index.php?view=site&id=%d&returnurl=%s', $this->item->id, base64_encode(Uri::getInstance()->toString())))">
             <span class="fa fa-pencil-alt"></span>

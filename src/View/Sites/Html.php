@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\View\Sites;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Toolbar\DropdownButton;
+use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
 use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
@@ -19,6 +20,8 @@ use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Document\Toolbar\Button;
 use Awf\Mvc\DataView\Html as DataViewHtml;
+use Awf\Registry\Registry;
+use Awf\Uri\Uri;
 use Awf\Utils\Template;
 use DateInterval;
 use DateTime;
@@ -26,6 +29,11 @@ use DateTimeZone;
 use Exception;
 use Throwable;
 
+/**
+ * Html class for rendering HTML views related to managing Sites.
+ *
+ * @since     1.0.0
+ */
 class Html extends DataViewHtml
 {
 	use TimeAgoTrait;
@@ -49,12 +57,6 @@ class Html extends DataViewHtml
 
 	public Throwable|null $akeebaBackupConnectionError = null;
 
-	private ?string $curlError = null;
-
-	private ?string $guzzleError = null;
-
-	private ?int $httpCode;
-
 	protected Site $item;
 
 	protected array $extUpdatePreferences = [];
@@ -77,7 +79,66 @@ class Html extends DataViewHtml
 		'filter-unscheduled' => 'fa-bolt',
 	];
 
+	/**
+	 * Determines if the user has the permission to edit the current site.
+	 *
+	 * @var   bool
+	 * @since 1.0.6
+	 */
+	protected bool $canEdit = false;
+
 	protected ?DateTime $cronStuckTime = null;
+
+	/**
+	 * The configuration settings for the current site.
+	 *
+	 * @var   Registry
+	 * @since 1.0.6
+	 */
+	protected Registry $siteConfig;
+
+	/**
+	 * The version of the Panopticon connector we're talking to.
+	 *
+	 * @var   string|null
+	 * @since 1.0.6
+	 */
+	protected ?string $connectorVersion;
+
+	/**
+	 * The API level of the Panopticon connector.
+	 *
+	 * @var   string|null
+	 * @since 1.0.6
+	 */
+	protected ?string $connectorAPI;
+
+	/**
+	 * The base URI of the site.
+	 *
+	 * This variable stores the base (public) URI of the site, which is used to construct the full URL for redirecting
+	 * or generating links.
+	 *
+	 * @var   Uri
+	 * @since 1.0.6
+	 */
+	protected Uri $baseUri;
+
+	/**
+	 * The URI of the site's admin panel login page.
+	 *
+	 * This variable stores the URI (Uniform Resource Identifier) of the admin panel login page.
+	 *
+	 * @var   Uri
+	 * @since 1.0.6
+	 */
+	protected Uri $adminUri;
+
+	private ?string $curlError = null;
+
+	private ?string $guzzleError = null;
+
+	private ?int $httpCode;
 
 	private array $backupProfiles = [];
 
@@ -95,10 +156,10 @@ class Html extends DataViewHtml
 		$this->setLayout('doctor');
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
-		$this->item = $this->getModel();
-
-		$this->connectionError = $this->container->segment->getFlash('site_connection_error', $this->connectionError) ?? $this->connectionError;
-
+		$this->item            = $this->getModel();
+		$this->canEdit         = $this->canEditThisItem();
+		$this->connectionError = $this->container->segment->getFlash('site_connection_error', $this->connectionError) ??
+		                         $this->connectionError;
 		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
 		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
 		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
@@ -126,6 +187,8 @@ class Html extends DataViewHtml
 
 	public function onBeforeBrowse(): bool
 	{
+		Template::addJs('media://choices/choices.min.js', $this->getContainer()->application, defer: true);
+
 		$result = $this->onBeforeBrowseCrud();
 
 		// Groups map
@@ -144,6 +207,7 @@ class Html extends DataViewHtml
 		$this->addButtons($buttons);
 
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
+		Template::addJs('media://js/site-browse.js', $this->getContainer()->application);
 
 		$this->addTooltipJavaScript();
 
@@ -172,6 +236,7 @@ class Html extends DataViewHtml
 	public function onBeforeAdd()
 	{
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
+		Template::addJs('media://choices/choices.min.js', $this->getContainer()->application, defer: true);
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();
@@ -183,26 +248,26 @@ class Html extends DataViewHtml
 
 		$document = $this->container->application->getDocument();
 		$document->addScriptOptions(
-				'panopticon.rememberTab', [
-					'key' => 'panopticon.siteAdd.rememberTab',
-				]
-			);
+			'panopticon.rememberTab', [
+				'key' => 'panopticon.siteAdd.rememberTab',
+			]
+		);
 		$document->addScriptOptions(
-				'panopticon.backupOnUpdate', [
-					'reload'  => $this->getContainer()->router->route(
-						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&extensions=1&format=raw&'
-						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
-					),
-					'relink'  => $this->getContainer()->router->route(
-						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&relink=1&format=raw&'
-						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
-					),
-					'refresh' => $this->getContainer()->router->route(
-						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId()
-						. '&format=raw&' . $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
-					),
-				]
-			);
+			'panopticon.backupOnUpdate', [
+				'reload'  => $this->getContainer()->router->route(
+					'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&extensions=1&format=raw&'
+					. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+				),
+				'relink'  => $this->getContainer()->router->route(
+					'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&relink=1&format=raw&'
+					. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+				),
+				'refresh' => $this->getContainer()->router->route(
+					'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId() . '&format=raw&'
+					. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+				),
+			]
+		);
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 		Template::addJs('media://js/site-edit.js', $this->getContainer()->application);
 
@@ -212,6 +277,7 @@ class Html extends DataViewHtml
 	public function onBeforeEdit()
 	{
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
+		Template::addJs('media://choices/choices.min.js', $this->getContainer()->application, defer: true);
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();
@@ -229,26 +295,26 @@ class Html extends DataViewHtml
 
 		$document = $this->container->application->getDocument();
 		$document->addScriptOptions(
-				'panopticon.rememberTab', [
-					'key' => 'panopticon.siteEdit.' . $this->getModel()->id . '.rememberTab',
-				]
-			);
+			'panopticon.rememberTab', [
+				'key' => 'panopticon.siteEdit.' . $this->getModel()->id . '.rememberTab',
+			]
+		);
 		$document->addScriptOptions(
-				'panopticon.backupOnUpdate', [
-					'reload'  => $this->getContainer()->router->route(
-						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&extensions=1&format=raw&'
-						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
-					),
-					'relink'  => $this->getContainer()->router->route(
-						'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&relink=1&format=raw&'
-						. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
-					),
-					'refresh' => $this->getContainer()->router->route(
-						'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId()
-						. '&format=raw&' . $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
-					),
-				]
-			);
+			'panopticon.backupOnUpdate', [
+				'reload'  => $this->getContainer()->router->route(
+					'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&extensions=1&format=raw&'
+					. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+				),
+				'relink'  => $this->getContainer()->router->route(
+					'index.php?view=site&task=reloadBoU&id=' . $this->item->getId() . '&relink=1&format=raw&'
+					. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+				),
+				'refresh' => $this->getContainer()->router->route(
+					'index.php?view=site&task=akeebaBackupProfilesSelect&id=' . $this->item->getId() . '&format=raw&'
+					. $this->getContainer()->session->getCsrfToken()->getValue() . '=1'
+				),
+			]
+		);
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 		Template::addJs('media://js/site-edit.js', $this->getContainer()->application);
 
@@ -271,10 +337,13 @@ class Html extends DataViewHtml
 		$this->groupMap = $this->getModel('groups')->getGroupMap();
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
-		$this->item = $this->getModel();
-
-		$user    = $this->getContainer()->userManager->getUser();
-		$canEdit = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.editown');
+		$this->item             = $this->getModel();
+		$this->canEdit          = $this->canEditThisItem();
+		$this->siteConfig       = $this->item->getConfig();
+		$this->connectorVersion = $this->siteConfig->get('core.panopticon.version');
+		$this->connectorAPI     = $this->siteConfig->get('core.panopticon.api');
+		$this->baseUri          = Uri::getInstance($this->item->getBaseUrl());
+		$this->adminUri         = Uri::getInstance($this->item->getAdminUrl());
 
 		try
 		{
@@ -320,26 +389,26 @@ class Html extends DataViewHtml
 				'class' => 'btn btn-info ms-2',
 			]
 		))->addButton(
-				new Button(
-					[
-						'class' => 'header',
-						'title' => $this->getContainer()->language->text(
-							'PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_EMAILS'
-						),
-					]
-				)
-			)->addButton(
-				new Button(
-					[
-						'id'    => 'updatesummarytasks',
-						'icon'  => 'fa fa-fw fa-envelope',
-						'title' => $this->getContainer()->language->text('PANOPTICON_UPDATESUMMARYTASKS_TITLE'),
-						'url'   => $router->route(
-							sprintf("index.php?view=updatesummarytasks&site_id=%s", $this->item->getId())
-						),
-					]
-				)
+			new Button(
+				[
+					'class' => 'header',
+					'title' => $this->getContainer()->language->text(
+						'PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_EMAILS'
+					),
+				]
 			)
+		)->addButton(
+			new Button(
+				[
+					'id'    => 'updatesummarytasks',
+					'icon'  => 'fa fa-fw fa-envelope',
+					'title' => $this->getContainer()->language->text('PANOPTICON_UPDATESUMMARYTASKS_TITLE'),
+					'url'   => $router->route(
+						sprintf("index.php?view=updatesummarytasks&site_id=%s", $this->item->getId())
+					),
+				]
+			)
+		)
 //			->addButton(
 //				new Button(
 //					[
@@ -387,17 +456,19 @@ class Html extends DataViewHtml
 
 		$this->container->application->getDocument()->getToolbar()->addButton($dropdown);
 
-		if ($canEdit)
+		if ($this->canEdit)
 		{
-			$this->addButtonFromDefinition([
-				'id'    => 'doctor',
-				'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
-				'class' => 'btn btn-secondary border-light',
-				'url'   => $router->route(
-					sprintf("index.php?view=site&task=connectionDoctor&id=%s", $this->item->getId())
-				),
-				'icon'  => 'fa fa-fw fa-stethoscope',
-			]);
+			$this->addButtonFromDefinition(
+				[
+					'id'    => 'doctor',
+					'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
+					'class' => 'btn btn-secondary border-light',
+					'url'   => $router->route(
+						sprintf("index.php?view=site&task=connectionDoctor&id=%s", $this->item->getId())
+					),
+					'icon'  => 'fa fa-fw fa-stethoscope',
+				]
+			);
 		}
 
 		$this->cronStuckTime = $this->getCronStuckTime();
@@ -665,6 +736,19 @@ class Html extends DataViewHtml
 	}
 
 	/**
+	 * Does the current site have collected server information?
+	 *
+	 * @return  bool
+	 * @since   1.0.6
+	 */
+	protected function hasCollectedServerInfo(): bool
+	{
+		return $this->siteConfig->get('core.panopticon.api') >= 101
+		       && $this->siteConfig->get('core.serverInfo')
+		       && $this->siteConfig->get('core.serverInfo.collected');
+	}
+
+	/**
 	 * @return void
 	 */
 	private function addTooltipJavaScript(): void
@@ -706,6 +790,21 @@ JS;
 		$now = new DateTime();
 
 		return $now->sub($interval);
+	}
+
+	/**
+	 * Am I allowed to edit the site specified in $this->item?
+	 *
+	 * @return  bool
+	 * @since   1.0.6
+	 */
+	private function canEditThisItem(): bool
+	{
+		/** @var User $user */
+		$user = $this->container->userManager->getUser();
+
+		return $user->authorise('panopticon.admin', $this->item)
+		       || $user->authorise('panopticon.editown', $this->item);
 	}
 
 }

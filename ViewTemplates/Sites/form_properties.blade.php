@@ -13,15 +13,6 @@ defined('AKEEBA') || die;
 $config  = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 $isSuper = $this->container->userManager->getUser()->getPrivilege('panopticon.admin');
 
-$js = <<< JS
-window.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.js-choice').forEach((element) => {
-        new Choices(element, {allowHTML: false, removeItemButton: true, placeholder: true, placeholderValue: ""});
-    });
-});
-
-JS;
-
 // This is an unwanted effect of how AWF parses the default value on timestamp columns.
 if ($this->item->created_on === 'CURRENT_TIMESTAMP')
 {
@@ -29,8 +20,6 @@ if ($this->item->created_on === 'CURRENT_TIMESTAMP')
 }
 
 ?>
-@js('choices/choices.min.js', $this->getContainer()->application)
-@inlinejs($js)
 
 {{-- enabled --}}
 <div class="row mb-3">

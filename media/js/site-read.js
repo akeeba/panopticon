@@ -281,6 +281,25 @@
         // Remember collapsible status
         restoreCollapsibles();
         rememberCollapsibles();
+
+        // Enable Choices.js
+        if (typeof Choices !== "undefined")
+        {
+            document.querySelectorAll(".js-choice")
+                    .forEach((element) =>
+                    {
+                        new Choices(
+                            element,
+                            {
+                                allowHTML:        false,
+                                placeholder:      true,
+                                placeholderValue: "",
+                                removeItemButton: true
+                            }
+                        );
+                    });
+        }
+
     };
 
     // Workaround for this file loading before the DOM has been loaded on fast servers.

@@ -8,6 +8,7 @@
         <item url="file://$PROJECT_DIR$/media/js/login.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/main.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/setup.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/site-browse.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-edit.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/system.min.js" />
@@ -25,6 +26,7 @@
       <root url="file://$PROJECT_DIR$/media/js/remember-tab.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/setup.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/showon.min.js" />
+      <root url="file://$PROJECT_DIR$/media/js/site-browse.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/site-edit.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/system.min.js" />
