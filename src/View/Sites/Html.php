@@ -9,8 +9,9 @@ namespace Akeeba\Panopticon\View\Sites;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
 use Akeeba\Panopticon\Library\Toolbar\DropdownButton;
-use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
 use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
@@ -18,6 +19,7 @@ use Akeeba\Panopticon\Task\Trait\AdminToolsTrait;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
+use Awf\Date\Date;
 use Awf\Document\Toolbar\Button;
 use Awf\Mvc\DataView\Html as DataViewHtml;
 use Awf\Registry\Registry;
@@ -134,6 +136,14 @@ class Html extends DataViewHtml
 	 */
 	protected Uri $adminUri;
 
+	/**
+	 * The state of whether the Joomla update task is running or not.
+	 *
+	 * @var   JoomlaUpdateRunState
+	 * @since 1.0.6
+	 */
+	protected JoomlaUpdateRunState $joomlaUpdateRunState;
+
 	private ?string $curlError = null;
 
 	private ?string $guzzleError = null;
@@ -157,7 +167,7 @@ class Html extends DataViewHtml
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item            = $this->getModel();
-		$this->canEdit         = $this->canEditThisItem();
+		$this->canEdit         = $this->item->canEdit();
 		$this->connectionError = $this->container->segment->getFlash('site_connection_error', $this->connectionError) ??
 		                         $this->connectionError;
 		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
@@ -338,12 +348,17 @@ class Html extends DataViewHtml
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item             = $this->getModel();
-		$this->canEdit          = $this->canEditThisItem();
+		$this->canEdit          = $this->item->canEdit();
 		$this->siteConfig       = $this->item->getConfig();
 		$this->connectorVersion = $this->siteConfig->get('core.panopticon.version');
 		$this->connectorAPI     = $this->siteConfig->get('core.panopticon.api');
 		$this->baseUri          = Uri::getInstance($this->item->getBaseUrl());
 		$this->adminUri         = Uri::getInstance($this->item->getAdminUrl());
+
+		if ($this->item->cmsType() === CMSType::JOOMLA)
+		{
+			$this->joomlaUpdateRunState = $this->item->getJoomlaUpdateRunState();
+		}
 
 		try
 		{
@@ -503,6 +518,38 @@ class Html extends DataViewHtml
 		);
 
 		return true;
+	}
+
+	/**
+	 * Formats a date using a specified date format key.
+	 *
+	 * @param   string|DateTime|Date  $date       The date to format
+	 * @param   string                $formatKey  The key to retrieve the date format from language
+	 *                                            (default: 'DATE_FORMAT_LC1')
+	 *
+	 * @return  string  The formatted date
+	 * @since   1.0.6
+	 */
+	protected function formatDate(string|DateTime|Date $date, string $formatKey = 'DATE_FORMAT_LC1'): string
+	{
+		if (is_numeric($date) && trim($date) == intval($date))
+		{
+			try
+			{
+				$date = new DateTime('@' . intval($date));
+			}
+			catch (Exception)
+			{
+				return '';
+			}
+		}
+
+		if ($date instanceof DateTime)
+		{
+			$date = $date->format(DATE_ATOM);
+		}
+
+		return $this->getContainer()->html->basic->date($date, $this->getLanguage()->text($formatKey));
 	}
 
 	/**
@@ -791,20 +838,4 @@ JS;
 
 		return $now->sub($interval);
 	}
-
-	/**
-	 * Am I allowed to edit the site specified in $this->item?
-	 *
-	 * @return  bool
-	 * @since   1.0.6
-	 */
-	private function canEditThisItem(): bool
-	{
-		/** @var User $user */
-		$user = $this->container->userManager->getUser();
-
-		return $user->authorise('panopticon.admin', $this->item)
-		       || $user->authorise('panopticon.editown', $this->item);
-	}
-
 }

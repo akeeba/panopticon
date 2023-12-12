@@ -21,6 +21,7 @@ use Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL;
 use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
 use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\AkeebaBackupIntegrationTrait;
@@ -915,11 +916,145 @@ class Site extends DataModel
 		} while ($return === Status::WILL_RESUME->value);
 	}
 
+	/**
+	 * Get the CMS type for this site
+	 *
+	 * @return  CMSType The CMS type
+	 * @since   1.0.6
+	 */
 	public function cmsType(): CMSType
 	{
 		$cmsType = $this->getConfig()->get('cmsType', 'joomla') ?: 'joomla';
 
 		return CMSType::from($cmsType);
+	}
+
+	/**
+	 * Get the current run state of the Joomla update task
+	 *
+	 * @return  JoomlaUpdateRunState  The run state of the Joomla update task
+	 * @since   1.0.6
+	 */
+	public function getJoomlaUpdateRunState(): JoomlaUpdateRunState
+	{
+		// This is NOT a Joomla! site.
+		if ($this->cmsType() !== CMSType::JOOMLA)
+		{
+			return JoomlaUpdateRunState::NOT_A_JOOMLA_SITE;
+		}
+
+		$config = $this->getConfig();
+		$joomlaUpdateTask = $this->getJoomlaUpdateTask();
+
+		// Special statuses for Joomla! core files refresh
+		if (
+			$config->get('core.lastAutoUpdateVersion') === $config->get('core.current.version')
+			&& !is_null($joomlaUpdateTask)
+			&& $joomlaUpdateTask->last_exit_code != Status::OK->value
+		)
+		{
+			if ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
+			{
+				return JoomlaUpdateRunState::REFRESH_SCHEDULED;
+			}
+
+			if ($joomlaUpdateTask->enabled && in_array($joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
+			{
+				return JoomlaUpdateRunState::REFRESH_RUNNING;
+			}
+
+			if (!$joomlaUpdateTask->enabled)
+			{
+				return JoomlaUpdateRunState::REFRESH_ERROR;
+			}
+
+			return JoomlaUpdateRunState::INVALID_STATE;
+		}
+
+		// We're told there is no update available.
+		if (!$config->get('core.canUpgrade', false))
+		{
+			return JoomlaUpdateRunState::CANNOT_UPGRADE;
+		}
+
+		// The last auto-update version is the same as the latest available version. Not scheduled.
+		if ($config->get('core.lastAutoUpdateVersion') == $config->get('core.latest.version'))
+		{
+			return JoomlaUpdateRunState::NOT_SCHEDULED;
+		}
+
+		// There is no scheduled update task.
+		if ($joomlaUpdateTask === null)
+		{
+			return JoomlaUpdateRunState::NOT_SCHEDULED;
+		}
+
+		// A new version is available, the update task is enabled, but has returned correctly. Should never happen!
+		if ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::OK->value)
+		{
+			return JoomlaUpdateRunState::NOT_SCHEDULED;
+		}
+
+		// There is a scheduled update task which will run later.
+		if ($joomlaUpdateTask->enabled && $joomlaUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
+		{
+			return JoomlaUpdateRunState::SCHEDULED;
+		}
+
+		// The update task is scheduled, and running.
+		if (($joomlaUpdateTask->enabled
+		     && in_array(
+			     $joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]
+		     )))
+		{
+			return JoomlaUpdateRunState::RUNNING;
+		}
+
+		// An error occurred
+		if ($joomlaUpdateTask->last_exit_code != Status::OK->value)
+		{
+			return JoomlaUpdateRunState::ERROR;
+		}
+
+		// We should never be here.
+		return JoomlaUpdateRunState::INVALID_STATE;
+	}
+
+	/**
+	 * Can we possibly schedule a core files refresh on a Joomla! site?
+	 *
+	 * @return  bool
+	 * @since   1.0.6
+	 */
+	public function canRefreshCoreJoomlaFiles(): bool
+	{
+		if ($this->cmsType() !== CMSType::JOOMLA)
+		{
+			return false;
+		}
+
+		$config = $this->getConfig();
+
+		return !$config->get('core.canUpgrade', false)
+		       && $config->get('core.extensionAvailable', true)
+		       && $config->get('core.updateSiteAvailable', true);
+	}
+
+	/**
+	 * Is the user allowed to edit this site?
+	 *
+	 * @param   User|null  $user  The user to check if they're authorised to edit. NULL for current user.
+	 *
+	 * @return  bool
+	 * @since   1.0.6
+	 */
+	public function canEdit(?User $user = null): bool
+	{
+		/** @var \Akeeba\Panopticon\Library\User\User $user */
+		$user ??= $this->container->userManager->getUser();
+
+		return $user->authorise('panopticon.admin', $this)
+		       || $user->authorise('panopticon.editown', $this);
 	}
 
 	protected function getSiteSpecificTask(string $type): ?Task

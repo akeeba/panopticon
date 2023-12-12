@@ -9,6 +9,7 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Awf\Uri\Uri;
 ?>
 
@@ -71,7 +72,13 @@ use Awf\Uri\Uri;
 <div class="container my-3">
     <div class="row g-3 mb-3">
         <div class="col-12 col-lg-6 order-1 order-lg-0">
-            @include('Sites/item_joomlaupdate')
+            @if ($this->item->cmsType() === CMSType::JOOMLA)
+                {{-- Joomla! sites: Joomla!™ Update information --}}
+                @include('Sites/item_joomlaupdate')
+            @elseif ($this->item->cmsType() === CMSType::WORDPRESS)
+                {{-- WordPress sites: WordPress update information --}}
+                @include('Sites/item_wpupdate')
+            @endif
         </div>
 
         <div class="col-12 col-lg-6 order-0 order-lg-1">
