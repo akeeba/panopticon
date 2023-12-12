@@ -34,7 +34,7 @@ defined('AKEEBA') || die;
         </tr>
         </thead>
         <tbody>
-        @foreach($this->dependecies as $packageName => $packageInfo)
+        @foreach($this->dependencies as $packageName => $packageInfo)
 				<?php if (!isset($packageInfo['version'])) continue ?>
 				<?php if ($packageName === 'akeeba/panopticon') continue ?>
             <tr>

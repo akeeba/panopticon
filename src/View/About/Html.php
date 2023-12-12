@@ -21,7 +21,7 @@ class Html extends BaseHtmlView
 
 	protected array $npmInfo;
 
-	protected array $dependecies;
+	protected array $dependencies;
 
 	protected function onBeforeMain(): bool
 	{
@@ -32,7 +32,7 @@ class Html extends BaseHtmlView
 		$model              = $this->getModel();
 		$this->contributors = $model->getContributors();
 		$this->npmInfo      = $model->getNPMInformation();
-		$this->dependecies  = $model->getDependencies();
+		$this->dependencies  = $model->getDependencies();
 
 		return true;
 	}
