@@ -72,6 +72,14 @@ class Site extends DataModel
 	use ApplyUserGroupsToSiteQueryTrait;
 	use JsonSanitizerTrait;
 
+	/**
+	 * Have the config contents changed since the last time I called getConfig()?)
+	 *
+	 * @var   true
+	 * @since 1.0.6
+	 */
+	private bool $configHasChanged = false;
+
 	public function __construct(Container $container = null)
 	{
 		$this->tableName   = '#__sites';
@@ -774,9 +782,42 @@ class Site extends DataModel
 
 	public function getConfig(): Registry
 	{
-		$config = $this->getFieldValue('config');
+		static $asRegistry = null;
 
-		return ($config instanceof Registry) ? $config : (new Registry($config));
+		if ($this->configHasChanged || $asRegistry === null)
+		{
+			$this->configHasChanged = false;
+			$config                 = $this->getFieldValue('config');
+			$asRegistry             = ($config instanceof Registry) ? $config : (new Registry($config));
+		}
+
+		return $asRegistry;
+	}
+
+	/**
+	 * Set the config attribute of the object.
+	 *
+	 * This method is called when using either the magic accessors, or the setFieldValue() method.
+	 *
+	 * It will automatically flag the config as changed if it no longer matches the getConfig() method's object.
+	 *
+	 * @param   string|Registry|null  $config  The config attribute to be set. Can be a string, Registry object, or null.
+	 *
+	 * @return  void
+	 * @since   1.0.6
+	 */
+	protected function setConfigAttribute(string|Registry|null $config): void
+	{
+		if (is_string($config) || $config === null)
+		{
+			$this->recordData['config'] = $config;
+			$this->configHasChanged = $config !== $this->getConfig()->toString();
+
+			return;
+		}
+
+		$this->recordData['config'] = $config->toString();
+		$this->configHasChanged = $this->recordData['config'] !== $this->getConfig()->toString();
 	}
 
 	public function saveDownloadKey(int $extensionId, ?string $key): void
