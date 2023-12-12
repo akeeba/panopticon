@@ -77,8 +77,8 @@ abstract class TinyMCE
 				'promotion'                   => false,
 				'branding'                    => false,
 				'content_security_policy'     => "script-src 'none'",
-				'skin'                        => '(window.matchMedia("(prefers-color-scheme: dark)").matches ? "oxide-dark" : "akeeba")',
-				'content_css'                 => '(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "akeeba")',
+				'skin'                        => ['oxide-dark', 'akeeba'],
+				'content_css'                 => ['dark', 'akeeba'],
 				'importcss_exclusive'         => false,
 				'browser_spellcheck'          => true,
 				'relative_urls'               => false,
@@ -105,12 +105,16 @@ window.addEventListener('DOMContentLoaded', () => {
         window.clearInterval(waitHandlerTimeout);
         let myConfig = akeeba.System.getOptions('panopticon.tinymce.config')['$id'];
         
-        if (myConfig['skin'].includes('window.matchMedia')) {
-            myConfig['skin'] = eval(myConfig['skin']);
+        if (typeof myConfig["skin"] === "object") {
+            const darkSkin = myConfig["skin"][0];
+            const lightSkin = myConfig["skin"][1];
+            myConfig["skin"] = (window.matchMedia("(prefers-color-scheme: dark)").matches ? darkSkin : lightSkin)
         }
         
-        if (myConfig['content_css'].includes('window.matchMedia')) {
-            myConfig['content_css'] = eval(myConfig['content_css']);
+        if (myConfig['content_css'] === "object") {
+            const darkCSS = myConfig["content_css"][0];
+            const lightCSS = myConfig["content_css"][1];
+            myConfig['content_css'] = (window.matchMedia("(prefers-color-scheme: dark)").matches ? darkCSS : lightCSS);
         }
         
         tinymce.init(myConfig);

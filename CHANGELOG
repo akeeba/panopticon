@@ -8,6 +8,7 @@ Akeeba Panopticon 1.0.6
 ~ Light and Dark Mode for the TinyMCE and ACE editors
 # [HIGH] Wrong assignment of sites to groups if there are gaps in numbering [gh-360]
 # [MEDIUM] No fallback to English if the browser, user configuration, and global configuration don't include it [gh-368]
+# [MEDIUM] No TinyMCE editor when using the `.htaccess` file
 
 Akeeba Panopticon 1.0.5
 ================================================================================
