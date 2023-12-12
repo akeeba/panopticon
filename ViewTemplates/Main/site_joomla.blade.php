@@ -31,8 +31,7 @@ $jVersionHelper      = new JoomlaVersion($this->getContainer())
 
 @repeatable('joomlaVersion', $jVersion)
 {{{ $jVersion }}}
-<?php
-$version = Version::create($jVersion) ?>
+<?php $version = Version::create($jVersion) ?>
 @if($version->isDev())
     <sup>
             <span class="badge bg-danger small text-light">
@@ -66,7 +65,16 @@ $version = Version::create($jVersion) ?>
 @endif
 @endrepeatable
 
+@repeatable('joomlaLogo')
+    <span class="fab fa-joomla" aria-hidden="true"
+          data-bs-toggle="tooltip" data-bs-placement="bottom"
+          data-bs-title="Joomla!™"
+    ></span>
+    <span class="visually-hidden">Joomla!™</span>
+@endrepeatable
+
 <div class="d-flex flex-row gap-2">
+    {{-- Button to reload the site information --}}
     <a class="btn btn-sm btn-outline-secondary" role="button"
        href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d&return=%s&%s=1', $item->id, $returnUrl, $token))"
        data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -75,6 +83,7 @@ $version = Version::create($jVersion) ?>
         <span class="fa fa-refresh" aria-hidden="true"></span>
         <span class="visually-hidden">@sprintf('PANOPTICON_SITE_BTN_JUPDATE_RELOAD_SR', $item->name)</span>
     </a>
+
     {{-- Did we have an error last time we tried to update the site information? --}}
     @if ($lastError)
         <?php $siteInfoLastErrorModalID = 'silem-' . md5(random_bytes(120)); ?>
@@ -119,6 +128,7 @@ $version = Version::create($jVersion) ?>
             </span>
         </div>
     @endif
+
     {{-- Is Joomla Update working at all? --}}
     @if($jUpdateFailure)
         <div>
@@ -162,10 +172,10 @@ $version = Version::create($jVersion) ?>
         </div>
     @endif
 
+    {{-- Joomla! version --}}
     @if (empty($jVersion))
         <span class="badge bg-secondary-subtle">@lang('PANOPTICON_MAIN_SITES_LBL_JVERSION_UNKNOWN')</span>
     @else
-
         @if ($canUpgrade)
             <div
                     data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -173,17 +183,20 @@ $version = Version::create($jVersion) ?>
 
             >
                 <div class="text-warning fw-bold d-inline-block">
+                    @yieldRepeatable('joomlaLogo')
                     @yieldRepeatable('joomlaVersion', $jVersion)
                 </div>
                 <div class="small text-success-emphasis d-inline-block">
                     <span class="fa fa-arrow-right" aria-hidden="true"></span>
                     <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_CAN_BE_UPGRADED_SHORT')</span>
+                    @yieldRepeatable('joomlaLogo')
                     @yieldRepeatable('joomlaVersion', $latestJoomlaVersion)
                 </div>
             </div>
         @else
             @if($jUpdateFailure)
                 <div class="text-secondary">
+                    @yieldRepeatable('joomlaLogo')
                     @yieldRepeatable('joomlaVersion', $jVersion)
                 </div>
             @elseif($jVersionHelper->isEOLMajor($jVersion))
@@ -193,6 +206,7 @@ $version = Version::create($jVersion) ?>
                           data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_MAJOR')"
                     ></span>
                     <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_MAJOR')</span>
+                    @yieldRepeatable('joomlaLogo')
                     @yieldRepeatable('joomlaVersion', $jVersion)
                 </div>
             @elseif($jVersionHelper->isEOLBranch($jVersion))
@@ -202,10 +216,12 @@ $version = Version::create($jVersion) ?>
                           data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_BRANCH')"
                     ></span>
                     <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_BRANCH')</span>
+                    @yieldRepeatable('joomlaLogo')
                     @yieldRepeatable('joomlaVersion', $jVersion)
                 </div>
             @else
                 <div class="text-body">
+                    @yieldRepeatable('joomlaLogo')
                     @yieldRepeatable('joomlaVersion', $jVersion)
                 </div>
             @endunless
@@ -213,6 +229,7 @@ $version = Version::create($jVersion) ?>
 
     @endif
 
+    {{-- Report number of changed template overrides --}}
     @if (($overridesChanged = $config->get('core.overridesChanged')) > 0)
         <div class="ms-2 small" data-bs-toggle="tooltip" data-bs-placement="bottom"
              data-bs-title="@sprintf('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N', $overridesChanged)">

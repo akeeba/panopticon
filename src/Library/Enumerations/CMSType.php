@@ -16,6 +16,37 @@ defined('AKEEBA') || die;
  */
 enum CMSType: string
 {
+	case UNKNOWN   = '';
 	case JOOMLA    = 'joomla';
 	case WORDPRESS = 'wordpress';
+
+	public function forHumans(): string
+	{
+		return match ($this)
+		{
+			default => 'Unknown',
+			self::JOOMLA => 'Joomla!™',
+			self::WORDPRESS => 'WordPress',
+		};
+	}
+
+	public function logoClass(bool $fullClassList = false): string
+	{
+		if ($fullClassList)
+		{
+			return match ($this)
+			{
+				default => 'fa fa-square',
+				self::JOOMLA => 'fab fa-joomla',
+				self::WORDPRESS => 'fab fa-wordpress',
+			};
+		}
+
+		return match ($this)
+		{
+			default => 'square',
+			self::JOOMLA => 'joomla',
+			self::WORDPRESS => 'wordpress',
+		};
+	}
 }

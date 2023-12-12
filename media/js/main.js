@@ -80,6 +80,22 @@
         const tooltipTriggerList = document.querySelectorAll("[data-bs-toggle=\"tooltip\"]")
         const tooltipList        = [...tooltipTriggerList].map(
             tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+        // Enable Choices.js
+        document
+            .querySelectorAll(".js-choice")
+            .forEach((element) =>
+            {
+                new Choices(
+                    element,
+                    {
+                        allowHTML:        false,
+                        placeholder:      true,
+                        placeholderValue: "",
+                        removeItemButton: true
+                    }
+                );
+            });
     }
 
     if (document.readyState === "loading")

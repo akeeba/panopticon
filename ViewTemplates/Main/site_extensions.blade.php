@@ -16,30 +16,10 @@ use Akeeba\Panopticon\View\Main\Html;
  * @var Awf\Registry\Registry $config
  */
 
-$extensions    = get_object_vars($config->get('extensions.list', new stdClass()));
-$numUpdates    = array_reduce(
-		$extensions,
-		function (int $carry, object $item): int {
-			$current = $item?->version?->current;
-			$new     = $item?->version?->new;
-
-			if (empty($new))
-			{
-				return $carry;
-			}
-
-			return $carry + ((empty($current) || version_compare($current, $new, 'ge')) ? 0 : 1);
-		},
-		0
-);
-$numKeyMissing = array_reduce(
-		$extensions,
-		fn(int $carry, object $item): int => $carry + ((!$item?->downloadkey?->supported || $item?->downloadkey?->valid)
-						? 0 : 1),
-		0
-);
-
-$lastError = trim($config->get('extensions.lastErrorMessage') ?? '');
+$extensions    = $this->getExtensions($config);
+$numUpdates    = $this->getNumberOfExtensionUpdates($extensions);
+$numKeyMissing = $this->getNumberOfKeyMissingExtensions($extensions);
+$lastError     = $this->getLastExtensionsUpdateError($config);
 ?>
 
 <div class="d-flex flex-row gap-2">

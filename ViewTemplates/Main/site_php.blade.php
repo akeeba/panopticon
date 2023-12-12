@@ -23,10 +23,10 @@ $phpVersion = new PhpVersion;
 ?>
 @repeatable('phpVersion', $php, $colorizePhp = true)
     <?php
-    $phpVersion = new PhpVersion;
-    $versionInfo = $phpVersion->getVersionInformation($php);
+    $phpVersion    = new PhpVersion;
+    $versionInfo   = $phpVersion->getVersionInformation($php);
     $latestVersion = $versionInfo->latest;
-    $isLatest    = version_compare($php, $latestVersion, 'ge');
+    $isLatest      = version_compare($php, $latestVersion, 'ge');
     ?>
     @if($isLatest)
         {{{ $php }}}
@@ -61,7 +61,7 @@ $phpVersion = new PhpVersion;
         ->format($this->getLanguage()->text('DATE_FORMAT_LC3')) ?>
     <div class="text-danger"
          data-bs-toggle="tooltip" data-bs-placement="bottom"
-         data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE', $eolDate)
+         data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE', $eolDate)"
     >
         <span class="fa fa-circle-xmark" aria-hidden="true"></span>
         {{{ $php }}}

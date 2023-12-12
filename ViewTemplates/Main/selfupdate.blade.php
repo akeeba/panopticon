@@ -12,12 +12,8 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\Model\Selfupdate $model
  */
 
-$model             = $this->getModel('selfupdate');
-$updateInformation = $model->getUpdateInformation();
-$hasUpdate         = $model->hasUpdate();
-$latestVersion     = $model->getLatestVersion();
 ?>
-@if ($updateInformation->stuck)
+@if ($this->selfUpdateInformation->stuck)
     <div class="alert alert-danger d-flex flex-row justify-content-between align-items-center">
         <div>
             <span class="fa fa-xmark-circle" aria-hidden="true"></span>
@@ -31,7 +27,7 @@ $latestVersion     = $model->getLatestVersion();
             </a>
         </div>
     </div>
-@elseif (!$updateInformation->loadedUpdate)
+@elseif (!$this->selfUpdateInformation->loadedUpdate)
     <div class="alert alert-warning d-flex flex-row justify-content-between align-items-center">
         <div class="fs-3">
             <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -45,11 +41,11 @@ $latestVersion     = $model->getLatestVersion();
             </a>
         </div>
     </div>
-@elseif ($hasUpdate)
+@elseif ($this->hasSelfUpdate)
     <div class="alert alert-info d-flex flex-row justify-content-between align-items-center">
         <div class="fs-3">
             <span class="fa fa-file-zipper" aria-hidden="true"></span>
-            @sprintf('PANOPTICON_SELFUPDATE_LBL_UPDATE_HEAD', $latestVersion->version)
+            @sprintf('PANOPTICON_SELFUPDATE_LBL_UPDATE_HEAD', $this->latestPanopticonVersion->version)
         </div>
         <div>
             <a class="btn btn-info btn-sm" role="button"
