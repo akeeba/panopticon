@@ -73,12 +73,13 @@ class Site extends DataModel
 	use JsonSanitizerTrait;
 
 	/**
-	 * Have the config contents changed since the last time I called getConfig()?)
+	 * Represents the configuration for a site as a Registry object.
 	 *
-	 * @var   true
+	 * @var   null|Registry $configAsRegistry The configuration for a site as a Registry object, or null if not
+	 *        available.
 	 * @since 1.0.6
 	 */
-	private bool $configHasChanged = false;
+	private ?Registry $configAsRegistry = null;
 
 	public function __construct(Container $container = null)
 	{
@@ -90,6 +91,13 @@ class Site extends DataModel
 		$this->fieldsSkipChecks[] = 'enabled';
 
 		$this->addBehaviour('filters');
+	}
+
+	public function reset($useDefaults = true, $resetRelations = false)
+	{
+		$this->configAsRegistry = null;
+
+		return parent::reset($useDefaults, $resetRelations);
 	}
 
 	public function keyedList(bool $onlyEnabled = true): array
@@ -782,42 +790,13 @@ class Site extends DataModel
 
 	public function getConfig(): Registry
 	{
-		static $asRegistry = null;
-
-		if ($this->configHasChanged || $asRegistry === null)
+		if ($this->configAsRegistry === null)
 		{
-			$this->configHasChanged = false;
 			$config                 = $this->getFieldValue('config');
-			$asRegistry             = ($config instanceof Registry) ? $config : (new Registry($config));
+			$this->configAsRegistry = ($config instanceof Registry) ? $config : (new Registry($config));
 		}
 
-		return $asRegistry;
-	}
-
-	/**
-	 * Set the config attribute of the object.
-	 *
-	 * This method is called when using either the magic accessors, or the setFieldValue() method.
-	 *
-	 * It will automatically flag the config as changed if it no longer matches the getConfig() method's object.
-	 *
-	 * @param   string|Registry|null  $config  The config attribute to be set. Can be a string, Registry object, or null.
-	 *
-	 * @return  void
-	 * @since   1.0.6
-	 */
-	protected function setConfigAttribute(string|Registry|null $config): void
-	{
-		if (is_string($config) || $config === null)
-		{
-			$this->recordData['config'] = $config;
-			$this->configHasChanged = $config !== $this->getConfig()->toString();
-
-			return;
-		}
-
-		$this->recordData['config'] = $config->toString();
-		$this->configHasChanged = $this->recordData['config'] !== $this->getConfig()->toString();
+		return $this->configAsRegistry;
 	}
 
 	public function saveDownloadKey(int $extensionId, ?string $key): void
@@ -984,7 +963,7 @@ class Site extends DataModel
 			return JoomlaUpdateRunState::NOT_A_JOOMLA_SITE;
 		}
 
-		$config = $this->getConfig();
+		$config           = $this->getConfig();
 		$joomlaUpdateTask = $this->getJoomlaUpdateTask();
 
 		// Special statuses for Joomla! core files refresh
@@ -999,7 +978,10 @@ class Site extends DataModel
 				return JoomlaUpdateRunState::REFRESH_SCHEDULED;
 			}
 
-			if ($joomlaUpdateTask->enabled && in_array($joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]))
+			if ($joomlaUpdateTask->enabled
+			    && in_array(
+				    $joomlaUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]
+			    ))
 			{
 				return JoomlaUpdateRunState::REFRESH_RUNNING;
 			}
@@ -1096,6 +1078,41 @@ class Site extends DataModel
 
 		return $user->authorise('panopticon.admin', $this)
 		       || $user->authorise('panopticon.editown', $this);
+	}
+
+	/**
+	 * Set the config attribute of the object.
+	 *
+	 * This method is called when using either the magic accessors, or the setFieldValue() method.
+	 *
+	 * It will automatically flag the config as changed if it no longer matches the getConfig() method's object.
+	 *
+	 * @param   string|Registry|null  $config  The config attribute to be set. Can be a string, Registry object, or
+	 *                                         null.
+	 *
+	 * @return  void
+	 * @since   1.0.6
+	 */
+	protected function setConfigAttribute(string|Registry|null $config): void
+	{
+		if (is_string($config) || $config === null)
+		{
+			$this->recordData['config'] = $config;
+
+			if ($config !== $this->getConfig()->toString())
+			{
+				$this->configAsRegistry = null;
+			}
+
+			return;
+		}
+
+		$this->recordData['config'] = $config->toString();
+
+		if ($this->recordData['config'] !== $this->getConfig()->toString())
+		{
+			$this->configAsRegistry = null;
+		}
 	}
 
 	protected function getSiteSpecificTask(string $type): ?Task
