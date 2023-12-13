@@ -55,16 +55,14 @@ use Awf\Uri\Uri;
 </div>
 
 {{-- Show group labels --}}
-@if (!empty($groups = $this->siteConfig->get('config.groups')))
+@if (!empty($groups = $this->item->getGroups(true)))
 <div class="my-1">
     <span class="fa fa-fw fa-user-group text-secondary" aria-hidden="true"></span>
     <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_GROUPS')</span>
-    @foreach($groups as $gid)
-        @if (isset($this->groupMap[$gid]))
-            <span class="badge bg-secondary">
-                {{{ $this->groupMap[$gid] }}}
-            </span>
-        @endif
+    @foreach($groups as $groupName)
+        <span class="badge bg-secondary">
+            {{{ $groupName }}}
+        </span>
     @endforeach
 </div>
 @endif

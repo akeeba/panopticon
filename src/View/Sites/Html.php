@@ -343,9 +343,6 @@ class Html extends DataViewHtml
 
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_TITLE_READ'));
 
-		// Groups map
-		$this->groupMap = $this->getModel('groups')->getGroupMap();
-
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item             = $this->getModel();
 		$this->canEdit          = $this->item->canEdit();

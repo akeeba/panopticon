@@ -76,10 +76,18 @@ class Site extends DataModel
 	 * Represents the configuration for a site as a Registry object.
 	 *
 	 * @var   null|Registry $configAsRegistry The configuration for a site as a Registry object, or null if not
-	 *        available.
+	 *                                        available.
 	 * @since 1.0.6
 	 */
 	private ?Registry $configAsRegistry = null;
+
+	/**
+	 * Group ID to group names map (used as cache).
+	 *
+	 * @var   null|string[]
+	 * @since 1.0.6
+	 */
+	private ?array $groupMaps = null;
 
 	public function __construct(Container $container = null)
 	{
@@ -96,6 +104,7 @@ class Site extends DataModel
 	public function reset($useDefaults = true, $resetRelations = false)
 	{
 		$this->configAsRegistry = null;
+		$this->groupMaps        = null;
 
 		return parent::reset($useDefaults, $resetRelations);
 	}
@@ -1078,6 +1087,46 @@ class Site extends DataModel
 
 		return $user->authorise('panopticon.admin', $this)
 		       || $user->authorise('panopticon.editown', $this);
+	}
+
+	/**
+	 * Get the groups for this site
+	 *
+	 * @param   bool  $asString  Optional. Whether to return the groups as strings instead of integers. Default is
+	 *                           false.
+	 *
+	 * @return  array|string  The groups as an array of integers (IDs) or strings (names), depending on the value of
+	 *                        $asString. If $asString is false, the return value is an array of group IDs (integers).
+	 *                        If $asString is true, the return value is an array of group names (strings).
+	 * @since   1.0.6
+	 */
+	public function getGroups(bool $asString = false): array
+	{
+		$groups = $this->getConfig()->get('config.groups', []) ?: [];
+
+		if (empty($groups) || !is_array($groups))
+		{
+			return [];
+		}
+
+		$groups = array_unique($groups);
+
+		if (!$asString)
+		{
+			return $groups;
+		}
+
+		$this->groupMaps ??= $this->getContainer()->mvcFactory->makeTempModel('groups')->getGroupMap();
+
+		$groups = array_map(
+			fn($x) => $this->groupMaps[$x] ?? null,
+			$groups
+		);
+		$groups = array_filter($groups);
+
+		sort($groups);
+
+		return $groups;
 	}
 
 	/**
