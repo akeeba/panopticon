@@ -764,6 +764,69 @@ class Site extends DataModel
 		return $extensions;
 	}
 
+	/**
+	 * Get summary information about extensions
+	 *
+	 * @param   array|null  $extensions  An array of extension objects. NULL to use the result of getExtensionsList().
+	 *
+	 * @return  object Quick information about the extensions:
+	 *                - update: the number of extensions with available updates
+	 *                - key: the number of extensions with missing download IDs
+	 *                - site: the number of extensions without update sites
+	 * @since   1.0.6
+	 */
+	public function getExtensionsQuickInfo(?array $extensions = null): object
+	{
+		$extensions ??= $this->getExtensionsList();
+
+		$ret = (object) [
+			'update' => 0,
+			'key'    => 0,
+			'site'   => 0,
+		];
+
+		/** @var \Akeeba\Panopticon\Model\Sysconfig $sysConfigModel */
+		$sysConfigModel = $this->getModel('Sysconfig');
+
+		foreach ($extensions as $item)
+		{
+			$extensionkey = $sysConfigModel->getExtensionShortname(
+				$item->type, $item->element, $item->folder, $item->client_id
+			);
+
+			if (empty($extensionkey) || $sysConfigModel->isExcludedShortname($extensionkey))
+			{
+				continue;
+			}
+
+			$currentVersion    = $item->version?->current;
+			$latestVersion     = $item->version?->new;
+			$noUpdateSite      = !($item->hasUpdateSites ?? false);
+			$missingDownloadID = ($item->downloadkey?->supported ?? false)
+			                     && !($item->downloadkey?->valid ?? false);
+			$hasUpdate         = !empty($currentVersion) && !empty($latestVersion)
+			                     && ($currentVersion != $latestVersion)
+			                     && version_compare($currentVersion, $latestVersion, 'lt');
+
+			if ($noUpdateSite)
+			{
+				$ret->site++;
+			}
+
+			if ($missingDownloadID)
+			{
+				$ret->key++;
+			}
+
+			if ($hasUpdate)
+			{
+				$ret->update++;
+			}
+		}
+
+		return $ret;
+	}
+
 	public function getExtensionsScheduledForUpdate(): array
 	{
 		$queueName = sprintf('extensions.%d', $this->getId());

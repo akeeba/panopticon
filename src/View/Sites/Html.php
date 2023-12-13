@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
 use Akeeba\Panopticon\Library\Toolbar\DropdownButton;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
+use Akeeba\Panopticon\Model\Trait\ExtensionAutoUpdateInfoTrait;
 use Akeeba\Panopticon\Model\Trait\FormatFilesizeTrait;
 use Akeeba\Panopticon\Task\Trait\AdminToolsTrait;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
@@ -48,6 +49,7 @@ class Html extends DataViewHtml
 	}
 	use AdminToolsTrait;
 	use FormatFilesizeTrait;
+	use ExtensionAutoUpdateInfoTrait;
 
 	public object $extension;
 
@@ -143,6 +145,14 @@ class Html extends DataViewHtml
 	 * @since 1.0.6
 	 */
 	protected JoomlaUpdateRunState $joomlaUpdateRunState;
+
+	/**
+	 * Holds an array of extensions installed on the site.
+	 *
+	 * @var   array
+	 * @since 1.0.6
+	 */
+	protected array $extensions;
 
 	private ?string $curlError = null;
 
@@ -344,13 +354,14 @@ class Html extends DataViewHtml
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_TITLE_READ'));
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
-		$this->item             = $this->getModel();
-		$this->canEdit          = $this->item->canEdit();
-		$this->siteConfig       = $this->item->getConfig();
-		$this->connectorVersion = $this->siteConfig->get('core.panopticon.version');
-		$this->connectorAPI     = $this->siteConfig->get('core.panopticon.api');
-		$this->baseUri          = Uri::getInstance($this->item->getBaseUrl());
-		$this->adminUri         = Uri::getInstance($this->item->getAdminUrl());
+		$this->item                = $this->getModel();
+		$this->canEdit             = $this->item->canEdit();
+		$this->siteConfig          = $this->item->getConfig();
+		$this->connectorVersion    = $this->siteConfig->get('core.panopticon.version');
+		$this->connectorAPI        = $this->siteConfig->get('core.panopticon.api');
+		$this->baseUri             = Uri::getInstance($this->item->getBaseUrl());
+		$this->adminUri            = Uri::getInstance($this->item->getAdminUrl());
+		$this->extensions          = $this->item->getExtensionsList();
 
 		if ($this->item->cmsType() === CMSType::JOOMLA)
 		{
