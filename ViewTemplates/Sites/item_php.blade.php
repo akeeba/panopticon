@@ -13,29 +13,23 @@ use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
 
-$config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 $phpVersion = new PhpVersion();
 
-$lastUpdateTimestamp = function () use ($config): string {
-	$timestamp = $config->get('core.lastAttempt');
-
-    return $timestamp ? $this->timeAgo($timestamp) : $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
-};
-
-$php                     = $config->get('core.php', '0.0.0');
-$phpBranch               = Version::create($php)->versionFamily();
+$lastUpdateTimestamp     = $this->siteConfig->get('core.lastAttempt')
+	? $this->timeAgo($this->siteConfig->get('core.lastAttempt'))
+	: $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
+$php                     = $this->siteConfig->get('core.php', '0.0.0') ?: '0.0.0';
+$phpBranch               = Version::create($php)?->versionFamily();
 $versionInfo             = $phpVersion->getVersionInformation($php);
-$latestVersionInBranch   = $versionInfo->latest;
-$minimumSupportedBranch  = $phpVersion->getMinimumSupportedBranch();
-$isUnknown               = $versionInfo->unknown;
-$isOutOfDate             = $versionInfo->eol;
+$latestVersionInBranch   = $versionInfo?->latest;
+$minimumSupportedBranch  = $phpVersion?->getMinimumSupportedBranch();
+$isUnknown               = $versionInfo?->unknown;
+$isOutOfDate             = $versionInfo?->eol;
 $isLatestVersionInBranch = version_compare($php, $latestVersionInBranch, 'ge');
 $isLatestBranch          = $phpBranch === $phpVersion->getLatestBranch();
 $isRecommendedBranch     = $phpBranch === $phpVersion->getRecommendedSupportedBranch();
 $isOldestBranch          = $phpBranch === $minimumSupportedBranch;
-$lastError               = trim($config->get('extensions.lastErrorMessage') ?? '');
-$hasError                = !empty($lastError);
-
+$hasError                = !empty(trim($this->siteConfig->get('core.lastErrorMessage') ?? ''));
 ?>
 <div class="card">
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
@@ -53,56 +47,17 @@ $hasError                = !empty($lastError);
         </a>
     </h3>
     <div class="card-body">
+        {{-- Last Check --}}
         <div class="small mb-3">
-            @if ($lastError)
-                <?php $extensionsLastErrorModalID = 'exlem-' . md5(random_bytes(120)); ?>
-                <div class="btn btn-danger btn-sm px-1 py-0" aria-hidden="true"
-                     data-bs-toggle="modal" data-bs-target="#{{ $extensionsLastErrorModalID }}"
-                >
-					<span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
-                          data-bs-toggle="tooltip" data-bs-placement="bottom"
-                          data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')"
-                          data-bs-content="{{{ $lastError }}}"></span>
-                </div>
-
-                <div class="modal fade" id="{{ $extensionsLastErrorModalID }}"
-                     tabindex="-1" aria-labelledby="{{ $extensionsLastErrorModalID }}_label" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5"
-                                    id="{{ $extensionsLastErrorModalID }}_label">
-                                    @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')
-                                </h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="@lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="text-break">
-                                    {{{ $lastError }}}
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    @lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <span class="visually-hidden">
-				    @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS') {{{ $lastError }}}
-                </span>
-            @endif
             <span class="{{ $hasError ? 'text-danger' : 'text-body-tertiary' }}">
                 <strong>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED')
                 </strong>
-                {{ $lastUpdateTimestamp() }}
+                {{ $lastUpdateTimestamp }}
             </span>
         </div>
 
+        {{-- PHP Status --}}
         @if($isUnknown)
             <div class="alert alert-info">
                 <h3 class="alert-heading h5 m-0 mb-2">
@@ -189,6 +144,7 @@ $hasError                = !empty($lastError);
             @endif
         @endif
 
+        {{-- Where did I get this data from? --}}
         <a href="http://endoflife.date/php" target="_blank"
            class="link-secondary link-opacity-75 link-opacity-100-hover small"
         >

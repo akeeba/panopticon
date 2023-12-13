@@ -20,11 +20,9 @@ $joomlaUpdateTask         = $this->item->getJoomlaUpdateTask();
 $overridesChanged         = $this->siteConfig->get('core.overridesChanged');
 $lastError                = trim($this->siteConfig->get('core.lastErrorMessage') ?? '');
 $hasError                 = !empty($lastError);
-$lastUpdateTimestamp      = function (): string {
-	$timestamp = $this->siteConfig->get('core.lastAttempt');
-
-	return $timestamp ? $this->timeAgo($timestamp) : $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
-};
+$lastUpdateTimestamp      = $this->siteConfig->get('core.lastAttempt')
+	? $this->timeAgo($this->siteConfig->get('core.lastAttempt')) :
+    $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
 $jVersionHelper           = new JoomlaVersion($this->getContainer());
 $showScheduleButton       = $this->joomlaUpdateRunState->isValidUpdateState();
 $showCancelScheduleButton = false;
@@ -438,7 +436,7 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
                 <strong>
                     @lang('PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED')
                 </strong>
-                {{ $lastUpdateTimestamp() }}
+                {{ $lastUpdateTimestamp }}
             </span>
         </div>
 

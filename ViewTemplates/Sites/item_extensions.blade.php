@@ -100,7 +100,8 @@ $extensionsQuickInfo = call_user_func(function () use ($extensions): object {
 });
 
 $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->site == 0 && $extensionsQuickInfo->key = 0;
-
+$lastError      = trim($this->siteConfig->get('extensions.lastErrorMessage') ?? '');
+$hasError       = !empty($lastError);
 ?>
 <div class="card">
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
@@ -144,6 +145,49 @@ $shouldCollapse = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->sit
                 </sup>
             @endif
         </span>
+
+        @if ($lastError)
+            <?php $extensionsLastErrorModalID = 'exlem-' . md5(random_bytes(120)); ?>
+            <div class="btn btn-danger btn-sm px-1 py-0" aria-hidden="true"
+                 data-bs-toggle="modal" data-bs-target="#{{ $extensionsLastErrorModalID }}"
+            >
+					<span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
+                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                          data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')"
+                          data-bs-content="{{{ $lastError }}}"></span>
+            </div>
+
+            <div class="modal fade" id="{{ $extensionsLastErrorModalID }}"
+                 tabindex="-1" aria-labelledby="{{ $extensionsLastErrorModalID }}_label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5"
+                                id="{{ $extensionsLastErrorModalID }}_label">
+                                @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="@lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-break">
+                                {{{ $lastError }}}
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                @lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <span class="visually-hidden">
+				    @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS') {{{ $lastError }}}
+                </span>
+        @endif
+
         <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
            href="@route(sprintf('index.php?view=site&task=refreshExtensionsInformation&id=%d&%s=1', $this->item->id, $token))"
            data-bs-toggle="tooltip" data-bs-placement="bottom"
