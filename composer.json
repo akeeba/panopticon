@@ -255,6 +255,11 @@
 					"choices.js",
 					"choices.min.js"
 				]
+			},
+			{
+				"type": "url",
+				"from": "https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js",
+				"to": "media/petite-vue/petite-vue.min.js"
 			}
 		],
 		"babel": [
