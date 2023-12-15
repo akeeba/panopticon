@@ -32,6 +32,7 @@
 	"require": {
 		"php": ">=8.1",
 		"ext-curl": "*",
+		"ext-dom": "*",
 		"ext-mbstring": "*",
 		"ext-json": "*",
 		"ext-zip": "*",
