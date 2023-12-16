@@ -9,6 +9,7 @@ Akeeba Panopticon 1.0.6
 # [HIGH] Wrong assignment of sites to groups if there are gaps in numbering [gh-360]
 # [MEDIUM] No fallback to English if the browser, user configuration, and global configuration don't include it [gh-368]
 # [MEDIUM] No TinyMCE editor when using the `.htaccess` file
+# [LOW] SMTP Authentication radio always appears disabled when loading System Configuration [gh-390]
 
 Akeeba Panopticon 1.0.5
 ================================================================================
