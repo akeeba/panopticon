@@ -157,7 +157,10 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
     </div>
 @stop
 
-@section('abErrorException')
+@repeatable('abErrorException')
+    <?php
+    $token               = $this->container->session->getCsrfToken()->getValue();
+    ?>
     <div class="alert alert-danger">
         <h4 class="alert-heading fs-5">
             <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -191,7 +194,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
             <pre>{{ $this->backupRecords->getTraceAsString() }}</pre>
         @endif
     </div>
-@stop
+@endrepeatable
 
 @section('abRunStatus')
 	<?php
@@ -306,7 +309,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
         @elseif ($this->backupRecords instanceof AkeebaBackupCannotConnectException)
             @yield('abErrorCannotConnect')
         @elseif($this->backupRecords instanceof Throwable)
-            @yield('abErrorException')
+            @yieldRepeatable('abErrorException')
         @else
             @yield('abRunStatus')
             @yield('abBackupControls')

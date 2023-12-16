@@ -17,7 +17,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 
 ?>
 
-@section('atScansError')
+@repeatable('atScansError')
     <div class="alert alert-danger">
         <h4 class="alert-heading fs-5">
             <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -42,7 +42,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             </details>
         @endif
     </div>
-@stop
+@endrepeatable
 
 @section('atScansScheduleInfo')
     <?php
@@ -131,7 +131,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 </h4>
 
 @if ($this->scans instanceof Throwable)
-    @yield('atScansError')
+    @yieldRepeatable('atScansError')
 @else
     @yield('atScansScheduleInfo')
     @yield('atScansScheduleControls')
