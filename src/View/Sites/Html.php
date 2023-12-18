@@ -239,7 +239,14 @@ class Html extends DataViewHtml
 		static $profiles = null;
 
 		$useCache = !$this->item->getState('akeebaBackupForce', false, 'bool');
-		$profiles ??= $this->getModel()->akeebaBackupGetProfiles($useCache);
+		try
+		{
+			$profiles ??= $this->getModel()->akeebaBackupGetProfiles($useCache);
+		}
+		catch (Exception $e)
+		{
+			$profiles = [];
+		}
 		$ret      = [];
 
 		foreach ($profiles as $profile)

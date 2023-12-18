@@ -7,6 +7,8 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
+
 /** @var \Akeeba\Panopticon\View\Main\Html $this */
 
 if ($this->phpVersionInfo === null || $this->phpVersionInfo->unknown)
@@ -27,8 +29,8 @@ if ($this->phpVersionInfo === null || $this->phpVersionInfo->unknown)
                 'PANOPTICON_MAIN_PHP_EOL_BODY',
                 PHP_VERSION,
                 $this->phpVersionInfo->dates->eol->format($this->getLanguage()->text('DATE_FORMAT_LC')),
-                $phpVersion->getMinimumSupportedBranch(),
-                $phpVersion->getRecommendedSupportedBranch()
+                (new PhpVersion())->getMinimumSupportedBranch(),
+                (new PhpVersion())->getRecommendedSupportedBranch()
             )
         </p>
     </div>
@@ -44,7 +46,7 @@ if ($this->phpVersionInfo === null || $this->phpVersionInfo->unknown)
                     'PANOPTICON_MAIN_PHP_SECURITY_BODY',
                     PHP_VERSION,
                     $this->phpVersionInfo->dates->eol->format($this->getLanguage()->text('DATE_FORMAT_LC')),
-                    $phpVersion->getRecommendedSupportedBranch()
+                    (new PhpVersion())->getRecommendedSupportedBranch()
                 )
             </p>
         </details>

@@ -1,6 +1,7 @@
-## 🔎 Release highlights
 
 🔣 This release is focused on improving the translation experience, and brings small improvements to the application.
+
+**✨ Connection Doctor** [gh-345]. You've got a site which “suddenly” won't connect to Panopticon? Troubleshoot the connection using the new Connection Doctor feature. It will give you detailed information which will help figure out what is going on, or get help more efficiently.
 
 **✨ Site notes** [gh-363]. You can now add notes to your sites. They are visible only to users who can edit the site. DO NOT STORE SENSITIVE INFORMATION, the notes are stored unencrypted.
 
@@ -20,28 +21,28 @@
 
 ## 🔮 What's coming next?
 
-Development of Akeeba Panopticon takes place _in public_. You can see what we're planning, thinking of, and working on
-in [our issues tracker](https://github.com/akeeba/panopticon/issues).
+Development of Akeeba Panopticon takes place _in public_. You can see what we're planning, thinking of, and working on in [our issues tracker](https://github.com/akeeba/panopticon/issues).
 
 Issues marked as _contemplating_ are those where we're still figuring out how to best implement in a way that makes
 sense.
 
-Issues marked as _planned_ are those which are being actively worked on, or queued up for implementation in the next
-version.
+Issues marked as _planned_ are those which are being actively worked on, or queued up for implementation in the next version.
 
-Some issues may have been opened by third parties. Usually, they are relegated
-to [Discussions](https://github.com/akeeba/panopticon/discussions), which is the best way to provide your feedback,
-and/or engage in discussion about a new feature, improving an existing feature, or describing a behaviour you find
-confusing. When there's something actionable in a discussion we will create a new issue with one of the aforementioned
-tags, or with the _bug_ tag to indicate something that's broken and needs to be fixed.
+Some issues may have been opened by third parties. Usually, they are relegated to [Discussions](https://github.com/akeeba/panopticon/discussions), which is the best way to provide your feedback, and/or engage in discussion about a new feature, improving an existing feature, or describing a behaviour you find confusing. When there's something actionable in a discussion we will create a new issue with one of the aforementioned tags, or with the _bug_ tag to indicate something that's broken and needs to be fixed.
 
-Kindly remember that the order and timeframe for implementation largely depends on our available time, and our
-assessment of expected complexity, and interdependencies between features. Security issues and bugs always take priority
-over new features; there's no point polishing a broken glass. Thank you for your understanding!
+Kindly remember that the order and timeframe for implementation largely depends on our available time, and our assessment of expected complexity, and interdependencies between features. Security issues and bugs always take priority over new features; there's no point polishing a broken glass. Thank you for your understanding!
 
 ## 📋 CHANGELOG
 
-[//]: # (TODO)
+* ✨ Connection Doctor [gh-345]
+* ✨ Site notes [gh-363]
+* ✏️ Improve login language selection [gh-367]
+* ✏️ Translations now use PO files instead of a third party service
+* ✏️ Light and Dark Mode for the TinyMCE and ACE editors
+* 🐞 🔺 Wrong assignment of sites to groups if there are gaps in numbering [gh-360]
+* 🐞 ➖ No fallback to English if the browser, user configuration, and global configuration don't include it [gh-368]
+* 🐞 ➖ No TinyMCE editor when using the `.htaccess` file
+* 🐞 🔻 SMTP Authentication radio always appears disabled when loading System Configuration [gh-390]
 
 Legend:
 

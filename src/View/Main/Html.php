@@ -95,6 +95,14 @@ class Html extends \Awf\Mvc\DataView\Html
 	 */
 	public ?VersionInformation $latestPanopticonVersion;
 
+	/**
+	 * The PHP version information on Panopticon's server.
+	 *
+	 * @var    object|null
+	 * @since  1.0.6
+	 */
+	public ?object $phpVersionInfo;
+
 	protected function onBeforeMain()
 	{
 		$isDashboard = $this->getLayout() === 'dashboard';

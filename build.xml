@@ -67,8 +67,8 @@
         <exclude name="*.md" />
 
         <!-- Exclude translation sources (PO / POT files) -->
-        <exclude name="language/*.po" />
-        <exclude name="language/*.pot" />
+        <exclude name="languages/*.po" />
+        <exclude name="languages/*.pot" />
 
         <!-- Exclude map files -->
         <exclude name="media/css/*.map" />
@@ -122,6 +122,10 @@
 
         <exclude name="vendor/bin/**" />
 
+        <exclude name="vendor/brick/math/CHANGELOG.md" />
+
+        <!-- cesargb/php-log-rotation: nothing to remove -->
+
         <exclude name="vendor/chillerlan/php-qrcode/.github/**" />
         <exclude name="vendor/chillerlan/php-qrcode/.idea/**" />
         <exclude name="vendor/chillerlan/php-qrcode/.phan/**" />
@@ -156,8 +160,12 @@
         <exclude name="vendor/delight-im/random/.gitignore" />
         <exclude name="vendor/delight-im/random/composer.lock" />
 
-        <exclude name="vendor/dragonmantank/cron-expression/CHAMGELOG*" />
+        <exclude name="vendor/dflydev/dot-access-data/CHANGELOG*" />
+
+        <exclude name="vendor/dragonmantank/cron-expression/CHANGELOG*" />
         <exclude name="vendor/dragonmantank/cron-expression/phpstan*" />
+
+        <!-- graham-campbell/result-type: nothing to remove -->
 
         <exclude name="vendor/guzzlehttp/guzzle/CHANGELOG.md" />
         <exclude name="vendor/guzzlehttp/guzzle/UPGRADING.md" />
@@ -185,12 +193,16 @@
         <exclude name="vendor/jfcherng/php-sequence-matcher/.php-cs-fixer.dist.php" />
         <exclude name="vendor/jfcherng/php-sequence-matcher/composer.lock" />
 
+        <!-- kevinrob/guzzle-cache-middleware: nothing to remove -->
+
         <exclude name="vendor/lcobucci/clock/renovate.json" />
 
         <exclude name="vendor/league/commonmark/.phpstorm.meta.php" />
         <exclude name="vendor/league/commonmark/CHANGELOG.md" />
 
         <exclude name="vendor/league/config/CHANGELOG.md" />
+
+        <!-- mcrumley/php-complexify: nothing to remove -->
 
         <exclude name="vendor/monolog/monolog/CHANGELOG.md" />
         <exclude name="vendor/monolog/monolog/favicon.ico" />
@@ -200,10 +212,14 @@
 
         <exclude name="vendor/nette/utils/.phpstorm.meta.php" />
 
+        <!-- paragonie/constant_time_encoding: nothing to remove -->
+
         <exclude name="vendor/phpmailer/phpmailer/COMMITMENT" />
         <exclude name="vendor/phpmailer/phpmailer/get_*.php" />
         <exclude name="vendor/phpmailer/phpmailer/SECURITY.md" />
         <exclude name="vendor/phpmailer/phpmailer/VERSION" />
+
+        <!-- phpoption/phpoption: nothing to remove -->
 
         <exclude name="vendor/psr/cache/CHANGELOG.md" />
 
@@ -219,18 +235,48 @@
         <exclude name="vendor/psr/http-message/docs/**" />
         <exclude name="vendor/psr/http-message/docs/CHANGELOG.md" />
 
+        <!-- psr/log: nothing to remove -->
+        <!-- ralouphie/getallheaders: nothing to remove -->
+
         <exclude name="vendor/scrivo/highlight.php/.php-cs-fixer.dist.php" />
         <exclude name="vendor/scrivo/highlight.php/AUTHORS.txt" />
         <exclude name="vendor/scrivo/highlight.php/CONTRIBUTING.md" />
 
-        <exclude name="vendor/symfony/cache-contracts/CHANGELOG.md" />
+        <!-- spomky-laps/cbor-php: nothing to remove -->
+        <!-- spomky-laps/otphp: nothing to remove -->
+        <!-- spomky-laps/pki-framework: nothing to remove -->
+
+        <exclude name="vendor/symfony/cache/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/cache-contracts/CHANGELOG.md" />
 
-        <exclude name="vendor/symfony/deprecation-contracts/.gitignore" />
+        <exclude name="vendor/symfony/console/CHANGELOG.md" />
+
         <exclude name="vendor/symfony/deprecation-contracts/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/error-handler/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/event-dispatcher/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/event-dispatcher-contracts/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/http-foundation/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/http-kernel/CHANGELOG.md" />
+
+        <!-- symfony/polyfill-ctype: nothing to remove -->
+        <!-- symfony/polyfill-intl-grapheme: nothing to remove -->
+        <!-- symfony/polyfill-intl-normalizer: nothing to remove -->
+        <!-- symfony/polyfill-mbstring: nothing to remove -->
+        <!-- symfony/polyfill-php80: nothing to remove -->
+        <!-- symfony/polyfill-php83: nothing to remove -->
+        <!-- symfony/polyfill-uuid: nothing to remove -->
+
+        <exclude name="vendor/symfony/property-access/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/property-info/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/serializer/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/service-contracts/CHANGELOG.md" />
         <exclude name="vendor/symfony/service-contracts/Test/**" />
@@ -242,6 +288,14 @@
         <exclude name="vendor/symfony/var-dumper/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/var-exporter/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/yaml/CHANGELOG.md" />
+
+        <!-- vlucas/phpdotenv: nothing to remove -->
+
+        <!-- web-auth/cose-lib: nothing to remove -->
+        <!-- web-auth/metadata-service: nothing to remove -->
+        <!-- web-auth/webauthn-lib: nothing to remove -->
 
         <exclude name="vendor/webmozart/assert/CHANGELOG.md" />
     </fileset>

@@ -1,14 +1,20 @@
 <?php die(); ?>
+Akeeba Panopticon 1.0.7
+================================================================================
+# [HIGH] Error when your PHP version is out of date [gh-392]
+# [HIGH] “You do not seem to have Akeeba Backup Professional installed.” viewing some sites
+
 Akeeba Panopticon 1.0.6
 ================================================================================
 + Connection Doctor [gh-345]
 + Site notes [gh-363]
-+ Improve login language selection [gh-367]
+~ Improve login language selection [gh-367]
 ~ Translations now use PO files instead of a third party service
 ~ Light and Dark Mode for the TinyMCE and ACE editors
 # [HIGH] Wrong assignment of sites to groups if there are gaps in numbering [gh-360]
 # [MEDIUM] No fallback to English if the browser, user configuration, and global configuration don't include it [gh-368]
 # [MEDIUM] No TinyMCE editor when using the `.htaccess` file
+# [LOW] SMTP Authentication radio always appears disabled when loading System Configuration [gh-390]
 
 Akeeba Panopticon 1.0.5
 ================================================================================
