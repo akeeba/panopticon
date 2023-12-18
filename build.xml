@@ -67,8 +67,8 @@
         <exclude name="*.md" />
 
         <!-- Exclude translation sources (PO / POT files) -->
-        <exclude name="language/*.po" />
-        <exclude name="language/*.pot" />
+        <exclude name="languages/*.po" />
+        <exclude name="languages/*.pot" />
 
         <!-- Exclude map files -->
         <exclude name="media/css/*.map" />
