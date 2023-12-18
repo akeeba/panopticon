@@ -19,6 +19,7 @@
 
 ### Automatically installed NPM dependencies
 /media/ace/**
+/media/axios/*.js
 /media/choices/**
 /media/css/fontawesome.*
 /media/js/bootstrap.bundle.*

@@ -47,11 +47,15 @@
 			]
 		],
 		"comments": false,
-		"sourceType": "script",
+		"sourceType": "unambiguous",
 		"ignore": [
 			"**/bootstrap.bundle.*",
 			"**/*.min.js",
 			"**/*.min.css"
 		]
+	},
+	"dependencies": {
+		"axios": "^1.6.2",
+		"petite-vue": "^0.4.1"
 	}
 }

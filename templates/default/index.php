@@ -37,7 +37,7 @@ $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component
 $isMenuEnabled = $this->getMenu()->isEnabled('main');
 $isDebug       = defined('AKEEBADEBUG') && AKEEBADEBUG;
 $themeColor    = TemplateHelper::getThemeColour();
-
+$importMap     = TemplateHelper::getImportMapAsJson();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $langCode ?>">
@@ -52,6 +52,10 @@ $themeColor    = TemplateHelper::getThemeColour();
 
 	<?php // Client-side options ?>
 	<script type="application/json" class="akeeba-script-options new"><?= json_encode($this->getScriptOptions(), $isDebug ? JSON_PRETTY_PRINT : 0) ?: '{}' ?></script>
+	<?php // ECMAScript import map ?>
+	<?php if (!empty($importMap)): ?>
+	<script type="importmap"><?= $importMap ?></script>
+	<?php endif ?>
 	<?php // Stylesheet files ?>
 	<?php foreach ($this->getStyles() as $url => $params): ?>
 		<link rel="stylesheet" type="<?= $params['mime'] ?>" href="<?= $url ?>"<?= ($params['media']) ? " media=\"{$params['media']}\"" : '' ?><?= ($params['attribs'] ?? null) ? ' ' . \Awf\Utils\ArrayHelper::toString($params['attribs']) : '' ?>>

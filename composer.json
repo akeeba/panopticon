@@ -66,7 +66,6 @@
 		{
 			"type": "github",
 			"url": "https://github.com/akeeba/stats_collector"
-
 		}
 	],
 	"suggest": {
@@ -258,9 +257,16 @@
 				]
 			},
 			{
-				"type": "url",
-				"from": "https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js",
+				"from": "node_modules/petite-vue/dist/petite-vue.es.js",
 				"to": "media/petite-vue/petite-vue.min.js"
+			},
+			{
+				"from": "node_modules/axios/dist/axios.js",
+				"to": "media/axios/axios.js"
+			},
+			{
+				"from": "node_modules/axios/dist/axios.min.js",
+				"to": "media/axios/axios.min.js"
 			}
 		],
 		"babel": [

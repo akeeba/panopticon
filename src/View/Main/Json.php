@@ -1,0 +1,116 @@
+<?php
+/**
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+namespace Akeeba\Panopticon\View\Main;
+
+defined('AKEEBA') || die;
+
+use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
+use Akeeba\Panopticon\Model\Site;
+use Awf\Mvc\DataModel\Collection;
+use Awf\Mvc\DataView\Json as BaseView;
+
+class Json extends BaseView
+{
+	protected function onBeforeSites()
+	{
+		// Load the model
+		/** @var Site $model */
+		$model = $this->getModel();
+		$model->setState('enabled', 1);
+
+		// We want to persist the state in the session
+		$model->savestate(1);
+
+		$order     = $model->getState('filter_order', 'name', 'cmd');
+		$order_Dir = $model->getState('filter_order_Dir', 'ASC', 'cmd');
+		$limitStart = $model->getState('limitstart', 0, 'int');
+		$limit      = $model->getState('limit', 50, 'int');
+
+		$model->setState('filter_order', $order);
+		$model->setState('filter_order_Dir', $order_Dir);
+		$model->setState('limitstart', $limitStart);
+		$model->setState('limit', $limit);
+
+		/** @var Collection<Site> $items */
+		$items = $model->get();
+
+		$items = $items->map(
+			function (Site $site) {
+				$siteConfig     = $site->getConfig();
+				$cmsType        = $site->cmsType();
+				$extensions     = get_object_vars($siteConfig->get('extensions.list', new \stdClass()));
+				$currentVersion = $siteConfig->get('core.current.version');
+				$latestVersion = $siteConfig->get('core.latest.version');
+				$eol            = false;
+				$numExtUpdates  = array_reduce(
+					$extensions,
+					function (int $carry, object $item): int {
+						$current = $item?->version?->current;
+						$new     = $item?->version?->new;
+
+						if (empty($new))
+						{
+							return $carry;
+						}
+
+						return $carry + ((empty($current) || version_compare($current, $new, 'ge')) ? 0 : 1);
+					},
+					0
+				);
+
+				switch ($cmsType->value)
+				{
+					case 'joomla':
+						$jVersionHelper = new JoomlaVersion($this->getContainer());
+						$eol            = $jVersionHelper->isEOLMajor($currentVersion)
+						                  || $jVersionHelper->isEOLBranch($currentVersion);
+
+						break;
+
+					case 'wordpress':
+						// TODO
+						break;
+				}
+
+				return [
+					'name'         => $site->name,
+					'favicon'      => null,
+					'url'          => $site->getBaseUrl(),
+					'overview_url' => $this->getContainer()->router->route(
+						sprintf('index.php?view=Site&task=read&id=%d', $site->getId())
+					),
+					'groups'       => $site->getGroups(true),
+					'cms'          => $cmsType->value,
+					'version'      => $currentVersion,
+					'eol'          => $eol,
+					'latest'       => ($currentVersion === $latestVersion) ? null : $latestVersion,
+					'php'          => $siteConfig->get('core.php', '0.0.0') ?: '0.0.0',
+					'extensions'   => $numExtUpdates,
+					'overrides'    => $siteConfig->get('core.overridesChanged') ?: 0,
+					'errors'       => [
+						'site'       => null,
+						'extensions' => null,
+					],
+					'updating'     => [
+						'cms'        => null,
+						'extensions' => null,
+					],
+				];
+			}
+		);
+
+		$document = $this->container->application->getDocument();
+		$document->setUseHashes(false);
+		$document->setMimeType('application/json');
+		$document->setName(null);
+
+		echo json_encode($items->toArray(), JSON_PRETTY_PRINT);
+
+		return true;
+	}
+}

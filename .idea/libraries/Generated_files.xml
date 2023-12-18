@@ -6,6 +6,7 @@
         <item url="file://$PROJECT_DIR$/media/js/filter-extensions.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/log.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/login.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/main-dashboard.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/main.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/setup.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-browse.min.js" />
@@ -22,6 +23,7 @@
       <root url="file://$PROJECT_DIR$/media/js/filter-extensions.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/log.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/login.min.js" />
+      <root url="file://$PROJECT_DIR$/media/js/main-dashboard.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/main.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/remember-tab.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/setup.min.js" />

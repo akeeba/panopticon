@@ -101,4 +101,22 @@ class Main extends Controller
 
 		return true;
 	}
+
+	public function sites()
+	{
+		// TODO Re-enable me
+		//$this->csrfProtection();
+
+		// Do not surround the reply with triple hashes
+		$doc = $this->getContainer()->application->getDocument();
+		$doc->setUseHashes(false);
+
+		// Use the saved model state
+		if ($this->input->get('savestate', -999, 'int') == -999)
+		{
+			$this->input->set('savestate', true);
+		}
+
+		$this->display();
+	}
 }
