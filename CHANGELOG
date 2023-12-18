@@ -3,7 +3,7 @@ Akeeba Panopticon 1.0.6
 ================================================================================
 + Connection Doctor [gh-345]
 + Site notes [gh-363]
-+ Improve login language selection [gh-367]
+~ Improve login language selection [gh-367]
 ~ Translations now use PO files instead of a third party service
 ~ Light and Dark Mode for the TinyMCE and ACE editors
 # [HIGH] Wrong assignment of sites to groups if there are gaps in numbering [gh-360]
