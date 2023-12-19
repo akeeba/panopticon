@@ -105,7 +105,7 @@ class Json extends BaseView
 		);
 
 		$document = $this->container->application->getDocument();
-		$document->setUseHashes(false);
+		$document->setUseHashes(true);
 		$document->setMimeType('application/json');
 		$document->setName(null);
 

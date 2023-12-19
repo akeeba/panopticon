@@ -34,36 +34,38 @@ function SitesList(props)
                 return;
             }
 
-            axios
-                .get(`${options.url}&limitstart=${this.PAGE_LENGTH * counter}&limit=${this.PAGE_LENGTH}`)
-                .then((response) =>
+            akeeba.System.doAjax(
+                {
+                    ajaxURL: `${options.url}&limitstart=${this.PAGE_LENGTH * counter}&limit=${this.PAGE_LENGTH}`,
+                },
+                (data) =>
                 {
                     this.error = null;
 
-                    // If we ran out of data, return false to prevent the next handler from fetching more data.
-                    if (typeof response.data !== "object" || response.data.length === 0)
+                    // Check if we ran out of data, or we hit the upper limit of data to load.
+                    if (typeof data !== "object" || data.length === 0)
                     {
+                        if (!this.countdownTimer && this.restartTimer)
+                        {
+                            this.restartTimer = false
+                            this.resetTimer()
+                            this.toggleTimer()
+                        }
+
                         return false;
                     }
 
                     // Append the retrieved data to the internal list.
-                    this.sites = this.sites.concat(response.data)
+                    this.sites = this.sites.concat(data)
 
                     // Get me some more data to display!
                     this.feedMeData(++counter)
-                })
-                .catch((error) =>
-                {
-                    this.stopTimer()
-                    this.error = error
-                })
-
-            if (!this.countdownTimer && this.restartTimer)
-            {
-                this.restartTimer = false
-                this.resetTimer()
-                this.toggleTimer()
-            }
+                },
+                (errorMessage) => {
+                    this.error = errorMessage;
+                },
+                false
+            )
         },
         resetTimer()
         {

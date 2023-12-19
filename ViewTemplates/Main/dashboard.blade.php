@@ -25,12 +25,9 @@ defined('AKEEBA') || die;
             <p>
                 @lang('PANOPTICON_MAIN_DASH_ERR_CANNOTLOAD_TEXT')
             </p>
-            <p>
-                @{{ error.message }}
-            </p>
             <details>
                 <summary>@lang('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_RAW')</summary>
-                <pre class="bg-dark text-light p-2 border border-2 rounded-2">@{{ error.response.data }}</pre>
+                <pre class="bg-dark text-light p-2 border border-2 rounded-2">@{{ error }}</pre>
             </details>
         </div>
 

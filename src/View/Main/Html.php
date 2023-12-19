@@ -220,7 +220,6 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		if ($isDashboard)
 		{
-			$doc->addScript(\Awf\Utils\Template::parsePath('axios/axios.js', false, $app), defer: true);
 			$doc->addScript(\Awf\Utils\Template::parsePath('js/main-dashboard.js', false, $app), type: 'module');
 			$doc->addScriptOptions(
 				'panopticon.dashboard',
