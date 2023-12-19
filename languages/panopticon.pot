@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0.5\n"
-"POT-Creation-Date: 2023-12-10 17:00:42\n"
+"Project-Id-Version: 1.0.7\n"
+"POT-Creation-Date: 2023-12-19 21:44:51\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.0.5\n"
+"X-Generator: Panopticon ini_to_po 1.0.7\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -2328,6 +2328,16 @@ msgid "Manage Sites"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_DASH"
+msgid "Dashboard"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB"
+msgid "Table"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_TABLE_CAPTION"
 msgid "Table of known sites and their information at a glance"
 msgstr ""
@@ -2340,6 +2350,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_THEAD_JOOMLA"
 msgid "Joomla™ version"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_THEAD_WORDPRESS"
+msgid "WordPress version"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_THEAD_CMS"
+msgid "CMS version"
 msgstr ""
 
 #, phpformat
@@ -2695,6 +2715,101 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_READ_DOCS"
 msgid "Read the documentation"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CANNOTLOAD_HEAD"
+msgid "Could not load the sites dashboard"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CANNOTLOAD_TEXT"
+msgid "An error occurred while loading the sites dashboard information from your server."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_BTN_RELOAD"
+msgid "Reload"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_BTN_TIMER_STOP"
+msgid "Stop the timer"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_BTN_TIMER_START"
+msgid "Start the timer"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_CMS_WILL_UPDATE"
+msgid "The CMS will be updated automatically"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_CMS_UPDATING"
+msgid "The CMS is being updated"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_CMS_UPDATE_ERROR"
+msgid "The automatic CMS update has failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS"
+msgid "Extensions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WORDPRESS"
+msgid "Plugins &amp; Themes"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WILL_UPDATE"
+msgid "The extensions will be updated automatically"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING"
+msgid "The extensions are being updated"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATE_ERROR"
+msgid "The automatic extensions update has failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_WILL_UPDATE"
+msgid "The plugins &amp; themes will be updated automatically"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING"
+msgid "The plugins &amp; themes are being updated"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR"
+msgid "The automatic plugins &amp; themes update has failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CMS"
+msgid "Error loading site information"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_ERR_EXT"
+msgid "Error loading extensions update information"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_ERR_EXT_WP"
+msgid "Error loading plugins &amp; themes update information"
 msgstr ""
 
 #, phpformat
@@ -4953,6 +5068,11 @@ msgid "Display Preferences"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DASHBOARD"
+msgid "Dashboard Preferences"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL"
 msgid "Email Sending"
 msgstr ""
@@ -5065,6 +5185,26 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FONTSIZE"
 msgid "Font size"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER"
+msgid "Dashboard Reload Timer"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER_HELP"
+msgid "Dashboard views will reload every this many seconds, unless manually paused."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS"
+msgid "Maximum Displayed Items"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS_HELP"
+msgid "Panopticon always loads up to 50 sites per HTTP request. This is the maximum number of sites to be displayed <em>in total</em>."
 msgstr ""
 
 #, phpformat
@@ -5665,6 +5805,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_FILES"
 msgid "files"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_PAGES"
+msgid "pages"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_ITEMS"
+msgid "items"
 msgstr ""
 
 #, phpformat
@@ -6310,6 +6460,26 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_HELP"
 msgid "The language to display Panopticon and send you emails in. “Use Default” uses the language set in your browser preferences for the web interface, and the default language (<tt>%s</tt>) for emails."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT"
+msgid "Sites Overview Layout"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_OPT_DEFAULT"
+msgid "Table"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_OPT_DASHBOARD"
+msgid "Dashboard"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_HELP"
+msgid "The Dashboard layout is simpler to understand, but uses more browser resources."
 msgstr ""
 
 #, phpformat
