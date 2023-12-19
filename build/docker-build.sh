@@ -45,7 +45,8 @@ echo $CR_PAT | docker login ghcr.io -u $CR_USERNAME --password-stdin
 
 if [ -z "$PANOPTICON_LATEST_TAG" ]
 then
-	export PANOPTICON_LATEST_TAG=`git describe --abbrev=0`
+	PANOPTICON_LATEST_TAG=`git describe --abbrev=0`
+	export PANOPTICON_LATEST_TAG
 fi
 
 docker rmi ghcr.io/akeeba/panopticon:latest
