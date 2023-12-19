@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\Main;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
 use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Mvc\DataModel\Collection;
@@ -26,8 +27,8 @@ class Json extends BaseView
 		// We want to persist the state in the session
 		$model->savestate(1);
 
-		$order     = $model->getState('filter_order', 'name', 'cmd');
-		$order_Dir = $model->getState('filter_order_Dir', 'ASC', 'cmd');
+		$order      = $model->getState('filter_order', 'name', 'cmd');
+		$order_Dir  = $model->getState('filter_order_Dir', 'ASC', 'cmd');
 		$limitStart = $model->getState('limitstart', 0, 'int');
 		$limit      = $model->getState('limit', 50, 'int');
 
@@ -41,13 +42,15 @@ class Json extends BaseView
 
 		$items = $items->map(
 			function (Site $site) {
-				$siteConfig     = $site->getConfig();
-				$cmsType        = $site->cmsType();
-				$extensions     = get_object_vars($siteConfig->get('extensions.list', new \stdClass()));
-				$currentVersion = $siteConfig->get('core.current.version');
-				$latestVersion = $siteConfig->get('core.latest.version');
-				$eol            = false;
-				$numExtUpdates  = array_reduce(
+				$siteConfig      = $site->getConfig();
+				$cmsType         = $site->cmsType();
+				$extensions      = get_object_vars($siteConfig->get('extensions.list', new \stdClass()));
+				$currentVersion  = $siteConfig->get('core.current.version');
+				$latestVersion   = $siteConfig->get('core.latest.version');
+				$eol             = false;
+				$cmsUpdateStatus = 0;
+				$extUpdateStatus = 0;
+				$numExtUpdates   = array_reduce(
 					$extensions,
 					function (int $carry, object $item): int {
 						$current = $item?->version?->current;
@@ -63,12 +66,32 @@ class Json extends BaseView
 					0
 				);
 
+				if ($site->isExtensionsUpdateTaskStuck())
+				{
+					$extUpdateStatus = 3;
+				}
+				elseif ($site->isExtensionsUpdateTaskRunning())
+				{
+					$extUpdateStatus = 2;
+				}
+				elseif ($site->isExtensionsUpdateTaskScheduled())
+				{
+					$extUpdateStatus = 1;
+				}
+
 				switch ($cmsType->value)
 				{
 					case 'joomla':
 						$jVersionHelper = new JoomlaVersion($this->getContainer());
 						$eol            = $jVersionHelper->isEOLMajor($currentVersion)
 						                  || $jVersionHelper->isEOLBranch($currentVersion);
+						$cmsUpdateStatus = match ($site->getJoomlaUpdateRunState())
+						{
+							default => 0,
+							JoomlaUpdateRunState::SCHEDULED => 1,
+							JoomlaUpdateRunState::RUNNING => 2,
+							JoomlaUpdateRunState::ERROR => 3,
+						};
 
 						break;
 
@@ -93,12 +116,12 @@ class Json extends BaseView
 					'extensions'   => $numExtUpdates,
 					'overrides'    => $siteConfig->get('core.overridesChanged') ?: 0,
 					'errors'       => [
-						'site'       => null,
-						'extensions' => null,
+						'site'       => trim($siteConfig->get('core.lastErrorMessage') ?? '') ?: null,
+						'extensions' => trim($siteConfig->get('extensions.lastErrorMessage') ?? '') ?: null,
 					],
 					'updating'     => [
-						'cms'        => null,
-						'extensions' => null,
+						'cms'        => $cmsUpdateStatus,
+						'extensions' => $extUpdateStatus,
 					],
 				];
 			}
