@@ -11,7 +11,7 @@ msgstr ""
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
 msgid "English – United Kingdom"
-msgstr "Hungarian – Hungary"
+msgstr "Croatian - Croatia"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_TRANSLATED"
