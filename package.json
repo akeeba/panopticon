@@ -24,6 +24,7 @@
 		"bootstrap": "^5.3.2",
 		"choices.js": "^10.2.0",
 		"core-js": "^3.34.0",
+		"petite-vue": "^0.4.1",
 		"tinymce": "^6.8.2"
 	},
 	"babel": {
@@ -47,7 +48,7 @@
 			]
 		],
 		"comments": false,
-		"sourceType": "script",
+		"sourceType": "unambiguous",
 		"ignore": [
 			"**/bootstrap.bundle.*",
 			"**/*.min.js",

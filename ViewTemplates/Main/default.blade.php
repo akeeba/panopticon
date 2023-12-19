@@ -21,12 +21,136 @@ $mainModel = $this->getModel('main');
 
 ?>
 
-@if($this->container->userManager->getUser()->getPrivilege('panopticon.super'))
-    @include('Main/heartbeat')
-    @include('Main/cronfellbehind')
-    @include('Main/php_warnings')
-    @include('Main/selfupdate')
-@endif
+{{-- Super User information panes --}}
+@include('Main/default_super')
+
+@section('main-default-sites')
+    {{-- The noTable param is passed by the dashboard layout to speed up the rendering by skipping this default section --}}
+    @unless(isset($noTable) && $noTable)
+    {{-- Results table --}}
+    <table class="table table-striped table-hover table-sm align-middle table-responsive-sm">
+        <caption class="visually-hidden">
+            @lang('PANOPTICON_MAIN_SITES_TABLE_CAPTION')
+        </caption>
+        <thead class="table-secondary">
+        <tr>
+            <th>
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAIN_SITES_THEAD_SITE', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+            </th>
+            <th>
+            <span class="fa fa-box fs-3" aria-hidden="true"
+                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                  data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_CMS')"
+            ></span>
+                <span class="visually-hidden">
+            @lang('PANOPTICON_MAIN_SITES_THEAD_CMS')
+            </span>
+            </th>
+            <th>
+            <span class="fa fa-cubes fs-3" aria-hidden="true"
+                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                  data-bs-title="@lang(  'PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')"
+            ></span>
+                <span class="visually-hidden">
+            @lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')
+            </span>
+            </th>
+            <th>
+            <span class="fab fa-php fs-3" aria-hidden="true"
+                  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                  data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')"
+            ></span>
+                <span class="visually-hidden">
+            @lang('PANOPTICON_MAIN_SITES_THEAD_PHP')
+            </span>
+            </th>
+            <th style="min-width: 2em">
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+            </th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+		<?php
+		/** @var \Akeeba\Panopticon\Model\Site $item */
+		?>
+        @foreach($this->items as $item)
+				<?php
+				$url    = $item->getBaseUrl();
+				$config = $item->getConfig();
+				?>
+            <tr>
+                <td>
+                    <a class="fw-medium"
+                       href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
+                        {{{ $item->name }}}
+                    </a>
+                    <div class="small mt-1">
+                        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
+                        <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
+                            {{{ $url }}}
+                            <span class="fa fa-external-link-square" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    {{-- Show group labels --}}
+                    @if (!empty($groups = $config->get('config.groups')))
+                        <div>
+                            @foreach($groups as $gid)
+                                @if (isset($this->groupMap[$gid]))
+                                    <span class="badge bg-secondary">
+                                {{{ $this->groupMap[$gid] }}}
+                            </span>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                </td>
+                <td>
+                    @if ($item->cmsType() === CMSType::JOOMLA)
+                        @include('Main/site_joomla', [
+                            'item' => $item,
+                            'config' => $config,
+                        ])
+                    @else
+                        @include('Main/site_wordpress', [
+                            'item' => $item,
+                            'config' => $config,
+                        ])
+                    @endif
+                </td>
+                <td>
+                    @include('Main/site_extensions', [
+                        'item' => $item,
+                        'config' => $config,
+                    ])
+                </td>
+                <td>
+                    @include('Main/site_php', [
+                        'item' => $item,
+                        'config' => $config,
+                        'php' => $config->get('core.php')
+                    ])
+                </td>
+                <td class="font-monospace text-body-tertiary small px-2">
+                    {{{ $item->id }}}
+                </td>
+            </tr>
+        @endforeach
+        @if ($this->itemsCount == 0)
+            <tr>
+                <td colspan="20">
+                    <div class="alert alert-info m-2">
+                        <span class="fa fa-info-circle" aria-hidden="true"></span>
+                        @lang('PANOPTICON_MAIN_SITES_LBL_NO_RESULTS')
+                    </div>
+                </td>
+            </tr>
+        @endif
+        </tbody>
+    </table>
+    {{-- Pagination --}}
+    {{ $this->pagination->getListFooter(['class' => 'form-select akeebaGridViewAutoSubmitOnChange']) }}
+    @endunless
+@endsection
 
 {{-- My Sites --}}
 @if ($this->itemsCount || $this->isFiltered)
@@ -140,130 +264,14 @@ $mainModel = $this->getModel('main');
             </div>
         </div>
 
-        {{-- Results table --}}
-        <table class="table table-striped table-hover table-sm align-middle table-responsive-sm">
-            <caption class="visually-hidden">
-                @lang('PANOPTICON_MAIN_SITES_TABLE_CAPTION')
-            </caption>
-            <thead class="table-secondary">
-            <tr>
-                <th>
-                    {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAIN_SITES_THEAD_SITE', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
-                </th>
-                <th>
-                <span class="fa fa-box fs-3" aria-hidden="true"
-                      data-bs-toggle="tooltip" data-bs-placement="bottom"
-                      data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_CMS')"
-                ></span>
-                    <span class="visually-hidden">
-                @lang('PANOPTICON_MAIN_SITES_THEAD_CMS')
-                </span>
-                </th>
-                <th>
-                <span class="fa fa-cubes fs-3" aria-hidden="true"
-                      data-bs-toggle="tooltip" data-bs-placement="bottom"
-                      data-bs-title="@lang(  'PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')"
-                ></span>
-                    <span class="visually-hidden">
-                @lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')
-                </span>
-                </th>
-                <th>
-                <span class="fab fa-php fs-3" aria-hidden="true"
-                      data-bs-toggle="tooltip" data-bs-placement="bottom"
-                      data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')"
-                ></span>
-                    <span class="visually-hidden">
-                @lang('PANOPTICON_MAIN_SITES_THEAD_PHP')
-                </span>
-                </th>
-                <th style="min-width: 2em">
-                    {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
-                </th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider">
-				<?php
-				/** @var \Akeeba\Panopticon\Model\Site $item */
-				?>
-            @foreach($this->items as $item)
-					<?php
-					$url    = $item->getBaseUrl();
-					$config = $item->getConfig();
-					?>
-                <tr>
-                    <td>
-                        <a class="fw-medium"
-                           href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
-                            {{{ $item->name }}}
-                        </a>
-                        <div class="small mt-1">
-                            <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
-                            <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
-                                {{{ $url }}}
-                                <span class="fa fa-external-link-square" aria-hidden="true"></span>
-                            </a>
-                        </div>
-                        {{-- Show group labels --}}
-                        @if (!empty($groups = $config->get('config.groups')))
-                            <div>
-                                @foreach($groups as $gid)
-                                    @if (isset($this->groupMap[$gid]))
-                                        <span class="badge bg-secondary">
-                                    {{{ $this->groupMap[$gid] }}}
-                                </span>
-                                    @endif
-                                @endforeach
-                            </div>
-                        @endif
-                    </td>
-                    <td>
-                        @if ($item->cmsType() === CMSType::JOOMLA)
-                            @include('Main/site_joomla', [
-                                'item' => $item,
-                                'config' => $config,
-                            ])
-                        @else
-                            @include('Main/site_wordpress', [
-                                'item' => $item,
-                                'config' => $config,
-                            ])
-                        @endif
-                    </td>
-                    <td>
-                        @include('Main/site_extensions', [
-                            'item' => $item,
-                            'config' => $config,
-                        ])
-                    </td>
-                    <td>
-                        @include('Main/site_php', [
-                            'item' => $item,
-                            'config' => $config,
-                            'php' => $config->get('core.php')
-                        ])
-                    </td>
-                    <td class="font-monospace text-body-tertiary small px-2">
-                        {{{ $item->id }}}
-                    </td>
-                </tr>
-            @endforeach
-            @if ($this->itemsCount == 0)
-                <tr>
-                    <td colspan="20">
-                        <div class="alert alert-info m-2">
-                            <span class="fa fa-info-circle" aria-hidden="true"></span>
-                            @lang('PANOPTICON_MAIN_SITES_LBL_NO_RESULTS')
-                        </div>
-                    </td>
-                </tr>
-            @endif
-            </tbody>
-        </table>
-        {{ $this->pagination->getListFooter(['class' => 'form-select akeebaGridViewAutoSubmitOnChange']) }}
+        @yield('main-default-sites')
+
         <input type="hidden" name="task" id="task" value="browse">
         <input type="hidden" name="filter_order" id="filter_order" value="{{{ $this->lists->order }}}">
         <input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="{{{ $this->lists->order_Dir }}}">
+        @if ($this->getLayout() !== 'default')
+            <input type="hidden" name="layout" id="layout" value="{{ $this->getLayout() }}">
+        @endif
     </form>
 @else
     <div class="d-flex flex-column align-items-center gap-3 mt-4">

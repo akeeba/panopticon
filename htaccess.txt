@@ -38,7 +38,7 @@
 ### ============================================================================
 <IfModule mod_headers.c>
     ## Default policy
-    Header set Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; form-action 'self'; frame-ancestors 'self'; frame-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+    Header set Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; form-action 'self'; frame-ancestors 'self'; frame-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'"
 
     ## Disable scripts for SVG and HTML files
     <FilesMatch "\.(svg|SVG|html|HTML|htm|HTM)$">

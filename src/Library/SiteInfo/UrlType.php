@@ -5,7 +5,20 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-const AKEEBA_PANOPTICON_VERSION  = '##VERSION##';
-const AKEEBA_PANOPTICON_DATE     = '##DATE##';
-const AKEEBA_PANOPTICON_CODENAME = 'Dawn';
-const AKEEBA_PANOPTICON_MINPHP   = '8.1.0';
+namespace Akeeba\Panopticon\Library\SiteInfo;
+
+
+defined('AKEEBA') || die;
+
+enum UrlType: int
+{
+	case EMBED_BASE64 = 0;
+
+	case ABSOLUTE = 1;
+
+	case ABSOLUTE_SCHEME = 2;
+
+	case ABSOLUTE_PATH = 3;
+
+	case RELATIVE = 4;
+}

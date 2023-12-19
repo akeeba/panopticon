@@ -22,6 +22,8 @@ defined('AKEEBA') || die;
 
 abstract class DefaultTemplate
 {
+	private static array $importMap = [];
+
 	public static function applyFontSize(): void
 	{
 		$container    = Factory::getContainer();
@@ -484,6 +486,30 @@ abstract class DefaultTemplate
 		$html .= '</ul>';
 
 		return $html;
+	}
+
+	public static function addImportMapEntry(string $key, string $url): void
+	{
+		self::$importMap[$key] = $url;
+	}
+
+	public static function removeImportMapEntry(string $key): void
+	{
+		if (!isset(self::$importMap[$key]))
+		{
+			return;
+		}
+
+		unset(self::$importMap[$key]);
+	}
+
+	public static function getImportMapAsJson(): ?string
+	{
+		return empty(self::$importMap)
+			? null
+			: json_encode([
+				'imports' => self::$importMap
+			], JSON_PRETTY_PRINT);
 	}
 
 	private static function isSubmenuActive(Item $item): bool

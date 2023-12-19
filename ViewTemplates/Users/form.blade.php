@@ -148,6 +148,35 @@ JS;
                         </div>
                     </div>
                 </div>
+
+                {{-- main_layout --}}
+                <div class="row mb-3">
+                    <label for="main_layout" class="col-sm-3 col-form-label">
+                        @lang('PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT')
+                    </label>
+                    <div class="col-sm-9">
+                        {{ $this->container->html->select->genericList(
+                                data: [
+									(object) [
+                                        'value' => 'default',
+                                        'text' => $this->getLanguage()->text('PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_OPT_DEFAULT')
+                                    ],
+									(object) [
+                                        'value' => 'dashboard',
+                                        'text' => $this->getLanguage()->text('PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_OPT_DASHBOARD')
+                                    ],
+                                ],
+                                name: 'main_layout',
+                                attribs: [
+                                    'class' => 'form-select',
+                                ],
+                                selected: $user->getParameters()->get('main_layout', [])
+                            ) }}
+                        <div class="form-text">
+                            @sprintf('PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_HELP', $this->getContainer()->appConfig->get('language', 'en-GB'))
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

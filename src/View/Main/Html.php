@@ -105,6 +105,12 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	protected function onBeforeMain()
 	{
+		$isDashboard = $this->getLayout() === 'dashboard';
+		$app         = $this->getContainer()->application;
+		$doc         = $app->getDocument();
+		$router      = $this->getContainer()->router;
+		$appConfig   = $this->getContainer()->appConfig;
+
 		$this->setStrictLayout(true);
 		$this->setStrictTpl(true);
 
@@ -142,8 +148,18 @@ class Html extends \Awf\Mvc\DataView\Html
 			->getCRONJobsSecondsBehind();
 
 		// Assign items to the view
-		$this->items      = $model->get();
 		$this->itemsCount = $model->count();
+
+		if (!$isDashboard)
+		{
+			$this->items      = $model->get();
+
+			// Pagination
+			$displayedLinks   = 10;
+			$this->pagination = new Pagination(
+				$this->itemsCount, $this->lists->limitStart, $this->lists->limit, $displayedLinks, $this->container
+			);
+		}
 
 		// Assign other information to the view
 		$this->user           = $this->getContainer()->userManager->getUser();
@@ -154,7 +170,7 @@ class Html extends \Awf\Mvc\DataView\Html
 			fn(bool $carry, string $filterKey) => $carry || $model->getState($filterKey) !== null,
 			false
 		);
-		$this->phpVersionInfo = $this->container->appConfig->get('phpwarnings', true)
+		$this->phpVersionInfo = $appConfig->get('phpwarnings', true)
 			? (new PhpVersion())->getVersionInformation(PHP_VERSION)
 			: null;
 
@@ -165,24 +181,17 @@ class Html extends \Awf\Mvc\DataView\Html
 		$this->hasSelfUpdate           = $selfUpdateModel->hasUpdate();
 		$this->latestPanopticonVersion = $selfUpdateModel->getLatestVersion();
 
-
-		// Pagination
-		$displayedLinks   = 10;
-		$this->pagination = new Pagination(
-			$this->itemsCount, $this->lists->limitStart, $this->lists->limit, $displayedLinks, $this->container
-		);
-
 		// Back button in the CRON instructions page
 		if ($this->layout === 'cron')
 		{
-			$this->cronKey = $this->container->appConfig->get('webcron_key', '');
+			$this->cronKey = $appConfig->get('webcron_key', '');
 
-			$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition(
+			$doc->getToolbar()->addButtonFromDefinition(
 				[
 					'id'    => 'prev',
 					'title' => $this->getLanguage()->text('PANOPTICON_BTN_PREV'),
 					'class' => 'btn btn-secondary border-light',
-					'url'   => $this->container->router->route('index.php'),
+					'url'   => $router->route('index.php'),
 					'icon'  => 'fa fa-chevron-left',
 				]
 			);
@@ -192,36 +201,90 @@ class Html extends \Awf\Mvc\DataView\Html
 		/** @var Usagestats $usageStatsModel */
 		$usageStatsModel = $this->getModel('usagestats');
 
-		$doc = $this->container->application->getDocument();
 		$doc->addScriptOptions(
 			'panopticon.heartbeat', [
-				'url'       => $this->container->router->route('index.php?view=main&task=heartbeat&format=json'),
+				'url'       => $router->route('index.php?view=main&task=heartbeat&format=json'),
 				'warningId' => 'heartbeatWarning',
 			]
 		);
 		$doc->addScriptOptions(
 			'panopticon.usagestats', [
-				'url'     => $this->container->router->route('index.php?view=usagestats&task=ajax&format=raw'),
+				'url'     => $router->route('index.php?view=usagestats&task=ajax&format=raw'),
 				'enabled' => $usageStatsModel->isStatsCollectionEnabled(),
 			]
 		);
 
 		// DO NOT TRANSPOSE THESE LINES. Choices.js needs to be loaded before our main.js.
-		Template::addJs('media://choices/choices.min.js', $this->getContainer()->application, defer: true);
-		Template::addJs('media://js/main.js', $this->getContainer()->application, defer: true);
+		Template::addJs('media://choices/choices.min.js', $app, defer: true);
+		Template::addJs('media://js/main.js', $app, defer: true);
+
+		if ($isDashboard)
+		{
+			$doc->addScript(\Awf\Utils\Template::parsePath('js/main-dashboard.js', false, $app), type: 'module');
+			$doc->addScriptOptions(
+				'panopticon.dashboard',
+				[
+					'url'       => $router->route(
+						'index.php?view=main&task=sites&format=json&' . $this->getContainer()->session->getCsrfToken()
+							->getValue() . '=1'
+					),
+					'maxTimer'  => (int) $appConfig->get('dashboard_reload_timer', 90),
+					'maxPages'  => (int) ceil($appConfig->get('dashboard_max_items', 1000) / 50),
+					'pageLimit' => 50,
+				]
+			);
+
+		}
 
 		// Toolbar
+		$qualifier = sprintf('– <small>%s</small>', $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB'));
+
+		if ($isDashboard)
+		{
+			$qualifier =
+				sprintf(
+					' – <small>%s<sup class="ms-2 "><span class="badge bg-danger"><span class="fa fa-fw fa-flask me-1" aria-hidden="true"></span>LABS</span></sup></small>',
+					$this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_DASH')
+				);
+		}
+
 		$toolbar = $doc->getToolbar();
-		$toolbar->setTitle($this->getLanguage()->text('PANOPTICON_MAIN_TITLE'));
+		$toolbar->setTitle($this->getLanguage()->text('PANOPTICON_MAIN_TITLE') . $qualifier);
 		$toolbar->addButtonFromDefinition(
 			[
 				'id'    => 'manageSites',
 				'title' => $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE'),
 				'class' => 'btn btn-secondary border-light',
-				'url'   => $this->container->router->route('index.php?view=sites'),
+				'url'   => $router->route('index.php?view=sites'),
 				'icon'  => 'fa fa-gears',
 			]
 		);
+
+		if (!$isDashboard)
+		{
+			$toolbar->addButtonFromDefinition(
+				[
+					'id'    => 'dashboard',
+					'title' => $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_DASH'),
+					'class' => 'btn btn-dark border-light',
+					'url'   => $router->route('index.php?layout=dashboard'),
+					'icon'  => 'fa fa-gauge',
+				]
+			);
+		}
+		else
+		{
+			$toolbar->addButtonFromDefinition(
+				[
+					'id'    => 'astable',
+					'title' => $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB'),
+					'class' => 'btn btn-dark border-light',
+					'url'   => $router->route('index.php?layout=default'),
+					'icon'  => 'fa fa-table',
+				]
+			);
+		}
+
 
 		return true;
 	}

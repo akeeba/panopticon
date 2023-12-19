@@ -10,10 +10,9 @@ namespace Akeeba\Panopticon\Composer;
 use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
-use Awf\Mvc\Model;
+use Awf\Download\Download;
 use Composer\Script\Event;
 use Symfony\Component\Finder\Finder;
-use function Symfony\Component\VarDumper\Dumper\esc;
 
 abstract class InstallationScript
 {
@@ -101,8 +100,12 @@ abstract class InstallationScript
 			$to    = $copyDef['to'] ?? '';
 			$names = $copyDef['names'] ?? null;
 
-			$from = $container->basePath . '/' . trim($from, '/');
-			$to   = $container->basePath . '/' . trim($to, '/');
+			if (!str_starts_with($from, 'https://') && !str_starts_with($from, 'http://'))
+			{
+				$from = $container->basePath . '/' . trim($from, '/');
+			}
+
+			$to = $container->basePath . '/' . trim($to, '/');
 
 			if (empty($from) || empty($to))
 			{
@@ -112,6 +115,15 @@ abstract class InstallationScript
 			if ($type === 'file')
 			{
 				$container->fileSystem->copy($from, $to);
+
+				continue;
+			}
+
+			if ($type === 'url')
+			{
+				$download = new Download($container);
+				$data     = $download->getFromURL($from);
+				$container->fileSystem->write($to, $data);
 
 				continue;
 			}
@@ -185,7 +197,7 @@ abstract class InstallationScript
 				chdir($container->basePath);
 
 				$command = 'npx babel ' . escapeshellarg($inFile) . ' --out-dir ' . escapeshellarg($outdir)
-					. ' --out-file-extension ' . escapeshellarg('.min.js') . ' --source-maps';
+				           . ' --out-file-extension ' . escapeshellarg('.min.js') . ' --source-maps';
 
 				passthru($command);
 
@@ -259,7 +271,7 @@ abstract class InstallationScript
 				chdir($container->basePath);
 
 				$command = 'sass ' . escapeshellarg($inFile . ':' . $outFile) .
-					' -s compressed --update';
+				           ' -s compressed --update';
 
 				passthru($command);
 
@@ -361,20 +373,22 @@ abstract class InstallationScript
 		$finder->ignoreDotFiles(false)
 			->ignoreVCS(true)
 			->ignoreVCSIgnored(true)
-			->in([
-				$container->basePath . '/assets',
-				$container->basePath . '/build',
-				$container->basePath . '/cache',
-				$container->basePath . '/cli',
-				$container->basePath . '/includes',
-				$container->basePath . '/languages',
-				$container->basePath . '/log',
-				$container->basePath . '/media',
-				$container->basePath . '/src',
-				$container->basePath . '/templates',
-				$container->basePath . '/user_code',
-				$container->basePath . '/ViewTemplates',
-			])
+			->in(
+				[
+					$container->basePath . '/assets',
+					$container->basePath . '/build',
+					$container->basePath . '/cache',
+					$container->basePath . '/cli',
+					$container->basePath . '/includes',
+					$container->basePath . '/languages',
+					$container->basePath . '/log',
+					$container->basePath . '/media',
+					$container->basePath . '/src',
+					$container->basePath . '/templates',
+					$container->basePath . '/user_code',
+					$container->basePath . '/ViewTemplates',
+				]
+			)
 			->name('.DS_Store')
 			->files();
 
@@ -474,9 +488,11 @@ abstract class InstallationScript
 		}
 
 		// Remove empty lines
-		$lines = array_filter($lines, function ($x) {
+		$lines = array_filter(
+			$lines, function ($x) {
 			return !empty($x);
-		});
+		}
+		);
 
 		// The first line should be "Something something something VERSION" or just "VERSION"
 		$firstLine = array_shift($lines);

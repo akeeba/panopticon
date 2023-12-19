@@ -85,8 +85,13 @@ class Main extends Controller
 		}
 
 		// Pass the Selfupdate model to the view
+		$view            = $this->getView();
+
 		$selfUpdateModel = $this->getModel('selfupdate');
-		$this->getView()->setModel('selfupdate', $selfUpdateModel);
+		$view->setModel('selfupdate', $selfUpdateModel);
+
+		$bestLayout = $this->getModel('Main')->getBestLayout($this->input);
+		$view->setLayout($bestLayout);
 
 		// When no group filter is selected we are POSTed no value. In this case, we need to unset the filter.
 		if (strtoupper($this->input->getMethod() ?? '') === 'POST')
@@ -100,5 +105,22 @@ class Main extends Controller
 		}
 
 		return true;
+	}
+
+	public function sites()
+	{
+		$this->csrfProtection();
+
+		// Do not surround the reply with triple hashes
+		$doc = $this->getContainer()->application->getDocument();
+		$doc->setUseHashes(false);
+
+		// Use the saved model state
+		if ($this->input->get('savestate', -999, 'int') == -999)
+		{
+			$this->input->set('savestate', true);
+		}
+
+		$this->display();
 	}
 }

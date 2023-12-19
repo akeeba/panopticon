@@ -102,6 +102,7 @@ class Users extends DataController
 
 		$params = [
 			'language' => $this->input->post->getCmd('language', ''),
+			'main_layout' => $this->input->post->getCmd('main_layout', 'default'),
 		];
 
 		if (!$myself->getPrivilege('panopticon.super'))

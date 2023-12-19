@@ -32,6 +32,7 @@
 	"require": {
 		"php": ">=8.1",
 		"ext-curl": "*",
+		"ext-dom": "*",
 		"ext-mbstring": "*",
 		"ext-json": "*",
 		"ext-zip": "*",
@@ -65,7 +66,6 @@
 		{
 			"type": "github",
 			"url": "https://github.com/akeeba/stats_collector"
-
 		}
 	],
 	"suggest": {
@@ -255,6 +255,10 @@
 					"choices.js",
 					"choices.min.js"
 				]
+			},
+			{
+				"from": "node_modules/petite-vue/dist/petite-vue.es.js",
+				"to": "media/petite-vue/petite-vue.min.js"
 			}
 		],
 		"babel": [
