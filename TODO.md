@@ -1,6 +1,6 @@
 ## Dashboard
 
-* Main: Remember the last layout. When changing to the default layout, apply `limitstart=0` automatically. 
+* User option: `main_layout` -> default, dashboard (user param)
 * Global options:
     * `dashboard_reload_timer` default 90
     * `dashboard_max_pages` default 50

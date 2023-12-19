@@ -279,7 +279,7 @@ class Html extends \Awf\Mvc\DataView\Html
 					'id'    => 'astable',
 					'title' => $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB'),
 					'class' => 'btn btn-dark border-light',
-					'url'   => $router->route('index.php?layout=default&limitstart=0'),
+					'url'   => $router->route('index.php?layout=default'),
 					'icon'  => 'fa fa-table',
 				]
 			);

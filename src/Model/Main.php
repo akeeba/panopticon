@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Awf\Date\Date;
+use Awf\Input\Input;
 use Awf\Mvc\Model;
 
 /**
@@ -22,6 +23,36 @@ use Awf\Mvc\Model;
  */
 class Main extends Model
 {
+	public function getBestLayout(Input $input): string
+	{
+		$user           = $this->getContainer()->userManager->getUser();
+		$userPreference = $user?->getParameters()?->get('main_layout', 'default');
+		$urlLayout      = $input->get('layout', null);
+		$storedLayout   = $this->getContainer()->segment->get('main.layout', null);
+
+		// No layout in the URL, nor stored in the session. Return the user preference.
+		if ($urlLayout === null && $storedLayout === null)
+		{
+			return $userPreference ?? 'default';
+		}
+
+		// No layout in the URL, but a stored layout exists. Return it.
+		if ($urlLayout === null)
+		{
+			return $storedLayout;
+		}
+
+		// A layout is specified in the URL. Store it and return it.
+		$this->getContainer()->segment->set('main.layout', $urlLayout);
+
+		if ($urlLayout === 'default' && $storedLayout !== null && $storedLayout !== 'default')
+		{
+			$input->set('limitstart', $input->getInt('limitstart', 0));
+		}
+
+		return $urlLayout;
+	}
+
 	public function getHighestJoomlaVersion(): ?string
 	{
 		$db    = $this->container->db;
