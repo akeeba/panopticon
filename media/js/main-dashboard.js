@@ -107,7 +107,7 @@ function SitesList(props)
             this.toggleTimer()
             this.feedMeData(0)
         },
-        reload()
+        reloadData()
         {
             this.restartTimer = this.countdownTimer !== null
 

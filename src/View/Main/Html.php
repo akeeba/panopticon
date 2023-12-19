@@ -238,8 +238,19 @@ class Html extends \Awf\Mvc\DataView\Html
 		}
 
 		// Toolbar
+		$qualifier = sprintf('– <small>%s</small>', $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB'));
+
+		if ($isDashboard)
+		{
+			$qualifier =
+				sprintf(
+					' – <small>%s<sup class="ms-2 "><span class="badge bg-danger"><span class="fa fa-fw fa-flask me-1" aria-hidden="true"></span>LABS</span></sup></small>',
+					$this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_DASH')
+				);
+		}
+
 		$toolbar = $doc->getToolbar();
-		$toolbar->setTitle($this->getLanguage()->text('PANOPTICON_MAIN_TITLE'));
+		$toolbar->setTitle($this->getLanguage()->text('PANOPTICON_MAIN_TITLE') . $qualifier);
 		$toolbar->addButtonFromDefinition(
 			[
 				'id'    => 'manageSites',
@@ -249,6 +260,32 @@ class Html extends \Awf\Mvc\DataView\Html
 				'icon'  => 'fa fa-gears',
 			]
 		);
+
+		if (!$isDashboard)
+		{
+			$toolbar->addButtonFromDefinition(
+				[
+					'id'    => 'dashboard',
+					'title' => $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_DASH'),
+					'class' => 'btn btn-dark border-light',
+					'url'   => $router->route('index.php?layout=dashboard'),
+					'icon'  => 'fa fa-gauge',
+				]
+			);
+		}
+		else
+		{
+			$toolbar->addButtonFromDefinition(
+				[
+					'id'    => 'astable',
+					'title' => $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB'),
+					'class' => 'btn btn-dark border-light',
+					'url'   => $router->route('index.php?layout=default&limitstart=0'),
+					'icon'  => 'fa fa-table',
+				]
+			);
+		}
+
 
 		return true;
 	}

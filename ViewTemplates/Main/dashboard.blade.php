@@ -44,14 +44,14 @@ defined('AKEEBA') || die;
                      :style="`width: ${100*availableTime/MAX_TIMER}%`"
                 >@{{ availableTime }}s</div>
             </div>
-            <button
+            <button type="button"
                     v-if="countdownTimer === null"
                     class="btn btn-secondary btn-sm"
-                    @click="reload()"
+                    @click="reloadData()"
             >
                 <span class="fa fa-fw fa-arrow-rotate-right"></span>
             </button>
-            <button
+            <button type="button"
                     class="btn btn-secondary btn-sm"
                     @click="toggleTimer()"
             >
@@ -69,26 +69,16 @@ defined('AKEEBA') || die;
 				</span>
 			</span>
             </button>
-            <a href="@route('index.php?limitstart=0')"
-               role="button"
-               class="btn btn-secondary btn-sm"
-            >
-                <span class="fa fa-fw fa-table" aria-hidden="true"></span>
-                <span class="visually-hidden">
-				Display as table
-			</span>
-            </a>
+
         </div>
 
         <div class="col" v-for="site in sites">
             <div class="card h-100">
-                <h4 class="card-header h6">
-				<span class="fw-semibold">
-                    <a :href="site.overview_url">
-					    @{{ site.name ?? 'No Name' }}
-                    </a>
-				</span>
-                </h4>
+                <a :href="site.overview_url">
+                    <h4 class="card-header h6 fw-semibold">
+                            @{{ site.name ?? 'No Name' }}
+                    </h4>
+                </a>
                 <div class="card-body">
                     <div v-if="site.groups.length > 0">
                         <div class="card-subtitle text-end mb-2">
@@ -223,7 +213,7 @@ defined('AKEEBA') || die;
 
                     <div>
                         <a href="@{{ site.url }}" target="_blank"
-                           class="text-decoration-none link-secondary">
+                           class="link-opacity-50 link-opacity-100-hover link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                             @{{ site.url }}
                             <span class="fa fa-fw fa-square-arrow-up-right" aria-hidden="true"></span>
                         </a>
