@@ -2,7 +2,7 @@ Aphelion [Alpha]
 Perihelion [Betas]
 Halo [RCs]
 Morn [1.0]
-Dawn
+Dawn [1.1]
 Twilight
 Aurora
 Daybreak
