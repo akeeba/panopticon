@@ -20,16 +20,16 @@ defined('AKEEBA') || die;
         >
             <h4 class="alert-heading">
                 <span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"></span>
-                Could not load the sites dashboard
+                @lang('PANOPTICON_MAIN_DASH_ERR_CANNOTLOAD_HEAD')
             </h4>
             <p>
-                An error occurred while loading the sites dashboard information from your server.
+                @lang('PANOPTICON_MAIN_DASH_ERR_CANNOTLOAD_TEXT')
             </p>
             <p>
                 @{{ error.message }}
             </p>
             <details>
-                <summary>Raw response</summary>
+                <summary>@lang('PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_RAW')</summary>
                 <pre class="bg-dark text-light p-2 border border-2 rounded-2">@{{ error.response.data }}</pre>
             </details>
         </div>
@@ -37,7 +37,7 @@ defined('AKEEBA') || die;
         <div v-if="error === null"
              class="col col-md-6 col-xl-12 mb-4 d-flex flex-row align-items-center gap-1">
             <div class="progress flex-grow-1" role="progressbar" style="height: 2em"
-                 aria-label="Page reload timer"
+                 aria-label="@lang('PANOPTICON_LOGS_LBL_SR_AUTOREFRESH_TIME')"
                  :aria-valuenow="availableTime"
                  aria-valuemin="0" aria-valuemax="@{{ MAX_TIMER }}">
                 <div class="progress-bar bg-secondary"
@@ -50,6 +50,7 @@ defined('AKEEBA') || die;
                     @click="reloadData()"
             >
                 <span class="fa fa-fw fa-arrow-rotate-right"></span>
+                <span class="visually-hidden">@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')</span>
             </button>
             <button type="button"
                     class="btn btn-secondary btn-sm"
@@ -59,24 +60,23 @@ defined('AKEEBA') || die;
                 <span v-if="countdownTimer !== null">
 				<span class="fa fa-fw fa-stop" aria-hidden="true"></span>
 				<span class="visually-hidden">
-					Stop the timer
+					@lang('PANOPTICON_MAIN_DASH_BTN_TIMER_STOP')
 				</span>
 			</span>
                 <span v-if="countdownTimer === null">
 				<span class="fa fa-fw fa-play" aria-hidden="true"></span>
 				<span class="visually-hidden">
-					Start the timer
+					@lang('PANOPTICON_MAIN_DASH_BTN_TIMER_START')
 				</span>
 			</span>
             </button>
-
         </div>
 
         <div class="col" v-for="site in sites">
             <div class="card h-100">
                 <a :href="site.overview_url">
                     <h4 class="card-header h6 fw-semibold">
-                            @{{ site.name ?? 'No Name' }}
+                            @{{ site.name ?? '' }}
                     </h4>
                 </a>
                 <div class="card-body">
@@ -104,41 +104,41 @@ defined('AKEEBA') || die;
                                       class="text-secondary fa fa-fw fa-clock" aria-hidden="true"></span>
                                     <span v-if="site.updating.cms === 1"
                                           class="visually-hidden">
-									The CMS will be updated automatically
+									@lang('PANOPTICON_MAIN_DASH_LBL_CMS_WILL_UPDATE')
 								</span>
                                     <span v-if="site.updating.cms === 2"
                                           class="text-primary fa fa-fw fa-play" aria-hidden="true"></span>
                                     <span v-if="site.updating.cms === 2"
                                           class="visually-hidden">
-									The CMS is being updated
-								</span>
+                                        @lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATING')
+                                    </span>
                                     <span v-if="site.updating.cms === 3"
                                           class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"></span>
                                     <span v-if="site.updating.cms === 3"
                                           class="visually-hidden">
-									The automatic CMS update has failed
-								</span>
+                                        @lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATE_ERROR')
+                                    </span>
 
-                                    <span v-if="!site.version" class="text-danger">Unknown</span>
+                                    <span v-if="!site.version" class="text-danger">@lang('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION')</span>
                                     <span v-else-if="site.eol" class="text-danger">
 									<span class="fa fa-fw fa-book-skull" aria-hidden="true"></span>
-									@{{ site.version }}
-								</span>
+                                        @{{ site.version }}
+                                    </span>
                                     <span v-else-if="(site.latest !== null)" class="text-warning">
-									@{{ site.version }}
-								</span>
+                                        @{{ site.version }}
+                                    </span>
                                     <span v-else>@{{ site.version }}</span>
                                     <span v-if="(site.latest !== null)" class="text-secondary">
 									<span class="fa fa-fw fa-arrow-right"></span>
-									@{{ site.latest }}
-								</span>
+                                        @{{ site.latest }}
+                                    </span>
                                 </dd>
 
-                                <dt>PHP Version</dt>
+                                <dt>@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')</dt>
                                 <dd>@{{ site.php }}</dd>
 
                                 <dt v-if="(site.overrides > 0)">
-                                    Overrides
+                                    @lang('PANOPTICON_OVERRIDES_TITLE')
                                 </dt>
                                 <dd v-if="(site.overrides > 0)">
 								<span class="badge bg-warning">
@@ -147,27 +147,33 @@ defined('AKEEBA') || die;
 								</span>
                                 </dd>
 
-                                <dt v-if="(site.extensions > 0)">
-                                    Extensions
+                                <dt v-if="(site.extensions > 0) && (site.cms ?? 'joomla') === 'joomla'">
+                                    @lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS')
+                                </dt>
+                                <dt v-if="(site.extensions > 0) && (site.cms ?? 'joomla') === 'wordpress'">
+                                    @lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WORDPRESS')
                                 </dt>
                                 <dd v-if="(site.extensions > 0)">
 								<span v-if="site.updating.extensions === 1"
                                       class="text-secondary fa fa-fw fa-clock" aria-hidden="true"></span>
                                     <span v-if="site.updating.extensions === 1"
                                           class="visually-hidden">
-									The installed software will be updated automatically
+									<span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WILL_UPDATE')</span>
+									<span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_WILL_UPDATE')</span>
 								</span>
                                     <span v-if="site.updating.extensions === 2"
                                           class="text-primary fa fa-fw fa-play" aria-hidden="true"></span>
                                     <span v-if="site.updating.extensions === 2"
                                           class="visually-hidden">
-									The installed software is being updated
+									<span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING')</span>
+									<span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING')</span>
 								</span>
                                     <span v-if="site.updating.extensions === 3"
                                           class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"></span>
                                     <span v-if="site.updating.extensions === 3"
                                           class="visually-hidden">
-									The automatic installed software update has failed
+									<span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATE_ERROR')</span>
+									<span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR')</span>
 								</span>
 
                                     <span class="badge bg-warning">
@@ -191,7 +197,7 @@ defined('AKEEBA') || die;
                         >
 						<span class="fa fa-fw fa-triangle-exclamation" aria-hidden="true"></span>
 						<span class="visually-hidden">
-							Error loading site information
+							@lang('PANOPTICON_MAIN_DASH_ERR_CMS')
 						</span>
 					</span>
 
@@ -202,11 +208,11 @@ defined('AKEEBA') || die;
 						<span class="fa fa-fw fa-circle-exclamation" aria-hidden="true"></span>
 						<span v-if="(site.cms ?? 'joomla') === 'joomla'"
                               class="visually-hidden">
-							Error loading extensions information
+                            @lang('PANOPTICON_MAIN_DASH_ERR_EXT')
 						</span>
 						<span v-if="(site.cms ?? 'wordpress') === 'wordpress'"
                               class="visually-hidden">
-							Error loading plugins and themes information
+                            @lang('PANOPTICON_MAIN_DASH_ERR_EXT_WP')
 						</span>
 					</span>
                     </div>
