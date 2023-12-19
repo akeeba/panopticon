@@ -228,9 +228,9 @@ class Html extends \Awf\Mvc\DataView\Html
 						'index.php?view=main&task=sites&format=json&' . $this->getContainer()->session->getCsrfToken()
 							->getValue() . '=1'
 					),
-					'maxTimer'  => $appConfig->get('dashboard_reload_timer', 90),
-					'maxPages'  => $appConfig->get('dashboard_max_pages', 50),
-					'pageLimit' => $appConfig->get('dashboard_page_limit', 20),
+					'maxTimer'  => (int) $appConfig->get('dashboard_reload_timer', 90),
+					'maxPages'  => (int) ceil($appConfig->get('dashboard_max_items', 1000) / 50),
+					'pageLimit' => 50,
 				]
 			);
 

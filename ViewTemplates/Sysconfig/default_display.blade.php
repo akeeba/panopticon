@@ -114,3 +114,52 @@ $config = $this->container->appConfig;
 
     </div>
 </div>
+
+<div class="card">
+    <h3 class="card-header h4">@lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DASHBOARD')</h3>
+    <div class="card-body">
+        {{--dashboard_reload_timer--}}
+        <div class="row mb-3">
+            <label for="fontsize" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER')
+            </label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <input type="number" class="form-control" id="dashboard_reload_timer"
+                           name="options[dashboard_reload_timer]"
+                           value="{{{ $config->get('dashboard_reload_timer', 90) }}}"
+                           min="0" max="86400"
+                    >
+                    <div class="input-group-text">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_UOM_SECONDS')
+                    </div>
+                </div>
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER_HELP')
+                </div>
+            </div>
+        </div>
+
+        {{--dashboard_max_items--}}
+        <div class="row mb-3">
+            <label for="fontsize" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS')
+            </label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <input type="number" class="form-control" id="dashboard_max_items"
+                           name="options[dashboard_max_items]"
+                           value="{{{ $config->get('dashboard_max_items', 1000) }}}"
+                           min="50" max="100000"
+                    >
+                    <div class="input-group-text">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_UOM_ITEMS')
+                    </div>
+                </div>
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS_HELP')
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
