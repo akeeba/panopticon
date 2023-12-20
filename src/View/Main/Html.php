@@ -260,7 +260,7 @@ class Html extends \Awf\Mvc\DataView\Html
 			]
 		);
 
-		if (!$isDashboard)
+		if ($this->getLayout() === 'default')
 		{
 			$toolbar->addButtonFromDefinition(
 				[
@@ -272,7 +272,7 @@ class Html extends \Awf\Mvc\DataView\Html
 				]
 			);
 		}
-		else
+		elseif($isDashboard)
 		{
 			$toolbar->addButtonFromDefinition(
 				[

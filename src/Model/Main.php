@@ -30,6 +30,12 @@ class Main extends Model
 		$urlLayout      = $input->get('layout', null);
 		$storedLayout   = $this->getContainer()->segment->get('main.layout', null);
 
+		// This prevents using layout=cron from getting us stuck on that page :p
+		if (!in_array($urlLayout, ['default', 'dashboard']))
+		{
+			$urlLayout = null;
+		}
+
 		// No layout in the URL, nor stored in the session. Return the user preference.
 		if ($urlLayout === null && $storedLayout === null)
 		{
@@ -41,6 +47,7 @@ class Main extends Model
 		{
 			return $storedLayout;
 		}
+
 
 		// A layout is specified in the URL. Store it and return it.
 		$this->getContainer()->segment->set('main.layout', $urlLayout);
