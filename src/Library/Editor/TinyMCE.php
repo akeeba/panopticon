@@ -111,7 +111,7 @@ window.addEventListener('DOMContentLoaded', () => {
             myConfig["skin"] = (window.matchMedia("(prefers-color-scheme: dark)").matches ? darkSkin : lightSkin)
         }
         
-        if (myConfig['content_css'] === "object") {
+        if (typeof myConfig['content_css'] === "object") {
             const darkCSS = myConfig["content_css"][0];
             const lightCSS = myConfig["content_css"][1];
             myConfig['content_css'] = (window.matchMedia("(prefers-color-scheme: dark)").matches ? darkCSS : lightCSS);
