@@ -304,7 +304,7 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 <!-- Fail page-->
 <div class="px-4 py-5 my-0 text-center d-none" id="error">
 	<div class="mx-auto mb-4">
-			<span class="badge bg-danger rounded-5">
+			<span class="badge bg-danger rounded-5 p-2">
 				<span class="far fa-times-circle display-5" aria-hidden="true"></span>
 			</span>
 	</div>
