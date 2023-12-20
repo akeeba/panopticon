@@ -504,7 +504,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                         <td colspan="20">
                             <div class="alert alert-info m-2">
                                 <span class="fa fa-info-circle" aria-hidden="true"></span>
-                                @lang('PANOPTICON_MAIN_SITES_LBL_NO_RESULTS')
+                                @lang('PANOPTICON_SITE_LBL_AKEEBABACKUP_NO_RESULTS')
                             </div>
                         </td>
                     </tr>
