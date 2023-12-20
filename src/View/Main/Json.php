@@ -103,7 +103,7 @@ class Json extends BaseView
 				return [
 					'id'           => $site->getId(),
 					'name'         => $site->name,
-					'favicon'      => null,
+					'favicon'      => $site->getFavicon(asDataUrl: true, onlyIfCached: true),
 					'url'          => $site->getBaseUrl(),
 					'overview_url' => $this->getContainer()->router->route(
 						sprintf('index.php?view=Site&task=read&id=%d', $site->getId())

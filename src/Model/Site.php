@@ -20,8 +20,10 @@ use Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled;
 use Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL;
 use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
 use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
+use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
+use Akeeba\Panopticon\Library\SiteInfo\Retriever;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\AkeebaBackupIntegrationTrait;
@@ -41,6 +43,8 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\RequestOptions;
+use Psr\Cache\CacheException;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use stdClass;
@@ -1190,6 +1194,50 @@ class Site extends DataModel
 		sort($groups);
 
 		return $groups;
+	}
+
+	/**
+	 * Retrieves the favicon URL
+	 *
+	 * @param   int          $minSize    Minimum size of the favicon (default: 0)
+	 * @param   string|null  $type       The type of the favicon (default: null)
+	 * @param   bool         $asDataUrl  Return a `data:` URL instead of an HTTP URL.
+	 *
+	 * @return  string|null  The URL of the favicon, or null if it could not be found.
+	 *
+	 * @throws CacheException
+	 * @throws InvalidArgumentException
+	 * @since   1.1.0
+	 */
+	public function getFavicon(int $minSize = 0, ?string $type = null, bool $asDataUrl = false, bool $onlyIfCached = false): ?string
+	{
+		/** @var \Akeeba\Panopticon\Container $container */
+		$container          = $this->getContainer();
+		$pool               = $container->cacheFactory->pool('favicon');
+		$callbackController = new CallbackController(
+			$container,
+			$pool
+		);
+		$cacheKey           = sha1(
+			sprintf(
+				'favicon-%d-%s-%d-%s-%s', $this->getId(), $this->getBaseUrl(), $minSize, $type ?? '',
+				$asDataUrl ? 'data' : 'url'
+			)
+		);
+
+		if ($onlyIfCached && !$pool->hasItem($cacheKey))
+		{
+			return null;
+		}
+
+		return $callbackController
+			->get(
+				fn($minSize, $type) => (new Retriever($this->getContainer(), $this->getBaseUrl(), true))
+					->getIconUrl($minSize, $type, true, $asDataUrl),
+				[$minSize, $type],
+				$cacheKey,
+				31536000
+			);
 	}
 
 	/**

@@ -126,7 +126,7 @@ class Retriever
 	 *
 	 * @return  string|null
 	 */
-	public function getIconUrl(int $minSize = 0, ?string $type = null, bool $testDownload = false): ?string
+	public function getIconUrl(int $minSize = 0, ?string $type = null, bool $testDownload = false, bool $asDataUrl = false): ?string
 	{
 		foreach ($this->icons as $def)
 		{
@@ -140,10 +140,15 @@ class Retriever
 				continue;
 			}
 
-			if ($testDownload)
+			if ($testDownload || $asDataUrl)
 			{
 				/** @var \Akeeba\Panopticon\Container $container */
 				$container = $this->getContainer();
+
+				if (str_starts_with($def->url, 'data:'))
+				{
+					return $def->url;
+				}
 
 				$client = $container->httpFactory->makeClient(cache: false, singleton: false);
 
@@ -160,6 +165,13 @@ class Retriever
 				if (empty($data))
 				{
 					continue;
+				}
+
+				if ($asDataUrl)
+				{
+					$mime = $this->getMimeTypeFromExtension($def->type);
+
+					return sprintf("data:%s;base64,%s", $mime, base64_encode($data));
 				}
 			}
 
@@ -574,4 +586,25 @@ class Retriever
 		return 'ico';
 	}
 
+
+	/**
+	 * Get the MIME type from a file extension
+	 *
+	 * @param   string  $extension  The file extension, without a dot
+	 *
+	 * @return  string  The corresponding MIME type
+	 * @since   1.1.0
+	 */
+	private function getMimeTypeFromExtension(string $extension): string
+	{
+		return match (strtolower($extension))
+		{
+			'ico' => 'image/ico',
+			'png' => 'image/png',
+			'gif' => 'image/gif',
+			'jpg' => 'image/jpg',
+			'svg' => 'image/svg+xml',
+			default => 'application/octet-stream'
+		};
+	}
 }

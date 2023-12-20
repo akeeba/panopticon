@@ -326,6 +326,8 @@ class RefreshSiteInfo extends AbstractCallback
 									sleep($retry);
 								}
 							} while ($retry < 3);
+
+							return $response;
 						},
 						function (RequestException $e) use ($site) {
 							$this->logger->error(sprintf(
@@ -353,6 +355,13 @@ class RefreshSiteInfo extends AbstractCallback
 									$site->id, $site->name, $e->getMessage()
 								));
 							}
+						}
+					)
+					->then(
+						function(ResponseInterface $response) use ($site) {
+							$site->getFavicon(asDataUrl: true);
+
+							return $response;
 						}
 					);
 			},
