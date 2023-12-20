@@ -2,6 +2,7 @@
 Akeeba Panopticon 1.1.0
 ================================================================================
 + Dashboard layout for Sites Overview [gh-395]
++ Select language in Setup [gh-384]
 + Change the rotated log names [gh-398]
 ~ Running `composer install` will now always create the `version.php` file
 # [LOW] PHP error when the browser returns invalid data during WebAuthn [gh-406]

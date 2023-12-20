@@ -25,6 +25,24 @@ $headAndFootHeight = (defined('AKEEBADEBUG') && AKEEBADEBUG) ? '13em' : '11em';
 			<p class="lead mb-4">
 				<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_WELCOME_HERO_TEXT') ?>
 			</p>
+			<form action="<?= $this->container->router->route('index.php?view=setup') ?>"
+				  class="mb-4"
+				  method="GET" id="adminForm">
+				<label for="language" class="visually-hidden">
+					<?= $this->container->language->text('PANOPTICON_LOGIN_LBL_LANGUAGE') ?>
+				</label>
+				<?= $this->getContainer()->helper->setup->languageOptions(
+					$this->getContainer()->segment->get('panopticon.forced_language', ''),
+					name: 'language',
+					id: 'language',
+					attribs: [
+						'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+						'style' => 'width: min(19em, 100%); margin-left: calc(50% - min(9.5em, 50%))',
+					],
+					addUseDefault: true,
+					namesAlsoInEnglish: false
+				) ?>
+			</form>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
 				<a href="<?= $this->container->router->route('index.php?view=setup&task=precheck&layout=precheck') ?>" role="button" class="btn btn-primary btn-lg px-4 gap-3">
 					<span class="fa fa-chevron-circle-right" aria-hidden="true"></span>

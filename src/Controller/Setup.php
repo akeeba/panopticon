@@ -48,6 +48,20 @@ class Setup extends Controller
 		return parent::execute($task);
 	}
 
+	public function onBeforeDefault()
+	{
+		$lang = $this->input->get->get('language', null);
+
+		if ($lang !== null)
+		{
+			$this->getContainer()->segment->set('panopticon.forced_language', $lang);
+
+			$this->getLanguage()->loadLanguage($lang ?: 'en-GB');
+		}
+
+		return true;
+	}
+
 	public function precheck(): void
 	{
 		// If the session save path is not writable,
