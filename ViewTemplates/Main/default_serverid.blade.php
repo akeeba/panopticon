@@ -28,7 +28,7 @@ defined('AKEEBA') || die;
             <tbody>
             <tr>
                 <th scope="row">
-                    <span class="fa fa-globe" aria-hidden="true"></span>
+                    <span class="fa fa-globe fa-fw" aria-hidden="true"></span>
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_HOSTNAME')
                 </th>
                 <td>
@@ -37,7 +37,7 @@ defined('AKEEBA') || die;
             </tr>
             <tr>
                 <th scope="row">
-                    <span class="fa fa-network-wired" aria-hidden="true"></span>
+                    <span class="fa fa-network-wired fa-fw" aria-hidden="true"></span>
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_IP')
                 </th>
                 <td>
@@ -46,7 +46,7 @@ defined('AKEEBA') || die;
             </tr>
             <tr>
                 <th scope="row">
-                    <span class="fa fa-server" aria-hidden="true"></span>
+                    <span class="fa fa-server fa-fw" aria-hidden="true"></span>
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_SYS_HOSTNAME')
                 </th>
                 <td>
@@ -55,7 +55,7 @@ defined('AKEEBA') || die;
             </tr>
             <tr>
                 <th scope="row">
-                    <span class="fa fa-ethernet" aria-hidden="true"></span>
+                    <span class="fa fa-ethernet fa-fw" aria-hidden="true"></span>
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_SYS_IP')
                 </th>
                 <td>
@@ -64,7 +64,7 @@ defined('AKEEBA') || die;
             </tr>
             <tr>
                 <th scope="row">
-                    <span class="fa fa-user-secret" aria-hidden="true"></span>
+                    <span class="fa fa-user-secret fa-fw" aria-hidden="true"></span>
                     @lang('PANOPTICON_MAIN_SITES_LBL_IDENTITY_USER_AGENT')
                 </th>
                 <td>
