@@ -607,8 +607,16 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 
 		foreach ($decodedData->response as $key => $value)
 		{
-
-			$decodedData->response->{$key} = Base64UrlSafe::encodeUnpadded(Base64::decode($decodedData->response->{$key}));
+			try
+			{
+				$decodedData->response->{$key} = Base64UrlSafe::encodeUnpadded(
+					Base64::decode($decodedData->response->{$key})
+				);
+			}
+			catch (Throwable $e)
+			{
+				// No can do.
+			}
 		}
 
 		return json_encode($decodedData);
