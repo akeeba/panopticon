@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
    if (div) {
        div.classList.remove('d-none');
    }
-   
+
    if (typeof bootstrap.Collapse !== 'function') {
        document.getElementById('brokenJavaScript').classList.remove('d-none');
    }
@@ -95,7 +95,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 
 	<div class="px-4 py-5 my-0 text-center d-none" id="systemsGo">
 		<div class="mx-auto mb-4">
-			<span class="badge bg-success rounded-5">
+			<span class="badge bg-success rounded-5 p-2">
 				<span class="far fa-check-circle display-5" aria-hidden="true"></span>
 			</span>
 		</div>
