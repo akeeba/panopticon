@@ -51,13 +51,13 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
             <span class="fa fa-users fa-fw text-secondary me-1" aria-hidden="true"></span>
             <span class="{{ ($this->baseUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $this->baseUri->getScheme() }}}://</span><span
                     class="fw-medium">{{{ $this->baseUri->toString(['user', 'pass', 'host', 'port', 'path', 'query', 'fragment']) }}}</span>
-            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+            <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>
         </a>
         <a href="{{{ $this->item->getAdminUrl() }}}" target="_blank" class="text-decoration-none">
             <span class="fa fa-user-secret fa-fw text-secondary me-1" aria-hidden="true"></span>
             <span class="{{ ($this->adminUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $this->adminUri->getScheme() }}}://</span><span
                     class="fw-medium">{{{ $this->adminUri->toString(['user', 'pass', 'host', 'port', 'path']) }}}</span>@if(!empty($this->adminUri->getQuery()))<span class="text-body-tertiary">{{{ $this->adminUri->toString(['query', 'fragment']) }}}</span>@endif
-            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+            <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>
         </a>
     </div>
 </div>

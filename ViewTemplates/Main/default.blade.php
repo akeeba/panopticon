@@ -99,7 +99,7 @@ $mainModel = $this->getModel('main');
                                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
                                 <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
                                     {{{ $url }}}
-                                    <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+                                    <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>
                                 </a>
                             </div>
                             {{-- Show group labels --}}
