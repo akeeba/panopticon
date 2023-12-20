@@ -36,7 +36,8 @@
 					"corejs": {
 						"version": "3.9",
 						"proposals": true
-					}
+					},
+					"modules": false
 				}
 			],
 			[

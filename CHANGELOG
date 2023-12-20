@@ -6,6 +6,7 @@ Akeeba Panopticon 1.1.0
 + Change the rotated log names [gh-398]
 + Support for site favicons
 ~ Running `composer install` will now always create the `version.php` file
+# [HIGH] The minified Dashboard JavaScript was broken [gh-408]
 # [LOW] PHP error when the browser returns invalid data during WebAuthn [gh-406]
 
 Akeeba Panopticon 1.0.7
