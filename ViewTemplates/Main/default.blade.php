@@ -38,33 +38,33 @@ $mainModel = $this->getModel('main');
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAIN_SITES_THEAD_SITE', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th>
-            <span class="fa fa-box fs-3" aria-hidden="true"
-                  data-bs-toggle="tooltip" data-bs-placement="bottom"
-                  data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_CMS')"
-            ></span>
+                <span class="fa fa-box fs-3" aria-hidden="true"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_CMS')"
+                ></span>
                 <span class="visually-hidden">
-            @lang('PANOPTICON_MAIN_SITES_THEAD_CMS')
-            </span>
+                    @lang('PANOPTICON_MAIN_SITES_THEAD_CMS')
+                </span>
             </th>
             <th>
-            <span class="fa fa-cubes fs-3" aria-hidden="true"
-                  data-bs-toggle="tooltip" data-bs-placement="bottom"
-                  data-bs-title="@lang(  'PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')"
-            ></span>
+                <span class="fa fa-cubes fs-3" aria-hidden="true"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="@lang(  'PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')"
+                ></span>
                 <span class="visually-hidden">
-            @lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')
-            </span>
+                    @lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')
+                </span>
             </th>
-            <th>
-            <span class="fab fa-php fs-3" aria-hidden="true"
-                  data-bs-toggle="tooltip" data-bs-placement="bottom"
-                  data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')"
-            ></span>
+            <th class="d-none d-md-table-cell">
+                <span class="fab fa-php fs-3" aria-hidden="true"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')"
+                ></span>
                 <span class="visually-hidden">
-            @lang('PANOPTICON_MAIN_SITES_THEAD_PHP')
-            </span>
+                    @lang('PANOPTICON_MAIN_SITES_THEAD_PHP')
+                </span>
             </th>
-            <th style="min-width: 2em">
+            <th class="d-none d-md-table-cell" style="min-width: 2em">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
@@ -77,32 +77,45 @@ $mainModel = $this->getModel('main');
 				<?php
 				$url    = $item->getBaseUrl();
 				$config = $item->getConfig();
+				$favicon = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
 				?>
             <tr>
                 <td>
-                    <a class="fw-medium"
-                       href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
-                        {{{ $item->name }}}
-                    </a>
-                    <div class="small mt-1">
-                        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
-                        <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
-                            {{{ $url }}}
-                            <span class="fa fa-external-link-square" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    {{-- Show group labels --}}
-                    @if (!empty($groups = $config->get('config.groups')))
+                    <div class="d-flex flex-row gap-2">
+                        @if ($favicon)
+                            <div class="d-none d-md-block">
+                                <img alt="" aria-hidden="true"
+                                     src="{{{ $favicon }}}"
+                                     class="me-1"
+                                     style="aspect-ratio: 1.0; max-width: 2em; max-height: 2em; min-width: 1em; min-height: 1em">
+                            </div>
+                        @endif
                         <div>
-                            @foreach($groups as $gid)
-                                @if (isset($this->groupMap[$gid]))
-                                    <span class="badge bg-secondary">
-                                {{{ $this->groupMap[$gid] }}}
-                            </span>
-                                @endif
-                            @endforeach
+                            <a class="fw-medium"
+                               href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
+                                {{{ $item->name }}}
+                            </a>
+                            <div class="small mt-1">
+                                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
+                                <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
+                                    {{{ $url }}}
+                                    <span class="fa fa-external-link-square" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                            {{-- Show group labels --}}
+                            @if (!empty($groups = $config->get('config.groups')))
+                                <div>
+                                    @foreach($groups as $gid)
+                                        @if (isset($this->groupMap[$gid]))
+                                            <span class="badge bg-secondary">
+                                        {{{ $this->groupMap[$gid] }}}
+                                    </span>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
-                    @endif
+                    </div>
                 </td>
                 <td>
                     @if ($item->cmsType() === CMSType::JOOMLA)
@@ -123,14 +136,14 @@ $mainModel = $this->getModel('main');
                         'config' => $config,
                     ])
                 </td>
-                <td>
+                <td class="d-none d-md-table-cell">
                     @include('Main/site_php', [
                         'item' => $item,
                         'config' => $config,
                         'php' => $config->get('core.php')
                     ])
                 </td>
-                <td class="font-monospace text-body-tertiary small px-2">
+                <td class="d-none d-md-table-cell font-monospace text-body-tertiary small px-2">
                     {{{ $item->id }}}
                 </td>
             </tr>
