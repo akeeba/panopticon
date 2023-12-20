@@ -221,7 +221,7 @@ defined('AKEEBA') || die;
                         <a href="@{{ site.url }}" target="_blank"
                            class="link-opacity-50 link-opacity-100-hover link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                             @{{ site.url }}
-                            <span class="fa fa-fw fa-square-arrow-up-right" aria-hidden="true"></span>
+                            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
                         </a>
                     </div>
                 </div>
