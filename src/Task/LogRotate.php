@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Task;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
+use Akeeba\Panopticon\Library\LogRotate\CustomRotativeProcessor;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -47,7 +48,14 @@ class LogRotate extends AbstractCallback
 			return Status::OK->value;
 		}
 
-		$rotator = (new Rotation())
+		$rotator = (new Rotation());
+
+		$refObj = new \ReflectionObject($rotator);
+		$refProp = $refObj->getProperty('processor');
+		$refProp->setAccessible(true);
+		$refProp->setValue($rotator, new CustomRotativeProcessor());
+
+		$rotator
 			->files($rotateFiles)
 			->minSize(1048576)
 			->truncate()
