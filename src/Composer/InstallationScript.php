@@ -21,13 +21,6 @@ abstract class InstallationScript
 		$io         = $event->getIO();
 		$targetFile = __DIR__ . '/../../version.php';
 
-		if (file_exists($targetFile))
-		{
-			$io->debug('version.php already exists; skipping');
-
-			return;
-		}
-
 		$fileContents = file_get_contents(__DIR__ . '/../../build/templates/version.php');
 
 		if ($fileContents === false)

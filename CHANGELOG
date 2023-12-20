@@ -1,4 +1,9 @@
 <?php die(); ?>
+Akeeba Panopticon 1.1.0
+================================================================================
++ Dashboard layout for Sites Overview [gh-395]
+~ Running `composer install` will now always create the `version.php` file
+
 Akeeba Panopticon 1.0.7
 ================================================================================
 # [HIGH] Error when your PHP version is out of date [gh-392]
