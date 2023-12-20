@@ -12,7 +12,7 @@ defined('AKEEBA') || die;
 
 <div class="px-4 py-5 my-0 text-center">
 	<div class="mx-auto mb-4">
-			<span class="badge bg-success rounded-5">
+			<span class="badge bg-success rounded-5 p-2">
 				<span class="far fa-check-circle display-5" aria-hidden="true"></span>
 			</span>
 	</div>

@@ -31,7 +31,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 	<noscript>
 		<div class="px-4 py-5 my-0 text-center">
 			<div class="mx-auto mb-4">
-			<span class="badge bg-danger rounded-5">
+			<span class="badge bg-danger rounded-5 p-2">
 				<span class="far fa-times-circle display-5" aria-hidden="true"></span>
 			</span>
 			</div>
@@ -63,7 +63,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 
 	<div class="px-4 py-5 my-0 text-center d-none" id="brokenJavaScript">
 		<div class="mx-auto mb-4">
-			<span class="badge bg-danger rounded-5">
+			<span class="badge bg-danger rounded-5 p-2">
 				<span class="far fa-times-circle display-5" aria-hidden="true"></span>
 			</span>
 		</div>
@@ -131,7 +131,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 <?php else: ?>
 	<div class="px-4 py-5 my-0 text-center">
 		<div class="mx-auto mb-4">
-			<span class="badge bg-danger rounded-5">
+			<span class="badge bg-danger rounded-5 p-2">
 				<span class="far fa-times-circle display-5" aria-hidden="true"></span>
 			</span>
 		</div>
