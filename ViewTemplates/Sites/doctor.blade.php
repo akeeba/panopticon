@@ -76,7 +76,7 @@ $hasAkeebaBackupError = $this->akeebaBackupConnectionError instanceof Throwable
 @if ($this->connectionError === null && !$hasAkeebaBackupError)
     <div class="px-4 py-5 mt-0 mb-4 text-center">
         <div class="mx-auto mb-4">
-			<span class="badge bg-success rounded-5">
+			<span class="badge bg-success rounded-5 p-2">
 				<span class="far fa-check-circle display-5" aria-hidden="true"></span>
 			</span>
         </div>
