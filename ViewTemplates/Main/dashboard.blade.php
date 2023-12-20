@@ -71,9 +71,10 @@ defined('AKEEBA') || die;
 
         <div class="col" v-for="site in sites">
             <div class="card h-100">
-                <a :href="site.overview_url">
+                <a :href="site.overview_url" class="text-decoration-none">
                     <h4 class="card-header h6 fw-semibold">
-                            @{{ site.name ?? '' }}
+                        <span class="text-muted fw-light"><small>#&thinsp;</small>@{{ site.id }}</span>&ensp;
+                        <span class="text-decoration-underline link-offset-1">@{{ site.name ?? '' }}</span>
                     </h4>
                 </a>
                 <div class="card-body">
@@ -86,7 +87,9 @@ defined('AKEEBA') || die;
                     </div>
 
                     <div class="d-flex flex-row gap-2 align-items-start gap-3">
-                        <div class="flex-shrink-1">
+                        <div class="flex-shrink-1"
+                             v-if="site.favicon"
+                        >
                             <img :src="site.favicon" alt=""
                                  style="height: 3em; width: 3em; aspect-ratio: 1.0">
                         </div>

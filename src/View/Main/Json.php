@@ -101,6 +101,7 @@ class Json extends BaseView
 				}
 
 				return [
+					'id'           => $site->getId(),
 					'name'         => $site->name,
 					'favicon'      => null,
 					'url'          => $site->getBaseUrl(),
