@@ -185,7 +185,9 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
             {{-- Server load --}}
             @if(!empty(trim($serverInfo->load?->load1 ?? '')))
             <div>
-                <span class="fa fa-fw fa-gauge" aria-hidden="true"></span>
+                <span class="fa fa-fw fa-gauge" aria-hidden="true"
+                    data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_LOAD')"
+                ></span>
                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_LOAD')</span>
 
                 @if(!empty(trim($serverInfo->load?->load1 ?? '')))
