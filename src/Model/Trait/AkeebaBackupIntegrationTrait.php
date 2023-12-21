@@ -639,7 +639,7 @@ trait AkeebaBackupIntegrationTrait
 			}
 		}
 
-		if (empty($info))
+		if (empty($info) || ($info?->api ?? null) === null)
 		{
 			throw new AkeebaBackupNoInfoException();
 		}

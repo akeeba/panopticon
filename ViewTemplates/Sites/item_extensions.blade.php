@@ -16,8 +16,8 @@ $token                = $this->container->session->getCsrfToken()->getValue();
 $extensionsUpdateTask = $this->item->getExtensionsUpdateTask();
 $scheduledExtensions  = $this->item->getExtensionsScheduledForUpdate();
 $lastUpdateTimestamp  = $this->siteConfig->get('extensions.lastAttempt')
-	? $this->timeAgo($this->siteConfig->get('extensions.lastAttempt'))
-	: $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
+    ? $this->timeAgo($this->siteConfig->get('extensions.lastAttempt'))
+    : $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
 $extensionsQuickInfo = $this->item->getExtensionsQuickInfo($this->extensions);
 $shouldCollapse      = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->site == 0
                        && $extensionsQuickInfo->key == 0;
@@ -72,11 +72,11 @@ $hasError            = !empty($lastError);
 
 @section('extUpdateErrorInfoButton')
     @if ($lastError)
-			<?php $extensionsLastErrorModalID = 'exlem-' . md5(random_bytes(120)); ?>
+            <?php $extensionsLastErrorModalID = 'exlem-' . md5(random_bytes(120)); ?>
         <div class="btn btn-danger btn-sm px-1 py-0" aria-hidden="true"
              data-bs-toggle="modal" data-bs-target="#{{ $extensionsLastErrorModalID }}"
         >
-					<span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
+                    <span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS')"
                           data-bs-content="{{{ $lastError }}}"></span>
@@ -109,7 +109,7 @@ $hasError            = !empty($lastError);
         </div>
 
         <span class="visually-hidden">
-				    @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS') {{{ $lastError }}}
+                    @lang('PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS') {{{ $lastError }}}
                 </span>
     @endif
 @stop
@@ -222,9 +222,9 @@ $hasError            = !empty($lastError);
             @endif
         @elseif ($extensionsUpdateTask->last_exit_code != Status::OK->value)
             {{-- Task error condition --}}
-				<?php
-				$status = Status::tryFrom($extensionsUpdateTask->last_exit_code) ?? Status::NO_ROUTINE
-				?>
+                <?php
+                $status = Status::tryFrom($extensionsUpdateTask->last_exit_code) ?? Status::NO_ROUTINE
+                ?>
             <div class="alert alert-danger">
                 <h4 class="h5 alert-heading text-center{{ $status->value === Status::EXCEPTION->value ? ' border-bottom border-danger' : ''  }}">
                     <span class="fa fa-xmark-circle" aria-hidden="true"></span>
@@ -233,9 +233,9 @@ $hasError            = !empty($lastError);
                 </h4>
 
                 @if ($status->value === Status::EXCEPTION->value)
-						<?php
-						$storage = ($extensionsUpdateTask->storage instanceof Registry) ? $extensionsUpdateTask->storage : (new Registry($extensionsUpdateTask->storage));
-						?>
+                        <?php
+                        $storage = ($extensionsUpdateTask->storage instanceof Registry) ? $extensionsUpdateTask->storage : (new Registry($extensionsUpdateTask->storage));
+                        ?>
                     <p>
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_THE_ERROR_REPORTED_WAS')
                     </p>
@@ -283,37 +283,37 @@ $hasError            = !empty($lastError);
 
 @repeatable('extUpdateExtensionIcon', $item)
     @if ($item->type === 'component')
-        <span class="fa fa-puzzle-piece" aria-hidden="true"
+        <span class="fa fa-puzzle-piece fa-fw" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="right"
               data-bs-title="@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_COMPONENT')"></span>
         <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_COMPONENT')</span>
     @elseif ($item->type === 'file')
-        <span class="fa fa-file-alt" aria-hidden="true"
+        <span class="fa fa-file-alt fa-fw" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="right"
               data-bs-title="@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_FILE')"></span>
         <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_FILE')</span>
     @elseif ($item->type === 'library')
-        <span class="fa fa-book" aria-hidden="true"
+        <span class="fa fa-book fa-fw" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="right"
               data-bs-title="@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_LIBRARY')"></span>
         <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_LIBRARY')</span>
     @elseif ($item->type === 'package')
-        <span class="fa fa-boxes-packing" aria-hidden="true"
+        <span class="fa fa-boxes-packing fa-fw" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="right"
               data-bs-title="@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_PACKAGE')"></span>
         <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_PACKAGE')</span>
     @elseif ($item->type === 'plugin')
-        <span class="fa fa-plug" aria-hidden="true"
+        <span class="fa fa-plug fa-fw" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="right"
               data-bs-title="@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_PLUGIN')"></span>
         <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_PLUGIN')</span>
     @elseif ($item->type === 'module')
-        <span class="fa fa-cube" aria-hidden="true"
+        <span class="fa fa-cube fa-fw" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="right"
               data-bs-title="@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_MODULE')"></span>
         <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_MODULE')</span>
     @elseif ($item->type === 'template')
-        <span class="fa fa-paint-brush" aria-hidden="true"
+        <span class="fa fa-paint-brush fa-fw" aria-hidden="true"
               data-bs-toggle="tooltip" data-bs-placement="right"
               data-bs-title="@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE')"></span>
         <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE')</span>
@@ -357,48 +357,48 @@ $hasError            = !empty($lastError);
                 <th>
                     @lang('PANOPTICON_SITE_LBL_EXTENSIONS_AUTHOR')
                 </th>
-                <th style="width: 1%">
+                <th>
                     @lang('PANOPTICON_SITE_LBL_EXTENSIONS_VERSION')
                 </th>
             </tr>
             </thead>
             <tbody>
             @foreach($this->extensions as $extensionId => $item)
-					<?php
-					$key = $this->getModel('Sysconfig')
-								->getExtensionShortname(
-									$item->type, $item->element, $item->folder, $item->client_id
-								);
+                    <?php
+                    $key = $this->getModel('Sysconfig')
+                                ->getExtensionShortname(
+                                    $item->type, $item->element, $item->folder, $item->client_id
+                                );
 
-					// Hide core extensions which are stupidly only ever marked as top-level extensions on core update.
-					if (empty($key) || $this->getModel('Sysconfig')->isExcludedShortname($key))
-					{
-						continue;
-					}
+                    // Hide core extensions which are stupidly only ever marked as top-level extensions on core update.
+                    if (empty($key) || $this->getModel('Sysconfig')->isExcludedShortname($key))
+                    {
+                        continue;
+                    }
 
-					$currentVersion    = $item->version?->current;
-					$latestVersion     = $item->version?->new;
-					$noUpdateSite      = !($item->hasUpdateSites ?? false);
-					$missingDownloadID = ($item->downloadkey?->supported ?? false)
-						&& !($item->downloadkey?->valid ?? false);
-					$naughtyUpdates    = $item->naughtyUpdates === 'parent';
-					$error             = $noUpdateSite || $missingDownloadID || $naughtyUpdates;
-					$hasUpdate         = !empty($currentVersion) && !empty($latestVersion)
-						&& ($currentVersion != $latestVersion)
-						&& version_compare($currentVersion, $latestVersion, 'lt');
+                    $currentVersion    = $item->version?->current;
+                    $latestVersion     = $item->version?->new;
+                    $noUpdateSite      = !($item->hasUpdateSites ?? false);
+                    $missingDownloadID = ($item->downloadkey?->supported ?? false)
+                        && !($item->downloadkey?->valid ?? false);
+                    $naughtyUpdates    = $item->naughtyUpdates === 'parent';
+                    $error             = $noUpdateSite || $missingDownloadID || $naughtyUpdates;
+                    $hasUpdate         = !empty($currentVersion) && !empty($latestVersion)
+                        && ($currentVersion != $latestVersion)
+                        && version_compare($currentVersion, $latestVersion, 'lt');
 
-					$cssClasses = 'extension-row';
-		            $cssClasses .= $noUpdateSite ? ' filter-updatesite' : '';
-		            $cssClasses .= $missingDownloadID ? ' filter-dlid' : '';
-		            $cssClasses .= $naughtyUpdates ? ' filter-naughty' : '';
-		            $cssClasses .= ($hasUpdate && !$noUpdateSite) ? ' filter-update' : ' filter-noupdate';
-		            $cssClasses .= $hasUpdate && (in_array($item->extension_id, $scheduledExtensions) || (!$error && $this->willExtensionAutoUpdate($item, $this->item))) ? ' filter-scheduled' :
-			            ($hasUpdate ? ' filter-unscheduled' : '');
-					?>
+                    $cssClasses = 'extension-row';
+                    $cssClasses .= $noUpdateSite ? ' filter-updatesite' : '';
+                    $cssClasses .= $missingDownloadID ? ' filter-dlid' : '';
+                    $cssClasses .= $naughtyUpdates ? ' filter-naughty' : '';
+                    $cssClasses .= ($hasUpdate && !$noUpdateSite) ? ' filter-update' : ' filter-noupdate';
+                    $cssClasses .= $hasUpdate && (in_array($item->extension_id, $scheduledExtensions) || (!$error && $this->willExtensionAutoUpdate($item, $this->item))) ? ' filter-scheduled' :
+                        ($hasUpdate ? ' filter-unscheduled' : '');
+                    ?>
                 <tr class="{{ $cssClasses }}">
                     <td>
                         <div>
-                            <span class="text-body-tertiary pe-2">
+                            <span class="text-body-tertiary">
                                 @yieldRepeatable('extUpdateExtensionIcon', $item)
                             </span>
 
@@ -506,25 +506,25 @@ $hasError            = !empty($lastError);
                             <strong class="text-danger-emphasis">
                                 {{{ $item->version->current }}}
                             </strong>
-                            <div class="ps-4 text-body-tertiary">
+                            <span class="text-body-tertiary">
                                 <span class="fa fa-arrow-right small" aria-hidden="true"></span>
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_NEWVERSION_CANNOTINSTALL_SR')</span>
                                 <span class="fw-medium small">
                                     {{{ $item->version->new }}}
                                 </span>
                                 <span class="fa fa-lock text-danger"></span>
-                            </div>
+                            </span>
                         @elseif ($hasUpdate)
                             <strong class="text-danger-emphasis">
                                 {{{ $item->version->current }}}
                             </strong>
-                            <div class="ps-4">
+                            <span>
                                 <span class="fa fa-arrow-right text-body-tertiary small" aria-hidden="true"></span>
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_NEWVERSION_CANINSTALL_SR')</span>
                                 <span class="fw-medium text-info small">
                                     {{{ $item->version->new }}}
                                 </span>
-                            </div>
+                            </span>
 
                             {{-- Button to install the update (if not scheduled, or if schedule failed) --}}
                             @if (!in_array($item->extension_id, $scheduledExtensions) && $hasUpdate && !$error && !$this->willExtensionAutoUpdate($item, $this->item))

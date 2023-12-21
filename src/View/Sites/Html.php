@@ -408,8 +408,8 @@ class Html extends DataViewHtml
 			}
 		}
 
-		$hasAkeebaBackup   = $this->item->hasAkeebaBackup();
-		$hasAkeebaSoftware = $hasAkeebaBackup || $this->hasAdminToolsPro;
+		$hasAkeebaBackupPro = $this->item->hasAkeebaBackup() && $this->siteConfig->get('akeebabackup.info.api') > 1;
+		$hasAkeebaSoftware  = $hasAkeebaBackupPro || $this->hasAdminToolsPro;
 
 		$dropdown = (new DropdownButton(
 			[
@@ -460,7 +460,11 @@ class Html extends DataViewHtml
 						),
 					]
 				)
-			)->addButton(
+			);
+
+		if ($hasAkeebaBackupPro)
+		{
+			$dropdown->addButton(
 				new Button(
 					[
 						'id'    => 'backuptasks',
@@ -471,7 +475,12 @@ class Html extends DataViewHtml
 						),
 					]
 				)
-			)->addButton(
+			);
+		}
+
+		if ($this->hasAdminToolsPro)
+		{
+			$dropdown->addButton(
 				new Button(
 					[
 						'id'    => 'scannertasks',
@@ -483,6 +492,7 @@ class Html extends DataViewHtml
 					]
 				)
 			);
+		}
 
 		$this->container->application->getDocument()->getToolbar()->addButton($dropdown);
 

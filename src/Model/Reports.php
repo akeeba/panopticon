@@ -641,7 +641,7 @@ class Reports extends DataModel
 		$dateString = trim($dateString);
 
 		// Make sure it kinda follows what we expect a date string to look like
-		if (!preg_match('#^\d{2,4}-\d{1,2}-\d{1,2}(\s+\d{1,2}:\d{1,2}(:\d{1,2})?)?$#', $dateString))
+		if (!preg_match('#^\d{2,4}-\d{1,2}-\d{1,2}(\s*T?\s*\d{1,2}:\d{1,2}(:\d{1,2})?)?$#', $dateString))
 		{
 			return null;
 		}

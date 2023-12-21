@@ -237,7 +237,7 @@ class Html extends \Awf\Mvc\DataView\Html
 		}
 
 		// Toolbar
-		$qualifier = sprintf('– <small>%s</small>', $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB'));
+		$qualifier = sprintf(' – <small>%s</small>', $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB'));
 
 		if ($isDashboard)
 		{
