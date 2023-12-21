@@ -6,10 +6,11 @@ Akeeba Panopticon 1.1.0
 + Change the rotated log names [gh-398]
 + Support for site favicons
 ~ Running `composer install` will now always create the `version.php` file
+~ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]
 # [HIGH] The minified Dashboard JavaScript was broken [gh-408]
 # [LOW] PHP error when the browser returns invalid data during WebAuthn [gh-406]
 # [LOW] TinyMCE content always dark [gh-410]
-~ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]
+# [LOW] Date/time parsing on reports view [gh-419]
 
 Akeeba Panopticon 1.0.7
 ================================================================================
