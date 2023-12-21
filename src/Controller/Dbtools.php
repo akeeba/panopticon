@@ -62,6 +62,7 @@ class Dbtools extends Controller
 
 		$fileName = sprintf("%s/db_backups/backup-%s.sql", APATH_CACHE, date('Y-m-d-His'));
 		$export   = new Export($fileName, $this->getContainer()->db);
+		$export->setLogger($this->getContainer()->logger);
 
 		$session = $this->getContainer()->segment;
 		$session->set('dbtools.backup.export', json_encode($export));
@@ -90,6 +91,7 @@ class Dbtools extends Controller
 		try
 		{
 			$export = Export::fromJson($json);
+			$export->setLogger($this->getContainer()->logger);
 		}
 		catch (\JsonException $e)
 		{
