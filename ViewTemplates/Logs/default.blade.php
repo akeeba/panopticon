@@ -164,7 +164,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 <td>
                     @yieldRepeatable('actions', $logName)
                 </td>
-                <td align="center">
+                <td class="text-center">
                     @yieldRepeatable('status', $logName)
                 </td>
                 <td>
