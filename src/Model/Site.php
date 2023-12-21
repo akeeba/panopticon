@@ -1475,10 +1475,14 @@ class Site extends DataModel
 			return -1;
 		}
 
-		$now = new DateTime();
+		$warning  = $this->getConfig()->get('config.ssl.warning', 7);
+		$now      = new DateTime();
+		$warnDate = $warning > 0
+			? (new DateTime())->add(new \DateInterval(sprintf('P%sD', $warning)))
+			: $now;
 
 		// Both From and To defined, both within range: 0 (valid)
-		if (!empty($from) && !empty($to) && $from <= $now && $to >= $now)
+		if (!empty($from) && !empty($to) && $from <= $now && $to >= $now && $to > $warnDate)
 		{
 			return 0;
 		}
@@ -1490,7 +1494,7 @@ class Site extends DataModel
 		}
 
 		// Only To defined and is valid: 0 (valid)
-		if (empty($from) && !empty($to) && $to >= $now)
+		if (empty($from) && !empty($to) && $to >= $now && $to > $warnDate)
 		{
 			return 0;
 		}
@@ -1502,18 +1506,7 @@ class Site extends DataModel
 		}
 
 		// Too close to the expiration date: 2 (expiration warning)
-		$warning = $this->getConfig()->get('ssl.warning', 7);
-
-		if ($warning > 0)
-		{
-			$warning = (clone $to)->sub(new \DateInterval(sprintf('P%sD', $warning)));
-		}
-		else
-		{
-			$warning = null;
-		}
-
-		if (!empty($to) && !empty($warning) && $warning < $now)
+		if ($warning > 0 && !empty($to) && $to >= $now && $to <= $warnDate)
 		{
 			return 2;
 		}

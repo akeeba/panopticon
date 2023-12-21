@@ -1,6 +1,5 @@
-* [ ] show cert status in main (default)
-* [ ] show cert status in main (dashboard)
-
+* [ ] Update POT
+* 
 # Documentation notes
 
 ## Pages in need of documentation

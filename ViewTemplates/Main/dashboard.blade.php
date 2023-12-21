@@ -100,20 +100,28 @@ defined('AKEEBA') || die;
                                     <span v-if="(site.cms ?? 'joomla') === 'wordpress'">WordPress</span>
                                 </dt>
                                 <dd>
-								<span v-if="site.updating.cms === 1"
-                                      class="text-secondary fa fa-fw fa-clock" aria-hidden="true"></span>
+                                    <span v-if="site.updating.cms === 1"
+                                          class="text-secondary fa fa-fw fa-clock" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_WILL_UPDATE')"
+                                    ></span>
                                     <span v-if="site.updating.cms === 1"
                                           class="visually-hidden">
-									@lang('PANOPTICON_MAIN_DASH_LBL_CMS_WILL_UPDATE')
-								</span>
+                                        @lang('PANOPTICON_MAIN_DASH_LBL_CMS_WILL_UPDATE')
+                                    </span>
+
                                     <span v-if="site.updating.cms === 2"
-                                          class="text-primary fa fa-fw fa-play" aria-hidden="true"></span>
+                                          class="text-primary fa fa-fw fa-play" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATING')"
+                                    ></span>
                                     <span v-if="site.updating.cms === 2"
                                           class="visually-hidden">
                                         @lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATING')
                                     </span>
+
                                     <span v-if="site.updating.cms === 3"
-                                          class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"></span>
+                                          class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATE_ERROR')"
+                                    ></span>
                                     <span v-if="site.updating.cms === 3"
                                           class="visually-hidden">
                                         @lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATE_ERROR')
@@ -141,10 +149,10 @@ defined('AKEEBA') || die;
                                     @lang('PANOPTICON_OVERRIDES_TITLE')
                                 </dt>
                                 <dd v-if="(site.overrides > 0)">
-								<span class="badge bg-warning">
-									<span class="fa fa-fw fa-arrows-to-circle" aria-hidden="true"></span>
-									@{{ site.overrides }}
-								</span>
+                                    <span class="badge bg-warning">
+                                        <span class="fa fa-fw fa-arrows-to-circle" aria-hidden="true"></span>
+                                        @{{ site.overrides }}
+                                    </span>
                                 </dd>
 
                                 <dt v-if="(site.extensions > 0) && (site.cms ?? 'joomla') === 'joomla'">
@@ -154,32 +162,52 @@ defined('AKEEBA') || die;
                                     @lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WORDPRESS')
                                 </dt>
                                 <dd v-if="(site.extensions > 0)">
-								<span v-if="site.updating.extensions === 1"
-                                      class="text-secondary fa fa-fw fa-clock" aria-hidden="true"></span>
+                                    <span v-if="(site.updating.extensions === 1) && (site.cms ?? 'joomla') === 'joomla'"
+                                          class="text-secondary fa fa-fw fa-clock" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WILL_UPDATE')"
+                                    ></span>
+                                    <span v-if="(site.updating.extensions === 1) && (site.cms ?? 'joomla') === 'wordpress'"
+                                          class="text-secondary fa fa-fw fa-clock" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_WILL_UPDATE')"
+                                    ></span>
                                     <span v-if="site.updating.extensions === 1"
                                           class="visually-hidden">
-									<span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WILL_UPDATE')</span>
-									<span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_WILL_UPDATE')</span>
-								</span>
+                                        <span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WILL_UPDATE')</span>
+                                        <span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_WILL_UPDATE')</span>
+                                    </span>
+
+                                    <span v-if="(site.updating.extensions === 2) && (site.cms ?? 'joomla') === 'joomla'"
+                                          class="text-primary fa fa-fw fa-play" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING')"
+                                    ></span>
+                                    <span v-if="(site.updating.extensions === 2) && (site.cms ?? 'joomla') === 'wordpress'"
+                                          class="text-primary fa fa-fw fa-play" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING')"
+                                    ></span>
                                     <span v-if="site.updating.extensions === 2"
-                                          class="text-primary fa fa-fw fa-play" aria-hidden="true"></span>
-                                    <span v-if="site.updating.extensions === 2"
-                                          class="visually-hidden">
-									<span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING')</span>
-									<span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING')</span>
-								</span>
+                                              class="visually-hidden">
+                                        <span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING')</span>
+                                        <span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING')</span>
+                                    </span>
+
+                                    <span v-if="(site.updating.extensions === 3) && (site.cms ?? 'joomla') === 'joomla'"
+                                          class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATE_ERROR')"
+                                    ></span>
+                                    <span v-if="(site.updating.extensions === 3) && (site.cms ?? 'joomla') === 'wordpress'"
+                                          class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"
+                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR')"
+                                    ></span>
                                     <span v-if="site.updating.extensions === 3"
-                                          class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"></span>
-                                    <span v-if="site.updating.extensions === 3"
-                                          class="visually-hidden">
-									<span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATE_ERROR')</span>
-									<span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR')</span>
-								</span>
+                                              class="visually-hidden">
+                                        <span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATE_ERROR')</span>
+                                        <span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR')</span>
+                                    </span>
 
                                     <span class="badge bg-warning">
-									<span class="fa fa-fw fa-box-open" aria-hidden="true"></span>
-									@{{ site.extensions }}
-								</span>
+                                        <span class="fa fa-fw fa-box-open" aria-hidden="true"></span>
+                                        @{{ site.extensions }}
+                                    </span>
                                 </dd>
                             </dl>
                         </div>
@@ -188,33 +216,68 @@ defined('AKEEBA') || die;
                 <div class="card-footer d-flex flex-row justify-content-between">
                     <div class="text-secondary">
                         <!-- CMS icon -->
-                        <span v-if="(site.cms ?? 'joomla') === 'joomla'" class="fab fa-fw fa-joomla" aria-hidden="true"></span>
-                        <span v-if="(site.cms ?? 'joomla') === 'wordpress'" class="fab fa-fw fa-wordpress" aria-hidden="true"></span>
+                        <span v-if="(site.cms ?? 'joomla') === 'joomla'"
+                              class="fab fa-fw fa-joomla" aria-hidden="true"
+                              title="Joomla!"
+                        ></span>
+                        <span v-if="(site.cms ?? 'joomla') === 'wordpress'"
+                              class="fab fa-fw fa-wordpress" aria-hidden="true"
+                              title="WordPress"
+                        ></span>
 
-                        <!-- Errors collecting site information -->
+                        {{--  Errors collecting site information  --}}
                         <span v-if="(site.errors.site !== null)"
                               class="text-warning"
                         >
-						<span class="fa fa-fw fa-triangle-exclamation" aria-hidden="true"></span>
-						<span class="visually-hidden">
-							@lang('PANOPTICON_MAIN_DASH_ERR_CMS')
-						</span>
-					</span>
+						    <span class="fa fa-fw fa-triangle-exclamation" aria-hidden="true"
+                                  title="@lang('PANOPTICON_MAIN_DASH_ERR_CMS')"
+                            ></span>
+						    <span class="visually-hidden">
+                                @lang('PANOPTICON_MAIN_DASH_ERR_CMS')
+                            </span>
+					    </span>
 
-                        <!-- Errors collecting extensions information -->
+                        {{-- Errors collecting extensions information --}}
                         <span v-if="(site.errors.site !== null)"
                               class="text-danger"
                         >
-						<span class="fa fa-fw fa-circle-exclamation" aria-hidden="true"></span>
-						<span v-if="(site.cms ?? 'joomla') === 'joomla'"
+						    <span v-if="(site.cms ?? 'joomla') === 'joomla'"
+                                class="fa fa-fw fa-circle-exclamation" aria-hidden="true"
+                                title="@lang('PANOPTICON_MAIN_DASH_ERR_EXT')"
+                            ></span>
+						    <span v-if="(site.cms ?? 'joomla') === 'joomla'"
                               class="visually-hidden">
-                            @lang('PANOPTICON_MAIN_DASH_ERR_EXT')
-						</span>
-						<span v-if="(site.cms ?? 'wordpress') === 'wordpress'"
+                                @lang('PANOPTICON_MAIN_DASH_ERR_EXT')
+						    </span>
+						    <span v-if="(site.cms ?? 'joomla') === 'wordpress'"
+                                  class="fa fa-fw fa-circle-exclamation" aria-hidden="true"
+                                  title="@lang('PANOPTICON_MAIN_DASH_ERR_EXT_WP')"
+                            ></span>
+						    <span v-if="(site.cms ?? 'wordpress') === 'wordpress'"
                               class="visually-hidden">
-                            @lang('PANOPTICON_MAIN_DASH_ERR_EXT_WP')
-						</span>
-					</span>
+                                @lang('PANOPTICON_MAIN_DASH_ERR_EXT_WP')
+						    </span>
+					    </span>
+
+                        {{-- SSL certificate problems --}}
+                        <span v-if="(site.certificateStatus === -1) || (site.certificateStatus === 1) || (site.certificateStatus === 3)"
+                              class="text-danger"
+                              title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')"
+                        >
+                            <span class="fa fa-fw fa-lock" aria-hidden="true"></span>
+                            <span class="visually-hidden">
+                                @lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')
+                            </span>
+                        </span>
+                        <span v-if="(site.certificateStatus === 2)"
+                              class="text-warning"
+                              title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')"
+                        >
+                            <span class="fa fa-fw fa-lock" aria-hidden="true"></span>
+                            <span class="visually-hidden">
+                                @lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')
+                            </span>
+                        </span>
                     </div>
 
                     <div>
