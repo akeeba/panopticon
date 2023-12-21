@@ -10,6 +10,7 @@ Akeeba Panopticon 1.1.0
 # [HIGH] The minified Dashboard JavaScript was broken [gh-408]
 # [LOW] PHP error when the browser returns invalid data during WebAuthn [gh-406]
 # [LOW] TinyMCE content always dark [gh-410]
+# [LOW] Backup not Pro when extension not installed [gh-414]
 # [LOW] Date/time parsing on reports view [gh-419]
 
 Akeeba Panopticon 1.0.7
