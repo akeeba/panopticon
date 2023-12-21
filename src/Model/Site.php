@@ -1419,8 +1419,8 @@ class Site extends DataModel
 			'type'               => $certificateInformation['signatureTypeLN'] ?? null,
 			'issuerCommonName'   => $certificateInformation['issuer']['CN'] ?? null,
 			'issuerOrganisation' => $certificateInformation['issuer']['O'] ?? null,
-			'validFrom'          => $validFrom->format(DATE_RFC3339),
-			'validTo'            => $validTo->format(DATE_RFC3339),
+			'validFrom'          => $validFrom->format('Y-m-d H:i:s'),
+			'validTo'            => $validTo->format('Y-m-d H:i:s'),
 			'verified'           => $signatureVerified,
 		];
 	}

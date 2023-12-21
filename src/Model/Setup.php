@@ -33,6 +33,7 @@ class Setup extends Model
 	private const DEFAULT_TASKS = [
 		'logrotate'                  => '@daily',
 		'databasebackup'             => '@daily',
+		'ssltlsexpiration'           => '@daily',
 		'usagestats'                 => '0 */12 * * *',
 		'selfupdatefinder'           => '0 */6 * * *',
 		'refreshsiteinfo'            => '*/15 * * * *',
