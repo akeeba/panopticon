@@ -48,6 +48,14 @@ $returnUrl = $this->input->getBase64('returnurl', '');
             </button>
         </li>
         <li class="nav-item" role="presentation">
+            <button type="button" id="siteTabOtherFeatures"
+                    class="nav-link" aria-selected="true"
+                    data-bs-toggle="tab" role="tab"
+                    data-bs-target="#siteTabContentOtherFeatures" aria-controls="siteTabContentOtherFeatures">
+                @lang('PANOPTICON_SITE_LBL_TAB_OTHER_FEATURES')
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
             <button type="button" id="siteTabNotes"
                     class="nav-link" aria-selected="true"
                     data-bs-toggle="tab" role="tab"
@@ -86,6 +94,11 @@ $returnUrl = $this->input->getBase64('returnurl', '');
              id="siteTabContentProperties" role="tabpanel" aria-labelledby="siteTabProperties" tabindex="-1"
         >
             @include('Sites/form_properties')
+        </div>
+        <div class="tab-pane show"
+             id="siteTabContentOtherFeatures" role="tabpanel" aria-labelledby="siteTabOtherFeatures" tabindex="-1"
+        >
+            @include('Sites/form_other_features')
         </div>
         <div class="tab-pane show"
              id="siteTabContentNotes" role="tabpanel" aria-labelledby="siteTabNotes" tabindex="-1"

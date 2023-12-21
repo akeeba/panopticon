@@ -92,6 +92,7 @@ class Mailtemplates extends DataModel
 			'akeebabackup_fail' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_FAIL',
 			'selfupdate_found' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SELFUPDATE_FOUND',
 			'scheduled_update_summary' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SCHEDULED_UPDATE_SUMMARY',
+			'ssl_tls_expiring' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SSL_TLS_EXPIRING',
 		];
 	}
 }

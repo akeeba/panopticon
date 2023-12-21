@@ -75,9 +75,10 @@ $mainModel = $this->getModel('main');
 		?>
         @foreach($this->items as $item)
 				<?php
-				$url    = $item->getBaseUrl();
-				$config = $item->getConfig();
-				$favicon = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
+				$url               = $item->getBaseUrl();
+				$config            = $item->getConfig();
+				$favicon           = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
+				$certificateStatus = $item->getSSLValidityStatus();
 				?>
             <tr>
                 <td>
@@ -91,11 +92,30 @@ $mainModel = $this->getModel('main');
                             </div>
                         @endif
                         <div>
-                            <a class="fw-medium"
-                               href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
-                                {{{ $item->name }}}
-                            </a>
+                            <div>
+                                <a class="fw-medium"
+                                   href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
+                                    {{{ $item->name }}}
+                                </a>
+                            </div>
                             <div class="small mt-1">
+                                @if(in_array($certificateStatus, [-1, 1, 3]))
+                                    <span class="fa fa-fw fa-lock text-danger" aria-hidden="true"
+                                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                          data-bs-title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')"
+                                    ></span>
+                                    <span class="visually-hidden">
+                                        @lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')
+                                    </span>
+                                @elseif($certificateStatus === 2)
+                                    <span class="fa fa-fw fa-lock text-warning" aria-hidden="true"
+                                          data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                          data-bs-title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')"
+                                    ></span>
+                                    <span class="visually-hidden">
+                                        @lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')
+                                    </span>
+                                @endif
                                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
                                 <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
                                     {{{ $url }}}

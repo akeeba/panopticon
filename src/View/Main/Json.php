@@ -82,9 +82,9 @@ class Json extends BaseView
 				switch ($cmsType->value)
 				{
 					case 'joomla':
-						$jVersionHelper = new JoomlaVersion($this->getContainer());
-						$eol            = $jVersionHelper->isEOLMajor($currentVersion)
-						                  || $jVersionHelper->isEOLBranch($currentVersion);
+						$jVersionHelper  = new JoomlaVersion($this->getContainer());
+						$eol             = $jVersionHelper->isEOLMajor($currentVersion)
+						                   || $jVersionHelper->isEOLBranch($currentVersion);
 						$cmsUpdateStatus = match ($site->getJoomlaUpdateRunState())
 						{
 							default => 0,
@@ -101,29 +101,30 @@ class Json extends BaseView
 				}
 
 				return [
-					'id'           => $site->getId(),
-					'name'         => $site->name,
-					'favicon'      => $site->getFavicon(asDataUrl: true, onlyIfCached: true),
-					'url'          => $site->getBaseUrl(),
-					'overview_url' => $this->getContainer()->router->route(
+					'id'                => $site->getId(),
+					'name'              => $site->name,
+					'favicon'           => $site->getFavicon(asDataUrl: true, onlyIfCached: true),
+					'url'               => $site->getBaseUrl(),
+					'overview_url'      => $this->getContainer()->router->route(
 						sprintf('index.php?view=Site&task=read&id=%d', $site->getId())
 					),
-					'groups'       => $site->getGroups(true),
-					'cms'          => $cmsType->value,
-					'version'      => $currentVersion,
-					'eol'          => $eol,
-					'latest'       => ($currentVersion === $latestVersion) ? null : $latestVersion,
-					'php'          => $siteConfig->get('core.php', '0.0.0') ?: '0.0.0',
-					'extensions'   => $numExtUpdates,
-					'overrides'    => $siteConfig->get('core.overridesChanged') ?: 0,
-					'errors'       => [
+					'groups'            => $site->getGroups(true),
+					'cms'               => $cmsType->value,
+					'version'           => $currentVersion,
+					'eol'               => $eol,
+					'latest'            => ($currentVersion === $latestVersion) ? null : $latestVersion,
+					'php'               => $siteConfig->get('core.php', '0.0.0') ?: '0.0.0',
+					'extensions'        => $numExtUpdates,
+					'overrides'         => $siteConfig->get('core.overridesChanged') ?: 0,
+					'errors'            => [
 						'site'       => trim($siteConfig->get('core.lastErrorMessage') ?? '') ?: null,
 						'extensions' => trim($siteConfig->get('extensions.lastErrorMessage') ?? '') ?: null,
 					],
-					'updating'     => [
+					'updating'          => [
 						'cms'        => $cmsUpdateStatus,
 						'extensions' => $extUpdateStatus,
 					],
+					'certificateStatus' => $site->getSSLValidityStatus(),
 				];
 			}
 		);

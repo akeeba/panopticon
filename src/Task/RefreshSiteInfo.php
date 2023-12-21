@@ -212,7 +212,7 @@ class RefreshSiteInfo extends AbstractCallback
 									$site->id, $site->name
 								));
 
-								return;
+								return $response;
 							}
 
 							$this->logger->debug(
@@ -290,6 +290,9 @@ class RefreshSiteInfo extends AbstractCallback
 
 							// Clear the last error message
 							$config->set('core.lastErrorMessage', null);
+
+							// Retrieve the SSL / TLS certificate information
+							$config->set('ssl', $site->getCertificateInformation());
 
 							// Save the configuration (three tries)
 							$retry = -1;
