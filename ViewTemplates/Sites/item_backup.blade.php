@@ -372,10 +372,10 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                         {{-- Description, backup date, duration and size --}}
                         <td>
                             {{-- Row: origin and description --}}
-                            <div class="d-flex flex-column flex-lg-row gap-2">
+                            <div class="d-flex flex-column flex-lg-row gap-1">
                                 {{-- Origin --}}
                                 <div>
-                                <span class="{{ $originIcon }} me" aria-hidden="true"
+                                <span class="{{ $originIcon }} fa-fw" aria-hidden="true"
                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                                       data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN'): {{{ $originDescription }}}"
                                 ></span>
@@ -413,10 +413,10 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                             <div class="row mt-1">
                                 {{-- Start Date --}}
                                 <div class="col-lg-5">
-                                    <span class="fa fa-calendar" aria-hidden="true"
+                                    <span class="fa fa-calendar fa-fw" aria-hidden="true"
                                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                                           data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_START')"
-                                    ></span>&nbsp;
+                                    ></span>
                                     <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_START')</span>
 										<?= $startTime ?> <?= $timeZoneText ?>
                                 </div>
@@ -451,7 +451,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                             {{-- Backup Profile (condensed display) --}}
                             <div class="row mt-1">
                                 <div class="col-md">
-                                <span class="fa fa-users" aria-hidden="true"
+                                <span class="fa fa-users fa-fw" aria-hidden="true"
                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                                       data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_PROFILE')"
                                 ></span>
