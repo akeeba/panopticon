@@ -1,5 +1,3 @@
-* [ ] Update POT
-* 
 # Documentation notes
 
 ## Pages in need of documentation

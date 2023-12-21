@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0.8-dev202312200857\n"
-"POT-Creation-Date: 2023-12-20 10:23:38\n"
+"Project-Id-Version: 1.1.0-dev202312201029\n"
+"POT-Creation-Date: 2023-12-21 21:44:41\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.0.8-dev202312200857\n"
+"X-Generator: Panopticon ini_to_po 1.1.0-dev202312201029\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -765,6 +765,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_UPDATESUMMARYEMAIL"
 msgid "Update summary email"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_SSLTLSEXPIRATION"
+msgid "Send emails about SSL/TLS certificate expiration"
 msgstr ""
 
 #, phpformat
@@ -2813,6 +2818,16 @@ msgid "Error loading plugins &amp; themes update information"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CERT_INVALID"
+msgid "Invalid SSL/TLS (HTTPS) certificate"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING"
+msgid "The SSL/TLS (HTTPS) certificate is expiring soon"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_TITLE"
 msgid "Sites"
 msgstr ""
@@ -2865,6 +2880,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_TAB_PROPERTIES"
 msgid "Properties"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_TAB_OTHER_FEATURES"
+msgid "Other Features"
 msgstr ""
 
 #, phpformat
@@ -3110,6 +3130,116 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY_MORE"
 msgid "The connection to your site was tested, and found to be working fine."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING"
+msgid "SSL/TLS Expiration First Warning"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING_HELP"
+msgid "Panopticon will warn you that your site\'s SSL/TLS certificate is expiring this many days before it expires. 0 disables the warning."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSL_TLS_CERT_INFO"
+msgid "SSL/TLS (HTTPS) Certificate Information"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TABLE_CAPTION"
+msgid "Table of SSL/TLS certificate information"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_SERIAL"
+msgid "Serial"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_SIG_TYPE"
+msgid "Signature Type"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_FROM"
+msgid "Valid From"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TO"
+msgid "Valid To"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_CN"
+msgid "Common Names (domains)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_ISSUER"
+msgid "Issued By"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_ERR_DATE_INVALID_HEAD"
+msgid "Unknown Validity"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_ERR_DATE_INVALID"
+msgid "The SSL/TLS certificate lacks valid from/to dates, making it impossible to determine whether it is valid."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TOOSOON_HEAD"
+msgid "Invalid (Too Soon)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TOOSOON"
+msgid "The SSL/TLS certificate has a Valid From date in the future. Browsers will report it as invalid as it\'s not meant to be used just yet."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRING_HEAD"
+msgid "Imminent Expiration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRING"
+msgid "The SSL/TLS certificate will expire soon. You need to replace it with a new one to prevent problems with your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRED_HEAD"
+msgid "Expired"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRED"
+msgid "The SSL/TLS certificate has a Valid To date in the past. Browsers will report it as invalid as it\'s not meant to be used any more."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_CN_HEAD"
+msgid "Invalid Domain"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_CN"
+msgid "The SSL/TLS certificate is issued for a different domain name than the one you are using it for. Browsers will report it as invalid."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_SIG_HEAD"
+msgid "Invalid or Self-signed Certificate"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_SIG"
+msgid "The signature of your SSL/TLS certificate cannot be verified against the Certification Authorities known to the server. This usually means that you are using a self-signed certificate which will be rejected by browsers."
 msgstr ""
 
 #, phpformat
@@ -4178,6 +4308,11 @@ msgid "Modified"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_NO_RESULTS"
+msgid "There are no scans to review."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS"
 msgid "Suspicious"
 msgstr ""
@@ -4425,6 +4560,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_LATEST"
 msgid "Latest Backups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_AKEEBABACKUP_NO_RESULTS"
+msgid "There are no backups to review."
 msgstr ""
 
 #, phpformat
@@ -6095,6 +6235,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SCHEDULED_UPDATE_SUMMARY"
 msgid "Scheduled Update Summary"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SSL_TLS_EXPIRING"
+msgid "SSL/TLS Certificate Expires Soon"
 msgstr ""
 
 #, phpformat
