@@ -34,14 +34,24 @@ $hasFacility = array_reduce($this->logLines, fn(bool $carry, object $item) => $c
     <tbody class="table-group-divider">
     @foreach($this->logLines as $item)
 			<?php
-			$textClass = match($item->loglevel) {
-				'emergency' => 'text-danger-emphasis fw-bolder',
-				'alert' => 'text-danger-emphasis fw-bold',
-				'critical' => 'text-danger-emphasis fw-semibold',
+			$timeClass = match($item->loglevel) {
+				'emergency' => 'text-danger',
+				'alert' => 'text-danger',
+				'critical' => 'text-danger',
 				'error' => 'text-danger',
-				'warning' => 'text-warning-emphasis fw-semibold',
+				'warning' => 'text-warning',
 				'notice' => 'text-warning',
-				'debug' => 'text-text-tertiary fw-light',
+				'debug' => 'text-body-tertiary',
+				default => '',
+			};
+			$textClass = match($item->loglevel) {
+				'emergency' => 'text-danger fw-bolder',
+				'alert' => 'text-danger fw-bold',
+				'critical' => 'text-danger fw-semibold',
+				'error' => 'text-danger',
+				'warning' => 'text-warning fw-semibold',
+				'notice' => 'text-warning',
+				'debug' => 'text-body-tertiary fw-light',
 				default => '',
 			};
 
@@ -56,16 +66,16 @@ $hasFacility = array_reduce($this->logLines, fn(bool $carry, object $item) => $c
 				default => 'fa-info-circle',
 			};
 			?>
-        <tr class="{{ $textClass }}">
-            <td class="{{ $textClass }}" style="white-space: nowrap">
+        <tr>
+            <td class="{{ $timeClass }} text-nowrap">
                 @html('basic.date', $item->timestamp->format(DATE_RFC7231), $timeFormat, false)
             </td>
-            <td class="{{ $textClass }}">
-                <span class="fa fa-fw {{ $icon }} me-2" aria-hidden="true"></span>
+            <td class="{{ $textClass }} text-nowrap">
+                <span class="fa fa-fw {{ $icon }}" aria-hidden="true"></span>
                 @lang('PANOPTICON_LOGS_LBL_PRIORITY_' . $item->loglevel)
             </td>
             @if ($hasFacility)
-                <td class="{{ $textClass }}">
+                <td class="{{ $textClass }} text-nowrap">
                     {{{ $item->facility }}}
                 </td>
             @endif

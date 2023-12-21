@@ -20,9 +20,6 @@ $hasFacility = array_reduce($this->logLines, fn(bool $carry, object $item) => $c
 </h3>
 
 <div class="my-2 mb-4 border rounded-1 p-2 bg-body-tertiary">
-    <small class="fw-semibold text-muted">
-        @lang('PANOPTICON_LOGS_LBL_DISPLAY_OPTIONS')
-    </small>
     <div class="my-2 d-flex flex-row flex-wrap justify-content-evenly align-items-center">
         <div>
             <div class="input-group">
