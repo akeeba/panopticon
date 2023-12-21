@@ -38,6 +38,7 @@ use Awf\Registry\Registry;
 use Awf\Uri\Uri;
 use Awf\User\User;
 use Awf\Utils\ArrayHelper;
+use DateTime;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -1209,7 +1210,9 @@ class Site extends DataModel
 	 * @throws InvalidArgumentException
 	 * @since   1.1.0
 	 */
-	public function getFavicon(int $minSize = 0, ?string $type = null, bool $asDataUrl = false, bool $onlyIfCached = false): ?string
+	public function getFavicon(
+		int $minSize = 0, ?string $type = null, bool $asDataUrl = false, bool $onlyIfCached = false
+	): ?string
 	{
 		/** @var \Akeeba\Panopticon\Container $container */
 		$container          = $this->getContainer();
@@ -1238,6 +1241,320 @@ class Site extends DataModel
 				$cacheKey,
 				31536000
 			);
+	}
+
+	/**
+	 * Returns select TLS certificate information which are relevant to our use case.
+	 *
+	 * @param   string  $url      The URL of the site to fetch the SSL certificate from.
+	 * @param   int     $timeout  The timeout, in seconds, for the fetch operation.
+	 *
+	 * @return  null|object
+	 * @since   1.1.0
+	 */
+	#[\JetBrains\PhpStorm\ObjectShape([
+		'commonName'         => 'string|null',
+		'hash'               => 'string|null',
+		'type'               => 'string|null',
+		'issuerCommonName'   => 'string|null',
+		'issuerOrganisation' => 'string|null',
+		'validFrom'          => 'DateTime|null',
+		'validTo'            => 'DateTime|null',
+	])]
+	public function getCertificateInformation(int $timeout = 3): ?object
+	{
+		// Make sure the PHP OpenSSL extension is installed.
+		if (!function_exists('openssl_x509_parse'))
+		{
+			return null;
+		}
+
+		// Get the hostname and port from the URL
+		$uri      = new Uri($this->getBaseUrl());
+		$hostname = $uri->getHost();
+		$scheme   = $uri->getScheme() ?? 'https';
+		$port     = (int) ($uri->getPort() ?: ($scheme === 'https' ? 443 : 80));
+
+		// If the hostname is empty, the scheme is not HTTPS, or the port is out-of-range we have nothing to do.
+		if (empty($hostname) || $scheme !== 'https' || $port <= 0 || $port >= 65536)
+		{
+			return null;
+		}
+
+		// Open the raw SSL socket stream to fetch the remote server's certificate.
+
+		try
+		{
+			$socketResource = stream_socket_client(
+				sprintf('ssl://%s:%d', $hostname, $port),
+				$errorNumber,
+				$errorString,
+				$timeout,
+				STREAM_CLIENT_CONNECT,
+				stream_context_create(
+					[
+						'ssl' => [
+							'verify_peer'             => false,
+							'verify_peer_name'        => false,
+							'allow_self_signed'       => true,
+							'security_level'          => 0,
+							'capture_peer_cert'       => true,
+							'capture_peer_cert_chain' => true,
+						],
+					]
+				)
+			);
+
+			if (!is_resource($socketResource))
+			{
+				return null;
+			}
+		}
+		catch (Throwable)
+		{
+			return null;
+		}
+
+		// Get the certificate and close the stream
+		$cert = stream_context_get_params($socketResource);
+
+		fclose($socketResource);
+
+		// Make sure we have indeed captured the peer certificate
+		if (
+			!is_array($cert)
+			|| !isset($cert['options'])
+			|| !is_array($cert['options'])
+			|| !isset($cert['options']['ssl'])
+			|| !is_array($cert['options']['ssl'])
+			|| !isset($cert['options']['ssl']['peer_certificate'])
+		)
+		{
+			return null;
+		}
+
+		// Parse the raw binary certificate using the PHP OpenSSL extension.
+		try
+		{
+			$certificateInformation = openssl_x509_parse($cert['options']['ssl']['peer_certificate']);
+		}
+		catch (Throwable)
+		{
+			$certificateInformation = false;
+		}
+
+		if ($certificateInformation === false)
+		{
+			return null;
+		}
+
+		// Check if the certificate has a valid signature, given its chain.
+		$signatureVerified = true;
+
+		if ($caChain = $cert['options']['ssl']['peer_certificate_chain'])
+		{
+			// Verify all certificates form a valid chain
+			for ($i = 1; $i < count($caChain); $i++)
+			{
+				$signatureVerified = $signatureVerified && openssl_x509_verify($caChain[$i - 1], $caChain[$i]) == 1;
+			}
+
+			/**
+			 * If I have more than two certificates we have intermediate certificates. Check the second to last and/or
+			 * second certificate can be verified outside the chain.
+			 */
+			if ($signatureVerified && count($caChain) > 2)
+			{
+				$secondToLastCert  = $caChain[count($caChain) - 2];
+				$secondCert        = $caChain[1];
+				$signatureVerified = openssl_x509_checkpurpose($secondToLastCert, X509_PURPOSE_ANY, [AKEEBA_CACERT_PEM])
+				                     || openssl_x509_checkpurpose($secondCert, X509_PURPOSE_ANY, [AKEEBA_CACERT_PEM]);
+			}
+		}
+
+		// Decode the validity from / to time
+		try
+		{
+			$validFrom = new DateTime('@' . $certificateInformation['validFrom_time_t'] ?? '0');
+		}
+		catch (Throwable)
+		{
+			$validFrom = null;
+		}
+
+		try
+		{
+			$validTo = new DateTime('@' . $certificateInformation['validTo_time_t'] ?? '0');
+		}
+		catch (Throwable)
+		{
+			$validTo = null;
+		}
+
+		$commonNames = null;
+
+		if ($altName = $certificateInformation['extensions']['subjectAltName'] ?? null)
+		{
+			$commonNames = array_map(
+				fn($x) => trim(substr($x, 4)),
+				array_filter(
+					array_map(
+						'trim',
+						explode(',', $altName)
+					),
+					fn($x) => str_starts_with($x, 'DNS:')
+				)
+			);
+		}
+		elseif ($cn = $certificateInformation['subject']['CN'] ?? null)
+		{
+			$commonNames = [$cn];
+		}
+
+		// Return the information which is relevant to us
+		return (object) [
+			'commonName'         => $commonNames,
+			'hash'               => $certificateInformation['hash'] ?? null,
+			'serialHex'          => $certificateInformation['serialNumberHex'],
+			'type'               => $certificateInformation['signatureTypeLN'] ?? null,
+			'issuerCommonName'   => $certificateInformation['issuer']['CN'] ?? null,
+			'issuerOrganisation' => $certificateInformation['issuer']['O'] ?? null,
+			'validFrom'          => $validFrom->format(DATE_RFC3339),
+			'validTo'            => $validTo->format(DATE_RFC3339),
+			'verified'           => $signatureVerified,
+		];
+	}
+
+	/**
+	 * Get the validFrom or validTo date for the site's SSL certificate.
+	 *
+	 * @param   bool  $from  True to return validFrom, false to return validTo.
+	 *
+	 * @return  DateTime|null  ValidFrom date if available, null if not available or invalid
+	 * @since   1.1.0
+	 */
+	public function getSSLValidityDate(bool $from): ?DateTime
+	{
+		$raw = $this->getConfig()->get('ssl.valid' . ($from ? 'From' : 'To'));
+
+		if (empty($raw))
+		{
+			return null;
+		}
+
+		try
+		{
+			return new DateTime($raw);
+		}
+		catch (Exception)
+		{
+			return null;
+		}
+	}
+
+	/**
+	 * Get the SSL validity status of the website
+	 *
+	 * @return  int  The SSL validity status:
+	 *  -1: Unknown state
+	 *  0: Valid
+	 *  1: Too soon
+	 *  2: Expiration warning
+	 *  3: Expired
+	 *
+	 * @since  1.1.0
+	 */
+	public function getSSLValidityStatus(): int
+	{
+		$from = $this->getSSLValidityDate(true);
+		$to   = $this->getSSLValidityDate(false);
+
+		// No From or To: -1 (unknown state)
+		if (empty($from) && empty($to))
+		{
+			return -1;
+		}
+
+		$now = new DateTime();
+
+		// Both From and To defined, both within range: 0 (valid)
+		if (!empty($from) && !empty($to) && $from <= $now && $to >= $now)
+		{
+			return 0;
+		}
+
+		// Only From defined and is valid: 0 (valid)
+		if (!empty($from) && empty($to) && $from <= $now)
+		{
+			return 0;
+		}
+
+		// Only To defined and is valid: 0 (valid)
+		if (empty($from) && !empty($to) && $to >= $now)
+		{
+			return 0;
+		}
+
+		// From is defined but invalid: 1 (too soon)
+		if (!empty($from) && $from > $now)
+		{
+			return 1;
+		}
+
+		// Too close to the expiration date: 2 (expiration warning)
+		$warning = $this->getConfig()->get('ssl.warning', 7);
+
+		if ($warning > 0)
+		{
+			$warning = (clone $to)->sub(new \DateInterval(sprintf('P%sD', $warning)));
+		}
+		else
+		{
+			$warning = null;
+		}
+
+		if (!empty($to) && !empty($warning) && $warning < $now)
+		{
+			return 2;
+		}
+
+		// To is defined but invalid: 3 (expired)
+		if (!empty($to) && $to < $now)
+		{
+			return 3;
+		}
+
+		// No idea WTF is going on: -1
+		return -1;
+	}
+
+	public function getSSLValidDomain(): bool
+	{
+		$sslDomains = $this->getConfig()->get('ssl.commonName');
+
+		// Look, I have no idea, or you don't have an SSL cert. I won't report an error in this case. Okay?
+		if (!is_array($sslDomains) || empty($sslDomains))
+		{
+			return true;
+		}
+
+		$currentDomain = (new Uri($this->getBaseUrl()))->getHost();
+
+		// I don't know what my own domain is! 🙈 I will not report an error.
+		if (empty($currentDomain))
+		{
+			return true;
+		}
+
+		foreach ($sslDomains as $domain)
+		{
+			if ($domain === $currentDomain || fnmatch($domain, $currentDomain))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

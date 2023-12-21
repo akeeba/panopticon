@@ -3,6 +3,21 @@
     <module2copyright>
       <element module="App Files" copyright="Akeeba" />
     </module2copyright>
+    <LanguageOptions name="CSS">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="1" />
+    </LanguageOptions>
+    <LanguageOptions name="JavaScript">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="1" />
+    </LanguageOptions>
+    <LanguageOptions name="Less">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="1" />
+    </LanguageOptions>
     <LanguageOptions name="PHP">
       <option name="fileTypeOverride" value="3" />
       <option name="separateBefore" value="true" />
@@ -13,6 +28,25 @@
       <option name="separateBefore" value="true" />
       <option name="lenBefore" value="1" />
       <option name="lenAfter" value="1" />
+    </LanguageOptions>
+    <LanguageOptions name="SQL">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="1" />
+    </LanguageOptions>
+    <LanguageOptions name="Sass">
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="1" />
+    </LanguageOptions>
+    <LanguageOptions name="Shell Script">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="separateAfter" value="true" />
+    </LanguageOptions>
+    <LanguageOptions name="TypeScript">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="1" />
     </LanguageOptions>
   </settings>
 </component>

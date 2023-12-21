@@ -24,6 +24,9 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
              alt="">
     @endif
     <span class="flex-grow-1">{{{ $this->item->name }}}</span>
+    @if (!empty($this->siteConfig->get('ssl')))
+        @include('Sites/item_ssl')
+    @endif
     @if($this->canEdit)
         <a class="btn btn-secondary" role="button"
            href="@route(sprintf('index.php?view=site&id=%d&returnurl=%s', $this->item->id, base64_encode(Uri::getInstance()->toString())))">
