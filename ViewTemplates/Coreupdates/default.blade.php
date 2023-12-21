@@ -220,7 +220,7 @@ JS;
                         <a href="{{{ $item->getBaseUrl() }}}" class="link-secondary text-decoration-none"
                            target="_blank">
                             {{{ $item->getBaseUrl() }}}
-                            <span class="fa fa-external-link-square" aria-hidden="true"></span>
+                            <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>
                         </a>
                     </div>
                     {{-- Show group labels --}}

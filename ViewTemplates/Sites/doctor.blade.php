@@ -53,13 +53,13 @@ $hasAkeebaBackupError = $this->akeebaBackupConnectionError instanceof Throwable
             <span class="fa fa-users fa-fw text-secondary me-1" aria-hidden="true"></span>
             <span class="{{ ($baseUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $baseUri->getScheme() }}}://</span><span
                     class="fw-medium">{{{ $baseUri->toString(['user', 'pass', 'host', 'port', 'path', 'query', 'fragment']) }}}</span>
-            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+            <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>
         </a>
         <a href="{{{ $this->item->getAdminUrl() }}}" target="_blank" class="text-decoration-none">
             <span class="fa fa-user-secret fa-fw text-secondary me-1" aria-hidden="true"></span>
             <span class="{{ ($adminUri->getScheme() === 'https') ? 'text-muted' : 'text-danger' }}">{{{ $adminUri->getScheme() }}}://</span><span
                     class="fw-medium">{{{ $adminUri->toString(['user', 'pass', 'host', 'port', 'path']) }}}</span>@if(!empty($adminUri->getQuery()))<span class="text-body-tertiary">{{{ $adminUri->toString(['query', 'fragment']) }}}</span>@endif
-            <span class="fa fa-external-link-alt fa-xs text-muted small" aria-hidden="true"></span>
+            <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>
         </a>
     </div>
 </div>
