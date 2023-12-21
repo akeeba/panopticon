@@ -172,7 +172,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         <div class="flex-grow-1">
                             @yieldRepeatable('logFileName', $logName)
                         </div>
-                        <div class="small font-monospace text-success-emphasis">
+                        <div class="font-monospace">
                             {{ $this->filesize($logName) }}
                         </div>
                     </div>
