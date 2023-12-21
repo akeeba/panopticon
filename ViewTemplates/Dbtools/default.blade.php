@@ -77,7 +77,7 @@ $totalSize  = 0;
             {{  $this->formatFilesize($item->size) }}
         </td>
         <td>
-            <div class="d-flex flex-column flex-lg-row gap-2 align-items-center justify-content-evenly">
+            <div class="d-flex flex-column flex-lg-row gap-2 align-items-center">
                 <a href="@route(sprintf('index.php?view=dbtools&task=download&file=%s&%s=1&format=raw', urlencode($item->filename), $token))"
                    class="btn btn-primary btn-sm"
                    data-bs-tooltip="tooltip" data-bs-placement="bottom"
@@ -114,7 +114,7 @@ $totalSize  = 0;
             {{ $this->formatFilesize($totalSize) }}
         </td>
         <td>
-            <div class="d-flex flex-column gap-2 align-items-center justify-content-evenly">
+            <div class="d-flex flex-column gap-2 align-items-start">
                 <a href="@route(sprintf('index.php?view=dbtools&task=startBackup&%s=1', $token))"
                    class="btn btn-outline-primary">
                     <span class="fa fa-fw fa-play-circle" aria-hidden="true"></span>
