@@ -526,7 +526,7 @@ MYSQL;
 	{
 		// Has the user disabled GZip-compressing backups?
 		$shouldCompress = $this->compress ??
-			Factory::getContainer()->appConfig->get('compress_db_backups', true);
+			Factory::getContainer()->appConfig->get('dbbackup_compress', true);
 
 		if (!$shouldCompress)
 		{
