@@ -19,7 +19,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 <form action="@route('index.php?view=sites')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 d-flex flex-column flex-lg-row gap-2 gap-lg-3 justify-content-center border rounded-1 p-2 bg-body-tertiary">
         {{-- Search --}}
-        <div class="input-group pnp=mw-50" @if(empty($this->groupMap)) @endif>
+        <div class="input-group pnp-mw-50" @if(empty($this->groupMap)) @endif>
             <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="name" value="{{{ $model->getState('name', '') }}}">
