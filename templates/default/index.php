@@ -58,11 +58,11 @@ $importMap     = TemplateHelper::getImportMapAsJson();
 	<?php endif ?>
 	<?php // Stylesheet files ?>
 	<?php foreach ($this->getStyles() as $url => $params): ?>
-		<link rel="stylesheet" type="<?= $params['mime'] ?>" href="<?= $url ?>"<?= ($params['media']) ? " media=\"{$params['media']}\"" : '' ?><?= ($params['attribs'] ?? null) ? ' ' . \Awf\Utils\ArrayHelper::toString($params['attribs']) : '' ?>>
+		<link rel="stylesheet" href="<?= $url ?>"<?= ($params['media']) ? " media=\"{$params['media']}\"" : '' ?><?= ($params['attribs'] ?? null) ? ' ' . \Awf\Utils\ArrayHelper::toString($params['attribs']) : '' ?>>
 	<?php endforeach ?>
 	<?php // Inline Stylesheets ?>
 	<?php foreach ($this->getStyleDeclarations() as $type => $content): ?>
-		<style type="<?= $type ?>"><?= $content ?></style>
+		<style><?= $content ?></style>
 	<?php endforeach ?>
 	<?php // Script files ?>
 	<?php foreach ($this->getScripts() as $url => $params): ?>

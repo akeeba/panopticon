@@ -35,7 +35,7 @@ $hasError                = !empty(trim($this->siteConfig->get('core.lastErrorMes
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
         <span class="fab fa-php" aria-hidden="true"></span>
         <span class="flex-grow-1">@lang('PANOPTICON_SITE_LBL_PHP_HEAD')</span>
-        <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
+        <a class="btn btn-outline-secondary btn-sm" role="button"
            href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d&%s=1', $this->item->id, $this->container->session->getCsrfToken()->getValue()))"
            data-bs-toggle="tooltip" data-bs-placement="bottom"
            data-bs-title="@lang('PANOPTICON_SITE_BTN_PHP_RELOAD')"
