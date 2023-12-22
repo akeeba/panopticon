@@ -33,7 +33,7 @@ JS;
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
         <div class="d-flex flex-column flex-lg-row gap-2 gap-lg-3 justify-content-center align-items-center">
             {{-- Search --}}
-            <div class="input-group" @if(empty($this->groupMap)) style="max-width: max(25em, 50%)" @endif>
+            <div class="input-group pnp-mw-50" @if(empty($this->groupMap)) @endif>
                 <input type="search" class="form-control form-control-lg" id="search"
                        placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                        name="name" value="{{{ $model->getState('name', '') }}}">

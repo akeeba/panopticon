@@ -23,7 +23,7 @@ $utilities: map-merge($utilities,
         class: pnp-mw,
         values: (
           33: (33%, 12em),
-          50: (50%, 25em),
+          50: max(50%, 25em),
           ),
       )
     )

@@ -194,7 +194,7 @@ $mainModel = $this->getModel('main');
         <div class="mt-2 mb-3 border rounded-1 p-2 bg-body-tertiary align-items-center">
             <div class="d-flex flex-column flex-lg-row gap-2 gap-lg-3 justify-content-center align-items-center">
                 {{-- Search --}}
-                <div class="input-group" @if(empty($this->groupMap)) style="max-width: max(25em, 50%)" @endif>
+                <div class="input-group pnp-mw" @if(empty($this->groupMap)) @endif>
                     <input type="search" class="form-control form-control-lg" id="search"
                            placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                            name="search" value="{{{ $model->getState('search', '') }}}">
