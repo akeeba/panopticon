@@ -15,6 +15,7 @@ use Akeeba\Panopticon\Model\Groups;
 use Akeeba\Panopticon\Model\Selfupdate;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Usagestats;
+use Akeeba\Panopticon\View\Trait\AkeebaBackupTooOldTrait;
 use Awf\Pagination\Pagination;
 use Awf\Registry\Registry;
 use Awf\Utils\Template;
@@ -23,6 +24,8 @@ defined('AKEEBA') || die;
 
 class Html extends \Awf\Mvc\DataView\Html
 {
+	use AkeebaBackupTooOldTrait;
+
 	/**
 	 * The proposed key for web-based pseudo-CRON.
 	 *
@@ -152,7 +155,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		if (!$isDashboard)
 		{
-			$this->items      = $model->get();
+			$this->items = $model->get();
 
 			// Pagination
 			$displayedLinks   = 10;
@@ -237,7 +240,9 @@ class Html extends \Awf\Mvc\DataView\Html
 		}
 
 		// Toolbar
-		$qualifier = sprintf(' – <small>%s</small>', $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB'));
+		$qualifier = sprintf(
+			' – <small>%s</small>', $this->getLanguage()->text('PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB')
+		);
 
 		if ($isDashboard)
 		{
@@ -272,7 +277,7 @@ class Html extends \Awf\Mvc\DataView\Html
 				]
 			);
 		}
-		elseif($isDashboard)
+		elseif ($isDashboard)
 		{
 			$toolbar->addButtonFromDefinition(
 				[

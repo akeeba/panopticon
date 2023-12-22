@@ -171,6 +171,7 @@ class AkeebaBackup extends AbstractCallback
 			);
 
 			$this->backupRecordsCacheBuster($site);
+			$this->reloadLatestBackupRecord($site);
 
 			// Die.
 			throw new \RuntimeException($errorMessage);
@@ -288,6 +289,7 @@ class AkeebaBackup extends AbstractCallback
 			);
 
 			$this->backupRecordsCacheBuster($site);
+			$this->reloadLatestBackupRecord($site);
 
 			// Die.
 			throw new \RuntimeException($rawData?->Error);
@@ -296,6 +298,7 @@ class AkeebaBackup extends AbstractCallback
 		if (!$rawData?->HasRun)
 		{
 			$this->backupRecordsCacheBuster($site);
+			$this->reloadLatestBackupRecord($site);
 		}
 
 		return $rawData?->HasRun ? Status::WILL_RESUME->value : Status::OK->value;
@@ -333,4 +336,83 @@ class AkeebaBackup extends AbstractCallback
 			$pool->delete($key);
 		}
 	}
+
+	/**
+	 * Update the last known backup record information
+	 *
+	 * @param   Site  $site
+	 *
+	 * @return  void
+	 * @since   1.1.0
+	 */
+	private function reloadLatestBackupRecord(Site $site): void
+	{
+		$config = $site->getConfig();
+		$config->set('akeebabackup.latest', $this->getLatestBackup($site));
+		$site->config = $config;
+
+		// Save the configuration (three tries)
+		$retry = -1;
+
+		do
+		{
+			try
+			{
+				$retry++;
+
+				$site->save([
+					'config' => $config->toString(),
+				]);
+
+				break;
+			}
+			catch (\Exception $e)
+			{
+				if ($retry >= 3)
+				{
+					$this->logger->error(sprintf(
+						'Error saving the information for site #%d (%s) after backup attempt: %s',
+						$site->id, $site->name, $e->getMessage()
+					));
+
+					break;
+				}
+
+				$this->logger->warning(sprintf(
+					'Failed saving the information for site #%d (%s) after backup attempt (will retry): %s',
+					$site->id, $site->name, $e->getMessage()
+				));
+
+				sleep($retry);
+			}
+		} while ($retry < 3);
+	}
+
+	/**
+	 * Get the latest backup record using the site's Akeeba Backup Professional JSON API.
+	 *
+	 * @param   Site  $site  The site object to retrieve backups from.
+	 *
+	 * @return  object|null The latest backup record as an object, or null if no backups are found.
+	 * @since   1.1.0
+	 */
+	private function getLatestBackup(Site $site): ?object
+	{
+		try
+		{
+			$records = $site->akeebaBackupGetBackups(false, 0, 1, true);
+		}
+		catch (\Throwable)
+		{
+			return null;
+		}
+
+		if (empty($records))
+		{
+			return null;
+		}
+
+		return $records[0];
+	}
+
 }

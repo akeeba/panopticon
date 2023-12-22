@@ -21,7 +21,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
 ?>
 
 @section('abReload')
-    <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
+    <a class="btn btn-outline-secondary btn-sm" role="button"
        href="@route(sprintf('index.php?view=site&task=read&id=%d&akeebaBackupForce=1', $this->item->getId()))"
        data-bs-toggle="tooltip" data-bs-placement="bottom"
        data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_REFRESH')"

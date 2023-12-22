@@ -19,7 +19,10 @@ use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Utils;
+use Psr\Cache\CacheException;
+use Psr\Cache\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 #[AsTask(
 	name: 'refreshsiteinfo',
@@ -294,6 +297,12 @@ class RefreshSiteInfo extends AbstractCallback
 							// Retrieve the SSL / TLS certificate information
 							$config->set('ssl', $site->getCertificateInformation());
 
+							// Latest backup information
+							if ($site->hasAkeebaBackup())
+							{
+								$config->set('akeebabackup.latest', $this->getLatestBackup($site));
+							}
+
 							// Save the configuration (three tries)
 							$retry = -1;
 
@@ -379,5 +388,32 @@ class RefreshSiteInfo extends AbstractCallback
 		}
 
 		Utils::settle($promises)->wait(true);
+	}
+
+	/**
+	 * Get the latest backup record using the site's Akeeba Backup Professional JSON API.
+	 *
+	 * @param   Site  $site  The site object to retrieve backups from.
+	 *
+	 * @return  object|null The latest backup record as an object, or null if no backups are found.
+	 * @since   1.1.0
+	 */
+	private function getLatestBackup(Site $site): ?object
+	{
+		try
+		{
+			$records = $site->akeebaBackupGetBackups(false, 0, 1, true);
+		}
+		catch (Throwable)
+		{
+			return null;
+		}
+
+		if (empty($records))
+		{
+			return null;
+		}
+
+		return $records[0];
 	}
 }

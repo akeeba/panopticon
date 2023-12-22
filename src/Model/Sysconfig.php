@@ -25,11 +25,7 @@ use Throwable;
 class Sysconfig extends Model
 {
 	private const EXCLUDED_EXTENSIONS = [
-		'plg_workflow_publishing', 'plg_workflow_featuring', 'plg_workflow_notification', 'plg_webservices_installer',
-		'plg_system_schedulerunner', 'plg_task_checkfiles', 'plg_task_demotasks', 'plg_task_requests',
-		'plg_task_sitestatus', 'plg_com_com_ats', 'plg_multifactorauth_email', 'plg_multifactorauth_fixed',
-		'plg_multifactorauth_totp', 'plg_multifactorauth_webauthn', 'plg_multifactorauth_yubikey',
-		'plg_system_shortcut', 'plg_sampledata_testing', 
+		'mod_contacts', 'phpass', 'phputf8', 'plg_captcha_recaptcha_invisible', 'plg_com_com_ats', 'plg_multifactorauth_email', 'plg_multifactorauth_fixed', 'plg_multifactorauth_totp', 'plg_multifactorauth_webauthn', 'plg_multifactorauth_yubikey', 'plg_sampledata_testing', 'plg_schemaorg_blogposting', 'plg_schemaorg_book', 'plg_schemaorg_book', 'plg_schemaorg_event', 'plg_schemaorg_jobposting', 'plg_schemaorg_organization', 'plg_schemaorg_person', 'plg_schemaorg_recipe', 'plg_system_schedulerunner', 'plg_system_schemaorg', 'plg_system_shortcut', 'plg_task_checkfiles', 'plg_task_demotasks', 'plg_task_globalcheckin', 'plg_task_requests', 'plg_task_sitestatus', 'plg_webservices_installer', 'plg_workflow_featuring', 'plg_workflow_notification', 'plg_workflow_publishing', 'tpl_protostar',
 	];
 
 	public function isExcludedShortname(string $shortname): bool
