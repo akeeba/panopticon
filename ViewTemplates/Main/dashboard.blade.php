@@ -13,6 +13,69 @@ defined('AKEEBA') || die;
 
 @extends('Main/default', ['noTable' => true])
 
+@section('dashBackupIcon')
+    <div v-if="!site.backup.isInstalled">
+        <span class="fa fa-fw fa-rectangle-xmark text-body-tertiary" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_NOT_INSTALLED')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_NOT_INSTALLED')</span>
+    </div>
+    <div v-else-if="!site.backup.isPro">
+        <span class="fa fa-fw fa-plug-circle-xmark text-body-tertiary" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_NOT_CONNECTED')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_NOT_CONNECTED')</span>
+    </div>
+    <div v-else-if="site.backup.noRecord || !site.backup.meta">
+        <span class="fa fa-fw fa-ban text-danger" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_NONE')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_NONE')</span>
+    </div>
+    <div v-else-if="site.backup.tooOld">
+        <span class="fa fa-fw fa-hourglass-end text-danger" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_TOO_OLD')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_TOO_OLD')</span>
+    </div>
+    <div v-else-if="site.backup.meta === 'obsolete'">
+        <span class="fa fa-fw fa-trash-can text-danger" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_OBSOLETE')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_OBSOLETE')</span>
+    </div>
+    <div v-else-if="site.backup.meta === 'remote'">
+        <span class="fa fa-fw fa-cloud text-info" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_REMOTE')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_REMOTE')</span>
+    </div>
+    <div v-else-if="site.backup.meta === 'ok' || site.backup.meta === 'complete'">
+        <span class="fa fa-fw fa-check-circle text-success" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_OK')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_OK')</span>
+    </div>
+    <div v-else-if="site.backup.meta === 'fail'">
+        <span class="fa fa-fw fa-times text-danger" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_FAIL')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_FAIL')</span>
+    </div>
+    <div v-else-if="site.backup.meta === 'pending'">
+        <span class="fa fa-fw fa-play text-warning" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_PENDING')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_PENDING')</span>
+    </div>
+    <div v-else="">
+        <span class="fa fa-fw fa-question-circle text-warning" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_UNKNOWN')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_UNKNOWN')</span>
+    </div>
+@stop
+
 @section('main-default-sites')
     <template id="sitesListTemplate">
         <div v-if="error !== null"
@@ -46,7 +109,9 @@ defined('AKEEBA') || die;
                     class="btn btn-secondary btn-sm"
                     @click="reloadData()"
             >
-                <span class="fa fa-fw fa-arrow-rotate-right"></span>
+                <span class="fa fa-fw fa-arrow-rotate-right"
+                      v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')"
+                ></span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')</span>
             </button>
             <button type="button"
@@ -55,17 +120,22 @@ defined('AKEEBA') || die;
             >
                 <!-- Cannot put the v-if on the icon span itself; it breaks Petite Vue. -->
                 <span v-if="countdownTimer !== null">
-				<span class="fa fa-fw fa-stop" aria-hidden="true"></span>
-				<span class="visually-hidden">
-					@lang('PANOPTICON_MAIN_DASH_BTN_TIMER_STOP')
-				</span>
-			</span>
+                    <span class="fa fa-fw fa-stop" aria-hidden="true"
+                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_BTN_TIMER_STOP')"
+                    ></span>
+                    <span class="visually-hidden"
+                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_BTN_TIMER_STOP')"
+                    >
+                        @lang('PANOPTICON_MAIN_DASH_BTN_TIMER_STOP')
+                    </span>
+                </span>
                 <span v-if="countdownTimer === null">
-				<span class="fa fa-fw fa-play" aria-hidden="true"></span>
-				<span class="visually-hidden">
-					@lang('PANOPTICON_MAIN_DASH_BTN_TIMER_START')
-				</span>
-			</span>
+				    <span class="fa fa-fw fa-play" aria-hidden="true"
+                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_BTN_TIMER_START')"></span>
+				    <span class="visually-hidden">
+                        @lang('PANOPTICON_MAIN_DASH_BTN_TIMER_START')
+                    </span>
+                </span>
             </button>
         </div>
 
@@ -102,7 +172,7 @@ defined('AKEEBA') || die;
                                 <dd>
                                     <span v-if="site.updating.cms === 1"
                                           class="text-secondary fa fa-fw fa-clock" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_WILL_UPDATE')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_WILL_UPDATE')"
                                     ></span>
                                     <span v-if="site.updating.cms === 1"
                                           class="visually-hidden">
@@ -111,7 +181,7 @@ defined('AKEEBA') || die;
 
                                     <span v-if="site.updating.cms === 2"
                                           class="text-primary fa fa-fw fa-play" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATING')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATING')"
                                     ></span>
                                     <span v-if="site.updating.cms === 2"
                                           class="visually-hidden">
@@ -120,7 +190,7 @@ defined('AKEEBA') || die;
 
                                     <span v-if="site.updating.cms === 3"
                                           class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATE_ERROR')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_CMS_UPDATE_ERROR')"
                                     ></span>
                                     <span v-if="site.updating.cms === 3"
                                           class="visually-hidden">
@@ -164,11 +234,11 @@ defined('AKEEBA') || die;
                                 <dd v-if="(site.extensions > 0)">
                                     <span v-if="(site.updating.extensions === 1) && (site.cms ?? 'joomla') === 'joomla'"
                                           class="text-secondary fa fa-fw fa-clock" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WILL_UPDATE')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WILL_UPDATE')"
                                     ></span>
                                     <span v-if="(site.updating.extensions === 1) && (site.cms ?? 'joomla') === 'wordpress'"
                                           class="text-secondary fa fa-fw fa-clock" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_WILL_UPDATE')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_WILL_UPDATE')"
                                     ></span>
                                     <span v-if="site.updating.extensions === 1"
                                           class="visually-hidden">
@@ -178,25 +248,25 @@ defined('AKEEBA') || die;
 
                                     <span v-if="(site.updating.extensions === 2) && (site.cms ?? 'joomla') === 'joomla'"
                                           class="text-primary fa fa-fw fa-play" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING')"
                                     ></span>
                                     <span v-if="(site.updating.extensions === 2) && (site.cms ?? 'joomla') === 'wordpress'"
                                           class="text-primary fa fa-fw fa-play" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING')"
                                     ></span>
                                     <span v-if="site.updating.extensions === 2"
-                                              class="visually-hidden">
+                                          class="visually-hidden">
                                         <span v-if="(site.cms ?? 'joomla') === 'joomla'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING')</span>
                                         <span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING')</span>
                                     </span>
 
                                     <span v-if="(site.updating.extensions === 3) && (site.cms ?? 'joomla') === 'joomla'"
                                           class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATE_ERROR')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATE_ERROR')"
                                     ></span>
                                     <span v-if="(site.updating.extensions === 3) && (site.cms ?? 'joomla') === 'wordpress'"
                                           class="text-danger fa fa-fw fa-circle-xmark" aria-hidden="true"
-                                          title="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR')"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR')"
                                     ></span>
                                     <span v-if="site.updating.extensions === 3"
                                               class="visually-hidden">
@@ -209,6 +279,13 @@ defined('AKEEBA') || die;
                                         @{{ site.extensions }}
                                     </span>
                                 </dd>
+
+                                <dt v-if="site.backup.isInstalled && site.backup.isPro">
+                                    @lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD_SHORT')
+                                </dt>
+                                <dd v-if="site.backup.isInstalled && site.backup.isPro">
+                                    @yield('dashBackupIcon')
+                                </dd>
                             </dl>
                         </div>
                     </div>
@@ -218,11 +295,11 @@ defined('AKEEBA') || die;
                         <!-- CMS icon -->
                         <span v-if="(site.cms ?? 'joomla') === 'joomla'"
                               class="fab fa-fw fa-joomla" aria-hidden="true"
-                              title="Joomla!"
+                              v-bs:tooltip.raw="Joomla!"
                         ></span>
                         <span v-if="(site.cms ?? 'joomla') === 'wordpress'"
                               class="fab fa-fw fa-wordpress" aria-hidden="true"
-                              title="WordPress"
+                              v-bs:tooltip.raw="WordPress"
                         ></span>
 
                         {{--  Errors collecting site information  --}}
@@ -230,7 +307,7 @@ defined('AKEEBA') || die;
                               class="text-warning"
                         >
 						    <span class="fa fa-fw fa-triangle-exclamation" aria-hidden="true"
-                                  title="@lang('PANOPTICON_MAIN_DASH_ERR_CMS')"
+                                  v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_ERR_CMS')"
                             ></span>
 						    <span class="visually-hidden">
                                 @lang('PANOPTICON_MAIN_DASH_ERR_CMS')
@@ -243,7 +320,7 @@ defined('AKEEBA') || die;
                         >
 						    <span v-if="(site.cms ?? 'joomla') === 'joomla'"
                                 class="fa fa-fw fa-circle-exclamation" aria-hidden="true"
-                                title="@lang('PANOPTICON_MAIN_DASH_ERR_EXT')"
+                                  v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_ERR_EXT')"
                             ></span>
 						    <span v-if="(site.cms ?? 'joomla') === 'joomla'"
                               class="visually-hidden">
@@ -251,7 +328,7 @@ defined('AKEEBA') || die;
 						    </span>
 						    <span v-if="(site.cms ?? 'joomla') === 'wordpress'"
                                   class="fa fa-fw fa-circle-exclamation" aria-hidden="true"
-                                  title="@lang('PANOPTICON_MAIN_DASH_ERR_EXT_WP')"
+                                  v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_ERR_EXT_WP')"
                             ></span>
 						    <span v-if="(site.cms ?? 'wordpress') === 'wordpress'"
                               class="visually-hidden">
@@ -262,7 +339,7 @@ defined('AKEEBA') || die;
                         {{-- SSL certificate problems --}}
                         <span v-if="(site.certificateStatus === -1) || (site.certificateStatus === 1) || (site.certificateStatus === 3)"
                               class="text-danger"
-                              title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')"
+                              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')"
                         >
                             <span class="fa fa-fw fa-lock" aria-hidden="true"></span>
                             <span class="visually-hidden">
@@ -271,7 +348,7 @@ defined('AKEEBA') || die;
                         </span>
                         <span v-if="(site.certificateStatus === 2)"
                               class="text-warning"
-                              title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')"
+                              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')"
                         >
                             <span class="fa fa-fw fa-lock" aria-hidden="true"></span>
                             <span class="visually-hidden">

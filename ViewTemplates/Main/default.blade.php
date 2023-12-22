@@ -64,6 +64,14 @@ $mainModel = $this->getModel('main');
                     @lang('PANOPTICON_MAIN_SITES_THEAD_PHP')
                 </span>
             </th>
+            <th class="d-none d-md-table-cell">
+                <span class="fa fa-hard-drive fs-3" aria-hidden="true"
+                      data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD')"
+                ></span>
+                <span class="visually-hidden">
+                    @lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD')
+                </span>
+            </th>
             <th class="d-none d-md-table-cell" style="min-width: 2em">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
@@ -161,6 +169,12 @@ $mainModel = $this->getModel('main');
                         'item' => $item,
                         'config' => $config,
                         'php' => $config->get('core.php')
+                    ])
+                </td>
+                <td class="d-none d-md-table-cell">
+                    @include('Main/site_backup', [
+                        'item' => $item,
+                        'config' => $config,
                     ])
                 </td>
                 <td class="d-none d-md-table-cell font-monospace text-body-tertiary small px-2">

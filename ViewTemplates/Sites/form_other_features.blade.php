@@ -33,3 +33,23 @@ $config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
         </div>
     </div>
 </div>
+
+<div class="row mt-3 mb-4">
+    <label for="name" class="col-sm-3 col-form-label">
+        @lang('PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE')
+    </label>
+    <div class="col-sm-9">
+        <div class="input-group">
+            <input type="text" class="form-control"
+                   name="config[config.backup.max_age]" id="config_backup_max_age"
+                   value="{{ $config->get('config.backup.max_age', 168) }}"
+            >
+            <div class="input-group-text">
+                @lang('PANOPTICON_SYSCONFIG_LBL_UOM_HOURS')
+            </div>
+        </div>
+        <div class="form-text">
+            @lang('PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE_HELP')
+        </div>
+    </div>
+</div>

@@ -12,11 +12,14 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
 use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\View\Trait\AkeebaBackupTooOldTrait;
 use Awf\Mvc\DataModel\Collection;
 use Awf\Mvc\DataView\Json as BaseView;
 
 class Json extends BaseView
 {
+	use AkeebaBackupTooOldTrait;
+
 	protected function onBeforeSites()
 	{
 		// Load the model
@@ -125,6 +128,16 @@ class Json extends BaseView
 						'extensions' => $extUpdateStatus,
 					],
 					'certificateStatus' => $site->getSSLValidityStatus(),
+					'backup'            => [
+						'isInstalled' => $site->hasAkeebaBackup()
+						                 || $siteConfig->get(
+								'akeebabackup.info.installed', false
+							),
+						'isPro'       => !empty($siteConfig->get('akeebabackup.info.api')),
+						'noRecord'    => empty($siteConfig->get('akeebabackup.latest')),
+						'meta'        => $siteConfig->get('akeebabackup.latest')?->meta ?? null,
+						'tooOld'      => $this->isTooOldBackup($siteConfig->get('akeebabackup.latest'), $siteConfig)
+					],
 				];
 			}
 		);

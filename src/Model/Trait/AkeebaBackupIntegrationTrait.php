@@ -346,9 +346,12 @@ trait AkeebaBackupIntegrationTrait
 	 * @throws  InvalidArgumentException
 	 * @since   1.0.0
 	 */
-	public function akeebaBackupGetBackups(bool $cache = true, int $from = 0, int $limit = 200): array
+	public function akeebaBackupGetBackups(bool $cache = true, int $from = 0, int $limit = 200, bool $skipConnectionCheck = false): array
 	{
-		$this->ensureAkeebaBackupConnectionOptions();
+		if (!$skipConnectionCheck)
+		{
+			$this->ensureAkeebaBackupConnectionOptions();
+		}
 
 		return $this->getAkeebaBackupCacheController()->get(
 			fn(Connector $connector, $from, $limit): array => $connector->getBackups($from, $limit),

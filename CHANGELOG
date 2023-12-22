@@ -5,6 +5,7 @@ Akeeba Panopticon 1.1.0
 + SSL/TLS certificate information display, and sending expiration warning emails
 + Select language in Setup [gh-384]
 + Change the rotated log names [gh-398]
++ Report latest backup status [gh-396]
 + Support for site favicons
 ~ Running `composer install` will now always create the `version.php` file
 ~ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]

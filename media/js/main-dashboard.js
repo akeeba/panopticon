@@ -123,4 +123,38 @@ function SitesList(props)
     }
 }
 
-createApp({SitesList}).mount()
+const bsDirective = (ctx) => {
+    var myTooltip = null;
+
+    ctx.effect(() => {
+        if (ctx.arg === 'tooltip')
+        {
+            if (myTooltip)
+            {
+                myTooltip.dispose();
+                myTooltip = null;
+            }
+
+            myTooltip = new window.bootstrap.Tooltip(
+                ctx.el,
+                {
+                    placement: 'auto',
+                    title: (ctx.modifiers?.raw ?? false) ? ctx.exp : ctx.get()
+                }
+            )
+        }
+
+    })
+
+    return () => {
+        if (myTooltip)
+        {
+            myTooltip.dispose();
+            myTooltip = null;
+        }
+    }
+};
+
+createApp({SitesList})
+    .directive('bs', bsDirective)
+    .mount()
