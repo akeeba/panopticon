@@ -181,7 +181,7 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 
 		</div>
 
-		<div class="tab-pane" id="webTabPane" role="tabpanel" aria-labelledby="webTab" tabindex="0">
+		<div class="tab-pane px-2" id="webTabPane" role="tabpanel" aria-labelledby="webTab" tabindex="0">
 			<div class="row px-2 g-5">
 				<div class="col-12 col-lg-8 order-1 py-1">
 					<h3 class="h2 text-secondary"><?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_LBL_INSTRUCTIONS') ?></h3>
