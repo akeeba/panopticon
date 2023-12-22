@@ -24,7 +24,7 @@ $lastError     = $this->getLastExtensionsUpdateError($config);
 
 <div class="d-flex flex-row gap-2">
 	<div>
-		<a type="button" class="btn btn-outline-secondary btn-sm" role="button"
+		<a class="btn btn-outline-secondary btn-sm" role="button"
 		   href="@route(sprintf('index.php?view=site&task=refreshExtensionsInformation&id=%d&return=%s&%s=1', $item->id, base64_encode(\Awf\Uri\Uri::getInstance()->toString()), $this->container->session->getCsrfToken()->getValue()))"
 		   data-bs-toggle="tooltip" data-bs-placement="bottom"
 		   data-bs-title="@lang('PANOPTICON_SITE_BTN_EXTENSIONS_RELOAD')"
