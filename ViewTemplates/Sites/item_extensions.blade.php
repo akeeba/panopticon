@@ -115,7 +115,7 @@ $hasError            = !empty($lastError);
 @stop
 
 @section('extUpdateReloadButton')
-    <a type="button" class="btn btn-outline-secondary btn-sm" role="button"
+    <a class="btn btn-outline-secondary btn-sm" role="button"
        href="@route(sprintf('index.php?view=site&task=refreshExtensionsInformation&id=%d&%s=1', $this->item->id, $token))"
        data-bs-toggle="tooltip" data-bs-placement="bottom"
        data-bs-title="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_UPDATE_INFO')"
