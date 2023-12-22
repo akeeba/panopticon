@@ -615,7 +615,7 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 			}
 			catch (Throwable $e)
 			{
-				// No can do.
+				$decodedData->response->{$key} = null;
 			}
 		}
 
