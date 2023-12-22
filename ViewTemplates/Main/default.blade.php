@@ -64,7 +64,7 @@ $mainModel = $this->getModel('main');
                     @lang('PANOPTICON_MAIN_SITES_THEAD_PHP')
                 </span>
             </th>
-            <th class="d-none d-md-table-cell" style="min-width: 2em">
+            <th class="d-none d-md-table-cell pnp-w-2">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
