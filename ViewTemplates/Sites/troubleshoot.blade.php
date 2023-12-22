@@ -385,7 +385,7 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
                                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_BODY')
                             </th>
                             <td>
-                                <pre style="overflow-x: scroll">{{{ $body }}}</pre>
+                                <pre class="overflow-x-scroll">{{{ $body }}}</pre>
                             </td>
                         </tr>
                     @endif
@@ -445,7 +445,7 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
                     </p>
                 @endif
                 @if((is_string($exceptionTrace) && !empty($exceptionTrace)))
-                    <pre style="overflow-x: scroll">{{{ $exceptionTrace }}}</pre>
+                    <pre class="overflow-x-scroll">{{{ $exceptionTrace }}}</pre>
                 @endif
             @endif
 
