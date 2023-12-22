@@ -66,10 +66,10 @@ $importMap     = TemplateHelper::getImportMapAsJson();
 	<?php endforeach ?>
 	<?php // Script files ?>
 	<?php foreach ($this->getScripts() as $url => $params): ?>
-		<script src="<?= $url ?>"<?= ($params['defer'] ?? false) ? ' defer="defer"' : '' ?><?= ($params['async'] ?? false) ? ' async="async"' : '' ?>></script>
+		<script type="<?= $params['mime'] ?>" src="<?= $url ?>"<?= ($params['defer'] ?? false) ? ' defer="defer"' : '' ?><?= ($params['async'] ?? false) ? ' async="async"' : '' ?>></script>
 	<?php endforeach ?>
 	<?php foreach ($this->getScriptDeclarations() as $type => $content): ?>
-		<script><?= $content ?></script>
+		<script type="<?= $params['mime'] ?>"><?= $content ?></script>
 	<?php endforeach ?>
 
 	<?php if ($darkModeValue): ?>
