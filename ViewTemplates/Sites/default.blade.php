@@ -74,7 +74,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             <th>
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_SITES_TABLE_HEAD_NAME', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
-            <th width="10%">
+            <th class="pnp-w-10">
                 @lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')
             </th>
             <th class="pnp-w-5">

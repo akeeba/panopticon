@@ -144,10 +144,10 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </caption>
         <thead>
         <tr>
-            <th style="width: 9em">
+            <th class="pnp-w-15">
                 @lang('PANOPTICON_LOGS_LBL_FIELD_ACTIONS')
             </th>
-            <th width="10">
+            <th class="pnp-w-5">
                 @lang('PANOPTICON_LOGS_LBL_FIELD_STATUS')
             </th>
             <th>
