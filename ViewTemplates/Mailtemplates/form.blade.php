@@ -74,7 +74,7 @@ $item = $this->getModel();
 	            $item->html,
 	            [
 					'id' => 'html',
-					'relative_urls' => true,
+					'relative_urls' => false,
 					'content_style' => $this->css
                 ]
             ) }}
