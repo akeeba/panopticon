@@ -38,7 +38,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </caption>
         <thead>
         <tr>
-            <th width="1">
+            <th class="pnp-w-1">
                 <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
                 </span>
@@ -46,7 +46,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             <th>
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_GROUPS_TABLE_HEAD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>

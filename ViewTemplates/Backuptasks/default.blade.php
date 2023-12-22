@@ -98,7 +98,7 @@ $profileOptions = $this->getProfileOptions();
         </caption>
         <thead>
         <tr>
-            <th width="1">
+            <th class="pnp-w-1">
                 <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
                 </span>
@@ -109,16 +109,16 @@ $profileOptions = $this->getProfileOptions();
             <th>
                 @lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_SCHEDULE')
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 @lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 @lang('PANOPTICON_TASKS_LBL_FIELD_STATUS')
             </th>
             <th>
                 @lang('PANOPTICON_TASKS_LBL_FIELD_TIMES')
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>

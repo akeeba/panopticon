@@ -43,12 +43,12 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
         </caption>
         <thead>
         <tr>
-            <th width="1">
+            <th class="pnp-w-1">
                 <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
                 </span>
             </th>
-            <th width="20%">
+            <th class="pnp-w-10">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_TYPE', 'type', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th>
@@ -57,7 +57,7 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
             <th>
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_LANGUAGE', 'language', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
         </tr>
