@@ -69,7 +69,7 @@ $importMap     = TemplateHelper::getImportMapAsJson();
 		<script type="<?= $params['mime'] ?>" src="<?= $url ?>"<?= ($params['defer'] ?? false) ? ' defer="defer"' : '' ?><?= ($params['async'] ?? false) ? ' async="async"' : '' ?>></script>
 	<?php endforeach ?>
 	<?php foreach ($this->getScriptDeclarations() as $type => $content): ?>
-		<script type="<?= $params['mime'] ?>"><?= $content ?></script>
+		<script type="<?= $type ?>"><?= $content ?></script>
 	<?php endforeach ?>
 
 	<?php if ($darkModeValue): ?>
