@@ -176,7 +176,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 						<tbody>
 						<?php foreach($this->reqSettings as $option): ?>
 							<tr>
-								<th colspan="row">
+								<th>
 									<?= $this->escape($option['label']) ?>
 									<?php if ($option['notice'] ?? ''): ?>
 										<div class="small text-muted">
@@ -217,7 +217,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 						<tbody>
 						<?php foreach($this->recommendedSettings as $option): ?>
 							<tr>
-								<th colspan="row">
+								<th>
 									<?= $this->escape($option['label']) ?>
 									<?php if ($option['notice'] ?? ''): ?>
 										<div class="small text-muted">
