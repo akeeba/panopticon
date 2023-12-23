@@ -124,12 +124,26 @@ class SendMail extends AbstractCallback
 			{
 				if ($hasMultipleLanguages)
 				{
-					$this->logger->info(
-						sprintf(
-							'Sending email template %s for site %d and language %s',
-							$template, $queueItem->getSiteId(), $language
-						)
-					);
+					if (empty($language))
+					{
+						$language = $defaultLanguage;
+
+						$this->logger->info(
+							sprintf(
+								'Sending email template %s for site %d and default language (%s)',
+								$template, $queueItem->getSiteId(), $defaultLanguage
+							)
+						);
+					}
+					else
+					{
+						$this->logger->info(
+							sprintf(
+								'Sending email template %s for site %d and language %s',
+								$template, $queueItem->getSiteId(), $language
+							)
+						);
+					}
 				}
 
 				$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
