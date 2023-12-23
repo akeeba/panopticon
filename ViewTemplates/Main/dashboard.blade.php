@@ -99,7 +99,7 @@ defined('AKEEBA') || die;
             <div class="progress flex-grow-1" role="progressbar" style="height: 2em"
                  aria-label="@lang('PANOPTICON_LOGS_LBL_SR_AUTOREFRESH_TIME')"
                  :aria-valuenow="availableTime"
-                 aria-valuemin="0" aria-valuemax="@{{ MAX_TIMER }}">
+                 aria-valuemin="0" :aria-valuemax="MAX_TIMER">
                 <div class="progress-bar bg-secondary"
                      :style="`width: ${100*availableTime/MAX_TIMER}%`"
                 >@{{ availableTime }}s</div>
