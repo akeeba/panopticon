@@ -160,10 +160,10 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
                             <?php
                             $icon = match ($perm)
                             {
-                                'view' => 'fa fa-eye',
-                                'run' => 'fa fa-person-walking',
-                                'addown' => 'fa fa-user-plus text-body-tertiary',
-                                'editown' => 'fa fa-user-pen text-body-tertiary',
+                                'view' => 'fa-eye',
+                                'run' => 'fa-person-walking',
+                                'addown' => 'fa-user-plus text-body-tertiary',
+                                'editown' => 'fa-user-pen text-body-tertiary',
                             } ?>
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <span class="fa {{{ $icon }}} fa-fw" aria-hidden="true"></span>
