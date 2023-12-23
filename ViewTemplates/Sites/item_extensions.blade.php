@@ -19,7 +19,7 @@ $lastUpdateTimestamp  = $this->siteConfig->get('extensions.lastAttempt')
     ? $this->timeAgo($this->siteConfig->get('extensions.lastAttempt'))
     : $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
 $extensionsQuickInfo = $this->item->getExtensionsQuickInfo($this->extensions);
-$shouldCollapse      = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->site == 0
+$shouldCollapse      = false && $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->site == 0
                        && $extensionsQuickInfo->key == 0;
 $lastError           = trim($this->siteConfig->get('extensions.lastErrorMessage') ?? '');
 $hasError            = !empty($lastError);
@@ -336,7 +336,7 @@ $hasError            = !empty($lastError);
         @yield('extUpdateReloadButton')
         @yield('extUpdateShowToggleButton')
     </h3>
-    <div class="card-body collapse{{ $shouldCollapse ? '' : ' show' }}" id="cardExtensionsBody">
+    <div class="card-body collapse {{ $shouldCollapse ? '' : ' show' }}" id="cardExtensionsBody">
 
         <p class="small text-body-tertiary">
             <strong>
