@@ -73,21 +73,21 @@ $mainModel = $this->getModel('main');
                 </span>
             </th>
             <th class="d-none d-md-table-cell" style="min-width: 2em">
-                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', 'asc','PANOPTICON_LBL_TABLE_HEAD_NUM_SR') }}
             </th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
-		<?php
-		/** @var \Akeeba\Panopticon\Model\Site $item */
-		?>
+        <?php
+        /** @var \Akeeba\Panopticon\Model\Site $item */
+        ?>
         @foreach($this->items as $item)
-				<?php
-				$url               = $item->getBaseUrl();
-				$config            = $item->getConfig();
-				$favicon           = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
-				$certificateStatus = $item->getSSLValidityStatus();
-				?>
+                <?php
+                $url               = $item->getBaseUrl();
+                $config            = $item->getConfig();
+                $favicon           = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
+                $certificateStatus = $item->getSSLValidityStatus();
+                ?>
             <tr>
                 <td>
                     <div class="d-flex flex-row gap-2">
