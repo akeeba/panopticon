@@ -387,7 +387,7 @@ JS;
                             <span class="fw-medium small">
                                 {{{ $item->version->new }}}
                             </span>
-                            <span class="fa fa-lock text-danger"></span>
+                            <span class="fa fa-lock text-danger" aria-hidden="true"></span>
                         </div>
                     @elseif ($hasUpdate)
                         <span class="text-muted">
