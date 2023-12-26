@@ -26,7 +26,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
             <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="search" value="{{{ $model->getState('search', '') }}}">
-            <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
+            <label for="search" class="visually-hidden">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
             <button type="submit"
                     class="btn btn-primary">
                 <span class="fa fa-search" aria-hidden="true"></span>
@@ -162,10 +162,10 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
                             <?php
                             $icon = match ($perm)
                             {
-                                'view' => 'fa fa-eye',
-                                'run' => 'fa fa-person-walking',
-                                'addown' => 'fa fa-user-plus text-body-tertiary',
-                                'editown' => 'fa fa-user-pen text-body-tertiary',
+                                'view' => 'fa-eye',
+                                'run' => 'fa-person-walking',
+                                'addown' => 'fa-user-plus text-body-tertiary',
+                                'editown' => 'fa-user-pen text-body-tertiary',
                             } ?>
                             <div class="d-flex flex-row gap-2 align-items-center">
                                 <span class="fa {{{ $icon }}} fa-fw" aria-hidden="true"></span>

@@ -19,7 +19,7 @@ $lastUpdateTimestamp  = $this->siteConfig->get('extensions.lastAttempt')
     ? $this->timeAgo($this->siteConfig->get('extensions.lastAttempt'))
     : $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
 $extensionsQuickInfo = $this->item->getExtensionsQuickInfo($this->extensions);
-$shouldCollapse      = $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->site == 0
+$shouldCollapse      = false && $extensionsQuickInfo->update == 0 && $extensionsQuickInfo->site == 0
                        && $extensionsQuickInfo->key == 0;
 $lastError           = trim($this->siteConfig->get('extensions.lastErrorMessage') ?? '');
 $hasError            = !empty($lastError);
@@ -336,7 +336,7 @@ $hasError            = !empty($lastError);
         @yield('extUpdateReloadButton')
         @yield('extUpdateShowToggleButton')
     </h3>
-    <div class="card-body collapse{{ $shouldCollapse ? '' : ' show' }}" id="cardExtensionsBody">
+    <div class="card-body collapse {{ $shouldCollapse ? '' : ' show' }}" id="cardExtensionsBody">
 
         <p class="small text-body-tertiary">
             <strong>
@@ -473,7 +473,7 @@ $hasError            = !empty($lastError);
                                 @endif
                             </div>
                         @elseif (($item->downloadkey?->supported ?? false) && !empty($item->downloadkey?->value ?? '') && $this->container->userManager->getUser()->getPrivilege('panopticon.admin'))
-                            <span class="fa fa-key text-muted" ></span>
+                            <span class="fa fa-key text-muted" aria-hidden="true"></span>
                             <span class="visually-hidden">Download Key: </span>
                             <code class="download-key" tabindex="0">{{{ $item->downloadkey?->value ?? '' }}}</code>
                             @if ($this->canEdit)
@@ -512,7 +512,7 @@ $hasError            = !empty($lastError);
                                 <span class="fw-medium small">
                                     {{{ $item->version->new }}}
                                 </span>
-                                <span class="fa fa-lock text-danger"></span>
+                                <span class="fa fa-lock text-danger" aria-hidden="true"></span>
                             </span>
                         @elseif ($hasUpdate)
                             <strong class="text-danger-emphasis">

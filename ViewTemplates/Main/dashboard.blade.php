@@ -99,7 +99,7 @@ defined('AKEEBA') || die;
             <div class="progress flex-grow-1" role="progressbar" style="height: 2em"
                  aria-label="@lang('PANOPTICON_LOGS_LBL_SR_AUTOREFRESH_TIME')"
                  :aria-valuenow="availableTime"
-                 aria-valuemin="0" aria-valuemax="@{{ MAX_TIMER }}">
+                 aria-valuemin="0" :aria-valuemax="MAX_TIMER">
                 <div class="progress-bar bg-secondary"
                      :style="`width: ${100*availableTime/MAX_TIMER}%`"
                 >@{{ availableTime }}s</div>
@@ -109,7 +109,7 @@ defined('AKEEBA') || die;
                     class="btn btn-secondary btn-sm"
                     @click="reloadData()"
             >
-                <span class="fa fa-fw fa-arrow-rotate-right"
+                <span class="fa fa-fw fa-arrow-rotate-right" aria-hidden="true"
                       v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')"
                 ></span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')</span>
@@ -358,7 +358,7 @@ defined('AKEEBA') || die;
                     </div>
 
                     <div>
-                        <a href="@{{ site.url }}" target="_blank"
+                        <a :href="site.url" target="_blank"
                            class="link-opacity-50 link-opacity-100-hover link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                             @{{ site.url }}
                             <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>

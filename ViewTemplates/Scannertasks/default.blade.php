@@ -31,7 +31,7 @@ $i     = 1;
                 <input type="search" class="form-control form-control-lg" id="search"
                        placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                        name="name" value="{{{ $model->getState('name', '') }}}">
-                <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
+                <label for="search" class="visually-hidden">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
                 <button type="submit"
                         class="btn btn-primary">
                     <span class="fa fa-search" aria-hidden="true"></span>

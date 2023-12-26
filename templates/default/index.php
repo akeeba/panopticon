@@ -213,7 +213,7 @@ $importMap     = TemplateHelper::getImportMapAsJson();
 					<div>
 						<span class="fa fa-address-card" aria-hidden="true"></span>
 						<a href="<?= $this->container->router->route('index.php?view=about') ?>">
-							About
+							<?= $text->text('PANOPTICON_ABOUT_TITLE') ?>
 						</a>
 					</div>
 					<?php if ($isDebug): ?>
