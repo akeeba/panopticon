@@ -109,7 +109,7 @@ defined('AKEEBA') || die;
                     class="btn btn-secondary btn-sm"
                     @click="reloadData()"
             >
-                <span class="fa fa-fw fa-arrow-rotate-right"
+                <span class="fa fa-fw fa-arrow-rotate-right" aria-hidden="true"
                       v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')"
                 ></span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')</span>

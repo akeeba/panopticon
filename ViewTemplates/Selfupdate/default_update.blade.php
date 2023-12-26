@@ -55,7 +55,7 @@ if ($releaseDate instanceof DateTime)
 
 <div class="card card-body border-info bg-body-tertiary mb-5">
     <h4 class="card-title">
-        <span class="fa fa-info-circle pe-1 text-info"></span>
+        <span class="fa fa-info-circle pe-1 text-info" aria-hidden="true"></span>
         @lang('PANOPTICON_APP_TITLE_SHORT') {{{ $this->latestversion->version }}}
     </h4>
     <p>

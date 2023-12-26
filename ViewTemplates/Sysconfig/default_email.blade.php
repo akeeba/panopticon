@@ -214,7 +214,7 @@ $user   = $this->container->userManager->getUser();
             </a>
         </div>
         <p class="small text-muted">
-            <span class="fa fa-fw fa-info-circle"></span>
+            <span class="fa fa-fw fa-info-circle" aria-hidden="true"></span>
             @sprintf('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_WILL_SEND_TO', sprintf('<span class="text-body-tertiary">%s</span>', $this->escape($user->getEmail())))
         </p>
     </div>

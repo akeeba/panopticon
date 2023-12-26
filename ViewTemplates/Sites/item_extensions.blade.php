@@ -473,7 +473,7 @@ $hasError            = !empty($lastError);
                                 @endif
                             </div>
                         @elseif (($item->downloadkey?->supported ?? false) && !empty($item->downloadkey?->value ?? '') && $this->container->userManager->getUser()->getPrivilege('panopticon.admin'))
-                            <span class="fa fa-key text-muted" ></span>
+                            <span class="fa fa-key text-muted" aria-hidden="true"></span>
                             <span class="visually-hidden">Download Key: </span>
                             <code class="download-key" tabindex="0">{{{ $item->downloadkey?->value ?? '' }}}</code>
                             @if ($this->canEdit)
@@ -512,7 +512,7 @@ $hasError            = !empty($lastError);
                                 <span class="fw-medium small">
                                     {{{ $item->version->new }}}
                                 </span>
-                                <span class="fa fa-lock text-danger"></span>
+                                <span class="fa fa-lock text-danger" aria-hidden="true"></span>
                             </span>
                         @elseif ($hasUpdate)
                             <strong class="text-danger-emphasis">

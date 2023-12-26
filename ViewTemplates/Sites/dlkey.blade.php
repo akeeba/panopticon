@@ -21,7 +21,7 @@ $returnUrl = $this->input->getBase64('returnurl', '');
         <span>
             {{{ $model->name }}}
         </span>
-        <span class="fa fa-chevron-right mx-2"></span>
+        <span class="fa fa-chevron-right mx-2" aria-hidden="true"></span>
         <span class="visually-hidden">,</span>
         <span class="text-secondary">
             {{{ strip_tags($this->extension->name) }}}
