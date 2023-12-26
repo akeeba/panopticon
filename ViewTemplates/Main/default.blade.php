@@ -73,7 +73,9 @@ $mainModel = $this->getModel('main');
                 </span>
             </th>
             <th class="d-none d-md-table-cell" style="min-width: 2em">
-                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
+                    'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
+                ]) }}
             </th>
         </tr>
         </thead>

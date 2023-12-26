@@ -119,7 +119,9 @@ $profileOptions = $this->getProfileOptions();
                 @lang('PANOPTICON_TASKS_LBL_FIELD_TIMES')
             </th>
             <th width="5%">
-                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
+                    'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
+                ]) }}
             </th>
         </tr>
         </thead>

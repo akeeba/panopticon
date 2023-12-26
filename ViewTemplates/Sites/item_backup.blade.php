@@ -322,7 +322,9 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                 <thead class="table-dark">
                 <tr>
                     <th scope="col" class="text-center d-none d-md-table-cell" style="max-width: 48px;">
-                        @lang('PANOPTICON_LBL_TABLE_HEAD_NUM')
+                        <span aria-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')">
+                            @lang('PANOPTICON_LBL_TABLE_HEAD_NUM')
+                        </span>
                     </th>
                     <th scope="col" class="text-center" style="max-width: 3em">
                         @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN')
