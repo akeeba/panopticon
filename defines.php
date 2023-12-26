@@ -5,7 +5,7 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-defined('AKEEBA') or die;
+defined('AKEEBA') || die;
 
 const APATH_BASE = __DIR__;
 const APATH_ROOT = APATH_BASE;
