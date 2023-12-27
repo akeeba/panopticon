@@ -25,7 +25,7 @@ enum CMSType: string
 		return match ($this)
 		{
 			default => 'Unknown',
-			self::JOOMLA => 'Joomla!™',
+			self::JOOMLA => 'Joomla!&reg;',
 			self::WORDPRESS => 'WordPress',
 		};
 	}
