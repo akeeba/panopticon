@@ -166,7 +166,7 @@ defined('AKEEBA') || die;
                         <div>
                             <dl style="display: grid; grid-template-columns: auto auto; grid-auto-rows: 1fr; grid-auto-flow: row; column-gap: .5em">
                                 <dt>
-                                    <span v-if="(site.cms ?? 'joomla') === 'joomla'">Joomla!&trade;</span>
+                                    <span v-if="(site.cms ?? 'joomla') === 'joomla'">Joomla!&reg;</span>
                                     <span v-if="(site.cms ?? 'joomla') === 'wordpress'">WordPress</span>
                                 </dt>
                                 <dd>

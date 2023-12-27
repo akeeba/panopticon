@@ -19,7 +19,7 @@ use Akeeba\Panopticon\Library\Enumerations\CMSType;
 $config       = $site->getConfig();
 $cmsTypeHuman = match ($site->cmsType())
 {
-	default => 'Joomla!™',
+	default => 'Joomla!&reg;',
 	CMSType::WORDPRESS => 'WordPress',
 };
 $extensionNameHuman = match ($site->cmsType())

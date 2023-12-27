@@ -68,9 +68,9 @@ $jVersionHelper      = new JoomlaVersion($this->getContainer());
 @repeatable('joomlaLogo')
     <span class="fab fa-joomla" aria-hidden="true"
           data-bs-toggle="tooltip" data-bs-placement="bottom"
-          data-bs-title="Joomla!™"
+          data-bs-title="Joomla!&reg;"
     ></span>
-    <span class="visually-hidden">Joomla!™</span>
+    <span class="visually-hidden">Joomla!&reg;</span>
 @endrepeatable
 
 <div class="d-flex flex-row gap-2">

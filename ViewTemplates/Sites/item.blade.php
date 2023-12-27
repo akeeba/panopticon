@@ -82,7 +82,7 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
     <div class="row g-3 mb-3">
         <div class="col-12 col-lg-6 order-1 order-lg-0">
             @if ($this->item->cmsType() === CMSType::JOOMLA)
-                {{-- Joomla! sites: Joomla!™ Update information --}}
+                {{-- Joomla! sites: Joomla!&reg; Update information --}}
                 @include('Sites/item_joomlaupdate')
             @elseif ($this->item->cmsType() === CMSType::WORDPRESS)
                 {{-- WordPress sites: WordPress update information --}}
