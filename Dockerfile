@@ -31,4 +31,9 @@ COPY assets/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint.sh"]
+# Copy the crontab file
+COPY assets/container_cronjob /etc/cron.d/container_cronjob
+
+RUN chmod 0644 /etc/cron.d/container_cronjob
+
+ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint.sh && cron"]
