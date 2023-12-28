@@ -10,7 +10,7 @@ svg.panopticonLogoColour {
 
 html[data-bs-theme=dark] svg.panopticonLogoColour {
   path.main {
-    fill: $gray-100
+    fill: $gray-100;
   }
 
   path.w {
@@ -22,25 +22,25 @@ svg.panopticonLogoColour
 {
   &[data-bs-theme=success] {
     path.w {
-      fill: $success
+      fill: $success;
     }
   }
 
   &[data-bs-theme=warning] {
     path.w {
-      fill: $warning
+      fill: $warning;
     }
   }
 
   &[data-bs-theme=danger] {
     path.w {
-      fill: $danger
+      fill: $danger;
     }
   }
 
   &[data-bs-theme=off] {
     path.w {
-      fill: $secondary
+      fill: $secondary;
     }
   }
 }
