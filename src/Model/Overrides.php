@@ -53,23 +53,37 @@ class Overrides extends Model
 		return new Pagination($this->count(), $limitStart, $limit, 10, $this->getContainer());
 	}
 
-	public function get(): Collection
+	public function get(bool $overrideLimits = false): Collection
 	{
 		if (empty($this->site))
 		{
 			return new Collection();
 		}
 
-		$limitStart = $this->getUserStateFromRequest('limitstart', 'limitstart', 0, 'int') ?: 0;
-		$limit      = $this->getUserStateFromRequest('limit', 'limit', 20, 'int') ?: 20;
-		$client     = $this->getUserStateFromRequest('client', 'client', 0, 'int') ?: 0;
+		if ($overrideLimits)
+		{
+			$limitStart = 0;
+			$limit      = 100000000;
+			$client     = null;
+		}
+		else
+		{
+			$limitStart = $this->getUserStateFromRequest('limitstart', 'limitstart', 0, 'int') ?: 0;
+			$limit      = $this->getUserStateFromRequest('limit', 'limit', 20, 'int') ?: 20;
+			$client     = $this->getUserStateFromRequest('client', 'client', 0, 'int') ?: 0;
+		}
+
 
 		[$url, $options] = $this->getRequestOptions($this->site, '/index.php/v1/panopticon/template/overrides/changed');
 
 		$uri = new Uri($url);
-		$uri->setVar('client', $client);
 		$uri->setVar('page[limit]', $limit);
 		$uri->setVar('page[offset]', $limitStart);
+
+		if ($client)
+		{
+			$uri->setVar('client', $client);
+		}
 
 		/** @var \Akeeba\Panopticon\Container $container */
 		$container  = $this->container;
@@ -86,7 +100,10 @@ class Overrides extends Model
 			$rawData = null;
 		}
 
-		if (empty($rawData) || !is_object($rawData) || !is_array($rawData?->data ?? null) || empty($rawData?->data ?? null))
+		if (empty($rawData) || !is_object($rawData) || !is_array($rawData?->data ?? null)
+		    || empty(
+			    $rawData?->data ?? null
+		    ))
 		{
 			return new Collection();
 		}
@@ -95,7 +112,10 @@ class Overrides extends Model
 			array_filter(
 				array_map(
 					function ($item): ?object {
-						if (!is_object($item) || empty($item->attributes ?? null) || !is_object($item->attributes ?? null))
+						if (!is_object($item) || empty($item->attributes ?? null)
+						    || !is_object(
+								$item->attributes ?? null
+							))
 						{
 							return null;
 						}
@@ -177,7 +197,9 @@ class Overrides extends Model
 			'wrapperClasses' => ['diff-wrapper'],
 		];
 
-		$data->diff = DiffHelper::calculate($data->coreSource, $data->overrideSource, 'SideBySide', $diffOptions, $rendererOptions);
+		$data->diff = DiffHelper::calculate(
+			$data->coreSource, $data->overrideSource, 'SideBySide', $diffOptions, $rendererOptions
+		);
 
 		return $data;
 	}

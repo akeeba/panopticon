@@ -39,7 +39,9 @@ trait PrintFormattedArrayTrait
 			case 'table':
 				if ($isNumericKeys)
 				{
-					$this->ioStyle->table(array_keys(reset($data)), $data);
+					$firstRow = reset($data);
+					$firstRow = is_array($firstRow) ? $firstRow : (array)$firstRow;
+					$this->ioStyle->table(array_keys($firstRow), $data);
 
 					return;
 				}
