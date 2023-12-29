@@ -123,7 +123,7 @@ $disable         = $disable || empty($profiles);
         </div>
 
         <div class="row mb-3" {{ $this->showOn('config[config.core_update.backup_on_update]:1') }}>
-            <label for="config_core_update_backup_profile" class="col-sm-3 col-form-label">
+            <label for="backupOnUpdateProfiles" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SITES_LBL_BOU_PROFILE')
             </label>
             <div class="col-sm-9">
