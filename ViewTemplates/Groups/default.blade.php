@@ -17,7 +17,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 ?>
 <form action="@route('index.php?view=groups')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
-        <div class="input-group" style="max-width: max(50%, 25em)">
+        <div class="input-group pnp-mw-50">
             <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="title" value="{{{ $model->getState('title', '') }}}">
@@ -38,7 +38,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </caption>
         <thead>
         <tr>
-            <th width="1">
+            <th class="pnp-w-1">
                 <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
                 </span>
@@ -46,7 +46,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             <th>
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_GROUPS_TABLE_HEAD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
                     'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
                 ]) }}

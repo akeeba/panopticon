@@ -21,7 +21,7 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
 
 <form action="@route('index.php?view=mailtemplates')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
-        <div class="input-group" style="max-width: max(50%, 25em)">
+        <div class="input-group pnp-mw-50">
             <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="name" value="{{{ $model->getState('subject', '') }}}">
@@ -43,12 +43,12 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
         </caption>
         <thead>
         <tr>
-            <th width="1">
+            <th class="pnp-w-1">
                 <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
                 </span>
             </th>
-            <th width="20%">
+            <th class="pnp-w-10">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_TYPE', 'type', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th>
@@ -57,7 +57,7 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
             <th>
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_LANGUAGE', 'language', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
                     'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
                 ]) }}

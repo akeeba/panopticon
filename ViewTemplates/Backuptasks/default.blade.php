@@ -29,7 +29,7 @@ $profileOptions = $this->getProfileOptions();
 <form action="@route('index.php?view=backuptasks')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
         <div class="d-flex flex-row justify-content-center">
-            <div class="input-group" style="max-width: max(50%, 25em)">
+            <div class="input-group pnp-mw-50">
                 <input type="search" class="form-control form-control-lg" id="search"
                        placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                        name="name" value="{{{ $model->getState('name', '') }}}">
@@ -98,7 +98,7 @@ $profileOptions = $this->getProfileOptions();
         </caption>
         <thead>
         <tr>
-            <th width="1">
+            <th class="pnp-w-1">
                 <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
                 </span>
@@ -109,16 +109,16 @@ $profileOptions = $this->getProfileOptions();
             <th>
                 @lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_SCHEDULE')
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 @lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 @lang('PANOPTICON_TASKS_LBL_FIELD_STATUS')
             </th>
             <th>
                 @lang('PANOPTICON_TASKS_LBL_FIELD_TIMES')
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
                     'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
                 ]) }}

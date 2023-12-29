@@ -130,7 +130,7 @@ $isJoomla3       = str_ends_with(rtrim($this->item->url, '/'), '/panopticon_api'
                         @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_HTTP_BODY')
                     </th>
                     <td>
-                        <pre style="overflow-x: scroll">{{{ $body }}}</pre>
+                        <pre class="overflow-x-scroll">{{{ $body }}}</pre>
                     </td>
                 </tr>
             @endif
@@ -190,7 +190,7 @@ $isJoomla3       = str_ends_with(rtrim($this->item->url, '/'), '/panopticon_api'
             </p>
         @endif
         @if((is_string($exceptionTrace) && !empty($exceptionTrace)))
-            <pre style="overflow-x: scroll">{{{ $exceptionTrace }}}</pre>
+            <pre class="overflow-x-scroll">{{{ $exceptionTrace }}}</pre>
         @endif
     @endif
 @endunless

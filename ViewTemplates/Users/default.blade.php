@@ -22,7 +22,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
 <form action="@route('index.php?view=users')" method="post" name="adminForm" id="adminForm">
 
     <div class="my-2 d-flex flex-row justify-content-center border rounded-1 p-2 bg-body-tertiary">
-        <div class="input-group" style="max-width: max(50%, 25em)">
+        <div class="input-group pnp-mw-50">
             <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="search" value="{{{ $model->getState('search', '') }}}">
@@ -43,7 +43,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
         </caption>
         <thead>
         <tr>
-            <th width="1">
+            <th class="pnp-w-1">
                 <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
                 </span>
@@ -57,7 +57,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
             <th>
                 @lang('PANOPTICON_GROUPS_FIELD_PERMISSIONS_GROUPS')
             </th>
-            <th width="5%">
+            <th class="pnp-w-5">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
                     'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
                 ]) }}
