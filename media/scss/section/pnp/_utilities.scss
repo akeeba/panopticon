@@ -1,0 +1,32 @@
+/*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+// Additional prefixed Utilities (pnp-)
+
+$utilities: () !default;
+$utilities: map-merge($utilities,
+    ("pnp-width": (property: width,
+        class: pnp-w,
+        values: (
+            1: 1%,
+            2: 2%,
+            3: 3%,
+            4: 4%,
+            5: 5%,
+            10: 10%,
+            15: 15%,
+            20: 20%,
+          ),
+      ),
+    "pnp-max-width": (property: max-width,
+        class: pnp-mw,
+        values: (
+          33: (33%, 12em),
+          50: max(50%, 25em),
+          ),
+      )
+    )
+  );

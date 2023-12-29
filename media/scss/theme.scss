@@ -34,6 +34,9 @@ $link-color-dark: #7dcaca;
 $code-color: #b12a6e;
 $code-color-dark: #c22774;
 
+// PNP additional utility classes must be loaded before Bootstrap
+@import "section/pnp/utilities";
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 @import "section/choices";
