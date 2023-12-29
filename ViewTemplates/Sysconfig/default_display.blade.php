@@ -20,7 +20,7 @@ $config = $this->container->appConfig;
 
         {{-- template --}}
         <div class="row mb-3">
-            <label for="template" class="col-sm-3 col-form-label">
+            <label for="optionstemplate" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_TEMPLATE')
             </label>
             <div class="col-sm-9">
@@ -120,7 +120,7 @@ $config = $this->container->appConfig;
     <div class="card-body">
         {{--dashboard_reload_timer--}}
         <div class="row mb-3">
-            <label for="fontsize" class="col-sm-3 col-form-label">
+            <label for="dashboard_reload_timer" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER')
             </label>
             <div class="col-sm-9">
@@ -142,7 +142,7 @@ $config = $this->container->appConfig;
 
         {{--dashboard_max_items--}}
         <div class="row mb-3">
-            <label for="fontsize" class="col-sm-3 col-form-label">
+            <label for="dashboard_max_items" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS')
             </label>
             <div class="col-sm-9">
