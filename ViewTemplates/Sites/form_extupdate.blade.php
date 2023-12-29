@@ -93,6 +93,9 @@ defined('AKEEBA') || die;
             @endif
         </td>
         <td>
+            <label for="extupdates_{{ $key }}" class="visually-hidden">
+                @sprintf('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_PREFERENCE_SELECT', strip_tags($item->name))
+            </label>
             <?php
                 $attribs = [
 	                'class' => 'form-select',

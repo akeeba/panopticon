@@ -112,7 +112,7 @@ $disable         = $disable || empty($profiles);
                            {{ !$disable && $config->get('config.core_update.backup_on_update', false) ? 'checked' : '' }}
                            @if ($disable) disabled="disabled" @endif
                     >
-                    <label class="form-check-label" for="config_core_update_email_error">
+                    <label class="form-check-label" for="config_core_update_backup_on_update">
                         @lang('PANOPTICON_SITES_LBL_BOU_TOGGLE')
                     </label>
                 </div>
