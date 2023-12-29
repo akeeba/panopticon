@@ -7,6 +7,7 @@ Akeeba Panopticon 1.1.0
 + Change the rotated log names [gh-398]
 + Report latest backup status [gh-396]
 + Support for site favicons
++ Preload hints, and HTTP 103 Early Hints [gh-458]
 ~ Running `composer install` will now always create the `version.php` file
 ~ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]
 ~ More accessible ID column labels [gh-446]

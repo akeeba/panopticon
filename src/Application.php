@@ -10,19 +10,14 @@ namespace Akeeba\Panopticon;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Application\BootstrapUtilities;
-use Akeeba\Panopticon\Application\UserAuthenticationPassword;
-use Akeeba\Panopticon\Application\UserPrivileges;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\PassKeys;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\TOTP;
-use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Application\Application as AWFApplication;
 use Awf\Application\TransparentAuthentication;
 use Awf\Document\Menu\Item;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
-use Awf\User\ManagerInterface;
 use Awf\Utils\Ip;
 use Exception;
 
@@ -35,6 +30,12 @@ class Application extends AWFApplication
 	 */
 	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup'];
 
+	/**
+	 * Main menu structure
+	 *
+	 * @var    array
+	 * @since  1.0.0
+	 */
 	private const MAIN_MENU = [
 		[
 			'url'         => null,
@@ -189,6 +190,29 @@ class Application extends AWFApplication
 		],
 	];
 
+	/**
+	 * Preload resources for HTTP 103 early hints.
+	 *
+	 * Format: relative path => preload type.
+	 *
+	 * @var    array
+	 * @since  1.1.0
+	 * @see    https://developer.chrome.com/docs/web-platform/early-hints
+	 * @see    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#as
+	 */
+	private const HINT_PRELOAD = [
+		'media/css/theme.min.css?_MEDIAKEY_=1'      => 'style',
+		'media/css/fontawesome.css?_MEDIAKEY_=1'    => 'style',
+		//'media/images/logo_bw.svg'               => 'image',
+		//'media/images/logo_colour.svg'           => 'image',
+		'media/js/darkmode.min.js'                  => 'script',
+		'media/js/system.js?_MEDIAKEY_=1'           => 'script',
+		'media/js/bootstrap.bundle.js?_MEDIAKEY_=1' => 'script',
+		'media/webfonts/fa-solid-900.woff2'         => 'font',
+		'media/webfonts/fa-brands-400.woff2'        => 'font',
+		'media/webfonts/fa-regular-400.woff2'       => 'font',
+	];
+
 	public static function getUserMenuTitle(): string
 	{
 		$container = Factory::getContainer();
@@ -215,6 +239,12 @@ class Application extends AWFApplication
 
 	public function initialise()
 	{
+		// Set up the media query key
+		$this->setupMediaVersioning();
+
+		// HTTP 103 early hints
+		$this->preloadHints();
+
 		// Apply a forced language – but only if there is no logged-in user, or they have no language preference.
 		$forcedLanguage = $this->getContainer()->segment->get('panopticon.forced_language', null);
 
@@ -269,9 +299,6 @@ class Application extends AWFApplication
 
 		// Show the login page when necessary
 		$this->redirectToLogin();
-
-		// Set up the media query key
-		$this->setupMediaVersioning();
 	}
 
 	public function dispatch()
@@ -731,6 +758,88 @@ class Application extends AWFApplication
 			if (empty($this->getTemplate()) || $this->getTemplate() === 'Panopticon')
 			{
 				$this->setTemplate('default');
+			}
+		}
+	}
+
+	/**
+	 * Improves the page load time by sending preload hints.
+	 *
+	 * On regular servers, e.g. FastCGI, these are sent _with_ the request response, just as if we had them as <link>
+	 * elements in the HTML output.
+	 *
+	 * On FrankenPHP we send them as HTTP 103 responses. These are sent **BEFORE** the request response, which improves
+	 * performance.
+	 *
+	 * @return  void
+	 * @since   1.1.0
+	 * @see     https://developer.chrome.com/docs/web-platform/early-hints
+	 * @see     https://speakerdeck.com/dunglas/webperf-boost-your-php-apps-with-103-early-hints
+	 */
+	private function preloadHints()
+	{
+		$hintsOutput = 0;
+		$container   = $this->getContainer();
+		$input       = $container->input;
+
+		// We must only send preload hints in HTML output.
+		if (($input->getCmd('format', 'html') ?: 'html') !== 'html')
+		{
+			return;
+		}
+
+		$mediaKey = $container->mediaQueryKey;
+		$basePath = $container->filesystemBase;
+		$relUri   = Uri::base(true, $container);
+		$relUri   .= !str_ends_with($relUri, '/') ? '/' : '';
+
+		foreach (self::HINT_PRELOAD as $file => $as)
+		{
+			$parts     = explode('?', $file);
+			$nakedFile = reset($parts);
+
+			if (!file_exists($basePath . '/' . $nakedFile))
+			{
+				continue;
+			}
+
+			if (!str_contains($file, '.min.') && !(defined('AKEEBADEBUG') && AKEEBADEBUG))
+			{
+				$lastDot = strrpos($file, '.');
+				$altFile = substr($file, 0, $lastDot) . '.min' . substr($file, $lastDot);
+
+				$parts     = explode('?', $file);
+				$nakedFile = reset($parts);
+
+				if (file_exists($basePath . '/' . $nakedFile))
+				{
+					$file = $altFile;
+				}
+			}
+
+			// Replace _MEDIAKEY_
+			$file  = str_replace('_MEDIAKEY_', $mediaKey, $file);
+			$extra = '';
+
+			if ($as === 'font')
+			{
+				$extra = '; crossorigin';
+			}
+
+			$hintsOutput++;
+			header(sprintf("Link: <%s%s>; rel=preload; as=%s%s", $relUri, $file, $as, $extra), false);
+		}
+
+		// This is required for FrankenPHP, see https://frankenphp.dev/docs/early-hints/
+		if ($hintsOutput && function_exists('headers_send'))
+		{
+			try
+			{
+				headers_send(103);
+			}
+			catch (\Throwable)
+			{
+				// Nada
 			}
 		}
 	}
