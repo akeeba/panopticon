@@ -33,9 +33,10 @@
 		"php": ">=8.1",
 		"ext-curl": "*",
 		"ext-dom": "*",
+		"ext-json": "*",
 		"ext-mbstring": "*",
 		"ext-openssl": "*",
-		"ext-json": "*",
+		"ext-simplexml": "*",
 		"ext-zip": "*",
 		"akeeba/awf": "dev-development",
 		"akeeba/json-backup-api": "^1.0.0",
@@ -70,8 +71,8 @@
 		}
 	],
 	"suggest": {
-		"ext-pdo": "*",
-		"ext-simplexml": "*",
+		"ext-pdo": "Preferred database driver (PDO MySQL)",
+		"ext-mysqli": "Fallback database driver (MySQLi)",
 		"ext-zend-opcache": "*",
 		"ext-zlib": "*"
 	},

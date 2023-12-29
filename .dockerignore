@@ -23,11 +23,12 @@ config.php
 /assets
 !/assets/php.ini
 !/assets/docker-entrypoint.sh
-!/assets/container_cronjob
 /build
 /release
 /.dockerignore
 /.editorconfig
+/.env*
+!/.env.dist
 /.gitattributes
 /.gitignore
 /.phpstorm.meta.php
@@ -36,5 +37,6 @@ config.php
 /docker-*.yml
 /docker-run.sh
 /Dockerfile
+/*.Dockerfile
 /RELEASENOTES.md
 /TODO.md

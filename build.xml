@@ -61,9 +61,10 @@
         <exclude name="composer.json" />
         <exclude name="composer.lock" />
         <exclude name="config.php" />
-        <exclude name="docker-compose.yml" />
+        <exclude name="docker-*.yml" />
         <exclude name="docker-run.sh" />
         <exclude name="Dockerfile" />
+        <exclude name="*.Dockerfile" />
         <exclude name="*.md" />
 
         <!-- Exclude translation sources (PO / POT files) -->

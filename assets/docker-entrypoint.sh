@@ -12,20 +12,20 @@ then
 	# All files and folders must be owned by panopticon (our custom user Apache runs under)
 	chown -R panopticon *
 	# Create a config.php file
-	su panopticon -c "/usr/local/bin/php /var/www/html/cli/panopticon.php config:create --driver mysqli --host mysql --user panopticon --password Emx6Rf9mtneXNgpZyehvdm8NUJJMJQA8 --name panopticon --prefix pnptc_"
-	# Create the database tables
-	su panopticon -c "/usr/local/bin/php /var/www/html/cli/panopticon.php database:update"
-	# Create an admin user
-	su panopticon -c "php /var/www/html/cli/panopticon.php user:create --username=admin --password=admin --name Super\ Administrator --email=admin@example.com"
-	# Set up the maximum CLI execution time
-	su panopticon -c "php /var/www/html/cli/panopticon.php config:set max_execution 180"
-	# Mark the installation as complete
-	su panopticon -c "php /var/www/html/cli/panopticon.php config:set finished_setup true"
-	# Install a CRON job
-	crontab -u panopticon -l > mycron
-	echo "* * * * * /usr/local/bin/php /var/www/html/cli/panopticon.php task:run" >> mycron
-	crontab -u panopticon mycron
-	rm mycron
+  su panopticon -c "/usr/local/bin/php /var/www/html/cli/panopticon.php config:create --driver mysqli --host \"$PANOPTICON_DB_HOST\" --user \"$MYSQL_USER\" --password \"$MYSQL_PASSWORD\" --name \"$MYSQL_DATABASE\" --prefix \"$PANOPTICON_DB_PREFIX\""
+  # Create the database tables
+  su panopticon -c "/usr/local/bin/php /var/www/html/cli/panopticon.php database:update"
+  # Create an admin user
+  su panopticon -c "php /var/www/html/cli/panopticon.php user:create --username=\"$ADMIN_USERNAME\" --password=\"$ADMIN_PASSWORD\" --name \"$ADMIN_NAME\" --email=\"$ADMIN_EMAIL\" --overwrite"
+  # Set up the maximum CLI execution time
+  su panopticon -c "php /var/www/html/cli/panopticon.php config:set max_execution 180"
+  # Mark the installation as complete
+  su panopticon -c "php /var/www/html/cli/panopticon.php config:set finished_setup true"
+  # Install a CRON job
+  crontab -u panopticon -l > mycron
+  echo "* * * * * /usr/local/bin/php /var/www/html/cli/panopticon.php task:run --loop" >> mycron
+  crontab -u panopticon mycron
+  rm mycron
 else
 	# Update the database structure
 	su panopticon -c "/usr/local/bin/php /var/www/html/cli/panopticon.php database:update"

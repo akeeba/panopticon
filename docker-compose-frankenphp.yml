@@ -6,7 +6,7 @@
 ##
 ## -----------------------------------------------------------------------------
 ##
-## Sample Docker Compose file, using Apache
+## Sample Docker Compose file, using FrankenPHP
 ##
 ## Use this Docker Compose file to set up your own installation of Akeeba
 ## Panopticon. Read the comments in this file to understand what to configure.
@@ -31,18 +31,17 @@ x-db-variables: &db-variables
   MYSQL_PASSWORD: "Emx6Rf9mtneXNgpZyehvdm8NUJJMJQA8"
 
 services:
-  # The web application container, based on Apache with PHP-FPM
+  # The web application container, based on FrankenPHP (https://frankenphp.dev).
   php:
+    # If you are using a development / customised installation built from sources use the `build` section.
     build:
       context: '.'
-      dockerfile: Dockerfile
-      args:
-        PHP_VERSION: 8.2
-    # If you want to use the pre-made images, uncomment this line and remove the `build` section.
-    #image: ghcr.io/akeeba/panopticon:latest
+      dockerfile: frankenphp.Dockerfile
+    container_name: panopticon_php
     depends_on:
       wait-for-db:
         condition: service_completed_successfully
+    restart: always
     links:
       - mysql
     # This exposes the internal web server ports (80 and 443) to your host as ports 4280 and 4443 respectively.
@@ -51,9 +50,9 @@ services:
       - 4280:80
       - 4443:443
     volumes:
-      - panopticon_usercode:/var/www/html/user_code
-    container_name: panopticon_php
-    restart: always
+      - panopticon_usercode:/app/public/user_code
+    # comment the following line in production, it allows to have nice human-readable logs in dev
+    tty: true
     environment:
       <<: *db-variables
       # Your username. You should change this.
@@ -64,9 +63,21 @@ services:
       ADMIN_NAME: "Super Administrator"
       # Your email address.
       ADMIN_EMAIL: "admin@example.com"
+      ## Global Caddy options, see https://caddyserver.com/docs/caddyfile/options – parsed before the frankenphp global option
+      #CADDY_GLOBAL_OPTIONS: ""
+      ## FrankenPHP config options, see https://frankenphp.dev/docs/config/#environment-variables
+      ## NOTE: You should NOT need that to run Panopticon
+      #FRANKENPHP_CONFIG: ""
+      ## Like CADDY_GLOBAL_OPTIONS, but they are parsed AFTER the frankenphp global option
+      #CADDY_EXTRA_CONFIG: ""
+      ## The hostname of the server. Default to localhost
+      #SERVER_NAME: "localhost"
+      ## Caddy directives located inside the default domain section
+      #CADDY_SERVER_EXTRA_DIRECTIVES: ""
   # The database server container.
   mysql:
     image: mysql:8.0
+    container_name: panopticon_mysql
     command:
       - --default-authentication-plugin=mysql_native_password
     restart: always
@@ -76,7 +87,6 @@ services:
       <<: *db-variables
       TZ: "Asia/Nicosia"
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-    container_name: panopticon_mysql
   # Used to start the web application container only after the database container is up and running.
   wait-for-db:
     image: atkrad/wait4x
