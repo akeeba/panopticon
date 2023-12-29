@@ -15,7 +15,7 @@ $config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 ?>
 
 <div class="row mt-3 mb-4">
-    <label for="name" class="col-sm-3 col-form-label">
+    <label for="config_ssl_warning" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING')
     </label>
     <div class="col-sm-9">
@@ -35,7 +35,7 @@ $config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 </div>
 
 <div class="row mt-3 mb-4">
-    <label for="name" class="col-sm-3 col-form-label">
+    <label for="config_backup_max_age" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE')
     </label>
     <div class="col-sm-9">
