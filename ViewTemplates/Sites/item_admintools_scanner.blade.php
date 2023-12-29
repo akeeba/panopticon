@@ -144,7 +144,9 @@ $token = $this->container->session->getCsrfToken()->getValue();
         <thead class="table-dark">
         <tr>
             <th rowspan="2" class="d-none d-md-table-cell">
-                @lang('PANOPTICON_LBL_TABLE_HEAD_NUM')
+                <span aria-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')">
+                    @lang('PANOPTICON_LBL_TABLE_HEAD_NUM')
+                </span>
             </th>
             <th rowspan="2">
                 @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_STATUS')

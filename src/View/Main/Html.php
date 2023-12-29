@@ -236,7 +236,6 @@ class Html extends \Awf\Mvc\DataView\Html
 					'pageLimit' => 50,
 				]
 			);
-
 		}
 
 		// Toolbar
@@ -290,6 +289,14 @@ class Html extends \Awf\Mvc\DataView\Html
 			);
 		}
 
+		// Push client-side strings
+		if ($isDashboard)
+		{
+			$doc->lang('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N');
+			$doc->lang('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N_1');
+			$doc->lang('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N');
+			$doc->lang('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N_1');
+		}
 
 		return true;
 	}

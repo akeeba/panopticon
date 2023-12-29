@@ -155,13 +155,13 @@ $importMap     = TemplateHelper::getImportMapAsJson();
 
 <?php // Toolbar / page title ?>
 <?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
-	<section class="navbar container-xl bg-secondary py-3 px-2 d-print-none" id="toolbar" data-bs-theme="dark"
+	<section class="navbar container-xl bg-secondary py-3 px-2 d-print-none" id="toolbar"
 	         aria-label="<?= $text->text('PANOPTICON_APP_LBL_TOOLBAR') ?>">
 		<div class="ms-2 me-auto d-flex flex-row gap-2">
 			<?= TemplateHelper::getRenderedToolbarButtons() ?>
 		</div>
 		 <?php if (!empty($this->getToolbar()->getTitle())): ?>
-			<h2 class="navbar-text ps-2 fs-5 py-0 my-0 me-2">
+			<h2 class="navbar-text text-light ps-2 fs-5 py-0 my-0 me-2">
 				<?= $this->getToolbar()->getTitle() ?>
 			</h2>
 		<?php endif; ?>

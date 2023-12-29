@@ -34,7 +34,7 @@ $amISuper   = $this->getContainer()->userManager->getUser()->getPrivilege('panop
     @else
         <div class="text-center flex-shrink-1 d-flex flex-column gap-2">
             <div class="rounded-circle bg-light py-5 px-5">
-                <span class="fa fa-user-large display-1 rounded-circle bg-light"></span>
+                <span class="fa fa-user-large display-1 rounded-circle bg-light" aria-hidden="true"></span>
             </div>
         </div>
     @endif

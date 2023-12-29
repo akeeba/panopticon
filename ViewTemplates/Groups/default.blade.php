@@ -21,7 +21,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             <input type="search" class="form-control form-control-lg" id="search"
                    placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                    name="title" value="{{{ $model->getState('title', '') }}}">
-            <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
+            <label for="search" class="visually-hidden">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
             <button type="submit"
                     class="btn btn-primary">
                 <span class="fa fa-search" aria-hidden="true"></span>
@@ -47,7 +47,9 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_GROUPS_TABLE_HEAD_TITLE', 'title', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
             <th class="pnp-w-5">
-                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
+                    'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
+                ]) }}
             </th>
         </tr>
         </thead>

@@ -33,7 +33,7 @@ $profileOptions = $this->getProfileOptions();
                 <input type="search" class="form-control form-control-lg" id="search"
                        placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                        name="name" value="{{{ $model->getState('name', '') }}}">
-                <label for="search" class="sr-only">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
+                <label for="search" class="visually-hidden">@lang('PANOPTICON_LBL_FORM_SEARCH')</label>
                 <button type="submit"
                         class="btn btn-primary">
                     <span class="fa fa-search" aria-hidden="true"></span>
@@ -119,7 +119,9 @@ $profileOptions = $this->getProfileOptions();
                 @lang('PANOPTICON_TASKS_LBL_FIELD_TIMES')
             </th>
             <th class="pnp-w-5">
-                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
+                    'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
+                ]) }}
             </th>
         </tr>
         </thead>

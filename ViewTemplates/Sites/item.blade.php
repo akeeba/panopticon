@@ -30,7 +30,7 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
     @if($this->canEdit)
         <a class="btn btn-secondary" role="button"
            href="@route(sprintf('index.php?view=site&id=%d&returnurl=%s', $this->item->id, base64_encode(Uri::getInstance()->toString())))">
-            <span class="fa fa-pencil-alt"></span>
+            <span class="fa fa-pencil-alt" aria-hidden="true"></span>
             <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
         </a>
     @endif
@@ -82,7 +82,7 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
     <div class="row g-3 mb-3">
         <div class="col-12 col-lg-6 order-1 order-lg-0">
             @if ($this->item->cmsType() === CMSType::JOOMLA)
-                {{-- Joomla! sites: Joomla!™ Update information --}}
+                {{-- Joomla! sites: Joomla!&reg; Update information --}}
                 @include('Sites/item_joomlaupdate')
             @elseif ($this->item->cmsType() === CMSType::WORDPRESS)
                 {{-- WordPress sites: WordPress update information --}}

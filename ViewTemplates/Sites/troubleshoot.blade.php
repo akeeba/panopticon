@@ -38,7 +38,7 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
 <div class="card my-3 {{ $border }}">
     @if($showHeader)
         <h3 class="card-header bg-info text-white">
-            <span class="fa fa-bug-slash"></span>
+            <span class="fa fa-bug-slash" aria-hidden="true"></span>
             @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_HEAD')
         </h3>
     @endif

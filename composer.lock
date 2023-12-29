@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28c4075533d3c633a1fe5ccd7a69b1ec",
+    "content-hash": "948f69dcb380d2f3efbbe2946d767246",
     "packages": [
         {
             "name": "akeeba/awf",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "9a5405187ab8edc1d39c1f645b5a30f4266fac91"
+                "reference": "3b0a4ff229c987d65de0065bedc83f82576b4ca9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/9a5405187ab8edc1d39c1f645b5a30f4266fac91",
-                "reference": "9a5405187ab8edc1d39c1f645b5a30f4266fac91",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/3b0a4ff229c987d65de0065bedc83f82576b4ca9",
+                "reference": "3b0a4ff229c987d65de0065bedc83f82576b4ca9",
                 "shasum": ""
             },
             "require": {
@@ -66,9 +66,9 @@
             ],
             "support": {
                 "issues": "https://github.com/akeeba/awf/issues",
-                "source": "https://github.com/akeeba/awf/tree/1.1.1"
+                "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2023-11-23T15:36:05+00:00"
+            "time": "2023-12-26T10:50:37+00:00"
         },
         {
             "name": "akeeba/json-backup-api",
@@ -5502,7 +5502,9 @@
     "platform": {
         "php": ">=8.1",
         "ext-curl": "*",
+        "ext-dom": "*",
         "ext-mbstring": "*",
+        "ext-openssl": "*",
         "ext-json": "*",
         "ext-zip": "*"
     },

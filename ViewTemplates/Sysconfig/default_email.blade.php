@@ -38,7 +38,7 @@ $user   = $this->container->userManager->getUser();
                     <input class="form-check-input" type="checkbox" name="options[immediate_email]" id="immediate_email"
                             {{ $config->get('immediate_email', true) ? 'checked' : '' }}
                     >
-                    <label class="form-check-label" for="mail_online">
+                    <label class="form-check-label" for="immediate_email">
                         @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_IMMEDIATE_EMAIL')
                     </label>
                 </div>
@@ -214,7 +214,7 @@ $user   = $this->container->userManager->getUser();
             </a>
         </div>
         <p class="small text-muted">
-            <span class="fa fa-fw fa-info-circle"></span>
+            <span class="fa fa-fw fa-info-circle" aria-hidden="true"></span>
             @sprintf('PANOPTICON_SYSCONFIG_LBL_EMAILTEST_WILL_SEND_TO', sprintf('<span class="text-body-tertiary">%s</span>', $this->escape($user->getEmail())))
         </p>
     </div>

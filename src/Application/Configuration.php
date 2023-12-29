@@ -7,7 +7,7 @@
 
 namespace Akeeba\Panopticon\Application;
 
-defined('AKEEBA') or die;
+defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Application\Trait\DefaultConfigurationTrait;
 use Akeeba\Panopticon\Exception\Configuration\ReadOnlyRepository;

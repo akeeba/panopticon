@@ -16,12 +16,15 @@ use Akeeba\Panopticon\Library\SelfUpdate\VersionInformation;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Awf\Mvc\Model;
 use DateInterval;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 use RuntimeException;
 use Symfony\Contracts\Cache\CacheInterface;
+use ZipArchive;
 
 /**
  * Self-update (integrated update) Model
@@ -82,8 +85,7 @@ class Selfupdate extends Model
 	 *
 	 * The application must not break when these folders are present.
 	 */
-	private const REMOVE_FOLDERS = [
-	];
+	private const REMOVE_FOLDERS = [];
 
 	/**
 	 * @var string The currently installed version
@@ -100,7 +102,8 @@ class Selfupdate extends Model
 		parent::__construct($container);
 
 		$this->currentVersion  = defined('AKEEBA_PANOPTICON_VERSION') ? AKEEBA_PANOPTICON_VERSION : 'dev';
-		$this->updateStreamUrl = $this->container['updateStreamUrl'] ?? 'https://api.github.com/repos/akeeba/panopticon/releases';
+		$this->updateStreamUrl = $this->container['updateStreamUrl'] ??
+		                         'https://api.github.com/repos/akeeba/panopticon/releases';
 	}
 
 	/**
@@ -109,77 +112,76 @@ class Selfupdate extends Model
 	 * @param   bool  $force  Set to true to bypass the update cache.
 	 *
 	 * @return  UpdateInformation
-	 * @throws  \Psr\Cache\CacheException
-	 * @throws  \Psr\Cache\InvalidArgumentException
+	 * @throws  CacheException
+	 * @throws  InvalidArgumentException
 	 */
 	public function getUpdateInformation(bool $force = false): UpdateInformation
 	{
 		$cacheController = new CallbackController(
-			container: $this->container,
-			pool: $this->container->cacheFactory->pool('system')
+			container: $this->container, pool: $this->container->cacheFactory->pool('system')
 		);
 
-		return $cacheController->get(function (): UpdateInformation {
-			/** @var Client $httpClient */
-			$httpClient = $this->container->httpFactory->makeClient(cache: false);
-			$options    = $this->container->httpFactory->getDefaultRequestOptions();
+		return $cacheController->get(
+			function (): UpdateInformation {
+				/** @var Client $httpClient */
+				$httpClient = $this->container->httpFactory->makeClient(cache: false);
+				$options    = $this->container->httpFactory->getDefaultRequestOptions();
 
-			$options[RequestOptions::TIMEOUT] = 5.0;
+				$options[RequestOptions::TIMEOUT] = 5.0;
 
-			if (str_contains($this->updateStreamUrl, 'api.github.com'))
-			{
-				$options[RequestOptions::HEADERS] = array_merge(
-					$options[RequestOptions::HEADERS] ?? [],
-					[
-						'Accept'     => 'application/vnd.github+json', 'X-GitHub-Api-Version' => '2022-11-28',
-						'User-Agent' => 'panopticon/' . $this->currentVersion,
-					]
-				);
-			}
+				if (str_contains($this->updateStreamUrl, 'api.github.com'))
+				{
+					$options[RequestOptions::HEADERS] = array_merge(
+						$options[RequestOptions::HEADERS] ?? [], [
+							'Accept'               => 'application/vnd.github+json',
+							'X-GitHub-Api-Version' => '2022-11-28',
+							'User-Agent'           => 'panopticon/' . $this->currentVersion,
+						]
+					);
+				}
 
-			$updateInfo = new UpdateInformation();
+				$updateInfo = new UpdateInformation();
 
-			try
-			{
-				$response = $httpClient->get($this->updateStreamUrl, $options);
-			}
-			catch (GuzzleException $e)
-			{
-				$updateInfo->error            = $e->getMessage();
-				$updateInfo->errorLocation    = $e->getFile() . ':' . $e->getLine();
-				$updateInfo->errorTraceString = $e->getTraceAsString();
+				try
+				{
+					$response = $httpClient->get($this->updateStreamUrl, $options);
+				}
+				catch (GuzzleException $e)
+				{
+					$updateInfo->error            = $e->getMessage();
+					$updateInfo->errorLocation    = $e->getFile() . ':' . $e->getLine();
+					$updateInfo->errorTraceString = $e->getTraceAsString();
+
+					return $updateInfo;
+				}
+
+				$updateInfo->stuck            = false;
+				$updateInfo->error            = null;
+				$updateInfo->errorLocation    = null;
+				$updateInfo->errorTraceString = null;
+
+				$json = $this->sanitizeJson($response->getBody()->getContents());
+
+				try
+				{
+					$rawData = @json_decode($json);
+				}
+				catch (Exception $e)
+				{
+					$rawData = null;
+				}
+
+				if (empty($rawData) || !is_array($rawData))
+				{
+					return $updateInfo;
+				}
+
+				$updateInfo->populateVersionsFromGitHubReleases($rawData);
+				$updateInfo->loadedUpdate = !empty($updateInfo->versions);
 
 				return $updateInfo;
-			}
-
-			$updateInfo->stuck            = false;
-			$updateInfo->error            = null;
-			$updateInfo->errorLocation    = null;
-			$updateInfo->errorTraceString = null;
-
-			$json = $this->sanitizeJson($response->getBody()->getContents());
-
-			try
-			{
-				$rawData = @json_decode($json);
-			}
-			catch (\Exception $e)
-			{
-				$rawData = null;
-			}
-
-			if (empty($rawData) || !is_array($rawData))
-			{
-				return $updateInfo;
-			}
-
-			$updateInfo->populateVersionsFromGitHubReleases($rawData);
-			$updateInfo->loadedUpdate = !empty($updateInfo->versions);
-
-			return $updateInfo;
-		},
-			id: 'updateInformation',
-			expiration: $force ? 0 : new DateInterval('PT6H'));
+			}, id: 'updateInformation', expiration: $force ? 0 : new DateInterval('PT6H')
+		);
 	}
 
 	public function getLatestVersion(bool $force = false): ?VersionInformation
@@ -193,11 +195,10 @@ class Selfupdate extends Model
 
 		$versions    = array_keys($updateInfo->versions);
 		$bestVersion = array_reduce(
-			$versions,
-			fn($carry, $someVersion) => empty($carry) ? $someVersion : (
-			version_compare($carry, $someVersion, 'lt') ? $someVersion : $carry
-			),
-			null
+			$versions, fn($carry, $someVersion) => empty($carry)
+			? $someVersion
+			: (version_compare($carry, $someVersion, 'lt')
+				? $someVersion : $carry), null
 		);
 
 		if (empty($bestVersion))
@@ -250,7 +251,8 @@ class Selfupdate extends Model
 			return $minVersion;
 		}
 
-		return defined('AKEEBA_PANOPTICON_MINPHP') ? AKEEBA_PANOPTICON_MINPHP : (PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION);
+		return defined('AKEEBA_PANOPTICON_MINPHP') ? AKEEBA_PANOPTICON_MINPHP
+			: (PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION);
 	}
 
 	public function download(): string
@@ -347,39 +349,38 @@ class Selfupdate extends Model
 			ini_set('memory_limit', '1024M');
 		}
 
-		$zip = new \ZipArchive();
+		$zip = new ZipArchive();
 
-		switch ($zip->open($sourceFile, \ZipArchive::RDONLY))
+		switch ($zip->open($sourceFile, ZipArchive::RDONLY))
 		{
-			case \ZipArchive::ER_INCONS:
+			case ZipArchive::ER_INCONS:
 				/**
 				 * Ignore this. Despite open() returning this error it can still open and extract the archive. Yeah.
-				 */
-				// throw new RuntimeException(sprintf('Update file %s is inconsistent.', $sourceFile));
+				 */ // throw new RuntimeException(sprintf('Update file %s is inconsistent.', $sourceFile));
 				break;
 
-			case \ZipArchive::ER_INVAL:
-			case \ZipArchive::ER_MEMORY:
+			case ZipArchive::ER_INVAL:
+			case ZipArchive::ER_MEMORY:
 				throw new RuntimeException(sprintf('Cannot open update file %s: internal error in PHP', $sourceFile));
 				break;
 
-			case \ZipArchive::ER_NOENT:
+			case ZipArchive::ER_NOENT:
 				throw new RuntimeException(sprintf('Update file %s does not exist.', $sourceFile));
 				break;
 
-			case \ZipArchive::ER_NOZIP:
+			case ZipArchive::ER_NOZIP:
 				throw new RuntimeException(sprintf('Update file %s is not a ZIP archive.', $sourceFile));
 				break;
 
-			case \ZipArchive::ER_OPEN:
+			case ZipArchive::ER_OPEN:
 				throw new RuntimeException(sprintf('Update file %s cannot be opened.', $sourceFile));
 				break;
 
-			case \ZipArchive::ER_READ:
+			case ZipArchive::ER_READ:
 				throw new RuntimeException(sprintf('Update file %s cannot be read from.', $sourceFile));
 				break;
 
-			case \ZipArchive::ER_SEEK:
+			case ZipArchive::ER_SEEK:
 				throw new RuntimeException(sprintf('Update file %s cannot be skipped forward.', $sourceFile));
 				break;
 		}
@@ -387,29 +388,8 @@ class Selfupdate extends Model
 		/**
 		 * Before extracting, delete the third party dependency and critical folders and files (if they exist).
 		 */
-		foreach (self::DEPS_FILES as $file)
-		{
-			$file = $this->container->basePath . '/' . $file;
-
-			if (!file_exists($file))
-			{
-				continue;
-			}
-
-			$this->container->fileSystem->delete($file);
-		}
-
-		foreach (self::DEPS_FOLDERS as $folder)
-		{
-			$folder = $this->container->basePath . '/' . $folder;
-
-			if (!file_exists($folder) || !is_dir($folder))
-			{
-				continue;
-			}
-
-			$this->container->fileSystem->rmdir($folder);
-		}
+		$this->deleteFiles(self::DEPS_FILES);
+		$this->deleteFolders(self::DEPS_FOLDERS);
 
 		/**
 		 * Extract the ZIP file.
@@ -432,37 +412,18 @@ class Selfupdate extends Model
 		/** @var Container $container */
 		$container = $this->getContainer();
 
-		/** @var \Akeeba\Panopticon\Model\Setup $model */
+		/** @var Setup $model */
 		$model = $this->getContainer()->mvcFactory->makeTempModel('Setup');
 		// Check the installed default tasks
 		$model->checkDefaultTasks();
 		// Make sure the DB tables are installed correctly
 		$model->installDatabase();
+		// Replace Joomla!™ with Joomla!® in email templates
+		$this->replaceJoomlaRegMarkInEmailTemplates();
 
 		// Remove old files and folders
-		foreach (self::REMOVE_FILES as $file)
-		{
-			$file = $this->container->basePath . '/' . $file;
-
-			if (!file_exists($file))
-			{
-				continue;
-			}
-
-			$this->container->fileSystem->delete($file);
-		}
-
-		foreach (self::REMOVE_FOLDERS as $folder)
-		{
-			$folder = $this->container->basePath . '/' . $folder;
-
-			if (!file_exists($folder) || !is_dir($folder))
-			{
-				continue;
-			}
-
-			$this->container->fileSystem->rmdir($folder);
-		}
+		$this->deleteFiles(self::REMOVE_FILES);
+		$this->deleteFolders(self::REMOVE_FOLDERS);
 
 		// Remove obsolete cache pools
 		$container->cacheFactory->pool('php_versions')->clear();
@@ -493,4 +454,93 @@ class Selfupdate extends Model
 		$cachePool = $this->container->cacheFactory->pool('system');
 		$cachePool->delete('updateInformation');
 	}
+
+	/**
+	 * Delete files from the specified array
+	 *
+	 * @param   string[]  $files  An array of file paths to delete, relative to the installation's root
+	 *
+	 * @return  void
+	 * @since   1.1.0
+	 */
+	private function deleteFiles(array $files): void
+	{
+		foreach ($files as $file)
+		{
+			$file = $this->container->basePath . '/' . $file;
+
+			if (!file_exists($file))
+			{
+				continue;
+			}
+
+			$this->container->fileSystem->delete($file);
+		}
+	}
+
+	/**
+	 * Delete folders from the specified array
+	 *
+	 * @param   string[]  $folders  An array of folder paths to delete, relative to the installation's root
+	 *
+	 * @return  void
+	 * @since   1.1.0
+	 */
+	private function deleteFolders(array $folders): void
+	{
+		foreach ($folders as $folder)
+		{
+			$folder = $this->container->basePath . '/' . $folder;
+
+			if (!file_exists($folder) || !is_dir($folder))
+			{
+				continue;
+			}
+
+			$this->container->fileSystem->rmdir($folder);
+		}
+	}
+
+	private function replaceJoomlaRegMarkInEmailTemplates()
+	{
+		$db = $this->getContainer()->db;
+
+		$replacements = [
+			'Joomla!™'       => 'Joomla!®',
+			'Joomla!&trade;' => 'Joomla!&reg;',
+		];
+
+		foreach ($replacements as $from => $to)
+		{
+			$query = $db->getQuery(true)
+				->update($db->quoteName('#__mailtemplates'))
+				->set(
+					[
+						$db->qn('subject') . ' = REPLACE(' . $db->qn('subject') . ', ' . $db->quote($from) . ', '
+						. $db->quote($to) . ')',
+						$db->qn('html') . ' = REPLACE(' . $db->qn('html') . ', ' . $db->quote($from) . ', '
+						. $db->quote($to) . ')',
+						$db->qn('plaintext') . ' = REPLACE(' . $db->qn('plaintext') . ', ' . $db->quote($from) . ', '
+						. $db->quote($to) . ')',
+					]
+				)
+				->where(
+					[
+						$db->quoteName('subject') . ' LIKE ' . $db->quote('%' . $from . '%'),
+						$db->quoteName('html') . ' LIKE ' . $db->quote('%' . $from . '%'),
+						$db->quoteName('plaintext') . ' LIKE ' . $db->quote('%' . $from . '%'),
+					], 'OR'
+				);
+
+			try
+			{
+				$db->setQuery($query)->execute();
+			}
+			catch (Exception)
+			{
+				// Swallow it.
+			}
+		}
+	}
+
 }

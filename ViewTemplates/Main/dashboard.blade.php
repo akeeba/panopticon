@@ -109,7 +109,7 @@ defined('AKEEBA') || die;
                     class="btn btn-secondary btn-sm"
                     @click="reloadData()"
             >
-                <span class="fa fa-fw fa-arrow-rotate-right"
+                <span class="fa fa-fw fa-arrow-rotate-right" aria-hidden="true"
                       v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')"
                 ></span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_DASH_BTN_RELOAD')</span>
@@ -166,7 +166,7 @@ defined('AKEEBA') || die;
                         <div>
                             <dl style="display: grid; grid-template-columns: auto auto; grid-auto-rows: 1fr; grid-auto-flow: row; column-gap: .5em">
                                 <dt>
-                                    <span v-if="(site.cms ?? 'joomla') === 'joomla'">Joomla!&trade;</span>
+                                    <span v-if="(site.cms ?? 'joomla') === 'joomla'">Joomla!&reg;</span>
                                     <span v-if="(site.cms ?? 'joomla') === 'wordpress'">WordPress</span>
                                 </dt>
                                 <dd>
@@ -219,7 +219,9 @@ defined('AKEEBA') || die;
                                     @lang('PANOPTICON_OVERRIDES_TITLE')
                                 </dt>
                                 <dd v-if="(site.overrides > 0)">
-                                    <span class="badge bg-warning">
+                                    <span class="badge bg-warning"
+                                          v-bs:tooltip="akeeba.System.Text.plural('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N', site.overrides)"
+                                    >
                                         <span class="fa fa-fw fa-arrows-to-circle" aria-hidden="true"></span>
                                         @{{ site.overrides }}
                                     </span>
@@ -274,7 +276,9 @@ defined('AKEEBA') || die;
                                         <span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR')</span>
                                     </span>
 
-                                    <span class="badge bg-warning">
+                                    <span class="badge bg-warning"
+                                          v-bs:tooltip="akeeba.System.Text.plural('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N', site.extensions)"
+                                    >
                                         <span class="fa fa-fw fa-box-open" aria-hidden="true"></span>
                                         @{{ site.extensions }}
                                     </span>

@@ -23,6 +23,7 @@ config.php
 /assets
 !/assets/php.ini
 !/assets/docker-entrypoint.sh
+!/assets/container_cronjob
 /build
 /release
 /.dockerignore

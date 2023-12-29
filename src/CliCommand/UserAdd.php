@@ -22,12 +22,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-	name: 'user:create',
-	description: 'Creates or overwrites a Super User',
+	name: 'user:add',
+	description: 'Creates or overwrites a user',
 	hidden: false,
 )]
 #[ConfigAssertion(true)]
-class UserCreate extends AbstractCommand
+class UserAdd extends AbstractCommand
 {
 	protected function interact(InputInterface $input, OutputInterface $output)
 	{
@@ -127,7 +127,6 @@ class UserCreate extends AbstractCommand
 		}
 	}
 
-
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$username  = $input->getOption('username');
@@ -175,7 +174,15 @@ class UserCreate extends AbstractCommand
 
 		$user->bind($data);
 		$user->setPassword($password);
-		$user->setPrivilege('panopticon.super', true);
+
+		$privileges = $input->getOption('permission');
+		$privileges = $privileges ?: [];
+		$privileges = is_array($privileges) ? $privileges : array($privileges);
+
+		foreach ($privileges as $privilege)
+		{
+			$user->setPrivilege($privilege, true);
+		}
 
 		$manager->saveUser($user);
 
@@ -193,7 +200,9 @@ class UserCreate extends AbstractCommand
 			->addOption('password', null, InputOption::VALUE_REQUIRED, 'Password')
 			->addOption('email', null, InputOption::VALUE_REQUIRED, 'Email address')
 			->addOption('name', null, InputOption::VALUE_OPTIONAL, 'Full name')
-			->addOption('overwrite', null, InputOption::VALUE_NEGATABLE, 'Overwrite an existing user?', false);
+			->addOption('overwrite', null, InputOption::VALUE_NEGATABLE, 'Overwrite an existing user?', false)
+			->addOption('permission', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'Which permission(s) to add to the user account')
+		;
 	}
 
 	private function getComplexify(): Complexify

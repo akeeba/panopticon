@@ -9,6 +9,7 @@ Akeeba Panopticon 1.1.0
 + Support for site favicons
 ~ Running `composer install` will now always create the `version.php` file
 ~ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]
+~ More accessible ID column labels [gh-446]
 # [HIGH] The minified Dashboard JavaScript was broken [gh-408]
 # [MEDIUM] Sending emails with the default language results in untranslated variables
 # [LOW] PHP error when the browser returns invalid data during WebAuthn [gh-406]
