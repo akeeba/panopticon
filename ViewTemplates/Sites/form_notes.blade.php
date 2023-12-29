@@ -22,7 +22,7 @@ $css      = @file_get_contents($filePath) ?: '';
 </div>
 
 <div class="row mb-3">
-    <label for="html" class="col-sm-3 col-form-label">
+    <label for="notes" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_SITE_LBL_NOTES_HEAD')
         <div class="form-text mt-4">
             @lang('PANOPTICON_SITE_LBL_NOTES_HELP')
