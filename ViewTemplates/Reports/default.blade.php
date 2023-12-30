@@ -79,17 +79,17 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
         <thead>
         <tr>
             @unless($this->hasSiteFilter)
-            <th>
+            <th scope="col">
                 @lang('PANOPTICON_REPORTS_FIELD_SITE')
             </th>
             @endunless
-            <th>
+            <th scope="col" class="pnp-w-10">
                 @lang('PANOPTICON_REPORTS_FIELD_CREATED_ON')
             </th>
-            <th class="d-none d-lg-table-cell">
+            <th scope="col" class="d-none d-lg-table-cell">
                 @lang('PANOPTICON_REPORTS_FIELD_CREATED_BY')
             </th>
-            <th>
+            <th scope="col">
                 @lang('PANOPTICON_REPORTS_FIELD_ACTION')
             </th>
         </tr>
@@ -106,19 +106,19 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
         @foreach ($this->items as $item)
         <tr>
             @unless($this->hasSiteFilter)
-            <td>
-                <div class="fw-semibold">
+            <th scope="col">
+                <div>
                     {{{ $item->site_id->name }}}
                 </div>
-                <div class="small">
+                <div class="small fw-normal">
                     {{{ $item->site_id->getBaseUrl() }}}
                 </div>
-            </td>
+            </th>
             @endunless
-            <td class="font-monospace small" style="width: 10em">
+            <td class="font-monospace small">
                 {{{ $this->getContainer()->html->basic->date($item->created_on->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC6')) }}}
             </td>
-            <td class="d-none d-lg-table-cell">
+            <td>
                 <div class="d-flex flex-row gap-2 align-items-center">
                 @if ($item->created_by->getId() == 0)
                     <div>
@@ -128,7 +128,7 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
                         <div class="text-secondary small fw-medium">
                             @lang('PANOPTICON_APP_LBL_SYSTEM_TASK')
                         </div>
-                        <div class="text-success small font-monospace text-">
+                        <div class="text-success small font-monospace">
                             system
                         </div>
                     </div>
@@ -144,7 +144,7 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
                         <div class="text-secondary small fw-medium">
                             {{ $item->created_by->getName() }}
                         </div>
-                        <div class="text-success small font-monospace text-">
+                        <div class="text-success small font-monospace">
                             {{ $item->created_by->getUsername() }}
                         </div>
                     </div>
@@ -158,6 +158,13 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
             </td>
         </tr>
         @endforeach
+        @if (!$this->items?->count())
+            <tr>
+                <td colspan="20" class="text-center text-body-tertiary">
+                    @lang('AWF_PAGINATION_LBL_NO_RESULTS')
+                </td>
+            </tr>
+        @endif
         </tbody>
     </table>
 
