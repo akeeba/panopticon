@@ -146,22 +146,22 @@ JS;
         </caption>
         <thead>
         <tr>
-            <th class="pnp-w-1">
+            <td class="pnp-w-1">
                 <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
                 </span>
                 {{ $this->getContainer()->html->grid->checkall() }}
-            </th>
-            <th>
+            </td>
+            <th scope="col">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_COREUPDATES_FIELD_SITE', 'id', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
-            <th>
+            <th scope="col">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_COREUPDATES_FIELD_CURRENT', 'current', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
-            <th>
+            <th scope="col">
                 {{ $this->getContainer()->html->grid->sort('PANOPTICON_COREUPDATES_FIELD_LATEST', 'latest', $this->lists->order_Dir, $this->lists->order, 'browse') }}
             </th>
-            <th>
+            <th scope="col">
                 PHP
             </th>
         </tr>
@@ -184,7 +184,7 @@ JS;
                            value="{{{ (int)$item->getId() }}}"
                            onclick="akeeba.System.isChecked(this.checked);" />
                 </td>
-                <td>
+                <th scope="row">
                     @if ($item->isJoomlaUpdateTaskStuck())
                         <div class="badge bg-light text-dark"
                              data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -217,7 +217,7 @@ JS;
                     </a>
                     <div class="small mt-1">
                         <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
-                        <a href="{{{ $item->getBaseUrl() }}}" class="link-secondary text-decoration-none"
+                        <a href="{{{ $item->getBaseUrl() }}}" class="link-secondary text-decoration-none fw-normal"
                            target="_blank">
                             {{{ $item->getBaseUrl() }}}
                             <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>
@@ -235,7 +235,7 @@ JS;
                             @endforeach
                         </div>
                     @endif
-                </td>
+                </th>
                 <td>
                     {{{ $item->getConfig()->get('core.current.version')  }}}
                 </td>
