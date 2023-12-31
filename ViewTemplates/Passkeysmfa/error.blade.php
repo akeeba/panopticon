@@ -8,13 +8,11 @@
 defined('AKEEBA') || die;
 
 ?>
-<div id="passkeys-missing" style="margin: 0.5em 0">
-	<div class="alert alert-danger">
-		<h4>
-			@lang('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_HEAD')
-		</h4>
-		<p>
-			@lang('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_BODY')
-		</p>
-	</div>
+<div class="alert alert-danger my-3 d-none" id="passkeys-missing">
+    <h3 class="alert-heading">
+        @lang('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_HEAD')
+    </h3>
+    <p>
+        @lang('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_BODY')
+    </p>
 </div>
