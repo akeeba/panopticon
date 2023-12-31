@@ -8,7 +8,7 @@
 defined('AKEEBA') || die;
 
 ?>
-<div class="alert alert-danger my-3 d-none" id="passkeys-missing">
+<div class="alert alert-danger my-3" id="passkeys-missing">
     <h3 class="alert-heading">
         @lang('PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_HEAD')
     </h3>

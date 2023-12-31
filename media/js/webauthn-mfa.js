@@ -201,6 +201,8 @@ akeeba.MFA.webauthn.onValidateClick = function (event)
     return false;
 }
 
+document.getElementById("passkeys-missing").classList.add("d-none");
+
 if (typeof (navigator.credentials) == "undefined") {
     document.getElementById("passkeys-missing").classList.replace("d-none", "d-block");
     document.getElementById("passkeys-controls").classList.add("d-none");
