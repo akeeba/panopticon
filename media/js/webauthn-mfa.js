@@ -201,12 +201,9 @@ akeeba.MFA.webauthn.onValidateClick = function (event)
     return false;
 }
 
-document.getElementById("passkeys-missing").style.display = "none";
-
-if (typeof (navigator.credentials) == "undefined")
-{
-    document.getElementById("passkeys-missing").style.display  = "block";
-    document.getElementById("passkeys-controls").style.display = "none";
+if (typeof (navigator.credentials) == "undefined") {
+    document.getElementById("passkeys-missing").classList.replace("d-none", "d-block");
+    document.getElementById("passkeys-controls").classList.add("d-none");
     document.getElementById("passkeys_button").style.disabled = "disabled";
 }
 
