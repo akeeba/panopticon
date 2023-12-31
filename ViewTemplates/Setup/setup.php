@@ -49,7 +49,7 @@ defined('AKEEBA') || die;
 	</div>
 
 	<div class="row mb-3">
-		<label for="name" class="col-sm-3 col-form-label">
+		<label for="username" class="col-sm-3 col-form-label">
 			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_USER_USERNAME') ?>
 		</label>
 		<div class="col-sm-9">
@@ -88,7 +88,7 @@ defined('AKEEBA') || die;
 	</div>
 
 	<div class="row mb-3">
-		<label for="name" class="col-sm-3 col-form-label">
+		<label for="timezone" class="col-sm-3 col-form-label">
 			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_TIMEZONE') ?>
 		</label>
 		<div class="col-sm-9">
