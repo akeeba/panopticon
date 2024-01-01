@@ -207,7 +207,7 @@ defined('AKEEBA') || die;
                                     </span>
                                     <span v-else>@{{ site.version }}</span>
                                     <span v-if="(site.latest !== null)" class="text-secondary">
-									<span class="fa fa-fw fa-arrow-right"></span>
+									<span class="fa fa-fw fa-arrow-right">aria-hidden="true"</span>
                                         @{{ site.latest }}
                                     </span>
                                 </dd>
