@@ -45,7 +45,7 @@ $profileOptions = $this->getProfileOptions();
         </div>
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
             <div>
-                <label class="visually-hidden" for="profile">@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')</label>
+                <label class="visually-hidden" for="profile">@lang('PANOPTICON_BACKUPTASKS_LBL_BACKUP_PROFILE')</label>
                 {{ $this->container->html->select->genericList(
 	                array_merge(['' => $this->getLanguage()->text('PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE')], $profileOptions),
 	                'profile',
@@ -69,7 +69,7 @@ $profileOptions = $this->getProfileOptions();
                 translate: true) }}
             </div>
             <div>
-                <label class="visually-hidden" for="manual">@lang('')</label>
+                <label class="visually-hidden" for="manual">@lang('PANOPTICON_BACKUPTASKS_LBL_SCHEDULE')</label>
                 {{ $this->container->html->select->genericList([
 	                '' => 'PANOPTICON_BACKUPTASKS_LBL_SELECT_MANUAL',
 	                '0' => 'PANOPTICON_BACKUPTASKS_LBL_MANUAL_NO',
