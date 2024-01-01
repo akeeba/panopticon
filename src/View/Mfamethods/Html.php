@@ -99,7 +99,7 @@ class Html extends BaseHtmlView
 			]);
 		}
 
-		// TODO Set up the Help URL.
+		// Set up the Help URL.
 		$helpUrl = $this->renderOptions['help_url'];
 
 		if (!empty($helpUrl))
@@ -110,5 +110,13 @@ class Html extends BaseHtmlView
 		return parent::display($tpl);
 	}
 
+	protected function onBeforeAdd()
+	{
+		return parent::onBeforeAdd();
+	}
 
+	protected function onBeforeEdit()
+	{
+		return parent::onBeforeEdit();
+	}
 }
