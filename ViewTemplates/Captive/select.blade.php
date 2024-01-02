@@ -47,7 +47,7 @@ $shownMethods = [];
             <div class="col-12 col-md-6 col-lg-3 col-xl-2">
 				<img src="{{ Uri::root() . ($method?->image ?: 'media/mfa/images/emergency.svg') }}"
 					 alt="{{{ strip_tags($record->title) }}}"
-					 class="img-fluid bg-light p-2 rounded-2" style="min-width: 3em; max-width: 7em" />
+					 class="img-fluid bg-light p-2 rounded-2">
 			</div>
 
 			<div class="col-12 col-md-6 col-lg-9 col-xl-10 d-flex flex-column">
