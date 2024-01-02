@@ -153,7 +153,7 @@ trait ACLTrait
 			'default' => ['super'],
 			'add'     => ['super'],
 			'remove'  => ['super'],
-			'copy'	  => ['super'],
+			'copy'	  => ['ø'],
 			'edit'    => ['*'],
 			'read'    => ['*'],
 			'save'    => ['*'],
