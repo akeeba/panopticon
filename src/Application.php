@@ -803,7 +803,13 @@ class Application extends AWFApplication
 				continue;
 			}
 
-			if (!str_contains($file, '.min.') && !(defined('AKEEBADEBUG') && AKEEBADEBUG))
+			if (
+				!str_contains($file, '.min.') && !(defined('AKEEBADEBUG') && AKEEBADEBUG)
+				&& (
+					str_ends_with($file, '.js') || str_ends_with($file, '.css')
+					|| str_contains($file, '.js?') || str_contains($file, '.css?')
+				)
+			)
 			{
 				$lastDot = strrpos($file, '.');
 				$altFile = substr($file, 0, $lastDot) . '.min' . substr($file, $lastDot);
