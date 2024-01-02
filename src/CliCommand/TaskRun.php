@@ -132,6 +132,8 @@ class TaskRun extends AbstractCommand
 	protected function configure()
 	{
 		$this
-			->addOption('loop', 'l', InputOption::VALUE_NEGATABLE, 'Enter a wait loop if no tasks exist?', false);
+			->addOption('loop', 'l', InputOption::VALUE_NEGATABLE, 'Enter a wait loop if no tasks exist?', false)
+			->addOption('dummy', 'd', InputOption::VALUE_OPTIONAL,
+			'This value is ignored (read the CRON job documentation)', 0);
 	}
 }
