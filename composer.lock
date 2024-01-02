@@ -135,12 +135,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/stats_collector.git",
-                "reference": "0c12279043d6bacdf55f536cddecec407d249dc2"
+                "reference": "356b7a4e277581e4c7ae38d8c280227eef6c6327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/0c12279043d6bacdf55f536cddecec407d249dc2",
-                "reference": "0c12279043d6bacdf55f536cddecec407d249dc2",
+                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/356b7a4e277581e4c7ae38d8c280227eef6c6327",
+                "reference": "356b7a4e277581e4c7ae38d8c280227eef6c6327",
                 "shasum": ""
             },
             "require": {
@@ -178,7 +178,7 @@
                 "source": "https://github.com/akeeba/stats_collector/tree/main",
                 "issues": "https://github.com/akeeba/stats_collector/issues"
             },
-            "time": "2023-11-01T10:19:46+00:00"
+            "time": "2024-01-02T10:24:26+00:00"
         },
         {
             "name": "brick/math",
