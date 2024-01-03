@@ -199,7 +199,7 @@ $user   = $this->container->userManager->getUser();
 </div>
 
 <div class="card border-warning">
-    <h3 class="card-header h4 bg-warning text-dark">
+    <h3 class="card-header h4 text-bg-warning">
         @lang('PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL_TEST')
     </h3>
     <div class="card-body">

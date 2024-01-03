@@ -219,7 +219,7 @@ defined('AKEEBA') || die;
                                     @lang('PANOPTICON_OVERRIDES_TITLE')
                                 </dt>
                                 <dd v-if="(site.overrides > 0)">
-                                    <span class="badge bg-warning"
+                                    <span class="badge text-bg-warning"
                                           v-bs:tooltip="akeeba.System.Text.plural('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N', site.overrides)"
                                     >
                                         <span class="fa fa-fw fa-arrows-to-circle" aria-hidden="true"></span>
@@ -276,7 +276,7 @@ defined('AKEEBA') || die;
                                         <span v-if="(site.cms ?? 'joomla') === 'wordpress'">@lang('PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR')</span>
                                     </span>
 
-                                    <span class="badge bg-warning"
+                                    <span class="badge text-bg-warning"
                                           v-bs:tooltip="akeeba.System.Text.plural('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N', site.extensions)"
                                     >
                                         <span class="fa fa-fw fa-box-open" aria-hidden="true"></span>

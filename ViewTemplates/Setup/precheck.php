@@ -231,7 +231,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 							</span>
 								</td>
 								<td>
-							<span class="badge <?= $option['current'] == $option['recommended'] ? 'bg-success' : 'bg-warning' ?>">
+							<span class="badge <?= $option['current'] == $option['recommended'] ? 'bg-success' : 'text-bg-warning' ?>">
 								<span class="fa <?= $option['current'] == $option['recommended'] ? 'fa-check-circle' : 'fa-times-circle' ?>" aria-hidden="true"></span>
 								<?= $option['current'] ? $this->getLanguage()->text('AWF_YES') : $this->getLanguage()->text('AWF_NO') ?>
 							</span>

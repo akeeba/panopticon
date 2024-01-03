@@ -28,7 +28,7 @@ $hasError            = !empty($lastError);
 @section('extUpdateBadgeHasUpdates')
     @if ($extensionsQuickInfo->update > 0)
         <sup>
-                    <span class="badge bg-warning"
+                    <span class="badge text-bg-warning"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATES_N', $extensionsQuickInfo->update)"
                     >
@@ -43,7 +43,7 @@ $hasError            = !empty($lastError);
 @section('extUpdateBadgeHasMissingSites')
     @if ($extensionsQuickInfo->site > 0)
         <sup>
-                    <span class="badge bg-warning"
+                    <span class="badge text-bg-warning"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATESITES_N', $extensionsQuickInfo->site)"
                     >
@@ -452,7 +452,7 @@ $hasError            = !empty($lastError);
 
                                 @if ($noUpdateSite)
                                     <a href="https://github.com/akeeba/panopticon/wiki/Extensions-Without-Update-Sites" target="_blank">
-                                        <span class="badge bg-warning">
+                                        <span class="badge text-bg-warning">
                                             <span class="fa fa-globe" aria-hidden="true"></span>
                                             @lang('PANOPTICON_SITE_LBL_EXTENSIONS_UPDATESITE_MISSING')
                                         </span>

@@ -153,7 +153,7 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
                          data-bs-toggle="tooltip" data-bs-placement="bottom"
                          data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_CPU_TYPE_IOWAIT'): {{{ sprintf('%0.2f', floatval($serverInfo->cpuUsage->iowait)) }}}%"
                     >
-                        <div class="progress-bar bg-warning"></div>
+                        <div class="progress-bar text-bg-warning"></div>
                     </div>
 
                     <div class="progress" role="progressbar"
@@ -250,7 +250,7 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
 
 		if ($usedPercent > 70)
         {
-            $class = 'bg-warning';
+            $class = 'text-bg-warning';
         }
 
 		if ($usedPercent >= 85)
