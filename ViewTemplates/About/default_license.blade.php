@@ -23,8 +23,10 @@ $copyrightYear = ($maxYear == 2023) ? "2023" : "2023–{$maxYear}";
 
 <div class="d-flex flex-column flex-md-row gap-2">
     <div>
-        <img src="@media('images/agpl_logo.svg', false, $this->container->application)" class="img-fluid" alt="Logotype of the GNU Affero General Public License">
+        <img src="@media('images/agpl_logo.svg', false, $this->container->application)" class="img-fluid" alt="@lang('PANOPTICON_ABOUT_LBL_LICENSE_IMAGE_ALT')">
     </div>
+    {{-- !!! DO NOT TRANSLATE - BEGIN !!! --}}
+    {{-- This is legal text, required by the license. It must remain untranslated (the license text is available in US English **only**). --}}
     <div>
         <p>
             This program is free software: you can redistribute it and/or modify it under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank">GNU Affero General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -37,6 +39,7 @@ $copyrightYear = ($maxYear == 2023) ? "2023" : "2023–{$maxYear}";
             .
         </p>
     </div>
+    {{-- !!! DO NOT TRANSLATE - END !!! --}}
 </div>
 
 <div class="text-body-tertiary my-3 mx-4">
