@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -81,7 +81,7 @@ $hasError                = !empty(trim($this->siteConfig->get('core.lastErrorMes
                     <span class="fa fa-info-circle" aria-hidden="true"></span>
                     @lang('PANOPTICON_SITE_LBL_PHP_LTS_HEAD')
                 </summary>
-                <div class="mt-2 ps-3 pe-2 text-info" style="text-align: justify">
+                <div class="mt-2 ps-3 pe-2 text-info">
                     <p>
                         @lang('PANOPTICON_SITE_LBL_PHP_LTS_P1')
                     </p>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -34,28 +34,28 @@ $jVersionHelper      = new JoomlaVersion($this->getContainer());
 <?php $version = Version::create($jVersion) ?>
 @if($version->isDev())
     <sup>
-            <span class="badge bg-danger small text-light">
+            <span class="badge bg-danger">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_DEV_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_DEV_LONG')</span>
             </span>
     </sup>
 @elseif($version->isAlpha())
     <sup>
-            <span class="badge bg-danger small">
+            <span class="badge bg-danger">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_ALPHA_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_ALPHA_LONG')</span>
             </span>
     </sup>
 @elseif($version->isBeta())
     <sup>
-            <span class="badge bg-warning small">
+            <span class="badge bg-warning">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_BETA_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BETA_LONG')</span>
             </span>
     </sup>
 @elseif($version->isRC())
     <sup>
-            <span class="badge bg-info small">
+            <span class="badge bg-info">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_RC_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_RC_LONG')</span>
             </span>

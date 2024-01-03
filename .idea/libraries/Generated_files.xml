@@ -3,12 +3,15 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/darkmode.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/filter-extensions.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/log.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/login.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/main-dashboard.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/main.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/remember-tab.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/setup.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/showon.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-browse.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-edit.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-read.min.js" />

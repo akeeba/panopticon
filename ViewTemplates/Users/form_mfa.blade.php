@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -68,7 +68,7 @@ $token = $container->session->getCsrfToken()->getValue();
                     {{-- MFA method header --}}
                     <div class="d-flex flex-row gap-2 align-items-center mb-3">
                         <img src="{{ Uri::root() . $method['image'] }}" alt="{{{ $method['name'] }}}"
-                             class="img-fluid bg-light p-2 rounded-2" style="min-width: 3em; max-width: 7em">
+                             class="img-fluid bg-light p-2 rounded-2">
 
                         <h4 class="m-0 p-0 flex-grow-1 fs-5">
                         <span>

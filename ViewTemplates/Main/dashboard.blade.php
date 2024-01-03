@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -207,7 +207,7 @@ defined('AKEEBA') || die;
                                     </span>
                                     <span v-else>@{{ site.version }}</span>
                                     <span v-if="(site.latest !== null)" class="text-secondary">
-									<span class="fa fa-fw fa-arrow-right"></span>
+									<span class="fa fa-fw fa-arrow-right" aria-hidden="true"></span>
                                         @{{ site.latest }}
                                     </span>
                                 </dd>

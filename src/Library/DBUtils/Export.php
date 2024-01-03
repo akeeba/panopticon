@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -92,7 +92,7 @@ class Export implements \JsonSerializable
 	private ?string $buffer = null;
 
 	/**
-	 * Should I compress the backup with GZip?
+	 * Should I compress the backup with Gzip?
 	 *
 	 * If NULL (default) it will use the global option. Otherwise, what the boolean value says.
 	 *
@@ -263,7 +263,7 @@ class Export implements \JsonSerializable
 	}
 
 	/**
-	 * Will I compress the backup with GZip?
+	 * Will I compress the backup with Gzip?
 	 *
 	 * @return  bool|null  NULL means use global setting.
 	 * @since   1.0.3
@@ -274,7 +274,7 @@ class Export implements \JsonSerializable
 	}
 
 	/**
-	 * Set the flag which controls compressing the backup with GZip.
+	 * Set the flag which controls compressing the backup with Gzip.
 	 *
 	 * @param   bool|null  $compress  NULL to use the global setting.
 	 *
@@ -524,7 +524,7 @@ MYSQL;
 	 */
 	private function compress(): void
 	{
-		// Has the user disabled GZip-compressing backups?
+		// Has the user disabled Gzip-compressing backups?
 		$shouldCompress = $this->compress ??
 			Factory::getContainer()->appConfig->get('dbbackup_compress', true);
 
@@ -628,7 +628,7 @@ MYSQL;
 	 */
 	private function compressNative(): bool
 	{
-		// Native GZip is only support on UNIX–like systems (BSD, macOS, Solaris, Linux)
+		// Native Gzip is only support on UNIX–like systems (BSD, macOS, Solaris, Linux)
 		if (in_array(strtolower(PHP_OS_FAMILY), ['windows', 'unknown']))
 		{
 			$this->logger?->debug('Cannot use native gzip executable: not a UNIX system');
@@ -644,7 +644,7 @@ MYSQL;
 			return false;
 		}
 
-		// Does the GZip command exist?
+		// Does the Gzip command exist?
 		exec('gzip -h 2>/dev/null', $out, $resultCode);
 
 		if ($resultCode !== 0)

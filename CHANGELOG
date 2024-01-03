@@ -12,11 +12,13 @@ Akeeba Panopticon 1.1.0
 ~ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]
 ~ More accessible ID column labels [gh-446]
 # [HIGH] The minified Dashboard JavaScript was broken [gh-408]
+# [HIGH] Users should not be able to be copied [gh-481]
 # [MEDIUM] Sending emails with the default language results in untranslated variables
 # [LOW] PHP error when the browser returns invalid data during WebAuthn [gh-406]
 # [LOW] TinyMCE content always dark [gh-410]
 # [LOW] Backup not Pro when extension not installed [gh-414]
 # [LOW] Date/time parsing on reports view [gh-419]
+# [LOW] MFA method setup has non-functional toolbar buttons [gh-468]
 
 Akeeba Panopticon 1.0.7
 ================================================================================

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -28,7 +28,7 @@ $hasError            = !empty($lastError);
 @section('extUpdateBadgeHasUpdates')
     @if ($extensionsQuickInfo->update > 0)
         <sup>
-                    <span class="badge bg-warning" style="font-size: small"
+                    <span class="badge bg-warning"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATES_N', $extensionsQuickInfo->update)"
                     >
@@ -43,7 +43,7 @@ $hasError            = !empty($lastError);
 @section('extUpdateBadgeHasMissingSites')
     @if ($extensionsQuickInfo->site > 0)
         <sup>
-                    <span class="badge bg-warning" style="font-size: small"
+                    <span class="badge bg-warning"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_UPDATESITES_N', $extensionsQuickInfo->site)"
                     >
@@ -58,7 +58,7 @@ $hasError            = !empty($lastError);
 @section('extUpdateBadgeHasMissingKeys')
     @if ($extensionsQuickInfo->key > 0)
         <sup>
-                    <span class="badge bg-danger" style="font-size: small"
+                    <span class="badge bg-danger"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@plural('PANOPTICON_SITE_LBL_EXTENSIONS_HEAD_NOKEY_N', $extensionsQuickInfo->key)"
                     >

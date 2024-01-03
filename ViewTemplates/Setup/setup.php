@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -49,7 +49,7 @@ defined('AKEEBA') || die;
 	</div>
 
 	<div class="row mb-3">
-		<label for="name" class="col-sm-3 col-form-label">
+		<label for="username" class="col-sm-3 col-form-label">
 			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_USER_USERNAME') ?>
 		</label>
 		<div class="col-sm-9">
@@ -88,7 +88,7 @@ defined('AKEEBA') || die;
 	</div>
 
 	<div class="row mb-3">
-		<label for="name" class="col-sm-3 col-form-label">
+		<label for="timezone" class="col-sm-3 col-form-label">
 			<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_TIMEZONE') ?>
 		</label>
 		<div class="col-sm-9">

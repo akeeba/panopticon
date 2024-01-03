@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -29,7 +29,7 @@ $returnUrl = $this->input->getBase64('returnurl', '');
     </p>
 
     <div class="row mt-3 mb-4">
-        <label for="name" class="col-sm-3 col-form-label">
+        <label for="dlkey" class="col-sm-3 col-form-label">
             @lang('PANOPTICON_SITES_LBL_DLKEY')
         </label>
         <div class="col-sm-9">

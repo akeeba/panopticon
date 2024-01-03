@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -99,7 +99,7 @@ class Html extends BaseHtmlView
 			]);
 		}
 
-		// TODO Set up the Help URL.
+		// Set up the Help URL.
 		$helpUrl = $this->renderOptions['help_url'];
 
 		if (!empty($helpUrl))
@@ -110,5 +110,13 @@ class Html extends BaseHtmlView
 		return parent::display($tpl);
 	}
 
+	protected function onBeforeAdd()
+	{
+		return parent::onBeforeAdd();
+	}
 
+	protected function onBeforeEdit()
+	{
+		return parent::onBeforeEdit();
+	}
 }

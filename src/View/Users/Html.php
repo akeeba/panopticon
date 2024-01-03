@@ -1,7 +1,7 @@
 <?php
 /**
  * @package   panopticon
- * @copyright Copyright (c)2023-2023 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Model\Users;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
+use Awf\Inflector\Inflector;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
 use Awf\Utils\Template;
 
@@ -49,6 +50,23 @@ class Html extends BaseHtmlView
 		onBeforeAdd as onBeforeAddCrud;
 		onBeforeEdit as onBeforeEditCrud;
 	}
+
+	public function onBeforeBrowse(): bool
+	{
+		$this->addButtons(['add', 'edit', 'delete']);
+
+		if (empty($this->getTitle()))
+		{
+			$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
+		}
+
+		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
+		$limit = $this->getModel()->getState('limit', 50, 'int');
+		$this->getModel()->setState('limit', $limit);
+
+		return parent::onBeforeBrowse();
+	}
+
 
 	protected function onBeforeAdd()
 	{
