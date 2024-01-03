@@ -28,9 +28,9 @@ defined('AKEEBA') || die;
     <table class="table">
         <thead class="table-dark">
         <tr>
-            <th>@lang('PANOPTICON_ABOUT_LBL_PACKAGE')</th>
-            <th>@lang('PANOPTICON_ABOUT_LBL_VERSION')</th>
-            <th>@lang('PANOPTICON_ABOUT_LBL_REFERENCE')</th>
+            <th scope="col" class="w-25">@lang('PANOPTICON_ABOUT_LBL_PACKAGE')</th>
+            <th scope="col" class="pnp-w-15">@lang('PANOPTICON_ABOUT_LBL_VERSION')</th>
+            <th scope="col" class="d-none d-lg-block">@lang('PANOPTICON_ABOUT_LBL_REFERENCE')</th>
         </tr>
         </thead>
         <tbody>
@@ -38,9 +38,9 @@ defined('AKEEBA') || die;
 				<?php if (!isset($packageInfo['version'])) continue ?>
 				<?php if ($packageName === 'akeeba/panopticon') continue ?>
             <tr>
-                <td>{{{ $packageName }}}</td>
+                <th scope="row">{{{ $packageName }}}</th>
                 <td>{{{ $packageInfo['pretty_version'] ?? $packageInfo['version'] }}}</td>
-                <td>{{{ $packageInfo['reference'] }}}</td>
+                <td class="d-none d-lg-block">{{{ $packageInfo['reference'] }}}</td>
             </tr>
         @endforeach
         </tbody>
@@ -50,59 +50,59 @@ defined('AKEEBA') || die;
     <table class="table">
         <thead class="table-dark">
         <tr>
-            <th>@lang('PANOPTICON_ABOUT_LBL_PACKAGE')</th>
-            <th>@lang('PANOPTICON_ABOUT_LBL_VERSION')</th>
-            <th>@lang('PANOPTICON_ABOUT_LBL_INTEGRITY')</th>
+            <th scope="col" class="w-25">@lang('PANOPTICON_ABOUT_LBL_PACKAGE')</th>
+            <th scope="col" class="pnp-w-15">@lang('PANOPTICON_ABOUT_LBL_VERSION')</th>
+            <th scope="col" class="d-none d-lg-block">@lang('PANOPTICON_ABOUT_LBL_INTEGRITY')</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             {{-- DO NOT TRANSLATE! --}}
-            <td>Bootstrap</td>
+            <th scope="row">Bootstrap</th>
             <td>
                 {{ $this->npmInfo['packages']['node_modules/bootstrap']['version'] }}
             </td>
-            <td>
+            <td class="d-none d-lg-block">
                 @yieldRepeatable('integrity', $this->npmInfo['packages']['node_modules/bootstrap']['integrity'])
             </td>
         </tr>
         <tr>
             {{-- DO NOT TRANSLATE! --}}
-            <td>FontAwesome</td>
+            <th scope="row">FontAwesome</th>
             <td>
                 {{ $this->npmInfo['packages']['node_modules/@fortawesome/fontawesome-free']['version'] }}
             </td>
-            <td>
+            <td class="d-none d-lg-block">
                 @yieldRepeatable('integrity', $this->npmInfo['packages']['node_modules/@fortawesome/fontawesome-free']['integrity'])
             </td>
         </tr>
         <tr>
             {{-- DO NOT TRANSLATE! --}}
-            <td>Cloud9 ACE Editor</td>
+            <th scope="row">Cloud9 ACE Editor</th>
             <td>
                 {{ $this->npmInfo['packages']['node_modules/ace-builds']['version'] }}
             </td>
-            <td>
+            <td class="d-none d-lg-block">
                 @yieldRepeatable('integrity', $this->npmInfo['packages']['node_modules/ace-builds']['integrity'])
             </td>
         </tr>
         <tr>
             {{-- DO NOT TRANSLATE! --}}
-            <td>choices.js</td>
+            <th scope="row">choices.js</th>
             <td>
                 {{ $this->npmInfo['packages']['node_modules/choices.js']['version'] }}
             </td>
-            <td>
+            <td class="d-none d-lg-block">
                 @yieldRepeatable('integrity', $this->npmInfo['packages']['node_modules/choices.js']['integrity'])
             </td>
         </tr>
         <tr>
             {{-- DO NOT TRANSLATE! --}}
-            <td>TinyMCE</td>
+            <th scope="row">TinyMCE</th>
             <td>
                 {{ $this->npmInfo['packages']['node_modules/tinymce']['version'] }}
             </td>
-            <td>
+            <td class="d-none d-lg-block">
                 @yieldRepeatable('integrity', $this->npmInfo['packages']['node_modules/tinymce']['integrity'])
             </td>
         </tr>
