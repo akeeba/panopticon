@@ -2,7 +2,7 @@
 Akeeba Panopticon 1.1.0
 ================================================================================
 + Dashboard layout for Sites Overview [gh-395]
-+ SSL/TLS certificate information display, and sending expiration warning emails
++ SSL/TLS certificate information display, and sending expiration warning emails [gh-397]
 + Select language in Setup [gh-384]
 + Change the rotated log names [gh-398]
 + Report latest backup status [gh-396]
@@ -12,7 +12,6 @@ Akeeba Panopticon 1.1.0
 ~ Running `composer install` will now always create the `version.php` file
 ~ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]
 ~ More accessible ID column labels [gh-446]
-# [HIGH] The minified Dashboard JavaScript was broken [gh-408]
 # [HIGH] Users should not be able to be copied [gh-481]
 # [MEDIUM] Sending emails with the default language results in untranslated variables
 # [LOW] PHP error when the browser returns invalid data during WebAuthn [gh-406]
