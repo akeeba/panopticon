@@ -20,38 +20,37 @@ defined('AKEEBA') || die;
 $svg = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $svg);
 ?>
 
-<div class="row mb-3">
-    <div class="col-sm-9 offset-sm-3">
-        <div class="card">
-            <p class="h3 card-header">
-                Set up your authenticator software
-            </p>
-            <div class="card-body d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start justify-content-center">
-                {{ $svg }}
-                <div>
-                    <p>
-                        Depending on your authenticator software, do one of the following:
-                    </p>
-                    <ul>
-                        <li>
-                            Scan this QR Code&trade;.
-                        </li>
-                        <li>
-                            Use this <a href="{{ $uri }}">link</a>.
-                        </li>
-                        <li>
-                            Enter the Secret <code>{{ $secret }}</code>
-                        </li>
-                    </ul>
-                    <p>
-                        Enter the generated 6-digit code into the field below, and click on “Save”.
-                    </p>
-                    <p class="text-info small">
-                        <span class="fa fa-fw fa-info-circle" aria-hidden="true"></span>
-                        Looking for compatible authenticator software? We have tested with <a href="https://keepassxc.org/">KeePassXC</a>, <a href="https://strongboxsafe.com/">Strongbox</a>, <a href="https://1password.com/">1Password</a>, <a href="https://en.wikipedia.org/wiki/Google_Authenticator">Google Authenticator</a>, <a href="https://authy.com/">Twilio Authy</a>, and the built-in feature in macOS / iOS / iPadOS.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="col-sm-9 offset-sm-3">
+	<div class="card">
+		<p class="h3 card-header">
+			@lang('PANOPTICON_MFA_TOTP_QR_LBL_TITLE')
+		</p>
+		<div class="card-body d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start justify-content-center">
+			{{ $svg }}
+			<div>
+				<p>
+					@lang('PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS')
+				</p>
+				<ul>
+					<li>
+						@lang('PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT1')
+					</li>
+					<li>
+						@sprintf('PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT2', $uri)
+					</li>
+					<li>
+						@lang('PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT3')
+						<code>{{ $secret }}</code>
+					</li>
+				</ul>
+				<p>
+					@lang('PANOPTICON_MFA_TOTP_QR_LBL_ENTER_CODE')
+				</p>
+				<p class="text-info small">
+					<span class="fa fa-fw fa-info-circle" aria-hidden="true"></span>
+					@lang('PANOPTICON_MFA_TOTP_QR_LBL_SOFTWARE')
+				</p>
+			</div>
+		</div>
+	</div>
 </div>

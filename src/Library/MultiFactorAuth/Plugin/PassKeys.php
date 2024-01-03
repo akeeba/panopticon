@@ -144,6 +144,20 @@ class PassKeys
 			$preMessage = $this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS');
 		}
 
+		// Render the pre-message in a properly padded container
+		$preMessage = (new FakeView(
+			$this->getContainer(),
+			[
+				'name' => 'Passkeymfa',
+			]
+		))
+			->loadAnyTemplate(
+				'Passkeysmfa/pre_message',
+				[
+					'preMessage' => $preMessage,
+				]
+			);
+
 		return [
 			'default_title' => $this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_LBL_DISPLAYEDAS'),
 			'pre_message'   => $preMessage,
