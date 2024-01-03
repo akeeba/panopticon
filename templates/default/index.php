@@ -99,7 +99,7 @@ $importMap     = TemplateHelper::getImportMapAsJson();
 							</sup>
 						<?php elseif ($versionTag === Version::TAG_TYPE_BETA): ?>
 							<sup>
-								<span class="badge bg-warning"><?= ucfirst($versionTag) ?></span>
+								<span class="badge text-bg-warning"><?= ucfirst($versionTag) ?></span>
 							</sup>
 						<?php elseif ($versionTag === Version::TAG_TYPE_RELEASE_CANDIDATE): ?>
 							<sup>
@@ -122,7 +122,7 @@ $importMap     = TemplateHelper::getImportMapAsJson();
 							</sup>
 						<?php elseif ($versionTag === Version::TAG_TYPE_BETA): ?>
 							<sup>
-								<span class="badge bg-warning"><?= ucfirst($versionTag) ?></span>
+								<span class="badge text-bg-warning"><?= ucfirst($versionTag) ?></span>
 							</sup>
 						<?php elseif ($versionTag === Version::TAG_TYPE_RELEASE_CANDIDATE): ?>
 							<sup>

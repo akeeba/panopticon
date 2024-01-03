@@ -48,7 +48,7 @@ $jVersionHelper      = new JoomlaVersion($this->getContainer());
     </sup>
 @elseif($version->isBeta())
     <sup>
-            <span class="badge bg-warning">
+            <span class="badge text-bg-warning">
                 <span aria-hidden="true">@lang('PANOPTICON_MAIN_SITES_LBL_BETA_SHORT')</span>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_BETA_LONG')</span>
             </span>
