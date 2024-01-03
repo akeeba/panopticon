@@ -55,9 +55,7 @@ $userId   = $this->user->getId() ?? 0;
 
 	@if (!empty($this->renderOptions['pre_message']))
     <div class="row mb-3">
-        <div class="col-sm-9 offset-sm-3">
-            {{ $this->renderOptions['pre_message'] }}
-        </div>
+        {{ $this->renderOptions['pre_message'] }}
     </div>
 	@endif
 
