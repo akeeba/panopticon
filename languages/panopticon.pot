@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.0-dev202312201029\n"
-"POT-Creation-Date: 2023-12-21 21:44:41\n"
+"Project-Id-Version: 1.1.0\n"
+"POT-Creation-Date: 2024-01-03 10:42:46\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.1.0-dev202312201029\n"
+"X-Generator: Panopticon ini_to_po 1.1.0\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -195,6 +195,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_LBL_TABLE_HEAD_NUM"
 msgid "#"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_TABLE_HEAD_NUM_SR"
+msgid "ID"
 msgstr ""
 
 #, phpformat
@@ -1054,7 +1059,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_WELCOME_HERO_TEXT"
-msgid "You can use Panopticon to monitor your Joomla!™ sites. But first, we need to make sure your server meets the minimum requirements."
+msgid "You can use Panopticon to monitor your Joomla!&reg; sites. But first, we need to make sure your server meets the minimum requirements."
 msgstr ""
 
 #, phpformat
@@ -1864,7 +1869,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_EVERY_MINUTE_ALERT_BODY"
-msgid "Running the CRON job less frequently results in outdated information and unreliability, including broken sites due to incomplete Joomla!™ core updates."
+msgid "Running the CRON job less frequently results in outdated information and unreliability, including broken sites due to incomplete Joomla!&reg; core updates."
 msgstr ""
 
 #, phpformat
@@ -1959,7 +1964,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_4"
-msgid "<strong>Do not “cheap out” on CRON job frequency!</strong> Running CRON jobs less frequently will make Panopticon unreliable and could even break your sites due to incomplete Joomla™ core updates."
+msgid "<strong>Do not “cheap out” on CRON job frequency!</strong> Running CRON jobs less frequently will make Panopticon unreliable and could even break your sites due to incomplete Joomla&reg; core updates."
 msgstr ""
 
 #, phpformat
@@ -2194,7 +2199,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_FINISH_SUBTITLE"
-msgid "You can now start using Panopticon to monitor your Joomla!™ sites."
+msgid "You can now start using Panopticon to monitor your Joomla!&reg; sites."
 msgstr ""
 
 #, phpformat
@@ -2209,7 +2214,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_FINISH_MAXEXEC_TOOLOW_CAUTION"
-msgid "We <strong>do not</strong> recommend using this configuration to automate Joomla™ upgrades, extension updates, or backups. You can still use Panopticon to monitor your sites."
+msgid "We <strong>do not</strong> recommend using this configuration to automate Joomla&reg; upgrades, extension updates, or backups. You can still use Panopticon to monitor your sites."
 msgstr ""
 
 #, phpformat
@@ -2354,7 +2359,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_THEAD_JOOMLA"
-msgid "Joomla™ version"
+msgid "Joomla&reg; version"
 msgstr ""
 
 #, phpformat
@@ -2534,17 +2539,17 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE"
-msgid "ACTION REQUIRED. The Joomla!™ update task is stuck."
+msgid "ACTION REQUIRED. The Joomla!&reg; update task is stuck."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_SCHEDULED_UPDATE"
-msgid "The Joomla!™ core update has been scheduled to run automatically."
+msgid "The Joomla!&reg; core update has been scheduled to run automatically."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_RUNNING_UPDATE"
-msgid "The Joomla!™ core update is currently running."
+msgid "The Joomla!&reg; core update is currently running."
 msgstr ""
 
 #, phpformat
@@ -2634,7 +2639,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY"
-msgid "Joomla!™"
+msgid "Joomla!&reg;"
 msgstr ""
 
 #, phpformat
@@ -2828,6 +2833,66 @@ msgid "The SSL/TLS (HTTPS) certificate is expiring soon"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD"
+msgid "Latest Backup status, powered by Akeeba Backup Professional"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD_SHORT"
+msgid "Backup Status"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_NOT_INSTALLED"
+msgid "Akeeba Backup is not installed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_NOT_CONNECTED"
+msgid "Akeeba Backup is not connected, or is the Core version"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_NONE"
+msgid "No backup taken"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_OBSOLETE"
+msgid "The backup files are missing"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_REMOTE"
+msgid "The backup files are in remote storage"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_OK"
+msgid "Successful backup"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_FAIL"
+msgid "The backup has failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_PENDING"
+msgid "The backup is still running"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_UNKNOWN"
+msgid "Unknown backup status"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_TOO_OLD"
+msgid "The last backup was taken a long time ago"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_TITLE"
 msgid "Sites"
 msgstr ""
@@ -2889,7 +2954,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE"
-msgid "Joomla!™ Update"
+msgid "Joomla!&reg; Update"
 msgstr ""
 
 #, phpformat
@@ -2949,7 +3014,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1"
-msgid "If your site\'s <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!™ updates will fail with an error mentioning “401 Unauthorized”."
+msgid "If your site\'s <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!&reg; updates will fail with an error mentioning “401 Unauthorized”."
 msgstr ""
 
 #, phpformat
@@ -3143,6 +3208,16 @@ msgid "Panopticon will warn you that your site\'s SSL/TLS certificate is expirin
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE"
+msgid "Maximum Backup Age"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE_HELP"
+msgid "Successful backups will be considered “too old” after this many hours. Use 0 to disable this feature."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_SSL_TLS_CERT_INFO"
 msgid "SSL/TLS (HTTPS) Certificate Information"
 msgstr ""
@@ -3319,17 +3394,17 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_HEAD"
-msgid "Joomla!™ Update"
+msgid "Joomla!&reg; Update"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_BTN_JUPDATE_RELOAD"
-msgid "Reload Joomla!™ Update information"
+msgid "Reload Joomla!&reg; Update information"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_BTN_JUPDATE_RELOAD_SR"
-msgid "Reload Joomla!™ Update information for site “%s”"
+msgid "Reload Joomla!&reg; Update information for site “%s”"
 msgstr ""
 
 #, phpformat
@@ -4329,7 +4404,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_JOOMLA"
-msgid "Joomla!&trade; CLI"
+msgid "Joomla!&reg; CLI"
 msgstr ""
 
 #, phpformat
@@ -4424,12 +4499,12 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLACLI"
-msgid "Joomla!™ CLI"
+msgid "Joomla!&reg; CLI"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLA"
-msgid "Joomla!™ CLI"
+msgid "Joomla!&reg; CLI"
 msgstr ""
 
 #, phpformat
@@ -5189,7 +5264,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES"
-msgid "Joomla!™ Updates"
+msgid "Joomla!&reg; Updates"
 msgstr ""
 
 #, phpformat
@@ -5294,7 +5369,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP_LEARN_MORE"
-msgid "Learn more"
+msgid "Details of the information collected."
 msgstr ""
 
 #, phpformat
@@ -5444,7 +5519,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_COMPRESS_HELP"
-msgid "Should I compress the database backups with GZip?"
+msgid "Should I compress the database backups with Gzip?"
 msgstr ""
 
 #, phpformat
@@ -5920,6 +5995,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_OPT_DBDRIVER_PDOMYSQL"
 msgid "PDO MySQL"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_HOURS"
+msgid "hours"
 msgstr ""
 
 #, phpformat
@@ -6473,6 +6553,11 @@ msgid "The user account has been deleted"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_LBL_USER_COPIED"
+msgid "The user account has been copied"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_USERS_ERR_CANT_DELETE_YOURSELF"
 msgid "You cannot delete your own user account."
 msgstr ""
@@ -6635,6 +6720,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_LICENSE"
 msgid "License"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ABOUT_LBL_LICENSE_IMAGE_ALT"
+msgid "Logotype of the GNU Affero General Public License"
 msgstr ""
 
 #, phpformat
@@ -7448,6 +7538,46 @@ msgid "Enter your six-digit code"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_TITLE"
+msgid "Set up your authenticator software"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS"
+msgid "Depending on your authenticator software, do one of the following:"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT1"
+msgid "Scan this QR Code&trade;."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT2"
+msgid "Use this <a href=\"%s\">link</a>."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT3"
+msgid "Enter the Secret"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_ENTER_CODE"
+msgid "Enter the generated 6-digit code into the field below, and click on “Save”."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_SOFTWARE"
+msgid "Looking for compatible authenticator software? We have tested with <a href=\"https://keepassxc.org/\">KeePassXC</a>, <a href=\"https://strongboxsafe.com/\">Strongbox</a>, <a href=\"https://1password.com/\">1Password</a>, <a href=\"https://en.wikipedia.org/wiki/Google_Authenticator\">Google Authenticator</a>, <a href=\"https://authy.com/\">Twilio Authy</a>, and the built-in feature in macOS / iOS / iPadOS."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_LBL_HELP"
+msgid "Help on the wiki"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_OVERRIDES_TITLE"
 msgid "Template Overrides"
 msgstr ""
@@ -7655,11 +7785,6 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_LOGS_LBL_PRIORITY_DEBUG"
 msgid "Debug"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_LOGS_LBL_DISPLAY_OPTIONS"
-msgid "Log Display Options"
 msgstr ""
 
 #, phpformat
@@ -8144,7 +8269,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_DBTOOLS_LBL_INFO_BODY"
-msgid "The database backups are SQL files, either plain or compressed with GZip. Both file types can be restored with common database tools provided by your host such as phpMyAdmin, Adminer, or even the command-line <code>mysql</code> command."
+msgid "The database backups are SQL files, either plain or compressed with Gzip. Both file types can be restored with common database tools provided by your host such as phpMyAdmin, Adminer, or even the command-line <code>mysql</code> command."
 msgstr ""
 
 #, phpformat
