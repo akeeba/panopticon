@@ -142,7 +142,7 @@ $jVersionHelper      = new JoomlaVersion($this->getContainer());
         </div>
     @elseif ($config->get('core.canUpgrade', false) && $item->isJoomlaUpdateTaskStuck())
         <div>
-            <div class="badge bg-light text-dark"
+            <div class="badge text-bg-light"
                  data-bs-toggle="tooltip" data-bs-placement="bottom"
                  data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE')"
             >
@@ -174,7 +174,9 @@ $jVersionHelper      = new JoomlaVersion($this->getContainer());
 
     {{-- Joomla! version --}}
     @if (empty($jVersion))
-        <span class="badge bg-secondary-subtle">@lang('PANOPTICON_MAIN_SITES_LBL_JVERSION_UNKNOWN')</span>
+		<div>
+        	<span class="badge bg-secondary-subtle text-dark">@lang('PANOPTICON_MAIN_SITES_LBL_JVERSION_UNKNOWN')</span>
+		</div>
     @else
         @if ($canUpgrade)
             <div
@@ -233,8 +235,8 @@ $jVersionHelper      = new JoomlaVersion($this->getContainer());
     @if (($overridesChanged = $config->get('core.overridesChanged')) > 0)
         <div class="ms-2 small" data-bs-toggle="tooltip" data-bs-placement="bottom"
              data-bs-title="@sprintf('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N', $overridesChanged)">
-            <span class="badge bg-light-subtle text-warning border border-warning-subtle">
-                <span class="fa fa-arrows-to-eye fa-fw" aria-hidden="true"></span>
+            <span class="badge text-bg-warning">
+                <span class="fa fa-fw fa-arrows-to-circle" aria-hidden="true"></span>
                 <span aria-hidden="true">{{ $overridesChanged ?? 0 }}</span>
                 <span class="visually-hidden">@sprintf('PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N', $overridesChanged)</span>
             </span>

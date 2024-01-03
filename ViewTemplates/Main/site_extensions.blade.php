@@ -79,11 +79,13 @@ $lastError     = $this->getLastExtensionsUpdateError($config);
 		@endif
 
 		@if (empty($extensions))
-			<span class="badge bg-secondary-subtle">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UNKNOWN')</span>
+			<div>
+				<span class="badge bg-secondary-subtle text-dark">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UNKNOWN')</span>
+			</div>
 		@else
 			@if ($item->isExtensionsUpdateTaskStuck())
 				<div>
-					<div class="badge bg-light text-dark"
+					<div class="badge text-bg-light"
 						 data-bs-toggle="tooltip" data-bs-placement="bottom"
 						 data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_EXT_STUCK_UPDATE')"
 					>
@@ -113,13 +115,15 @@ $lastError     = $this->getLastExtensionsUpdateError($config);
 				</div>
 			@endif
 			@if ($numUpdates)
-				<div class="text-warning fw-bold"
-					 data-bs-toggle="tooltip" data-bs-placement="bottom"
-					 data-bs-title="@plural('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N', $numUpdates)"
-				>
-					<span class="fa fa-box-open" aria-hidden="true"></span>
-					<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADES_FOUND')</span>
-					{{ $numUpdates }}
+				<div>
+					<div class="badge text-bg-warning"
+						data-bs-toggle="tooltip" data-bs-placement="bottom"
+						data-bs-title="@plural('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N', $numUpdates)"
+					>
+						<span class="fa ta-fw fa-box-open" aria-hidden="true"></span>
+						<span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADES_FOUND')</span>
+						{{ $numUpdates }}
+					</div>
 				</div>
 			@elseif ($numKeyMissing === 0)
 				<div class="text-body">
