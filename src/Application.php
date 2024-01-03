@@ -20,6 +20,7 @@ use Awf\Document\Menu\Item;
 use Awf\Uri\Uri;
 use Awf\Utils\Ip;
 use Exception;
+use function array_map;
 
 class Application extends AWFApplication
 {
@@ -69,7 +70,6 @@ class Application extends AWFApplication
 					'permissions' => [],
 					'icon'        => 'fa fa-fw fa-table',
 				],
-
 			],
 		],
 		[
@@ -150,6 +150,15 @@ class Application extends AWFApplication
 					'icon'        => 'fa fa-fw fa-database',
 				],
 			],
+		],
+		[
+			'url'            => '#!hiddenTitle!',
+			'permissions'    => [],
+			'name'           => 'language_menu',
+			'icon'           => 'fa fa-fw fa-language',
+			'iconHandler'    => [self::class, 'getCurrentLanguageIcon'],
+			'title'          => 'PANOPTICON_APP_LBL_LANGUAGE',
+			'submenuHandler' => [self::class, 'getLanguageSubmenu'],
 		],
 		[
 			'url'          => null,
@@ -237,6 +246,110 @@ class Application extends AWFApplication
 		);
 	}
 
+	public static function getCurrentLanguageIcon(): string
+	{
+		$languages       = Factory::getContainer()->helper->setup->getLanguageOptions(false);
+		$currentLanguage = self::getCurrentLanguage();
+
+		if (!empty($currentLanguage) && isset($languages[$currentLanguage]))
+		{
+			$langName = $languages[$currentLanguage];
+			[$icon,] = explode('&nbsp;', $langName);
+
+			return $icon;
+		}
+
+		return 'fa fa-fw fa-language';
+	}
+
+	public static function getLanguageSubmenu(): array
+	{
+		$languages       = Factory::getContainer()->helper->setup->getLanguageOptions(false);
+		$items           = [];
+		$currentLanguage = self::getCurrentLanguage();
+		$langUrl         = fn($langCode) => Factory::getContainer()->router->route(
+			sprintf(
+				'index.php?view=main&task=switchLanguage&lang=%s&returnurl=%s',
+				$langCode,
+				base64_encode(Uri::getInstance()->toString())
+			)
+		);
+
+		// Add an icon for the default language
+		$items[] = [
+			'url'         => $langUrl(''),
+			'permissions' => [],
+			'name'        => 'set_lang_default',
+			'icon'        => 'fa fa-fw fa-language',
+			'title'       => 'PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_AUTO',
+		];
+
+		// Push the current language up top
+		if (!empty($currentLanguage) && isset($languages[$currentLanguage]))
+		{
+			$langName = $languages[$currentLanguage];
+			unset($languages[$currentLanguage]);
+
+			$items[] = [
+				'url'         => $langUrl($currentLanguage) . '#!disabled!',
+				'permissions' => [],
+				'name'        => 'set_lang_' . $currentLanguage,
+				'title'       => $langName,
+			];
+		}
+
+		// Add divider
+		$items[] = [
+			'url'         => null,
+			'name'        => 'lang_separator01',
+			'title'       => '---',
+			'permissions' => [],
+		];
+
+		// Sort the other languages
+		uasort(
+			$languages, function ($a, $b) {
+			[, $nameA] = explode('&nbsp;', $a);
+			[, $nameB] = explode('&nbsp;', $b);
+
+			return $nameA <=> $nameB;
+		}
+		);
+
+		// Add submenu items
+		foreach ($languages as $code => $langName)
+		{
+			$items[] = [
+				'url'         => $langUrl($code),
+				'permissions' => [],
+				'name'        => 'set_lang_' . $code,
+				'title'       => $langName,
+			];
+		}
+
+		return $items;
+	}
+
+	private static function getCurrentLanguage(bool $fallbackUser = false, bool $fallbackApp = false): string
+	{
+		$container      = Factory::getContainer();
+		$appLanguage    = $container->appConfig->get('language', 'en-GB');
+		$forcedLanguage = $container->segment->get('panopticon.forced_language', null);
+		$userLanguage   = $container->userManager->getUser()->getParameters()->get('language');
+
+		if ($forcedLanguage)
+		{
+			return $forcedLanguage;
+		}
+
+		if (!empty($userLanguage) && $fallbackUser)
+		{
+			return $userLanguage;
+		}
+
+		return $fallbackApp ? $appLanguage : '';
+	}
+
 	public function initialise()
 	{
 		// Set up the media query key
@@ -248,7 +361,7 @@ class Application extends AWFApplication
 		// Apply a forced language – but only if there is no logged-in user, or they have no language preference.
 		$forcedLanguage = $this->getContainer()->segment->get('panopticon.forced_language', null);
 
-		if ($forcedLanguage && empty($this->getContainer()->userManager->getUser()->getParameters()->get('language')))
+		if ($forcedLanguage)
 		{
 			$this->getLanguage()->loadLanguage($forcedLanguage);
 		}
@@ -356,11 +469,13 @@ class Application extends AWFApplication
 		}
 	}
 
-	private function initialiseMenu(array $items = self::MAIN_MENU, ?Item $parent = null): void
+	private function initialiseMenu(?array $items = null, ?Item $parent = null): void
 	{
 		$menu  = $this->getDocument()->getMenu();
 		$user  = $this->container->userManager->getUser();
 		$order = 0;
+
+		$items ??= array_map([$this, 'applyMenuItemHandlers'], self::MAIN_MENU);
 
 		foreach ($items as $params)
 		{
@@ -390,12 +505,17 @@ class Application extends AWFApplication
 
 			$order += 10;
 
+			$title = $params['title'] ?? sprintf('%s_%s_TITLE', $this->getName(), $params['view']);
+
+			if (str_starts_with(strtoupper($title), 'PANOPTICON_'))
+			{
+				$title = $this->getLanguage()->text($title);
+			}
+
 			$options = [
 				'show'         => $params['show'] ?? ['main'],
 				'name'         => $params['name'] ?? $params['view'],
-				'title'        => $this->getLanguage()->text(
-					$params['title'] ?? sprintf('%s_%s_TITLE', $this->getName(), $params['view'])
-				),
+				'title'        => $title,
 				'order'        => $params['order'] ?? $order,
 				'titleHandler' => $params['titleHandler'] ?? null,
 				'icon'         => $params['icon'] ?? null,
@@ -437,6 +557,36 @@ class Application extends AWFApplication
 
 			$menu->addItem($item);
 		}
+	}
+
+	private function applyMenuItemHandlers(array $item): array
+	{
+		if (isset($item['iconHandler']))
+		{
+			$item['icon'] = is_callable($item['iconHandler'])
+				? call_user_func($item['iconHandler'])
+				:
+				($item['icon'] ?? '');
+
+			unset($item['iconHandler']);
+		}
+
+		if (isset($item['submenuHandler']))
+		{
+			$item['submenu'] = is_callable($item['submenuHandler'])
+				? call_user_func($item['submenuHandler'])
+				:
+				($item['submenu'] ?? '');
+
+			unset($item['submenuHandler']);
+		}
+
+		if (isset($item['submenu']) && is_array($item['submenu']) && !empty($item['submenu']))
+		{
+			$item['submenu'] = array_map([$this, 'applyMenuItemHandlers'], $item['submenu']);
+		}
+
+		return $item;
 	}
 
 	private function applySessionTimeout(): void
@@ -807,7 +957,8 @@ class Application extends AWFApplication
 				!str_contains($file, '.min.') && !(defined('AKEEBADEBUG') && AKEEBADEBUG)
 				&& (
 					str_ends_with($file, '.js') || str_ends_with($file, '.css')
-					|| str_contains($file, '.js?') || str_contains($file, '.css?')
+					|| str_contains($file, '.js?')
+					|| str_contains($file, '.css?')
 				)
 			)
 			{

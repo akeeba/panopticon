@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Model\Main as MainModel;
 use Awf\Container\Container;
 use Awf\Date\Date;
 use Awf\Document\Json;
+use Awf\Inflector\Inflector;
 use Awf\Mvc\Controller;
 
 class Main extends Controller
@@ -56,6 +57,25 @@ class Main extends Controller
 		$app->close();
 	}
 
+	public function switchLanguage()
+	{
+		$lang = $this->input->get->getCmd('lang', 'en-GB');
+
+		if (isset($lang))
+		{
+			$this->getContainer()->segment->set('panopticon.forced_language', $lang ?: null);
+		}
+
+		if ($customURL = $this->input->getBase64('returnurl', ''))
+		{
+			$customURL = base64_decode($customURL);
+		}
+
+		$this->setRedirect(
+			!empty($customURL) ? $customURL : $this->container->router->route('index.php')
+		);
+	}
+
 	public function onBeforeBrowse(): bool
 	{
 		return $this->onBeforeDefault();
@@ -85,7 +105,7 @@ class Main extends Controller
 		}
 
 		// Pass the Selfupdate model to the view
-		$view            = $this->getView();
+		$view = $this->getView();
 
 		$selfUpdateModel = $this->getModel('selfupdate');
 		$view->setModel('selfupdate', $selfUpdateModel);

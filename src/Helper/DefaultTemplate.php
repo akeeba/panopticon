@@ -121,15 +121,28 @@ abstract class DefaultTemplate
 
 		if (!empty($icon))
 		{
-			$icon = sprintf('<span class="%s me-1" aria-hidden="true"></span>', $icon);
+			if (str_starts_with($icon, 'fa'))
+			{
+				$icon = sprintf('<span class="%s me-1" aria-hidden="true"></span>', $icon);
+			}
 		}
 
 		if (!$hasChildren)
 		{
-			$isDisabled = str_ends_with($item->getUrl(), '#!disabled!');
-			$aClass     = $anchorClass . ($isActiveItem ? ' active' : '') . ($isDisabled ? ' disabled' : '');
+			$url           = $item->getUrl();
+			$isDisabled    = str_ends_with($url, '#!disabled!');
+			$isHiddenTitle = str_ends_with($url, '#!hiddenTitle!');
+			$aClass        = $anchorClass . ($isActiveItem ? ' active' : '') . ($isDisabled ? ' disabled' : '');
+			$aria          = $isActiveItem ? ' aria-current="page"' : '';
+			$title         = $item->getTitle();
 
-			$aria = $isActiveItem ? ' aria-current="page"' : '';
+			if ($isHiddenTitle)
+			{
+				$url = str_replace('#!hiddenTitle!', '', $url);
+				$title = sprintf('<span class="visually-hidden">%s</span>', $title);
+			}
+
+			$url = $url ?: null;
 
 			if ($isDivider)
 			{
@@ -138,24 +151,38 @@ abstract class DefaultTemplate
 			elseif ($isDisabled)
 			{
 				$html .= sprintf(
-					'<span class="%s">%s%s</span>', $aClass, $icon, $item->getTitle()
+					'<span class="%s">%s%s</span>', $aClass, $icon, $title
 				);
+			}
+			elseif($url === null)
+			{
+				$html .= sprintf(
+            		'<span class="%s">%s%s</span>',
+					$aClass, $icon, $title
+            	);
 			}
 			else
 			{
 				$html .= sprintf(
-					'<a class="%s"%s href="%s">%s%s</a>', $aClass, $aria, $item->getUrl(), $icon, $item->getTitle()
+					'<a class="%s"%s href="%s">%s%s</a>', $aClass, $aria, $url, $icon, $title
 				);
 			}
 		}
 		else
 		{
-			$aClass = $anchorClass . ($isActiveItem ? ' active' : '');
-			$aria   = $isActiveItem ? ' aria-current="page"' : '';
+			$aClass        = $anchorClass . ($isActiveItem ? ' active' : '');
+			$aria          = $isActiveItem ? ' aria-current="page"' : '';
+			$title         = $item->getTitle();
+			$isHiddenTitle = str_ends_with($item->getUrl(), '#!hiddenTitle!');
+
+			if ($isHiddenTitle)
+			{
+				$title = sprintf('<span class="visually-hidden">%s</span>', $title);
+			}
 
 			$html .= sprintf(
 				'<a class="nav-link dropdown-toggle %s" href="#" role="button" data-bs-toggle="dropdown"%s>%s%s</a>',
-				$aClass, $aria, $icon, $item->getTitle()
+				$aClass, $aria, $icon, $title
 			);
 			$html .= '<ul class="dropdown-menu dropdown-menu-end">';
 			$html .= array_reduce(
@@ -507,9 +534,11 @@ abstract class DefaultTemplate
 	{
 		return empty(self::$importMap)
 			? null
-			: json_encode([
-				'imports' => self::$importMap
-			], JSON_PRETTY_PRINT);
+			: json_encode(
+				[
+					'imports' => self::$importMap,
+				], JSON_PRETTY_PRINT
+			);
 	}
 
 	private static function isSubmenuActive(Item $item): bool
