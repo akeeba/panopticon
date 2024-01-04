@@ -271,6 +271,30 @@ class Reports extends DataModel
 		return $item;
 	}
 
+	public static function fromSiteUptime(
+		int $site_id, bool $up = false, ?int $downtimeStart = null, mixed $furtherContext = null
+	)
+	{
+		$context = [
+			'context' => self::furtherContextAsArrayOrNull($furtherContext),
+		];
+
+		if ($up && !empty($downtimeStart))
+		{
+			$context['start']    = $downtimeStart;
+			$context['end']      = time();
+			$context['duration'] = $context['end'] - $context['start'];
+		}
+
+		/** @var static $item */
+		$item             = Factory::getContainer()->mvcFactory->makeTempModel('reports');
+		$item->site_id    = $site_id;
+		$item->created_on = 'now';
+		$item->created_by = Factory::getContainer()->userManager->getUser();
+		$item->action     = $up ? ReportAction::UPTIME_UP : ReportAction::UPTIME_DOWN;
+		$item->context    = $context;
+	}
+
 	/**
 	 * Add a known site action string
 	 *

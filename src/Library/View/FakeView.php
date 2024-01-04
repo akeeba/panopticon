@@ -27,4 +27,8 @@ class FakeView extends View
 		parent::__construct($container);
 	}
 
+	public function getViewFinder()
+	{
+		return $this->viewFinder;
+	}
 }

@@ -36,7 +36,7 @@ trait SaveSiteTrait
 			// Reload the site, in case something changed in the meantime
 			$tempSite = $site->getClone()->reset(true, true)->findOrFail($site->getId());
 
-			call_user_func($updater, $site);
+			call_user_func($updater, $tempSite);
 
 			// Save the configuration (three tries)
 			$retry = -1;

@@ -10,8 +10,8 @@ defined('AKEEBA') || die;
 /**
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
-$config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
-
+$config = $this->item?->getConfig() ?? new Awf\Registry\Registry();
+$extra   = $this->getContainer()->eventDispatcher->trigger('onSiteDisplayAddEdit', [$this->item]);
 ?>
 
 <div class="row mt-3 mb-4">
@@ -53,3 +53,7 @@ $config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
         </div>
     </div>
 </div>
+
+@unless (empty($extra))
+{{ array_reduce($extra, fn($carry, $x) => is_string($x) ? ($carry . "\n" . $x) : $carry) }}
+@endunless

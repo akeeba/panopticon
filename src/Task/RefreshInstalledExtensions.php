@@ -221,8 +221,6 @@ class RefreshInstalledExtensions extends AbstractCallback
 					->getAsync($url, $options)
 					->then(
 						function (ResponseInterface $response) use ($site) {
-							$config = $site->getConfig();
-
 							try
 							{
 								$rawData  = $this->sanitizeJson($response->getBody()->getContents());
@@ -239,7 +237,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 								$site,
 								function (Site $site) use ($data, $rawData)
 								{
-									$config = $site->config;
+									$config = $site->getConfig();
 									$config->set('extensions.lastErrorMessage', null);
 
 									if (empty($data))

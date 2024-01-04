@@ -6,6 +6,7 @@
  */
 
 use Akeeba\Panopticon\Application\BootstrapUtilities;
+use Akeeba\Panopticon\Library\Plugin\PluginHelper;
 
 // I must include the file since the autoloader is not yet set up.
 require_once APATH_ROOT . '/src/Application/BootstrapUtilities.php';
@@ -37,3 +38,6 @@ BootstrapUtilities::fallbackLanguage();
 
 // Apply user-supplied code and miscellaneous files
 BootstrapUtilities::loadUserCode();
+
+// Load plugins
+PluginHelper::loadPlugins();

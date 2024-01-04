@@ -136,8 +136,9 @@ class Json extends BaseView
 						'isPro'       => !empty($siteConfig->get('akeebabackup.info.api')),
 						'noRecord'    => empty($siteConfig->get('akeebabackup.latest')),
 						'meta'        => $siteConfig->get('akeebabackup.latest')?->meta ?? null,
-						'tooOld'      => $this->isTooOldBackup($siteConfig->get('akeebabackup.latest'), $siteConfig)
+						'tooOld'      => $this->isTooOldBackup($siteConfig->get('akeebabackup.latest'), $siteConfig),
 					],
+					'uptime'            => $this->getContainer()->helper->uptime->status($site)->asArray(),
 				];
 			}
 		);

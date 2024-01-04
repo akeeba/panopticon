@@ -41,6 +41,7 @@ class Setup extends Model
 		'joomlaupdatedirector'       => '*/3 * * * *',
 		'extensionupdatesdirector'   => '*/10 * * * *',
 		'sendmail'                   => '* * * * *',
+		'uptimemonitor'              => '* * * * *$-1',
 	];
 
 	private static bool|null $isRequiredMet = null;
@@ -560,13 +561,20 @@ class Setup extends Model
 			/** @var Task $task */
 			$task = $this->container->mvcFactory->makeModel('Task');
 
-			$task->save([
-				'site_id'         => null,
-				'type'            => $type,
-				'cron_expression' => $cronExpression,
-				'enabled'         => 1,
-				'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
-			]);
+			$parts          = explode('$', $cronExpression, 2);
+			$cronExpression = $parts[0];
+			$priority       = (int) ($parts[1] ?? 0);
+
+			$task->save(
+				[
+					'site_id'         => null,
+					'type'            => $type,
+					'cron_expression' => $cronExpression,
+					'enabled'         => 1,
+					'last_exit_code'  => Status::INITIAL_SCHEDULE->value,
+					'priority'        => $priority,
+				]
+			);
 		}
 	}
 
@@ -578,6 +586,7 @@ class Setup extends Model
 					->select([
 						$db->quoteName('type'),
 						$db->quoteName('cron_expression'),
+						$db->quoteName('priority'),
 					])
 					->from($db->quoteName('#__tasks'))
 					->where(
@@ -594,6 +603,10 @@ class Setup extends Model
 
 		foreach (self::DEFAULT_TASKS as $type => $cronExpression)
 		{
+			$parts          = explode('$', $cronExpression, 2);
+			$cronExpression = $parts[0];
+			$priority       = (int) ($parts[1] ?? 0);
+
 			$installed = $installedTypes[$type] ?? null;
 
 			if ($installed === null)
@@ -603,7 +616,7 @@ class Setup extends Model
 				break;
 			}
 
-			if ($installed->cron_expression != $cronExpression)
+			if ($installed->cron_expression != $cronExpression || $installed->priority != $priority)
 			{
 				$dirty = true;
 

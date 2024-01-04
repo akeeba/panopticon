@@ -626,27 +626,51 @@ class Task extends DataModel
 	private function getNextTask(): ?self
 	{
 		$db    = $this->getDbo();
+
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->qn($this->tableName))
-			->where([
-				$db->quoteName('enabled') . ' = 1',
+			->where($db->quoteName('enabled') . ' = 1')
+			->andWhere([
 				$db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value,
+				// -OR-
+				'(' .
+				$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value .
+				' AND ' .
+				$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value .
+				' AND ' .
+				$db->qn('next_execution') . ' <= ' . $db->quote(
+					$this->container->dateFactory('now', 'UTC')->toSql()
+				) .
+				')'
 			])
-			->order($db->qn('last_run_end') . ' ASC')
-			->union(
-				$db->getQuery(true)
-					->select('*')
-					->from($db->qn($this->tableName, 's'))
-					->where([
-						$db->quoteName('enabled') . ' = 1',
-						$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value,
-						$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value,
-						$db->qn('next_execution') . ' <= ' . $db->quote(
-							$this->container->dateFactory('now', 'UTC')->toSql()),
-					])
-					->order($db->qn('priority') . ' ASC, ' . $db->qn('next_execution') . ' ASC')
+			->order(
+				$db->qn('priority') . ' ASC, ' .
+				$db->qn('last_exit_code') . ' DESC, ' .
+				$db->qn('next_execution') . ' ASC'
 			);
+
+//		$query = $db->getQuery(true)
+//			->select('*')
+//			->from($db->qn($this->tableName))
+//			->where([
+//				$db->quoteName('enabled') . ' = 1',
+//				$db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value,
+//			])
+//			->order($db->qn('last_run_end') . ' ASC')
+//			->union(
+//				$db->getQuery(true)
+//					->select('*')
+//					->from($db->qn($this->tableName, 's'))
+//					->where([
+//						$db->quoteName('enabled') . ' = 1',
+//						$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value,
+//						$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value,
+//						$db->qn('next_execution') . ' <= ' . $db->quote(
+//							$this->container->dateFactory('now', 'UTC')->toSql()),
+//					])
+//					->order($db->qn('priority') . ' ASC, ' . $db->qn('next_execution') . ' ASC')
+//			);
 
 		$task = $db->setQuery($query, 0, 1)->loadObject();
 
