@@ -26,6 +26,7 @@ use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Akeeba\Panopticon\View\Sites\Html;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataController;
@@ -44,6 +45,7 @@ class Sites extends DataController
 	use EnqueueExtensionUpdateTrait;
 	use AkeebaBackupIntegrationTrait;
 	use AdminToolsIntegrationTrait;
+	use SaveSiteTrait;
 
 	private const CHECKBOX_KEYS = [
 		'config.core_update.email_error',
@@ -345,11 +347,15 @@ class Sites extends DataController
 			$this->enqueueJoomlaUpdate($site, $this->container, $force, $this->container->userManager->getUser());
 
 			// Update the core.lastAutoUpdateVersion after enqueueing
-			$site->findOrFail($id);
-			$config = $site->getConfig();
-			$config->set('core.lastAutoUpdateVersion', $config->get('core.current.version'));
-			$site->config = $config->toString();
-			$site->save();
+			$this->saveSite(
+				$site,
+				function (Site $site)
+				{
+					$config = $site->getConfig();
+					$config->set('core.lastAutoUpdateVersion', $config->get('core.current.version'));
+					$site->config = $config->toString();
+				}
+			);
 
 			$type    = 'info';
 			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_OK');

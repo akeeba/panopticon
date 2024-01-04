@@ -15,12 +15,11 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Utils;
-use Psr\Cache\CacheException;
-use Psr\Cache\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
@@ -32,6 +31,7 @@ class RefreshSiteInfo extends AbstractCallback
 {
 	use ApiRequestTrait;
 	use JsonSanitizerTrait;
+	use SaveSiteTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -226,118 +226,90 @@ class RefreshSiteInfo extends AbstractCallback
 								)
 							);
 
-							$config = $site?->getConfig() ?? new Registry();
-
-							$config->set('core.current.version', $attributes->current);
-							$config->set('core.current.stability', $attributes->currentStability);
-							$config->set('core.latest.version', $attributes->latest ?? $attributes->current);
-							$config->set('core.latest.stability', $attributes->latestStability ?? $attributes->currentStability);
-							$config->set('core.php', $attributes->phpVersion ?? null);
-							$config->set('core.extensionAvailable', $attributes->extensionAvailable ?? false);
-							$config->set('core.updateSiteAvailable', $attributes->updateSiteAvailable ?? false);
-							$config->set('core.maxCacheHours', $attributes->maxCacheHours ?? 6);
-							$config->set('core.minimumStability', $attributes->minimumStability ?? 'stable');
-							$config->set('core.lastUpdateTimestamp', $attributes->lastUpdateTimestamp ?? time());
-							$config->set('core.lastAttempt', time());
-							$config->set('core.overridesChanged', $attributes->overridesChanged ?? null);
-							$config->set('core.serverInfo', $attributes->serverInfo ?? null);
-
-							$stabilityCheck = match ($config->get('core.minimumStability', 'stable'))
-							{
-								default => in_array($config->get('core.latest.stability', 'stable'), ['stable']),
-								'rc' => in_array($config->get('core.latest.stability', 'stable'), [
-									'stable', 'rc',
-								]),
-								'beta' => in_array($config->get('core.latest.stability', 'stable'), [
-									'stable', 'rc', 'beta',
-								]),
-								'alpha' => in_array($config->get('core.latest.stability', 'stable'), [
-									'stable', 'rc', 'beta', 'alpha',
-								]),
-								'dev' => in_array($config->get('core.latest.stability', 'stable'), [
-									'stable', 'rc', 'beta', 'alpha', 'dev',
-								]),
-							};
-
-							$config->set(
-								'core.canUpgrade',
-								version_compare(
-									$config->get('core.current.version'),
-									$config->get('core.latest.version'),
-									'lt'
-								)
-								&& $stabilityCheck
-								&& $config->get('core.extensionAvailable')
-								&& $config->get('core.updateSiteAvailable')
-							);
-
-							$panopticon = $attributes->panopticon ?? null;
-
-							if (!empty($panopticon) && (is_object($panopticon) || is_array($panopticon)))
-							{
-								foreach ($panopticon as $k => $v)
+							$this->saveSite(
+								$site,
+								function (Site $site) use ($rawData, $document, $attributes)
 								{
-									$config->set('core.panopticon.' . $k, $v);
-								}
-							}
+									$config = $site?->getConfig() ?? new Registry();
 
-							$admintools = $attributes->admintools ?? null;
+									$config->set('core.current.version', $attributes->current);
+									$config->set('core.current.stability', $attributes->currentStability);
+									$config->set('core.latest.version', $attributes->latest ?? $attributes->current);
+									$config->set('core.latest.stability', $attributes->latestStability ?? $attributes->currentStability);
+									$config->set('core.php', $attributes->phpVersion ?? null);
+									$config->set('core.extensionAvailable', $attributes->extensionAvailable ?? false);
+									$config->set('core.updateSiteAvailable', $attributes->updateSiteAvailable ?? false);
+									$config->set('core.maxCacheHours', $attributes->maxCacheHours ?? 6);
+									$config->set('core.minimumStability', $attributes->minimumStability ?? 'stable');
+									$config->set('core.lastUpdateTimestamp', $attributes->lastUpdateTimestamp ?? time());
+									$config->set('core.lastAttempt', time());
+									$config->set('core.overridesChanged', $attributes->overridesChanged ?? null);
+									$config->set('core.serverInfo', $attributes->serverInfo ?? null);
 
-							if (!empty($admintools) && (is_object($admintools) || is_array($admintools)))
-							{
-								foreach ($admintools as $k => $v)
-								{
-									$config->set('core.admintools.' . $k, $v);
-								}
-							}
-
-							// Clear the last error message
-							$config->set('core.lastErrorMessage', null);
-
-							// Retrieve the SSL / TLS certificate information
-							$config->set('ssl', $site->getCertificateInformation());
-
-							// Latest backup information
-							if ($site->hasAkeebaBackup())
-							{
-								$config->set('akeebabackup.latest', $this->getLatestBackup($site));
-							}
-
-							// Save the configuration (three tries)
-							$retry = -1;
-
-							do
-							{
-								try
-								{
-									$retry++;
-
-									$site->save([
-										'config' => $config->toString(),
-									]);
-
-									break;
-								}
-								catch (\Exception $e)
-								{
-									if ($retry >= 3)
+									$stabilityCheck = match ($config->get('core.minimumStability', 'stable'))
 									{
-										$this->logger->error(sprintf(
-											'Error saving the information for site #%d (%s) upon successful API call: %s',
-											$site->id, $site->name, $e->getMessage()
-										));
+										default => in_array($config->get('core.latest.stability', 'stable'), ['stable']),
+										'rc' => in_array($config->get('core.latest.stability', 'stable'), [
+											'stable', 'rc',
+										]),
+										'beta' => in_array($config->get('core.latest.stability', 'stable'), [
+											'stable', 'rc', 'beta',
+										]),
+										'alpha' => in_array($config->get('core.latest.stability', 'stable'), [
+											'stable', 'rc', 'beta', 'alpha',
+										]),
+										'dev' => in_array($config->get('core.latest.stability', 'stable'), [
+											'stable', 'rc', 'beta', 'alpha', 'dev',
+										]),
+									};
 
-										break;
+									$config->set(
+										'core.canUpgrade',
+										version_compare(
+											$config->get('core.current.version'),
+											$config->get('core.latest.version'),
+											'lt'
+										)
+										&& $stabilityCheck
+										&& $config->get('core.extensionAvailable')
+										&& $config->get('core.updateSiteAvailable')
+									);
+
+									$panopticon = $attributes->panopticon ?? null;
+
+									if (!empty($panopticon) && (is_object($panopticon) || is_array($panopticon)))
+									{
+										foreach ($panopticon as $k => $v)
+										{
+											$config->set('core.panopticon.' . $k, $v);
+										}
 									}
 
-									$this->logger->warning(sprintf(
-										'Failed saving the information for site #%d (%s) upon successful API call (will retry): %s',
-										$site->id, $site->name, $e->getMessage()
-									));
+									$admintools = $attributes->admintools ?? null;
 
-									sleep($retry);
+									if (!empty($admintools) && (is_object($admintools) || is_array($admintools)))
+									{
+										foreach ($admintools as $k => $v)
+										{
+											$config->set('core.admintools.' . $k, $v);
+										}
+									}
+
+									// Clear the last error message
+									$config->set('core.lastErrorMessage', null);
+
+									// Retrieve the SSL / TLS certificate information
+									$config->set('ssl', $site->getCertificateInformation());
+
+									// Latest backup information
+									if ($site->hasAkeebaBackup())
+									{
+										$config->set('akeebabackup.latest', $this->getLatestBackup($site));
+									}
+
+									$site->config = $config;
 								}
-							} while ($retry < 3);
+							);
 
 							return $response;
 						},
@@ -348,25 +320,19 @@ class RefreshSiteInfo extends AbstractCallback
 							));
 
 							// Save the last error message
-							$config = $site?->getConfig() ?? new Registry();
+							$this->saveSite(
+								$site,
+								function (Site $site)
+								{
+									$config = $site?->getConfig() ?? new Registry();
 
-							$config->set('core.lastErrorMessage', $e->getMessage());
+									$config->set('core.lastErrorMessage', $e->getMessage());
 
-							try
-							{
-								$site->save(
-									[
-										'config' => $config->toString(),
-									]
-								);
-							}
-							catch (\Exception $e)
-							{
-								$this->logger->error(sprintf(
-									'Error saving the information for site #%d (%s) upon failed API call: %s',
-									$site->id, $site->name, $e->getMessage()
-								));
-							}
+									$site->config = $config;
+								}
+							);
+
+							throw $e;
 						}
 					)
 					->then(

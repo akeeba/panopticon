@@ -15,6 +15,7 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Awf\Registry\Registry;
 
 #[AsTask(
@@ -24,6 +25,7 @@ use Awf\Registry\Registry;
 class AkeebaBackup extends AbstractCallback
 {
 	use EmailSendingTrait;
+	use SaveSiteTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -347,45 +349,14 @@ class AkeebaBackup extends AbstractCallback
 	 */
 	private function reloadLatestBackupRecord(Site $site): void
 	{
-		$config = $site->getConfig();
-		$config->set('akeebabackup.latest', $this->getLatestBackup($site));
-		$site->config = $config;
-
-		// Save the configuration (three tries)
-		$retry = -1;
-
-		do
-		{
-			try
-			{
-				$retry++;
-
-				$site->save([
-					'config' => $config->toString(),
-				]);
-
-				break;
+		$this->saveSite(
+			$site,
+			function (Site $site) {
+				$config = $site->getConfig();
+				$config->set('akeebabackup.latest', $this->getLatestBackup($site));
+				$site->config = $config;
 			}
-			catch (\Exception $e)
-			{
-				if ($retry >= 3)
-				{
-					$this->logger->error(sprintf(
-						'Error saving the information for site #%d (%s) after backup attempt: %s',
-						$site->id, $site->name, $e->getMessage()
-					));
-
-					break;
-				}
-
-				$this->logger->warning(sprintf(
-					'Failed saving the information for site #%d (%s) after backup attempt (will retry): %s',
-					$site->id, $site->name, $e->getMessage()
-				));
-
-				sleep($retry);
-			}
-		} while ($retry < 3);
+		);
 	}
 
 	/**

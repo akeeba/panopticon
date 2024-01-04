@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Controller\Trait;
 
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Awf\Utils\Ip;
 use Throwable;
 
@@ -38,10 +39,15 @@ trait AdminToolsIntegrationTrait
 
 			if ($result->didChange)
 			{
-				$config = $model->getConfig();
-				$config->set('core.admintools.renamed', $result->renamed);
-				$model->setFieldValue('config', $config->toString());
-				$model->save();
+				$this->saveSite(
+					$model,
+					function (Site $site) use ($result)
+					{
+						$config = $site->getConfig();
+						$config->set('core.admintools.renamed', $result->renamed);
+						$site->setFieldValue('config', $config->toString());
+					}
+				);
 			}
 
 			// Redirect
@@ -90,10 +96,14 @@ trait AdminToolsIntegrationTrait
 
 			if ($result->didChange)
 			{
-				$config = $model->getConfig();
-				$config->set('core.admintools.renamed', $result->renamed);
-				$model->setFieldValue('config', $config->toString());
-				$model->save();
+				$this->saveSite(
+					$model,
+					function (Site $model) use ($result) {
+						$config = $model->getConfig();
+						$config->set('core.admintools.renamed', $result->renamed);
+						$model->setFieldValue('config', $config->toString());
+					}
+				);
 			}
 
 			// Redirect
