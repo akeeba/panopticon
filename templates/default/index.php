@@ -38,7 +38,7 @@ $isMenuEnabled = $this->getMenu()->isEnabled('main');
 $isDebug       = defined('AKEEBADEBUG') && AKEEBADEBUG;
 $themeColor    = TemplateHelper::getThemeColour();
 $importMap     = TemplateHelper::getImportMapAsJson();
-$view          = $this->getContainer()->input->getCmd('view', 'main');
+$view          = $this->getContainer()->input->getCmd('view', 'main') ?: 'main';
 
 ?>
 <!DOCTYPE html>
@@ -81,7 +81,7 @@ $view          = $this->getContainer()->input->getCmd('view', 'main');
 	<meta name="theme-color" content="<?= $themeColor ?>">
 	<?php endif; ?>
 </head>
-<body data-bs-theme="<?= $darkModeValue ?: '' ?>" class="<?= $view ?: '' ?>">
+<body data-bs-theme="<?= $darkModeValue ?: '' ?>" class="panopticon-view-<?= $view ?>">
 
 <?php // Top header ?>
 <?php if (!$isBareDisplay): ?>
