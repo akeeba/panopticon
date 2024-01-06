@@ -79,7 +79,7 @@ class Dispatcher extends AWFDispatcher
 		$themeFile = (new Filter())->clean($themeFile, 'path');
 		$themeFile .= '.min.css';
 
-		if (!@file_exists(Template::parsePath('media://css/' . $themeFile, false, $this->getContainer()->application)))
+		if (!@file_exists(Template::parsePath('media://css/' . $themeFile, true, $this->getContainer()->application)))
 		{
 			$themeFile = 'theme.min.css';
 		}

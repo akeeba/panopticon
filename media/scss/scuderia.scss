@@ -1,0 +1,37 @@
+/*!*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+// This palette was created with the help of the http://colormind.io/bootstrap/ tool.
+
+// Grays. Gradient made with https://coolors.co/gradient-palette/fffefe-201b18?number=11
+$white: #FFFEFE;
+$gray-100: #E9E7E7;
+$gray-200: #D2D1D0;
+$gray-300: #BCBAB9;
+$gray-400: #A6A3A2;
+$gray-500: #908D8B;
+$gray-600: #797674;
+$gray-700: #635F5D;
+$gray-800: #4D4846;
+$gray-900: #36322F;
+$black: #201B18;
+
+// Semantic colours
+$primary: #FF2800;
+$secondary: #A69E94;
+$success: #7e883e;
+$info: #191b20;
+$warning: #fc7806;
+$danger: #f44336;
+$light: #F8F4F3;
+$dark: #201B18;
+
+// Additional colours (currently unused)
+$akLightAccent: #A69E94;
+$akDarkAccent: #D2915B;
+
+// Common includes
+@import "common";

@@ -18,6 +18,15 @@ We are happy to present you with Panopticon 1.1.0, nicknamed “Dawn”.
 
 ✨ **Preload hints, and HTTP 103 Early Hints** [gh-458] As long as your web server supports it, Panopticon will send HTTP/2 and HTTP/3 preload hints. If you are using [FrankenPHP](https://frankenphp.dev/) it will also send HTTP 103 Early Hint headers with that information, making the page load even faster.
 
+✨ **Additional colour themes (CSS) and easier theme selection** Panopticon now comes with additional colour themes (CSS files), and a drop-down to select them:
+
+* Aegean. Deep blue and white, the colours of the Aegean Sea.
+* Minty (by Bootswatch). Pastel greens and pink, like a mint candy.
+* Scuderia. Legendary racing livery.
+* WinterCandy. Pastel blues and plum.
+
+All additional colour themes, except those marked as “by Bootswatch”, were created by us. Additional colour themes, except Aegean, are not very good for accessibility and/or look weird in Dark Mode.
+
 **Loads of accessibility and design tweaks**. A lot of time and effort was spent by @brianteeman to tweak a lot of views for design consistency and accessibility. Hats off to Brian for his rigorous testing and prolific PRs!
 
 Last, but not least, we identified and terminated a number of bugs _with extreme prejudice_. Quality of life matters.

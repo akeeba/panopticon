@@ -4,10 +4,12 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-// Akeeba grays
-$white: #ffffff;
-$gray-100: #fcfcfc;
-$gray-200: #efefef;
+// This palette was created with the help of the http://colormind.io/bootstrap/ tool.
+
+// Grays
+$white: #FCFAFB;
+$gray-100: #FCFAFB;
+$gray-200: #f5f4f5;
 $gray-300: #e6e6e6;
 $gray-400: #d6d6d6;
 $gray-500: #c2c2c2;
@@ -17,22 +19,19 @@ $gray-800: #373637;
 $gray-900: #212021;
 $black: #100010;
 
-// Akeeba colours
-$primary: #147878;
-$secondary: #514f50;
-$success: #598230;
-$info: #467d8c;
-$warning: #e6a449;
-$danger: #cc3136;
-$light: #efefef;
-$dark: #373637;
+// Semantic colours
+$primary: #81adce;
+$secondary: #536899;
+$success: #5cae76;
+$info: #2f4b6e;
+$warning: #d99e3e;
+$danger: #f44336;
+$light: #FCFAFB;
+$dark: #66434f;
 
 // Accessibility tweaks
-$link-color: #116969;
-$link-color-dark: #7dcaca;
-
-$code-color: #b12a6e;
-$code-color-dark: #c22774;
+$link-color: #99B1D7;
+$link-color-dark: #a8c3ed;
 
 // Common includes
 @import "common";

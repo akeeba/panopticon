@@ -9,6 +9,7 @@ Akeeba Panopticon 1.1.0
 + Support for site favicons
 + Preload hints, and HTTP 103 Early Hints [gh-458]
 + Language selection after logging in [gh-490]
++ Additional colour themes (CSS) and easier theme selection
 ~ Running `composer install` will now always create the `version.php` file
 ~ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]
 ~ More accessible ID column labels [gh-446]

@@ -1,0 +1,20 @@
+/**
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+// PNP additional utility classes must be loaded before Bootstrap
+@import "section/pnp/utilities";
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+@import "section/choices";
+@import "section/ace";
+@import "section/tinymce";
+@import "section/logo";
+@import "section/login";
+@import "section/site";
+@import "section/phpdiff";
+@import "section/code_highlight";
+@import "section/user";

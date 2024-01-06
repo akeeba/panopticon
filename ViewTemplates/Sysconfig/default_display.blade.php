@@ -47,9 +47,9 @@ $config = $this->container->appConfig;
                     <div class="input-group-text">
                         media/css/
                     </div>
-                    <input type="text" class="form-control" id="theme" name="options[theme]"
-                           value="{{{ $config->get('theme', 'theme') ?: 'theme' }}}"
-                    >
+
+                    {{ $this->container->helper->setup->cssThemeSelect($config->get('theme', 'theme') ?: 'theme') }}
+
                     <div class="input-group-text">
                         .min.css
                     </div>

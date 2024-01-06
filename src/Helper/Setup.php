@@ -20,6 +20,51 @@ use JsonException;
 
 class Setup extends AbstractHelper
 {
+	public function cssThemeSelect(string $selected = '', string $name = 'options[theme]', string $id = 'theme')
+	{
+		$files = $this->getThemeCSSFiles();
+
+		return $this->getContainer()->html->select->genericList(
+			data: array_combine($files, $files),
+			name: $name,
+			attribs: ['class' => 'form-select'],
+			selected: $selected, idTag: $id ?: $name,
+			translate: false
+		);
+	}
+
+	private function getThemeCSSFiles(): array
+	{
+		$ret = [];
+
+		try
+		{
+			/** @var DirectoryIterator $file */
+			foreach (new DirectoryIterator(APATH_MEDIA . '/css') as $file)
+			{
+				if (!$file->isFile() || !str_ends_with($file->getBasename(), '.min.css'))
+				{
+					continue;
+				}
+
+				$basename = $file->getBasename('.min.css');
+
+				if ($basename === 'fontawesome')
+				{
+					continue;
+				}
+
+				$ret[]    = $basename;
+			}
+
+			return $ret;
+		}
+		catch (\Throwable)
+		{
+			return [];
+		}
+	}
+
 	public function databaseTypesSelect(string $selected = '', string $name = 'driver'): string
 	{
 		$connectors = Driver::getConnectors();
