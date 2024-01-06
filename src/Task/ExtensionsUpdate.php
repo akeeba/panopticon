@@ -21,6 +21,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
 use Awf\Registry\Registry;
@@ -36,6 +37,7 @@ class ExtensionsUpdate extends AbstractCallback
 	use EmailSendingTrait;
 	use LanguageListTrait;
 	use JsonSanitizerTrait;
+	use SaveSiteTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -374,62 +376,50 @@ class ExtensionsUpdate extends AbstractCallback
 		);
 
 		// Update extensions.list and extensions.hasUpdates in the site's config storage
-		try
-		{
-			// Ensure the site information read/write is an atomic operation
-			$this->container->db->lockTable('#__sites');
-
-			// Reload the site information, in case it changed while we were installing updates
-			$site->findOrFail($site->id);
-
-			// Get the extensions list
-			$siteConfig = $site->getConfig() ?? new Registry();;
-			$extensions = (array) $siteConfig->get('extensions.list');
-
-			// Make sure our updated extension didn't get uninstalled in the meantime
-			if (!isset($extensions[$extensionId]))
+		$this->saveSite(
+			$site,
+			function (Site $site) use ($extensionId)
 			{
-				throw new \RuntimeException('The extension went away.');
+				// Reload the site information, in case it changed while we were installing updates
+				$site->findOrFail($site->id);
+
+				// Get the extensions list
+				$siteConfig = $site->getConfig() ?? new Registry();;
+				$extensions = (array) $siteConfig->get('extensions.list');
+
+				// Make sure our updated extension didn't get uninstalled in the meantime
+				if (!isset($extensions[$extensionId]))
+				{
+					throw new \RuntimeException('The extension went away.');
+				}
+
+				// Mark the extension as not having updates
+				$extensions[$extensionId]->version->new = null;
+				$siteConfig->set('extensions.list', $extensions);
+
+				// Set a flag for the existence of updates
+				$hasUpdates = array_reduce(
+					$extensions,
+					function (bool $carry, object $item): int {
+						$current = $item?->version?->current;
+						$new     = $item?->version?->new;
+
+						if ($carry || empty($current) || empty($new))
+						{
+							return $carry;
+						}
+
+						return version_compare($current, $new, 'lt');
+					},
+					false
+				);
+
+				$siteConfig->set('extensions.hasUpdates', $hasUpdates);
+
+				// Update the site's JSON config field
+				$site->config = $siteConfig->toString('JSON');
 			}
-
-			// Mark the extension as not having updates
-			$extensions[$extensionId]->version->new = null;
-			$siteConfig->set('extensions.list', $extensions);
-
-			// Set a flag for the existence of updates
-			$hasUpdates = array_reduce(
-				$extensions,
-				function (bool $carry, object $item): int {
-					$current = $item?->version?->current;
-					$new     = $item?->version?->new;
-
-					if ($carry || empty($current) || empty($new))
-					{
-						return $carry;
-					}
-
-					return version_compare($current, $new, 'lt');
-				},
-				false
-			);
-
-			$siteConfig->set('extensions.hasUpdates', $hasUpdates);
-
-			// Update the site's JSON config field
-			$site->config = $siteConfig->toString('JSON');
-
-			// Save the modified site
-			$site->save();
-		}
-		catch (\Throwable)
-		{
-			// No worries, this was a mostly optional step...
-		}
-		finally
-		{
-			// No matter what happens, we need to unlock the tables.
-			$this->container->db->unlockTables();
-		}
+		);
 
 		$updateStatus[$extensionId] = [
 			'type'     => $extensions[$extensionId]->type,
@@ -631,18 +621,23 @@ class ExtensionsUpdate extends AbstractCallback
 	 */
 	private function recordLastSeenVersion(Site $site, int $extensionId): void
 	{
-		$siteConfig                     = $site->getConfig() ?? new Registry();
-		$lastSeenVersions               = $siteConfig->get('director.extensionupdates.lastSeen', []) ?: [];
-		$lastSeenVersions               = is_object($lastSeenVersions) ? (array) $lastSeenVersions : $lastSeenVersions;
-		$lastSeenVersions               = is_array($lastSeenVersions) ? $lastSeenVersions : [];
-		$extensions                     = (array) $siteConfig->get('extensions.list');
-		$extensionItem                  = $extensions[$extensionId] ?? null;
-		$latestVersion                  = $extensionItem?->version?->new;
-		$lastSeenVersions[$extensionId] = $latestVersion;
+		$this->saveSite(
+			$site,
+			function (Site $site) use ($extensionId)
+			{
+				$siteConfig                     = $site->getConfig() ?? new Registry();
+				$lastSeenVersions               = $siteConfig->get('director.extensionupdates.lastSeen', []) ?: [];
+				$lastSeenVersions               = is_object($lastSeenVersions) ? (array) $lastSeenVersions : $lastSeenVersions;
+				$lastSeenVersions               = is_array($lastSeenVersions) ? $lastSeenVersions : [];
+				$extensions                     = (array) $siteConfig->get('extensions.list');
+				$extensionItem                  = $extensions[$extensionId] ?? null;
+				$latestVersion                  = $extensionItem?->version?->new;
+				$lastSeenVersions[$extensionId] = $latestVersion;
 
-		$siteConfig->set('director.extensionupdates.lastSeen', $lastSeenVersions);
-		$site->setFieldValue('config', $siteConfig->toString());
-		$site->save();
+				$siteConfig->set('director.extensionupdates.lastSeen', $lastSeenVersions);
+				$site->setFieldValue('config', $siteConfig->toString());
+			}
+		);
 	}
 
 	/**

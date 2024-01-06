@@ -9,6 +9,7 @@ use Akeeba\Panopticon\Application;
 use Akeeba\Panopticon\Factory;
 
 const AKEEBA = 1;
+const AKEEBA_WEB = 1;
 
 call_user_func(function (){
 	// Load prerequisites

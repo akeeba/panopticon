@@ -18,6 +18,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
@@ -32,6 +33,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 	use EnqueueJoomlaUpdateTrait;
 	use SiteNotificationEmailTrait;
 	use EmailSendingTrait;
+	use SaveSiteTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -442,9 +444,14 @@ class JoomlaUpdateDirector extends AbstractCallback
 			return false;
 		}
 
-		$siteConfig->set('director.joomlaupdate.lastLatestVersion', $latestVersion);
-		$site->setFieldValue('config', $siteConfig->toString());
-		$site->save();
+		$this->saveSite(
+			$site,
+			function (Site $site) use ($latestVersion) {
+				$siteConfig = $site->getConfig() ?? new Registry();
+				$siteConfig->set('director.joomlaupdate.lastLatestVersion', $latestVersion);
+				$site->setFieldValue('config', $siteConfig->toString());
+			}
+		);
 
 		return true;
 	}

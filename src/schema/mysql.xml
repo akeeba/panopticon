@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `#__reports` (
     `site_id` BIGINT UNSIGNED NOT NULL,
     `created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `created_by` BIGINT UNSIGNED NOT NULL DEFAULT '0',
-    `action` ENUM('core_update_found','core_update_installed','ext_update_found','ext_update_installed','backup','filescanner','site_action','misc_action') NOT NULL DEFAULT 'misc_action',
+    `action` ENUM('core_update_found','core_update_installed','ext_update_found','ext_update_installed','backup','filescanner','site_action','misc_action','site_up','site_down') NOT NULL DEFAULT 'misc_action',
     `context` JSON NOT NULL,
     UNIQUE KEY `id` (`id`),
     KEY `#__report_site_acton_index` (`site_id`,`action`),
@@ -215,6 +215,18 @@ CREATE TABLE IF NOT EXISTS `#__reports` (
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
+            ]]></query>
+        </action>
+
+        <!-- Update the #__reports table -->
+        <action table="#__reports" canfail="1">
+            <condition type="equals" value="0"><![CDATA[
+SELECT COUNT(*) FROM `INFORMATION_SCHEMA`.`COLUMNS`
+WHERE (`COLUMN_NAME` = 'action') AND (`TABLE_NAME` = '#__reports') AND (`TABLE_SCHEMA` = DATABASE())
+  AND `COLUMN_TYPE` LIKE '%\'site_up\'%'
+            ]]></condition>
+            <query><![CDATA[
+ALTER TABLE `#__reports` CHANGE `action` `action` ENUM('core_update_found','core_update_installed','ext_update_found','ext_update_installed','backup','filescanner','site_action','misc_action','site_up','site_down') NOT NULL DEFAULT 'misc_action';
             ]]></query>
         </action>
 
@@ -444,6 +456,30 @@ SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` 
 INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
 VALUES
 	('ssl_tls_expiring', '*', '⚠️ The SSL/TLS certificate for [SITE_NAME] expires soon', '<div class=\"akemail-outer-wrapper\">\r\n<table>\r\n<tbody>\r\n<tr>\r\n<td width=\"10%\">&nbsp;</td>\r\n<td>\r\n<div class=\"akemail-wrapper\">\r\n<div class=\"akemail-container\"><!-- Logo Header -->\r\n<div class=\"akemail-logo\"><a href=\"[URL]\">&nbsp;<img src=\"[URL]/media/images/logo_bw.svg\" alt=\"Panopticon &mdash; Site Monitoring\">&nbsp;</a></div>\r\n<!-- Hello -->\r\n<div class=\"akemail-hello\">\r\n<p>Hello,</p>\r\n</div>\r\n<!-- Main-Topic -->\r\n<div class=\"akemail-main-topic\">\r\n<p>The SSL/TLS certificate for &ldquo;[SITE_NAME]&rdquo; expires soon</p>\r\n</div>\r\n<!-- Message -->\r\n<div class=\"akemail-message\">\r\n<p>The SSL/TLS (HTTPS) certificate for your site &ldquo;<a href=\"[SITE_URL]\">[SITE_NAME]</a>&rdquo; will expire soon, on [DATE]. Please install a new certificate to prevent connectivity problems to your site.</p>\r\n<p><strong>ℹ️ Kind reminder</strong>: If you let your certificate expire, web browsers will report your site as &ldquo;untrusted&rdquo;. Some browsers may prevent your site\'s visitors from accessing your site completely.</p>\r\n</div>\r\n<!-- Area Offer/Announcement -->\r\n<div class=\"akemail-announcement\">\r\n<div class=\"akemail-announcement-box\">\r\n<h3>Action required</h3>\r\n<p>You need to install a new SSL/TLS certificate on your site.</p>\r\n</div>\r\n<p class=\"akemail-announcement-note\"><em>Note</em>: Akeeba Panopticon cannot install or update SSL/TLS certificates. This is something you need to do from your hosting control panel.</p>\r\n</div>\r\n<div class=\"akemail-outro\">\r\n<p>Have a great day!</p>\r\n</div>\r\n<!-- Footer -->\r\n<div class=\"akemail-footer\">\r\n<p class=\"akemail-footer-sitelink\">&nbsp;<a href=\"[URL]\">Panopticon &mdash; Site Monitoring</a></p>\r\n</div>\r\n</div>\r\n<!-- Legal info -->\r\n<div class=\"akemail-legalinfo\">\r\n<p>This is an automated email. Please do not reply to it.</p>\r\n</div>\r\n</div>\r\n</td>\r\n<td width=\"10%\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>', 'Hello,\r\n\r\n\r\nThe SSL/TLS certificate for “[SITE_NAME]” expires soon\r\n\r\n\r\nThe SSL/TLS (HTTPS) certificate for your site “[SITE_NAME]”\r\nat [SITE_URL]” will expire soon, on [DATE]. Please install a new\r\ncertificate to prevent connectivity problems to your site.\r\n\r\nℹ️ KIND REMINDER: If you let your certificate expire, web browsers\r\nwill report your site as “untrusted”. Some browsers may prevent\r\nyour site\'s visitors from accessing your site completely.\r\n\r\n==============================================================================\r\n! ! ! ! !  ACTION REQUIRED  ! ! ! ! !\r\n==============================================================================\r\n\r\nYou need to install a new SSL/TLS certificate on your site.\r\n\r\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n\r\n_Note_: Akeeba Panopticon cannot install or update SSL/TLS\r\ncertificates. This is something you need to do from your hosting\r\ncontrol panel.\r\n\r\n==============================================================================\r\n\r\nHave a great day!\r\n\r\n------------------------------------------------------------------------------\r\n\r\nThis email was sent by the Panopticon installation on [URL]\r\nThis is an automated email. Please do not reply to it.');
+]]></query>
+        </action>
+
+        <!-- Install mail template: site_down -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'site_down') x
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
+VALUES
+	('site_down','*','😱 [SITE_NAME] is down','<div class=\"akemail-outer-wrapper\">\r\n<table>\r\n<tbody>\r\n<tr>\r\n<td width=\"10%\">&nbsp;</td>\r\n<td>\r\n<div class=\"akemail-wrapper\">\r\n<div class=\"akemail-container\"><!-- Logo Header -->\r\n<div class=\"akemail-logo\"><a href=\"[URL]\">&nbsp;<img src=\"[URL]/media/images/logo_bw.svg\" alt=\"Panopticon &mdash; Site Monitoring\">&nbsp;</a></div>\r\n<!-- Hello -->\r\n<div class=\"akemail-hello\">\r\n<p>Hello,</p>\r\n</div>\r\n<!-- Main-Topic -->\r\n<div class=\"akemail-main-topic\">\r\n<p>The site &ldquo;[SITE_NAME]&rdquo; is down</p>\r\n</div>\r\n<!-- Message -->\r\n<div class=\"akemail-message\">\r\n<p>Panopticon has detected that your site &ldquo;<a href=\"[SITE_URL]\">[SITE_NAME]</a>&rdquo; appears to be inaccessible (site down). Please check whether there is a problem on your site, or your hosting provider.</p>\r\n</div>\r\n<!-- Area Offer/Announcement -->\r\n<div class=\"akemail-announcement\">\r\n<div class=\"akemail-announcement-box\">\r\n<h3>Action required</h3>\r\n<p>You need to check why your site is inaccessible.</p>\r\n</div>\r\n</div>\r\n<div class=\"akemail-outro\">\r\n<p>Have a great day!</p>\r\n</div>\r\n<!-- Footer -->\r\n<div class=\"akemail-footer\">\r\n<p class=\"akemail-footer-sitelink\">&nbsp;<a href=\"[URL]\">Panopticon &mdash; Site Monitoring</a></p>\r\n</div>\r\n</div>\r\n<!-- Legal info -->\r\n<div class=\"akemail-legalinfo\">\r\n<p>This is an automated email. Please do not reply to it.</p>\r\n</div>\r\n</div>\r\n</td>\r\n<td width=\"10%\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','Hello,\r\n\r\n\r\nThe site “[SITE_NAME]” is down\r\n\r\n\r\nPanopticon has detected that your site “[SITE_NAME]”\r\n([SITE_URL]) appears\r\nto be inaccessible (site down). Please check whether there is a problem on\r\nyour site, or your hosting provider.\r\n\r\n==============================================================================\r\n! ! ! ! !  ACTION REQUIRED  ! ! ! ! !\r\n==============================================================================\r\n\r\nYou need to check why your site is inaccessible.\r\n\r\n==============================================================================\r\n\r\nHave a great day!\r\n\r\n------------------------------------------------------------------------------\r\n\r\nThis email was sent by the Panopticon installation on [URL]\r\nThis is an automated email. Please do not reply to it.');
+]]></query>
+        </action>
+
+        <!-- Install mail template: site_up -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'site_up') x
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
+VALUES
+('site_down','*','🥳 [SITE_NAME] is back up','<div class=\"akemail-outer-wrapper\">\r\n<table>\r\n<tbody>\r\n<tr>\r\n<td width=\"10%\">&nbsp;</td>\r\n<td>\r\n<div class=\"akemail-wrapper\">\r\n<div class=\"akemail-container\"><!-- Logo Header -->\r\n<div class=\"akemail-logo\"><a href=\"[URL]\">&nbsp;<img src=\"[URL]/media/images/logo_bw.svg\" alt=\"Panopticon &mdash; Site Monitoring\">&nbsp;</a></div>\r\n<!-- Hello -->\r\n<div class=\"akemail-hello\">\r\n<p>Hello,</p>\r\n</div>\r\n<!-- Main-Topic -->\r\n<div class=\"akemail-main-topic\">\r\n<p>The site &ldquo;[SITE_NAME]&rdquo; is back up</p>\r\n</div>\r\n<!-- Message -->\r\n<div class=\"akemail-message\">\r\n<p>Panopticon has detected that your site &ldquo;<a href=\"[SITE_URL]\">[SITE_NAME]</a>&rdquo; appears to be accessible once again (the site is up).</p>\r\n<p>We would like to remind you that the site was inaccessible since [DOWNTIME_START] for [DOWNTIME_HUMAN].</p>\r\n</div>\r\n<!-- Area Offer/Announcement -->\r\n<div class=\"akemail-outro\">\r\n<p>Have a great day!</p>\r\n</div>\r\n<!-- Footer -->\r\n<div class=\"akemail-footer\">\r\n<p class=\"akemail-footer-sitelink\">&nbsp;<a href=\"[URL]\">Panopticon &mdash; Site Monitoring</a></p>\r\n</div>\r\n</div>\r\n<!-- Legal info -->\r\n<div class=\"akemail-legalinfo\">\r\n<p>This is an automated email. Please do not reply to it.</p>\r\n</div>\r\n</div>\r\n</td>\r\n<td width=\"10%\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','Hello,\r\n\r\n\r\nThe site “[SITE_NAME]” is down\r\n\r\n\r\nPanopticon has detected that your site “[SITE_NAME]”\r\n([SITE_URL]) appears to be accessible once again\r\n(the site is up).\r\n\r\nWe would like to remind you that the site was inaccessible since\r\n[DOWNTIME_START] for [DOWNTIME_HUMAN].\r\n\r\n\r\nHave a great day!\r\n\r\n------------------------------------------------------------------------------\r\n\r\nThis email was sent by the Panopticon installation on [URL]\r\nThis is an automated email. Please do not reply to it.');
 ]]></query>
         </action>
 

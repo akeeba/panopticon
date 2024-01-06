@@ -141,12 +141,54 @@ defined('AKEEBA') || die;
 
         <div class="col" v-for="site in sites">
             <div class="card h-100">
-                <a :href="site.overview_url" class="text-decoration-none">
                     <h4 class="card-header h6 fw-semibold">
-                        <span class="text-muted fw-light"><small>#&thinsp;</small>@{{ site.id }}</span>&ensp;
-                        <span class="text-decoration-underline link-offset-1">@{{ site.name ?? '' }}</span>
+                        <div class="w-100 d-inline-flex">
+                            <a :href="site.overview_url" class="text-decoration-none flex-grow-1">
+                                <span class="text-muted fw-light"><small>#&thinsp;</small>@{{ site.id }}</span>&ensp;
+                                <span class="text-decoration-underline link-offset-1">@{{ site.name ?? '' }}</span>
+                            </a>
+
+                            <div class="d-inline-block bg-danger rounded-pill px-1 text-bg-dark flex-shrink-1"
+                                 v-if="site.uptime.up === false && !site.uptime.isScheduled"
+                            >
+                                <a v-bind:href="site.uptime.detailsUrl"
+                                   class="text-light text-decoration-none"
+                                   v-if="site.uptime.detailsUrl !== null">
+                                    <span class="fa fa-fw fa-arrow-down" aria-hidden="true"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')"
+                                    ></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')</span>
+                                </a>
+                                <span v-if="site.uptime.detailsUrl === null">
+                                    <span class="fa fa-fw fa-arrow-down" aria-hidden="true"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')"
+                                    ></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')</span>
+                                </span>
+                            </div>
+
+                            <div class="d-inline-block bg-warning rounded-pill px-1 text-bg-light flex-shrink-1"
+                                 v-if="site.uptime.up === false && site.uptime.isScheduled"
+                            >
+                                <a v-bind:href="site.uptime.detailsUrl"
+                                   class="text-light text-decoration-none"
+                                   v-if="site.uptime.detailsUrl !== null">
+                                    <span class="fa fa-fw fa-hammer" aria-hidden="true"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')"
+                                    ></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')</span>
+                                </a>
+                                <span v-if="site.uptime.detailsUrl === null">
+                                    <span class="fa fa-fw fa-hammer" aria-hidden="true"
+                                          v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')"
+                                    ></span>
+                                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')</span>
+                                </span>
+                            </div>
+                        </div>
+
+
                     </h4>
-                </a>
                 <div class="card-body">
                     <div v-if="site.groups.length > 0">
                         <div class="card-subtitle text-end mb-2">

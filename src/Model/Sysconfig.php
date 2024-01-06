@@ -331,6 +331,20 @@ class Sysconfig extends Model
 		return false;
 	}
 
+	public function getUptimeOptions()
+	{
+		$results = $this->getContainer()->eventDispatcher->trigger('onGetUptimeProvider');
+		$results = array_filter($results, fn($x) => is_array($x) && !empty($x));
+
+		return array_reduce(
+			$results,
+			fn(array $carry, array $item) => array_merge($carry, $item),
+			[
+				'none' => 'PANOPTICON_SYSCONFIG_OPT_UPTIME_NONE',
+			]
+		);
+	}
+
 	/**
 	 * Returns the extension update preferences, global or per site.
 	 *

@@ -24,6 +24,7 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupCannotConnectException;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupNoInfoException;
+use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Awf\Mvc\DataModel\Collection;
 use Awf\User\User;
@@ -621,16 +622,29 @@ trait AkeebaBackupIntegrationTrait
 
 			try
 			{
-				$mustSave = $this->testAkeebaBackupConnection();
+				$this->saveSite(
+					$this,
+					function (Site $model)
+					{
+						$dirty = $model->testAkeebaBackupConnection(true);
 
-				if ($mustSave)
-				{
-					$this->save();
+						if (!$dirty)
+						{
+							// This short-circuits saveSite(), telling it to save nothing.
+							throw new \RuntimeException('Nothing to save');
+						}
+					},
+					function (Throwable $e)
+					{
+						if (!$e instanceof \RuntimeException || $e->getMessage() !== 'Nothing to save')
+						{
+							throw $e;
+						}
+					}
+				);
 
-					$config          = $this->getConfig();
-					$info            = $config->get('akeebabackup.info');
-					$endpointOptions = $config->get('akeebabackup.endpoint');
-				}
+				$info            = $config->get('akeebabackup.info');
+				$endpointOptions = $config->get('akeebabackup.endpoint');
 			}
 			catch (GuzzleException $e)
 			{

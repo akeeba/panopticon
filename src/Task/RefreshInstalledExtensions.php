@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Awf\Registry\Registry;
 use Awf\Utils\ArrayHelper;
 use GuzzleHttp\Exception\RequestException;
@@ -30,6 +31,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 {
 	use ApiRequestTrait;
 	use JsonSanitizerTrait;
+	use SaveSiteTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -219,8 +221,6 @@ class RefreshInstalledExtensions extends AbstractCallback
 					->getAsync($url, $options)
 					->then(
 						function (ResponseInterface $response) use ($site) {
-							$config = $site->getConfig();
-
 							try
 							{
 								$rawData  = $this->sanitizeJson($response->getBody()->getContents());
@@ -233,116 +233,73 @@ class RefreshInstalledExtensions extends AbstractCallback
 
 							$data = $document?->data;
 
-							$config->set('extensions.lastErrorMessage', null);
-
-							if (empty($data))
-							{
-								$this->logger->notice(
-									sprintf(
-										'Could not retrieve information for site #%d (%s). Invalid data returned from API call.',
-										$site->id, $site->name
-									)
-								);
-
-								$config->set(
-									'extensions.lastErrorMessage',
-									sprintf(
-										"Invalid (non-JSON) data returned from the Joomla! API. Probably a third party plugin is breaking the API application? Raw data as follows:\n\n%s",
-										$rawData ?: '(no data)'
-									)
-								);
-							}
-							else
-							{
-								$this->logger->debug(
-									sprintf(
-										'Retrieved information for site #%d (%s).',
-										$site->id,
-										$site->name
-									)
-								);
-
-								$extensions = $this->mapExtensionsList(
-									array_filter(
-										array_map(fn($item) => $item?->attributes, $data)
-									)
-								);
-								$config->set(
-									'extensions.list',
-									$extensions
-								);
-
-								// Save a flag for the existence of updates
-								$hasUpdates = array_reduce(
-									$extensions,
-									function (bool $carry, object $item): int {
-										$current = $item?->version?->current;
-										$new     = $item?->version?->new;
-
-										if ($carry || empty($current) || empty($new))
-										{
-											return $carry;
-										}
-
-										return version_compare($current, $new, 'lt');
-									},
-									false
-								);
-
-								$config->set('extensions.hasUpdates', $hasUpdates);
-							}
-
-							// Save the configuration (three tries)
-							$retry = -1;
-
-							do
-							{
-								try
+							$this->saveSite(
+								$site,
+								function (Site $site) use ($data, $rawData)
 								{
-									$retry++;
+									$config = $site->getConfig();
+									$config->set('extensions.lastErrorMessage', null);
 
-									$site->save(
-										[
-											'config' => $config->toString(),
-										]
-									);
-
-									if ($retry > 0)
+									if (empty($data))
 									{
-										$this->logger->error(
+										$this->logger->notice(
 											sprintf(
-												'Succeeded saving the extensions information for site #%d (%s) upon successful API call on retry number %u',
-												$site->id, $site->name, $retry
-											)
-										);
-									}
-
-									break;
-								}
-								catch (\Exception $e)
-								{
-									if ($retry >= 3)
-									{
-										$this->logger->error(
-											sprintf(
-												'Error saving the extensions information for site #%d (%s) upon successful API call: %s',
-												$site->id, $site->name, $e->getMessage()
+												'Could not retrieve information for site #%d (%s). Invalid data returned from API call.',
+												$site->id, $site->name
 											)
 										);
 
-										break;
+										$config->set(
+											'extensions.lastErrorMessage',
+											sprintf(
+												"Invalid (non-JSON) data returned from the Joomla! API. Probably a third party plugin is breaking the API application? Raw data as follows:\n\n%s",
+												$rawData ?: '(no data)'
+											)
+										);
+									}
+									else
+									{
+										$this->logger->debug(
+											sprintf(
+												'Retrieved information for site #%d (%s).',
+												$site->id,
+												$site->name
+											)
+										);
+
+										$extensions = $this->mapExtensionsList(
+											array_filter(
+												array_map(fn($item) => $item?->attributes, $data)
+											)
+										);
+										$config->set(
+											'extensions.list',
+											$extensions
+										);
+
+										// Save a flag for the existence of updates
+										$hasUpdates = array_reduce(
+											$extensions,
+											function (bool $carry, object $item): int {
+												$current = $item?->version?->current;
+												$new     = $item?->version?->new;
+
+												if ($carry || empty($current) || empty($new))
+												{
+													return $carry;
+												}
+
+												return version_compare($current, $new, 'lt');
+											},
+											false
+										);
+
+										$config->set('extensions.hasUpdates', $hasUpdates);
 									}
 
-									$this->logger->warning(
-										sprintf(
-											'Failed saving the extensions information for site #%d (%s) upon successful API call (will retry): %s',
-											$site->id, $site->name, $e->getMessage()
-										)
-									);
-
-									sleep($retry);
+									$site->config = $config->toString();
 								}
-							} while ($retry < 3);
+							);
 
 							// Finally, clear the cache of known extensions for the specific site
 							$cacheKey = 'site.' . $site->id;
@@ -356,33 +313,21 @@ class RefreshInstalledExtensions extends AbstractCallback
 							$this->container->cacheFactory->pool('extensions')->delete($cacheKey);
 						},
 						function (RequestException $e) use ($site) {
-							$this->logger->error(
-								sprintf(
-									'Could not retrieve extensions information for site #%d (%s). The server replied with the following error: %s',
-									$site->id, $site->name, $e->getMessage()
-								)
+							$this->saveSite(
+								$site,
+								function (Site $site) use ($e) {
+									$this->logger->error(
+										sprintf(
+											'Could not retrieve extensions information for site #%d (%s). The server replied with the following error: %s',
+											$site->id, $site->name, $e->getMessage()
+										)
+									);
+
+									$config = $site->getConfig();
+									$config->set('extensions.lastErrorMessage', $e->getMessage());
+									$site->config = $config;
+								}
 							);
-
-							$config = $site->getConfig();
-							$config->set('extensions.lastErrorMessage', $e->getMessage());
-
-							try
-							{
-								$site->save(
-									[
-										'config' => $config->toString(),
-									]
-								);
-							}
-							catch (\Exception $e)
-							{
-								$this->logger->error(
-									sprintf(
-										'Error saving the extension information for site #%d (%s) upon failed API call: %s',
-										$site->id, $site->name, $e->getMessage()
-									)
-								);
-							}
 						}
 					);
 			},

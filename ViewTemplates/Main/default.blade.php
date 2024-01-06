@@ -84,12 +84,13 @@ $mainModel = $this->getModel('main');
 		/** @var \Akeeba\Panopticon\Model\Site $item */
 		?>
         @foreach($this->items as $item)
-				<?php
-				$url               = $item->getBaseUrl();
-				$config            = $item->getConfig();
-				$favicon           = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
-				$certificateStatus = $item->getSSLValidityStatus();
-				?>
+		        <?php
+		        $url               = $item->getBaseUrl();
+		        $config            = $item->getConfig();
+		        $favicon           = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
+		        $certificateStatus = $item->getSSLValidityStatus();
+		        $uptimeStatus      = $this->getContainer()->helper->uptime->status($item);
+		        ?>
             <tr>
                 <td>
                     <div class="d-flex flex-row gap-2">
@@ -103,7 +104,33 @@ $mainModel = $this->getModel('main');
                         @endif
                         <div>
                             <div>
-                                <a class="fw-medium"
+                                @if (!$uptimeStatus->up && !$uptimeStatus->isScheduled)
+                                    <div class="d-inline-block bg-danger rounded-pill px-1 text-bg-dark">
+                                        @if ($uptimeStatus->detailsUrl)
+                                            <a href="{{ $uptimeStatus->detailsUrl }}">
+                                                <span class="fa fa-fw fa-arrow-down" aria-hidden="true"></span>
+                                                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')</span>
+                                            </a>
+                                        @else
+                                            <span class="fa fa-fw fa-arrow-down" aria-hidden="true"></span>
+                                            <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')</span>
+                                        @endif
+                                    </div>
+                                @elseif (!$uptimeStatus->up)
+                                    <div class="d-inline-block bg-warning rounded-pill px-1 text-bg-light">
+                                        @if ($uptimeStatus->detailsUrl)
+                                            <a href="{{ $uptimeStatus->detailsUrl }}">
+                                                <span class="fa fa-fw fa-hammer" aria-hidden="true"></span>
+                                                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')</span>
+                                            </a>
+                                        @else
+                                            <span class="fa fa-fw fa-hammer" aria-hidden="true"></span>
+                                            <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')</span>
+                                        @endif
+                                    </div>
+                                @endif
+
+                                <a class="fw-medium {{ $uptimeStatus->up ? '' : 'text-danger fw-bold' }}"
                                    href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
                                     {{{ $item->name }}}
                                 </a>

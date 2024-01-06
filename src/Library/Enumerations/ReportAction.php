@@ -23,5 +23,7 @@ enum ReportAction: string
 	case BACKUP                = 'backup';
 	case FILESCANNER           = 'filescanner';
 	case SITE_ACTION           = 'site_action';
+	case UPTIME_UP             = 'site_up';
+	case UPTIME_DOWN           = 'site_down';
 	case MISC_ACTION           = 'misc_action';
 }

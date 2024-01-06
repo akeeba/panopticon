@@ -331,12 +331,26 @@ trait AkeebaBackupIntegrationTrait
 				return false;
 			}
 
-			$dirty = $model->testAkeebaBackupConnection(true);
+			$this->saveSite(
+				$model,
+				function (Site $model)
+				{
+					$dirty = $model->testAkeebaBackupConnection(true);
 
-			if ($dirty)
-			{
-				$model->save();
-			}
+					if (!$dirty)
+					{
+						// This short-circuits saveSite(), telling it to save nothing.
+						throw new \RuntimeException('Nothing to save');
+					}
+				},
+				function (Throwable $e)
+				{
+					if (!$e instanceof \RuntimeException || $e->getMessage() !== 'Nothing to save')
+					{
+						throw $e;
+					}
+				}
+			);
 		}
 		catch (Throwable)
 		{

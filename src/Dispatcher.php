@@ -58,11 +58,31 @@ class Dispatcher extends AWFDispatcher
 
 	public function onBeforeDispatch(): bool
 	{
+		$results = $this->getContainer()->eventDispatcher->trigger('onBeforeDispatch');
+
+		if (in_array(false, $results, true))
+		{
+			return false;
+		}
+
 		$this->loadCommonCSS();
 		$this->loadCommonJavaScript();
 
 		return true;
 	}
+
+	public function onAfterDispatch()
+	{
+		$results = $this->getContainer()->eventDispatcher->trigger('onAfterDispatch');
+
+		if (in_array(false, $results, true))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 
 	private function loadCommonJavaScript(): void
 	{
