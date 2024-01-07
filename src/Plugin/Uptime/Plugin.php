@@ -35,7 +35,9 @@ class Plugin extends AbstractUptimePlugin
 		// If a different uptime provider is used don't bother.
 		if ($this->getContainer()->appConfig->get('uptime', 'none') !== 'panopticon')
 		{
-			return [];
+			return [
+				'onGetUptimeProvider'
+			];
 		}
 
 		// We add some extra events we need to handle for per-site configuration.
