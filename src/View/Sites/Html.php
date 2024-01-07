@@ -469,7 +469,7 @@ class Html extends DataViewHtml
 					[
 						'id'    => 'backuptasks',
 						'icon'  => 'fa fa-fw fa-hard-drive',
-						'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_AKEEBABACKUP_SCHEDULE'),
+						'title' => $this->getContainer()->language->text('PANOPTICON_SITES_MENU_AKEEBABACKUP_SCHEDULE'),
 						'url'   => $router->route(
 							sprintf("index.php?view=backuptasks&site_id=%s&manual=0", $this->item->getId())
 						),
@@ -485,7 +485,7 @@ class Html extends DataViewHtml
 					[
 						'id'    => 'scannertasks',
 						'icon'  => 'fa fa-fw fa-shield-halved',
-						'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_ADMINTOOLS_SCHEDULE'),
+						'title' => $this->getContainer()->language->text('PANOPTICON_SITES_MENU_ADMINTOOLS_SCHEDULE'),
 						'url'   => $router->route(
 							sprintf("index.php?view=scannertasks&site_id=%s&manual=0", $this->item->getId())
 						),
