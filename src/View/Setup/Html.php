@@ -124,7 +124,7 @@ class Html extends \Awf\Mvc\DataView\Html
 		if ($subTitle)
 		{
 			$title .= sprintf(
-				'<small class="ms-1 text-muted"><span class="fa fa-chevron-right" aria-hidden="true"></span></small><small class="ms-2 text-primary-emphasis">%s</small>',
+				' - <small>%s</small>',
 				$subTitle
 			);
 		}
