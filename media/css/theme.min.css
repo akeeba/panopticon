@@ -2,7 +2,7 @@
  * @package   panopticon
  * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
- *//*!
+ */@media screen and (max-width: 567px){.table.is-mobile-stack thead{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important}.table.is-mobile-stack tbody tr,.table.is-mobile-stack tbody th,.table.is-mobile-stack tbody td{display:block}.table.is-mobile-stack tbody th::before,.table.is-mobile-stack tbody td::before{font-weight:700;display:inline-block;content:attr(data-label);min-width:25%}}/*!
  * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
