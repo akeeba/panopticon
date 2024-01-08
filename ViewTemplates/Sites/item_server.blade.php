@@ -42,10 +42,9 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
     <div class="card-body collapse show" id="cardServerBody">
 
         {{-- OS and CPU summary --}}
-        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between gap-2 mb-2">
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-between gap-2 mb-2">
             {{-- Operating System --}}
-            <div class="d-flex flex-column flex-sm-row fs-5 align-items-center gap-2">
-                <div>
+            <div class="fs-5">
                     @if (($serverInfo->os?->family ?? null) === 'Linux')
                         <span class="fab fa-fw fa-linux" aria-hidden="true"></span>
                         <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_OS_LINUX')</span>
@@ -62,9 +61,8 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
                         <span class="fa fa-fw fa-circle-question" aria-hidden="true"></span>
                         <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_OS_OTHER')</span>
                     @endif
-                </div>
                 @if(!empty($serverInfo->os?->os ?? null) || !empty($serverInfo->os?->kernel ?? null))
-                    <div>
+                    <span>
                         @if(($serverInfo->os?->os ?? null))
                             <span>{{{ $serverInfo->os?->os }}}</span>
                         @else
@@ -73,46 +71,42 @@ $freeDb     = !empty($serverInfo->dbDisk->free ?? 0)
                         @if(($serverInfo->os?->kernel ?? null))
                             <span class="text-body-tertiary">({{{ $serverInfo->os?->kernel }}})</span>
                         @endif
-                    </div>
+                    </span>
                 @elseif(($serverInfo->os?->family ?? null) === 'Windows')
-                    <div>
+                    <span>
                         @lang('PANOPTICON_SITE_LBL_SERVER_OS_WINDOWS')
-                    </div>
+                    </span>
                 @else
-                    <div>
+                    <span>
                         @lang('PANOPTICON_SITE_LBL_SERVER_OS_OTHER')
-                    </div>
+                    </span>
                 @endif
             </div>
 
             {{-- CPU --}}
             @if ($serverInfo->cpuInfo?->cores ?? null)
-            <div class="d-flex flex-column flex-md-row align-items-center gap-2">
-                <div class="fs-5">
-                    <span class="fa fa-fw fa-microchip" aria-hidden="true"
-                          data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_CPU')"
-                    ></span>
-                    <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_CPU')</span>
-                </div>
-                <div>
-                    <span class="text-secondary">
-                        {{ (int) $serverInfo->cpuInfo?->cores }}
-                    </span>
-                    <span class="text-body-tertiary">×</span>
-                </div>
-                <div class="text-secondary">
+            <div>
+                <span class="fa fa-fw fa-microchip" aria-hidden="true"
+                        data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_SITE_LBL_SERVER_CPU')"
+                ></span>
+                <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_SERVER_CPU')</span>
+                <span class="text-secondary">
+                    {{ (int) $serverInfo->cpuInfo?->cores }}
+                </span>
+                <span class="text-body-tertiary">×</span>
+                <span class="text-secondary">
                     @if ($serverInfo->cpuInfo?->model ?? null)
                         {{{ $serverInfo->cpuInfo->model }}}
                     @else
                         @lang('PANOPTICON_SITE_LBL_SERVER_CPU_UNKNOWN')
                     @endif
-                </div>
+                </span>
             </div>
             @endif
         </div>
 
         {{-- Uptime, Server Load and CPU Utilisation --}}
-        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between gap-3 mb-2">
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-between gap-2 mb-2">
 
             {{-- Uptime --}}
             @if($serverInfo->load?->uptime ?? '')
