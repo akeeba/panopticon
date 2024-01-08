@@ -1,0 +1,38 @@
+/*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2024 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+// alternative method to display tables on mobile
+
+@media screen and (max-width: 567px) {
+  .table.is-mobile-stack {
+    thead {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    tbody tr,
+    tbody th,
+    tbody td {
+      display: block;
+    }
+
+    tbody th::before,
+    tbody td::before {
+      font-weight: 700;
+      display: inline-block;
+      content: attr(data-label);
+      min-width: 25%;
+    }
+  }
+}
+
