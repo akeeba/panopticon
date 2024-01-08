@@ -90,7 +90,7 @@ $token               = $this->container->session->getCsrfToken()->getValue();
         <span class="fa fa-door-closed" aria-hidden="true"></span>
         @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_ACTIONS_TIP')
     </p>
-    <div class="d-flex flex-column flex-md-row gap-md-2">
+    <div class="row row-cols-lg-auto g-4 align-items-center mb-3 p-2">
         @yield('atUnblockMyIP')
         @yield('atEnableDisablePlugin')
         @yield('atHtaccessEnableDisable')
