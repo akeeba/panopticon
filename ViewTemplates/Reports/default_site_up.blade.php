@@ -8,4 +8,4 @@ defined('AKEEBA') || die;
  */
 ?>
 
-@lang('PANOPTICON_REPORTS_LBL_MISC')
+@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_UP')

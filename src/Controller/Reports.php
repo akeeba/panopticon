@@ -8,11 +8,17 @@
 namespace Akeeba\Panopticon\Controller;
 
 
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
 
 defined('AKEEBA') || die;
 
 class Reports extends Controller
 {
+	use ACLTrait;
 
+	public function test()
+	{
+		$this->display();
+	}
 }

@@ -31,6 +31,9 @@ trait ACLTrait
 		'about'         => [
 			'*' => ['*'],
 		],
+		'actionsummarytasks' => [
+			'*' => ['*']
+		],
 		'captive'       => [
 			'*' => ['*'],
 		],
