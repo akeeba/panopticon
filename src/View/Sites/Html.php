@@ -439,18 +439,18 @@ class Html extends DataViewHtml
 				]
 			)
 		)
-//			->addButton(
-//				new Button(
-//					[
-//						'id'    => 'actionsummarytasks',
-//						'icon'  => 'fa fa-fw fa-envelope-open-text',
-//						'title' => 'Scheduled Action Summary',
-//						'url'   => $router->route(
-//							sprintf("index.php?view=actionsummarytasks&site_id=%s", $this->item->getId())
-//						),
-//					]
-//				)
-//			)
+			->addButton(
+				new Button(
+					[
+						'id'    => 'actionsummarytasks',
+						'icon'  => 'fa fa-fw fa-envelope',
+						'title' => $this->getContainer()->language->text('PANOPTICON_ACTIONSUMMARYTASKS_TITLE'),
+						'url'   => $router->route(
+							sprintf("index.php?view=actionsummarytasks&site_id=%s", $this->item->getId())
+						),
+					]
+				)
+			)
 			->addButton(
 				new Button(
 					[

@@ -21,7 +21,7 @@ class Html extends BaseHtmlView
 	use CrudTasksTrait;
 	use TimeAgoTrait;
 
-	protected bool $hasSiteFilter;
+	protected bool $hasSiteFilter = true;
 
 	protected Pagination $pagination;
 

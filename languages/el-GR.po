@@ -2896,7 +2896,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_MAIN_DASH_BTN_RELOAD"
 msgid "Reload"
-msgstr "Επεναφόρτωση"
+msgstr "Επαναφόρτωση"
 
 msgctxt "PANOPTICON_MAIN_DASH_BTN_TIMER_STOP"
 msgid "Stop the timer"
@@ -8617,7 +8617,7 @@ msgstr "Επιπλέον Πληροφορίες"
 
 msgctxt "PANOPTICON_LOGS_LBL_RELOAD"
 msgid "Reload Now"
-msgstr "Επεναφόρτωση"
+msgstr "Επαναφόρτωση"
 
 msgctxt "PANOPTICON_LOGS_LBL_DELETED"
 msgid "Deleted log file <code>%s</code>"

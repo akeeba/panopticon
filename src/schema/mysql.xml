@@ -483,5 +483,17 @@ VALUES
 ]]></query>
         </action>
 
+        <!-- Install mail template: action_summary -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'action_summary') x
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
+VALUES
+('action_summary', '*', 'Site action summary for [SITE_NAME]', '<div class="akemail-outer-wrapper">\n<table>\n<tbody>\n<tr>\n<td width="10%">&nbsp;</td>\n<td>\n<div class="akemail-wrapper">\n<div class="akemail-container"><!-- Logo Header -->\n<div class="akemail-logo"><a href="[URL]">&nbsp;<img src="[URL]/media/images/logo_bw.svg" alt="Panopticon &mdash; Site Monitoring">&nbsp;</a></div>\n<!-- Hello -->\n<div class="akemail-hello">\n<p>Hello,</p>\n</div>\n[RENDERED_HTML] <!-- Bye, Bye -->\n<div class="akemail-outro">\n<p>Have a great day!</p>\n</div>\n<!-- Footer -->\n<div class="akemail-footer">\n<p class="akemail-footer-sitelink">&nbsp;<a href="[URL]">Panopticon &mdash; Site Monitoring</a></p>\n</div>\n</div>\n<!-- Legal info -->\n<div class="akemail-legalinfo">\n<p>This is an automated email. Please do not reply to it.</p>\n</div>\n</div>\n</td>\n<td width="10%">&nbsp;</td>\n</tr>\n</tbody>\n</table>\n</div>', 'Hello,\n\n\n[RENDERED_TEXT]\n\n\nHave a great day!\n\n------------------------------------------------------------------------------\n\nThis email was sent by the Panopticon installation on [URL]\nThis is an automated email. Please do not reply to it.');
+]]></query>
+        </action>
+
     </sql>
 </schema>

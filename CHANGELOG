@@ -2,6 +2,7 @@
 Akeeba Panopticon 1.1.0
 ================================================================================
 + Dashboard layout for Sites Overview [gh-395]
++ Scheduled Site Action Report Emails [gh-303]
 + Basic uptime monitoring [gh-491]
 + Plugin system
 + SSL/TLS certificate information display, and sending expiration warning emails [gh-397]

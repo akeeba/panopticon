@@ -39,5 +39,8 @@ BootstrapUtilities::fallbackLanguage();
 // Apply user-supplied code and miscellaneous files
 BootstrapUtilities::loadUserCode();
 
+// Addresses MySQL errors about the sort buffer being too short, especially when sending email.
+BootstrapUtilities::workaroundMySQLSortBufferSize();
+
 // Load plugins
 PluginHelper::loadPlugins();
