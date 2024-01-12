@@ -19,6 +19,8 @@ $context = $item->context->get('context');
     @endif
     {{ $item->siteActionAsString() }}
 </div>
-<div>
-    @include('Reports/error_cell', ['context' => $context])
-</div>
+@if (!boolval($status))
+    <div>
+        @include('Reports/error_cell', ['context' => $context])
+    </div>
+@endif

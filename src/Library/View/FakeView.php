@@ -10,10 +10,13 @@ namespace Akeeba\Panopticon\Library\View;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
+use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Mvc\View;
 
 class FakeView extends View
 {
+	use TimeAgoTrait;
+
 	/**
 	 * @param   Container  $container
 	 * @param   array      $config

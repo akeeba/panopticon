@@ -393,6 +393,24 @@ final class BootstrapUtilities
 	}
 
 	/**
+	 * Addresses MySQL errors about the sort buffer being too short, especially when sending email..
+	 *
+	 * @return  void
+	 * @since   1.1.0
+	 */
+	public static function workaroundMySQLSortBufferSize(): void
+	{
+		try
+		{
+			\Akeeba\Panopticon\Factory::getContainer()->db->setQuery('SET sort_buffer_size = 256000000')->execute();
+		}
+		catch (Throwable $e)
+		{
+			// Ignore it if this fails.
+		}
+	}
+
+	/**
 	 * Overrides the Symfony HtmlErrorRenderer for customisation reasons.
 	 *
 	 * Overrides the Symfony HtmlErrorRenderer:
