@@ -193,7 +193,7 @@ class Log extends Model
 		if ($siteId > 0)
 		{
 			$this->logs = array_filter(
-				$this->logs, fn($x) => str_ends_with($x, '.' . $siteId . 'log') || str_contains($x, '.' . $siteId . 'log.')
+				$this->logs, fn($x) => str_ends_with($x, '.' . $siteId . '.log') || str_contains($x, '.' . $siteId . '.log.')
 			);
 		}
 

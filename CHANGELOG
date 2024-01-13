@@ -23,6 +23,7 @@ Akeeba Panopticon 1.1.0
 # [LOW] Backup not Pro when extension not installed [gh-414]
 # [LOW] Date/time parsing on reports view [gh-419]
 # [LOW] MFA method setup has non-functional toolbar buttons [gh-468]
+# [LOW] Filtering the log files by site name did not work consistently
 
 Akeeba Panopticon 1.0.7
 ================================================================================
