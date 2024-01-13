@@ -50,6 +50,8 @@ class JoomlaUpdate extends AbstractCallback
 		$site               = $this->getSite($task);
 		$config             = $site->getConfig();
 
+		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+
 		try
 		{
 			switch ($this->currentState)
@@ -92,8 +94,6 @@ class JoomlaUpdate extends AbstractCallback
 					break;
 
 				case 'siteInfo':
-					$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
-
 					// I have to wrap this in a transaction for saving the new information to work.
 					$this->container->db->transactionStart();
 					$this->runSiteInfo($task, $storage);
@@ -469,8 +469,6 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$site = $this->getSite($task);
 
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
-
 		// Retrieve information from the storage
 		$mode = $storage->get('update.mode', 'chunk');
 
@@ -668,8 +666,6 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$site = $this->getSite($task);
 
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
-
 		$this->logger->info(
 			$this->getLanguage()->sprintf(
 				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_EVENTS',
@@ -703,8 +699,6 @@ class JoomlaUpdate extends AbstractCallback
 	private function runBackup(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
-
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		// Collect configuration and task process information
 		$config         = $site->getConfig();
@@ -835,8 +829,6 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$site = $this->getSite($task);
 
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
-
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$this->logger->info(
@@ -911,8 +903,6 @@ class JoomlaUpdate extends AbstractCallback
 	private function runExtract(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
-
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		$step = $storage->get('restore.step', 'start');
 		$url  = $this->getExtractUrl($site);
@@ -1299,6 +1289,8 @@ class JoomlaUpdate extends AbstractCallback
 			$options[RequestOptions::AUTH] = [$username, $password];
 		}
 
+		$options[RequestOptions::HTTP_ERRORS] = false;
+
 		// Send the request
 		$response = $client
 			->post(
@@ -1308,6 +1300,16 @@ class JoomlaUpdate extends AbstractCallback
 					]
 				)
 			);
+
+		// Special case: HTTP 401 means that the user failed to provide the administrator folder username and password.
+		if ($response->getStatusCode() === 401)
+		{
+			throw new RuntimeException(
+				$this->getLanguage()->text(
+					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_HTTP_401',
+				)
+			);
+		}
 
 		// We must always get HTTP 200
 		if ($response->getStatusCode() !== 200)
@@ -1446,8 +1448,6 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$site = $this->getSite($task);
 
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
-
 		$url = $this->getExtractUrl($site);
 
 		$this->logger->info(
@@ -1543,8 +1543,6 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$site = $this->getSite($task);
 
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
-
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
 		$this->logger->info(
@@ -1582,8 +1580,6 @@ class JoomlaUpdate extends AbstractCallback
 	private function runReloadUpdates(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
-
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
@@ -1654,8 +1650,6 @@ class JoomlaUpdate extends AbstractCallback
 	private function runAfterEvents(object $task, Registry $storage): void
 	{
 		$site = $this->getSite($task);
-
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
 		$this->logger->info(
 			$this->getLanguage()->sprintf(
@@ -1789,10 +1783,6 @@ class JoomlaUpdate extends AbstractCallback
 	 */
 	private function sendSuccessEmail(object $task, Registry $storage): void
 	{
-		$this->logger->pushLogger(
-			$this->container->loggerFactory->get($this->name . '.' . $this->getSite($task)->id)
-		);
-
 		// Ensure there are not stray transactions
 		try
 		{

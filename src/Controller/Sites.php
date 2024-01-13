@@ -352,7 +352,7 @@ class Sites extends DataController
 				function (Site $site)
 				{
 					$config = $site->getConfig();
-					$config->set('core.lastAutoUpdateVersion', $config->get('core.current.version'));
+					$config->set('core.lastAutoUpdateVersion', $config->get('core.latest.version'));
 					$site->config = $config->toString();
 				}
 			);

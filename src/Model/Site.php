@@ -1063,7 +1063,7 @@ class Site extends DataModel
 				return JoomlaUpdateRunState::REFRESH_RUNNING;
 			}
 
-			if (!$joomlaUpdateTask->enabled)
+			if ($joomlaUpdateTask->last_exit_code === Status::EXCEPTION->value || !$joomlaUpdateTask->enabled)
 			{
 				return JoomlaUpdateRunState::REFRESH_ERROR;
 			}
@@ -1077,14 +1077,14 @@ class Site extends DataModel
 			return JoomlaUpdateRunState::CANNOT_UPGRADE;
 		}
 
-		// The last auto-update version is the same as the latest available version. Not scheduled.
-		if ($config->get('core.lastAutoUpdateVersion') == $config->get('core.latest.version'))
+		// There is no scheduled update task.
+		if ($joomlaUpdateTask === null)
 		{
 			return JoomlaUpdateRunState::NOT_SCHEDULED;
 		}
 
-		// There is no scheduled update task.
-		if ($joomlaUpdateTask === null)
+		// There is an update task, but it's disabled
+		if (!$joomlaUpdateTask->enabled && in_array($joomlaUpdateTask->last_exit_code, [Status::INITIAL_SCHEDULE->value, Status::OK->value]))
 		{
 			return JoomlaUpdateRunState::NOT_SCHEDULED;
 		}

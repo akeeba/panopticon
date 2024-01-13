@@ -244,11 +244,7 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
 @stop
 
 @section('jUpdateSchedule')
-    @if ($this->joomlaUpdateRunState === JoomlaUpdateRunState::NOT_SCHEDULED)
-        <p>
-            @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
-        </p>
-    @elseif ($this->joomlaUpdateRunState === JoomlaUpdateRunState::SCHEDULED)
+    @if ($this->joomlaUpdateRunState === JoomlaUpdateRunState::SCHEDULED || $this->joomlaUpdateRunState === JoomlaUpdateRunState::REFRESH_SCHEDULED)
         <?php
         $showScheduleButton       = false;
         $showCancelScheduleButton = true;
@@ -260,25 +256,25 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
                 @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP')
             @endif
         </p>
-    @elseif ($this->joomlaUpdateRunState === JoomlaUpdateRunState::RUNNING)
+    @elseif ($this->joomlaUpdateRunState === JoomlaUpdateRunState::RUNNING || $this->joomlaUpdateRunState === JoomlaUpdateRunState::REFRESH_RUNNING)
 			<?php $showScheduleButton = false; ?>
         <p>
             @lang('PANOPTICON_SITE_LBL_JUPDATE_RUNNING')
         </p>
-    @elseif ($this->joomlaUpdateRunState === JoomlaUpdateRunState::ERROR)
+    @elseif ($this->joomlaUpdateRunState === JoomlaUpdateRunState::ERROR || $this->joomlaUpdateRunState === JoomlaUpdateRunState::REFRESH_ERROR)
         {{-- Task error condition --}}
-			<?php
-			$status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE
-			?>
+        <?php
+        $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE;
+        ?>
         <p class="text-warning-emphasis">
             @lang('PANOPTICON_SITE_LBL_JUPDATE_ERRORED')
             {{ $status->forHumans() }}
         </p>
         @if ($status->value === Status::EXCEPTION->value)
-				<?php
-				$storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage
-					: (new Registry($joomlaUpdateTask->storage));
-				?>
+            <?php
+            $storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage
+                : (new Registry($joomlaUpdateTask->storage));
+            ?>
             <p>
                 @lang('PANOPTICON_SITE_LBL_JUPDATE_THE_ERROR_REPORTED_WAS')
             </p>
@@ -293,10 +289,14 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
 
         {{-- Button to reset the error (by removing the failed task) --}}
         <a href="@route(sprintf('index.php?view=site&task=clearUpdateScheduleError&id=%d&%s=1', $this->item->id, $token))"
-           class="btn btn-primary mt-3" role="button">
+           class="btn btn-primary" role="button">
             <span class="fa fa-eraser" aria-hidden="true"></span>
             @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_CLEAR_ERROR')
         </a>
+    @elseif($this->joomlaUpdateRunState != JoomlaUpdateRunState::CANNOT_UPGRADE)
+        <p>
+            @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
+        </p>
     @endif
 
     @if ($showScheduleButton)
