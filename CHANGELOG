@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 1.1.1
+================================================================================
+# [LOW] Extraneous slash in mail messages' `[URL]` variable [gh-519]
+
 Akeeba Panopticon 1.1.0
 ================================================================================
 + Dashboard layout for Sites Overview [gh-395]

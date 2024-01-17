@@ -302,7 +302,7 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 		}
 
 		$replacements = array_merge([
-			'URL' => Uri::base(false, $this->getContainer()),
+			'URL' => rtrim(Uri::base(false, $this->getContainer()), '/'),
 		], $replacements);
 		$replaceFrom  = array_map(
 			fn(string $x) => '[' . strtoupper($x) . ']',
