@@ -247,7 +247,7 @@ class Html extends DataViewHtml
 		{
 			$profiles = [];
 		}
-		$ret      = [];
+		$ret = [];
 
 		foreach ($profiles as $profile)
 		{
@@ -361,14 +361,14 @@ class Html extends DataViewHtml
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_TITLE_READ'));
 
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
-		$this->item                = $this->getModel();
-		$this->canEdit             = $this->item->canEdit();
-		$this->siteConfig          = $this->item->getConfig();
-		$this->connectorVersion    = $this->siteConfig->get('core.panopticon.version');
-		$this->connectorAPI        = $this->siteConfig->get('core.panopticon.api');
-		$this->baseUri             = Uri::getInstance($this->item->getBaseUrl());
-		$this->adminUri            = Uri::getInstance($this->item->getAdminUrl());
-		$this->extensions          = $this->item->getExtensionsList();
+		$this->item             = $this->getModel();
+		$this->canEdit          = $this->item->canEdit();
+		$this->siteConfig       = $this->item->getConfig();
+		$this->connectorVersion = $this->siteConfig->get('core.panopticon.version');
+		$this->connectorAPI     = $this->siteConfig->get('core.panopticon.api');
+		$this->baseUri          = Uri::getInstance($this->item->getBaseUrl());
+		$this->adminUri         = Uri::getInstance($this->item->getAdminUrl());
+		$this->extensions       = $this->item->getExtensionsList();
 
 		if ($this->item->cmsType() === CMSType::JOOMLA)
 		{
@@ -498,17 +498,62 @@ class Html extends DataViewHtml
 
 		if ($this->canEdit)
 		{
-			$this->addButtonFromDefinition(
+			$troubleshootDropdown = (new DropdownButton(
 				[
-					'id'    => 'doctor',
-					'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
-					'class' => 'btn btn-secondary border-light',
-					'url'   => $router->route(
-						sprintf("index.php?view=site&task=connectionDoctor&id=%s", $this->item->getId())
-					),
-					'icon'  => 'fa fa-fw fa-stethoscope',
+					'id'    => 'dropdown-troubleshoot',
+					'icon'  => 'fa fa-fw fa-kit-medical',
+					'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_DROPDOWN_TROUBLESHOOT'),
+					'class' => 'btn btn-outline-warning ms-2',
 				]
+			))->addButton(
+				new Button(
+					[
+						'id'    => 'doctor',
+						'icon'  => 'fa fa-fw fa-stethoscope',
+						'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
+						'url'   => $router->route(
+							sprintf("index.php?view=site&task=connectionDoctor&id=%s", $this->item->getId())
+						),
+					]
+				)
 			);
+
+			if ($this->getContainer()->userManager->getUser()->getPrivilege('panopticon.super', false))
+			{
+				$troubleshootDropdown->addButton(
+					new Button(
+						[
+							'id'    => 'troubleshooting-divider-01',
+							'title' => '---',
+							'url'   => null,
+						]
+					)
+				)->addButton(
+					new Button(
+						[
+							'id'    => 'tasks',
+							'icon'  => 'fa fa-fw fa-list-check',
+							'title' => $this->getLanguage()->text('PANOPTICON_TASKS_TITLE'),
+							'url'   => $router->route(
+								sprintf("index.php?view=tasks&site_id=%s", $this->item->getId())
+							),
+						]
+					)
+				)->addButton(
+					new Button(
+						[
+							'id'    => 'logs',
+							'icon'  => 'fa fa-fw fa-file-lines',
+							'title' => $this->getLanguage()->text('PANOPTICON_LOGS_TITLE'),
+							'url'   => $router->route(
+								sprintf("index.php?view=log&site_id=%s", $this->item->getId())
+							),
+						]
+					)
+				);
+			}
+
+			$this->container->application->getDocument()->getToolbar()->addButton($troubleshootDropdown);
 		}
 
 		$this->cronStuckTime = $this->getCronStuckTime();

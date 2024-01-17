@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.0\n"
-"POT-Creation-Date: 2024-01-03 10:42:46\n"
+"POT-Creation-Date: 2024-01-13 16:37:04\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -698,6 +698,11 @@ msgid "Panopticon (Default Template)"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_APP_LBL_LANGUAGE"
+msgid "Language"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_TASKTYPE_AKEEBABACKUP"
 msgid "Take a backup with Akeeba Backup"
 msgstr ""
@@ -778,6 +783,16 @@ msgid "Send emails about SSL/TLS certificate expiration"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_TASKTYPE_UPTIMEMONITOR"
+msgid "Monitors sites\' uptime"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_ACTIONSUMMARYEMAIL"
+msgid "Sends a Site Action Summary email"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED"
 msgid "Site %d is disabled"
 msgstr ""
@@ -835,6 +850,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_UNEXPECTED_HTTP"
 msgid "Unexpected HTTP %d while extracting the update; the site may be broken."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_HTTP_401"
+msgid "HTTP status 401 while extracting the update. Your site\'s administrator folder is password protected. Please edit the site and enter the Administrator Directory Username and Password in the Connection tab. Then, retry scheduling an update for this site."
 msgstr ""
 
 #, phpformat
@@ -2893,6 +2913,21 @@ msgid "The last backup was taken a long time ago"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
+msgid "The site is up and running."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN"
+msgid "The site is down."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE"
+msgid "The site is down for maintenance."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_TITLE"
 msgid "Sites"
 msgstr ""
@@ -3315,6 +3350,41 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_SIG"
 msgid "The signature of your SSL/TLS certificate cannot be verified against the Certification Authorities known to the server. This usually means that you are using a self-signed certificate which will be rejected by browsers."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_TITLE"
+msgid "Very Basic Site Uptime Monitoring"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_NOTE"
+msgid "This is <em>very basic</em> uptime monitoring through Panopticon itself. It only notifies you by email when your site goes down and comes back up. It does not integrate with third party services, it does not offer history, it does not have a public uptime page. We strongly recommend using a third party service or software to monitor your sites\' uptime instead of using this feature."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_ENABLED"
+msgid "Monitor Uptime"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_ENABLED_HELP"
+msgid "Disabling this option will no longer send you emails, log site actions, or display badges when your site goes down and comes back up."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_PATH"
+msgid "URL Path To Monitor"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_STRING"
+msgid "Look For This String"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_STRING_HELP"
+msgid "The site will be considered up if the page contains this string. Do <em>NOT</em> use HTML; all tags and multiple whitespaces are removed before evaluating this string. Leave blank to consider any HTTP 2xx response as adequate proof the site is up."
 msgstr ""
 
 #, phpformat
@@ -4638,6 +4708,11 @@ msgid "Latest Backups"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_MENU_AKEEBABACKUP_SCHEDULE"
+msgid "Backup"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITE_LBL_AKEEBABACKUP_NO_RESULTS"
 msgid "There are no backups to review."
 msgstr ""
@@ -5318,6 +5393,11 @@ msgid "Collecting Site Information"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_UPTIME"
+msgid "Uptime Monitoring"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SYSTEM"
 msgid "System Preferences"
 msgstr ""
@@ -5390,6 +5470,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_THEME"
 msgid "CSS Theme File"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_THEME_DEFAULT"
+msgid "(Default)"
 msgstr ""
 
 #, phpformat
@@ -6043,6 +6128,26 @@ msgid "The System Configuration has been saved"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME"
+msgid "Uptime Monitoring Provider"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME_HELP"
+msgid "Choose which service will be used to report your sites\' uptime. Please note that the integrated “Panopticon” provider is very basic and has some gotchas. Please read the documentation."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_UPTIME_NONE"
+msgid "None"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_UPTIME_PANOPTICON"
+msgid "Panopticon"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EMAILTEST_WATCH_OUT"
 msgid "<strong>Watch out!</strong> Clicking the button below will cause all unsaved configuration setting changes to be lost. If you want to keep your changes please first click on the Save button in the toolbar, then click on the button below to send a test email message."
 msgstr ""
@@ -6325,6 +6430,21 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_LBL_CSS_HEAD"
 msgid "This CSS will be added to all HTML emails sent by Panopticon."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_DOWN"
+msgid "Site went down"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_UP"
+msgid "Site is back up"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_ACTION_SUMMARY"
+msgid "Site Action Summary"
 msgstr ""
 
 #, phpformat
@@ -7184,7 +7304,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_ADMINTOOLS_SCHEDULE"
-msgid "Scheduled Scans"
+msgid "Schedule Scans"
 msgstr ""
 
 #, phpformat
@@ -7195,6 +7315,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_ADMINTOOLS_REFRESH"
 msgid "Refresh"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_MENU_ADMINTOOLS_SCHEDULE"
+msgid "PHP File Change Scanner"
 msgstr ""
 
 #, phpformat
@@ -8528,6 +8653,11 @@ msgid "PHP File Change Scanner failed"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_MISC"
+msgid "Miscellaneous Action"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_REPORTS_LBL_DURATION_SR"
 msgid "Duration"
 msgstr ""
@@ -8580,5 +8710,60 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_SAVED"
 msgid "The Scheduled Update Summary task has been saved"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE"
+msgid "Scheduled Action Summary"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE_NEW"
+msgid "New Scheduled Action Summary"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE_EDIT"
+msgid "Edit Scheduled Action Summary"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_ACTIONSUMMARYTASK_SAVED"
+msgid "The Scheduled Action Summary has been saved"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The Site Action Summary schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_OPTIONS"
+msgid "Report Options"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD"
+msgid "Period"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_HELP"
+msgid "Choose which time period the report will be generated for."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_DAILY"
+msgid "Daily"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_WEEKLY"
+msgid "Weekly"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_MONTHLY"
+msgid "Monthly"
 msgstr ""
 
