@@ -24,7 +24,9 @@ We are happy to present you with Panopticon 1.1.0, nicknamed “Dawn”.
 
 ✨ **Preload hints, and HTTP 103 Early Hints** [gh-458] As long as your web server supports it, Panopticon will send HTTP/2 and HTTP/3 preload hints. If you are using [FrankenPHP](https://frankenphp.dev/) it will also send HTTP 103 Early Hint headers with that information, making the page load even faster.
 
-✨ **Additional colour themes (CSS) and easier theme selection** Panopticon now comes with additional colour themes (CSS files), and a drop-down to select them:
+✨ **Access a site's logs and tasks directly from the Site Information page**. Wanna take a look at the log entries and the scheduled tasks for a site? You no longer need to hunt for that site. The link is under the new Troubleshooting menu item at the top of the Site Information page.
+
+✨ **Additional colour themes (CSS) and easier theme selection**. Panopticon now comes with additional colour themes (CSS files), and a drop-down to select them:
 
 * Aegean. Deep blue and white, the colours of the Aegean Sea.
 * Minty (by Bootswatch). Pastel greens and pink, like a mint candy.
@@ -53,7 +55,32 @@ Kindly remember that the order and timeframe for implementation largely depends 
 
 ## 📋 CHANGELOG
 
-[//]: # (TODO)
+* ✨ Dashboard layout for Sites Overview [gh-395]
+* ✨ Scheduled Site Action Report Emails [gh-303]
+* ✨ Basic uptime monitoring [gh-491]
+* ✨ Plugin system
+* ✨ SSL/TLS certificate information display, and sending expiration warning emails [gh-397]
+* ✨ Select language in Setup [gh-384]
+* ✨ Change the rotated log names [gh-398]
+* ✨ Report latest backup status [gh-396]
+* ✨ Support for site favicons
+* ✨ Preload hints, and HTTP 103 Early Hints [gh-458]
+* ✨ Language selection after logging in [gh-490]
+* ✨ Additional colour themes (CSS) and easier theme selection
+* ✨ Access a site's logs and tasks directly from the Site Information page
+* ✏️ Running `composer install` will now always create the `version.php` file
+* ✏️ Don't show backup and scanner scheduling buttons unless corresponding software installed [gh-413]
+* ✏️ More accessible ID column labels [gh-446]
+* 🐞 🔺 The Joomla! Update state could appear to be inconsistent
+* 🐞 🔺 Users should not be able to be copied [gh-481]
+* 🐞 ➖ Sending emails with the default language results in untranslated variables
+* 🐞 🔻 PHP error when the browser returns invalid data during WebAuthn [gh-406]
+* 🐞 🔻 TinyMCE content always dark [gh-410]
+* 🐞 🔻 Backup not Pro when extension not installed [gh-414]
+* 🐞 🔻 Date/time parsing on reports view [gh-419]
+* 🐞 🔻 MFA method setup has non-functional toolbar buttons [gh-468]
+* 🐞 🔻 Filtering the log files by site name did not work consistently
+
 
 Legend:
 
