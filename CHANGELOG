@@ -3,6 +3,7 @@ Akeeba Panopticon 1.1.1
 ================================================================================
 # [HIGH] Tasks would be picked up by multiple task runners running in parallel (MySQL race condition)
 # [LOW] Extraneous slash in mail messages' `[URL]` variable [gh-519]
+# [LOW] Joomla update failures could result in the wrong error message displayed
 
 Akeeba Panopticon 1.1.0
 ================================================================================

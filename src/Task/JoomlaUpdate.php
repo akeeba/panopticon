@@ -107,6 +107,9 @@ class JoomlaUpdate extends AbstractCallback
 				case 'email':
 					$this->sendSuccessEmail($task, $storage);
 					break;
+
+				case 'finish':
+					break;
 			}
 		}
 		catch (Throwable $e)
@@ -150,7 +153,7 @@ class JoomlaUpdate extends AbstractCallback
 					]
 				);
 			}
-			catch (Throwable $e)
+			catch (Throwable)
 			{
 				// Ignore this
 			}
@@ -478,8 +481,23 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			case 'chunk':
 			default:
+				// Get values from the storage
+				$url         = $storage->get('update.package_url', null);
+				$size        = $storage->get('update.size', null);
+				$offset      = $storage->get('update.offset', null);
+				$chunk_index = $storage->get('update.chunk_index', null);
+				$max_time    = $storage->get('update.max_time', null);
+
+				// Sanitise values
+				$url         = empty($url) ? null : (filter_var($url, FILTER_SANITIZE_URL) ?: null);
+				$size        = $size >= 0 ? $size : null;
+				$offset      = $offset >= 0 ? $offset : null;
+				$chunk_index = $chunk_index >= 0 ? $chunk_index : null;
+				$max_time    = $max_time >= 0 ? $max_time : null;
+
 				$offsetInt = (int) ($offset ?? -1);
 				$offsetInt = $offsetInt <= 0 ? 0 : $offset;
+
 				$this->logger->info(
 					$offsetInt <= 0
 						? $this->getLanguage()->sprintf(
@@ -514,43 +532,29 @@ class JoomlaUpdate extends AbstractCallback
 				}
 
 				// Then, download the update
-				// Get values from the storage
-				$url         = $storage->get('update.package_url', null);
-				$size        = $storage->get('update.size', null);
-				$offset      = $storage->get('update.offset', null);
-				$chunk_index = $storage->get('update.chunk_index', null);
-				$max_time    = $storage->get('update.max_time', null);
-
-				// Sanitise values
-				$url         = empty($url) ? null : (filter_var($url, FILTER_SANITIZE_URL) ?: null);
-				$size        = $size >= 0 ? $size : null;
-				$offset      = $offset >= 0 ? $offset : null;
-				$chunk_index = $chunk_index >= 0 ? $chunk_index : null;
-				$max_time    = $max_time >= 0 ? $max_time : null;
-
 				$postData = [];
 
-				if ($url !== null)
+				if (!empty($url))
 				{
 					$postData['url'] = $url;
 				}
 
-				if ($size !== null)
+				if (!empty($size))
 				{
 					$postData['size'] = $size;
 				}
 
-				if ($offset !== null)
+				if (!empty($offset))
 				{
 					$postData['offset'] = $offset;
 				}
 
-				if ($chunk_index !== null)
+				if (!empty($chunk_index))
 				{
 					$postData['chunk_index'] = $chunk_index;
 				}
 
-				if ($max_time !== null)
+				if (!empty($max_time))
 				{
 					$postData['max_time'] = $max_time;
 				}
@@ -606,7 +610,7 @@ class JoomlaUpdate extends AbstractCallback
 							$site->id,
 							$site->name
 						),
-						[json_encode($raw)]
+						[empty($raw) ? $json : $raw]
 					);
 
 					$storage->set('update.mode', 'single');
@@ -641,13 +645,21 @@ class JoomlaUpdate extends AbstractCallback
 
 				if ($done)
 				{
+					$this->logger->debug('Done with the download');
+
 					$this->advanceState();
 				}
+
+				$this->logger->debug('Will continue download in the next step');
 
 				break;
 
 			case 'single':
+				$this->logger->info('Downloading the update (single part)');
+
 				$this->doSinglePartDownload($site, $storage);
+
+				$this->logger->info('Downloaded the update (single part)');
 
 				$this->advanceState();
 				break;
