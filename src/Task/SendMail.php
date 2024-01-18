@@ -217,7 +217,7 @@ class SendMail extends AbstractCallback
 						)
 					);
 				}
-				catch (\PHPMailer\PHPMailer\Exception $e)
+				catch (\Throwable $e)
 				{
 					$this->logger->error(
 						sprintf(
