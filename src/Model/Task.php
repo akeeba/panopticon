@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Task\SymfonyStyleAwareInterface;
 use Awf\Container\Container;
+use Awf\Database\Driver;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
@@ -52,6 +53,10 @@ defined('AKEEBA') || die;
  */
 class Task extends DataModel
 {
+	private const DB_LOCK_NAME = 'PanopticonNextTask';
+
+	private const DB_LOCK_TIMEOUT = 5;
+
 	public function __construct(Container $container = null)
 	{
 		$this->tableName   = '#__tasks';
@@ -229,33 +234,14 @@ class Task extends DataModel
 	public function runNextTask(?LoggerInterface $logger = null, ?SymfonyStyle $ioStyle = null): bool
 	{
 		$logger ??= new NullLogger();
-		$db     = $this->getDbo();
 
 		@ob_start();
 
 		$logger->info('Locking task tables');
 
 		// Lock the table to avoid concurrency issues
-		try
+		if (!$this->lockTables($logger))
 		{
-			$query = 'LOCK TABLES ' . $db->quoteName($this->tableName) . ' WRITE, '
-				. $db->quoteName($this->tableName, 's') . ' WRITE, '
-				. $db->quoteName('#__sites') . ' WRITE';
-			$db->setQuery($query)->execute();
-		}
-		catch (Exception $e)
-		{
-			$logger->error(
-				sprintf(
-					'Locking task tables failed [%s:%d]: %s',
-					$e->getFile(),
-					$e->getLine(),
-					$e->getMessage()
-				)
-			);
-
-			ob_end_clean();
-
 			return false;
 		}
 
@@ -265,6 +251,8 @@ class Task extends DataModel
 			$logger->info('Cleaning up stuck tasks');
 
 			$this->cleanUpStuckTasks();
+
+			$this->unlockTables();
 		}
 		catch (Throwable $e)
 		{
@@ -278,7 +266,7 @@ class Task extends DataModel
 			);
 
 			// If an error occurred it means that a past lock has not yet been freed; give up.
-			$db->unlockTables();
+			$this->unlockTables();
 
 			@ob_end_clean();
 
@@ -290,13 +278,26 @@ class Task extends DataModel
 		{
 			$logger->info('Getting next task');
 
+			/**
+			 * MAGIC. DO NOT TOUCH.
+			 *
+			 * If you have multiple processes trying to get a lock at precisely the same time (down to a few hundreds of
+			 * nanoseconds) MySQL will happily acquire the lock for EACH. AND. EVERY. ONE. OF. THEM! This, of course, is
+			 * really bloody useless as it beats the entire point of having a lock. Adding a random sleep between 25 and
+			 * 100 msec we “unsync” the various threads enough so that MySQL can get its ducks in a row and apply locks
+			 * they way its documentation claims it does.
+			 *
+			 * Almost six hours of debugging comes down to “wait for a random amount of time”. For fuck's sake…
+			 */
+			usleep(random_int(25000, 100000));
+
 			$pendingTask = $this->getNextTask();
 
 			if (empty($pendingTask))
 			{
 				$logger->info('There are no pending tasks.');
 
-				$db->unlockTables();
+				$this->unlockTables();
 
 				return false;
 			}
@@ -312,7 +313,7 @@ class Task extends DataModel
 				)
 			);
 
-			$db->unlockTables();
+			$this->unlockTables();
 
 			@ob_end_clean();
 
@@ -352,7 +353,7 @@ class Task extends DataModel
 			$willResume = $pendingTask->last_exit_code == Status::WILL_RESUME->value;
 
 			$updates = [
-				'last_exit_code' => Status::RUNNING,
+				'last_exit_code' => Status::RUNNING->value,
 			];
 
 			/**
@@ -375,7 +376,7 @@ class Task extends DataModel
 			try
 			{
 				$pendingTask->save([
-					'last_exit_code' => Status::NO_LOCK,
+					'last_exit_code' => Status::NO_LOCK->value,
 					'last_execution' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
 				]);
 			}
@@ -384,7 +385,7 @@ class Task extends DataModel
 				// If that fails to, man, I don't know! Your database died or something?
 			}
 
-			$db->unlockTables();
+			$this->unlockTables();
 
 			@ob_end_clean();
 
@@ -395,7 +396,7 @@ class Task extends DataModel
 		{
 			$logger->debug('Unlocking tables');
 
-			$db->unlockTables();
+			$this->unlockTables();
 		}
 		catch (Exception)
 		{
@@ -551,11 +552,11 @@ class Task extends DataModel
 
 			try
 			{
-				$db->lockTable($this->tableName);
+				$this->lockTables();
 				$pendingTask->save([
 					'last_run_end' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
 				]);
-				$db->unlockTables();
+				$this->unlockTables();
 			}
 			catch (Exception)
 			{
@@ -563,7 +564,7 @@ class Task extends DataModel
 
 				$pendingTask->save([
 					'last_run_end'   => ($this->container->dateFactory('now', 'UTC'))->toSql(),
-					'last_exit_code' => Status::NO_RELEASE,
+					'last_exit_code' => Status::NO_RELEASE->value,
 				]);
 			}
 
@@ -615,7 +616,7 @@ class Task extends DataModel
 		if (in_array(connection_status(), [2, 3]))
 		{
 			$pendingTask->save([
-				'last_exit_code' => Status::TIMEOUT,
+				'last_exit_code' => Status::TIMEOUT->value,
 				'storage'        => null,
 			]);
 
@@ -650,28 +651,6 @@ class Task extends DataModel
 				$db->qn('next_execution') . ' ASC'
 			);
 
-//		$query = $db->getQuery(true)
-//			->select('*')
-//			->from($db->qn($this->tableName))
-//			->where([
-//				$db->quoteName('enabled') . ' = 1',
-//				$db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value,
-//			])
-//			->order($db->qn('last_run_end') . ' ASC')
-//			->union(
-//				$db->getQuery(true)
-//					->select('*')
-//					->from($db->qn($this->tableName, 's'))
-//					->where([
-//						$db->quoteName('enabled') . ' = 1',
-//						$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value,
-//						$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value,
-//						$db->qn('next_execution') . ' <= ' . $db->quote(
-//							$this->container->dateFactory('now', 'UTC')->toSql()),
-//					])
-//					->order($db->qn('priority') . ' ASC, ' . $db->qn('next_execution') . ' ASC')
-//			);
-
 		$task = $db->setQuery($query, 0, 1)->loadObject();
 
 		if (empty($task))
@@ -680,5 +659,52 @@ class Task extends DataModel
 		}
 
 		return $this->getClone()->bind($task);
+	}
+
+	private function lockTables(?LoggerInterface $logger = null, bool $unlockFirst = false)
+	{
+		$logger ??= new NullLogger();
+		$db     = $this->getDbo();
+
+		if ($unlockFirst)
+		{
+			$this->unlockTables();
+		}
+
+		$gotLock = $db->setQuery(
+			'SELECT GET_LOCK(' . $db->quote(self::DB_LOCK_NAME) . ', ' . self::DB_LOCK_TIMEOUT . ')'
+		)->loadResult();
+
+		if ($gotLock == 1)
+		{
+			$connId = $db->setQuery('SELECT CONNECTION_ID()')->loadResult();
+
+			$logger->debug(sprintf(
+				'Got tasks lock [%d]', $connId
+			));
+
+			return true;
+		}
+
+		$logger->notice('Could not obtain tasks lock');
+
+		return false;
+	}
+
+	private function unlockTables()
+	{
+		$db = $this->getDbo();
+
+		while (true)
+		{
+			$result = $db->setQuery(
+				'SELECT RELEASE_LOCK('.$db->quote(self::DB_LOCK_NAME).')'
+			)->loadResult();
+
+			if ($result !== 1)
+			{
+				break;
+			}
+		}
 	}
 }
