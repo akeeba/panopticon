@@ -95,11 +95,11 @@ $mainModel = $this->getModel('main');
                 <td>
                     <div class="d-flex flex-row gap-2">
                         @if ($favicon)
-                            <div class="d-none d-md-block">
+                            <div class="d-none d-md-block text-center" style="width: 1.3em">
                                 <img alt="" aria-hidden="true"
                                      src="{{{ $favicon }}}"
                                      class="me-1"
-                                     style="aspect-ratio: 1.0; max-width: 2em; max-height: 2em; min-width: 1em; min-height: 1em">
+                                     style="aspect-ratio: 1.0; max-width: 1.3em; max-height: 1.3em; min-width: 1em; min-height: 1em">
                             </div>
                         @endif
                         <div>

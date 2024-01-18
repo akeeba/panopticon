@@ -38,6 +38,7 @@ use Awf\Registry\Registry;
 use Awf\Uri\Uri;
 use Awf\User\User;
 use Awf\Utils\ArrayHelper;
+use Awf\Utils\Template;
 use DateTime;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -1230,7 +1231,7 @@ class Site extends DataModel
 
 		if ($onlyIfCached && !$pool->hasItem($cacheKey))
 		{
-			return null;
+			return null ?? $this->getDefaultFavicon();
 		}
 
 		return $callbackController
@@ -1240,7 +1241,26 @@ class Site extends DataModel
 				[$minSize, $type],
 				$cacheKey,
 				31536000
-			);
+			) ?? $this->getDefaultFavicon();
+	}
+
+	private function getDefaultFavicon(): ?string
+	{
+		$filePath = Template::parsePath('media://images/globe-solid.svg', true, $this->getContainer()->application);
+
+		if (!file_exists($filePath))
+		{
+			return null;
+		}
+
+		$contents = @file_get_contents($filePath);
+
+		if ($contents === false)
+        {
+            return null;
+        }
+
+		return sprintf("data:%s;base64,%s", 'image/svg+xml', base64_encode($contents));
 	}
 
 	/**
