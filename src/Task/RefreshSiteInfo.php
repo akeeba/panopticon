@@ -313,7 +313,7 @@ class RefreshSiteInfo extends AbstractCallback
 
 							return $response;
 						},
-						function (RequestException $e) use ($site) {
+						function (Throwable $e) use ($site) {
 							$this->logger->error(sprintf(
 								'Could not retrieve information for site #%d (%s). The server replied with the following error: %s',
 								$site->id, $site->name, $e->getMessage()
@@ -322,7 +322,7 @@ class RefreshSiteInfo extends AbstractCallback
 							// Save the last error message
 							$this->saveSite(
 								$site,
-								function (Site $site)
+								function (Site $site) use ($e)
 								{
 									$config = $site?->getConfig() ?? new Registry();
 

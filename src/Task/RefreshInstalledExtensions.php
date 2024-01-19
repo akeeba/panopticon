@@ -312,7 +312,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 							);
 							$this->container->cacheFactory->pool('extensions')->delete($cacheKey);
 						},
-						function (RequestException $e) use ($site) {
+						function (\Throwable $e) use ($site) {
 							$this->saveSite(
 								$site,
 								function (Site $site) use ($e) {
