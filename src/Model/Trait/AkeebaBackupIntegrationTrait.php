@@ -193,6 +193,11 @@ trait AkeebaBackupIntegrationTrait
 			);
 			$newEndpointConfiguration = null;
 
+			if (empty($endpoints))
+			{
+				throw new AkeebaBackupIsNotPro();
+			}
+
 			foreach ($endpoints as $someEndpoint)
 			{
 				$options = new JsonApiOptions(

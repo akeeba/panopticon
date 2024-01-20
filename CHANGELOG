@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.1.1
 ================================================================================
+~ Connection doctor: detect Akeeba Backup Core for Joomla! 3
 # [HIGH] Tasks would be picked up by multiple task runners running in parallel (MySQL race condition)
 # [MEDIUM] No visible error message when the site information update fails [gh-523]
 # [MEDIUM] PHPmailer throws a simple RuntimeException in some cases, which was not being caught
