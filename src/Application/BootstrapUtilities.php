@@ -19,6 +19,7 @@ use ReflectionException;
 use ReflectionObject;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
+use Throwable;
 
 defined('AKEEBA') || die;
 
