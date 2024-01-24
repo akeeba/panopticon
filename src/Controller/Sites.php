@@ -1270,16 +1270,19 @@ class Sites extends DataController
 			}
 
 			// Update the Akeeba Backup information if necessary
-			if (isset($warnings) && !in_array('akeebabackup', $warnings ?? []))
+			if (isset($warnings))
 			{
-				$model->testAkeebaBackupConnection();
-			}
-			else
-			{
-				$config = $model->getConfig();
-				$config->set('akeebabackup.info', null);
-				$config->set('akeebabackup.endpoint', null);
-				$model->setFieldValue('config', $config->toString());
+				if (in_array('akeebabackup', $warnings ?? []))
+				{
+					$config = $model->getConfig();
+					$config->set('akeebabackup.info', null);
+					$config->set('akeebabackup.endpoint', null);
+					$model->setFieldValue('config', $config->toString());
+				}
+				else
+				{
+					$model->testAkeebaBackupConnection();
+				}
 			}
 
 			// Save the data

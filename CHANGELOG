@@ -8,6 +8,7 @@ Akeeba Panopticon 1.1.1
 # [LOW] Extraneous slash in mail messages' `[URL]` variable [gh-519]
 # [LOW] Joomla update failures could result in the wrong error message displayed
 # [LOW] Missing or small favicons can create layout issues [gh-522]
+# [LOW] Connection to Akeeba Backup reset when saving site without changing connection information [gh-534]
 
 Akeeba Panopticon 1.1.0
 ================================================================================
