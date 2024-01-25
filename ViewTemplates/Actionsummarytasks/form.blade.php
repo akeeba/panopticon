@@ -13,9 +13,10 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\View\Actionsummarytasks\Html $this
  * @var \Akeeba\Panopticon\Model\Task            $model
  */
-$model  = $this->getModel();
-$token  = $this->container->session->getCsrfToken()->getValue();
-$params = is_object($model->params) ? $model->params : new Registry($model->params);
+$model    = $this->getModel();
+$token    = $this->container->session->getCsrfToken()->getValue();
+$params   = is_object($model->params) ? $model->params : new Registry($model->params);
+$favIcon  = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
 
 try
 {
@@ -35,9 +36,15 @@ catch (InvalidArgumentException $e)
 <form action="@route('index.php?view=actionsummarytasks')"
       method="post" name="adminForm" id="adminForm">
 
-    <h3 class="text-body-secondary border-bottom border-2 border-info-subtle">
-        <span class="text-body-tertiary me-2">#{{ (int) $this->site->id }}</span>
-        {{ $this->site->name }}
+    <h3 class="mt-2 pb-1 border-bottom border-3 border-primary-subtle d-flex flex-row align-items-center gap-2">
+        <span class="text-muted fw-light fs-4">#{{ (int) $this->site->id }}</span>
+        @if($favIcon)
+            <img src="{{{ $favIcon }}}"
+                style="max-width: 1em; max-height: 1em; aspect-ratio: 1.0"
+                class="mx-1 p-1 border rounded"
+                alt="">
+        @endif
+        <span class="flex-grow-1">{{{ $this->site->name }}}</span>
     </h3>
 
     <h4>@lang('PANOPTICON_ACTIONSUMMARYTASKS_LBL_OPTIONS')</h4>
