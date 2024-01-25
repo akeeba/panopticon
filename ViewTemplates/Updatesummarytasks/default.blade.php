@@ -15,17 +15,23 @@ use Awf\Registry\Registry;
  * @var \Akeeba\Panopticon\View\Updatesummarytasks\Html $this
  * @var \Akeeba\Panopticon\Model\Task            $model
  */
-$model = $this->getModel();
-$token = $this->container->session->getCsrfToken()->getValue();
-$i     = 1;
+$model    = $this->getModel();
+$token    = $this->container->session->getCsrfToken()->getValue();
+$i        = 1;
+$favIcon  = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
 
 ?>
 
-<h3 class="text-body-secondary border-bottom border-2 border-info-subtle">
-    <span class="text-body-tertiary me-2">#{{ (int) $this->site->id }}</span>
-    {{ $this->site->name }}
+<h3 class="mt-2 pb-1 border-bottom border-3 border-primary-subtle d-flex flex-row align-items-center gap-2">
+    <span class="text-muted fw-light fs-4">#{{ (int) $this->site->id }}</span>
+    @if($favIcon)
+        <img src="{{{ $favIcon }}}"
+             style="max-width: 1em; max-height: 1em; aspect-ratio: 1.0"
+             class="mx-1 p-1 border rounded"
+             alt="">
+    @endif
+    <span class="flex-grow-1">{{{ $this->site->name }}}</span>
 </h3>
-
 <form action="@route('index.php?view=updatesummarytasks')" method="post" name="adminForm" id="adminForm">
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
         <div class="d-flex flex-row justify-content-center">
