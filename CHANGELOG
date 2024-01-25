@@ -10,7 +10,7 @@ Akeeba Panopticon 1.1.1
 # [LOW] Joomla update failures could result in the wrong error message displayed
 # [LOW] Missing or small favicons can create layout issues [gh-522]
 # [LOW] Connection to Akeeba Backup reset when saving site without changing connection information [gh-534]
-
+.
 Akeeba Panopticon 1.1.0
 ================================================================================
 + Dashboard layout for Sites Overview [gh-395]
