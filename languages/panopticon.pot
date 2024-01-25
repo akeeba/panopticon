@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.0\n"
-"POT-Creation-Date: 2024-01-17 10:37:34\n"
+"Project-Id-Version: 1.1.1-dev202401241207\n"
+"POT-Creation-Date: 2024-01-25 09:44:15\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.1.0\n"
+"X-Generator: Panopticon ini_to_po 1.1.1-dev202401241207\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -4434,7 +4434,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_FILES"
-msgid "Files"
+msgid "Scanned Files"
 msgstr ""
 
 #, phpformat
@@ -4444,7 +4444,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_NEW"
-msgid "New"
+msgid "Added"
 msgstr ""
 
 #, phpformat
@@ -4459,7 +4459,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS"
-msgid "Suspicious"
+msgid "Possible Threats"
 msgstr ""
 
 #, phpformat
