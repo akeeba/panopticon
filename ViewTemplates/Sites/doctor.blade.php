@@ -21,7 +21,7 @@ $connectorAPI         = $config->get('core.panopticon.api');
 $hasAkeebaBackupError = $this->akeebaBackupConnectionError instanceof Throwable
                         && !$this->akeebaBackupConnectionError instanceof AkeebaBackupNotInstalled
                         && !$this->akeebaBackupConnectionError instanceof AkeebaBackupIsNotPro;
-$favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
+$favIcon              = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
 
 ?>
 
