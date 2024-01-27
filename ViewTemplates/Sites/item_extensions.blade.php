@@ -348,7 +348,7 @@ $hasError            = !empty($lastError);
         @yield('extUpdateFilters')
         @yield('extUpdateScheduleInfo')
 
-        <table class="table table-striped table-responsive">
+        <table class="table table-striped table-responsive is-mobile-stack">
             <thead class="table-dark">
             <tr>
                 <th>
@@ -396,7 +396,7 @@ $hasError            = !empty($lastError);
                         ($hasUpdate ? ' filter-unscheduled' : '');
                     ?>
                 <tr class="{{ $cssClasses }}">
-                    <td>
+                    <td data-label="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_NAME')">
                         <div>
                             <span class="text-body-tertiary">
                                 @yieldRepeatable('extUpdateExtensionIcon', $item)
@@ -485,7 +485,7 @@ $hasError            = !empty($lastError);
                             @endif
                         @endif
                     </td>
-                    <td class="small">
+                    <td data-label="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_AUTHOR')" class="small">
                         <div class="extensions-filterable-author">
                             @if ($item->authorUrl)
                                 <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
@@ -501,7 +501,7 @@ $hasError            = !empty($lastError);
                             </div>
                         @endif
                     </td>
-                    <td>
+                    <td data-label="@lang('PANOPTICON_SITE_LBL_EXTENSIONS_VERSION')">
                         @if ($hasUpdate && $error)
                             <strong class="text-danger-emphasis">
                                 {{{ $item->version->current }}}

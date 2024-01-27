@@ -6,6 +6,7 @@
 
 // PNP additional utility classes must be loaded before Bootstrap
 @import "section/pnp/utilities";
+@import "section/pnp/ismobilestack";
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
