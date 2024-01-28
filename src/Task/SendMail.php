@@ -42,8 +42,13 @@ class SendMail extends AbstractCallback
 			$fallbackLanguage = $sendingParams->get('language', 'en-GB');
 			$variables        = $sendingParams->get('email_variables', []);
 			$variablesByLang  = (array) $sendingParams->get('email_variables_by_lang', []);
-			$permissions      = $sendingParams->get('permissions');
+			$permissions      = $sendingParams->get('permissions', []) ?? [];
+			$permissions      = is_array($permissions) ? $permissions : [];
 			$cc               = $sendingParams->get('email_cc');
+			$cc               = is_array($cc) ? $cc : array_filter(array_map('trim', explode(',', $cc)));
+			$mailGroups       = $sendingParams->get('email_groups', null);
+			$mailGroups       = empty($mailGroups) ? null : array_filter(ArrayHelper::toInteger($mailGroups));
+			$onlyMailGroups   = (bool) $sendingParams->get('only_email_groups', false);
 
 			if (empty($template))
 			{
@@ -77,7 +82,10 @@ class SendMail extends AbstractCallback
 				$site = null;
 			}
 
-			$recipients = $this->getRecipientsByPermissions($permissions, $site);
+			$recipients =
+				$onlyMailGroups
+					? $this->getRecipientsByPermissions([], null, $mailGroups)
+					: $this->getRecipientsByPermissions($permissions, $site, $mailGroups);
 
 			if (empty($recipients))
 			{
@@ -198,11 +206,21 @@ class SendMail extends AbstractCallback
 					continue;
 				}
 
+				$firstRecipient = true;
+
 				foreach ($recipients as $recipient)
 				{
 					[$email, $name] = $recipient;
 
-					$mailer->addRecipient($email, $name);
+					if ($firstRecipient)
+					{
+						$firstRecipient = false;
+						$mailer->addRecipient($email, $name);
+					}
+					else
+					{
+						$mailer->addBCC($email, $name);
+					}
 				}
 
 				// Send the email
@@ -238,7 +256,8 @@ class SendMail extends AbstractCallback
 		return Status::OK->value;
 	}
 
-	private function getRecipientsByPermissions(array $permissions, ?Site $site = null): array
+	private function getRecipientsByPermissions(array $permissions, ?Site $site = null, ?array $mailGroups = null
+	): array
 	{
 		$db = $this->container->db;
 
@@ -262,8 +281,7 @@ class SendMail extends AbstractCallback
 
 			$query->andWhere(
 				array_map(
-					fn($permission) => 'JSON_SEARCH(' . $db->quoteName('privileges') . ', ' . $db->quote('one') . ',' .
-					                   $db->quote($permission) . ')',
+					fn($permission) => 'JSON_SEARCH(' . $db->quoteName('privileges') . ', ' . $db->quote('one') . ',' . $db->quote($permission) . ')',
 					$permissions
 				)
 			);
@@ -271,6 +289,10 @@ class SendMail extends AbstractCallback
 			$groupIDs = $db->setQuery($query)->loadColumn();
 		}
 
+		// Combine all groups
+		$groupIDs = array_unique(array_merge($groupIDs, $mailGroups ?? []));
+
+		// Get the query
 		$query = $db->getQuery(true)
 			->select(
 				[
@@ -281,6 +303,7 @@ class SendMail extends AbstractCallback
 			)
 			->from($db->quoteName('#__users'));
 
+		// Look for permissions...
 		foreach ($permissions as $permission)
 		{
 			$query
@@ -290,6 +313,7 @@ class SendMail extends AbstractCallback
 				);
 		}
 
+		// ...or any of the group IDs
 		foreach ($groupIDs as $groupID)
 		{
 			$query

@@ -3,6 +3,7 @@ Akeeba Panopticon 1.1.1
 ================================================================================
 ~ Connection doctor: detect Akeeba Backup Core for Joomla! 3
 ~ Improve the X-Mailer and Reply-To headers in sent emails
+~ Internal support for sending email only to selected user groups
 # [HIGH] Cannot launch installation due to a missing character
 # [HIGH] Tasks would be picked up by multiple task runners running in parallel (MySQL race condition)
 # [MEDIUM] No visible error message when the site information update fails [gh-523]
