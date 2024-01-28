@@ -7,6 +7,7 @@ Akeeba Panopticon 1.1.1
 # [HIGH] Tasks would be picked up by multiple task runners running in parallel (MySQL race condition)
 # [MEDIUM] No visible error message when the site information update fails [gh-523]
 # [MEDIUM] PHPmailer throws a simple RuntimeException in some cases, which was not being caught
+# [MEDIUM] Custom CLI commands in user_code where not autoloaded
 # [LOW] Extraneous slash in mail messages' `[URL]` variable [gh-519]
 # [LOW] Joomla update failures could result in the wrong error message displayed
 # [LOW] Missing or small favicons can create layout issues [gh-522]

@@ -43,29 +43,40 @@ call_user_func(function () {
 	$application->setName('Akeeba Panopticon CLI');
 	$application->setVersion(AKEEBA_PANOPTICON_VERSION);
 
-	// Automatically populate the commands from ../src/CliCommand
-	$di = new DirectoryIterator(__DIR__ . '/../src/CliCommand');
-
-	foreach ($di as $file)
+	// Automatically populate the commands
+	foreach ([
+		         __DIR__ . '/../src/CliCommand',
+		         __DIR__ . '/../user_code/CliCommand'
+			 ] as $directory)
 	{
-		if (!$file->isFile() || $file->getExtension() !== 'php')
+		if (!@is_dir($directory) || !is_readable($directory))
 		{
 			continue;
 		}
 
-		$className = '\\Akeeba\\Panopticon\\CliCommand\\' . $file->getBasename('.php');
+		$di = new DirectoryIterator($directory);
 
-		if (!class_exists($className))
+		foreach ($di as $file)
 		{
-			continue;
-		}
+			if (!$file->isFile() || $file->getExtension() !== 'php')
+			{
+				continue;
+			}
 
-		if (!(new ReflectionClass($className))->isInstantiable())
-		{
-			continue;
-		}
+			$className = '\\Akeeba\\Panopticon\\CliCommand\\' . $file->getBasename('.php');
 
-		$application->add(new $className());
+			if (!class_exists($className))
+			{
+				continue;
+			}
+
+			if (!(new ReflectionClass($className))->isInstantiable())
+			{
+				continue;
+			}
+
+			$application->add(new $className());
+		}
 	}
 
 	$application->run();
