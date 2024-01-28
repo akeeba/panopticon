@@ -85,6 +85,10 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 				$this->IsMail();
 				break;
 		}
+
+		$this->clearReplyTos();
+		$this->addReplyTo($config->get('mailfrom'), $config->get('fromname'));
+		$this->XMailer = 'Panopticon ' . (defined('AKEEBA_PANOPTICON_VERSION') ? constant('AKEEBA_PANOPTICON_VERSION') : 'dev');
 	}
 
 	/**
