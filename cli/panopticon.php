@@ -45,8 +45,8 @@ call_user_func(function () {
 
 	// Automatically populate the commands
 	foreach ([
+		         __DIR__ . '/../user_code/CliCommand',
 		         __DIR__ . '/../src/CliCommand',
-		         __DIR__ . '/../user_code/CliCommand'
 			 ] as $directory)
 	{
 		if (!@is_dir($directory) || !is_readable($directory))

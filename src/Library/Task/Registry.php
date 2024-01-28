@@ -18,9 +18,11 @@ defined('AKEEBA') || die;
 
 class Registry
 {
-	public function __construct(private readonly Container $container,
-	                            private array              $registry = [],
-	                            private readonly bool      $autoPopulate = true) {}
+	public function __construct(
+		private readonly Container $container,
+		private array $registry = [],
+		private readonly bool $autoPopulate = true
+	) {}
 
 	public function add(string $type, CallbackInterface $callback): void
 	{
@@ -76,7 +78,9 @@ class Registry
 	{
 		if (empty($classname))
 		{
-			throw new DomainException('Adding task types to the Task Registry by class name requires a non-empty class name', 500);
+			throw new DomainException(
+				'Adding task types to the Task Registry by class name requires a non-empty class name', 500
+			);
 		}
 
 		if (!class_exists($classname))
@@ -126,23 +130,36 @@ class Registry
 
 	private function populate(): void
 	{
-		$di = new DirectoryIterator(APATH_ROOT . '/src/Task');
-
-		foreach ($di as $file)
+		foreach (
+			[
+				APATH_USER_CODE . '/Task',
+				APATH_ROOT . '/src/Task',
+			] as $directory
+		)
 		{
-			if (!$file->isFile() || $file->getExtension() != 'php')
+			if (!@is_dir($directory) || !is_readable($directory))
 			{
 				continue;
 			}
 
-			$className = '\\Akeeba\\Panopticon\\Task\\' . $file->getBasename('.php');
+			$di = new DirectoryIterator($directory);
 
-			if (!class_exists($className))
+			foreach ($di as $file)
 			{
-				continue;
-			}
+				if (!$file->isFile() || $file->getExtension() != 'php')
+				{
+					continue;
+				}
 
-			$this->addFromClassname($className);
+				$className = '\\Akeeba\\Panopticon\\Task\\' . $file->getBasename('.php');
+
+				if (!class_exists($className))
+				{
+					continue;
+				}
+
+				$this->addFromClassname($className);
+			}
 		}
 	}
 }
