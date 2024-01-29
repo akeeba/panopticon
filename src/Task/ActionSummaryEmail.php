@@ -23,6 +23,7 @@ use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Awf\Mvc\DataModel\Collection;
 use Awf\Registry\Registry;
+use Awf\Utils\ArrayHelper;
 use DateTime;
 use DateTimeZone;
 use Exception;
@@ -47,6 +48,17 @@ class ActionSummaryEmail extends AbstractCallback
 	private ?Site $site = null;
 
 	private ?ActionReportPeriod $period = null;
+
+	/**
+	 * The user group to send emails to.
+	 *
+	 * When this is set, emails will be sent to all users of the selected group regardless of whether they can see or
+	 * manage the site the report is generated for. If this is not set (empty array) emails will be sent to any user
+	 * who has the Super global privilege and/or is allowed to manage the site.
+	 *
+	 * @var array|int[]
+	 */
+	private array $emailGroups;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -156,6 +168,15 @@ class ActionSummaryEmail extends AbstractCallback
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
 
+		if (!empty($this->emailGroups))
+		{
+			// Email groups selected. Send the emil ONLY to users belonging in these groups.
+			$data->set('email_cc', []);
+			$data->set('permissions', []);
+			$data->set('email_groups', $this->emailGroups);
+			$data->set('only_email_groups', true);
+		}
+
 		$this->enqueueEmail($data, $this->site->id, 'now');
 
 		return Status::OK->value;
@@ -171,18 +192,15 @@ class ActionSummaryEmail extends AbstractCallback
 	 */
 	private function initialiseObject(object $task): void
 	{
-		if ($task instanceof Task)
-		{
-			$params = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
-		}
-		else
-		{
-			$params = new Registry();
-		}
+		$params = ($task->params instanceof Registry) ? $task->params : new Registry($task->params ?? null);
 
 		$this->site   = $this->getSite($task);
 		$this->period = ActionReportPeriod::tryFrom($params->get('period', 'daily') ?: 'daily') ??
 		                ActionReportPeriod::DAILY;
+
+		$mailGroups                   = $params->get('email_groups', null) ?? null;
+		$mailGroups                   = is_array($mailGroups) ? array_filter(ArrayHelper::toInteger($mailGroups)) : [];
+		$this->emailGroups            = $mailGroups;
 	}
 
 	/**

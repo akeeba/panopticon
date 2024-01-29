@@ -35,14 +35,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 
 	public function __invoke(object $task, Registry $storage): int
 	{
-		if ($task instanceof Task)
-		{
-			$params = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
-		}
-		else
-		{
-			$params = new Registry();
-		}
+		$params = ($task->params instanceof Registry) ? $task->params : new Registry($task->params ?? null);
 
 		$limitStart   = (int) $storage->get('limitStart', 0);
 		$limit        = (int) $storage->get('limit', $params->get('limit', 10));

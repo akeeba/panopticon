@@ -31,7 +31,19 @@ catch (InvalidArgumentException $e)
 {
 	[$ceMinutes, $ceHours, $ceDom, $ceMonth, $ceDow] = explode(' ', $model->cron_expression);
 }
+
+$js = <<< JS
+window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.js-choice').forEach((element) => {
+        new Choices(element, {allowHTML: false, removeItemButton: true, placeholder: true, placeholderValue: ""});
+    });
+});
+
+JS;
+
 ?>
+@js('choices/choices.min.js', $this->getContainer()->application)
+@inlinejs($js)
 
 <form action="@route('index.php?view=actionsummarytasks')"
       method="post" name="adminForm" id="adminForm">
@@ -83,6 +95,30 @@ catch (InvalidArgumentException $e)
                 <label class="form-check-label" for="enabled">
                     @lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')
                 </label>
+            </div>
+        </div>
+    </div>
+
+    <h4>@lang('PANOPTICON_UPDATESUMMARYTASKS_LBL_RECIPIENTS')</h4>
+
+    <div class="row mb-3">
+        <label for="groups" class="col-sm-3 col-form-label">
+            @lang('PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS')
+        </label>
+        <div class="col-sm-9">
+            {{ $this->container->html->select->genericList(
+                data: $this->getModel()->getGroupsForSelect(),
+                name: 'params[email_groups][]',
+                attribs: [
+                    'class' => 'form-select js-choice',
+                    'multiple' => 'multiple',
+                ],
+                selected: $params->get('email_groups', []),
+                idTag: 'email_groups'
+            ) }}
+
+            <div class="form-text">
+                @lang('PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP')
             </div>
         </div>
     </div>

@@ -624,6 +624,20 @@ class Task extends DataModel
 		}
 	}
 
+	public function getGroupsForSelect(): array
+	{
+		$db    = $this->getDbo();
+		$query = $db
+			->getQuery(true)
+			->select([
+				$db->quoteName('id'),
+				$db->quoteName('title'),
+			])
+			->from($db->quoteName('#__groups'));
+
+		return array_map(fn($x) => $x->title, $db->setQuery($query)->loadObjectList('id') ?: []);
+	}
+
 	private function getNextTask(): ?self
 	{
 		$db    = $this->getDbo();

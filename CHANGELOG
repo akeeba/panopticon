@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.1.1
 ================================================================================
++ Send scheduled reports to specific groups [gh-521]
 ~ Connection doctor: detect Akeeba Backup Core for Joomla! 3
 ~ Improve the X-Mailer and Reply-To headers in sent emails
 ~ Internal support for sending email only to selected user groups

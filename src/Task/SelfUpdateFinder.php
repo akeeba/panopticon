@@ -31,9 +31,6 @@ class SelfUpdateFinder extends AbstractCallback
 
 	public function __invoke(object $task, Registry $storage): int
 	{
-		$task->params ??= new Registry();
-		$params       = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
-
 		$this->logger->info('Checking for Panopticon updates');
 
 		/** @var Selfupdate $model */
