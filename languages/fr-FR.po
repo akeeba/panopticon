@@ -3243,7 +3243,7 @@ msgstr "Extensions"
 
 msgctxt "PANOPTICON_SITE_LBL_EXTENSIONS_UPDATE_INFO"
 msgid "Update Extension Information"
-msgstr "Mettre à jour les informations sur l'extension"
+msgstr "Mettre à jour les informations des extensions"
 
 msgctxt "PANOPTICON_SITE_LBL_EXTENSIONS_LAST_CHECKED"
 msgid "Last checked:"
