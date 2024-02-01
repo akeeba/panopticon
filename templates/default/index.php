@@ -182,7 +182,7 @@ $view          = $this->getContainer()->input->getCmd('view', 'main') ?: 'main';
 </main>
 
 <?php if (!$isBareDisplay): ?>
-	<footer class="container-xl bg-dark text-light p-3 pb-3 text-light small sticky-bottom d-print-none" data-bs-theme="dark">
+	<footer class="container-xl bg-dark text-light p-3 pb-3 text-light small sticky-sm-bottom d-print-none" data-bs-theme="dark">
 		<?= $text->text('PANOPTICON_APP_TITLE') ?> <?= Version::create(AKEEBA_PANOPTICON_VERSION)->shortVersion(true) ?><?php if (Version::create(AKEEBA_PANOPTICON_VERSION)->hasTag()): ?><span class="text-muted small">.<?= Version::create(AKEEBA_PANOPTICON_VERSION)->tag() ?></span><?php endif; ?>
 		<?php if ($isDebug): ?>
 			<span class="text-body-tertiary">on</span>
