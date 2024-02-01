@@ -95,7 +95,7 @@ defined('AKEEBA') || die;
         </div>
 
         <div v-if="error === null"
-             class="col col-md-6 col-xl-12 mb-4 d-flex flex-row align-items-center gap-1">
+             class="col col-md-12 col-xl-12 mb-4 d-flex flex-row align-items-center gap-1">
             <div class="progress flex-grow-1 h-75" role="progressbar"
                  aria-label="@lang('PANOPTICON_LOGS_LBL_SR_AUTOREFRESH_TIME')"
                  :aria-valuenow="availableTime"
