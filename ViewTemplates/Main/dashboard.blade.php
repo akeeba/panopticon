@@ -79,7 +79,7 @@ defined('AKEEBA') || die;
 @section('main-default-sites')
     <template id="sitesListTemplate">
         <div v-if="error !== null"
-             class="alert alert-danger col col-md-6 col-xl-12"
+             class="alert alert-danger col col-md-12 col-xl-12"
         >
             <h4 class="alert-heading">
                 <span class="fa fa-fw fa-exclamation-circle" aria-hidden="true"></span>
