@@ -198,7 +198,7 @@ defined('AKEEBA') || die;
                         </div>
                     </div>
 
-                    <div class="d-flex flex-row gap-2 align-items-start gap-3">
+                    <div class="d-flex flex-row align-items-start gap-3">
                         <div class="flex-shrink-1"
                              v-if="site.favicon"
                         >
