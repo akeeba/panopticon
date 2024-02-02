@@ -6,4 +6,7 @@
 
 .ace_editor {
   height: min(400px, 30vh);
+  border-width: var(--bs-border-width);
+  border-style: var(--bs-border-style);
+  border-color: var(--bs-border-color);
 }
