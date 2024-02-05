@@ -185,15 +185,15 @@ class SSLTLSExpiration extends AbstractCallback
 		if (is_int($warnDays))
 		{
 			$query->where(
-				'DATE_SUB(' . $query->jsonExtract('config', '$.ssl.validTo') . ', INTERVAL '
+				'DATE_SUB(CAST(' . $query->jsonExtract('config', '$.ssl.validTo') . ' AS DATETIME), INTERVAL '
 				. $warnDays . ' DAY) <= NOW()'
 			);
 		}
 		else
 		{
 			$query->where(
-				'DATE_SUB(' . $query->jsonExtract('config', '$.ssl.validTo') . ', INTERVAL '
-				. 'CAST(IFNULL(' . $query->jsonExtract('config', '$.config.ssl.warning') . ', 7) AS JSON) * 1 DAY)'
+				'DATE_SUB(CAST(' . $query->jsonExtract('config', '$.ssl.validTo') . ' AS DATETIME), INTERVAL '
+				. 'CAST(IFNULL(' . $query->jsonExtract('config', '$.config.ssl.warning') . ', 7) AS FLOAT) DAY)'
 				. ' <= NOW()'
 			);
 		}

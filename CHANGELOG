@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 1.1.2
+================================================================================
+# [MEDIUM] The SSL/TLS expiration task would fail on MariaDB [gh-562]
+
 Akeeba Panopticon 1.1.1
 ================================================================================
 + Send scheduled reports to specific groups [gh-521]
