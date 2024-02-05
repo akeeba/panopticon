@@ -2,6 +2,7 @@
 Akeeba Panopticon 1.1.2
 ================================================================================
 # [MEDIUM] The SSL/TLS expiration task would fail on MariaDB [gh-562]
+# [LOW] The default .htaccess causes the ACE Editor to throw a JavaScript console warning [gh-561]
 
 Akeeba Panopticon 1.1.1
 ================================================================================
