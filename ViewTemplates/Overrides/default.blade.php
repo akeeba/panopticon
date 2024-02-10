@@ -96,11 +96,19 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                 </td>
                 {{-- Created --}}
                 <td>
-                    {{{ $this->getContainer()->html->basic->date($item->created_date, $this->getLanguage()->text('DATE_FORMAT_LC5')) }}}
+                    @if($item->created_date)
+                        {{{ $this->getContainer()->html->basic->date($item->created_date, $this->getLanguage()->text('DATE_FORMAT_LC5')) }}}
+                    @else
+                        &mdash;
+                    @endif
                 </td>
                 {{-- Modified --}}
                 <td>
-                    {{{ $this->getContainer()->html->basic->date($item->modified_date, $this->getLanguage()->text('DATE_FORMAT_LC5')) }}}
+                    @if($item->modified_date)
+                        {{{ $this->getContainer()->html->basic->date($item->modified_date, $this->getLanguage()->text('DATE_FORMAT_LC5')) }}}
+                    @else
+                        &mdash;
+                    @endif
                 </td>
                 {{-- Action --}}
                 <td>
