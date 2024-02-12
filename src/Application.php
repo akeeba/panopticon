@@ -152,7 +152,7 @@ class Application extends AWFApplication
 			],
 		],
 		[
-			'url'            => '#!hiddenTitle!',
+			'url'            => null,
 			'permissions'    => [],
 			'name'           => 'language_menu',
 			'icon'           => 'fa fa-fw fa-language',
