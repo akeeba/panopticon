@@ -59,7 +59,7 @@ $phpVersion = new PhpVersion;
 @elseif ($phpVersion->isEOL($php))
     <?php $eolDate = ($this->container->dateFactory($phpVersion->getVersionInformation($php)->dates->eol->format(DATE_RFC3339)))
         ->format($this->getLanguage()->text('DATE_FORMAT_LC3')) ?>
-    <div class="text-danger"
+    <div class="text-danger text-truncate"
          data-bs-toggle="tooltip" data-bs-placement="bottom"
          data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE', $eolDate)"
     >
@@ -70,7 +70,7 @@ $phpVersion = new PhpVersion;
 @elseif ($phpVersion->isSecurity($php))
     <?php $eolDate = ($this->container->dateFactory($phpVersion->getVersionInformation($php)->dates->eol->format(DATE_RFC3339)))
 		->format($this->getLanguage()->text('DATE_FORMAT_LC3')) ?>
-    <div class="text-body-tertiary"
+    <div class="text-body-tertiary text-truncate"
          data-bs-toggle="tooltip" data-bs-placement="bottom"
          data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_SECURITY_MAINTENANCE', $eolDate)"
     >
@@ -81,7 +81,9 @@ $phpVersion = new PhpVersion;
         </span>
     </div>
 @elseif($phpVersion->getVersionInformation($php)->unknown)
-    <span class="text-body">{{{ $php }}}</span>
+    <span class="text-body text-truncate">{{{ $php }}}</span>
 @else
+    <span class="text-truncate">
     @yieldRepeatable('phpVersion', $php)
+    </span>
 @endif

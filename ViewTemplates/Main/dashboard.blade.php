@@ -255,7 +255,7 @@ defined('AKEEBA') || die;
                                 </dd>
 
                                 <dt>@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')</dt>
-                                <dd>@{{ site.php }}</dd>
+                                <dd class="text-truncate">@{{ site.php }}</dd>
 
                                 <dt v-if="(site.overrides > 0)">
                                     @lang('PANOPTICON_OVERRIDES_TITLE')
