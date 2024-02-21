@@ -717,7 +717,7 @@ MYSQL;
 			return;
 		}
 
-		$this->fp = fopen($this->outputFilename, 'wb+');
+		$this->fp = fopen($this->outputFilename, 'rb+');
 
 		fseek($this->fp, 0);
 

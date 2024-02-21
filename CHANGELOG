@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.1.2
 ================================================================================
+# [HIGH] Panopticon database backups on Windows are empty [gh-552]
 # [MEDIUM] The SSL/TLS expiration task would fail on MariaDB [gh-562]
 # [LOW] The default .htaccess causes the ACE Editor to throw a JavaScript console warning [gh-561]
 
