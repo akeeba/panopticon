@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
+use Awf\Container\Container;
 use Awf\Container\ContainerAwareInterface;
 use Awf\Container\ContainerAwareTrait;
 use Awf\Registry\Registry;
@@ -22,6 +23,12 @@ class User extends \Awf\User\User implements ContainerAwareInterface
 	use ContainerAwareTrait;
 
 	private array $groupPrivileges = [];
+
+	public function __construct()
+	{
+		// Set up a default container for this object
+		$this->setContainer(Factory::getContainer());
+	}
 
 	public function bind(&$data)
 	{
@@ -101,7 +108,7 @@ class User extends \Awf\User\User implements ContainerAwareInterface
 
 	private function loadGroupPrivileges(): array
 	{
-		$db       = Factory::getContainer()->db;
+		$db       = $this->getContainer()->db;
 		$groupIDs = implode(
 			',',
 			array_map(
