@@ -323,7 +323,7 @@ class Application extends AWFApplication
 				'url'         => $langUrl($code),
 				'permissions' => [],
 				'name'        => 'set_lang_' . $code,
-				'title'       => $langName,
+				'title'       => '<span lang="' . $code . '">' . $langName . '</span>',
 			];
 		}
 
