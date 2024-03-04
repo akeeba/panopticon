@@ -86,7 +86,8 @@ class Json extends BaseView
 				{
 					case 'joomla':
 						$jVersionHelper  = new JoomlaVersion($this->getContainer());
-						$eol             = $jVersionHelper->isEOLMajor($currentVersion)
+						$eol             = empty($currentVersion)
+						                   || $jVersionHelper->isEOLMajor($currentVersion)
 						                   || $jVersionHelper->isEOLBranch($currentVersion);
 						$cmsUpdateStatus = match ($site->getJoomlaUpdateRunState())
 						{

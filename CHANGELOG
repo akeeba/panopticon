@@ -5,6 +5,7 @@ Akeeba Panopticon 1.1.2
 # [HIGH] Database installation errors are not communicated at installation time
 # [HIGH] Panopticon database backups on Windows are empty [gh-552]
 # [HIGH] Canceling causes a PHP error for some user groups [gh-583]
+# [MEDIUM] Dashboard doesn't load if a site doesn't report its CMS version
 # [MEDIUM] The SSL/TLS expiration task would fail on MariaDB [gh-562]
 # [LOW] The default .htaccess causes the ACE Editor to throw a JavaScript console warning [gh-561]
 
