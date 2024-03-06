@@ -2799,11 +2799,11 @@ msgstr "L'enregistrement du site de mise à jour Joomla! est absent de votre sit
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J4"
 msgid "Go to your site's administrator backend, System, Update, Update Sites, and click on the Rebuild button."
-msgstr "Allez dans le backend de l'administrateur de votre site, Système, Mise à jour, Mettre à jour les sites, et cliquez sur le bouton Reconstruire."
+msgstr "Allez dans l'administration de votre site, Système, Mise à jour, Sites de mise à jour et cliquez sur le bouton Reconstruire."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J3"
 msgid "Go to your site's administrator backend, Extensions, Manage, Update Sites, and click on the Rebuild button."
-msgstr "Allez dans le backend de l'administrateur de votre site, Extensions, Gérer, Mettre à jour les sites, et cliquez sur le bouton Reconstruire."
+msgstr "Allez dans l'administration de votre site, Extensions, Gérer, Sites de mise à jour et cliquez sur le bouton Reconstruire."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_COREUPDATESITEFIX_BTN"
 msgid "Attempt an automatic fix"
