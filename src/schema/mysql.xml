@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `#__groups`
 (
     `id`         SERIAL,
     `title`      VARCHAR(255) NOT NULL,
-    `privileges` JSON         NOT NULL DEFAULT ('{}')
+    `privileges` JSON         NOT NULL,
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   DEFAULT COLLATE = utf8mb4_unicode_ci;

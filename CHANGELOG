@@ -2,6 +2,7 @@
 Akeeba Panopticon 1.1.2
 ================================================================================
 ~ Long PHP version is now truncated in Dashboard view
+~ Better compatibility with some ancient MySQL versions
 # [HIGH] Database installation errors are not communicated at installation time
 # [HIGH] Panopticon database backups on Windows are empty [gh-552]
 # [HIGH] Canceling causes a PHP error for some user groups [gh-583]
