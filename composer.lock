@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "9aa0ae6e2eda294cbdf75cbc84b532517488f749"
+                "reference": "f37f70adb9b7107671c9016809bc1820259dcc28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/9aa0ae6e2eda294cbdf75cbc84b532517488f749",
-                "reference": "9aa0ae6e2eda294cbdf75cbc84b532517488f749",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/f37f70adb9b7107671c9016809bc1820259dcc28",
+                "reference": "f37f70adb9b7107671c9016809bc1820259dcc28",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "issues": "https://github.com/akeeba/awf/issues",
                 "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2024-02-28T12:33:21+00:00"
+            "time": "2024-03-14T10:21:46+00:00"
         },
         {
             "name": "akeeba/json-backup-api",
@@ -386,16 +386,16 @@
         },
         {
             "name": "chillerlan/php-settings-container",
-            "version": "3.1.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chillerlan/php-settings-container.git",
-                "reference": "c41e89f8bf963d1e88584a47fb78d1cd204b6e2a"
+                "reference": "8f93648fac8e6bacac8e00a8d325eba4950295e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chillerlan/php-settings-container/zipball/c41e89f8bf963d1e88584a47fb78d1cd204b6e2a",
-                "reference": "c41e89f8bf963d1e88584a47fb78d1cd204b6e2a",
+                "url": "https://api.github.com/repos/chillerlan/php-settings-container/zipball/8f93648fac8e6bacac8e00a8d325eba4950295e6",
+                "reference": "8f93648fac8e6bacac8e00a8d325eba4950295e6",
                 "shasum": ""
             },
             "require": {
@@ -404,9 +404,9 @@
             },
             "require-dev": {
                 "phan/phan": "^5.4",
-                "phpcsstandards/php_codesniffer": "^3.8",
                 "phpmd/phpmd": "^2.15",
-                "phpunit/phpunit": "^10.5"
+                "phpunit/phpunit": "^10.5",
+                "squizlabs/php_codesniffer": "^3.9"
             },
             "type": "library",
             "autoload": {
@@ -447,7 +447,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2024-01-05T23:55:20+00:00"
+            "time": "2024-03-02T20:07:15+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -5502,5 +5502,5 @@
     "platform-overrides": {
         "php": "8.1.0"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
