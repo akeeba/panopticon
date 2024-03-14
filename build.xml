@@ -61,6 +61,8 @@
         <exclude name="composer.json" />
         <exclude name="composer.lock" />
         <exclude name="config.php" />
+        <exclude name="config.php.*" />
+        <exclude name="config.bak*" />
         <exclude name="docker-*.yml" />
         <exclude name="docker-run.sh" />
         <exclude name="Dockerfile" />
