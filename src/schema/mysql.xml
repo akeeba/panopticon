@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `#__groups`
 (
     `id`         SERIAL,
     `title`      VARCHAR(255) NOT NULL,
-    `privileges` JSON         NOT NULL,
+    `privileges` JSON
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   DEFAULT COLLATE = utf8mb4_unicode_ci;
@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `#__reports` (
     `created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `created_by` BIGINT UNSIGNED NOT NULL DEFAULT '0',
     `action` ENUM('core_update_found','core_update_installed','ext_update_found','ext_update_installed','backup','filescanner','site_action','misc_action','site_up','site_down') NOT NULL DEFAULT 'misc_action',
-    `context` JSON NOT NULL,
+    `context` JSON,
     UNIQUE KEY `id` (`id`),
     KEY `#__report_site_acton_index` (`site_id`,`action`),
     KEY `#__report_site_index` (`site_id`),
