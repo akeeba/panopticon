@@ -374,7 +374,6 @@ class Application extends AWFApplication
 
 		// Initialisation
 		$this->discoverSessionSavePath();
-		$this->container->session->start();
 		$this->setTemplate('default');
 		$this->registerMultifactorAuthentication();
 
