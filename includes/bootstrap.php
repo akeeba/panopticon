@@ -26,7 +26,6 @@ BootstrapUtilities::applyExceptionsHandler();
 BootstrapUtilities::applyErrorReportingToPHP();
 BootstrapUtilities::applyDebugToConstant();
 BootstrapUtilities::conditionallyForceBladeRecompilation();
-
 // Apply network-related settings
 BootstrapUtilities::applyLoadBalancerConfiguration();
 BootstrapUtilities::applyCustomCAFile();

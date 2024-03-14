@@ -358,12 +358,25 @@ class Application extends AWFApplication
 		// HTTP 103 early hints
 		$this->preloadHints();
 
+		// Set up the session
+		$this->discoverSessionSavePath();
+		$this->container->session->start();
+
 		// Apply a forced language – but only if there is no logged-in user, or they have no language preference.
 		$forcedLanguage = $this->getContainer()->segment->get('panopticon.forced_language', null);
 
 		if ($forcedLanguage)
 		{
 			$this->getLanguage()->loadLanguage($forcedLanguage);
+		}
+		elseif ($this->getContainer()->userManager->getUser()->getId() > 0)
+		{
+			$this->getLanguage()->loadLanguage(
+				$this->getLanguage()->detectLanguage(
+					null,
+					$this->getContainer()->userManager->getUser()
+				)
+			);
 		}
 
 		// Will I have to redirect to the setup page?
@@ -373,7 +386,6 @@ class Application extends AWFApplication
 		$this->getContainer()->html->grid->setJavascriptPrefix('akeeba.System.');
 
 		// Initialisation
-		$this->discoverSessionSavePath();
 		$this->setTemplate('default');
 		$this->registerMultifactorAuthentication();
 

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "9aa0ae6e2eda294cbdf75cbc84b532517488f749"
+                "reference": "89ce232145b09cebc6889f75cbed78e1a42232c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/9aa0ae6e2eda294cbdf75cbc84b532517488f749",
-                "reference": "9aa0ae6e2eda294cbdf75cbc84b532517488f749",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/89ce232145b09cebc6889f75cbed78e1a42232c4",
+                "reference": "89ce232145b09cebc6889f75cbed78e1a42232c4",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "issues": "https://github.com/akeeba/awf/issues",
                 "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2024-02-28T12:33:21+00:00"
+            "time": "2024-03-14T13:22:52+00:00"
         },
         {
             "name": "akeeba/json-backup-api",
@@ -386,16 +386,16 @@
         },
         {
             "name": "chillerlan/php-settings-container",
-            "version": "3.1.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chillerlan/php-settings-container.git",
-                "reference": "c41e89f8bf963d1e88584a47fb78d1cd204b6e2a"
+                "reference": "8f93648fac8e6bacac8e00a8d325eba4950295e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chillerlan/php-settings-container/zipball/c41e89f8bf963d1e88584a47fb78d1cd204b6e2a",
-                "reference": "c41e89f8bf963d1e88584a47fb78d1cd204b6e2a",
+                "url": "https://api.github.com/repos/chillerlan/php-settings-container/zipball/8f93648fac8e6bacac8e00a8d325eba4950295e6",
+                "reference": "8f93648fac8e6bacac8e00a8d325eba4950295e6",
                 "shasum": ""
             },
             "require": {
@@ -404,9 +404,9 @@
             },
             "require-dev": {
                 "phan/phan": "^5.4",
-                "phpcsstandards/php_codesniffer": "^3.8",
                 "phpmd/phpmd": "^2.15",
-                "phpunit/phpunit": "^10.5"
+                "phpunit/phpunit": "^10.5",
+                "squizlabs/php_codesniffer": "^3.9"
             },
             "type": "library",
             "autoload": {
@@ -447,20 +447,20 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2024-01-05T23:55:20+00:00"
+            "time": "2024-03-02T20:07:15+00:00"
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "3ce240142f6d59b808dd65c1f52f7a1c252e6cfd"
+                "reference": "18fc0ab083a48f85bfee31f3786537353b8a8403"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/3ce240142f6d59b808dd65c1f52f7a1c252e6cfd",
-                "reference": "3ce240142f6d59b808dd65c1f52f7a1c252e6cfd",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/18fc0ab083a48f85bfee31f3786537353b8a8403",
+                "reference": "18fc0ab083a48f85bfee31f3786537353b8a8403",
                 "shasum": ""
             },
             "require": {
@@ -507,7 +507,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.4.1"
+                "source": "https://github.com/composer/ca-bundle/tree/1.4.2"
             },
             "funding": [
                 {
@@ -523,7 +523,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-23T10:16:52+00:00"
+            "time": "2024-03-14T13:20:33+00:00"
         },
         {
             "name": "delight-im/alphabets",
