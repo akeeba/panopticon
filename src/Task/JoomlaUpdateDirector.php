@@ -168,7 +168,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__tasks'))
 				->set($db->quoteName('enabled') . ' = 0')
-                ->where($db->quoteName('type').' like '.$db->quote('joomlaupdate'))
+                ->where($db->quoteName('type').' like '.$db->quote('joomlaupdate')) 
 				->where($db->quoteName('site_id') . ' IN(' . implode(',', $siteIDs) . ')');
 			$db->setQuery($query)->execute();
 		}
