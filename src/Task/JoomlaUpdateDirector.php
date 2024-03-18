@@ -164,7 +164,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 				->where($db->quoteName('id') . ' IN(' . implode(',', $siteIDs) . ')');
 			$db->setQuery($query)->execute();
 
-			// Disable all pending 'joomlaupdate' tasks for these sites
+			// Disable all pending 'joomlaupdate' tasks for these sites.
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__tasks'))
 				->set($db->quoteName('enabled') . ' = 0')
