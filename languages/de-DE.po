@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2023-12-01 22:16:45\n"
-"PO-Revision-Date: 2024-03-24 19:35+0100\n"
+"POT-Creation-Date: 2024-01-25 09:44:15\n"
+"PO-Revision-Date: 2024-03-29 18:59+0100\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -162,6 +162,10 @@ msgstr "l, d. F Y H:i:s T"
 msgctxt "PANOPTICON_LBL_TABLE_HEAD_NUM"
 msgid "#"
 msgstr "#"
+
+msgctxt "PANOPTICON_LBL_TABLE_HEAD_NUM_SR"
+msgid "ID"
+msgstr "ID"
 
 msgctxt "PANOPTICON_LBL_TABLE_HEAD_ENABLED"
 msgid "Enabled"
@@ -559,6 +563,10 @@ msgctxt "PANOPTICON_APP_TEMPLATE_DEFAULT"
 msgid "Panopticon (Default Template)"
 msgstr "Panopticon (Standardvorlage)"
 
+msgctxt "PANOPTICON_APP_LBL_LANGUAGE"
+msgid "Language"
+msgstr "Sprache"
+
 msgctxt "PANOPTICON_TASKTYPE_AKEEBABACKUP"
 msgid "Take a backup with Akeeba Backup"
 msgstr "Ein Backup mit Akeeba Backup erstellen"
@@ -577,11 +585,11 @@ msgstr "PHP-Dateiänderungsscanner"
 
 msgctxt "PANOPTICON_TASKTYPE_LOGROTATE"
 msgid "Log Rotation"
-msgstr "Protokollrotation"
+msgstr "Log Rotation"
 
 msgctxt "PANOPTICON_TASKTYPE_MAXEXEC"
 msgid "Maximum Execution Time Test"
-msgstr "Test der maximalen Ausführungszeit"
+msgstr "Test maximale Ausführungszeit"
 
 msgctxt "PANOPTICON_TASKTYPE_JOOMLAUPDATE"
 msgid "Update Joomla! Core"
@@ -618,6 +626,18 @@ msgstr "Datenbanksicherung"
 msgctxt "PANOPTICON_TASKTYPE_UPDATESUMMARYEMAIL"
 msgid "Update summary email"
 msgstr "Zusammenfassungs-E-Mail aktualisieren"
+
+msgctxt "PANOPTICON_TASKTYPE_SSLTLSEXPIRATION"
+msgid "Send emails about SSL/TLS certificate expiration"
+msgstr "E-Mails über den Ablauf des SSL/TLS-Zertifikats senden"
+
+msgctxt "PANOPTICON_TASKTYPE_UPTIMEMONITOR"
+msgid "Monitors sites' uptime"
+msgstr "Überwacht Verfügbarkeit von Sites"
+
+msgctxt "PANOPTICON_TASKTYPE_ACTIONSUMMARYEMAIL"
+msgid "Sends a Site Action Summary email"
+msgstr "Sendet E-Mail der Aktionszusammenfassung der Site"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED"
 msgid "Site %d is disabled"
@@ -667,6 +687,10 @@ msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_UNEXPECTED_HTTP"
 msgid "Unexpected HTTP %d while extracting the update; the site may be broken."
 msgstr "Unerwartetes HTTP %d beim Extrahieren des Updates; Die Site ist möglicherweise defekt."
 
+msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_HTTP_401"
+msgid "HTTP status 401 while extracting the update. Your site's administrator folder is password protected. Please edit the site and enter the Administrator Directory Username and Password in the Connection tab. Then, retry scheduling an update for this site."
+msgstr "HTTP-Status 401 beim Extrahieren des Updates. Der Administratorordner der Site ist passwortgeschützt. Bitte Site bearbeiten und Benutzernamen und Passwort des Administratorverzeichnisses auf der Registerkarte Verbindung eingeben. Dann erneut versuchen, ein Update für diese Site zu planen."
+
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON"
 msgid "Invalid JSON response from the update extraction script; the site may be broken."
 msgstr "Ungültige JSON-Antwort vom Update-Extraktionsskript; Die Site ist möglicherweise defekt."
@@ -713,107 +737,107 @@ msgstr "Aktualisierung der Site %d (%s) wird vorbereitet"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING"
 msgid "Downloading update package to site %d (%s)"
-msgstr "Aktualisierungspaket wird auf die Site %d (%s) heruntergeladen."
+msgstr "Aktualisierungspaket wird auf die Site %d (%s) heruntergeladen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_START"
 msgid "Beginning multi-part download of the update package to site %d (%s)"
-msgstr ""
+msgstr "Beginn des mehrteiligen Downloads des Update-Pakets auf Site %d (%s)"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_CONTINUE"
 msgid "Continuing multi-part download of the update package to site %d (%s) from offset %d"
-msgstr ""
+msgstr "Fortsetzung des mehrteiligen Downloads des Update-Pakets auf Site %d (%s) ab Offset %d"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_END"
 msgid "Finished multi-part download of the update package to site %d (%s)"
-msgstr ""
+msgstr "Mehrteiliger Download des Update-Pakets auf Site %d (%s) abgeschlossen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED"
 msgid "The multi-part download of the update package to site %d (%s) has failed; will try a single-part download instead"
-msgstr ""
+msgstr "Mehrteiliger Download des Update-Pakets auf Site %d (%s) fehlgeschlagen; es wird stattdessen einen Einzelteil-Download versucht"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_EVENTS"
 msgid "Executing pre-update events for site %d (%s)"
-msgstr ""
+msgstr "Ereignisse vor Update für Site %d (%s) werden ausgeführt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_WILL_CONTINUE"
 msgid "Will continue executing pre-update events for site %d (%s)"
-msgstr ""
+msgstr "Ereignisse vor Update für Site %d (%s) werden fortgesetzt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_FINISHED"
 msgid "Finished executing pre-update events for site %d (%s)"
-msgstr ""
+msgstr "Ereignisse vor Update für die Site %d (%s) wurden ausgeführt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DONE"
 msgid "Done backing up before updating site %d (%s)"
-msgstr ""
+msgstr "Backup vor Update der Website %d (%s) abgeschlossen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DESCRIPTION"
 msgid "Automatic backup taken by Panopticon before upgrading to Joomla! %s"
-msgstr ""
+msgstr "Automatisches Backup erstellt durch Panopticon vor dem Upgrade auf Joomla! %S"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_NOT"
 msgid "I will NOT take a backup before updating site %d (%s)"
-msgstr ""
+msgstr "KEIN Backup erstellen, bevor Site %d (%s) aktualisiert wird"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_START"
 msgid "Starting a backup before updating site %d (%s)"
-msgstr ""
+msgstr "Backup erstellen, bevor Site %d (%s) aktualisiert wird"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_RESUME"
 msgid "Continuing the backup before updating site %d (%s)"
-msgstr ""
+msgstr "Backup fortsetzen, bevor Site %d (%s) aktualisiert wird"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_FAIL"
 msgid "Failed to take a backup before updating site %d (%s); update canceled"
-msgstr ""
+msgstr "Backup konnte vor Update der Site %d (%s) nicht erstellt werden, Update abgebrochen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
 msgid "Enabling Joomla Update\\'s extraction script for site %d (%s)"
-msgstr ""
+msgstr "Aktivierung Extraktionsskript vom Joomla Update für Site %d (%s)"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START"
 msgid "Starting the update package extraction for site %d (%s)"
-msgstr ""
+msgstr "Starten der Extraktion des Update-Pakets für Site %d (%s)"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_CONTINUE"
 msgid "Continuing the update package extraction for site %d (%s)"
-msgstr ""
+msgstr "Fortsetzung der Update-Paket-Extraktion für Site %d (%s)"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_FINISH"
 msgid "Finished the update package extraction for site %d (%s)"
-msgstr ""
+msgstr "Update-Paket-Extraktion für Site %d ( %s) beendet"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTEXTRACT"
 msgid "Cleaning up old files after extracting the update for site %d (%s)"
-msgstr ""
+msgstr "Bereinigen alter Dateien nach Extrahieren des Updates für Site %d (%s)"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_FINALISE"
 msgid "Finalising the update for site %d (%s)"
-msgstr ""
+msgstr "Update für Site %d (%s) wird abgeschlossen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_EVENTS"
 msgid "Executing post-update events for site %d (%s)"
-msgstr ""
+msgstr "Ereignisse vor Update für Site %d (%s) werden ausgeführt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_WILL_CONTINUE"
 msgid "Will continue executing post-update events for site %d (%s)"
-msgstr ""
+msgstr "Ereignisse vor Update für Site %d (%s) werden fortgesetzt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_FINISHED"
 msgid "Finished executing post-update events for site %d (%s)"
-msgstr ""
+msgstr "Ereignisse vor Update für Site %d (%s) abgeschlossen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_UPDATES"
 msgid "Reloading Joomla update information on site %d (%s)"
-msgstr ""
+msgstr "Joomla-Update-Informationen werden auf Site %d (%s) neu geladen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_SITEINFO"
 msgid "Refreshing the site information for the just updated site %d (%s)"
-msgstr ""
+msgstr "Aktualisierung Site-Informationen für gerade aktualisierte Site %d (%s)"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_WILL_BE_UPDATED"
 msgid "Site %d (%s) will be updated from Joomla! %s to Joomla! %s."
-msgstr ""
+msgstr "Site %d (%s) wird von Joomla! aktualisiert. %s zu Joomla! %s."
 
 msgctxt "PANOPTICON_SETUP_TITLE"
 msgid "Installation"
@@ -821,7 +845,7 @@ msgstr "Installation"
 
 msgctxt "PANOPTICON_SETUP_SUBTITLE_PRECHECK"
 msgid "Check Requirements"
-msgstr "Anforderungen überprüfen"
+msgstr "Anforderungen prüfen"
 
 msgctxt "PANOPTICON_SETUP_SUBTITLE_DATABASE"
 msgid "Database Configuration"
@@ -844,8 +868,8 @@ msgid "Welcome to %s"
 msgstr "Willkommen bei %s"
 
 msgctxt "PANOPTICON_SETUP_LBL_WELCOME_HERO_TEXT"
-msgid "You can use Panopticon to monitor your Joomla!™ sites. But first, we need to make sure your server meets the minimum requirements."
-msgstr "Panopticon kann zur Überwachung von Joomla!™-Sites verwendet werden. Zunächst muss jedoch sichergestellt werden, dass der verwendete Server die Mindestanforderungen erfüllt."
+msgid "You can use Panopticon to monitor your Joomla!&reg; sites. But first, we need to make sure your server meets the minimum requirements."
+msgstr "Panopticon kann zur Überwachung von Joomla!&reg;-Sites verwendet werden. Zunächst muss jedoch sichergestellt werden, dass der verwendete Server die Mindestanforderungen erfüllt."
 
 msgctxt "PANOPTICON_SETUP_BTN_LETS_GO"
 msgid "Let's go!"
@@ -857,159 +881,159 @@ msgstr "Einen neuen Sitzungsspeicherpfad erstellen"
 
 msgctxt "PANOPTICON_SETUP_SESSION_LBL_WARNING_BODY"
 msgid "The session write path configured in PHP cannot be written to, making logging in impossible. To address this problem, Panopticon will attempt to create a session save path in the <code>%s</code> directory. For this to be possible, you need to enter the FTP or SFTP connection details to your site's root. If you are unsure about these settings, please ask your host."
-msgstr ""
+msgstr "Auf den in PHP konfigurierten Sitzungsschreibpfad kann nicht geschrieben werden, sodass eine Anmeldung nicht möglich ist. Um dieses Problem zu beheben, wird Panopticon versuchen, einen Sitzungsspeicherpfad im Verzeichnis <code>%s</code> zu erstellen. Damit dies möglich ist, muss die FTP- oder SFTP-Verbindungsdetails zum Stammverzeichnis der Site eingeben werden. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_SESSION_LBL_ERROR_HEADER"
 msgid "An error occurred while trying to create a session save path"
-msgstr ""
+msgstr "Beim Versuch, einen Sitzungsspeicherpfad zu erstellen, ist ein Fehler aufgetreten"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_SESSION"
 msgid "Connection method"
-msgstr ""
+msgstr "Verbindungsmethode"
 
 msgctxt "PANOPTICON_SETUP_BTN_MAKE_SESSION_FOLDER"
 msgid "Create a session path"
-msgstr ""
+msgstr "Sitzungspfad erstellen"
 
 msgctxt "PANOPTICON_SETUP_BTN_SESSION_FIXED_IT"
 msgid "I fixed it myself; check again"
-msgstr ""
+msgstr "Selbst behoben; nochmal prüfen"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER"
 msgid "Filesystem driver"
-msgstr ""
+msgstr "Dateisystemtreiber"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_FILE"
 msgid "Direct File Writes"
-msgstr ""
+msgstr "Direkte Dateischreibvorgänge"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_FTP"
 msgid "FTP - File Transfer Protocol"
-msgstr ""
+msgstr "FTP - File Transfer Protocol"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_HELP"
 msgid "On some shared hosting environments you need to use FTP or SFTP to be able to write to your site's files."
-msgstr ""
+msgstr "In einigen Shared-Hosting-Umgebungen muss FTP oder SFTP verwendet werden, um in die Dateien der Site schreiben zu können."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_SFTP"
 msgid "SFTP - Secure File Transfer Protocol (over SSH)"
-msgstr ""
+msgstr "SFTP - Secure File Transfer Protocol (über SSH)"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_DIRECTORY"
 msgid "(S)FTP directory"
-msgstr ""
+msgstr "(S)FTP Verzeichnis"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_DIRECTORY_HELP"
 msgid "The (S)FTP directory to the Panopticon installation. On FTP servers this is not the same as the filesystem path. If unsure, ask your host."
-msgstr ""
+msgstr "(S)FTP-Verzeichnis zur Panopticon-Installation. Auf FTP-Servern ist dies nicht dasselbe wie der Dateisystempfad. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_HOST"
 msgid "(S)FTP server hostname"
-msgstr ""
+msgstr "(S)FTP Server-Hostname"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_HOST_HELP"
 msgid "The hostname or IP address of your (S)FTP server, e.g. <code>ftp.example.com</code> or <code>127.0.0.1</code>. You MUST enter this <em>without</em> the <code>ftp://</code>, <code>sftp://</code> or <code>ssh://</code> prefix. If unsure about this and the other FTP settings please ask your host."
-msgstr ""
+msgstr "Hostname oder IP-Adresse des (S)FTP-Servers, z.B. <code>ftp.example.com</code> oder <code>127.0.0.1</code>. Dies MUSS <em>ohne</em> das Präfix <code>ftp://</code>, <code>sftp://</code> oder <code>ssh://</code> eingegeben werden. Falls unsicher bei diesen und anderen FTP-Einstellungen, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PASSIVE"
 msgid "Use Passive mode"
-msgstr ""
+msgstr "Passiv Modus verwenden"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PASSIVE_HELP"
 msgid "Only applicable for FTP. When selected, Panopticon will use the FTP Passive mode. Most FTP servers require it. If your host requires FTP Active mode uncheck this box. If unsure, please ask your host."
-msgstr ""
+msgstr "Gilt nur für FTP. Wenn diese Option ausgewählt ist, verwendet Panopticon den FTP-Passivmodus. Die meisten FTP-Server erfordern dies. Wenn der Host aktiven FTP-Modus erfordert, dieses Kontrollkästchen deaktivieren. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PASSWORD"
 msgid "(S)FTP password"
-msgstr ""
+msgstr "(S)FTP Passwort"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PASSWORD_HELP"
 msgid "The password you use to connect to your (S)FTP server. If unsure, ask your host."
-msgstr ""
+msgstr "Passwort für (S)FTP-Server-Verbindung. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PORT"
 msgid "(S)FTP server port"
-msgstr ""
+msgstr "(S)FTP Server-Port"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PORT_HELP"
 msgid "The port number your (S)FTP server listens to. Usually it's 21 for FTP and 22 for SFTP. If unsure, ask your host."
-msgstr ""
+msgstr "Portnummer des (S)FTP-Servers. Normalerweise Port 21 für FTP und 22 für SFTP. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_SSL"
 msgid "Use SSL"
-msgstr ""
+msgstr "SSL benutzen"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_SSL_HELP"
 msgid "Only applicable for FTP, ignored for SFTP. When selected, Panopticon will use FTP over Explicit SSL (FTP/S). Please note that this is not to be confused with SFTP which is an entirely different thing."
-msgstr ""
+msgstr "Gilt nur für FTP, wird für SFTP ignoriert. Falls ausgewählt, verwendet Panopticon FTP über explizites SSL (FTP/S). Bitte beachten, dass dies nicht mit SFTP zu verwechseln ist, was etwas völlig anderes ist."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_USERNAME"
 msgid "(S)FTP username"
-msgstr ""
+msgstr "(S)FTP Benutzername"
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_USERNAME_HELP"
 msgid "The username you use to connect to your (S)FTP server. If unsure, ask your host."
-msgstr ""
+msgstr "Benutzername für die (S)FTP-Server-Verbindung. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_NOSCRIPT_HEAD"
 msgid "JavaScript is disabled"
-msgstr ""
+msgstr "JavaScript deaktiviert"
 
 msgctxt "PANOPTICON_SETUP_LBL_NOSCRIPT_EXPLAIN"
 msgid "You need to enable JavaScript in your browser to use Panopticon."
-msgstr ""
+msgstr "JavaScript muss im Browser aktiviert werden, um Panopticon nutzen zu können."
 
 msgctxt "PANOPTICON_SETUP_LBL_BROKEN_JS_HEAD"
 msgid "Required JavaScript does not load"
-msgstr ""
+msgstr "Erforderliches JavaScript wird nicht geladen"
 
 msgctxt "PANOPTICON_SETUP_LBL_BROKEN_JS_EXPLAIN"
 msgid "The JavaScript files for Panopticon are not loading properly. Make sure you installation is not missing files, check permissions, and clear your browser's cache."
-msgstr ""
+msgstr "JavaScript-Dateien für Panopticon werden nicht ordnungsgemäß geladen. Sicherstellen, dass bei der Installation keine Dateien fehlen, alle Berechtigungen prüfen und Cache des Browsers leeren."
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_HEAD_OK"
 msgid "All systems go!"
-msgstr ""
+msgstr "Alle Systeme laufen!"
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_REQUIREMENTS_OK"
 msgid "Your server meets all requirements."
-msgstr ""
+msgstr "Server erfüllt alle Anforderungen."
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_RECOMMENDED_IMPROVE"
 msgid "Some optional settings can be improved (see below)."
-msgstr ""
+msgstr "Einige optionale Einstellungen können optimiert werden (siehe unten)."
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_YOU_MAY_CONTINUE"
 msgid "You may continue installing Panopticon."
-msgstr ""
+msgstr "Es kann mit der Installation von Panopticon fortgefahren werden."
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_BTN_SHOW_OPTIONAL_SETTINGS"
 msgid "Show optional settings"
-msgstr ""
+msgstr "Optionale Einstellungen anzeigen"
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_HEAD_FAIL"
 msgid "Some requirements are not met"
-msgstr ""
+msgstr "Einige Anforderungen werden nicht erfüllt"
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_REQUIREMENTS_FAIL"
 msgid "Your server does not meet all minimum requirements."
-msgstr ""
+msgstr "Server erfüllt nicht alle Mindestanforderungen."
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_RECOMMENDED_FAIL"
 msgid "Moreover, some optional settings can be improved (see below)."
-msgstr ""
+msgstr "Darüber hinaus können einige optionale Einstellungen verbessert werden (siehe unten)."
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_CANNOT_CONTINUE"
 msgid "You need to address those issues before installing Panopticon."
-msgstr ""
+msgstr "Probleme müssen behoben werden, bevor Panopticon installiert wird."
 
 msgctxt "PANOPTICON_SETUP_BTN_RETRY_PRECHECK"
 msgid "Check again"
-msgstr ""
+msgstr "Erneut prüfen"
 
 msgctxt "PANOPTICON_SETUP_BTN_IGNORE_AND_NEXT"
 msgid "Ignore the errors <em>at your own risk</em>"
-msgstr ""
+msgstr "Fehler <em>auf eigenes Risiko</em> ignorieren"
 
 msgctxt "PANOPTICON_SETUP_LBL_REQUIRED"
 msgid "Requirements"
@@ -1093,7 +1117,7 @@ msgstr "SFTP Unterstützung"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_HEAD_TEXT"
 msgid "Panopticon needs a database to work. First, create a database - and a database user - on your server. Then enter the connection information to the database below. If something is unclear please check with the company hosting your site."
-msgstr "Panopticon benötigt eine Datenbank. Daher Datenbank und Datenbankbenutzer auf dem verwendeten Server erstellen. Dann die Verbindungsinformationen zur Datenbank unten eingeben. Bei Unklarheit, bitte an den Seitbetreiber wenden."
+msgstr "Panopticon benötigt eine Datenbank. Daher Datenbank und Datenbankbenutzer auf dem verwendeten Server erstellen. Dann die Verbindungsinformationen zur Datenbank unten eingeben. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER"
 msgid "Database type"
@@ -1101,15 +1125,15 @@ msgstr "Datenbank-Typ"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_HELP"
 msgid "This is usually MySQLi (<em>with</em> the trailing \"i\")"
-msgstr ""
+msgstr "Dies ist normalerweise MySQLi (<em>mit</em> dem nachgestellten „i“)."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_MYSQL"
 msgid "MySQL (obsolete driver for MySQL - avoid using)"
-msgstr ""
+msgstr "MySQL (veralteter Treiber für MySQL - Verwendung vermeiden)"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_MYSQLI"
 msgid "MySQLi (preferred driver for MySQL)"
-msgstr ""
+msgstr "MySQLi (bevorzugter Treiber für MySQL)"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_PDO"
 msgid "PDO"
@@ -1129,19 +1153,19 @@ msgstr "SQLite"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_HOST"
 msgid "Database server host name"
-msgstr ""
+msgstr "Datenbankserver Hostname"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_HOST_HELP"
 msgid "The host name or IP address of the database server (usually: localhost). Please note that localhost and 127.0.0.1 are <em>very</em> different as far as MySQL is concerned; you may have to try both to see which works with your database server. If your server is using a non-standard port, append it after the hostname prefixed with a colon, e.g. 127.0.0.1:1234 to use a database server on 127.0.0.1 listening to port 1234."
-msgstr ""
+msgstr "Hostname oder IP-Adresse des Datenbankservers (normalerweise: localhost). Bitte beachten, dass sich localhost und 127.0.0.1 in Bezug auf MySQL <em>deutlich</em> unterscheiden; möglicherweise müssen beide ausprobiert werden, um herauszufinden, welche mit dem Datenbankserver funktioniert. Wenn der Server einen nicht standardmäßigen Port verwendet, wird er mit einem Doppelpunkt als Präfix an den Hostnamen angehängt, z. B. 127.0.0.1:1234, um einen Datenbankserver auf 127.0.0.1 zu verwenden, der Port 1234 überwacht."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_NAME"
 msgid "Database name"
-msgstr ""
+msgstr "Datenbankname"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_NAME_HELP"
 msgid "The name of your database. Most hosts using cPanel, Plesk and other major hosting panels will give database names like abcdef_username, where abcdef is your hosting control panel username. If unsure, please ask your host."
-msgstr ""
+msgstr "Name der Datenbank. Die meisten Hosts, die cPanel, Plesk und andere große Hosting-Panels verwenden, geben Datenbanknamen wie abcdef_username an, wobei abcdef der Benutzername des Hosting-Control-Panels ist. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_PASS"
 msgid "Password"
@@ -1149,15 +1173,15 @@ msgstr "Passwort"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_PASS_HELP"
 msgid "The password you use to connect to your database."
-msgstr ""
+msgstr "Passwort für die Datenbankverbindung."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_PREFIX"
 msgid "Database table name prefix"
-msgstr ""
+msgstr "Datenbanktabellen-Präfiix"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_PREFIX_HELP"
 msgid "The common table name prefix of all database tables belonging to this Panopticon installation."
-msgstr ""
+msgstr "Gemeinsames Tabellennamenpräfix aller Datenbanktabellen, die zu dieser Panopticon-Installation gehören."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_USER"
 msgid "User name"
@@ -1165,35 +1189,35 @@ msgstr "Benutzername"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_USER_HELP"
 msgid "The username you use to connect to your database. Most hosts using cPanel, Plesk and other major hosting panels will give usernames like abcdef_username, where abcdef is your hosting control panel username. If unsure, please ask your host."
-msgstr ""
+msgstr "Benutzername, der zum Herstellen einer Verbindung zur Datenbank verwendet wird. Die meisten Hosts, die cPanel, Plesk und andere große Hosting-Panels verwenden, geben Benutzernamen wie abcdef_username an, wobei abcdef der Benutzername des Hosting-Control-Panels ist. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION"
 msgid "Connect with an SSL certificate"
-msgstr ""
+msgstr "Verbindung mit einem SSL-Zertifikat herstellen"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION_HELP"
 msgid "Should we connect to the database using an SSL certificate? This can be used instead of username and password authentication (encrypted connection with certificate authentication) or <em>on top of</em> username and password authentication (encrypted connection with password authentication). If you don't know what this means set this option to No and ignore the next few options as well."
-msgstr ""
+msgstr "Soll über ein SSL-Zertifikat eine Verbindung zur Datenbank hergestellt werden? Dies kann anstelle der Authentifizierung mit Benutzername und Passwort (verschlüsselte Verbindung mit Zertifikatauthentifizierung) oder <em>zusätzlich</em> zur Authentifizierung mit Benutzername und Passwort (verschlüsselte Verbindung mit Passwortauthentifizierung) verwendet werden. Falls unsicher, Option auf Nein setzen und auch die nächsten Optionen ignorieren."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLCIPHER"
 msgid "SSL/TLS Encryption Methods"
-msgstr ""
+msgstr "SSL/TLS Verschlüsselungsmethoden"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLCIPHER_HELP"
 msgid "Enter a list of encryption methods for connecting with SSL certificates, separated by colons. If left empty the default list (<code>AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-CBC-SHA256:AES256-CBC-SHA384:DES-CBC3-SHA</code>) will be used (recommended)."
-msgstr ""
+msgstr "Durch Doppelpunkte getrennte Liste der Verschlüsselungsmethoden für Verbindung mit SSL-Zertifikaten eingeben. Wenn leer gelassen, wird die Standardliste (<code>AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-CBC-SHA256:AES256-CBC-SHA384:DES-CBC3-SHA</code>) verwendet (empfohlen)."
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLCA"
 msgid "Certification Authority (CA) file"
-msgstr ""
+msgstr "Zertifizierungsstellen-Datei (CA)"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLCA_HELP"
 msgid "Absolute file path to the Certification Authority (CA) certificate PEM file of your database server, e.g. <code>/home/myuser/ca.pem</code>"
-msgstr ""
+msgstr "Absoluter Dateipfad zur PEM-Datei des Zertifizierungsstellenzertifikats (CA) des Datenbankservers, z.B. <code>/home/myuser/ca.pem</code>"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY"
 msgid "Database user's Private Key file"
-msgstr ""
+msgstr "Private Schlüsseldatei des Datenbankbenutzers"
 
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY_HELP"
 msgid "Absolute file path to the private key PEM file of your database user, e.g. <code>/home/myuser/myuser-key.pem</code>"
@@ -1229,7 +1253,7 @@ msgstr "Port"
 
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_PORT_DESCRIPTION"
 msgid "FTP server's TCP/IP port. Usually 21. Please ask your host."
-msgstr ""
+msgstr "TCP/IP Port des FTP-Servers. Normalerweise Port 21. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_USER_TITLE"
 msgid "User name"
@@ -1301,7 +1325,7 @@ msgstr "Port"
 
 msgctxt "PANOPTICON_SETUP_DIRECTSFTP_PORT_DESCRIPTION"
 msgid "TCP/IP port for SFTP. Usually 22. If unsure, please ask your host."
-msgstr ""
+msgstr "TCP/IP-Port für SFTP. Normalerweise 22. Falls unsicher, bitte Hoster fragen."
 
 msgctxt "PANOPTICON_SETUP_DIRECTSFTP_USER_TITLE"
 msgid "Username"
@@ -1469,19 +1493,19 @@ msgstr "Anweisungen"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_TROUBLESHOOTING"
 msgid "Problem? Meet solution!"
-msgstr ""
+msgstr "Problem? Lösung finden!"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_IS_THIS_RIGHT_FOR_ME"
 msgid "Is this method the right one for me?"
-msgstr ""
+msgstr "Richtige Methode?"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_PROS"
 msgid "Pros"
-msgstr ""
+msgstr "Pros"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_CONS"
 msgid "Cons"
-msgstr ""
+msgstr "Kontras"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_TARGET_AUDIENCE"
 msgid "Target Audience"
@@ -1492,7 +1516,7 @@ msgid "Make sure the CRON job runs <em>every minute</em>."
 msgstr "Sicherstellen, dass der CRON-Job <em>jede Minute</em> ausgeführt wird."
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_EVERY_MINUTE_ALERT_BODY"
-msgid "Running the CRON job less frequently results in outdated information and unreliability, including broken sites due to incomplete Joomla!™ core updates."
+msgid "Running the CRON job less frequently results in outdated information and unreliability, including broken sites due to incomplete Joomla!&reg; core updates."
 msgstr ""
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_CREATE_A_JOB"
@@ -1509,7 +1533,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NOT_RUN_HEAD"
 msgid "The CRON job does not run"
-msgstr ""
+msgstr "CRON-Job wird nicht ausgeführt"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NOT_RUN_INFO_1"
 msgid "Remove the <code>2>&1</code> from the CRON command line. When the CRON command executes again you will receive an email with an error (as long as your hosting account is configured to email you the output of CRON jobs). Using that, you can find out what is going on."
@@ -1568,44 +1592,44 @@ msgid "If you have a cheaper way executing CRON jobs remotely (e.g. another serv
 msgstr ""
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_4"
-msgid "<strong>Do not “cheap out” on CRON job frequency!</strong> Running CRON jobs less frequently will make Panopticon unreliable and could even break your sites due to incomplete Joomla™ core updates."
+msgid "<strong>Do not “cheap out” on CRON job frequency!</strong> Running CRON jobs less frequently will make Panopticon unreliable and could even break your sites due to incomplete Joomla&reg; core updates."
 msgstr ""
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_PROS_1"
 msgid "More reliable"
-msgstr ""
+msgstr "Zuverlässiger"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_PROS_2"
 msgid "Zero cost"
-msgstr ""
+msgstr "Keine Kosten"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_PROS_3"
 msgid "Faster"
-msgstr ""
+msgstr "Schneller"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_CONS_1"
 msgid "Some hosts don't support it"
-msgstr ""
+msgstr "Einige Hosts unterstützen es nicht"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_CONS_2"
 msgid "More involved setup"
-msgstr ""
+msgstr "Aufwändigeres Setup"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_TARGET_1"
 msgid "Recommended method for most users"
-msgstr ""
+msgstr "Empfohlene Methode für die meisten Benutzer"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_TARGET_2"
 msgid "Only supported method for dozens to hundreds of sites monitored"
-msgstr ""
+msgstr "Einzige unterstützte Methode für Dutzende bis Hunderte von überwachten Websites"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_IF_URL_CRON"
 msgid "If your host uses URL-based CRON jobs, or you're using a third party system which accepts a URL, use the following URL:"
-msgstr ""
+msgstr "Wenn der Host URL-basierte CRON-Jobs verwendet oder ein Drittanbietersystem verwendet wird, das eine URL akzeptiert, folgende URL verwenden:"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_IF_REGULAR_CRON"
 msgid "If you are setting up a regular CRON job, use one of the following command lines, depending on which command is installed on your system:"
-msgstr ""
+msgstr "Wenn ein regulärer CRON-Job eingerichtet wird, eine der folgenden Befehlszeilen verwenden, je nachdem, welcher Befehl auf dem System installiert ist:"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_WGET"
 msgid "<strong>wGET</strong> (most commercial hosts and Linux servers)"
@@ -1756,7 +1780,7 @@ msgid "Panopticon is ready,<br>attention required"
 msgstr ""
 
 msgctxt "PANOPTICON_SETUP_FINISH_SUBTITLE"
-msgid "You can now start using Panopticon to monitor your Joomla!™ sites."
+msgid "You can now start using Panopticon to monitor your Joomla!&reg; sites."
 msgstr ""
 
 msgctxt "PANOPTICON_SETUP_FINISH_MAXEXEC_TOOLOW_HEAD"
@@ -1768,7 +1792,7 @@ msgid "Your server configuration allows CRON jobs to run for a maximum of %d sec
 msgstr ""
 
 msgctxt "PANOPTICON_SETUP_FINISH_MAXEXEC_TOOLOW_CAUTION"
-msgid "We <strong>do not</strong> recommend using this configuration to automate Joomla™ upgrades, extension updates, or backups. You can still use Panopticon to monitor your sites."
+msgid "We <strong>do not</strong> recommend using this configuration to automate Joomla&reg; upgrades, extension updates, or backups. You can still use Panopticon to monitor your sites."
 msgstr ""
 
 msgctxt "PANOPTICON_SETUP_FINISH_MAXEXEC_TOOLOW_FIXIT"
@@ -1867,6 +1891,14 @@ msgctxt "PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE"
 msgid "Manage Sites"
 msgstr "Sites Verwaltung"
 
+msgctxt "PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_DASH"
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_MY_SITES_MANAGE_TAB"
+msgid "Table"
+msgstr "Tabelle"
+
 msgctxt "PANOPTICON_MAIN_SITES_TABLE_CAPTION"
 msgid "Table of known sites and their information at a glance"
 msgstr "Tabelle der bekannten Sites und ihrer Informationen auf einen Blick"
@@ -1876,8 +1908,16 @@ msgid "Site"
 msgstr "Site"
 
 msgctxt "PANOPTICON_MAIN_SITES_THEAD_JOOMLA"
-msgid "Joomla™ version"
-msgstr "Joomla™ Version"
+msgid "Joomla&reg; version"
+msgstr "Joomla&reg; Version"
+
+msgctxt "PANOPTICON_MAIN_SITES_THEAD_WORDPRESS"
+msgid "WordPress version"
+msgstr "WordPress Version"
+
+msgctxt "PANOPTICON_MAIN_SITES_THEAD_CMS"
+msgid "CMS version"
+msgstr "CMS Version"
 
 msgctxt "PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS"
 msgid "Extensions status"
@@ -1933,191 +1973,191 @@ msgstr "Stable"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPDATES_BROKEN"
 msgid "Joomla Update is not working correctly on this site"
-msgstr ""
+msgstr "Joomla-Update funktioniert auf dieser Site nicht ordnungsgemäß"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO"
 msgid "An error occurred updating the site information."
-msgstr ""
+msgstr "Beim Aktualisieren der Site-Informationen ist ein Fehler aufgetreten."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_ERROR_EXTENSIONS"
 msgid "An error occurred loading the site extensions information."
-msgstr ""
+msgstr "Beim Laden der Site-Erweiterungs-Informationen ist ein Fehler aufgetreten."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JVERSION_UNKNOWN"
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPGRADABLE_TO"
 msgid "Can be upgraded to %s"
-msgstr ""
+msgstr "Kann aktualisiert werden auf %s"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_CAN_BE_UPGRADED_SHORT"
 msgid "Can be upgraded to"
-msgstr ""
+msgstr "Kann aktualisiert werden auf %s"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_BRANCH"
 msgid "This Joomla! version family is End of Life"
-msgstr ""
+msgstr "Joomla! Versionsfamilie ist End of Life"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_MAJOR"
 msgid "This Joomla! major version is End of Life"
-msgstr ""
+msgstr "Joomla! Hauptversion ist End of Life"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_UNKNOWN"
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N"
 msgid "There are %d extension updates available"
-msgstr ""
+msgstr "%d Erweiterungs-Updates verfügbar"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADE_N_1"
 msgid "There is one extension update available"
-msgstr ""
+msgstr "Ein Erweiterungs-Update verfügbar"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_UPGRADES_FOUND"
 msgid "Updates found:"
-msgstr ""
+msgstr "Updates gefunden:"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_NO_UPGRADES"
 msgid "All installed extensions are up-to-date"
-msgstr ""
+msgstr "Alle installierten Erweiterungen sind aktuell"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING_N"
 msgid "%d Download Keys are missing or invalid"
-msgstr ""
+msgstr "%d Downloadschlüssel fehlen oder ungültig"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING_N_1"
 msgid "A Download Key is missing or invalid"
-msgstr ""
+msgstr "Ein Downloadschlüssel fehlt oder ungültig"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_KEYS_MISSING"
 msgid "Number of Download Keys which are invalid or missing:"
-msgstr ""
+msgstr "Anzahl Download-Schlüssel, ungültig oder fehlen:"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_PHP_SHOULD_UPGRADE"
 msgid "Should be upgraded to %s"
-msgstr ""
+msgstr "Sollte auf %s aktualisiert werden"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE"
 msgid "This PHP version is End of Life since %s"
-msgstr ""
+msgstr "PHP-Version wird seit %s nicht mehr unterstützt (EOL)"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_PHP_SECURITY_MAINTENANCE"
 msgid "This PHP version is in Security Maintenance mode and will become End of Life at %s"
-msgstr ""
+msgstr "PHP-Version befindet sich im Sicherheitswartungsmodus und wird ab %s nicht mehr unterstützt (EOL)"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_STUCK_UPDATE"
 msgid "ACTION REQUIRED. The extensions update task is stuck."
-msgstr ""
+msgstr "HANDLUNG ERFORDERLICH. Aufgabe zum Erweiterungs-Update bleibt hängen."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE"
-msgid "ACTION REQUIRED. The Joomla!™ update task is stuck."
-msgstr ""
+msgid "ACTION REQUIRED. The Joomla!&reg; update task is stuck."
+msgstr "HANDLUNG ERFORDERLICH. Die Joomla!&reg; Update-Aufgabe bleibt hängen."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_SCHEDULED_UPDATE"
-msgid "The Joomla!™ core update has been scheduled to run automatically."
-msgstr ""
+msgid "The Joomla!&reg; core update has been scheduled to run automatically."
+msgstr "Joomla!&reg; Core-update wurde so geplant, dass es automatisch ausgeführt wird."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_RUNNING_UPDATE"
-msgid "The Joomla!™ core update is currently running."
-msgstr ""
+msgid "The Joomla!&reg; core update is currently running."
+msgstr "Joomla!&reg; Core-Update läuft gerade."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_RUNNING_UPDATE"
 msgid "Extension updates are currently taking place."
-msgstr ""
+msgstr "Erweiterungs-Updates finden gerade statt."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_SCHEDULED_UPDATE"
 msgid "Extension updates have been scheduled to run automatically."
-msgstr ""
+msgstr "Es ist geplant, dass Erweiterungs-Updates automatisch ausgeführt werden."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_NO_RESULTS"
 msgid "There are no sites matching your search and filter criteria."
-msgstr ""
+msgstr "Keine Sites, die den Such- und Filterkriterien entsprechen."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_HEAD"
 msgid "Service Identity"
-msgstr ""
+msgstr "Service-Identität"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_ALERT_HEAD"
 msgid "Having connection issues?"
-msgstr ""
+msgstr "Verbindungsprobleme?"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_ALERT_BODY"
 msgid "Use the information below to explicitly allow (“whitelist”) requests originating from Panopticon through any Web Application Firewall (WAF), Content Delivery Network (CDN), or security product installed on, or in front of, your site. Please consult with the author or operator of the respective product to determine how to do that."
-msgstr ""
+msgstr "Folgenden Informationen verwenden, um von Panopticon ausgehende Anfragen über eine Web Application Firewall (WAF), ein Content Delivery Network (CDN) oder ein Sicherheitsprodukt, das auf oder vor der Website installiert ist, ausdrücklich zuzulassen (“Whitelist“). Bitte Autor oder Betreiber des jeweiligen Produkts kontaktieren, um zu klären, wie das geht."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_HOSTNAME"
 msgid "Public hostname"
-msgstr ""
+msgstr "Öffentlicher Hostname"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_IP"
 msgid "Public IP address"
-msgstr ""
+msgstr "Öffentliche IP-Adresse"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_SYS_HOSTNAME"
 msgid "System hostname"
-msgstr ""
+msgstr "System-Hostname"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_SYS_IP"
 msgid "System IP address"
-msgstr ""
+msgstr "System-IP-Adresse"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_USER_AGENT"
 msgid "<code>User-Agent</code> for API requests"
-msgstr ""
+msgstr "<code>Benutzer-Agent</code> für API-Anfragen"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UNKNOWN_NEUTRAL"
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_NOSITES_HEAD"
 msgid "Add a Site"
-msgstr ""
+msgstr "Site hinzufügen"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_NOSITES_CTA"
 msgid "Monitor and remotely manage your sites by adding them here."
-msgstr ""
+msgstr "Überwachen und verwalten der Sites aus der Ferne, indem sie hier hinzufügt werden."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_NOSITES_BUTTON"
 msgid "Add a Site"
-msgstr ""
+msgstr "Site hinzufügen"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_COREUPDATES"
 msgid "Core update"
-msgstr ""
+msgstr "Core-Update"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_EXTUPDATES"
 msgid "Extensions update"
-msgstr ""
+msgstr "Erweiterungs-Update"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY"
-msgid "Joomla!™"
-msgstr ""
+msgid "Joomla!&reg;"
+msgstr "Joomla!&reg;"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY"
 msgid "PHP"
-msgstr ""
+msgstr "PHP"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT"
 msgid "(All)"
-msgstr ""
+msgstr "(Alle)"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_GROUPS"
 msgid "Groups"
-msgstr ""
+msgstr "Gruppen"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_GROUPS_PLACEHOLDER"
 msgid "Select Site Groups"
-msgstr ""
+msgstr "Site-Gruppen wählen"
 
 msgctxt "PANOPTICON_MAIN_CRON_SUBHEAD_CTA"
 msgid "Set up a CRON job using one of the methods below. Then, go back to the previous page and wait for about a minute until the warning goes away."
-msgstr ""
+msgstr "CRON-Job mit einer der folgenden Methoden einrichten. Dann zur vorherigen Seite zurückgehen und etwa eine Minute warten, bis die Warnung verschwindet."
 
 msgctxt "PANOPTICON_MAIN_PHP_EOL_HEAD"
 msgid "PHP %s is End of Life"
-msgstr ""
+msgstr "PHP %s wird nicht mehr unterstützt (EOL)"
 
 msgctxt "PANOPTICON_MAIN_PHP_EOL_BODY"
 msgid "You are currently using PHP %s to run Panopticon. This PHP version has been End of Life since %s. Please upgrade your version of PHP to at least %s (recommended: PHP %s)."
@@ -2125,43 +2165,187 @@ msgstr ""
 
 msgctxt "PANOPTICON_MAIN_PHP_SECURITY_HEAD"
 msgid "PHP %s is approaching its End of Life"
-msgstr ""
+msgstr "PHP %s wird bald nicht mehr unterstützt (bald EOL)"
 
 msgctxt "PANOPTICON_MAIN_PHP_SECURITY_BODY"
 msgid "You are currently using PHP %s to run Panopticon. This PHP version will become End of Life on %s. Please upgrade your version of PHP to at least %s."
-msgstr ""
+msgstr "Derzeit wird PHP %s verwendet, um Panopticon auszuführen. Diese PHP-Version endet am %s. Bitte PHP-Version auf mindestens %s aktualisieren."
 
 msgctxt "PANOPTICON_MAIN_PHP_UPDATE_HEAD"
 msgid "Your PHP version is not up-to-date"
-msgstr ""
+msgstr "PHP-Version nicht aktuell"
 
 msgctxt "PANOPTICON_MAIN_PHP_UPDATE_BODY"
 msgid "You are currently using PHP %s to run Panopticon. The PHP project has released a newer version, PHP %s. Please upgrade."
-msgstr ""
+msgstr "Derzeit wird PHP %s verwendet, um Panopticon auszuführen. Das PHP-Projekt hat eine neuere Version veröffentlicht, PHP %s. Bitte upgraden."
 
 msgctxt "PANOPTICON_MAIN_LBL_HEARTBEAT_HEAD"
 msgid "Automated tasks appear to be broken"
-msgstr ""
+msgstr "Automatisierte Aufgaben scheinen fehlerhaft zu sein"
 
 msgctxt "PANOPTICON_MAIN_LBL_HEARTBEAT_MESSAGE"
 msgid "It is more than a minute since the last time an automated task ran. You need to set up CRON jobs to run every minute."
-msgstr ""
+msgstr "Seit der letzten Ausführung einer automatisierten Aufgabe ist mehr als eine Minute vergangen. CRON-Jobs müssen so eingerichtet werden, dass sie jede Minute ausgeführt werden."
 
 msgctxt "PANOPTICON_MAIN_LBL_HEARTBEAT_BTN_READ_INSTRUCTIONS"
 msgid "Read the instructions"
-msgstr ""
+msgstr "Anweisungen lesen"
 
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND"
 msgid "Automated tasks are falling behind"
-msgstr ""
+msgstr "Automatisierte Aufgaben verschieben sich nach hinten"
 
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_MESSAGE"
 msgid "Your automated tasks have been falling behind their scheduled time for an average of %d seconds. This means there is more work to be done than they can handle. You need to increase the number of CRON jobs you have set up."
-msgstr ""
+msgstr "Automatisierte Aufgaben liegen durchschnittlich %d Sekunden hinter ihrer geplanten Zeit zurück. Das bedeutet, dass mehr Arbeit zu erledigen ist, als sie bewältigen können. Es müssen die Anzahl der eingerichteten CRON-Jobs erhöht werden."
 
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_READ_DOCS"
 msgid "Read the documentation"
-msgstr ""
+msgstr "Dokumentation lesen"
+
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CANNOTLOAD_HEAD"
+msgid "Could not load the sites dashboard"
+msgstr "Sites-Dashboard konnte nicht geladen werden"
+
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CANNOTLOAD_TEXT"
+msgid "An error occurred while loading the sites dashboard information from your server."
+msgstr "Beim Laden der Site-Dashboard-Informationen vom Server ist ein Fehler aufgetreten."
+
+msgctxt "PANOPTICON_MAIN_DASH_BTN_RELOAD"
+msgid "Reload"
+msgstr "Neu laden"
+
+msgctxt "PANOPTICON_MAIN_DASH_BTN_TIMER_STOP"
+msgid "Stop the timer"
+msgstr "Timer stoppen"
+
+msgctxt "PANOPTICON_MAIN_DASH_BTN_TIMER_START"
+msgid "Start the timer"
+msgstr "Timer Starten"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_CMS_WILL_UPDATE"
+msgid "The CMS will be updated automatically"
+msgstr "CMS wird automatisch aktualisiert"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_CMS_UPDATING"
+msgid "The CMS is being updated"
+msgstr "CMS wird aktualisiert"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_CMS_UPDATE_ERROR"
+msgid "The automatic CMS update has failed"
+msgstr "Automatisches CMS Update fehlgeschlagen"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS"
+msgid "Extensions"
+msgstr "Erweiterungen"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WORDPRESS"
+msgid "Plugins &amp; Themes"
+msgstr "Plugins &amp; Themes"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WILL_UPDATE"
+msgid "The extensions will be updated automatically"
+msgstr "Erweiterung wird automatisch aktualisiert"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATING"
+msgid "The extensions are being updated"
+msgstr "Erweiterungen werden aktualisiert"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_UPDATE_ERROR"
+msgid "The automatic extensions update has failed"
+msgstr "Automatische Erweiterungs-Updates fehlgeschlagen"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_WILL_UPDATE"
+msgid "The plugins &amp; themes will be updated automatically"
+msgstr "Plugins &amp; Themes werden automatisch aktualisiert"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATING"
+msgid "The plugins &amp; themes are being updated"
+msgstr "Plugins &amp; Themes werden aktualisiert"
+
+msgctxt "PANOPTICON_MAIN_DASH_LBL_EXTENSIONS_WP_UPDATE_ERROR"
+msgid "The automatic plugins &amp; themes update has failed"
+msgstr "Automatische Plugins &amp; Themes-Updates fehlgeschlagen"
+
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CMS"
+msgid "Error loading site information"
+msgstr "Fehler beim Laden der Site-Informationen"
+
+msgctxt "PANOPTICON_MAIN_DASH_ERR_EXT"
+msgid "Error loading extensions update information"
+msgstr "Fehler beim Laden der Update-Informationen für Erweiterungen aufgetreten"
+
+msgctxt "PANOPTICON_MAIN_DASH_ERR_EXT_WP"
+msgid "Error loading plugins &amp; themes update information"
+msgstr "Fehler beim Laden der Update-Informationen für Plugins &amp; Themes"
+
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CERT_INVALID"
+msgid "Invalid SSL/TLS (HTTPS) certificate"
+msgstr "Ungültiges SSL/TLS (HTTPS) Zertifikat"
+
+msgctxt "PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING"
+msgid "The SSL/TLS (HTTPS) certificate is expiring soon"
+msgstr "SSL/TLS (HTTPS) Zertifikat läuft bald ab"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD"
+msgid "Latest Backup status, powered by Akeeba Backup Professional"
+msgstr "Aktueller Backup-Status, bereitgestellt von Akeeba Backup Professional"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD_SHORT"
+msgid "Backup Status"
+msgstr "Backup Status"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_NOT_INSTALLED"
+msgid "Akeeba Backup is not installed"
+msgstr "Akeeba Backup nicht installiert"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_NOT_CONNECTED"
+msgid "Akeeba Backup is not connected, or is the Core version"
+msgstr "Akeeba Backup nicht verbunden oder Core-Version"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_NONE"
+msgid "No backup taken"
+msgstr "Kein Backup erstellt"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_OBSOLETE"
+msgid "The backup files are missing"
+msgstr "Backupdateien fehlen"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_REMOTE"
+msgid "The backup files are in remote storage"
+msgstr "Backupdateien befinden sich im Remote-Speicher"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_OK"
+msgid "Successful backup"
+msgstr "Backup erfolgreich"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_FAIL"
+msgid "The backup has failed"
+msgstr "Backup fehlgeschlagen"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_PENDING"
+msgid "The backup is still running"
+msgstr "Backup läuft gerade"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_UNKNOWN"
+msgid "Unknown backup status"
+msgstr "Unbekannter Backupstatus"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_TOO_OLD"
+msgid "The last backup was taken a long time ago"
+msgstr "Letztes Backup ist eine Weile her"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
+msgid "The site is up and running."
+msgstr "Site in Betrieb."
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN"
+msgid "The site is down."
+msgstr "Site außer Betrieb."
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE"
+msgid "The site is down for maintenance."
+msgstr "Site im Wartungsmodus und daher außer Betrieb."
 
 msgctxt "PANOPTICON_SITES_TITLE"
 msgid "Sites"
@@ -2207,9 +2391,13 @@ msgctxt "PANOPTICON_SITE_LBL_TAB_PROPERTIES"
 msgid "Properties"
 msgstr "Eigenschaften"
 
+msgctxt "PANOPTICON_SITE_LBL_TAB_OTHER_FEATURES"
+msgid "Other Features"
+msgstr "Weitere Features"
+
 msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE"
-msgid "Joomla!™ Update"
-msgstr "Joomla!™ Update"
+msgid "Joomla!&reg; Update"
+msgstr "Joomla!&reg; Update"
 
 msgctxt "PANOPTICON_SITE_LBL_TAB_EXTUPDATE"
 msgid "Extensions Update"
@@ -2256,8 +2444,8 @@ msgid "Administrator Directory Password Protection"
 msgstr "Administratorverzeichnis Passwordschutz"
 
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1"
-msgid "If your site's <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!™ updates will fail with an error mentioning “401 Unauthorized”."
-msgstr "Wenn das <code>Administrator</code>-Verzeichnis passwortgeschützt ist, bitte Benutzernamen und Passwort eingeben. Andernfalls schlagen Joomla!™-Updates mit der Fehlermeldung “401 Unauthorized“ fehl."
+msgid "If your site's <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!&reg; updates will fail with an error mentioning “401 Unauthorized”."
+msgstr "Wenn das <code>Administrator</code>-Verzeichnis passwortgeschützt ist, bitte Benutzernamen und Passwort eingeben. Andernfalls schlagen Joomla!&reg;-Updates mit der Fehlermeldung “401 Unauthorized“ fehl."
 
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_2"
 msgid "Please note that this is <em>NOT</em> asking for your Joomla! username and password."
@@ -2329,15 +2517,15 @@ msgstr "Minuten"
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_HELP"
 msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover."
-msgstr ""
+msgstr "In der %s-Zeitzone ausgedrückte Zeit. Wenn Updates <em>nach</em> dieser Tageszeit gefunden werden, erfolgt die Update-Installation am nächsten Kalendertag. Umstellung auf Sommerzeit vermeiden (normalerweise zwischen 2 und 4 Uhr); Andernfalls verhält sich die Update-Planung auf eine nach außen hin “seltsame“ oder “falsche“ Art und Weise, wenn am Tag der Sommerzeitumstellung ein Update gefunden wird."
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_CC"
 msgid "CC the Following Email Addresses"
-msgstr ""
+msgstr "CC an die folgenden E-Mail-Adressen"
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_CC_HELP"
 msgid "A comma-separated list of additional email addresses to Carbon Copy when sending emails about the site update. Addresses can be in the format <code>foo@example.com</code> (only email address) or <code>Mr. Foo Bar &lt;foo@example.com&gt;</code> (name and address)."
-msgstr ""
+msgstr "Durch Kommas getrennte Liste zusätzlicher E-Mail-Adressen an Carbon Copy beim Senden von E-Mails zum Site-Update. Adressen können im Format <code>foo@example.com</code> (nur E-Mail-Adresse) oder <code>Mr. Foo Bar &lt;foo@example.com&gt;</code> (Name und Adresse) angegeben werden."
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_ERROR"
 msgid "Send Email after Update Failure"
@@ -2353,23 +2541,23 @@ msgstr "Site-Definition wurde gespeichert."
 
 msgctxt "PANOPTICON_LBL_SITE_COPIED"
 msgid "The selected Site definition(s) have been copied."
-msgstr ""
+msgstr "Ausgewählte Site-Definitionen wurden kopiert."
 
 msgctxt "PANOPTICON_LBL_SITE_DELETED"
 msgid "The selected Site definition(s) have been deleted."
-msgstr ""
+msgstr "Ausgewählte Site-Definitionen wurden gelöscht."
 
 msgctxt "PANOPTICON_LBL_FIELD_ENABLED_HELP"
 msgid "Controls whether the site is shown in the Overview page, whether its information is automatically refreshed, and whether it participates in any kind of scheduled (automatic) actions such as updates."
-msgstr ""
+msgstr "Steuert, ob die Site auf der Übersichtsseite angezeigt wird, ob ihre Informationen automatisch aktualisiert werden und ob sie an geplanten (automatischen) Aktionen wie Updates teilnimmt."
 
 msgctxt "PANOPTICON_LBL_SITE_OWNERSHIP"
 msgid "Site Ownership"
-msgstr ""
+msgstr "Site-Eigentum"
 
 msgctxt "PANOPTICON_LBL_SITE_OWNERSHIP_NON_SUPER"
 msgid "If you need the site ownership information modified please contact a user with administration or superuser privileges."
-msgstr ""
+msgstr "Wenn die Eigentümer-Informationen der Site geändert werden müssen, bitte an einen Benutzer mit Administrator- oder Superuser-Rechten wenden."
 
 msgctxt "PANOPTICON_SITES_LBL_GROUPS_INFO"
 msgid "This section is only relevant to multi–user installations with different access per site; please consult the documentation for more information. If you are managing a single–user installation, or if all users have equal access to all sites, you can ignore it."
@@ -2390,6 +2578,142 @@ msgstr "Einen Download-Schlüssel bearbeiten"
 msgctxt "PANOPTICON_SITES_LBL_DLKEY"
 msgid "Download Key"
 msgstr "Schlüssel herunterladen"
+
+msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE"
+msgid "Connection Doctor"
+msgstr "Verbindungsprüfer"
+
+msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY"
+msgid "All good!"
+msgstr "Alles gut!"
+
+msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY_MORE"
+msgid "The connection to your site was tested, and found to be working fine."
+msgstr "Verbindung zur Site wurde getestet und hat sich als einwandfrei erwiesen."
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING"
+msgid "SSL/TLS Expiration First Warning"
+msgstr "Erste Warnung zum SSL/TLS Ablauf"
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING_HELP"
+msgid "Panopticon will warn you that your site's SSL/TLS certificate is expiring this many days before it expires. 0 disables the warning."
+msgstr "Panopticon wird viele Tage vor Ablauf warnen, dass das SSL/TLS-Zertifikat der Site abläuft. 0 deaktiviert die Warnung."
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE"
+msgid "Maximum Backup Age"
+msgstr "Maximales Backup-Alter"
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE_HELP"
+msgid "Successful backups will be considered “too old” after this many hours. Use 0 to disable this feature."
+msgstr "Erfolgreiche Backups gelten nach dieser Anzahl von Stunden als “zu alt“. 0 deaktiviert diese Funktion."
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSL_TLS_CERT_INFO"
+msgid "SSL/TLS (HTTPS) Certificate Information"
+msgstr "SSL/TLS (HTTPS) Zertifikat-Informationen"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TABLE_CAPTION"
+msgid "Table of SSL/TLS certificate information"
+msgstr "Tabelle mit Informationen zum SSL/TLS-Zertifikat"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_SERIAL"
+msgid "Serial"
+msgstr "Seriell"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_SIG_TYPE"
+msgid "Signature Type"
+msgstr "Signaturtyp"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_FROM"
+msgid "Valid From"
+msgstr "Gültig Ab"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TO"
+msgid "Valid To"
+msgstr "Gültig Bis"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_CN"
+msgid "Common Names (domains)"
+msgstr "Allgemeine Namen (Domains)"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_ISSUER"
+msgid "Issued By"
+msgstr "Ausgestellt von"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_ERR_DATE_INVALID_HEAD"
+msgid "Unknown Validity"
+msgstr "Gültigkeit unbekannt"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_ERR_DATE_INVALID"
+msgid "The SSL/TLS certificate lacks valid from/to dates, making it impossible to determine whether it is valid."
+msgstr ""
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TOOSOON_HEAD"
+msgid "Invalid (Too Soon)"
+msgstr ""
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TOOSOON"
+msgid "The SSL/TLS certificate has a Valid From date in the future. Browsers will report it as invalid as it's not meant to be used just yet."
+msgstr ""
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRING_HEAD"
+msgid "Imminent Expiration"
+msgstr "Baldiges Ablaufdatum"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRING"
+msgid "The SSL/TLS certificate will expire soon. You need to replace it with a new one to prevent problems with your site."
+msgstr ""
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRED_HEAD"
+msgid "Expired"
+msgstr ""
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRED"
+msgid "The SSL/TLS certificate has a Valid To date in the past. Browsers will report it as invalid as it's not meant to be used any more."
+msgstr ""
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_CN_HEAD"
+msgid "Invalid Domain"
+msgstr "Domain ungültig"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_CN"
+msgid "The SSL/TLS certificate is issued for a different domain name than the one you are using it for. Browsers will report it as invalid."
+msgstr ""
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_SIG_HEAD"
+msgid "Invalid or Self-signed Certificate"
+msgstr ""
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_SIG"
+msgid "The signature of your SSL/TLS certificate cannot be verified against the Certification Authorities known to the server. This usually means that you are using a self-signed certificate which will be rejected by browsers."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_TITLE"
+msgid "Very Basic Site Uptime Monitoring"
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_NOTE"
+msgid "This is <em>very basic</em> uptime monitoring through Panopticon itself. It only notifies you by email when your site goes down and comes back up. It does not integrate with third party services, it does not offer history, it does not have a public uptime page. We strongly recommend using a third party service or software to monitor your sites' uptime instead of using this feature."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_ENABLED"
+msgid "Monitor Uptime"
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_ENABLED_HELP"
+msgid "Disabling this option will no longer send you emails, log site actions, or display badges when your site goes down and comes back up."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_PATH"
+msgid "URL Path To Monitor"
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_STRING"
+msgid "Look For This String"
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_STRING_HELP"
+msgid "The site will be considered up if the page contains this string. Do <em>NOT</em> use HTML; all tags and multiple whitespaces are removed before evaluating this string. Leave blank to consider any HTTP 2xx response as adequate proof the site is up."
+msgstr ""
 
 msgctxt "PANOPTICON_SITES_TITLE_READ"
 msgid "Site Information"
@@ -2452,15 +2776,15 @@ msgid "The scheduling error could not be cleared: %s"
 msgstr ""
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_HEAD"
-msgid "Joomla!™ Update"
-msgstr ""
+msgid "Joomla!&reg; Update"
+msgstr "Joomla!&reg; Update"
 
 msgctxt "PANOPTICON_SITE_BTN_JUPDATE_RELOAD"
-msgid "Reload Joomla!™ Update information"
+msgid "Reload Joomla!&reg; Update information"
 msgstr ""
 
 msgctxt "PANOPTICON_SITE_BTN_JUPDATE_RELOAD_SR"
-msgid "Reload Joomla!™ Update information for site “%s”"
+msgid "Reload Joomla!&reg; Update information for site “%s”"
 msgstr ""
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED"
@@ -2497,11 +2821,11 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_AVAILABLE_UPDATE"
 msgid "Joomla! %s is available"
-msgstr ""
+msgstr "Joomla! %s ist verfügbar"
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_CURRENT_VERSION"
 msgid "Your site is currently using Joomla! %s."
-msgstr ""
+msgstr "Site verwendet derzeit Joomla! %S."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_IS_PATCH_RELEASE"
 msgid "This is a patch (point) update which is almost always safe."
@@ -2525,11 +2849,11 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UP_TO_DATE"
 msgid "Joomla! %s is up-to-date"
-msgstr ""
+msgstr "Joomla! %s ist aktuell"
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_EOL"
 msgid "Joomla! %s is unsupported"
-msgstr ""
+msgstr "Joomla! %s wird nicht unterstützt"
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_EOL_MAJOR"
 msgid "The Joomla! %s series is End-of-Life"
@@ -3039,6 +3363,10 @@ msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTFOUND_BODY"
 msgid "You need to install Akeeba Backup Professional on your site to schedule and execute backups through Panopticon."
 msgstr ""
 
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTFOUND_NOTE_FOR_AFTERWARDS"
+msgid "After installing Akeeba Backup Professional please go back to the site overview page to link Akeeba Backup with Panopticon."
+msgstr ""
+
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTFOUND_SOLUTION"
 msgid "After installing Akeeba Backup Professional please click the button below to tell Panopticon to relink with the Akeeba Backup installation on your site."
 msgstr ""
@@ -3077,6 +3405,38 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_COMSERROR_HEAD"
 msgid "There has been a communication error with the Akeeba Panopticon Connector on the remote site."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_GUZZLE"
+msgid "We tried asking the Panopticon API on your site to provide information about the installation status of Akeeba Backup, but we received an error instead."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI_HEAD"
+msgid "Invalid response from the API when checking for the status of Akeeba Backup"
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI"
+msgid "We tried asking the Panopticon API on your site to provide information about the installation status of Akeeba Backup, but it did not respond correctly."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI_PLEASE_CHECK_VERSION"
+msgid "Please make sure you have a version of Akeeba Backup newer than 9.6.0."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI_PLEASE_CHECK_VERSION_J3"
+msgid "Please make sure you have a version of Akeeba Backup newer than 8.3.0."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_INVALIDAPI_OR_CHECK_ERRORS"
+msgid "If that does not help, please check below for any errors, or irregular response from the API."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_JSONAPI_ERROR_HEAD"
+msgid "There has been a communication error with the Akeeba Backup JSON API on your site"
+msgstr "Kommunikationsfehler mit der Akeeba Backup JSON API auf der Site aufgetreten"
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_JSONAPI_ERROR"
+msgid "The API indicated there is an error. Please make sure that you have entered the correct API Token, and that your site's server does not block or otherwise interfere with the request."
 msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_CONNECTOR_VERSION"
@@ -3192,24 +3552,28 @@ msgid "Date &amp; Time"
 msgstr "Datum &amp; Uhrzeit"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_FILES"
-msgid "Files"
-msgstr "Dateien"
+msgid "Scanned Files"
+msgstr "Gescannte Dateien"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_TOTAL"
 msgid "Total"
 msgstr "Gesamt"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_NEW"
-msgid "New"
-msgstr "Neu"
+msgid "Added"
+msgstr "Hinzugefügt"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_MODIFIED"
 msgid "Modified"
 msgstr "Geändert"
 
+msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_NO_RESULTS"
+msgid "There are no scans to review."
+msgstr "Keine Scans zur Überprüfung vorhanden."
+
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS"
-msgid "Suspicious"
-msgstr "Verdächtig"
+msgid "Possible Threats"
+msgstr "Mögliche Bedrohungen"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_BACKEND"
 msgid "Backend"
@@ -3220,8 +3584,8 @@ msgid "CLI"
 msgstr "CLI"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_JOOMLA"
-msgid "Joomla!&trade; CLI"
-msgstr "Joomla!&trade; CLI"
+msgid "Joomla!&reg; CLI"
+msgstr "Joomla!&reg; CLI"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_PANOPTICON"
 msgid "Panopticon"
@@ -3296,12 +3660,12 @@ msgid "JSON API"
 msgstr "JSON API"
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLACLI"
-msgid "Joomla!™ CLI"
-msgstr "Joomla!™ CLI"
+msgid "Joomla!&reg; CLI"
+msgstr "Joomla!&reg; CLI"
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLA"
-msgid "Joomla!™ CLI"
-msgstr "Joomla!™ CLI"
+msgid "Joomla!&reg; CLI"
+msgstr "Joomla!&reg; CLI"
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_CLI"
 msgid "Native CLI Script"
@@ -3407,6 +3771,14 @@ msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_LATEST"
 msgid "Latest Backups"
 msgstr "Neuste Backups"
 
+msgctxt "PANOPTICON_SITES_MENU_AKEEBABACKUP_SCHEDULE"
+msgid "Backup"
+msgstr "Backup"
+
+msgctxt "PANOPTICON_SITE_LBL_AKEEBABACKUP_NO_RESULTS"
+msgid "There are no backups to review."
+msgstr "Keine Backups zur Überprüfung vorhanden."
+
 msgctxt "PANOPTICON_SITES_LBL_BOU_HEAD"
 msgid "Backup on Update"
 msgstr "Backup bei Update"
@@ -3449,11 +3821,11 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_BOU_BTN_LINK"
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 msgctxt "PANOPTICON_SITES_LBL_BOU_TOGGLE"
 msgid "Backup on Update"
-msgstr ""
+msgstr "Backup bei Update"
 
 msgctxt "PANOPTICON_SITES_LBL_BOU_TOGGLE_HELP"
 msgid "Takes a backup of your site using the specified Akeeba Backup profile before applying the update."
@@ -3461,7 +3833,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_BOU_PROFILE"
 msgid "Backup Profile"
-msgstr ""
+msgstr "Backup-Profil"
 
 msgctxt "PANOPTICON_SITES_LBL_BOU_PROFILE_HELP"
 msgid "The backup profile to use for taking a backup of your site before applying the update."
@@ -3509,6 +3881,26 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK3"
 msgid "Do you have a security, SEO, or other similar plugin which may be blocking the above?"
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_HEAD"
+msgid "The Joomla! API Application response includes non-API output"
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_HEAD_J3"
+msgid "The API Plugin response includes includes non-API output"
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH1"
+msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party software. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site's response."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
+msgid "Make sure “Error Reporting” is set to None, and “Debug Site” is set to No in your site's Global Configuration page. This prevents PHP from printing messages which pollute the API response."
+msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH3"
+msgid "If this is not enough, it is possible that a third party plugin is causing an error in the API application. Check if there are any third party plugins, especially system plugins, which may be accidentally breaking the API plugin and contact their author."
 msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_HEAD"
@@ -3827,6 +4219,26 @@ msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_MUST_ENABLE_FOR_ISSUE"
 msgid "Before you attempt to submit an issue about this connection issue please go to Administration, System Configuration, System and enable Debug System. Then come back here and retry the same connection. You will receive detailed troubleshooting information which you need to include in your issue."
 msgstr ""
 
+msgctxt "PANOPTICON_SITE_LBL_NOTES_HEAD"
+msgid "Notes"
+msgstr "Notizen"
+
+msgctxt "PANOPTICON_SITE_LBL_NOTES_HELP"
+msgid "Freeform notes about the site only shown to users who have edit privileges on the site."
+msgstr "Freiform-Notizen zur Site werden nur Benutzern angezeigt, die über Bearbeitungsrechte für die Site verfügen."
+
+msgctxt "PANOPTICON_SITE_LBL_NOTES_HELP_NO_PRIVILEGED"
+msgid "<strong>DO NOT INCLUDE PRIVILEGED INFORMATION</strong>, such as passwords, in Notes. The contents of this field are stored <em>unencrypted</em> in the database. If you want to store privileged information we strongly recommend using a password manager with the ability to store arbitrary information such as KeePassXC, Strongbox, 1Password, etc."
+msgstr "<strong>KEINE PRIVILEGIERTEN INFORMATIONEN EINGEBEN</strong> wie etwa Passwörter in Notizen. Der Inhalt dieses Feldes wird <em>unverschlüsselt</em> in der Datenbank gespeichert. Wenn privilegierte Informationen gespeichert werden sollen, wird dringend die Verwendung eines Passwort-Managers mit der Möglichkeit, beliebige Informationen wie KeePassXC, Strongbox, 1Password usw. zu speichern empfohlen."
+
+msgctxt "PANOPTICON_SITE_LBL_NOTES_NONE"
+msgid "There are no notes."
+msgstr "Keine Notizen vorhanden."
+
+msgctxt "PANOPTICON_SITE_LBL_NOTES_EDIT"
+msgid "Edit site to edit notes"
+msgstr "Site bearbeiten, um Notizen zu bearbeiten"
+
 msgctxt "PANOPTICON_SYSCONFIG_TITLE"
 msgid "System Configuration"
 msgstr "Systemkonfiguration"
@@ -3864,8 +4276,8 @@ msgid "Caching"
 msgstr "Caching"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES"
-msgid "Joomla!™ Updates"
-msgstr "Joomla!™ Updates"
+msgid "Joomla!&reg; Updates"
+msgstr "Joomla!&reg; Updates"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DATABASE"
 msgid "Database Connection"
@@ -3878,6 +4290,10 @@ msgstr "Datenbank Backup"
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DISPLAY"
 msgid "Display Preferences"
 msgstr "Anzeigeeinstellungen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DASHBOARD"
+msgid "Dashboard Preferences"
+msgstr "Dashboard-Einstellungen"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_EMAIL"
 msgid "Email Sending"
@@ -3903,6 +4319,10 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SITE_INFO"
 msgid "Collecting Site Information"
 msgstr "Site-Informationen sammeln"
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_UPTIME"
+msgid "Uptime Monitoring"
+msgstr "Uptime-Monitoring"
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SYSTEM"
 msgid "System Preferences"
 msgstr "Systemeinstellungen"
@@ -3913,38 +4333,38 @@ msgstr "Keine Erweiterungen gefunden"
 
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_BODY"
 msgid "Set up your sites and wait until their extension update information refreshes - up to 15 minutes later. You will then see all of their installed extensions here."
-msgstr "Richte deine Websites zunächst ein und warte, bis die Informationen zur Aktualisierung der Erweiterungen aktualisiert wurden - das kann bis zu 15 Minuten dauern. Dann werden alle installierten Erweiterungen hier zu sehen sein."
+msgstr "Sites einrichten und warten, bis die Informationen zur Erweiterungsaktualisierung aktualisiert werden - Dauer bis zu 15 Minuten. Anschließend werden hier alle installierten Erweiterungen angezeigt."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LIVE_SITE"
 msgid "Panopticon URL"
-msgstr ""
+msgstr "Panopticon URL"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LIVE_SITE_HELP"
 msgid "The base URL of your Panopticon installation. Used when sending email from unattended tasks."
-msgstr ""
+msgstr "Basis-URL der Panopticon-Installation. Wird beim Senden von E-Mails von unbeaufsichtigten Aufgaben verwendet."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TIMEOUT"
 msgid "Session Timeout"
-msgstr ""
+msgstr "Sitzungs-Zeitüberschreitung"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE"
 msgid "Time Zone"
-msgstr ""
+msgstr "Zeitzone"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DEBUG"
 msgid "Debug System"
-msgstr ""
+msgstr "Debug System"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
 msgid "Anonymous Usage Statistics Collection"
-msgstr ""
+msgstr "Sammlung anonymer Nutzungsstatistiken"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP"
 msgid "Akeeba Panopticon collects anonymous information about the Panopticon, PHP, and database server version. This aggregated information allows Akeeba to determine which versions of PHP and database servers to support in future releases."
 msgstr ""
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP_LEARN_MORE"
-msgid "Learn more"
+msgid "Details of the information collected."
 msgstr ""
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ERROR_REPORTING"
@@ -3963,12 +4383,32 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_THEME"
 msgid "CSS Theme File"
 msgstr ""
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_THEME_DEFAULT"
+msgid "(Default)"
+msgstr ""
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DARKMODE"
 msgid "Dark Mode"
 msgstr ""
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FONTSIZE"
 msgid "Font size"
+msgstr ""
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER"
+msgid "Dashboard Reload Timer"
+msgstr ""
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER_HELP"
+msgid "Dashboard views will reload every this many seconds, unless manually paused."
+msgstr ""
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS"
+msgid "Maximum Displayed Items"
+msgstr "Maximal angezeigte Elemente"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS_HELP"
+msgid "Panopticon always loads up to 50 sites per HTTP request. This is the maximum number of sites to be displayed <em>in total</em>."
 msgstr ""
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PHPWARNINGS"
@@ -4048,7 +4488,7 @@ msgid "Compress Database Backups"
 msgstr ""
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_COMPRESS_HELP"
-msgid "Should I compress the database backups with GZip?"
+msgid "Should I compress the database backups with Gzip?"
 msgstr ""
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_MAXFILES"
@@ -4431,29 +4871,57 @@ msgctxt "PANOPTICON_SYSCONFIG_OPT_DBDRIVER_PDOMYSQL"
 msgid "PDO MySQL"
 msgstr ""
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_HOURS"
+msgid "hours"
+msgstr "Stunden"
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_MINUTES"
 msgid "minutes"
-msgstr ""
+msgstr "Minuten"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_SECONDS"
 msgid "seconds"
-msgstr ""
+msgstr "Sekunden"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_DAYS"
 msgid "days"
-msgstr ""
+msgstr "Tage"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_POINTS"
 msgid "pt"
-msgstr ""
+msgstr "pt"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_FILES"
 msgid "files"
-msgstr ""
+msgstr "Dateien"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_PAGES"
+msgid "pages"
+msgstr "Seiten"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_ITEMS"
+msgid "items"
+msgstr "Elemente"
 
 msgctxt "PANOPTICON_SYSCONFIG_MSG_SAVED"
 msgid "The System Configuration has been saved"
 msgstr "Die Systemkonfiguration wurde gespeichert"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME"
+msgid "Uptime Monitoring Provider"
+msgstr ""
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME_HELP"
+msgid "Choose which service will be used to report your sites' uptime. Please note that the integrated “Panopticon” provider is very basic and has some gotchas. Please read the documentation."
+msgstr ""
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_UPTIME_NONE"
+msgid "None"
+msgstr "Keine"
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_UPTIME_PANOPTICON"
+msgid "Panopticon"
+msgstr "Panopticon"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EMAILTEST_WATCH_OUT"
 msgid "<strong>Watch out!</strong> Clicking the button below will cause all unsaved configuration setting changes to be lost. If you want to keep your changes please first click on the Save button in the toolbar, then click on the button below to send a test email message."
@@ -4489,47 +4957,47 @@ msgstr ""
 
 msgctxt "PANOPTICON_TASKS_TITLE"
 msgid "Tasks"
-msgstr ""
+msgstr "Aufgaben"
 
 msgctxt "PANOPTICON_TASKS_LBL_FIELD_SITE_ID"
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 msgctxt "PANOPTICON_TASKS_LBL_FIELD_TYPE"
 msgid "Task Type"
-msgstr ""
+msgstr "Aufgabentyp"
 
 msgctxt "PANOPTICON_TASKS_LBL_FIELD_STATUS"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 msgctxt "PANOPTICON_TASKS_LBL_FIELD_TIMES"
 msgid "Last / Next Run"
-msgstr ""
+msgstr "Letzter / Nächster Lauf"
 
 msgctxt "PANOPTICON_TASKS_LBL_SELECT_TYPE"
 msgid "– Type –"
-msgstr ""
+msgstr "– Typ –"
 
 msgctxt "PANOPTICON_TASKS_LBL_SELECT_ENABLED"
 msgid "– Enabled –"
-msgstr ""
+msgstr "– Aktiviert –"
 
 msgctxt "PANOPTICON_TASKS_LBL_LAST_RUN"
 msgid "Last execution on"
-msgstr ""
+msgstr "Letzte Ausführung am"
 
 msgctxt "PANOPTICON_TASKS_LBL_NEXT_RUN"
 msgid "Next execution on"
-msgstr ""
+msgstr "Nächste Ausführung am"
 
 msgctxt "PANOPTICON_TASKS_LBL_DURATION"
 msgid "Last execution run time"
-msgstr ""
+msgstr "Letzte Ausführungsdauer"
 
 msgctxt "PANOPTICON_TASKS_LBL_SYSTEM"
 msgid "System"
-msgstr ""
+msgstr "System"
 
 msgctxt "PANOPTICON_TASKS_ERR_NO_DELETE_SYSTEM"
 msgid "You cannot delete a system task."
@@ -4541,63 +5009,63 @@ msgstr ""
 
 msgctxt "PANOPTICON_LBL_TASK_DELETED"
 msgid "The task has been disabled."
-msgstr ""
+msgstr "Aufgabe wurde deaktiviert."
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TITLE"
 msgid "Mail Templates"
-msgstr ""
+msgstr "Mail-Vorlagen"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TITLE_CSS"
 msgid "Mail Template CSS"
-msgstr ""
+msgstr "Mail-Vorlagen CSS"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TITLE_NEW"
 msgid "New Mail Template"
-msgstr ""
+msgstr "Neue Mail-Vorlage"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TITLE_EDIT"
 msgid "Edit Mail Template"
-msgstr ""
+msgstr "Mail-Vorlage bearbeiten"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_BTN_CSS"
 msgid "Edit Common CSS"
-msgstr ""
+msgstr "Allgemeine CSS bearbeiten"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TABLE_COMMENT"
 msgid "List of mail templates"
-msgstr ""
+msgstr "Mail-Vorlagen Liste"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TABLE_HEAD_TYPE"
 msgid "Mail type"
-msgstr ""
+msgstr "Mail-Typ"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TABLE_HEAD_SUBJECT"
 msgid "Subject"
-msgstr ""
+msgstr "Betreff"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TABLE_HEAD_LANGUAGE"
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 msgctxt "PANOPTICON_MAILTEMPLATE_FIELD_TYPE"
 msgid "Mail Type"
-msgstr ""
+msgstr "Mail-Typ"
 
 msgctxt "PANOPTICON_MAILTEMPLATE_FIELD_LANGUAGE"
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 msgctxt "PANOPTICON_MAILTEMPLATE_FIELD_SUBJECT"
 msgid "Subject"
-msgstr ""
+msgstr "Betreff"
 
 msgctxt "PANOPTICON_MAILTEMPLATE_FIELD_HTML"
 msgid "HTML Content"
-msgstr ""
+msgstr "HTML-Inhalt"
 
 msgctxt "PANOPTICON_MAILTEMPLATE_FIELD_PLAINTEXT"
 msgid "Plain Text Content"
-msgstr ""
+msgstr "Nur-Text-Inhalt"
 
 msgctxt "PANOPTICON_MAILTEMPLATE_LBL_REMINDER_URLS"
 msgid "Use <em>absolute</em> URLs for any images, media files, etc. Absolute URLs include the domain name e.g. <code>https://www.example.com/something.png</code>."
@@ -4629,54 +5097,70 @@ msgstr ""
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_LANGUAGE_ALL"
 msgid "(All)"
-msgstr ""
+msgstr "(Alle)"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_MUST_SELECT"
 msgid "- Select an option -"
-msgstr ""
+msgstr "- Option wählen -"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_JOOMLAUPDATE_FOUND"
 msgid "Joomla Core Update: Update found"
-msgstr ""
+msgstr "Joomla Core Update: Update gefunden"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_JOOMLAUPDATE_WILL_INSTALL"
 msgid "Joomla Core Update: Update will be installed"
-msgstr ""
+msgstr "Joomla Core Update: Update wird installiert"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_JOOMLAUPDATE_INSTALLED"
 msgid "Joomla Core Update: Update installed"
-msgstr ""
+msgstr "Joomla Core Update: Update installiert"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_JOOMLAUPDATE_FAILED"
 msgid "Joomla Core Update: Update failed"
-msgstr ""
+msgstr "Joomla Core Update: Update fehlgeschlagen"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_SUCCESS"
 msgid "Akeeba Backup: Successful backup"
-msgstr ""
+msgstr "Akeeba Backup: Backup erfolgreich"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_FAIL"
 msgid "Akeeba Backup: Failed backup"
-msgstr ""
+msgstr "Akeeba Backup: Backup fehlgeschlagen"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSION_UPDATE_FOUND"
 msgid "Joomla! Extension Update: Update Found"
-msgstr ""
+msgstr "Joomla! Erweiterungs-Update: Update gefunden"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSIONS_UPDATE_DONE"
 msgid "Joomla! Extension Update: Autoupdate Results"
-msgstr ""
+msgstr "Joomla! Erweiterungs-Update: Zusammenfassung Autoupdate"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SELFUPDATE_FOUND"
 msgid "Panopticon: Update found"
-msgstr ""
+msgstr "Panopticon: Update gefunden"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SCHEDULED_UPDATE_SUMMARY"
 msgid "Scheduled Update Summary"
-msgstr ""
+msgstr "Zusammenfassung Geplantes Update"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SSL_TLS_EXPIRING"
+msgid "SSL/TLS Certificate Expires Soon"
+msgstr "SSL/TLS Zertifikat läuft bald ab"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_LBL_CSS_HEAD"
 msgid "This CSS will be added to all HTML emails sent by Panopticon."
+msgstr "CSS wird allen von Panopticon gesendeten HTML-E-Mails hinzugefügt."
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_DOWN"
+msgid "Site went down"
+msgstr "Site ist ausgefallen"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_UP"
+msgid "Site is back up"
+msgstr "Site wieder verfügbar"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_ACTION_SUMMARY"
+msgid "Site Action Summary"
 msgstr ""
 
 msgctxt "PANOPTICON_SELFUPDATE_TITLE"
@@ -4859,6 +5343,10 @@ msgctxt "PANOPTICON_LBL_USER_DELETED"
 msgid "The user account has been deleted"
 msgstr ""
 
+msgctxt "PANOPTICON_LBL_USER_COPIED"
+msgid "The user account has been copied"
+msgstr "Das Benutzerkonto wurde kopiert"
+
 msgctxt "PANOPTICON_USERS_ERR_CANT_DELETE_YOURSELF"
 msgid "You cannot delete your own user account."
 msgstr ""
@@ -4893,159 +5381,179 @@ msgstr ""
 
 msgctxt "PANOPTICON_USERS_TABLE_COMMENT"
 msgid "Table of user accounts"
-msgstr ""
+msgstr "Tabelle der Benutzerkonten"
 
 msgctxt "PANOPTICON_USERS_TABLE_HEAD_USERNAME"
 msgid "Username"
-msgstr ""
+msgstr "Benutzername"
 
 msgctxt "PANOPTICON_USERS_TABLE_HEAD_NAME"
 msgid "Full name"
-msgstr ""
+msgstr "Voller Name"
 
 msgctxt "PANOPTICON_USERS_LBL_AVATAR_EDIT"
 msgid "Edit avatar"
-msgstr ""
+msgstr "Benutzerbild bearbeiten"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_USERNAME"
 msgid "Username"
-msgstr ""
+msgstr "Benutzername"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_NAME"
 msgid "Full name"
-msgstr ""
+msgstr "Voller Name"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL"
 msgid "Email"
-msgstr ""
+msgstr "E-Mail"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
 msgid "The email address is used to email the user, as well as displaying the user's picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
-msgstr ""
+msgstr "E-Mail-Adresse wird verwendet, um E-Mails an den Benutzer zu senden und das Bild des Benutzers über den <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>-Dienst eines Drittanbieters anzuzeigen."
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD"
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
 msgid "Password (repeat)"
-msgstr ""
+msgstr "Passwort (wiederholen)"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PERMISSIONS"
 msgid "Permissions"
-msgstr ""
+msgstr "Berechtigungen"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_GROUPS"
 msgid "Groups"
-msgstr ""
+msgstr "Gruppen"
 
 msgctxt "PANOPTICON_USERS_LBL_EDIT_PROFILE"
 msgid "Edit Profile"
-msgstr ""
+msgstr "Profil bearbeiten"
 
 msgctxt "PANOPTICON_USERS_LBL_NOACCESS"
 msgid "No Access"
-msgstr ""
+msgstr "Kein Zugriff"
 
 msgctxt "PANOPTICON_USERS_LBL_GROUPS"
 msgid "%d Groups"
-msgstr ""
+msgstr "%d Gruppen"
 
 msgctxt "PANOPTICON_USERS_LBL_GROUPS_1"
 msgid "Group"
-msgstr ""
+msgstr "Gruppe"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE"
 msgid "Preferred Language"
-msgstr ""
+msgstr "Bevorzugte Sprache"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_AUTO"
 msgid "Use Default"
-msgstr ""
+msgstr "Standard verwenden"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_HELP"
 msgid "The language to display Panopticon and send you emails in. “Use Default” uses the language set in your browser preferences for the web interface, and the default language (<tt>%s</tt>) for emails."
-msgstr ""
+msgstr "Sprache, in der Panopticon angezeigt und E-Mails gesendet werden. “Standard verwenden“ verwendet die in den Browsereinstellungen festgelegte Sprache für die Weboberfläche und die Standardsprache (<tt>%s</tt>) für E-Mails."
+
+msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT"
+msgid "Sites Overview Layout"
+msgstr "Layout Site-Übersicht"
+
+msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_OPT_DEFAULT"
+msgid "Table"
+msgstr "Tabelle"
+
+msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_OPT_DASHBOARD"
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_HELP"
+msgid "The Dashboard layout is simpler to understand, but uses more browser resources."
+msgstr "Dashboard-Layout ist einfacher zu verstehen, beansprucht jedoch mehr Browserressourcen."
 
 msgctxt "PANOPTICON_ABOUT_TITLE"
 msgid "About"
-msgstr ""
+msgstr "Über"
 
 msgctxt "PANOPTICON_ABOUT_LBL_LICENSE"
 msgid "License"
-msgstr ""
+msgstr "Lizenz"
+
+msgctxt "PANOPTICON_ABOUT_LBL_LICENSE_IMAGE_ALT"
+msgid "Logotype of the GNU Affero General Public License"
+msgstr "Logotyp der GNU Affero General Public Lizenz"
 
 msgctxt "PANOPTICON_ABOUT_LBL_APP_SUBTITLE"
 msgid "Self–hosted site monitoring"
-msgstr ""
+msgstr "Selbstgehostete Site-Überwachung"
 
 msgctxt "PANOPTICON_ABOUT_LBL_COPYRIGHT"
 msgid "Copyright &copy; %s Akeeba Ltd"
-msgstr ""
+msgstr "Copyright &copy; %s Akeeba Ltd"
 
 msgctxt "PANOPTICON_ABOUT_LBL_PLEASE_READ_LICENSE"
 msgid "For the complete text of the software license, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
-msgstr ""
+msgstr "Der vollständige Text der Softwarelizenz befindet sich in der mit der Software gelieferten Datei <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a>."
 
 msgctxt "PANOPTICON_ABOUT_LBL_3PD_SOFTWARE"
 msgid "Third Party Software Included"
-msgstr ""
+msgstr "Software von Drittanbietern enthalten"
 
 msgctxt "PANOPTICON_ABOUT_LBL_3PD_SOFTWARE_ABOUT"
 msgid "Software is not made in a vacuum, or by virgin birth. We build upon the work of other people and organisations who have kindly provided their software libraries under a permissive license. Below, you can find the third party software which is included in Akeeba Panopticon, its version numbers, and its integrity checksum - essentially a Software Bill Of Materials (SBOM) which you might need for compliance reasons."
-msgstr ""
+msgstr "Software entsteht nicht im luftleeren Raum oder durch Jungfrauengeburt. Wir bauen auf der Arbeit anderer Personen und Organisationen auf, die ihre Softwarebibliotheken freundlicherweise unter einer freizügigen Lizenz zur Verfügung gestellt haben. Nachfolgend finden Sie die Software von Drittanbietern, die in Akeeba Panopticon enthalten ist, ihre Versionsnummern und ihre Integritätsprüfsumme - im Wesentlichen eine Software-Stückliste (SBOM), die Sie möglicherweise aus Compliance-Gründen benötigen."
 
 msgctxt "PANOPTICON_ABOUT_LBL_PHP_DEPS"
 msgid "PHP Dependencies"
-msgstr ""
+msgstr "PHP-Abhängigkeiten"
 
 msgctxt "PANOPTICON_ABOUT_LBL_PACKAGE"
 msgid "Package"
-msgstr ""
+msgstr "Paket"
 
 msgctxt "PANOPTICON_ABOUT_LBL_VERSION"
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 msgctxt "PANOPTICON_ABOUT_LBL_REFERENCE"
 msgid "Reference"
-msgstr ""
+msgstr "Referenz"
 
 msgctxt "PANOPTICON_ABOUT_LBL_CSS_AND_JS"
 msgid "CSS and JavaScript Dependencies"
-msgstr ""
+msgstr "CSS- und JavaScript-Abhängigkeiten"
 
 msgctxt "PANOPTICON_ABOUT_LBL_INTEGRITY"
 msgid "Integrity"
-msgstr ""
+msgstr "Integrität"
 
 msgctxt "PANOPTICON_ABOUT_LBL_CONTRIBUTORS"
 msgid "Contributors"
-msgstr ""
+msgstr "Mitwirkende"
 
 msgctxt "PANOPTICON_ABOUT_LBL_CONTRIBUTORS_INFO"
 msgid "Panopticon is Free and Open Source Software (FOSS). Like all FOSS it is made possible by the contributions of volunteer software developers, designers, translators, linguists, beta testers, and users who contribute to its development in every way they can. Below you can find the top contributors to the Panopticon project, as reported by GitHub."
-msgstr ""
+msgstr "Panopticon ist Freie- und Open-Source-Software (FOSS). Wie alle FOSS wird es durch die Beiträge freiwilliger Softwareentwickler, Designer, Übersetzer, Linguisten, Betatester und Benutzer ermöglicht, die auf jede erdenkliche Weise zur Entwicklung beitragen. Nachfolgend die Top-Mitwirkenden des Panopticon-Projekts, wie von GitHub berichtet."
 
 msgctxt "PANOPTICON_ABOUT_LBL_AVATAR_FOR"
 msgid "Avatar for user %s"
-msgstr ""
+msgstr "Benutzerbild für Benutzer %s"
 
 msgctxt "PANOPTICON_ABOUT_LBL_CONTRIBUTIONS"
 msgid "Contributions: <span class=\"font-monospace text-success\">%d</span>"
-msgstr ""
+msgstr "Beiträge: <span class=\"font-monospace text-success\">%d</span>"
 
 msgctxt "PANOPTICON_ABOUT_LBL_GITHUB_PROFILE"
 msgid "GitHub profile"
-msgstr ""
+msgstr "GitHub Profil"
 
 msgctxt "PANOPTICON_ABOUT_LBL_GITHUB_PROFILE_FOR"
 msgid "GitHub profile for user %s"
-msgstr ""
+msgstr "GitHub Profil für Benutzer %s"
 
 msgctxt "PANOPTICON_ABOUT_LBL_VISIT_GITHUB"
 msgid "For a complete list of Panopticon's contributors please visit <a href=\"%s\">its GitHub repository</a>."
-msgstr ""
+msgstr "Vollständige Liste Mitwirkender von Panopticon im <a href=\"%s\">GitHub-Repository</a>."
 
 msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
 msgid "We would like to acknowledge and recognise the work of each and every person who has contributed to Akeeba Panopticon, no matter how small or big their contribution is; even the smallest of details are important. If you have contributed outside of GitHub and would like to be publicly acknowledged, please drop us a line and we'll rectify the omission; <em>every person matters</em>."
@@ -5065,19 +5573,19 @@ msgstr ""
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_RESET"
 msgid "Reset"
-msgstr ""
+msgstr "Zurücksetzen"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_BACKUP_OPTIONS"
 msgid "Backup Options"
-msgstr ""
+msgstr "Backup Optionen"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_BACKUP_PROFILE"
 msgid "Backup Profile"
-msgstr ""
+msgstr "Backup-Profil"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION"
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
 msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site's server where Akeeba Backup runs."
@@ -5089,79 +5597,79 @@ msgstr ""
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_SCHEDULE"
 msgid "Schedule"
-msgstr ""
+msgstr "Zeitplan"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MINUTES"
 msgid "Minutes"
-msgstr ""
+msgstr "Minuten"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MINUTES_HELP"
 msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
-msgstr ""
+msgstr "Zahl <code>0</code> bis <code>59</code>, zusammenhängender Bereich z.B. <code>5-15</code>, durch Kommas getrennte Liste von Werten, z.B. <code>1,15,30,45</code>, jede Minute als <code>*</code>, alle X Minuten mit Schrägstrich, z.B. <code>*/5</code> (alle 5 Minuten)."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_HOURS"
 msgid "Hours"
-msgstr ""
+msgstr "Stunden"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_HOURS_HELP"
 msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
-msgstr ""
+msgstr "Zahl <code>0</code> bis <code>23</code> (0-11 ist Vormittag, 12-23 ist Nachmittag), zusammenhängender Bereich, z.B. <code>5-15</code>, durch Kommas getrennte Liste von Werten, z. B. <code>0,6,12,18</code>, jede Stunde als <code>*</code>, alle X Stunden mit Schrägstrich, z.B. <code>*/2</code> (alle 2 Stunden)."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM"
 msgid "Day of the Month"
-msgstr ""
+msgstr "Tag des Monats"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that's not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr ""
+msgstr "Zahl <code>1</code> bis <code>31</code>, <code>L</code> für den letzten Tag des Monats (kann nicht in Wertelisten verwendet werden!), zusammenhängender Bereich z.B. <code>1-15</code>, durch Kommas getrennte Liste von Werten, z.B. <code>1,7,14,21,28</code>, jeden Tag als <code>*</code>, alle X Tage mit Schrägstrich, z.B. <code>*/3</code> (alle 3 Tage) .<br>Zahl mit <code>W</code> für den nächstgelegenen Tag innerhalb desselben Monatsverwenden, der kein Samstag oder Sonntag ist, z.B. <code>15W</code> ist der nächstgelegene Tag (vom 13. bis zum 17.), der kein Samstag oder Sonntag ist."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH"
 msgid "Month"
-msgstr ""
+msgstr "Monat"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH_HELP"
 msgid "Number <code>1</code> (January) to <code>12</code> (December), contiguous range e.g. <code>3-7</code>, comma–separated list of values e.g. <code>3,6,9,12</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/2</code> (every 2 months).<br>Instead of numbers you may use the abbreviated, three–letter, English names of the months: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
-msgstr ""
+msgstr "Zahl <code>1</code> (Januar) bis <code>12</code> (Dezember), zusammenhängender Bereich z.B. <code>3-7</code>, durch Kommas getrennte Liste von Werten, z B. <code>3,6,9,12</code>, jeden Monat als <code>*</code>, alle X Monate mit Schrägstrich, z.B. <code>*/2</code> (alle 2 Monate).<br>Anstelle von Zahlen können abgekürzte, aus drei Buchstaben bestehenden englischen Namen der Monate verwendet werden: <code>JAN</code> <code>FEB </code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEZ</code>."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOW"
 msgid "Day of the Week"
-msgstr ""
+msgstr "Wochentag"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOW_HELP"
 msgid "Number <code>0</code> (Sunday) to <code>6</code> (Saturday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>.<br> Instead of numbers you may use the abbreviated, three–letter, English names of the days of the week: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br>A number followed by <code>L</code> for the last day of the week in the month, e.g. <code>5L</code> is the last Friday of the month.<br>Two numbers separated by <code>#</code> for n-th day of the week in the month, e.g. <code>5#3</code> is the 3rd Friday of the month."
-msgstr ""
+msgstr "Zahl <code>0</code> (Sonntag) bis <code>6</code> (Samstag), zusammenhängender Bereich z.B. <code>1-5</code>, durch Kommas getrennte Liste von Werten, z.B. <code>1,3,5</code>, jeden Tag als <code>*</code>.<br> Anstelle von Zahlen können abgekürzte, aus drei Buchstaben bestehenden englischen Namen der Wochentage verwendet werden: <code>SUN</code>, <code>MON</code>, <code>DI</code>, <code>MI</code>, <code>DO</code>, <code>FR< /code>, <code>SAT</code><br>Eine Zahl gefolgt von <code>L</code> für den letzten Tag der Woche im Monat, z.B. <code>5L</code> ist der letzte Freitag des Monats.<br>Zwei durch <code>#</code> getrennte Zahlen für den n-ten Tag der Woche im Monat, z. B. <code>5#3</code> ist der 3. Freitag im Monat."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_PROFILE"
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_SCHEDULE"
 msgid "Schedule"
-msgstr ""
+msgstr "Zeitplan"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE"
 msgid "Repetition"
-msgstr ""
+msgstr "Wiederholung"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_NONE"
 msgid "Repeat according to schedule"
-msgstr ""
+msgstr "Nach Zeitplan wiederholen"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
 msgid "Run once, then disable this backup schedule"
-msgstr ""
+msgstr "Backup-Plan einmal ausführen und dann deaktivieren"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE"
 msgid "⚠️ Run once, then DELETE this backup schedule"
-msgstr ""
+msgstr "⚠️ Backup-Plan einmal ausführen und dann LÖSCHEN"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The backup schedule is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
-msgstr ""
+msgstr "Backup-Zeitplan ist ein <a href='%s' target='_blank'>CRON-Ausdruck</a>. Es wird die Zeitzone %s verwendet."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE"
 msgid "– Profile –"
-msgstr ""
+msgstr "– Profil –"
 
 msgctxt "PANOPTICON_LBL_BACKUPTASK_DELETED"
 msgid "The backup schedule has been deleted."
@@ -5205,15 +5713,15 @@ msgstr ""
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_SELECT_MANUAL"
 msgid "– Manual –"
-msgstr ""
+msgstr "– Manuell –"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MANUAL_NO"
 msgid "Scheduled"
-msgstr ""
+msgstr "Geplant"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MANUAL_YES"
 msgid "Manual"
-msgstr ""
+msgstr "Manuell"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_VIEW_MANUAL"
 msgid "List Manual Backups"
@@ -5340,28 +5848,32 @@ msgid "One manual scan has failed."
 msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_ADMINTOOLS_SCHEDULE"
-msgid "Scheduled Scans"
-msgstr ""
+msgid "Schedule Scans"
+msgstr "Scans planen"
 
 msgctxt "PANOPTICON_SITES_LBL_ADMINTOOLS_STARTSCAN"
 msgid "Start Scanning"
-msgstr ""
+msgstr "Scannen starten"
 
 msgctxt "PANOPTICON_SITES_LBL_ADMINTOOLS_REFRESH"
 msgid "Refresh"
-msgstr ""
+msgstr "Aktualisierung"
+
+msgctxt "PANOPTICON_SITES_MENU_ADMINTOOLS_SCHEDULE"
+msgid "PHP File Change Scanner"
+msgstr "PHP-Dateiänderungsscanner"
 
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_SELECT_MANUAL"
 msgid "– Manual –"
-msgstr ""
+msgstr "– Manuell –"
 
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MANUAL_NO"
 msgid "Scheduled"
-msgstr ""
+msgstr "Geplant"
 
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MANUAL_YES"
 msgid "Manual"
-msgstr ""
+msgstr "Manuell"
 
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_VIEW_MANUAL"
 msgid "List Manual Scans"
@@ -5378,6 +5890,10 @@ msgstr ""
 msgctxt "PANOPTICON_SITES_LBL_DROPDOWN_AUTOMATIONS_HEAD_BACKUP_SECURITY"
 msgid "Backup &amp; Security"
 msgstr ""
+
+msgctxt "PANOPTICON_SITES_LBL_DROPDOWN_TROUBLESHOOT"
+msgid "Troubleshooting"
+msgstr "Fehlerbehebung"
 
 msgctxt "PANOPTICON_MFA_HEAD_MFA_PAGE"
 msgid "Multi-factor Authentication"
@@ -5623,6 +6139,38 @@ msgctxt "PANOPTICON_MFA_TOTP_LBL_PLACEHOLDER"
 msgid "Enter your six-digit code"
 msgstr ""
 
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_TITLE"
+msgid "Set up your authenticator software"
+msgstr ""
+
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS"
+msgid "Depending on your authenticator software, do one of the following:"
+msgstr ""
+
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT1"
+msgid "Scan this QR Code&trade;."
+msgstr ""
+
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT2"
+msgid "Use this <a href=\"%s\">link</a>."
+msgstr ""
+
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT3"
+msgid "Enter the Secret"
+msgstr ""
+
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_ENTER_CODE"
+msgid "Enter the generated 6-digit code into the field below, and click on “Save”."
+msgstr ""
+
+msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_SOFTWARE"
+msgid "Looking for compatible authenticator software? We have tested with <a href=\"https://keepassxc.org/\">KeePassXC</a>, <a href=\"https://strongboxsafe.com/\">Strongbox</a>, <a href=\"https://1password.com/\">1Password</a>, <a href=\"https://en.wikipedia.org/wiki/Google_Authenticator\">Google Authenticator</a>, <a href=\"https://authy.com/\">Twilio Authy</a>, and the built-in feature in macOS / iOS / iPadOS."
+msgstr ""
+
+msgctxt "PANOPTICON_MFA_LBL_HELP"
+msgid "Help on the wiki"
+msgstr ""
+
 msgctxt "PANOPTICON_OVERRIDES_TITLE"
 msgid "Template Overrides"
 msgstr ""
@@ -5791,10 +6339,6 @@ msgctxt "PANOPTICON_LOGS_LBL_PRIORITY_DEBUG"
 msgid "Debug"
 msgstr ""
 
-msgctxt "PANOPTICON_LOGS_LBL_DISPLAY_OPTIONS"
-msgid "Log Display Options"
-msgstr ""
-
 msgctxt "PANOPTICON_LOGS_LBL_MAX_INPUT_SIZE"
 msgid "Maximum Input Size"
 msgstr ""
@@ -5861,75 +6405,75 @@ msgstr ""
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_SITE"
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_SITE_SELECT"
 msgid "– Site –"
-msgstr ""
+msgstr "– Site –"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_CMSVERSION_SELECT"
 msgid "– CMS Version –"
-msgstr ""
+msgstr "– CMS Version –"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_PHPVERSION_SELECT"
 msgid "– PHP Version –"
-msgstr ""
+msgstr "– PHP Version –"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_EXT_NAME"
 msgid "Extension Name"
-msgstr ""
+msgstr "Erweiterungs-Name"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_EXT_NAME_SELECT"
 msgid "– Extension Name –"
-msgstr ""
+msgstr "– Erweiterungs-Name –"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR"
 msgid "Extension Author"
-msgstr ""
+msgstr "Erweiterungs-Autor"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_SELECT"
 msgid "– Author –"
-msgstr ""
+msgstr "– Autor –"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_URL"
 msgid "Author URL"
-msgstr ""
+msgstr "Autor-URL"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_URL_SELECT"
 msgid "– Author URL –"
-msgstr ""
+msgstr "– Autor-URL –"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_EMAIL"
 msgid "Author Email"
-msgstr ""
+msgstr "Autor-E-Mail"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_EMAIL_SELECT"
 msgid "– Author Email –"
-msgstr ""
+msgstr "– Autor-E-Mail –"
 
 msgctxt "PANOPTICON_EXTUPDATES_TABLE_COMMENT"
 msgid "Table of extensions with available updates"
-msgstr ""
+msgstr "Tabelle der Erweiterungen mit verfügbaren Updates"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_SELECT_EXTENSION"
 msgid "Select extension %s for site %s"
-msgstr ""
+msgstr "Erweiterung %s für die Site %s auswählen"
 
 msgctxt "PANOPTICON_EXTUPDATES_FIELD_SITE"
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 msgctxt "PANOPTICON_EXTUPDATES_FIELD_EXTENSION"
 msgid "Extension"
-msgstr ""
+msgstr "Erweiterung"
 
 msgctxt "PANOPTICON_EXTUPDATES_FIELD_VERSION"
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 msgctxt "PANOPTICON_EXTUPDATES_FIELD_AUTHOR"
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgctxt "PANOPTICON_EXTUPDATES_LBL_SCHEDULED_N"
 msgid "%d selected extensions have been scheduled to be updated."
@@ -5969,27 +6513,27 @@ msgstr ""
 
 msgctxt "PANOPTICON_COREUPDATES_LBL_SELECT_CURRENT"
 msgid "– Current –"
-msgstr ""
+msgstr "– Aktuell –"
 
 msgctxt "PANOPTICON_COREUPDATES_LBL_SELECT_LATEST"
 msgid "– Updates To –"
-msgstr ""
+msgstr "– Updates für –"
 
 msgctxt "PANOPTICON_COREUPDATES_FIELD_SITE"
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 msgctxt "PANOPTICON_COREUPDATES_FIELD_CURRENT"
 msgid "Current"
-msgstr ""
+msgstr "Aktuell"
 
 msgctxt "PANOPTICON_COREUPDATES_FIELD_LATEST"
 msgid "Updates To"
-msgstr ""
+msgstr "Updates für"
 
 msgctxt "PANOPTICON_COREUPDATES_ERR_INVALID_SELECTION"
 msgid "Invalid sites selection."
-msgstr ""
+msgstr "Site-Auswahl ungültig."
 
 msgctxt "PANOPTICON_COREUPDATES_SCHEDULED_N"
 msgid "%d selected sites have been scheduled for core updates."
@@ -6180,7 +6724,7 @@ msgid "How do I restore database backups?"
 msgstr ""
 
 msgctxt "PANOPTICON_DBTOOLS_LBL_INFO_BODY"
-msgid "The database backups are SQL files, either plain or compressed with GZip. Both file types can be restored with common database tools provided by your host such as phpMyAdmin, Adminer, or even the command-line <code>mysql</code> command."
+msgid "The database backups are SQL files, either plain or compressed with Gzip. Both file types can be restored with common database tools provided by your host such as phpMyAdmin, Adminer, or even the command-line <code>mysql</code> command."
 msgstr ""
 
 msgctxt "PANOPTICON_DBTOOLS_LBL_FILENAME"
@@ -6317,108 +6861,184 @@ msgstr ""
 
 msgctxt "PANOPTICON_REPORTS_FIELD_SITE"
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 msgctxt "PANOPTICON_REPORTS_FIELD_CREATED_ON"
 msgid "Date &amp; Time"
-msgstr ""
+msgstr "Datum &amp; Zeit"
 
 msgctxt "PANOPTICON_REPORTS_FIELD_CREATED_ON_FROM"
 msgid "Date &amp; Time (from)"
-msgstr ""
+msgstr "Datum &amp; Zeit (von)"
 
 msgctxt "PANOPTICON_REPORTS_FIELD_CREATED_ON_TO"
 msgid "Date &amp; Time (to)"
-msgstr ""
+msgstr "Datum &amp; Zeit (zum)"
 
 msgctxt "PANOPTICON_REPORTS_FIELD_CREATED_BY"
 msgid "User"
-msgstr ""
+msgstr "Benutzer"
 
 msgctxt "PANOPTICON_REPORTS_FIELD_ACTION"
 msgid "Action"
-msgstr ""
+msgstr "Aktiion"
 
 msgctxt "PANOPTICON_REPORTS_LBL_CORE_UPDATE_FOUND"
 msgid "CMS update found"
-msgstr ""
+msgstr "CMS Aktualisierung gefunden"
 
 msgctxt "PANOPTICON_REPORTS_LBL_CORE_UPDATE_INSTALLED_SUCCESS"
 msgid "Updated the core CMS"
-msgstr ""
+msgstr "Core CMS wurde aktualisiert"
 
 msgctxt "PANOPTICON_REPORTS_LBL_CORE_UPDATE_INSTALLED_FAILURE"
 msgid "Failed to update the core CMS"
-msgstr ""
+msgstr "Core CMS konnte nicht aktualisiert werden"
 
 msgctxt "PANOPTICON_REPORTS_LBL_CORE_UPDATE_INSTALLED_BACKUP"
 msgid "Backup taken"
-msgstr ""
+msgstr "Backup erstellt"
 
 msgctxt "PANOPTICON_REPORTS_LBL_EXT_UPDATE_FOUND"
 msgid "Extension update found"
-msgstr ""
+msgstr "Erweiterungsupdate gefunden"
 
 msgctxt "PANOPTICON_REPORTS_LBL_EXT_UPDATE_INSTALLED_SUCCESS"
 msgid "Installed software update"
-msgstr ""
+msgstr "Software-Update installiert"
 
 msgctxt "PANOPTICON_REPORTS_EXT_CORE_UPDATE_INSTALLED_FAILURE"
 msgid "Failed to install software update"
-msgstr ""
+msgstr "Software-Update konnte nicht installiert werden"
 
 msgctxt "PANOPTICON_REPORTS_LBL_BACKUP_TAKEN"
 msgid "Backup taken"
-msgstr ""
+msgstr "Backup erstellt"
 
 msgctxt "PANOPTICON_REPORTS_LBL_BACKUP_FAILED"
 msgid "Backup failed"
-msgstr ""
+msgstr "Backup fehlgeschlagen"
 
 msgctxt "PANOPTICON_REPORTS_LBL_BACKUP_ARCHIVE"
 msgid "Backup archive file name"
-msgstr ""
+msgstr "Backup-Archiv-Dateiname"
 
 msgctxt "PANOPTICON_REPORTS_LBL_FILESCANNER_SUCCESS"
 msgid "PHP File Change Scanner ran"
-msgstr ""
+msgstr "PHP-Dateiänderungsscanner wurde ausgeführt"
 
 msgctxt "PANOPTICON_REPORTS_LBL_FILESCANNER_FAILED"
 msgid "PHP File Change Scanner failed"
-msgstr ""
+msgstr "PHP-Dateiänderungsscanner fehlgeschlagen"
+
+msgctxt "PANOPTICON_REPORTS_LBL_MISC"
+msgid "Miscellaneous Action"
+msgstr "Verschiedene Aktionen"
 
 msgctxt "PANOPTICON_REPORTS_LBL_DURATION_SR"
 msgid "Duration"
-msgstr ""
+msgstr "Dauer"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_TITLE"
 msgid "Scheduled Update Summary"
-msgstr ""
+msgstr "Zusammenfassung geplanter Updates"
+
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_TITLE_NEW"
+msgid "New Scheduled Update Summary"
+msgstr "Neue Zusammenfassung geplanter Updates"
+
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_TITLE_EDIT"
+msgid "Edit Scheduled Update Summary"
+msgstr "Zusammenfassung geplanter Updates bearbeiten"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The schedule for update summary emails is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
-msgstr ""
+msgstr "Zeitplan für Update-Zusammenfassungs-E-Mails ist ein <a href='%s' target='_blank'>CRON-Ausdruck</a>. Zeitzone %s wird verwendet."
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_OPTIONS"
 msgid "Email Options"
-msgstr ""
+msgstr "E-Mail-Optionen"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_CORE_UPDATES"
 msgid "Include core CMS updates in the email"
-msgstr ""
+msgstr "Core-CMS-Updates in E-Mail einfügen"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EXTENSION_UPDATES"
 msgid "Include third party software updates in the email"
-msgstr ""
+msgstr "Software-Updates von Drittanbietern in E-Mail hinzufügen"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_PREVENT_DUPLICATES"
 msgid "Prevent identical emails"
-msgstr ""
+msgstr "Identische E-Mails verhindern"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_PREVENT_DUPLICATES_HELP"
 msgid "When enabled, Panopticon will not send you an email if the list of pending updates for the site is identical to the list of updates in the last email it sent you."
-msgstr ""
+msgstr "Wenn aktiviert, sendet Panopticon keine E-Mail, wenn die Liste der ausstehenden Updates für die Site mit der Liste der Updates in der letzten gesendeten E-Mail identisch ist."
 
 msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_SAVED"
 msgid "The Scheduled Update Summary task has been saved"
-msgstr ""
+msgstr "Geplante Update-Zusammenfassung Aufgabe wurde gespeichert"
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE"
+msgid "Scheduled Action Summary"
+msgstr "Zusammenfassung geplanter Aktionen"
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE_NEW"
+msgid "New Scheduled Action Summary"
+msgstr "Neue Zusammenfassung geplanter Aktionen"
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE_EDIT"
+msgid "Edit Scheduled Action Summary"
+msgstr "Zusammenfassung geplanter Aktionen bearbeiten"
+
+msgctxt "PANOPTICON_LBL_ACTIONSUMMARYTASK_SAVED"
+msgid "The Scheduled Action Summary has been saved"
+msgstr "Zusammenfassung geplanter Aktionen wurde gespeichert"
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The Site Action Summary schedule is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
+msgstr "Zeitplan für Site-Aktionszusammenfassung ist ein <a href='%s' target='_blank'>CRON-Ausdruck</a>. Zeitzone %s wiird verwendet."
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_OPTIONS"
+msgid "Report Options"
+msgstr "Berichtsoptionen"
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD"
+msgid "Period"
+msgstr "Zeitraum"
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_HELP"
+msgid "Choose which time period the report will be generated for."
+msgstr "Auswählen für welchen Zeitraum der Bericht erstellt werden soll."
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_DAILY"
+msgid "Daily"
+msgstr "Täglich"
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_WEEKLY"
+msgid "Weekly"
+msgstr "Wöchentlich"
+
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_MONTHLY"
+msgid "Monthly"
+msgstr "Monatlich"
+
+#~ msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_FILES"
+#~ msgid "Files"
+#~ msgstr "Dateien"
+
+#~ msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_NEW"
+#~ msgid "New"
+#~ msgstr "Neu"
+
+#~ msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS"
+#~ msgid "Suspicious"
+#~ msgstr "Verdächtig"
+
+#~ msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLACLI"
+#~ msgid "Joomla!™ CLI"
+#~ msgstr "Joomla!™ CLI"
+
+#~ msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLA"
+#~ msgid "Joomla!™ CLI"
+#~ msgstr "Joomla!™ CLI"
