@@ -319,7 +319,7 @@
     <target name="setup-properties" description="Set up version and build properties">
         <!-- Initialize the build.date timestamp -->
         <tstamp>
-            <format property="build.date" pattern="%Y-%m-%d"/>
+            <format property="build.date" pattern="yyyy-MM-dd" />
         </tstamp>
 
         <!-- Initialize the version if it's not set -->
