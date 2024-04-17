@@ -366,7 +366,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 				$current = Version::create($siteConfig->get('core.current.version'));
 				$latest  = Version::create($siteConfig->get('core.latest.version'));
 
-				return $current->major() === $current->minor() ? "update" : "email";
+				return $current->major() === $latest->major() ? "update" : "email";
 				break;
 		}
 	}
