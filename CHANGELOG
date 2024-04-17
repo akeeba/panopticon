@@ -1,7 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.1.3
 ================================================================================
-# [HIGH] Cannot update to new Joomla! version is "only minor" update strategy is selected.
+# [HIGH] Cannot update to new Joomla! version if "only minor" update strategy is selected.
 
 Akeeba Panopticon 1.1.2
 ================================================================================
