@@ -6917,6 +6917,10 @@ msgctxt "PANOPTICON_REPORTS_LBL_FILESCANNER_FAILED"
 msgid "PHP File Change Scanner failed"
 msgstr "Le scanner de changement de fichier PHP a échoué"
 
+msgctxt "PANOPTICON_REPORTS_LBL_MISC"
+msgid "Miscellaneous Action"
+msgstr "Actions diverses"
+
 msgctxt "PANOPTICON_REPORTS_LBL_DURATION_SR"
 msgid "Duration"
 msgstr "Durée"
@@ -6961,6 +6965,18 @@ msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_SAVED"
 msgid "The Scheduled Update Summary task has been saved"
 msgstr "La tâche de résumé de mises à jour programmées a été sauvegardée"
 
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_RECIPIENTS"
+msgid "Recipients"
+msgstr "Destinataires"
+
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS"
+msgid "Email These Groups"
+msgstr "Envoyer un courriel à ces groupes"
+
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
+msgid "If no groups are selected: emails are sent to all users who can make changes to the site. When any groups are selected: emails are sent to all users who are assigned to the selected group, <em>even if they can't even view the site in the Sites Overview page</em>."
+msgstr "Si aucun groupe n’est sélectionné, les courriels sont envoyés à tous les utilisateurs qui peuvent apporter des modifications au site. Lorsqu’un groupe est sélectionné : les courriels sont envoyés à tous les utilisateurs affectés au groupe sélectionné, <em>même s’ils ne peuvent même pas afficher la page de présentation du site</em>."
+
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE"
 msgid "Scheduled Action Summary"
 msgstr "Résumé des actions programmées"
@@ -7004,23 +7020,3 @@ msgstr "Hebdomadaire"
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_MONTHLY"
 msgid "Monthly"
 msgstr "Mensuel"
-
-#~ msgctxt "PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY"
-#~ msgid "Joomla!™"
-#~ msgstr "Joomla!™"
-
-#~ msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLACLI"
-#~ msgid "Joomla!™ CLI"
-#~ msgstr "Joomla!™ CLI"
-
-#~ msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_JOOMLA"
-#~ msgid "Joomla!™ CLI"
-#~ msgstr "Joomla!™ CLI"
-
-#~ msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP_LEARN_MORE"
-#~ msgid "Learn more"
-#~ msgstr "En savoir plus"
-
-#~ msgctxt "PANOPTICON_LOGS_LBL_DISPLAY_OPTIONS"
-#~ msgid "Log Display Options"
-#~ msgstr "Options d’affichage du journal"
