@@ -5,6 +5,8 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
+
 defined('AKEEBA') || die;
 
 /**
@@ -34,29 +36,29 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </div>
         {{-- Groups --}}
         @if (!empty($this->groupMap))
-        <div class="input-group choice-large">
-            <label for="group" class="form-label visually-hidden">@lang('PANOPTICON_MAIN_LBL_FILTER_GROUPS')</label>
-            {{ $this->container->html->select->genericList(
-                data: array_combine(
-                    array_merge([''], array_keys($this->groupMap)),
-                    array_merge([$this->getLanguage()->text('PANOPTICON_MAIN_LBL_FILTER_GROUPS_PLACEHOLDER')], array_values($this->groupMap)),
-                ),
-                name: 'group[]',
-                attribs: array_merge([
-                    'class' => 'form-select js-choice',
-                    'multiple' => 'multiple',
-                    'style' => 'min-width: min(20em, 50%)'
-                ]),
-                selected: array_filter($this->getModel()->getState('group', []) ?: [])
-            ) }}
-            <button type="submit"
-                    class="btn btn-primary">
-                <span class="fa fa-search" aria-hidden="true"></span>
-                <span class="visually-hidden">
+            <div class="input-group choice-large">
+                <label for="group" class="form-label visually-hidden">@lang('PANOPTICON_MAIN_LBL_FILTER_GROUPS')</label>
+                {{ $this->container->html->select->genericList(
+                    data: array_combine(
+                        array_merge([''], array_keys($this->groupMap)),
+                        array_merge([$this->getLanguage()->text('PANOPTICON_MAIN_LBL_FILTER_GROUPS_PLACEHOLDER')], array_values($this->groupMap)),
+                    ),
+                    name: 'group[]',
+                    attribs: array_merge([
+                        'class' => 'form-select js-choice',
+                        'multiple' => 'multiple',
+                        'style' => 'min-width: min(20em, 50%)'
+                    ]),
+                    selected: array_filter($this->getModel()->getState('group', []) ?: [])
+                ) }}
+                <button type="submit"
+                        class="btn btn-primary">
+                    <span class="fa fa-search" aria-hidden="true"></span>
+                    <span class="visually-hidden">
                     @lang('PANOPTICON_LBL_FORM_SEARCH')
                 </span>
-            </button>
-        </div>
+                </button>
+            </div>
         @endif
     </div>
 
@@ -85,7 +87,8 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </tr>
         </thead>
         <tbody>
-        <?php $i = 1 ?>
+		<?php
+		$i = 1 ?>
         @foreach($this->items as $site)
             <tr>
                 <td>
@@ -98,6 +101,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         </a>
                     </div>
                     <div class="small mt-1">
+                        @include('Common/sitetype', ['site' => $site])
                         <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
                         <span class="text-secondary">
                             {{{ $site->getBaseUrl() }}}
