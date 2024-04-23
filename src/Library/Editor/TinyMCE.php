@@ -46,6 +46,7 @@ abstract class TinyMCE
 		$options = array_merge(
 			[
 				'selector'                    => '#' . $id,
+				'license_key'                 => 'gpl',
 				'plugins'                     => [
 					'advlist',
 					'autolink',
