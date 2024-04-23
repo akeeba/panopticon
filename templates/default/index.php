@@ -8,8 +8,8 @@
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Helper\DarkModeEnum;
 use Akeeba\Panopticon\Helper\DefaultTemplate as TemplateHelper;
+use Akeeba\Panopticon\Library\Enumerations\DarkModeEnum;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Uri\Uri;
 use Awf\Utils\Template;

@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Helper;
 
 
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Enumerations\DarkModeEnum;
 use Akeeba\Panopticon\Library\Toolbar\DropdownButton;
 use Awf\Document\Menu\Item;
 use Awf\Document\Toolbar\Button;
