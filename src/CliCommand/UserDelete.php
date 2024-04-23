@@ -50,6 +50,8 @@ class UserDelete extends AbstractCommand
 				sprintf('Could not delete user %d', $id),
 				$e->getMessage()
 			]);
+
+			return Command::FAILURE;
 		}
 
 		return Command::SUCCESS;

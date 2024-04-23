@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CLI user:set" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="user:set 1 --name=&quot;My hero&quot;">
+    <method v="2" />
+  </configuration>
+</component>

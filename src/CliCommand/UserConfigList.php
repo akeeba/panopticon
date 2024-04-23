@@ -52,6 +52,8 @@ class UserConfigList extends AbstractCommand
 					$e->getMessage(),
 				]
 			);
+
+			return Command::FAILURE;
 		}
 
 		$config = $this->flatten((new Registry($model->parameters))->toArray());
