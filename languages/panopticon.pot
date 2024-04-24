@@ -6763,6 +6763,11 @@ msgid "Password"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD_HELP"
+msgid "Leave empty if you do not wish to change the password of this user account."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
 msgid "Password (repeat)"
 msgstr ""
