@@ -90,7 +90,7 @@ JS;
                         >
                         @if($model->getId())
                             <div class="form-text">
-                                Leave empty if you do not wish to change the password of this user account.
+                                @lang('PANOPTICON_USERS_LBL_FIELD_PASSWORD_HELP')
                             </div>
                         @endif
                     </div>
