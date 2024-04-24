@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.1-dev202401241207\n"
-"POT-Creation-Date: 2024-01-25 09:44:15\n"
+"Project-Id-Version: 1.1.2\n"
+"POT-Creation-Date: 2024-04-24 21:29:55\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.1.1-dev202401241207\n"
+"X-Generator: Panopticon ini_to_po 1.1.2\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -5833,6 +5833,16 @@ msgid "Enter a comma–separated list of full, or partial domain names which sho
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FINISHED_SETUP"
+msgid "Is installing Panopticon finished?"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER"
+msgid "Behind load balancer / reverse proxy"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
 msgid "Table of known extensions and their automatic update preferences"
 msgstr ""
@@ -6768,13 +6778,13 @@ msgid "Password"
 msgstr ""
 
 #, phpformat
-msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD_HELP"
-msgid "Leave empty if you do not wish to change the password of this user account."
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
+msgid "Password (repeat)"
 msgstr ""
 
 #, phpformat
-msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
-msgid "Password (repeat)"
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD_HELP"
+msgid "Leave empty if you do not wish to change the password of this user account."
 msgstr ""
 
 #, phpformat
@@ -8725,6 +8735,21 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_SAVED"
 msgid "The Scheduled Update Summary task has been saved"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_RECIPIENTS"
+msgid "Recipients"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS"
+msgid "Email These Groups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
+msgid "If no groups are selected: emails are sent to all users who can make changes to the site. When any groups are selected: emails are sent to all users who are assigned to the selected group, <em>even if they can\'t even view the site in the Sites Overview page</em>."
 msgstr ""
 
 #, phpformat
