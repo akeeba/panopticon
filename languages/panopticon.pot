@@ -6738,6 +6738,11 @@ msgid "Edit avatar"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_BASICINFO"
+msgid "Basic information"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_USERNAME"
 msgid "Username"
 msgstr ""
