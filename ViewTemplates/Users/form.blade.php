@@ -39,7 +39,7 @@ JS;
         <div class="col-12 col-lg-6">
             <div class="card card-body">
                 <p class="card-title fs-5 fw-semibold mt-1 mb-3">
-                    Basic information
+                    @lang('PANOPTICON_USERS_LBL_FIELD_BASICINFO')
                 </p>
 
                 <div class="row my-2">
