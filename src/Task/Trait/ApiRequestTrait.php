@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\Task\Trait;
 
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Registry\Registry;
 use GuzzleHttp\RequestOptions;
@@ -55,15 +56,39 @@ trait ApiRequestTrait
 
 		$headers = [];
 
-		if (!empty($apiKey))
+		switch ($site->cmsType())
 		{
-			$authHeader                = 'Bearer ' . $apiKey;
-			$headers['Authorization']  = $authHeader;
-			$headers['X-Joomla-Token'] = $apiKey;
-		}
-		else
-		{
-			$headers['Authorization'] = 'Basic ' . base64_encode($username . ':' . $password);
+			case CMSType::JOOMLA:
+				// Prefer the Joomla! API token
+				if (!empty($apiKey))
+				{
+					$authHeader                = 'Bearer ' . $apiKey;
+					$headers['Authorization']  = $authHeader;
+					$headers['X-Joomla-Token'] = $apiKey;
+
+					return $headers;
+				}
+
+				// Fall back to HTTP Basic Authentication with username and password
+				$headers['Authorization'] = 'Basic ' . base64_encode($username . ':' . $password);
+
+				return $headers;
+				break;
+
+			case CMSType::WORDPRESS:
+				// Prefer the Panopticon token
+				if (!empty($apiKey))
+				{
+					$headers['X-Panopticon-Token'] = $apiKey;
+
+					return $headers;
+				}
+
+				// Fall back to HTTP Basic Authentication with username and password
+				$headers['Authorization'] = 'Basic ' . base64_encode($username . ':' . $password);
+
+				return $headers;
+				break;
 		}
 
 		return $headers;

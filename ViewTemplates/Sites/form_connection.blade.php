@@ -5,6 +5,8 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
+
 defined('AKEEBA') || die;
 
 /**
@@ -24,6 +26,11 @@ $config = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 	<p>
 		@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_BODY')
 	</p>
+	<ul>
+		<li>@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA4ORLATER')</li>
+		<li>@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA3')</li>
+		<li>@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_WORDPRESS')</li>
+	</ul>
 	<p>
 		@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_HERE')
 	</p>
@@ -38,8 +45,36 @@ $config = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 				@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_J3')
 			</a>
 		</li>
+		<li>
+			<a href="https://github.com/akeeba/panopticon-connector-wordpress/releases" target="_blank">
+				@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_WP')
+			</a>
+		</li>
 	</ul>
 </div>
+
+<div class="row mb-3">
+	<label for="config_cmsType" class="col-sm-3 col-form-label">
+		@lang('PANOPTICON_SITE_LBL_CMSTYPE_LABEL')
+	</label>
+	<div class="col-sm-9">
+		{{ $this->container->html->select->genericList(
+                    data: [
+						CMSType::JOOMLA->value => 'PANOPTICON_SITE_LBL_CMSTYPE_OPT_JOOMLA',
+						CMSType::WORDPRESS->value => 'PANOPTICON_SITE_LBL_CMSTYPE_OPT_WORDPRESS',
+					],
+                    name: 'config[cmsType]',
+                    attribs: [
+                        'class' => 'form-select',
+                        'required' => 'required',
+                    ],
+                    selected: $config->get('cmsType', 'joomla'),
+                    idTag: 'config_cmsType',
+                    translate: true
+                ) }}
+	</div>
+</div>
+
 
 <div class="row mb-3">
 	<label for="url" class="col-sm-3 col-form-label">
@@ -47,7 +82,7 @@ $config = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 	</label>
 	<div class="col-sm-9">
 		<input type="text" class="form-control" name="url" id="url"
-		       value="{{{ $this->item->url ?? '' }}}" required
+			   value="{{{ $this->item->url ?? '' }}}" required
 		>
 	</div>
 </div>
@@ -58,58 +93,61 @@ $config = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 	</label>
 	<div class="col-sm-9">
 		<input type="text" class="form-control font-monospace" name="apiToken" id="apiToken"
-		       value="{{{ $config->get('config.apiKey') ?? '' }}}" required
+			   value="{{{ $config->get('config.apiKey') ?? '' }}}" required
 		>
 	</div>
 </div>
 
-<h4>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_HEAD')</h4>
+<div {{ $this->showOn('config[cmsType]:joomla') }}>
+	<h4>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_HEAD')</h4>
 
-<div class="alert alert-info col-sm-9 offset-sm-3">
-	<p>
-		@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1')
-	</p>
-	<p>
-		@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_2')
-	</p>
-	<details>
-		<summary>
-			@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_HEAD')
-		</summary>
+	<div class="alert alert-info col-sm-9 offset-sm-3">
 		<p>
-			@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_1')
+			@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1')
 		</p>
-		<ul>
-			<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2')</li>
-			<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3')</li>
-			<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_4')</li>
-		</ul>
 		<p>
-			@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_5')
+			@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_2')
 		</p>
-	</details>
-</div>
-
-{{-- I have to use greeklish and plain text fields to prevent bloody password managers from screwing up those fields. GARGH! --}}
-
-<div class="row mb-3">
-	<label for="diaxeiristis_onoma" class="col-sm-3 col-form-label">
-		@lang('PANOPTICON_SITES_FIELD_ADMIN_USERNAME')
-	</label>
-	<div class="col-sm-9">
-		<input type="text" class="form-control" name="config[config.diaxeiristis_onoma]" id="diaxeiristis_onoma"
-			   value="{{{ $config->get('config.diaxeiristis_onoma', '') }}}" required autocomplete="off"
-		>
+		<details>
+			<summary>
+				@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_HEAD')
+			</summary>
+			<p>
+				@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_1')
+			</p>
+			<ul>
+				<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2')</li>
+				<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3')</li>
+				<li>@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_4')</li>
+			</ul>
+			<p>
+				@lang('PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_5')
+			</p>
+		</details>
 	</div>
-</div>
 
-<div class="row mb-3">
-	<label for="diaxeiristis_sunthimatiko" class="col-sm-3 col-form-label">
-		@lang('PANOPTICON_SITES_FIELD_ADMIN_PASSWORD')
-	</label>
-	<div class="col-sm-9">
-		<input type="text" class="form-control" name="config[config.diaxeiristis_sunthimatiko]" id="diaxeiristis_sunthimatiko"
-			   value="{{{ $config->get('config.diaxeiristis_sunthimatiko', '') }}}" required autocomplete="off"
-		>
+	{{-- I have to use greeklish and plain text fields to prevent bloody password managers from screwing up those fields. GARGH! --}}
+
+	<div class="row mb-3">
+		<label for="diaxeiristis_onoma" class="col-sm-3 col-form-label">
+			@lang('PANOPTICON_SITES_FIELD_ADMIN_USERNAME')
+		</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" name="config[config.diaxeiristis_onoma]" id="diaxeiristis_onoma"
+				   value="{{{ $config->get('config.diaxeiristis_onoma', '') }}}" required autocomplete="off"
+			>
+		</div>
+	</div>
+
+	<div class="row mb-3">
+		<label for="diaxeiristis_sunthimatiko" class="col-sm-3 col-form-label">
+			@lang('PANOPTICON_SITES_FIELD_ADMIN_PASSWORD')
+		</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" name="config[config.diaxeiristis_sunthimatiko]"
+				   id="diaxeiristis_sunthimatiko"
+				   value="{{{ $config->get('config.diaxeiristis_sunthimatiko', '') }}}" required autocomplete="off"
+			>
+		</div>
 	</div>
 </div>
