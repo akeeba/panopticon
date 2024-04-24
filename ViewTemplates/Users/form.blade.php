@@ -39,7 +39,7 @@ JS;
         <div class="col-12 col-lg-6">
             <div class="card card-body">
                 <p class="card-title fs-5 fw-semibold mt-1 mb-3">
-                    Basic information
+                    @lang('PANOPTICON_USERS_LBL_FIELD_BASICINFO')
                 </p>
 
                 <div class="row my-2">
@@ -90,7 +90,7 @@ JS;
                         >
                         @if($model->getId())
                             <div class="form-text">
-                                Leave empty if you do not wish to change the password of this user account.
+                                @lang('PANOPTICON_USERS_LBL_FIELD_PASSWORD_HELP')
                             </div>
                         @endif
                     </div>

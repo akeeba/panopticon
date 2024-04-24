@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2024-01-25 09:44:15\n"
-"PO-Revision-Date: 2024-03-23 05:57+0100\n"
+"POT-Creation-Date: 2024-04-24 21:29:55\n"
+"PO-Revision-Date: 2024-04-25 00:37+0300\n"
 "Last-Translator: Johan Peters <johanpeters@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -6338,6 +6338,17 @@ msgstr ""
 "domeinnamen die niet door de proxy mogen, bijv. <code>www.example.com, .mit."
 "edu, .dev</code>."
 
+#, fuzzy
+#| msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_YOU_MAY_CONTINUE"
+#| msgid "You may continue installing Panopticon."
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FINISHED_SETUP"
+msgid "Is installing Panopticon finished?"
+msgstr "Je kunt Panopticon blijven installeren."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER"
+msgid "Behind load balancer / reverse proxy"
+msgstr ""
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
 msgid "Table of known extensions and their automatic update preferences"
 msgstr ""
@@ -7128,6 +7139,13 @@ msgctxt "PANOPTICON_USERS_LBL_AVATAR_EDIT"
 msgid "Edit avatar"
 msgstr "Profielfoto bewerken"
 
+#, fuzzy
+#| msgctxt "PANOPTICON_SITES_TITLE_READ"
+#| msgid "Site Information"
+msgctxt "PANOPTICON_USERS_LBL_FIELD_BASICINFO"
+msgid "Basic information"
+msgstr "Informatie Website"
+
 msgctxt "PANOPTICON_USERS_LBL_FIELD_USERNAME"
 msgid "Username"
 msgstr "Gebruikersnaam"
@@ -7157,6 +7175,14 @@ msgstr "Wachtwoord"
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
 msgid "Password (repeat)"
 msgstr "Wachtwoord (herhalen)"
+
+#, fuzzy
+#| msgctxt "PANOPTICON_USERS_ERR_NEEDS_PASSWORD"
+#| msgid "You must enter a password for the user account."
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD_HELP"
+msgid ""
+"Leave empty if you do not wish to change the password of this user account."
+msgstr "U moet een wachtwoord invoeren voor de gebruikersaccount."
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PERMISSIONS"
 msgid "Permissions"
@@ -9160,6 +9186,25 @@ msgstr ""
 msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_SAVED"
 msgid "The Scheduled Update Summary task has been saved"
 msgstr "De taak Samenvatting van geplande updates is opgeslagen"
+
+#, fuzzy
+#| msgctxt "PANOPTICON_SETUP_LBL_REQUIRED"
+#| msgid "Requirements"
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_RECIPIENTS"
+msgid "Recipients"
+msgstr "Vereisten"
+
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS"
+msgid "Email These Groups"
+msgstr ""
+
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
+msgid ""
+"If no groups are selected: emails are sent to all users who can make changes "
+"to the site. When any groups are selected: emails are sent to all users who "
+"are assigned to the selected group, <em>even if they can't even view the site "
+"in the Sites Overview page</em>."
+msgstr ""
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE"
 msgid "Scheduled Action Summary"
