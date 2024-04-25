@@ -515,7 +515,11 @@ class Site extends DataModel
 
 	public function getExtensionsUpdateTask(): ?Task
 	{
-		return $this->getSiteSpecificTask('extensionsupdate');
+		return match ($this->cmsType()) {
+			CMSType::JOOMLA => $this->getSiteSpecificTask('extensionsupdate'),
+			CMSType::WORDPRESS => $this->getSiteSpecificTask('pluginsupdate'),
+			default => null
+		};
 	}
 
 	public function getJoomlaUpdateTask(): ?Task
