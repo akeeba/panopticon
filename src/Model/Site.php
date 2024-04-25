@@ -450,6 +450,11 @@ class Site extends DataModel
 
 	public function fixCoreUpdateSite(): void
 	{
+		if ($this->cmsType() !== CMSType::JOOMLA)
+		{
+			throw new RuntimeException('This is only possible with Joomla! sites.');
+		}
+
 		/** @var \Akeeba\Panopticon\Container $container */
 		$container = $this->container;
 		$client    = $container->httpFactory->makeClient(cache: false, singleton: false);
