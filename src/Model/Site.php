@@ -522,6 +522,11 @@ class Site extends DataModel
 		};
 	}
 
+	public function getPluginsUpdateTask(): ?Task
+	{
+		return $this->getExtensionsUpdateTask();
+	}
+
 	public function getJoomlaUpdateTask(): ?Task
 	{
 		return $this->getSiteSpecificTask('joomlaupdate');
