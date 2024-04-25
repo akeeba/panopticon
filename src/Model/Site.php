@@ -215,6 +215,24 @@ class Site extends DataModel
 			);
 		}
 
+		// Filter: cmsType
+		$fltCmsType = $this->getState('cmsType', null, 'cmd');
+
+		if (is_string($fltCmsType))
+		{
+			// Reject invalid filter values
+			$fltCmsType = strtolower(trim($fltCmsType));
+			$fltCmsType = in_array($fltCmsType, array_column(CMSType::cases(), 'value'))
+				? $fltCmsType : null;
+		}
+
+		if (!empty($fltCmsType))
+		{
+			$query->where(
+				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote($fltCmsType),
+			);
+		}
+
 		// Filter: cmsFamily
 		$fltCmsFamily = $this->getState('cmsFamily', null, 'cmd');
 
