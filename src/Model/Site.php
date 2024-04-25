@@ -543,32 +543,86 @@ class Site extends DataModel
 
 	public function isExtensionsUpdateTaskStuck(): bool
 	{
-		return $this->isSiteSpecificTaskStuck('extensionsupdate');
+		return match ($this->cmsType()) {
+			CMSType::JOOMLA => $this->isSiteSpecificTaskStuck('extensionsupdate'),
+			CMSType::WORDPRESS => $this->isSiteSpecificTaskStuck('pluginsupdate'),
+			default => false
+		};
+	}
+
+	public function isPluginsUpdateTaskStuck(): bool
+	{
+		return $this->isExtensionsUpdateTaskStuck();
 	}
 
 	public function isJoomlaUpdateTaskStuck(): bool
 	{
-		return $this->isSiteSpecificTaskStuck('joomlaupdate');
+		return match ($this->cmsType()) {
+			CMSType::JOOMLA => $this->isSiteSpecificTaskStuck('joomlaupdate'),
+			CMSType::WORDPRESS => $this->isSiteSpecificTaskStuck('wordpressupdate'),
+			default => false
+		};
+	}
+
+	public function isWordPressUpdateTaskStuck(): bool
+	{
+		return $this->isJoomlaUpdateTaskStuck();
 	}
 
 	public function isExtensionsUpdateTaskScheduled(): bool
 	{
-		return $this->isSiteSpecificTaskScheduled('extensionsupdate');
+		return match ($this->cmsType()) {
+			CMSType::JOOMLA => $this->isSiteSpecificTaskScheduled('extensionsupdate'),
+			CMSType::WORDPRESS => $this->isSiteSpecificTaskScheduled('pluginsupdate'),
+			default => false
+		};
+	}
+
+	public function isPluginsUpdateTaskScheduled(): bool
+	{
+		return $this->isExtensionsUpdateTaskScheduled();
 	}
 
 	public function isJoomlaUpdateTaskScheduled(): bool
 	{
-		return $this->isSiteSpecificTaskScheduled('joomlaupdate');
+		return match ($this->cmsType()) {
+			CMSType::JOOMLA => $this->isSiteSpecificTaskScheduled('joomlaupdate'),
+			CMSType::WORDPRESS => $this->isSiteSpecificTaskScheduled('wordpressupdate'),
+			default => false
+		};
+	}
+
+	public function isWordPressUpdateTaskScheduled(): bool
+	{
+		return $this->isJoomlaUpdateTaskScheduled();
 	}
 
 	public function isJoomlaUpdateTaskRunning(): bool
 	{
-		return $this->isSiteSpecificTaskRunning('joomlaupdate');
+		return match ($this->cmsType()) {
+			CMSType::JOOMLA => $this->isSiteSpecificTaskRunning('joomlaupdate'),
+			CMSType::WORDPRESS => $this->isSiteSpecificTaskRunning('wordpressupdate'),
+			default => false
+		};
+	}
+
+	public function isWordPressUpdateTaskRunning(): bool
+	{
+		return $this->isJoomlaUpdateTaskRunning();
 	}
 
 	public function isExtensionsUpdateTaskRunning(): bool
 	{
-		return $this->isSiteSpecificTaskRunning('extensionsupdate');
+		return match ($this->cmsType()) {
+			CMSType::JOOMLA => $this->isSiteSpecificTaskRunning('extensionsupdate'),
+			CMSType::WORDPRESS => $this->isSiteSpecificTaskRunning('pluginsupdate'),
+			default => false
+		};
+	}
+
+	public function isPluginsUpdateTaskRunning(): bool
+	{
+		return $this->isExtensionsUpdateTaskRunning();
 	}
 
 	public function getExtensionsList(bool $sortByName = true): array
