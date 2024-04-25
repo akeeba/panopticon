@@ -8,20 +8,20 @@
   * [x] \Akeeba\Panopticon\Model\Site::fixCoreUpdateSite can't run if not Joomla
   * [x] getExtensionsUpdateTask: should return PluginsUpdate for WordPress
   * [x] getPluginsUpdateTask: alias to getExtensionsUpdateTask 
-  * [ ] getJoomlaUpdateTask: should return WordPressUpdate for WordPress
-  * [ ] getWordPressUpdateTask: alias to getJoomlaUpdateTask
-  * [ ] isExtensionsUpdateTaskStuck: should use PluginsUpdate for WordPress
-  * [ ] isPluginsUpdateTaskStuck: alias to isExtensionsUpdateTaskStuck
-  * [ ] isJoomlaUpdateTaskStuck: should use WordPressUpdate for WordPress
-  * [ ] isWordPressUpdateTaskStuck: alias to isJoomlaUpdateTaskStuck
-  * [ ] isExtensionsUpdateTaskScheduled: should use PluginsUpdate for WordPress
-  * [ ] isPluginsUpdateTaskScheduled: alias to isExtensionsUpdateTaskScheduled
-  * [ ] isJoomlaUpdateTaskScheduled: should use WordPressUpdate for WordPress
-  * [ ] isWordPressUpdateTaskScheduled: alias to isJoomlaUpdateTaskScheduled
-  * [ ] isJoomlaUpdateTaskRunning: should use WordPressUpdate for WordPress
-  * [ ] isWordPressUpdateTaskRunning: alias to isJoomlaUpdateTaskRunning
-  * [ ] isExtensionsUpdateTaskRunning: should use PluginsUpdate for WordPress
-  * [ ] isPluginsUpdateTaskRunning: alias to isExtensionsUpdateTaskRunning
+  * [x] \Akeeba\Panopticon\Model\Site::getJoomlaUpdateTask: should return WordPressUpdate for WordPress
+  * [ ] \Akeeba\Panopticon\Model\Site::getWordPressUpdateTask: alias to getJoomlaUpdateTask
+  * [ ] \Akeeba\Panopticon\Model\Site::isExtensionsUpdateTaskStuck: should use PluginsUpdate for WordPress
+  * [ ] \Akeeba\Panopticon\Model\Site::isPluginsUpdateTaskStuck: alias to isExtensionsUpdateTaskStuck
+  * [ ] \Akeeba\Panopticon\Model\Site::isJoomlaUpdateTaskStuck: should use WordPressUpdate for WordPress
+  * [ ] \Akeeba\Panopticon\Model\Site::isWordPressUpdateTaskStuck: alias to isJoomlaUpdateTaskStuck
+  * [ ] \Akeeba\Panopticon\Model\Site::isExtensionsUpdateTaskScheduled: should use PluginsUpdate for WordPress
+  * [ ] \Akeeba\Panopticon\Model\Site::isPluginsUpdateTaskScheduled: alias to isExtensionsUpdateTaskScheduled
+  * [ ] \Akeeba\Panopticon\Model\Site::isJoomlaUpdateTaskScheduled: should use WordPressUpdate for WordPress
+  * [ ] \Akeeba\Panopticon\Model\Site::isWordPressUpdateTaskScheduled: alias to isJoomlaUpdateTaskScheduled
+  * [ ] \Akeeba\Panopticon\Model\Site::isJoomlaUpdateTaskRunning: should use WordPressUpdate for WordPress
+  * [ ] \Akeeba\Panopticon\Model\Site::isWordPressUpdateTaskRunning: alias to isJoomlaUpdateTaskRunning
+  * [ ] \Akeeba\Panopticon\Model\Site::isExtensionsUpdateTaskRunning: should use PluginsUpdate for WordPress
+  * [ ] \Akeeba\Panopticon\Model\Site::isPluginsUpdateTaskRunning: alias to isExtensionsUpdateTaskRunning
   * [ ] getExtensionsQuickInfo: update for WordPress
   * [ ] saveDownloadKey: n/a for WordPress
   * [ ] getJoomlaUpdateRunState: n/a for WordPress
