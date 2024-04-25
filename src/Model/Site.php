@@ -399,7 +399,13 @@ class Site extends DataModel
 	 */
 	public function getAdminUrl(): string
 	{
-		$url    = $this->getBaseUrl() . '/administrator';
+		$cmsType = $this->cmsType();
+		$url     = match ($cmsType)
+		{
+			CMSType::JOOMLA => $this->getBaseUrl() . '/administrator',
+			CMSType::WORDPRESS => $this->getBaseUrl() . '/wp-admin'
+		};
+
 		$config = $this->getConfig();
 
 		if (!$config->get('core.admintools.enabled', false) || $config->get('core.admintools.renamed', false))
@@ -408,8 +414,13 @@ class Site extends DataModel
 		}
 
 		$adminDir = $config->get('core.admintools.admindir', 'administrator');
+		$standardAdmin = match ($cmsType)
+		{
+			CMSType::JOOMLA => 'administrator',
+			CMSType::WORDPRESS => 'wp-admin'
+		};
 
-		if (!empty($adminDir) && $adminDir !== 'administrator')
+		if (!empty($adminDir) && $adminDir !== $standardAdmin)
 		{
 			$url = $this->getBaseUrl() . '/' . trim($adminDir, '/');
 		}
@@ -418,7 +429,10 @@ class Site extends DataModel
 
 		if (!empty($secretWord))
 		{
-			if (empty($adminDir) || $adminDir === 'administrator')
+			if (
+				$cmsType === CMSType::JOOMLA &&
+				(empty($adminDir) || $adminDir === 'administrator')
+			)
 			{
 				$url .= '/index.php';
 			}

@@ -4,7 +4,7 @@
 * Site Model
   * [x] buildQuery: add cmsType filter
   * [x] \Akeeba\Panopticon\Model\Site::check: check cmsType, assign `joomla` if nothing else is chosen.
-  * [ ] getAdminUrl: update for WordPress
+  * [x] \Akeeba\Panopticon\Model\Site::getAdminUrl update for WordPress
   * [ ] fixCoreUpdateSite: n/a for WP
   * [ ] getExtensionsUpdateTask: should return PluginsUpdate for WordPress
   * [ ] getPluginsUpdateTask: alias to getExtensionsUpdateTask 
