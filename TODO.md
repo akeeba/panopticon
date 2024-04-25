@@ -22,9 +22,9 @@
   * [x] \Akeeba\Panopticon\Model\Site::isWordPressUpdateTaskRunning: alias to isJoomlaUpdateTaskRunning
   * [x] \Akeeba\Panopticon\Model\Site::isExtensionsUpdateTaskRunning: should use PluginsUpdate for WordPress
   * [x] \Akeeba\Panopticon\Model\Site::isPluginsUpdateTaskRunning: alias to isExtensionsUpdateTaskRunning
+  * [x] \Akeeba\Panopticon\Model\Site::saveDownloadKey only works for Joomla
+  * [ ] \Akeeba\Panopticon\Model\Site::getJoomlaUpdateRunState only works for Joomla
   * [ ] getExtensionsQuickInfo: update for WordPress
-  * [ ] saveDownloadKey: n/a for WordPress
-  * [ ] getJoomlaUpdateRunState: n/a for WordPress
   * [ ] getWordPressUpdateRunState: similar to getJoomlaUpdateRunState but for WordPress -- Needs UI changes
   * [ ] canRefreshCoreWordPressFiles: similar to canRefreshCoreJoomlaFiles but for WordPress -- Needs UI changes
 

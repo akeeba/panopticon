@@ -748,6 +748,11 @@ class Site extends DataModel
 
 	public function saveDownloadKey(int $extensionId, ?string $key): void
 	{
+		if ($this->cmsType() !== CMSType::JOOMLA)
+		{
+			throw new RuntimeException('This is only possible with Joomla! sites.');
+		}
+
 		$extensions = (array) $this->getConfig()->get('extensions.list');
 
 		if (!array_key_exists($extensionId, $extensions))
