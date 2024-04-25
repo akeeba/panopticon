@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNotInstalled;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Queue\QueueInterface;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -170,6 +171,11 @@ class Sites extends DataController
 		try
 		{
 			$site->findOrFail($id);
+
+			if ($site->cmsType() !== CMSType::JOOMLA)
+			{
+				throw new RuntimeException('This is only possible with Joomla! sites.');
+			}
 
 			$site->fixCoreUpdateSite();
 
@@ -341,6 +347,11 @@ class Sites extends DataController
 
 		$site->findOrFail($id);
 
+		if ($site->cmsType() !== CMSType::JOOMLA)
+		{
+			throw new RuntimeException('This is only possible with Joomla! sites.');
+		}
+
 		try
 		{
 			/** @noinspection PhpParamsInspection */
@@ -405,6 +416,11 @@ class Sites extends DataController
 		);
 
 		$site->findOrFail($id);
+
+		if ($site->cmsType() !== CMSType::JOOMLA)
+		{
+			throw new RuntimeException('This is only possible with Joomla! sites.');
+		}
 
 		try
 		{
@@ -677,6 +693,11 @@ class Sites extends DataController
 
 		$site->findOrFail($siteId);
 
+		if ($site->cmsType() !== CMSType::JOOMLA)
+		{
+			throw new RuntimeException('This is only possible with Joomla! sites.');
+		}
+
 		try
 		{
 			/** @noinspection PhpParamsInspection */
@@ -723,27 +744,32 @@ class Sites extends DataController
 	{
 		$this->csrfProtection();
 
-		/** @var SiteModel $model */
-		$model = $this->getModel();
+		/** @var SiteModel $site */
+		$site = $this->getModel();
 
-		if (!$model->getId())
+		if (!$site->getId())
 		{
-			$this->getIDsFromRequest($model, true);
+			$this->getIDsFromRequest($site, true);
 		}
 
-		if (!$this->canAddEditOrSave($model))
+		if (!$this->canAddEditOrSave($site))
 		{
 			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		// Does the site record exist?
-		if ($model->getId() <= 0)
+		if ($site->getId() <= 0)
 		{
 			return false;
 		}
 
+		if ($site->cmsType() !== CMSType::JOOMLA)
+		{
+			throw new RuntimeException('This is only possible with Joomla! sites.');
+		}
+
 		// Does the extension exist?
-		$extensions  = (array) $model->getConfig()->get('extensions.list');
+		$extensions  = (array) $site->getConfig()->get('extensions.list');
 		$extensionID = $this->input->getInt('extension', -1);
 
 		if (!isset($extensions[$extensionID]))
@@ -753,7 +779,7 @@ class Sites extends DataController
 
 		$view = $this->getView();
 
-		$view->setDefaultModel($model);
+		$view->setDefaultModel($site);
 		$view->extension = $extensions[$extensionID];
 		$view->setLayout('dlkey');
 
@@ -766,27 +792,32 @@ class Sites extends DataController
 	{
 		$this->csrfProtection();
 
-		/** @var SiteModel $model */
-		$model = $this->getModel();
+		/** @var SiteModel $site */
+		$site = $this->getModel();
 
-		if (!$model->getId())
+		if (!$site->getId())
 		{
-			$this->getIDsFromRequest($model, true);
+			$this->getIDsFromRequest($site, true);
 		}
 
-		if (!$this->canAddEditOrSave($model))
+		if (!$this->canAddEditOrSave($site))
 		{
 			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
 		// Does the site record exist?
-		if ($model->getId() <= 0)
+		if ($site->getId() <= 0)
 		{
 			return false;
 		}
 
+		if ($site->cmsType() !== CMSType::JOOMLA)
+		{
+			throw new RuntimeException('This is only possible with Joomla! sites.');
+		}
+
 		// Does the extension exist?
-		$extensions  = (array) $model->getConfig()->get('extensions.list');
+		$extensions  = (array) $site->getConfig()->get('extensions.list');
 		$extensionID = $this->input->getInt('extension', -1);
 
 		if (!isset($extensions[$extensionID]))
@@ -826,7 +857,7 @@ class Sites extends DataController
 			$url = $router->route(
 				sprintf(
 					"index.php?view=sites&task=read&id=%d",
-					$model->getId()
+					$site->getId()
 				)
 			);
 		}

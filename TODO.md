@@ -23,25 +23,25 @@
   * [x] \Akeeba\Panopticon\Model\Site::isExtensionsUpdateTaskRunning: should use PluginsUpdate for WordPress
   * [x] \Akeeba\Panopticon\Model\Site::isPluginsUpdateTaskRunning: alias to isExtensionsUpdateTaskRunning
   * [x] \Akeeba\Panopticon\Model\Site::saveDownloadKey only works for Joomla
-  * [ ] \Akeeba\Panopticon\Model\Site::getJoomlaUpdateRunState only works for Joomla
+  * [x] \Akeeba\Panopticon\Model\Site::getJoomlaUpdateRunState only works for Joomla
   * [ ] getExtensionsQuickInfo: update for WordPress
   * [ ] getWordPressUpdateRunState: similar to getJoomlaUpdateRunState but for WordPress -- Needs UI changes
   * [ ] canRefreshCoreWordPressFiles: similar to canRefreshCoreJoomlaFiles but for WordPress -- Needs UI changes
 
 ## Controllers
 * Sites
-  * [ ] fixJoomlaCoreUpdateSite: n/a for WordPress
-  * [ ] scheduleJoomlaUpdate: n/a for WordPress
+  * [x] fixJoomlaCoreUpdateSite: n/a for WordPress
+  * [x] scheduleJoomlaUpdate: n/a for WordPress
+  * [x] unscheduleJoomlaUpdate: n/a for WordPress
+  * [x] scheduleExtensionUpdate: n/a for WordPress
+  * [x] dlkey: n/a for WordPress
+  * [x] savedlkey: n/a for WordPress
   * [ ] scheduleWordPressUpdate: similar to scheduleJoomlaUpdate
-  * [ ] unscheduleJoomlaUpdate: n/a for WordPress
   * [ ] unscheduleWordPressUpdate: similar to unscheduleJoomlaUpdate
   * [ ] clearUpdateScheduleError: task type change for WordPress
   * [ ] clearExtensionUpdatesScheduleError: task type change for WordPress
   * [ ] resetExtensionUpdate: queue type change for WordPress
-  * [ ] scheduleExtensionUpdate: n/a for WordPress
   * [ ] schedulePluginUpdate: similar to scheduleExtensionUpdate
-  * [ ] dlkey: n/a for WordPress
-  * [ ] savedlkey: n/a for WordPress
 
 ## Tasks
 
