@@ -3,7 +3,7 @@
 ## Models
 * Site Model
   * [x] buildQuery: add cmsType filter
-  * [ ] check: check cmsType, assign `joomla` if nothing else chosen
+  * [x] \Akeeba\Panopticon\Model\Site::check: check cmsType, assign `joomla` if nothing else is chosen.
   * [ ] getAdminUrl: update for WordPress
   * [ ] fixCoreUpdateSite: n/a for WP
   * [ ] getExtensionsUpdateTask: should return PluginsUpdate for WordPress
@@ -53,8 +53,10 @@
 * [ ] RefreshInstalledExtensions: Split between Joomla! and WordPress, and handle accordingly
 * [ ] WordPressUpdate task (similar to JoomlaUpdate task)
 * [ ] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
+* [ ] Add WordPressUpdateDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
 * [ ] PluginsUpdate task (similar to ExtensionsUpdate task)
 * [ ] WordPressPluginsUpdatesDirector task (similar to ExtensionUpdatesDirector task)
+* [ ] Add WordPressPluginsUpdatesDirector to WordPressUpdateDirector
 * [ ] AkeebaBackup task: work with WordPress
 * [ ] FileScanner task: work with WordPress
 

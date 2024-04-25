@@ -327,6 +327,14 @@ class Site extends DataModel
 			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_ERR_NO_URL'));
 		}
 
+		$cmsType = $this->getConfig()->get('cmsType', 'joomla');
+		$this->getConfig()->set(
+			'cmsType',
+			in_array($cmsType, array_column(CMSType::cases(), 'value'))
+				? $cmsType
+				: 'joomla'
+		);
+
 		parent::check();
 
 		$this->url = $this->cleanUrl($this->url);
