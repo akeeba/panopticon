@@ -536,6 +536,11 @@ class Site extends DataModel
 		};
 	}
 
+	public function getWordPressUpdateTask(): ?Task
+	{
+		return $this->getJoomlaUpdateTask();
+	}
+
 	public function isExtensionsUpdateTaskStuck(): bool
 	{
 		return $this->isSiteSpecificTaskStuck('extensionsupdate');
