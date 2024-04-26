@@ -228,9 +228,23 @@ class Site extends DataModel
 
 		if (!empty($fltCmsType))
 		{
-			$query->where(
-				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote($fltCmsType),
-			);
+			// Special case for `joomla`. Legacy entries don't have a CMSType.
+			if ($fltCmsType === CMSType::JOOMLA->value)
+			{
+				$query->where(
+					'(' .
+					$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote($fltCmsType) .
+					' OR ' .
+					$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' IS NULL' .
+					')'
+				);
+			}
+			else
+			{
+				$query->where(
+					$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote($fltCmsType),
+				);
+			}
 		}
 
 		// Filter: cmsFamily

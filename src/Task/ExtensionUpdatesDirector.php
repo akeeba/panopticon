@@ -366,6 +366,12 @@ class ExtensionUpdatesDirector extends AbstractCallback
 			$db->quoteName('enabled') . ' = 1',
 		]);
 
+		// Only fetch Joomla! sites. NB! Legacy records do not have a cmsType.
+		$query->andWhere([
+			$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote('joomla'),
+			$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' IS NULL'
+		]);
+
 		if (!$force)
 		{
 			// Only allow update enqueueing to run every 30'

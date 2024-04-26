@@ -302,6 +302,12 @@ class JoomlaUpdateDirector extends AbstractCallback
 			]
 		);
 
+		// Only fetch Joomla! sites. NB! Legacy records do not have a cmsType.
+		$query->andWhere([
+			$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote('joomla'),
+			$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' IS NULL'
+		]);
+
 		if (!$force)
 		{
 			$query->where(
