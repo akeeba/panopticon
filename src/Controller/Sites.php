@@ -498,7 +498,12 @@ class Sites extends DataController
 			$task->findOrFail(
 				[
 					'site_id' => (int) $id,
-					'type'    => 'joomlaupdate',
+					'type'    => match ($site->cmsType())
+					{
+						CMSType::JOOMLA => 'joomlaupdate',
+						CMSType::WORDPRESS => 'wordpressupdate',
+						default => 'xxx_invalid_xxx',
+					},
 				]
 			);
 
@@ -562,7 +567,12 @@ class Sites extends DataController
 			$task->findOrFail(
 				[
 					'site_id' => (int) $id,
-					'type'    => 'extensionsupdate',
+					'type'    => match ($site->cmsType())
+					{
+						CMSType::JOOMLA => 'extensionsupdate',
+						CMSType::WORDPRESS => 'pluginsupdate',
+						default => 'xxx_invalid_xxx',
+					},
 				]
 			);
 
@@ -633,14 +643,29 @@ class Sites extends DataController
 		{
 			if ($resetQueue)
 			{
-				$queueKey = sprintf(QueueTypeEnum::EXTENSIONS->value, $site->id);
+				$queuePattern = match ($site->cmsType()) {
+					CMSType::JOOMLA => QueueTypeEnum::EXTENSIONS->value,
+					CMSType::WORDPRESS => QueueTypeEnum::PLUGINS->value,
+					default => 'xxx_invalid_xxx.%d'
+				};
+
+				$queueKey = sprintf($queuePattern, $site->id);
 				/** @var QueueInterface $queue */
 				$queue = $this->container->queueFactory->makeQueue($queueKey);
 
 				$queue->clear();
 			}
 
-			$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
+			switch ($site->cmsType())
+			{
+				case CMSType::JOOMLA:
+					$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
+					break;
+
+				case CMSType::WORDPRESS:
+					$this->schedulePluginsUpdateForSite($site, $this->getContainer());
+					break;
+			}
 
 			$type    = 'info';
 			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_OK');

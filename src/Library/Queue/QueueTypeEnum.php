@@ -14,4 +14,6 @@ enum QueueTypeEnum: string
 	case MAIL = 'mail';
 
 	case EXTENSIONS = 'extensions.%d';
+
+	case PLUGINS = 'plugins.%d';
 }
