@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Helper\LanguageListTrait;
 use Akeeba\Panopticon\Library\Aes\Ctr;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -54,6 +55,11 @@ class JoomlaUpdate extends AbstractCallback
 
 		try
 		{
+			if ($site->cmsType() !== CMSType::JOOMLA)
+			{
+				throw new RuntimeException('This is not a Joomla site!');
+			}
+
 			switch ($this->currentState)
 			{
 				case 'init':

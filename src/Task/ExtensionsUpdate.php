@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Helper\Html2Text;
 use Akeeba\Panopticon\Helper\LanguageListTrait;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Queue\QueueItem;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
@@ -28,6 +29,7 @@ use Awf\Registry\Registry;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use RuntimeException;
 
 #[AsTask(name: 'extensionsupdate', description: 'PANOPTICON_TASKTYPE_EXTENSIONSUPDATE')]
 class ExtensionsUpdate extends AbstractCallback
@@ -45,6 +47,11 @@ class ExtensionsUpdate extends AbstractCallback
 		/** @var Site $site */
 		$site = $this->container->mvcFactory->makeTempModel('Site');
 		$site->findOrFail($task->site_id);
+
+		if ($site->cmsType() !== CMSType::JOOMLA)
+		{
+			throw new RuntimeException('This is not a Joomla site!');
+		}
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 

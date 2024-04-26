@@ -8,17 +8,14 @@
 
 ## Controllers
 * Sites
-  * [x] clearUpdateScheduleError: task type change for WordPress
-  * [x] clearExtensionUpdatesScheduleError: task type change for WordPress
-  * [x] resetExtensionUpdate: queue type change for WordPress
   * [ ] scheduleWordPressUpdate: similar to scheduleJoomlaUpdate
   * [ ] unscheduleWordPressUpdate: similar to unscheduleJoomlaUpdate
   * [ ] schedulePluginUpdate: similar to scheduleExtensionUpdate
 
 ## Tasks
 
-* [ ] JoomlaUpdate: reject non-Joomla sites
-* [ ] ExtensionsUpdate: reject non-Joomla sites
+* [x] JoomlaUpdate: reject non-Joomla sites
+* [x] ExtensionsUpdate: reject non-Joomla sites
 * [ ] JoomlaUpdateDirector: only look for sites with Joomla, or no designation
 * [ ] ExtensionsUpdate: : only look for sites with Joomla, or no designation
 * [ ] RefreshSiteInfo: Split between Joomla! and WordPress, and handle accordingly
