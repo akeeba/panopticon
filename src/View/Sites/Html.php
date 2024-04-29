@@ -222,6 +222,7 @@ class Html extends DataViewHtml
 		$buttons[] = $canAdd ? 'add' : null;
 		$buttons[] = $canEdit ? 'edit' : null;
 		$buttons[] = $canDelete ? 'delete' : null;
+        $buttons[] = $canEdit ? 'batch' : null;
 
 		$this->container->application->getDocument()->getToolbar()->clearButtons();
 		$this->addButtons($buttons);

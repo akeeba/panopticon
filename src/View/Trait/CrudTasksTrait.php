@@ -157,6 +157,13 @@ trait CrudTasksTrait
 				),
 				'icon'    => 'fa fa-question-circle me-1',
 			],
+            'batch' => [
+                'id'      => 'batch',
+                'title'   => $this->getLanguage()->text('PANOPTICON_BTN_BATCH'),
+                'class'   => 'btn btn-secondary border-light',
+                'onClick' => '',
+                'icon'    => 'fa fa-solid fa-square',
+            ],
 			default => null
 		};
 
