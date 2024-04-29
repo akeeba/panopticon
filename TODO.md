@@ -18,7 +18,7 @@
 * [x] ExtensionsUpdate: reject non-Joomla sites
 * [x] JoomlaUpdateDirector: only look for sites with Joomla, or no designation
 * [x] ExtensionUpdatesDirector: : only look for sites with Joomla, or no designation
-* [ ] RefreshSiteInfo: Split between Joomla! and WordPress, and handle accordingly
+* [x] RefreshSiteInfo: Split between Joomla! and WordPress, and handle accordingly
 * [ ] RefreshInstalledExtensions: Split between Joomla! and WordPress, and handle accordingly
 * [ ] WordPressUpdate task (similar to JoomlaUpdate task)
 * [ ] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
