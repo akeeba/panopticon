@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
 "POT-Creation-Date: 2024-04-24 21:29:55\n"
-"PO-Revision-Date: 2024-04-25 20:57+0200\n"
+"PO-Revision-Date: 2024-04-25 21:37+0200\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -4581,7 +4581,7 @@ msgstr "Inline-Bilder in E-Mails"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MAILER"
 msgid "Mail Handler"
-msgstr "Mail-Handler"
+msgstr "E-Mail-Handler"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MAILFROM"
 msgid "Sender Address"
@@ -5021,19 +5021,19 @@ msgstr "Aufgabe wurde deaktiviert."
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TITLE"
 msgid "Mail Templates"
-msgstr "Mail-Vorlagen"
+msgstr "E-Mail-Vorlagen"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TITLE_CSS"
 msgid "Mail Template CSS"
-msgstr "Mail-Vorlagen CSS"
+msgstr "E-Mail-Vorlagen CSS"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TITLE_NEW"
 msgid "New Mail Template"
-msgstr "Neue Mail-Vorlage"
+msgstr "Neue E-Mail-Vorlage"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TITLE_EDIT"
 msgid "Edit Mail Template"
-msgstr "Mail-Vorlage bearbeiten"
+msgstr "E-Mail-Vorlage bearbeiten"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_BTN_CSS"
 msgid "Edit Common CSS"
@@ -5041,11 +5041,11 @@ msgstr "Allgemeine CSS bearbeiten"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TABLE_COMMENT"
 msgid "List of mail templates"
-msgstr "Mail-Vorlagen Liste"
+msgstr "E-Mail-Vorlagen Liste"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TABLE_HEAD_TYPE"
 msgid "Mail type"
-msgstr "Mail-Typ"
+msgstr "E-Mail-Typ"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_TABLE_HEAD_SUBJECT"
 msgid "Subject"
@@ -5057,7 +5057,7 @@ msgstr "Sprache"
 
 msgctxt "PANOPTICON_MAILTEMPLATE_FIELD_TYPE"
 msgid "Mail Type"
-msgstr "Mail-Typ"
+msgstr "E-Mail-Typ"
 
 msgctxt "PANOPTICON_MAILTEMPLATE_FIELD_LANGUAGE"
 msgid "Language"
@@ -5961,7 +5961,7 @@ msgstr "Löschen"
 
 msgctxt "PANOPTICON_MFA_LBL_LIST_ADD_A"
 msgid "Add a new %s"
-msgstr "Neue %s hinzufügen"
+msgstr "Neuen %s hinzufügen"
 
 msgctxt "PANOPTICON_MFA_LBL_TITLE_ADD"
 msgid "Add an MFA method"
