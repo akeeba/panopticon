@@ -19,7 +19,7 @@
 * [x] JoomlaUpdateDirector: only look for sites with Joomla, or no designation
 * [x] ExtensionUpdatesDirector: : only look for sites with Joomla, or no designation
 * [x] RefreshSiteInfo: Split between Joomla! and WordPress, and handle accordingly
-* [ ] RefreshInstalledExtensions: Split between Joomla! and WordPress, and handle accordingly
+* [x] RefreshInstalledExtensions: Split between Joomla! and WordPress, and handle accordingly
 * [ ] WordPressUpdate task (similar to JoomlaUpdate task)
 * [ ] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
 * [ ] Add WordPressUpdateDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
@@ -40,8 +40,10 @@
 
 * [ ] EnqueueWordPressUpdateTrait: similar to EnqueueJoomlaUpdateTrait (method: enqueueWordPressUpdate)
 * [ ] EnqueuePluginsUpdateTrait: similar to EnqueueExtensionUpdateTrait (method: schedulePluginsUpdateForSite)
-* [ ] AdminToolsIntegrationTrait: deal with WP
-* [ ] AkeebaBackupIntegrationTrait: deal with WP
+* [ ] Model\AdminToolsIntegrationTrait: deal with WP
+* [ ] Controller\AdminToolsIntegrationTrait: deal with WP
+* [ ] Model\AkeebaBackupIntegrationTrait: deal with WP
+* [ ] Controller\AkeebaBackupIntegrationTrait: deal with WP
 
 
 
