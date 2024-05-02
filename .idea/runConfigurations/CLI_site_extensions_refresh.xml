@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CLI site:extensions:refresh" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="site:extensions:refresh --force -vvv">
+  <configuration default="false" name="CLI site:extensions:refresh" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/cli/panopticon.php" scriptParameters="site:extensions:refresh --force --id=10 -vvv">
     <method v="2" />
   </configuration>
 </component>

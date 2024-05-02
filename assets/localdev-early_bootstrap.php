@@ -27,6 +27,11 @@ defined('LOCAL_DEVELOPMENT_LOAD_STATS_COLLECTOR') || define('LOCAL_DEVELOPMENT_L
 defined('LOCAL_DEVELOPMENT_UPDATES_URL') || define('LOCAL_DEVELOPMENT_UPDATES_URL', '');
 defined('LOCAL_DEVELOPMENT_STATS_URL') || define('LOCAL_DEVELOPMENT_STATS_URL', '');
 
+if (PHP_OS === 'WINNT')
+{
+	define('LOCAL_DEVELOPMENT_PROJECTS_BASE', 'D:\\Projects');
+}
+
 // Load our local development helper classes
 require_once __DIR__ . '/LocalDev/LocalLibraryLoader.php';
 
@@ -34,8 +39,12 @@ require_once __DIR__ . '/LocalDev/LocalLibraryLoader.php';
 (new class extends \Akeeba\Panopticon\LocalDev\LocalLibraryLoader {
 	public function __construct()
 	{
+		$localDevelopmentProjectsBase = defined('LOCAL_DEVELOPMENT_PROJECTS_BASE')
+			? LOCAL_DEVELOPMENT_PROJECTS_BASE
+			: ($_SERVER['HOME'] ?? $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH']) . '/Projects';
+
 		parent::__construct(
-			composerAutoloaderFile: $_SERVER['HOME'] . '/Projects/akeeba/awf/vendor/autoload.php',
+			composerAutoloaderFile: $localDevelopmentProjectsBase . '/akeeba/awf/vendor/autoload.php',
 			namespace: 'Awf',
 			constantName: 'LOCAL_DEVELOPMENT_LOAD_AWF',
 		);
@@ -46,8 +55,12 @@ require_once __DIR__ . '/LocalDev/LocalLibraryLoader.php';
 (new class extends \Akeeba\Panopticon\LocalDev\LocalLibraryLoader {
 	public function __construct()
 	{
+		$localDevelopmentProjectsBase = defined('LOCAL_DEVELOPMENT_PROJECTS_BASE')
+			? LOCAL_DEVELOPMENT_PROJECTS_BASE
+			: ($_SERVER['HOME'] ?? $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH']) . '/Projects';
+
 		parent::__construct(
-			composerAutoloaderFile: $_SERVER['HOME'] . '/Projects/akeeba/json-backup-api/vendor/autoload.php',
+			composerAutoloaderFile: $localDevelopmentProjectsBase . '/akeeba/json-backup-api/vendor/autoload.php',
 			namespace: 'Akeeba\BackupJsonApi',
 			constantName: 'LOCAL_DEVELOPMENT_LOAD_JSON_API',
 		);
@@ -58,8 +71,12 @@ require_once __DIR__ . '/LocalDev/LocalLibraryLoader.php';
 (new class extends \Akeeba\Panopticon\LocalDev\LocalLibraryLoader {
 	public function __construct()
 	{
+		$localDevelopmentProjectsBase = defined('LOCAL_DEVELOPMENT_PROJECTS_BASE')
+			? LOCAL_DEVELOPMENT_PROJECTS_BASE
+			: ($_SERVER['HOME'] ?? $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH']) . '/Projects';
+
 		parent::__construct(
-			composerAutoloaderFile: $_SERVER['HOME'] . '/Projects/akeeba/stats_collector/vendor/autoload.php',
+			composerAutoloaderFile: $localDevelopmentProjectsBase . '/akeeba/stats_collector/vendor/autoload.php',
 			namespace: 'Akeeba\UsageStats\Collector',
 			constantName: 'LOCAL_DEVELOPMENT_LOAD_STATS_COLLECTOR',
 		);
