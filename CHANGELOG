@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 1.1.4
+================================================================================
+# [LOW] Wrong message about not having Akeeba Backup installed shown when adding a new site (gh-661)
+
 Akeeba Panopticon 1.1.3
 ================================================================================
 # [HIGH] Cannot update to new Joomla! version if "only minor" update strategy is selected.

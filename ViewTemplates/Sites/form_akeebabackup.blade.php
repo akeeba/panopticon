@@ -58,7 +58,7 @@ $disable         = $disable || empty($profiles);
             </p>
         </div>
 
-        <div class="alert alert-danger {{ !$noExtensions && $hasAkeebaBackup ? 'd-none' : '' }}"
+        <div class="alert alert-danger {{ (!$noExtensions && !$hasAkeebaBackup) ? '' : 'd-none' }}"
              id="backupOnUpdateNoAkeebaBackup">
             <h5 class="alert-heading">
                 <span class="fa fa-fw fa-xmark-circle" aria-hidden="true"></span>
