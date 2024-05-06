@@ -6,7 +6,7 @@
  */
 
 defined('AKEEBA') || die;
-
+$x = 1;
 /**
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  * @var \Akeeba\Panopticon\Model\Site      $model
@@ -162,14 +162,29 @@ $token = $this->container->session->getCsrfToken()->getValue();
 
     <!-- Modal -->
     <div class="modal fade" id="batchModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="batchModalLabel">@lang('PANOPTICON_SITES_BATCH_TITLE')</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="row mt-3 mb-4">
+                        <label for="name" class="col-sm-3 col-form-label fs-5">
+                            @lang('PANOPTICON_SITES_BATCH_LBL_GROUP')
+                        </label>
+                        <div class="col-sm-6">
+                            {{ $this->container->html->select->genericList(
+                                data: $this->getModel()->getGroupsForSelect(includeEmpty: true),
+                                name: 'groups[]',
+                                attribs: [
+                                    'class' => 'form-select js-choice',
+                                    'multiple' => 'multiple',
+                                ],
+                                selected: []
+                            ) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">@lang('PANOPTICON_SITES_BATCH_PROCESS')</button>
