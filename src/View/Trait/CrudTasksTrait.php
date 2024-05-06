@@ -161,7 +161,12 @@ trait CrudTasksTrait
                 'id'      => 'batch',
                 'title'   => $this->getLanguage()->text('PANOPTICON_BTN_BATCH'),
                 'class'   => 'btn btn-secondary border-light',
-                'onClick' => '',
+                'onClick' => json_encode(
+                    [
+                        'data-bs-toggle' => 'modal',
+                        'data-bs-target' => '#batchModal'
+                    ]
+                ),
                 'icon'    => 'fa fa-solid fa-square',
             ],
 			default => null

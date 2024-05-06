@@ -160,6 +160,24 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </tfoot>
     </table>
 
+    <!-- Modal -->
+    <div class="modal fade" id="batchModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="batchModalLabel">@lang('PANOPTICON_SITES_BATCH_TITLE')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">@lang('PANOPTICON_SITES_BATCH_PROCESS')</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <input type="hidden" name="boxchecked" id="boxchecked" value="0">
     <input type="hidden" name="task" id="task" value="browse">
     <input type="hidden" name="filter_order" id="filter_order" value="{{{ $this->lists->order }}}">
