@@ -114,6 +114,7 @@ trait ACLTrait
 			'edit'                               => ['*'],
 			'apply'                              => ['*'],
 			'save'                               => ['*'],
+			'batch'                              => ['*'],
 			'cancel'                             => ['addown', 'editown', 'admin'],
 			// The connection doctor needs the same permissions as the `save` task.
 			'connectionDoctor'                   => ['*'],

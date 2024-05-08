@@ -7,6 +7,8 @@
 
 namespace Akeeba\Panopticon\Model;
 
+use Awf\Text\LanguageAwareTrait;
+
 defined('AKEEBA') || die;
 
 /**
@@ -16,5 +18,11 @@ defined('AKEEBA') || die;
  */
 class Sites extends Site
 {
-
+    public function batch(array $ids)
+    {
+        if (!$ids)
+        {
+            throw new \RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_BATCH_ERR_NO_IDS'));
+        }
+    }
 }

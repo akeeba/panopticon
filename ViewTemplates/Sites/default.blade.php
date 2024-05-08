@@ -187,7 +187,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">@lang('PANOPTICON_SITES_BATCH_PROCESS')</button>
+                    <button type="button" class="btn btn-primary" onclick="akeeba.System.submitForm('batch')">@lang('PANOPTICON_SITES_BATCH_PROCESS')</button>
                 </div>
             </div>
         </div>
