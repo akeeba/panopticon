@@ -7,9 +7,9 @@
 
 namespace Akeeba\Panopticon\View\Main;
 
-use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
 use Akeeba\Panopticon\Library\SelfUpdate\UpdateInformation;
 use Akeeba\Panopticon\Library\SelfUpdate\VersionInformation;
+use Akeeba\Panopticon\Library\SoftwareVersions\PhpVersion;
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Model\Groups;
 use Akeeba\Panopticon\Model\Selfupdate;
@@ -353,9 +353,13 @@ class Html extends \Awf\Mvc\DataView\Html
 	{
 		return array_reduce(
 			$extensions,
-			fn(int $carry, object $item): int => $carry + (
-				!$item?->downloadkey?->supported || $item?->downloadkey?->valid ? 0 : 1
-				),
+			function (int $carry, object $item): int {
+				$downloadkey = $item?->downloadkey ?? null;
+
+				return $carry + (
+					!$downloadkey?->supported || $downloadkey?->valid ? 0 : 1
+					);
+			},
 			0
 		);
 	}

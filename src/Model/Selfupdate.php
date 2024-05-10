@@ -85,7 +85,10 @@ class Selfupdate extends Model
 	 *
 	 * The application must not break when these folders are present.
 	 */
-	private const REMOVE_FOLDERS = [];
+	private const REMOVE_FOLDERS = [
+		'src/Library/JoomlaVersion',
+		'src/Library/PhpVersion',
+	];
 
 	/**
 	 * @var string The currently installed version

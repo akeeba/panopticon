@@ -7,8 +7,8 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\SoftwareVersions\JoomlaVersion;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
-use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
 use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Main\Html;
@@ -26,9 +26,7 @@ $latestJoomlaVersion = $config->get('core.latest.version');
 $lastError           = trim($config->get('core.lastErrorMessage') ?? '');
 $jRunState           = $item->getJoomlaUpdateRunState();
 $jUpdateFailure      = !$config->get('core.extensionAvailable', true)
-                       || !$config->get(
-		'core.updateSiteAvailable', true
-	);
+                       || !$config->get('core.updateSiteAvailable', true);
 $token               = $this->container->session->getCsrfToken()->getValue();
 $returnUrl           = base64_encode(\Awf\Uri\Uri::getInstance()->toString());
 $jVersionHelper      = new JoomlaVersion($this->getContainer());

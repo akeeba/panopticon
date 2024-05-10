@@ -9,8 +9,8 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
+use Akeeba\Panopticon\Library\SoftwareVersions\JoomlaVersion;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
-use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
@@ -21,8 +21,9 @@ $overridesChanged         = $this->siteConfig->get('core.overridesChanged');
 $lastError                = trim($this->siteConfig->get('core.lastErrorMessage') ?? '');
 $hasError                 = !empty($lastError);
 $lastUpdateTimestamp      = $this->siteConfig->get('core.lastAttempt')
-	? $this->timeAgo($this->siteConfig->get('core.lastAttempt')) :
-    $this->getLanguage()->text('PANOPTICON_LBL_NEVER');
+	? $this->timeAgo($this->siteConfig->get('core.lastAttempt'))
+	:
+	$this->getLanguage()->text('PANOPTICON_LBL_NEVER');
 $jVersionHelper           = new JoomlaVersion($this->getContainer());
 $showScheduleButton       = $this->joomlaUpdateRunState->isValidUpdateState();
 $showCancelScheduleButton = false;
@@ -38,7 +39,8 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
 ?>
 
 @section('jUpdateLastErrorModal')
-	<?php $siteInfoLastErrorModalID = 'silem-' . md5(random_bytes(120)); ?>
+	<?php
+	$siteInfoLastErrorModalID = 'silem-' . md5(random_bytes(120)); ?>
     <div class="btn btn-danger btn-sm px-1 py-0" aria-hidden="true"
          data-bs-toggle="modal" data-bs-target="#{{ $siteInfoLastErrorModalID }}"
     >
@@ -245,10 +247,10 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
 
 @section('jUpdateSchedule')
     @if ($this->joomlaUpdateRunState === JoomlaUpdateRunState::SCHEDULED || $this->joomlaUpdateRunState === JoomlaUpdateRunState::REFRESH_SCHEDULED)
-        <?php
-        $showScheduleButton       = false;
-        $showCancelScheduleButton = true;
-        ?>
+			<?php
+			$showScheduleButton       = false;
+			$showCancelScheduleButton = true;
+			?>
         <p>
             @if ($joomlaUpdateTask?->next_execution)
                 @sprintf('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED', $this->formatDate($joomlaUpdateTask->next_execution, 'DATE_FORMAT_LC7'))
@@ -257,24 +259,25 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
             @endif
         </p>
     @elseif ($this->joomlaUpdateRunState === JoomlaUpdateRunState::RUNNING || $this->joomlaUpdateRunState === JoomlaUpdateRunState::REFRESH_RUNNING)
-			<?php $showScheduleButton = false; ?>
+			<?php
+			$showScheduleButton = false; ?>
         <p>
             @lang('PANOPTICON_SITE_LBL_JUPDATE_RUNNING')
         </p>
     @elseif ($this->joomlaUpdateRunState === JoomlaUpdateRunState::ERROR || $this->joomlaUpdateRunState === JoomlaUpdateRunState::REFRESH_ERROR)
         {{-- Task error condition --}}
-        <?php
-        $status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE;
-        ?>
+			<?php
+			$status = Status::tryFrom($joomlaUpdateTask->last_exit_code) ?? Status::NO_ROUTINE;
+			?>
         <p class="text-warning-emphasis">
             @lang('PANOPTICON_SITE_LBL_JUPDATE_ERRORED')
             {{ $status->forHumans() }}
         </p>
         @if ($status->value === Status::EXCEPTION->value)
-            <?php
-            $storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage
-                : (new Registry($joomlaUpdateTask->storage));
-            ?>
+				<?php
+				$storage = ($joomlaUpdateTask->storage instanceof Registry) ? $joomlaUpdateTask->storage
+					: (new Registry($joomlaUpdateTask->storage));
+				?>
             <p>
                 @lang('PANOPTICON_SITE_LBL_JUPDATE_THE_ERROR_REPORTED_WAS')
             </p>

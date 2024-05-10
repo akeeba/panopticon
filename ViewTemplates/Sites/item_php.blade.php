@@ -9,9 +9,8 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
-use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
+use Akeeba\Panopticon\Library\SoftwareVersions\PhpVersion;
 use Akeeba\Panopticon\Library\Version\Version;
-use Awf\Registry\Registry;
 
 $phpVersion = new PhpVersion();
 

@@ -5,17 +5,15 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-namespace Akeeba\Panopticon\Library\JoomlaVersion;
+namespace Akeeba\Panopticon\Library\SoftwareVersions;
 
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\Version\Version;
 use DateInterval;
 use DateTime;
-use DateTimeZone;
 use GuzzleHttp\ClientInterface;
 
 class JoomlaVersion

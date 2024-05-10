@@ -12,7 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
-use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
+use Akeeba\Panopticon\Library\SoftwareVersions\PhpVersion;
 use Awf\Date\Date;
 use Awf\Input\Input;
 use Awf\Mvc\Model;

@@ -9,8 +9,8 @@ namespace Akeeba\Panopticon\View\Main;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\SoftwareVersions\JoomlaVersion;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
-use Akeeba\Panopticon\Library\JoomlaVersion\JoomlaVersion;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Trait\AkeebaBackupTooOldTrait;
 use Awf\Mvc\DataModel\Collection;

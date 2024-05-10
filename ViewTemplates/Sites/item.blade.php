@@ -105,7 +105,13 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
 
     <div class="row g-3 mb-3">
         <div class="col-12">
-            @include('Sites/item_extensions')
+            @if ($this->item->cmsType() === CMSType::JOOMLA)
+                {{-- Joomla! sites --}}
+                @include('Sites/item_extensions')
+            @elseif ($this->item->cmsType() === CMSType::WORDPRESS)
+                {{-- WordPress sites --}}
+                @include('Sites/item_wpplugins')
+            @endif
         </div>
     </div>
 

@@ -7,7 +7,7 @@
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Library\PhpVersion\PhpVersion;
+use Akeeba\Panopticon\Library\SoftwareVersions\PhpVersion;
 
 /** @var \Akeeba\Panopticon\View\Main\Html $this */
 

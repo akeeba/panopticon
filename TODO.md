@@ -6,8 +6,9 @@
   * [ ] canRefreshCoreWordPressFiles: similar to canRefreshCoreJoomlaFiles but for WordPress -- Needs UI changes
 
 ## UI
-* [ ] Main: site_wordpress
-* [ ] ...
+* [ ] Main/site_wordpress
+* [ ] Sites/item_wpupdate
+* [ ] Sites/item_wpplugins (equivalent to extensions)
 
 ## Controllers
 * Sites
