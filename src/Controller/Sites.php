@@ -73,10 +73,15 @@ class Sites extends DataController
         /** @var \Akeeba\Panopticon\Model\Sites $model */
         $model = $this->getModel();
 
+        $groups = $this->input->get('groups', [], 'raw');
+        $groups = array_map('intval' ,$groups);
+
+        $data['groups'] = $groups;
+
         try
         {
             $ids = $this->getIDsFromRequest($model, false);
-            $model->batch($ids);
+            $model->batch($ids, $data);
         }
         catch (RuntimeException $e)
         {
