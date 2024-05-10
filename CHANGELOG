@@ -1,7 +1,8 @@
 <?php die(); ?>
 Akeeba Panopticon 1.1.4
 ================================================================================
-# [LOW] Wrong message about not having Akeeba Backup installed shown when adding a new site (gh-661)
+# [LOW] Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
+# [LOW] Wrong language in mail Blade templates [gh-658]
 
 Akeeba Panopticon 1.1.3
 ================================================================================

@@ -661,6 +661,7 @@ class ExtensionsUpdate extends AbstractCallback
 				APATH_USER_CODE . '/ViewTemplates/Mailtemplates',
 			],
 		];
+		$container->language->loadLanguage($language ?: $container->appConfig->get('language', 'en-GB'));
 		$fakeView                = new Html($container);
 		$rendered                = '';
 
