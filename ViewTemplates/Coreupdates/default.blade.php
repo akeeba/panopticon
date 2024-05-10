@@ -50,7 +50,8 @@ JS;
             {{-- Groups --}}
             @if (!empty($this->groupMap))
                 <div class="input-group choice-large">
-                    <label for="group" class="form-label visually-hidden">@lang('PANOPTICON_MAIN_LBL_FILTER_GROUPS')</label>
+                    <label for="group"
+                           class="form-label visually-hidden">@lang('PANOPTICON_MAIN_LBL_FILTER_GROUPS')</label>
                     {{ $this->container->html->select->genericList(
                         data: array_combine(
                             array_merge([''], array_keys($this->groupMap)),
@@ -98,7 +99,7 @@ JS;
                 {{ $this->container->html->select->genericList(
                     array_merge([
                         '' => $this->getLanguage()->text('PANOPTICON_COREUPDATES_LBL_SELECT_CURRENT')
-                    ], $mainModel->getKnownJoomlaVersions()),
+                    ], $mainModel->getKnownCMSVersions()),
                     'cmsFamily',
                     [
                         'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
@@ -113,7 +114,7 @@ JS;
                 {{ $this->container->html->select->genericList(
                     array_merge([
                         '' => $this->getLanguage()->text('PANOPTICON_COREUPDATES_LBL_SELECT_LATEST')
-                    ], $mainModel->getKnownJoomlaVersions()),
+                    ], $mainModel->getKnownCMSVersions()),
                     'latestFamily',
                     [
                         'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
@@ -167,14 +168,15 @@ JS;
         </tr>
         </thead>
         <tbody>
-        <?php $i = 0; ?>
+		<?php
+		$i = 0; ?>
         @foreach ($this->items as $item)
-            <?php
-                /** @var \Akeeba\Panopticon\Model\Site $item */
-                $isScheduled = $item->isJoomlaUpdateTaskScheduled();
-				$isStuck = $item->isJoomlaUpdateTaskScheduled();
-				$isRunning = $item->isJoomlaUpdateTaskRunning();
-            ?>
+				<?php
+				/** @var \Akeeba\Panopticon\Model\Site $item */
+				$isScheduled = $item->isJoomlaUpdateTaskScheduled();
+				$isStuck     = $item->isJoomlaUpdateTaskScheduled();
+				$isRunning   = $item->isJoomlaUpdateTaskRunning();
+				?>
             <tr>
                 <td>
                     <label for="cb{{{ ++$i }}}" class="visually-hidden">

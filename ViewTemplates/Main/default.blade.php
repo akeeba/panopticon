@@ -27,204 +27,205 @@ $mainModel = $this->getModel('main');
 @section('main-default-sites')
     {{-- The noTable param is passed by the dashboard layout to speed up the rendering by skipping this default section --}}
     @unless(isset($noTable) && $noTable)
-    {{-- Results table --}}
-    <table class="table table-striped table-hover table-sm align-middle table-responsive-sm">
-        <caption class="visually-hidden">
-            @lang('PANOPTICON_MAIN_SITES_TABLE_CAPTION')
-        </caption>
-        <thead class="table-secondary">
-        <tr>
-            <th>
-                {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAIN_SITES_THEAD_SITE', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
-            </th>
-            <th>
+        {{-- Results table --}}
+        <table class="table table-striped table-hover table-sm align-middle table-responsive-sm">
+            <caption class="visually-hidden">
+                @lang('PANOPTICON_MAIN_SITES_TABLE_CAPTION')
+            </caption>
+            <thead class="table-secondary">
+            <tr>
+                <th>
+                    {{ $this->getContainer()->html->grid->sort('PANOPTICON_MAIN_SITES_THEAD_SITE', 'name', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+                </th>
+                <th>
                 <span class="fa fa-box fs-3" aria-hidden="true"
                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                       data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_CMS')"
                 ></span>
-                <span class="visually-hidden">
+                    <span class="visually-hidden">
                     @lang('PANOPTICON_MAIN_SITES_THEAD_CMS')
                 </span>
-            </th>
-            <th>
+                </th>
+                <th>
                 <span class="fa fa-cubes fs-3" aria-hidden="true"
                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                       data-bs-title="@lang(  'PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')"
                 ></span>
-                <span class="visually-hidden">
+                    <span class="visually-hidden">
                     @lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')
                 </span>
-            </th>
-            <th class="d-none d-md-table-cell">
+                </th>
+                <th class="d-none d-md-table-cell">
                 <span class="fab fa-php fs-3" aria-hidden="true"
                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                       data-bs-title="@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')"
                 ></span>
-                <span class="visually-hidden">
+                    <span class="visually-hidden">
                     @lang('PANOPTICON_MAIN_SITES_THEAD_PHP')
                 </span>
-            </th>
-            <th class="d-none d-md-table-cell">
+                </th>
+                <th class="d-none d-md-table-cell">
                 <span class="fa fa-hard-drive fs-3" aria-hidden="true"
                       data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD')"
                 ></span>
-                <span class="visually-hidden">
+                    <span class="visually-hidden">
                     @lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD')
                 </span>
-            </th>
-            <th class="d-none d-md-table-cell pnp-w-2">
-                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
-                    'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
-                ]) }}
-            </th>
-        </tr>
-        </thead>
-        <tbody class="table-group-divider">
-		<?php
-		/** @var \Akeeba\Panopticon\Model\Site $item */
-		?>
-        @foreach($this->items as $item)
-		        <?php
-		        $url               = $item->getBaseUrl();
-		        $config            = $item->getConfig();
-		        $favicon           = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
-		        $certificateStatus = $item->getSSLValidityStatus();
-		        $uptimeStatus      = $this->getContainer()->helper->uptime->status($item);
-		        ?>
-            <tr>
-                <td>
-                    <div class="d-flex flex-row gap-2">
-                        @if ($favicon)
-                            <div class="d-none d-md-block text-center" style="width: 1.3em">
-                                <img alt="" aria-hidden="true"
-                                     src="{{{ $favicon }}}"
-                                     class="me-1"
-                                     style="aspect-ratio: 1.0; max-width: 1.3em; max-height: 1.3em; min-width: 1em; min-height: 1em">
-                            </div>
-                        @endif
-                        <div>
-                            <div>
-                                @if (!$uptimeStatus->up && !$uptimeStatus->isScheduled)
-                                    <div class="d-inline-block bg-danger rounded-pill px-1 text-bg-dark">
-                                        @if ($uptimeStatus->detailsUrl)
-                                            <a href="{{ $uptimeStatus->detailsUrl }}">
-                                                <span class="fa fa-fw fa-arrow-down" aria-hidden="true"></span>
-                                                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')</span>
-                                            </a>
-                                        @else
-                                            <span class="fa fa-fw fa-arrow-down" aria-hidden="true"></span>
-                                            <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')</span>
-                                        @endif
-                                    </div>
-                                @elseif (!$uptimeStatus->up)
-                                    <div class="d-inline-block bg-warning rounded-pill px-1 text-bg-light">
-                                        @if ($uptimeStatus->detailsUrl)
-                                            <a href="{{ $uptimeStatus->detailsUrl }}">
-                                                <span class="fa fa-fw fa-hammer" aria-hidden="true"></span>
-                                                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')</span>
-                                            </a>
-                                        @else
-                                            <span class="fa fa-fw fa-hammer" aria-hidden="true"></span>
-                                            <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')</span>
-                                        @endif
-                                    </div>
-                                @endif
-
-                                <a class="fw-medium {{ $uptimeStatus->up ? '' : 'text-danger fw-bold' }}"
-                                   href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
-                                    {{{ $item->name }}}
-                                </a>
-                            </div>
-                            <div class="small mt-1">
-                                @if(in_array($certificateStatus, [-1, 1, 3]))
-                                    <span class="fa fa-fw fa-lock text-danger" aria-hidden="true"
-                                          data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                          data-bs-title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')"
-                                    ></span>
-                                    <span class="visually-hidden">
-                                        @lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')
-                                    </span>
-                                @elseif($certificateStatus === 2)
-                                    <span class="fa fa-fw fa-lock text-warning" aria-hidden="true"
-                                          data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                          data-bs-title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')"
-                                    ></span>
-                                    <span class="visually-hidden">
-                                        @lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')
-                                    </span>
-                                @endif
-                                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
-                                <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
-                                    {{{ $url }}}
-                                    <span class="fa fa-external-link-alt fa-xs text-muted" aria-hidden="true"></span>
-                                </a>
-                            </div>
-                            {{-- Show group labels --}}
-                            @if (!empty($groups = $config->get('config.groups')))
-                                <div>
-                                    @foreach($groups as $gid)
-                                        @if (isset($this->groupMap[$gid]))
-                                            <span class="badge bg-secondary">
-                                        {{{ $this->groupMap[$gid] }}}
-                                    </span>
-                                        @endif
-                                    @endforeach
+                </th>
+                <th class="d-none d-md-table-cell pnp-w-2">
+                    {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
+                        'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
+                    ]) }}
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+				<?php
+				/** @var \Akeeba\Panopticon\Model\Site $item */
+				?>
+            @foreach($this->items as $item)
+					<?php
+					$url               = $item->getBaseUrl();
+					$config            = $item->getConfig();
+					$favicon           = $item->getFavicon(asDataUrl: true, onlyIfCached: true);
+					$certificateStatus = $item->getSSLValidityStatus();
+					$uptimeStatus      = $this->getContainer()->helper->uptime->status($item);
+					?>
+                <tr>
+                    <td>
+                        <div class="d-flex flex-row gap-2">
+                            @if ($favicon)
+                                <div class="d-none d-md-block text-center" style="width: 1.3em">
+                                    <img alt="" aria-hidden="true"
+                                         src="{{{ $favicon }}}"
+                                         class="me-1"
+                                         style="aspect-ratio: 1.0; max-width: 1.3em; max-height: 1.3em; min-width: 1em; min-height: 1em">
                                 </div>
                             @endif
+                            <div>
+                                <div>
+                                    @if (!$uptimeStatus->up && !$uptimeStatus->isScheduled)
+                                        <div class="d-inline-block bg-danger rounded-pill px-1 text-bg-dark">
+                                            @if ($uptimeStatus->detailsUrl)
+                                                <a href="{{ $uptimeStatus->detailsUrl }}">
+                                                    <span class="fa fa-fw fa-arrow-down" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')</span>
+                                                </a>
+                                            @else
+                                                <span class="fa fa-fw fa-arrow-down" aria-hidden="true"></span>
+                                                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN')</span>
+                                            @endif
+                                        </div>
+                                    @elseif (!$uptimeStatus->up)
+                                        <div class="d-inline-block bg-warning rounded-pill px-1 text-bg-light">
+                                            @if ($uptimeStatus->detailsUrl)
+                                                <a href="{{ $uptimeStatus->detailsUrl }}">
+                                                    <span class="fa fa-fw fa-hammer" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')</span>
+                                                </a>
+                                            @else
+                                                <span class="fa fa-fw fa-hammer" aria-hidden="true"></span>
+                                                <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE')</span>
+                                            @endif
+                                        </div>
+                                    @endif
+
+                                    <a class="fw-medium {{ $uptimeStatus->up ? '' : 'text-danger fw-bold' }}"
+                                       href="@route(sprintf('index.php?view=site&task=read&id=%s', $item->id))">
+                                        {{{ $item->name }}}
+                                    </a>
+                                </div>
+                                <div class="small mt-1">
+                                    @if(in_array($certificateStatus, [-1, 1, 3]))
+                                        <span class="fa fa-fw fa-lock text-danger" aria-hidden="true"
+                                              data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                              data-bs-title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')"
+                                        ></span>
+                                        <span class="visually-hidden">
+                                        @lang('PANOPTICON_MAIN_DASH_ERR_CERT_INVALID')
+                                    </span>
+                                    @elseif($certificateStatus === 2)
+                                        <span class="fa fa-fw fa-lock text-warning" aria-hidden="true"
+                                              data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                              data-bs-title="@lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')"
+                                        ></span>
+                                        <span class="visually-hidden">
+                                        @lang('PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING')
+                                    </span>
+                                    @endif
+                                    <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_URL_SCREENREADER')</span>
+                                    <a href="{{{ $url }}}" class="link-secondary text-decoration-none" target="_blank">
+                                        {{{ $url }}}
+                                        <span class="fa fa-external-link-alt fa-xs text-muted"
+                                              aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                                {{-- Show group labels --}}
+                                @if (!empty($groups = $config->get('config.groups')))
+                                    <div>
+                                        @foreach($groups as $gid)
+                                            @if (isset($this->groupMap[$gid]))
+                                                <span class="badge bg-secondary">
+                                        {{{ $this->groupMap[$gid] }}}
+                                    </span>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td>
-                    @if ($item->cmsType() === CMSType::JOOMLA)
-                        @include('Main/site_joomla', [
+                    </td>
+                    <td>
+                        @if ($item->cmsType() === CMSType::JOOMLA)
+                            @include('Main/site_joomla', [
+                                'item' => $item,
+                                'config' => $config,
+                            ])
+                        @else
+                            @include('Main/site_wordpress', [
+                                'item' => $item,
+                                'config' => $config,
+                            ])
+                        @endif
+                    </td>
+                    <td>
+                        @include('Main/site_extensions', [
                             'item' => $item,
                             'config' => $config,
                         ])
-                    @else
-                        @include('Main/site_wordpress', [
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        @include('Main/site_php', [
+                            'item' => $item,
+                            'config' => $config,
+                            'php' => $config->get('core.php')
+                        ])
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        @include('Main/site_backup', [
                             'item' => $item,
                             'config' => $config,
                         ])
-                    @endif
-                </td>
-                <td>
-                    @include('Main/site_extensions', [
-                        'item' => $item,
-                        'config' => $config,
-                    ])
-                </td>
-                <td class="d-none d-md-table-cell">
-                    @include('Main/site_php', [
-                        'item' => $item,
-                        'config' => $config,
-                        'php' => $config->get('core.php')
-                    ])
-                </td>
-                <td class="d-none d-md-table-cell">
-                    @include('Main/site_backup', [
-                        'item' => $item,
-                        'config' => $config,
-                    ])
-                </td>
-                <td class="d-none d-md-table-cell font-monospace text-body-tertiary small px-2">
-                    {{{ $item->id }}}
-                </td>
-            </tr>
-        @endforeach
-        @if ($this->itemsCount == 0)
-            <tr>
-                <td colspan="20">
-                    <div class="alert alert-info m-2">
-                        <span class="fa fa-info-circle" aria-hidden="true"></span>
-                        @lang('PANOPTICON_MAIN_SITES_LBL_NO_RESULTS')
-                    </div>
-                </td>
-            </tr>
-        @endif
-        </tbody>
-    </table>
-    {{-- Pagination --}}
-    {{ $this->pagination->getListFooter(['class' => 'form-select akeebaGridViewAutoSubmitOnChange']) }}
+                    </td>
+                    <td class="d-none d-md-table-cell font-monospace text-body-tertiary small px-2">
+                        {{{ $item->id }}}
+                    </td>
+                </tr>
+            @endforeach
+            @if ($this->itemsCount == 0)
+                <tr>
+                    <td colspan="20">
+                        <div class="alert alert-info m-2">
+                            <span class="fa fa-info-circle" aria-hidden="true"></span>
+                            @lang('PANOPTICON_MAIN_SITES_LBL_NO_RESULTS')
+                        </div>
+                    </td>
+                </tr>
+            @endif
+            </tbody>
+        </table>
+        {{-- Pagination --}}
+        {{ $this->pagination->getListFooter(['class' => 'form-select akeebaGridViewAutoSubmitOnChange']) }}
     @endunless
 @endsection
 
@@ -312,7 +313,7 @@ $mainModel = $this->getModel('main');
                     {{ $this->container->html->select->genericList(
                         array_merge([
                             '' => $this->getLanguage()->text('PANOPTICON_MAIN_LBL_FILTER_DROPDOWN_SELECT')
-                        ], $mainModel->getKnownJoomlaVersions()),
+                        ], $mainModel->getKnownCMSVersions()),
                         'cmsFamily',
                         [
                             'class' => 'form-select akeebaGridViewAutoSubmitOnChange',

@@ -47,7 +47,8 @@ class Json extends BaseView
 			function (Site $site) {
 				$siteConfig      = $site->getConfig();
 				$cmsType         = $site->cmsType();
-				$extensions      = get_object_vars($siteConfig->get('extensions.list', new \stdClass()));
+				$extensionsList  = $siteConfig->get('extensions.list', new \stdClass());
+				$extensions      = get_object_vars($extensionsList);
 				$currentVersion  = $siteConfig->get('core.current.version');
 				$latestVersion   = $siteConfig->get('core.latest.version');
 				$eol             = false;

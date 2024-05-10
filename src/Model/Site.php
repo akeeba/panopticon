@@ -9,17 +9,6 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationHasPHPMessages;
-use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBlocked;
-use Akeeba\Panopticon\Exception\SiteConnection\APIApplicationIsBroken;
-use Akeeba\Panopticon\Exception\SiteConnection\APIInvalidCredentials;
-use Akeeba\Panopticon\Exception\SiteConnection\cURLError;
-use Akeeba\Panopticon\Exception\SiteConnection\FrontendPasswordProtection;
-use Akeeba\Panopticon\Exception\SiteConnection\InvalidHostName;
-use Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled;
-use Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL;
-use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
-use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
@@ -28,6 +17,7 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
+use Akeeba\Panopticon\Model\Trait\CmsFamilyFilterSeparatorTrait;
 use Akeeba\Panopticon\Model\Trait\SiteTestConnectionJoomlaTrait;
 use Akeeba\Panopticon\Model\Trait\SiteTestConnectionWPTrait;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
@@ -43,7 +33,6 @@ use Awf\Utils\ArrayHelper;
 use Awf\Utils\Template;
 use DateTime;
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\RequestOptions;
@@ -51,7 +40,6 @@ use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
-use stdClass;
 use Throwable;
 
 /**
@@ -79,6 +67,7 @@ class Site extends DataModel
 	use AdminToolsIntegrationTrait;
 	use ApplyUserGroupsToSiteQueryTrait;
 	use JsonSanitizerTrait;
+	use CmsFamilyFilterSeparatorTrait;
 	use SiteTestConnectionJoomlaTrait;
 	use SiteTestConnectionWPTrait;
 
@@ -215,9 +204,11 @@ class Site extends DataModel
 			);
 		}
 
-		// Filter: cmsType
-		$fltCmsType = $this->getState('cmsType', null, 'cmd');
+		// Filters: cmsType and cmsFamily
+		[$fltCmsType, $fltCmsFamily] = $this->separateCmsFamilyFilter($this->getState('cmsFamily', null, 'cmd'));
+		$fltCmsType = $this->getState('cmsType', $fltCmsType, 'cmd');
 
+		// Filter: cmsType
 		if (is_string($fltCmsType))
 		{
 			// Reject invalid filter values
@@ -248,8 +239,6 @@ class Site extends DataModel
 		}
 
 		// Filter: cmsFamily
-		$fltCmsFamily = $this->getState('cmsFamily', null, 'cmd');
-
 		if ($fltCmsFamily)
 		{
 			$query->where(

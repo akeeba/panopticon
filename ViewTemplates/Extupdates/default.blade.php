@@ -18,7 +18,8 @@ $model     = $this->getModel();
 $mainModel = $this->getModel('main');
 $token     = $this->container->session->getCsrfToken()->getValue();
 
-$willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersion, \Akeeba\Panopticon\Model\Site $site): bool {
+$willAutoUpdate = function (string $key, ?string $oldVersion, ?string $newVersion, \Akeeba\Panopticon\Model\Site $site
+): bool {
 	static $updateInfo, $globalUpdateInfo, $defaultPreference;
 
 	if (empty($oldVersion) || empty($newVersion) || empty($key) || version_compare($oldVersion, $newVersion, 'ge'))
@@ -82,7 +83,8 @@ JS;
             {{-- Groups --}}
             @if (!empty($this->groupMap))
                 <div class="input-group choice-large">
-                    <label for="group" class="form-label visually-hidden">@lang('PANOPTICON_MAIN_LBL_FILTER_GROUPS')</label>
+                    <label for="group"
+                           class="form-label visually-hidden">@lang('PANOPTICON_MAIN_LBL_FILTER_GROUPS')</label>
                     {{ $this->container->html->select->genericList(
                         data: array_combine(
                             array_merge([''], array_keys($this->groupMap)),
@@ -129,7 +131,7 @@ JS;
                 {{ $this->container->html->select->genericList(
                     array_merge([
                         '' => $this->getLanguage()->text('PANOPTICON_EXTUPDATES_LBL_CMSVERSION_SELECT')
-                    ], $mainModel->getKnownJoomlaVersions()),
+                    ], $mainModel->getKnownCMSVersions()),
                     'cmsFamily',
                     [
                         'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
@@ -171,7 +173,8 @@ JS;
                 }}
             </div>
             <div>
-                <label class="visually-hidden" for="extension_author">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR')</label>
+                <label class="visually-hidden"
+                       for="extension_author">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR')</label>
                 {{  $this->container->html->select->genericList(
                         $model->getExtensionAuthors(true),
                         'extension_author',
@@ -185,7 +188,8 @@ JS;
                 }}
             </div>
             <div>
-                <label class="visually-hidden" for="extension_author_url">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_URL')</label>
+                <label class="visually-hidden"
+                       for="extension_author_url">@lang('PANOPTICON_EXTUPDATES_LBL_EXT_AUTHOR_URL')</label>
                 {{  $this->container->html->select->genericList(
                         $model->getExtensionAuthorURLs(true),
                         'extension_author_url',
@@ -407,7 +411,8 @@ JS;
                 <td class="small">
                     <div>
                         @if ($item->authorUrl)
-                            <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
+                            <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}"
+                               target="_blank">
                                 {{{ strip_tags($item->author) }}}
                             </a>
                         @else

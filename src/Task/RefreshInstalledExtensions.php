@@ -431,7 +431,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 									$this->mapWordPressThemesList(array_filter($document->themes ?: []))
 								);
 
-								$config->set('extensions.list', $extensions);
+								$config->set('extensions.list', (object) $extensions);
 
 								// Save a flag for the existence of updates
 								$hasUpdates = array_reduce(

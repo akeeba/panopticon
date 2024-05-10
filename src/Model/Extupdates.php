@@ -9,13 +9,16 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
+use Akeeba\Panopticon\Model\Trait\CmsFamilyFilterSeparatorTrait;
 use Awf\Mvc\Model;
 use Awf\Utils\ArrayHelper;
 
 class Extupdates extends Model
 {
 	use ApplyUserGroupsToSiteQueryTrait;
+	use CmsFamilyFilterSeparatorTrait;
 
 	private int $totalExtensions = 0;
 
@@ -59,7 +62,24 @@ class Extupdates extends Model
 		}
 
 		// Filter: CMS family
-		$fltCmsFamily = $this->getState('cmsFamily', null, 'cmd');
+		[$fltCmsType, $fltCmsFamily] = $this->separateCmsFamilyFilter($this->getState('cmsFamily', null, 'cmd'));
+
+		if ($fltCmsType === CMSType::JOOMLA->value)
+		{
+			$query->where(
+				'(' .
+				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote(CMSType::JOOMLA->value) .
+				' OR ' .
+				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' IS NULL' .
+				')'
+			);
+		}
+		elseif ($fltCmsType)
+		{
+			$query->where(
+				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote($fltCmsType)
+			);
+		}
 
 		if ($fltCmsFamily)
 		{

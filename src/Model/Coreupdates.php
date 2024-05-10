@@ -7,7 +7,9 @@
 
 namespace Akeeba\Panopticon\Model;
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
+use Akeeba\Panopticon\Model\Trait\CmsFamilyFilterSeparatorTrait;
 use Awf\Utils\ArrayHelper;
 
 defined('AKEEBA') || die;
@@ -15,6 +17,7 @@ defined('AKEEBA') || die;
 class Coreupdates extends Site
 {
 	use ApplyUserGroupsToSiteQueryTrait;
+	use CmsFamilyFilterSeparatorTrait;
 
 	public function buildQuery($overrideLimits = false)
 	{
@@ -106,8 +109,25 @@ class Coreupdates extends Site
 			$query->where($db->quoteName('id') . ' = ' . $db->quote($fltSiteId));
 		}
 
-		// Filters: current CMS family
-		$fltCmsFamily = $this->getState('cmsFamily', null, 'cmd');
+		// Filters: current CMS type and family
+		[$fltCmsType, $fltCmsFamily] = $this->separateCmsFamilyFilter($this->getState('cmsFamily', null, 'cmd'));
+
+		if ($fltCmsType === CMSType::JOOMLA->value)
+		{
+			$query->where(
+				'(' .
+				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote(CMSType::JOOMLA->value) .
+				' OR ' .
+				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' IS NULL' .
+				')'
+			);
+		}
+		elseif ($fltCmsType)
+		{
+			$query->where(
+				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote($fltCmsType)
+			);
+		}
 
 		if ($fltCmsFamily)
 		{
@@ -118,7 +138,13 @@ class Coreupdates extends Site
 		}
 
 		// Filters: latest CMS family
-		$fltLatestFamily = $this->getState('latestFamily', null, 'cmd');
+		[$fltLatestType, $fltLatestFamily] = $this->separateCmsFamilyFilter($this->getState('latestFamily', null, 'cmd'));
+
+		if ($fltLatestType !== null && $fltCmsType !== null && $fltLatestType != $fltCmsType)
+		{
+			// If you mix CMS versions... nope. One cannot upgrade to the other.
+			$fltLatestFamily = null;
+		}
 
 		if ($fltLatestFamily)
 		{
