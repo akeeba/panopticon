@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
+use Akeeba\Panopticon\Library\Enumerations\WordPressUpdateRunState;
 use Akeeba\Panopticon\Library\SiteInfo\Retriever;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Trait\AdminToolsIntegrationTrait;
@@ -996,6 +997,103 @@ class Site extends DataModel
 
 		// We should never be here.
 		return JoomlaUpdateRunState::INVALID_STATE;
+	}
+
+	/**
+	 * Get the current run state of the WordPress update task
+	 *
+	 * @return  WordPressUpdateRunState  The run state of the WordPress update task
+	 * @since   1.0.6
+	 */
+	public function getWordPressUpdateRunState(): WordPressUpdateRunState
+	{
+		// This is NOT a Joomla! site.
+		if ($this->cmsType() !== CMSType::WORDPRESS)
+		{
+			return WordPressUpdateRunState::NOT_A_WORDPRESS_SITE;
+		}
+
+		$config           = $this->getConfig();
+		$wpUpdateTask = $this->getWordPressUpdateTask();
+
+		// Special statuses for WP core files refresh (these are not currently supported, therefore mapped to errors)
+		if (
+			$config->get('core.lastAutoUpdateVersion') === $config->get('core.current.version')
+			&& !is_null($wpUpdateTask)
+			&& $wpUpdateTask->last_exit_code != Status::OK->value
+		)
+		{
+			if ($wpUpdateTask->enabled && $wpUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
+			{
+				// This would indicate a scheduled Refresh, but we don't support it for WordPress
+				return WordPressUpdateRunState::INVALID_STATE;
+			}
+
+			if ($wpUpdateTask->enabled
+			    && in_array(
+				    $wpUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]
+			    ))
+			{
+				// This would indicate a running Refresh, but it's not supported for WordPress
+				return WordPressUpdateRunState::INVALID_STATE;
+			}
+
+			if ($wpUpdateTask->last_exit_code === Status::EXCEPTION->value || !$wpUpdateTask->enabled)
+			{
+				// This would indicate a refresh error, but it's not supported for WordPress
+				return WordPressUpdateRunState::ERROR;
+			}
+
+			return WordPressUpdateRunState::INVALID_STATE;
+		}
+
+		// We're told there is no update available.
+		if (!$config->get('core.canUpgrade', false))
+		{
+			return WordPressUpdateRunState::CANNOT_UPGRADE;
+		}
+
+		// There is no scheduled update task.
+		if ($wpUpdateTask === null)
+		{
+			return WordPressUpdateRunState::NOT_SCHEDULED;
+		}
+
+		// There is an update task, but it's disabled
+		if (!$wpUpdateTask->enabled && in_array($wpUpdateTask->last_exit_code, [Status::INITIAL_SCHEDULE->value, Status::OK->value]))
+		{
+			return WordPressUpdateRunState::NOT_SCHEDULED;
+		}
+
+		// A new version is available, the update task is enabled, but has returned correctly. Should never happen!
+		if ($wpUpdateTask->enabled && $wpUpdateTask->last_exit_code == Status::OK->value)
+		{
+			return WordPressUpdateRunState::NOT_SCHEDULED;
+		}
+
+		// There is a scheduled update task which will run later.
+		if ($wpUpdateTask->enabled && $wpUpdateTask->last_exit_code == Status::INITIAL_SCHEDULE->value)
+		{
+			return WordPressUpdateRunState::SCHEDULED;
+		}
+
+		// The update task is scheduled, and running.
+		if (($wpUpdateTask->enabled
+		     && in_array(
+			     $wpUpdateTask->last_exit_code, [Status::WILL_RESUME->value, Status::RUNNING->value]
+		     )))
+		{
+			return WordPressUpdateRunState::RUNNING;
+		}
+
+		// An error occurred
+		if ($wpUpdateTask->last_exit_code != Status::OK->value)
+		{
+			return WordPressUpdateRunState::ERROR;
+		}
+
+		// We should never be here.
+		return WordPressUpdateRunState::INVALID_STATE;
 	}
 
 	/**
