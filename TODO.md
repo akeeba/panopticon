@@ -7,7 +7,7 @@
 
 ## UI
 * [x] Main/site_wordpress
-* [ ] Sites/item_wpupdate
+* [x] Sites/item_wpupdate
 * [ ] Sites/item_wpplugins (equivalent to extensions)
 
 ## Controllers

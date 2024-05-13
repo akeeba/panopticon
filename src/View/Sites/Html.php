@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
+use Akeeba\Panopticon\Library\Enumerations\WordPressUpdateRunState;
 use Akeeba\Panopticon\Library\Toolbar\DropdownButton;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
@@ -145,6 +146,14 @@ class Html extends DataViewHtml
 	 * @since 1.0.6
 	 */
 	protected JoomlaUpdateRunState $joomlaUpdateRunState;
+
+	/**
+	 * The state of whether the WordPress update task is running or not.
+	 *
+	 * @var   JoomlaUpdateRunState
+	 * @since 1.2.0
+	 */
+	protected WordPressUpdateRunState $wpUpdateRunState;
 
 	/**
 	 * Holds an array of extensions installed on the site.
@@ -373,6 +382,10 @@ class Html extends DataViewHtml
 		if ($this->item->cmsType() === CMSType::JOOMLA)
 		{
 			$this->joomlaUpdateRunState = $this->item->getJoomlaUpdateRunState();
+		}
+		elseif ($this->item->cmsType() === CMSType::WORDPRESS)
+		{
+			$this->wpUpdateRunState = $this->item->getWordPressUpdateRunState();
 		}
 
 		try
