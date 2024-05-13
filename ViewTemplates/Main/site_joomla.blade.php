@@ -208,12 +208,12 @@ $version = Version::create($jVersion) ?>
                 </div>
             @elseif($jVersionHelper->isEOLMajor($jVersion))
                 <div class="text-danger-emphasis">
+                    @yieldRepeatable('joomlaLogo')
                     <span class="fa fa-fw fa-skull" aria-hidden="true"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_MAJOR')"
                     ></span>
                     <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_MAJOR')</span>
-                    @yieldRepeatable('joomlaLogo')
                     @yieldRepeatable('joomlaVersion', $jVersion)
                 </div>
             @elseif($jVersionHelper->isEOLBranch($jVersion))

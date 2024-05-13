@@ -30,10 +30,10 @@ $wpVersionHelper = new WordPressVersion($this->getContainer());
 // TODO
 ?>
 
-@repeatable('wpVersion', $jVersion)
-{{{ $jVersion }}}
+@repeatable('wpVersion', $wpVersion)
+{{{ $wpVersion }}}
 <?php
-$version = Version::create($jVersion) ?>
+$version = Version::create($wpVersion) ?>
 @if($version->isDev())
     <sup>
         <span class="badge bg-danger">
@@ -143,7 +143,7 @@ $version = Version::create($jVersion) ?>
                 @lang('PANOPTICON_MAIN_SITES_LBL_WORDPRESS_UPDATES_BROKEN')
             </span>
         </div>
-    @elseif ($jRunState === WordPressUpdateRunState::ERROR)
+    @elseif ($wpRunState === WordPressUpdateRunState::ERROR)
         <div>
             <div class="badge text-bg-danger py-2"
                  data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -153,7 +153,7 @@ $version = Version::create($jVersion) ?>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE_WP')</span>
             </div>
         </div>
-    @elseif($jRunState === WordPressUpdateRunState::RUNNING)
+    @elseif($wpRunState === WordPressUpdateRunState::RUNNING)
         <div>
             <div class="badge bg-info-subtle text-primary"
                  data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -163,7 +163,7 @@ $version = Version::create($jVersion) ?>
                 <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_CORE_RUNNING_UPDATE_WP')</span>
             </div>
         </div>
-    @elseif ($jRunState === WordPressUpdateRunState::SCHEDULED)
+    @elseif ($wpRunState === WordPressUpdateRunState::SCHEDULED)
         <div>
             <div class="badge bg-info-subtle text-info"
                  data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -189,7 +189,7 @@ $version = Version::create($jVersion) ?>
             >
                 <div class="text-warning fw-bold d-inline-block">
                     @yieldRepeatable('wpLogo')
-                    @yieldRepeatable('wpVersion', $jVersion)
+                    @yieldRepeatable('wpVersion', $wpVersion)
                 </div>
                 <div class="small text-success-emphasis d-inline-block">
                     <span class="fa fa-arrow-right" aria-hidden="true"></span>
@@ -199,25 +199,25 @@ $version = Version::create($jVersion) ?>
                 </div>
             </div>
         @else
-            @if($jUpdateFailure)
+            @if($wpUpdateFailure)
                 <div class="text-secondary">
                     @yieldRepeatable('wpLogo')
-                    @yieldRepeatable('wpVersion', $jVersion)
+                    @yieldRepeatable('wpVersion', $wpVersion)
                 </div>
-            @elseif($wpVersionHelper->isEOL($jVersion))
+            @elseif($wpVersionHelper->isEOL($wpVersion))
                 <div class="text-danger-emphasis">
+                    @yieldRepeatable('wpLogo')
                     <span class="fa fa-fw fa-skull" aria-hidden="true"
                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                           data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_WP_EOL')"
                     ></span>
                     <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_WP_EOL')</span>
-                    @yieldRepeatable('wpLogo')
-                    @yieldRepeatable('wpVersion', $jVersion)
+                    @yieldRepeatable('wpVersion', $wpVersion)
                 </div>
             @else
                 <div class="text-body">
                     @yieldRepeatable('wpLogo')
-                    @yieldRepeatable('wpVersion', $jVersion)
+                    @yieldRepeatable('wpVersion', $wpVersion)
                 </div>
             @endunless
         @endif
