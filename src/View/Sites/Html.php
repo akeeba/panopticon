@@ -614,7 +614,11 @@ class Html extends DataViewHtml
 			}
 		}
 
-		if ($date instanceof DateTime)
+		if ($date instanceof Date)
+		{
+			$date = $date->toAtom();
+		}
+		elseif ($date instanceof DateTime)
 		{
 			$date = $date->format(DATE_ATOM);
 		}
@@ -742,7 +746,7 @@ class Html extends DataViewHtml
 			$startTime->setTimezone($tz);
 		}
 
-		$timeZoneSuffix = $startTime->format('T', true);
+		$timeZoneSuffix = $startTime->format('T', true, false);
 
 		return [
 			is_null($startTime) ? '&nbsp;' : $startTime->format($this->getLanguage()->text('DATE_FORMAT_LC6'), true),

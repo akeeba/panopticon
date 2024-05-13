@@ -770,7 +770,11 @@ class Reports extends DataModel
 			$created_on = (new DateTime('@' . $created_on))->format(DATE_ATOM);
 		}
 
-		if ($created_on instanceof DateTime)
+		if ($created_on instanceof Date)
+		{
+			$created_on = $created_on->toAtom();
+		}
+		elseif ($created_on instanceof DateTime)
 		{
 			$created_on = $created_on->format(DATE_ATOM);
 		}
