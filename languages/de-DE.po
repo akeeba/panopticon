@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2024-04-24 21:29:55\n"
-"PO-Revision-Date: 2024-04-25 21:37+0200\n"
+"POT-Creation-Date: 2024-05-13 10:53:16\n"
+"PO-Revision-Date: 2024-05-14 01:14+0200\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
 msgid "English – United Kingdom"
@@ -366,6 +366,158 @@ msgstr "Gesperrt von"
 msgctxt "PANOPTICON_LBL_SELECT_USER"
 msgid "– Select a User –"
 msgstr "– Benutzer wählen –"
+
+msgctxt "SUN"
+msgid "Sun"
+msgstr "So"
+
+msgctxt "MON"
+msgid "Mon"
+msgstr "Mo"
+
+msgctxt "TUE"
+msgid "Tue"
+msgstr "Di"
+
+msgctxt "WED"
+msgid "Wed"
+msgstr "Mi"
+
+msgctxt "THU"
+msgid "Thu"
+msgstr "Do"
+
+msgctxt "FRI"
+msgid "Fri"
+msgstr "Fr"
+
+msgctxt "SAT"
+msgid "Sat"
+msgstr "Sa"
+
+msgctxt "SUNDAY"
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgctxt "MONDAY"
+msgid "Monday"
+msgstr "Montag"
+
+msgctxt "TUESDAY"
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgctxt "WEDNESDAY"
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgctxt "THURSDAY"
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgctxt "FRIDAY"
+msgid "Friday"
+msgstr "Freitag"
+
+msgctxt "SATURDAY"
+msgid "Saturday"
+msgstr "Samstag"
+
+msgctxt "JAN_SHORT"
+msgid "Jan"
+msgstr "Jan"
+
+msgctxt "FEB_SHORT"
+msgid "Feb"
+msgstr "Feb"
+
+msgctxt "MAR_SHORT"
+msgid "Mar"
+msgstr "Mär"
+
+msgctxt "APR_SHORT"
+msgid "Apr"
+msgstr "Apr"
+
+msgctxt "MAY_SHORT"
+msgid "May"
+msgstr "Mai"
+
+msgctxt "JUN_SHORT"
+msgid "Jun"
+msgstr "Jun"
+
+msgctxt "JUL_SHORT"
+msgid "Jul"
+msgstr "Jul"
+
+msgctxt "AUG_SHORT"
+msgid "Aug"
+msgstr "Aug"
+
+msgctxt "SEP_SHORT"
+msgid "Sep"
+msgstr "Sep"
+
+msgctxt "OCT_SHORT"
+msgid "Oct"
+msgstr "Okt"
+
+msgctxt "NOV_SHORT"
+msgid "Nov"
+msgstr "Nov"
+
+msgctxt "DEC_SHORT"
+msgid "Dec"
+msgstr "Dez"
+
+msgctxt "JANUARY_GENITIVE"
+msgid "January"
+msgstr "Januar"
+
+msgctxt "FEBRUARY_GENITIVE"
+msgid "February"
+msgstr "Februar"
+
+msgctxt "MARCH_GENITIVE"
+msgid "March"
+msgstr "März"
+
+msgctxt "APRIL_GENITIVE"
+msgid "April"
+msgstr "April"
+
+msgctxt "MAY_GENITIVE"
+msgid "May"
+msgstr "Mai"
+
+msgctxt "JUNE_GENITIVE"
+msgid "June"
+msgstr "Juni"
+
+msgctxt "JULY_GENITIVE"
+msgid "July"
+msgstr "Juli"
+
+msgctxt "AUGUST_GENITIVE"
+msgid "August"
+msgstr "August"
+
+msgctxt "SEPTEMBER_GENITIVE"
+msgid "September"
+msgstr "September"
+
+msgctxt "OCTOBER_GENITIVE"
+msgid "October"
+msgstr "Oktober"
+
+msgctxt "NOVEMBER_GENITIVE"
+msgid "November"
+msgstr "November"
+
+msgctxt "DECEMBER_GENITIVE"
+msgid "December"
+msgstr "Dezember"
 
 msgctxt "PANOPTICON_APP_TITLE"
 msgid "Akeeba Panopticon"
