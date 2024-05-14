@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.2\n"
-"POT-Creation-Date: 2024-04-24 21:29:55\n"
+"Project-Id-Version: 1.1.4\n"
+"POT-Creation-Date: 2024-05-13 10:53:16\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.1.2\n"
+"X-Generator: Panopticon ini_to_po 1.1.4\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -450,6 +450,196 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_LBL_SELECT_USER"
 msgid "– Select a User –"
+msgstr ""
+
+#, phpformat
+msgctxt "SUN"
+msgid "Sun"
+msgstr ""
+
+#, phpformat
+msgctxt "MON"
+msgid "Mon"
+msgstr ""
+
+#, phpformat
+msgctxt "TUE"
+msgid "Tue"
+msgstr ""
+
+#, phpformat
+msgctxt "WED"
+msgid "Wed"
+msgstr ""
+
+#, phpformat
+msgctxt "THU"
+msgid "Thu"
+msgstr ""
+
+#, phpformat
+msgctxt "FRI"
+msgid "Fri"
+msgstr ""
+
+#, phpformat
+msgctxt "SAT"
+msgid "Sat"
+msgstr ""
+
+#, phpformat
+msgctxt "SUNDAY"
+msgid "Sunday"
+msgstr ""
+
+#, phpformat
+msgctxt "MONDAY"
+msgid "Monday"
+msgstr ""
+
+#, phpformat
+msgctxt "TUESDAY"
+msgid "Tuesday"
+msgstr ""
+
+#, phpformat
+msgctxt "WEDNESDAY"
+msgid "Wednesday"
+msgstr ""
+
+#, phpformat
+msgctxt "THURSDAY"
+msgid "Thursday"
+msgstr ""
+
+#, phpformat
+msgctxt "FRIDAY"
+msgid "Friday"
+msgstr ""
+
+#, phpformat
+msgctxt "SATURDAY"
+msgid "Saturday"
+msgstr ""
+
+#, phpformat
+msgctxt "JAN_SHORT"
+msgid "Jan"
+msgstr ""
+
+#, phpformat
+msgctxt "FEB_SHORT"
+msgid "Feb"
+msgstr ""
+
+#, phpformat
+msgctxt "MAR_SHORT"
+msgid "Mar"
+msgstr ""
+
+#, phpformat
+msgctxt "APR_SHORT"
+msgid "Apr"
+msgstr ""
+
+#, phpformat
+msgctxt "MAY_SHORT"
+msgid "May"
+msgstr ""
+
+#, phpformat
+msgctxt "JUN_SHORT"
+msgid "Jun"
+msgstr ""
+
+#, phpformat
+msgctxt "JUL_SHORT"
+msgid "Jul"
+msgstr ""
+
+#, phpformat
+msgctxt "AUG_SHORT"
+msgid "Aug"
+msgstr ""
+
+#, phpformat
+msgctxt "SEP_SHORT"
+msgid "Sep"
+msgstr ""
+
+#, phpformat
+msgctxt "OCT_SHORT"
+msgid "Oct"
+msgstr ""
+
+#, phpformat
+msgctxt "NOV_SHORT"
+msgid "Nov"
+msgstr ""
+
+#, phpformat
+msgctxt "DEC_SHORT"
+msgid "Dec"
+msgstr ""
+
+#, phpformat
+msgctxt "JANUARY_GENITIVE"
+msgid "January"
+msgstr ""
+
+#, phpformat
+msgctxt "FEBRUARY_GENITIVE"
+msgid "February"
+msgstr ""
+
+#, phpformat
+msgctxt "MARCH_GENITIVE"
+msgid "March"
+msgstr ""
+
+#, phpformat
+msgctxt "APRIL_GENITIVE"
+msgid "April"
+msgstr ""
+
+#, phpformat
+msgctxt "MAY_GENITIVE"
+msgid "May"
+msgstr ""
+
+#, phpformat
+msgctxt "JUNE_GENITIVE"
+msgid "June"
+msgstr ""
+
+#, phpformat
+msgctxt "JULY_GENITIVE"
+msgid "July"
+msgstr ""
+
+#, phpformat
+msgctxt "AUGUST_GENITIVE"
+msgid "August"
+msgstr ""
+
+#, phpformat
+msgctxt "SEPTEMBER_GENITIVE"
+msgid "September"
+msgstr ""
+
+#, phpformat
+msgctxt "OCTOBER_GENITIVE"
+msgid "October"
+msgstr ""
+
+#, phpformat
+msgctxt "NOVEMBER_GENITIVE"
+msgid "November"
+msgstr ""
+
+#, phpformat
+msgctxt "DECEMBER_GENITIVE"
+msgid "December"
 msgstr ""
 
 #, phpformat
