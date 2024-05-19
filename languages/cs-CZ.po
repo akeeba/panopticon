@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.3.7\n"
+"Project-Id-Version: 0.3.8\n"
 "POT-Creation-Date: 2024-04-23 23:23:23\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Richard Dvořák <rd@r3d.de>\n"
@@ -4609,7 +4609,7 @@ msgstr "SMTP autentizace"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPUSER"
 msgid "SMTP Username"
-msgstr "SMTP uživatelské jméno"
+msgstr "SMTP jméno uživatele"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPPASS"
 msgid "SMTP Password"
@@ -7029,7 +7029,7 @@ msgstr "Harmonogram přehledu akcí webu je <a href='%s' target='_blank'>CRON v�
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_OPTIONS"
 msgid "Report Options"
-msgstr "Možnosti zprávy"
+msgstr "Možnosti Reportu"
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD"
 msgid "Period"
@@ -7037,7 +7037,7 @@ msgstr "Období"
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_HELP"
 msgid "Choose which time period the report will be generated for."
-msgstr "Zvolte, za jaké časové období se bude zpráva generovat."
+msgstr "Zvolte, za jaké časové období se bude report generovat."
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_DAILY"
 msgid "Daily"
