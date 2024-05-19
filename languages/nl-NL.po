@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2024-04-24 21:29:55\n"
-"PO-Revision-Date: 2024-04-25 00:37+0300\n"
+"POT-Creation-Date: 2024-05-13 10:53:16\n"
+"PO-Revision-Date: 2024-05-19 08:24+0200\n"
 "Last-Translator: Johan Peters <johanpeters@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
 msgid "English – United Kingdom"
@@ -381,6 +381,158 @@ msgctxt "PANOPTICON_LBL_SELECT_USER"
 msgid "– Select a User –"
 msgstr "Selecteer een gebruiker"
 
+msgctxt "SUN"
+msgid "Sun"
+msgstr "Zon"
+
+msgctxt "MON"
+msgid "Mon"
+msgstr "Mrt"
+
+msgctxt "TUE"
+msgid "Tue"
+msgstr "Din"
+
+msgctxt "WED"
+msgid "Wed"
+msgstr "Woe"
+
+msgctxt "THU"
+msgid "Thu"
+msgstr "Do"
+
+msgctxt "FRI"
+msgid "Fri"
+msgstr "Vrij"
+
+msgctxt "SAT"
+msgid "Sat"
+msgstr "Zat"
+
+msgctxt "SUNDAY"
+msgid "Sunday"
+msgstr "Zondag"
+
+msgctxt "MONDAY"
+msgid "Monday"
+msgstr "Maandag"
+
+msgctxt "TUESDAY"
+msgid "Tuesday"
+msgstr "Dinsdag"
+
+msgctxt "WEDNESDAY"
+msgid "Wednesday"
+msgstr "Woensdag"
+
+msgctxt "THURSDAY"
+msgid "Thursday"
+msgstr "Donderdag"
+
+msgctxt "FRIDAY"
+msgid "Friday"
+msgstr "Vrijdag"
+
+msgctxt "SATURDAY"
+msgid "Saturday"
+msgstr "Zaterdag"
+
+msgctxt "JAN_SHORT"
+msgid "Jan"
+msgstr "Jan"
+
+msgctxt "FEB_SHORT"
+msgid "Feb"
+msgstr "Feb"
+
+msgctxt "MAR_SHORT"
+msgid "Mar"
+msgstr "Ma"
+
+msgctxt "APR_SHORT"
+msgid "Apr"
+msgstr "Apr"
+
+msgctxt "MAY_SHORT"
+msgid "May"
+msgstr "Mei"
+
+msgctxt "JUN_SHORT"
+msgid "Jun"
+msgstr "Jun"
+
+msgctxt "JUL_SHORT"
+msgid "Jul"
+msgstr "Jul"
+
+msgctxt "AUG_SHORT"
+msgid "Aug"
+msgstr "Aug"
+
+msgctxt "SEP_SHORT"
+msgid "Sep"
+msgstr "Sept"
+
+msgctxt "OCT_SHORT"
+msgid "Oct"
+msgstr "Okt"
+
+msgctxt "NOV_SHORT"
+msgid "Nov"
+msgstr "Nov"
+
+msgctxt "DEC_SHORT"
+msgid "Dec"
+msgstr "Dec"
+
+msgctxt "JANUARY_GENITIVE"
+msgid "January"
+msgstr "Januari"
+
+msgctxt "FEBRUARY_GENITIVE"
+msgid "February"
+msgstr "Februari"
+
+msgctxt "MARCH_GENITIVE"
+msgid "March"
+msgstr "Maart"
+
+msgctxt "APRIL_GENITIVE"
+msgid "April"
+msgstr "April"
+
+msgctxt "MAY_GENITIVE"
+msgid "May"
+msgstr "Mei"
+
+msgctxt "JUNE_GENITIVE"
+msgid "June"
+msgstr "Juni"
+
+msgctxt "JULY_GENITIVE"
+msgid "July"
+msgstr "Juli"
+
+msgctxt "AUGUST_GENITIVE"
+msgid "August"
+msgstr "Augustus"
+
+msgctxt "SEPTEMBER_GENITIVE"
+msgid "September"
+msgstr "September"
+
+msgctxt "OCTOBER_GENITIVE"
+msgid "October"
+msgstr "Oktober"
+
+msgctxt "NOVEMBER_GENITIVE"
+msgid "November"
+msgstr "November"
+
+msgctxt "DECEMBER_GENITIVE"
+msgid "December"
+msgstr "December"
+
 msgctxt "PANOPTICON_APP_TITLE"
 msgid "Akeeba Panopticon"
 msgstr "Akeeba Panopticon"
@@ -529,7 +681,7 @@ msgstr "Taak ID niet gevonden"
 
 msgctxt "PANOPTICON_APP_LBL_STATUS_NO_ROUTINE"
 msgid "No such task type"
-msgstr "tT"
+msgstr "Taak type onbekend"
 
 msgctxt "PANOPTICON_APP_ERR_ALREADY_LOGGED_IN"
 msgid "You are already logged in"
@@ -657,7 +809,7 @@ msgstr "Verzend e-mails over het verlopen van SSL/TLS-certificaten"
 
 msgctxt "PANOPTICON_TASKTYPE_UPTIMEMONITOR"
 msgid "Monitors sites' uptime"
-msgstr ""
+msgstr "Monitors sites’ uptime"
 
 msgctxt "PANOPTICON_TASKTYPE_ACTIONSUMMARYEMAIL"
 msgid "Sends a Site Action Summary email"
@@ -736,6 +888,10 @@ msgid ""
 "Directory Username and Password in the Connection tab. Then, retry scheduling "
 "an update for this site."
 msgstr ""
+"HTTP-status 401 tijdens het uitpakken van de update. De beheerdersmap van uw "
+"site is beveiligd met een wachtwoord. Bewerk de site en voer de "
+"gebruikersnaam en het wachtwoord van de beheerdersdirectory in op het tabblad "
+"Verbinding. Probeer vervolgens opnieuw een update voor deze site te plannen."
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_JSON"
 msgid ""
@@ -2705,7 +2861,7 @@ msgstr "Extentie update"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY"
 msgid "Joomla!&reg;"
-msgstr "Joomla!&reg; CLI"
+msgstr "Joomla!&reg; CLI;"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY"
 msgid "PHP"
@@ -2891,7 +3047,7 @@ msgstr "Ongeldig SSL/TLS (HTTPS) certificaat"
 
 msgctxt "PANOPTICON_MAIN_DASH_ERR_CERT_EXPIRING"
 msgid "The SSL/TLS (HTTPS) certificate is expiring soon"
-msgstr "Het SSL/TLS-certificaat (HTTPS) verloopt binnenkort."
+msgstr "Het SSL/TLS-certificaat (HTTPS) verloopt binnenkort"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD"
 msgid "Latest Backup status, powered by Akeeba Backup Professional"
@@ -2943,11 +3099,11 @@ msgstr "De laatste back-up is lang geleden gemaakt"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
 msgid "The site is up and running."
-msgstr "De website is online"
+msgstr "De website is online."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN"
 msgid "The site is down."
-msgstr ""
+msgstr "Site is niet beschikbaar."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_MAINTENANCE"
 msgid "The site is down for maintenance."
@@ -3418,7 +3574,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_TITLE"
 msgid "Very Basic Site Uptime Monitoring"
-msgstr ""
+msgstr "Zeer eenvoudige monitoring van de uptime van de site"
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_NOTE"
 msgid ""
@@ -3429,24 +3585,33 @@ msgid ""
 "service or software to monitor your sites' uptime instead of using this "
 "feature."
 msgstr ""
+"Dit is <em>zeer eenvoudige</em> uptimemonitoring via Panopticon zelf. Het "
+"informeert u alleen per e-mail wanneer uw site down gaat en weer terug komt. "
+"Het integreert niet met diensten van derden, biedt geen geschiedenis en heeft "
+"geen openbare uptimepagina. We raden u ten zeerste aan om een externe service "
+"of software te gebruiken om de uptime van uw site te monitoren in plaats van "
+"deze functie te gebruiken."
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_ENABLED"
 msgid "Monitor Uptime"
-msgstr ""
+msgstr "Uptime bewaken"
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_ENABLED_HELP"
 msgid ""
 "Disabling this option will no longer send you emails, log site actions, or "
 "display badges when your site goes down and comes back up."
 msgstr ""
+"Als je deze optie uitschakelt, ontvang je geen e-mails meer, worden "
+"siteacties niet meer gelogd en worden er geen badges meer weergegeven als je "
+"site down gaat en weer terugkomt."
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_PATH"
 msgid "URL Path To Monitor"
-msgstr ""
+msgstr "URL-pad naar bewaking"
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_STRING"
 msgid "Look For This String"
-msgstr ""
+msgstr "Kijk naar deze string"
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_STRING_HELP"
 msgid ""
@@ -3455,6 +3620,11 @@ msgid ""
 "this string. Leave blank to consider any HTTP 2xx response as adequate proof "
 "the site is up."
 msgstr ""
+"De site wordt in aanmerking genomen als de pagina deze tekenreeks bevat. "
+"Gebruik <em>NIET</em> HTML; alle tags en meerdere witruimten worden "
+"verwijderd voordat deze tekenreeks wordt geëvalueerd. Laat dit veld leeg als "
+"u een HTTP 2xx-reactie als voldoende bewijs wilt beschouwen dat de site "
+"actief is."
 
 msgctxt "PANOPTICON_SITES_TITLE_READ"
 msgid "Site Information"
@@ -4298,7 +4468,7 @@ msgstr "Backup"
 
 msgctxt "PANOPTICON_SITE_LBL_BACKUP_SUBHEAD"
 msgid "using Akeeba Backup Professional"
-msgstr "Gebruik Akeeba Backup Professional"
+msgstr "gebruik Akeeba Backup Professional"
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTFOUND_HEAD"
 msgid "Akeeba Backup not found."
@@ -4618,11 +4788,11 @@ msgstr "Aangepast"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_NO_RESULTS"
 msgid "There are no scans to review."
-msgstr "Er zijn geen scans te reviewen"
+msgstr "Er zijn geen scans te reviewen."
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS"
 msgid "Possible Threats"
-msgstr ""
+msgstr "Mogelijke bedreigingen"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_BACKEND"
 msgid "Backend"
@@ -4828,7 +4998,7 @@ msgstr "Backup"
 
 msgctxt "PANOPTICON_SITE_LBL_AKEEBABACKUP_NO_RESULTS"
 msgid "There are no backups to review."
-msgstr "Er zijn geen backups te reviewen"
+msgstr "Er zijn geen backups te reviewen."
 
 msgctxt "PANOPTICON_SITES_LBL_BOU_HEAD"
 msgid "Backup on Update"
@@ -5873,7 +6043,7 @@ msgstr "Site Informatie Verzamelen"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_UPTIME"
 msgid "Uptime Monitoring"
-msgstr ""
+msgstr "Uptime-bewaking"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SYSTEM"
 msgid "System Preferences"
@@ -5935,7 +6105,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION_HELP_LEARN_MORE"
 msgid "Details of the information collected."
-msgstr "Details van de informatie is verzameld"
+msgstr "Details van de informatie is verzameld."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ERROR_REPORTING"
 msgid "Error Reporting"
@@ -5976,7 +6146,7 @@ msgid ""
 "Dashboard views will reload every this many seconds, unless manually paused."
 msgstr ""
 "Het dashboard zal herladen worden na verstrijken van deze seconden, tenzij "
-"handmatig gepauzeerd"
+"handmatig gepauzeerd."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS"
 msgid "Maximum Displayed Items"
@@ -6338,16 +6508,13 @@ msgstr ""
 "domeinnamen die niet door de proxy mogen, bijv. <code>www.example.com, .mit."
 "edu, .dev</code>."
 
-#, fuzzy
-#| msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_YOU_MAY_CONTINUE"
-#| msgid "You may continue installing Panopticon."
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FINISHED_SETUP"
 msgid "Is installing Panopticon finished?"
-msgstr "Je kunt Panopticon blijven installeren."
+msgstr "Is de installatie van Panopticon voltooid?"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER"
 msgid "Behind load balancer / reverse proxy"
-msgstr ""
+msgstr "Achter load balancer / reverse proxy"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
 msgid "Table of known extensions and their automatic update preferences"
@@ -6576,7 +6743,7 @@ msgstr "bestanden"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_PAGES"
 msgid "pages"
-msgstr "Pagina’s"
+msgstr "pagina’s"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_ITEMS"
 msgid "items"
@@ -6588,7 +6755,7 @@ msgstr "De systeemconfiguratie is opgeslagen"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME"
 msgid "Uptime Monitoring Provider"
-msgstr ""
+msgstr "Leverancier van uptime-monitoring"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME_HELP"
 msgid ""
@@ -6596,6 +6763,9 @@ msgid ""
 "that the integrated “Panopticon” provider is very basic and has some gotchas. "
 "Please read the documentation."
 msgstr ""
+"Kies welke service wordt gebruikt om de uptime van uw sites te rapporteren. "
+"Houd er rekening mee dat de geïntegreerde “Panopticon”-provider erg eenvoudig "
+"is en enkele valkuilen kent. Lees de documentatie."
 
 msgctxt "PANOPTICON_SYSCONFIG_OPT_UPTIME_NONE"
 msgid "None"
@@ -6874,7 +7044,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_DOWN"
 msgid "Site went down"
-msgstr ""
+msgstr "Site is offline gegaan"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_UP"
 msgid "Site is back up"
@@ -6882,7 +7052,7 @@ msgstr "Site is weer online"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_ACTION_SUMMARY"
 msgid "Site Action Summary"
-msgstr ""
+msgstr "Samenvatting site acties"
 
 msgctxt "PANOPTICON_SELFUPDATE_TITLE"
 msgid "Update Panopticon"
@@ -7139,12 +7309,9 @@ msgctxt "PANOPTICON_USERS_LBL_AVATAR_EDIT"
 msgid "Edit avatar"
 msgstr "Profielfoto bewerken"
 
-#, fuzzy
-#| msgctxt "PANOPTICON_SITES_TITLE_READ"
-#| msgid "Site Information"
 msgctxt "PANOPTICON_USERS_LBL_FIELD_BASICINFO"
 msgid "Basic information"
-msgstr "Informatie Website"
+msgstr "Basis informatie"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_USERNAME"
 msgid "Username"
@@ -7176,13 +7343,12 @@ msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
 msgid "Password (repeat)"
 msgstr "Wachtwoord (herhalen)"
 
-#, fuzzy
-#| msgctxt "PANOPTICON_USERS_ERR_NEEDS_PASSWORD"
-#| msgid "You must enter a password for the user account."
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD_HELP"
 msgid ""
 "Leave empty if you do not wish to change the password of this user account."
-msgstr "U moet een wachtwoord invoeren voor de gebruikersaccount."
+msgstr ""
+"Laat dit leeg als u het wachtwoord van dit gebruikersaccount niet wilt "
+"wijzigen."
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PERMISSIONS"
 msgid "Permissions"
@@ -9131,7 +9297,7 @@ msgstr "PHP File Change Scanner faalde"
 
 msgctxt "PANOPTICON_REPORTS_LBL_MISC"
 msgid "Miscellaneous Action"
-msgstr ""
+msgstr "Diverse Actie"
 
 msgctxt "PANOPTICON_REPORTS_LBL_DURATION_SR"
 msgid "Duration"
@@ -9187,16 +9353,13 @@ msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_SAVED"
 msgid "The Scheduled Update Summary task has been saved"
 msgstr "De taak Samenvatting van geplande updates is opgeslagen"
 
-#, fuzzy
-#| msgctxt "PANOPTICON_SETUP_LBL_REQUIRED"
-#| msgid "Requirements"
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_RECIPIENTS"
 msgid "Recipients"
-msgstr "Vereisten"
+msgstr "Ontvangers"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS"
 msgid "Email These Groups"
-msgstr ""
+msgstr "Email deze groepen"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
 msgid ""
@@ -9205,6 +9368,11 @@ msgid ""
 "are assigned to the selected group, <em>even if they can't even view the site "
 "in the Sites Overview page</em>."
 msgstr ""
+"Als er geen groepen zijn geselecteerd: er worden e-mails verzonden naar alle "
+"gebruikers die wijzigingen kunnen aanbrengen op de site. Wanneer er groepen "
+"zijn geselecteerd: er worden e-mails verzonden naar alle gebruikers die aan "
+"de geselecteerde groep zijn toegewezen, <em>zelfs als ze de site niet eens "
+"kunnen bekijken op de pagina Sitesoverzicht</em>."
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE"
 msgid "Scheduled Action Summary"
@@ -9236,19 +9404,19 @@ msgstr "Rapport opties"
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD"
 msgid "Period"
-msgstr ""
+msgstr "Periode"
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_HELP"
 msgid "Choose which time period the report will be generated for."
-msgstr ""
+msgstr "Kies voor welke periode het rapport wordt gegenereerd."
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_DAILY"
 msgid "Daily"
-msgstr ""
+msgstr "Dagelijks"
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_WEEKLY"
 msgid "Weekly"
-msgstr ""
+msgstr "Wekelijks"
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_MONTHLY"
 msgid "Monthly"
