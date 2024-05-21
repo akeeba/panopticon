@@ -33,6 +33,7 @@
       <data directive="@plural" injection="true" prefix="&lt;?= \Awf\Text\Text::plural(" suffix="); ?&gt;" />
       <data directive="@push" injection="true" prefix="&lt;?php $__env-&gt;startPush(" suffix="); ?&gt;" />
       <data directive="@repeatable" injection="true" prefix="&lt;?php __dummyRepeatable(" suffix="); ?&gt;" />
+      <data directive="@repeatableOverride" injection="true" prefix="&lt;?php __dummyRepeatable(&quot;" suffix="&quot;); ?&gt;" />
       <data directive="@route" injection="true" prefix="&lt;?= $this-&gt;container-&gt;router-&gt;route(" suffix="); ?&gt;" />
       <data directive="@section" injection="true" prefix="&lt;?php $this-&gt;startSection(" suffix="); ?&gt;" />
       <data directive="@show" />

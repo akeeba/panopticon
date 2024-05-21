@@ -10,6 +10,7 @@ defined('AKEEBA') || die;
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Awf\Registry\Registry;
 
 $token                = $this->container->session->getCsrfToken()->getValue();
@@ -320,9 +321,7 @@ $hasError            = !empty($lastError);
     @endif
 @endrepeatable
 
-
-
-<div class="card">
+@section('extUpdateCardHeader')
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
         <span class="fa fa-cubes" aria-hidden="true"></span>
         <span class="flex-grow-1">
@@ -336,15 +335,23 @@ $hasError            = !empty($lastError);
         @yield('extUpdateReloadButton')
         @yield('extUpdateShowToggleButton')
     </h3>
+@endsection
+
+@section('extUpdateLastChecked')
+    <p class="small text-body-tertiary">
+        <strong>
+            @lang('PANOPTICON_SITE_LBL_EXTENSIONS_LAST_CHECKED')
+        </strong>
+        {{ $lastUpdateTimestamp }}
+    </p>
+@endsection
+
+@section('extUpdateCard')
+<div class="card">
+    @yield('extUpdateCardHeader')
+
     <div class="card-body collapse {{ $shouldCollapse ? '' : ' show' }}" id="cardExtensionsBody">
-
-        <p class="small text-body-tertiary">
-            <strong>
-                @lang('PANOPTICON_SITE_LBL_EXTENSIONS_LAST_CHECKED')
-            </strong>
-            {{ $lastUpdateTimestamp }}
-        </p>
-
+        @yield('extUpdateLastChecked')
         @yield('extUpdateFilters')
         @yield('extUpdateScheduleInfo')
 
@@ -436,52 +443,54 @@ $hasError            = !empty($lastError);
                             @endif
                         </div>
                         <div class="small text-muted font-monospace extensions-filterable-key">{{{ ltrim($key, 'a') }}}</div>
-                        @if ($error)
-                            <div>
-                                @if ($naughtyUpdates)
-                                <a href="https://github.com/akeeba/panopticon/wiki/Extension-With-Problematic-Updates" target="_blank">
-                                    <span class="badge bg-danger">
-                                        <span class="fa fa-bug" aria-hidden="true"
-                                              data-bs-toggle="tooltip" data-bs-placement="right"
-                                              data-bs-title="@lang('PANOPTICON_SITES_LBL_NAUGHTY_UPDATES')"
-                                        ></span>
-                                        <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_NAUGHTY_UPDATES')</span>
-                                    </span>
-                                </a>
-                                @endif
-
-                                @if ($noUpdateSite)
-                                    <a href="https://github.com/akeeba/panopticon/wiki/Extensions-Without-Update-Sites" target="_blank">
-                                        <span class="badge text-bg-warning">
-                                            <span class="fa fa-globe" aria-hidden="true"></span>
-                                            @lang('PANOPTICON_SITE_LBL_EXTENSIONS_UPDATESITE_MISSING')
+                        @if ($this->item->cmsType() === CMSType::WORDPRESS)
+                            @if ($error)
+                                <div>
+                                    @if ($naughtyUpdates)
+                                    <a href="https://github.com/akeeba/panopticon/wiki/Extension-With-Problematic-Updates" target="_blank">
+                                        <span class="badge bg-danger">
+                                            <span class="fa fa-bug" aria-hidden="true"
+                                                  data-bs-toggle="tooltip" data-bs-placement="right"
+                                                  data-bs-title="@lang('PANOPTICON_SITES_LBL_NAUGHTY_UPDATES')"
+                                            ></span>
+                                            <span class="visually-hidden">@lang('PANOPTICON_SITES_LBL_NAUGHTY_UPDATES')</span>
                                         </span>
                                     </a>
-                                @elseif ($missingDownloadID)
-                                    <span class="badge bg-danger">
-                                        <span class="fa fa-key" aria-hidden="true"></span>
-                                        @lang('PANOPTICON_SITE_LBL_EXTENSIONS_DOWNLOADKEY_MISSING')
-                                    </span>
-
-                                    @if ($this->canEdit)
-                                        <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $this->item->id, $extensionId, $token))"
-                                           class="ms-2 btn btn-outline-primary btn-sm" role="button">
-                                            <span class="fa fa-pencil-square" aria-hidden="true"></span>
-                                            <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
-                                        </a>
                                     @endif
+
+                                    @if ($noUpdateSite)
+                                        <a href="https://github.com/akeeba/panopticon/wiki/Extensions-Without-Update-Sites" target="_blank">
+                                            <span class="badge text-bg-warning">
+                                                <span class="fa fa-globe" aria-hidden="true"></span>
+                                                @lang('PANOPTICON_SITE_LBL_EXTENSIONS_UPDATESITE_MISSING')
+                                            </span>
+                                        </a>
+                                    @elseif ($missingDownloadID)
+                                        <span class="badge bg-danger">
+                                            <span class="fa fa-key" aria-hidden="true"></span>
+                                            @lang('PANOPTICON_SITE_LBL_EXTENSIONS_DOWNLOADKEY_MISSING')
+                                        </span>
+
+                                        @if ($this->canEdit)
+                                            <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $this->item->id, $extensionId, $token))"
+                                               class="ms-2 btn btn-outline-primary btn-sm" role="button">
+                                                <span class="fa fa-pencil-square" aria-hidden="true"></span>
+                                                <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
+                                            </a>
+                                        @endif
+                                    @endif
+                                </div>
+                            @elseif (($item->downloadkey?->supported ?? false) && !empty($item->downloadkey?->value ?? '') && $this->container->userManager->getUser()->getPrivilege('panopticon.admin'))
+                                <span class="fa fa-key text-muted" aria-hidden="true"></span>
+                                <span class="visually-hidden">Download Key: </span>
+                                <code class="download-key" tabindex="0">{{{ $item->downloadkey?->value ?? '' }}}</code>
+                                @if ($this->canEdit)
+                                    <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $this->item->id, $extensionId, $token))"
+                                       class="ms-2 btn btn-outline-primary btn-sm" role="button">
+                                        <span class="fa fa-pencil-square" aria-hidden="true"></span>
+                                        <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
+                                    </a>
                                 @endif
-                            </div>
-                        @elseif (($item->downloadkey?->supported ?? false) && !empty($item->downloadkey?->value ?? '') && $this->container->userManager->getUser()->getPrivilege('panopticon.admin'))
-                            <span class="fa fa-key text-muted" aria-hidden="true"></span>
-                            <span class="visually-hidden">Download Key: </span>
-                            <code class="download-key" tabindex="0">{{{ $item->downloadkey?->value ?? '' }}}</code>
-                            @if ($this->canEdit)
-                                <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $this->item->id, $extensionId, $token))"
-                                   class="ms-2 btn btn-outline-primary btn-sm" role="button">
-                                    <span class="fa fa-pencil-square" aria-hidden="true"></span>
-                                    <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
-                                </a>
                             @endif
                         @endif
                     </td>
@@ -546,3 +555,4 @@ $hasError            = !empty($lastError);
 
     </div>
 </div>
+@show

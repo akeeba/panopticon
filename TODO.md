@@ -1,10 +1,5 @@
 # WordPress integration
 
-## Models
-* Site Model
-  * [ ] getWordPressUpdateRunState: similar to getJoomlaUpdateRunState but for WordPress -- Needs UI changes
-  * [ ] canRefreshCoreWordPressFiles: similar to canRefreshCoreJoomlaFiles but for WordPress -- Needs UI changes
-
 ## UI
 * [x] Main/site_wordpress
 * [x] Sites/item_wpupdate

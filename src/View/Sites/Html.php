@@ -388,6 +388,14 @@ class Html extends DataViewHtml
 			$this->wpUpdateRunState = $this->item->getWordPressUpdateRunState();
 		}
 
+		// Modify extensionFilters for WordPress sites
+		if ($this->item->cmsType() === CMSType::WORDPRESS)
+		{
+			unset($this->extensionFilters['filter-dlid']);
+			unset($this->extensionFilters['filter-naughty']);
+			unset($this->extensionFilters['filter-updatesite']);
+		}
+
 		try
 		{
 			$useCache             = !$this->item->getState('akeebaBackupForce', false, 'bool');

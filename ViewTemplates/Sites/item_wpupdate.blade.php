@@ -10,8 +10,6 @@ defined('AKEEBA') || die;
 /** @var \Akeeba\Panopticon\View\Sites\Html $this */
 
 use Akeeba\Panopticon\Library\Enumerations\WordPressUpdateRunState;
-use Akeeba\Panopticon\Library\SoftwareVersions\JoomlaVersion;
-use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Registry\Registry;
