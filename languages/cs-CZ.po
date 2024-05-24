@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.3.8\n"
+"Project-Id-Version: 1.0.1\n"
 "POT-Creation-Date: 2024-04-23 23:23:23\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Richard Dvořák <rd@r3d.de>\n"
@@ -366,6 +366,158 @@ msgstr "Zamčeno od"
 msgctxt "PANOPTICON_LBL_SELECT_USER"
 msgid "– Select a User –"
 msgstr "– Vyberte uživatele –"
+
+msgctxt "SUN"
+msgid "Sun"
+msgstr "Ne"
+
+msgctxt "MON"
+msgid "Mon"
+msgstr "Po"
+
+msgctxt "TUE"
+msgid "Tue"
+msgstr "Út"
+
+msgctxt "WED"
+msgid "Wed"
+msgstr "St"
+
+msgctxt "THU"
+msgid "Thu"
+msgstr "Čt"
+
+msgctxt "FRI"
+msgid "Fri"
+msgstr "Pá"
+
+msgctxt "SAT"
+msgid "Sat"
+msgstr "So"
+
+msgctxt "SUNDAY"
+msgid "Sunday"
+msgstr "Neděle"
+
+msgctxt "MONDAY"
+msgid "Monday"
+msgstr "Pondělí"
+
+msgctxt "TUESDAY"
+msgid "Tuesday"
+msgstr "Úterý"
+
+msgctxt "WEDNESDAY"
+msgid "Wednesday"
+msgstr "Středa"
+
+msgctxt "THURSDAY"
+msgid "Thursday"
+msgstr "Čtvrtek"
+
+msgctxt "FRIDAY"
+msgid "Friday"
+msgstr "Pátek"
+
+msgctxt "SATURDAY"
+msgid "Saturday"
+msgstr "Sobota"
+
+msgctxt "JAN_SHORT"
+msgid "Jan"
+msgstr "Led"
+
+msgctxt "FEB_SHORT"
+msgid "Feb"
+msgstr "Úno"
+
+msgctxt "MAR_SHORT"
+msgid "Mar"
+msgstr "Bře"
+
+msgctxt "APR_SHORT"
+msgid "Apr"
+msgstr "Dub"
+
+msgctxt "MAY_SHORT"
+msgid "May"
+msgstr "Kvě"
+
+msgctxt "JUN_SHORT"
+msgid "Jun"
+msgstr "Čer"
+
+msgctxt "JUL_SHORT"
+msgid "Jul"
+msgstr "Čvc"
+
+msgctxt "AUG_SHORT"
+msgid "Aug"
+msgstr "Srp"
+
+msgctxt "SEP_SHORT"
+msgid "Sep"
+msgstr "Zář"
+
+msgctxt "OCT_SHORT"
+msgid "Oct"
+msgstr "Říj"
+
+msgctxt "NOV_SHORT"
+msgid "Nov"
+msgstr "Lis"
+
+msgctxt "DEC_SHORT"
+msgid "Dec"
+msgstr "Pro"
+
+msgctxt "JANUARY_GENITIVE"
+msgid "January"
+msgstr "Leden"
+
+msgctxt "FEBRUARY_GENITIVE"
+msgid "February"
+msgstr "Únor"
+
+msgctxt "MARCH_GENITIVE"
+msgid "March"
+msgstr "Březen"
+
+msgctxt "APRIL_GENITIVE"
+msgid "April"
+msgstr "Duben"
+
+msgctxt "MAY_GENITIVE"
+msgid "May"
+msgstr "Květen"
+
+msgctxt "JUNE_GENITIVE"
+msgid "June"
+msgstr "Červen"
+
+msgctxt "JULY_GENITIVE"
+msgid "July"
+msgstr "Červenec"
+
+msgctxt "AUGUST_GENITIVE"
+msgid "August"
+msgstr "Srpen"
+
+msgctxt "SEPTEMBER_GENITIVE"
+msgid "September"
+msgstr "Září"
+
+msgctxt "OCTOBER_GENITIVE"
+msgid "October"
+msgstr "Říjen"
+
+msgctxt "NOVEMBER_GENITIVE"
+msgid "November"
+msgstr "Listopad"
+
+msgctxt "DECEMBER_GENITIVE"
+msgid "December"
+msgstr "Prosinec"
 
 msgctxt "PANOPTICON_APP_TITLE"
 msgid "Akeeba Panopticon"
