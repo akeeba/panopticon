@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.1.4
 ================================================================================
++ Much improved Docker support
 + Translatable dates
 + Load TinyMCE translations
 # [LOW] Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]

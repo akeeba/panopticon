@@ -1,0 +1,3 @@
+DO NOT REMOVE THIS FILE!
+
+Its absence tells Panopticon it's running under Docker, disabling some features like self-update.

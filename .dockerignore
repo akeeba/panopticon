@@ -20,11 +20,13 @@ config.php
 
 ### Build & Release files
 /.github
+/.idea
 /assets
 !/assets/php.ini
 !/assets/docker-entrypoint.sh
 /build
 /release
+/src/.not_docker
 /.dockerignore
 /.editorconfig
 /.env*
@@ -36,6 +38,7 @@ config.php
 /build.xml
 /docker-*.yml
 /docker-run.sh
+/docker-testing
 /Dockerfile
 /*.Dockerfile
 /RELEASENOTES.md

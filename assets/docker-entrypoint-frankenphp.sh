@@ -23,7 +23,10 @@ then
 	su panopticon -c "php /app/public/cli/panopticon.php config:set finished_setup true"
 	# Install a CRON job
 	crontab -u panopticon -l > mycron
-	echo "* * * * * /usr/local/bin/php /app/public/cli/panopticon.php task:run --loop" >> mycron
+  for (( i=1; i<=$PANOPTICON_CRON_JOBS; i++ ))
+  do
+	  echo "* * * * * /usr/local/bin/php /app/public/cli/panopticon.php task:run --loop" >> mycron
+  done
 	crontab -u panopticon mycron
 	rm mycron
 else

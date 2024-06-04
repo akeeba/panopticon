@@ -15,21 +15,6 @@
 
 version: "3.5"
 
-# These are environment variables configuring the creation of and connection to the Panopticon database.
-x-db-variables: &db-variables
-  # The name of the container where the database server lives in. Do not change.
-  PANOPTICON_DB_HOST: "mysql"
-  # The database table prefix. Two to five lowercase letters and/or numbers, followed by an underscore.
-  # It must NOT start with a number. Best leave it as-is.
-  PANOPTICON_DB_PREFIX: "pnptc_"
-  # The name of the MySQL database. Best leave it as-is.
-  MYSQL_DATABASE: "panopticon"
-  # The name of the MySQL user. Best leave it as-is.
-  MYSQL_USER: "panopticon"
-  # The password of the MySQL user. You SHOULD change this to something random. You can create a random password here:
-  # https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new
-  MYSQL_PASSWORD: "Emx6Rf9mtneXNgpZyehvdm8NUJJMJQA8"
-
 services:
   # The web application container, based on Apache with PHP-FPM
   php:
@@ -52,18 +37,11 @@ services:
       - 4443:443
     volumes:
       - panopticon_usercode:/var/www/html/user_code
+      - panopticon_config:/var/www/html/config
     container_name: panopticon_php
     restart: always
-    environment:
-      <<: *db-variables
-      # Your username. You should change this.
-      ADMIN_USERNAME: "admin"
-      # Your password. Best create a random one here: # https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new
-      ADMIN_PASSWORD: "admin"
-      # Your full name.
-      ADMIN_NAME: "Super Administrator"
-      # Your email address.
-      ADMIN_EMAIL: "admin@example.com"
+    env_file:
+      - .env.docker
   # The database server container.
   mysql:
     image: mysql:8.0
@@ -72,10 +50,8 @@ services:
     restart: always
     volumes:
       - panopticon_mysql:/var/lib/mysql
-    environment:
-      <<: *db-variables
-      TZ: "Asia/Nicosia"
-      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    env_file:
+      - .env.docker
     container_name: panopticon_mysql
   # Used to start the web application container only after the database container is up and running.
   wait-for-db:
@@ -88,5 +64,7 @@ services:
 volumes:
   # User-provided code. It's mounted in the user_code folder of the application.
   panopticon_usercode:
+  # Panopticon's configuration files
+  panopticon_config:
   # The MySQL data directory
   panopticon_mysql:
