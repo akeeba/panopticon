@@ -19,36 +19,60 @@ defined('AKEEBA') || die;
  */
 class Sites extends Site
 {
-    public function batch(array $ids, $data = []): void
-    {
-        if (!$ids)
-        {
-            throw new \RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_BATCH_ERR_NO_IDS'));
-        }
+	public function batch(array $ids, $data = []): void
+	{
+		if (!$ids)
+		{
+			throw new \RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_BATCH_ERR_NO_IDS'));
+		}
 
-        // Apply the group to selected sites
-        if (isset($data['groups']) && $data['groups'])
-        {
-            foreach ($ids as $id)
-            {
-                $this->find($id);
-                $config = $this->getConfig() ?? new Registry();
+		// Apply the group to selected sites
+		$addGroups = $data['groups'] ?? [];
+		$addGroups = is_array($addGroups) ? $addGroups : [];
+		$addGroups = array_filter($addGroups);
 
-                $groups = $config->get('config.groups', []);
+		$removeGroups = $data['groups_remove'] ?? [];
+		$removeGroups = is_array($removeGroups) ? $removeGroups : [];
+		$removeGroups = array_filter($removeGroups);
 
-                foreach ($data['groups'] as $group)
-                {
-                    $groups[] = $group;
-                }
+		$hashFunction = function (array $groups): string {
+			asort($groups);
 
-                $groups = array_unique($groups);
+			return md5(implode(':', array_filter($groups)));
+		};
 
-                $config->set('config.groups', $groups);
+		foreach ($ids as $id)
+		{
+			try
+			{
+				/** @var Site $site */
+				$site = $this->container->mvcFactory->makeModel('Site')->findOrFail($id);
+			}
+			catch (\Exception $e)
+			{
+				continue;
+			}
 
-                $new_data['config'] = $config->toString();
+			$groups     = $site->getGroups();
+			$hashBefore = $hashFunction($groups);
+			$groups     = array_merge($groups, $addGroups);
+			$groups     = array_unique($groups);
+			$groups     = array_diff($groups, $removeGroups);
 
-                $this->save($new_data);
-            }
-        }
-    }
+			$hashAfter = $hashFunction($groups);
+
+			if ($hashBefore === $hashAfter)
+			{
+				continue;
+			}
+
+			$config = $site->getConfig();
+			$config->set('config.groups', $groups);
+			$site->save(
+				[
+					'config' => $config->toString(),
+				]
+			);
+		}
+	}
 }

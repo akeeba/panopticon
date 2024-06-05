@@ -67,29 +67,34 @@ class Sites extends DataController
      */
     public function batch(): void
     {
-        $type    = null;
-        $message = $this->getLanguage()->text('PANOPTICON_SITES_BATCH_COMPLETED');
+	    $type    = null;
+	    $message = $this->getLanguage()->text('PANOPTICON_SITES_BATCH_COMPLETED');
 
-        /** @var \Akeeba\Panopticon\Model\Sites $model */
-        $model = $this->getModel();
+	    /** @var \Akeeba\Panopticon\Model\Sites $model */
+	    $model = $this->getModel();
 
-        $groups = $this->input->get('groups', [], 'raw');
-        $groups = array_map('intval' ,$groups);
+	    $addGroups = $this->input->get('groups', [], 'raw');
+	    $addGroups = array_map('intval', $addGroups);
 
-        $data['groups'] = $groups;
+	    $data['groups'] = $addGroups;
 
-        try
-        {
-            $ids = $this->getIDsFromRequest($model, false);
-            $model->batch($ids, $data);
-        }
-        catch (RuntimeException $e)
-        {
-            $type    = 'warning';
-            $message = $e->getMessage();
-        }
+	    $removeGroups = $this->input->get('groups_remove', [], 'raw');
+	    $removeGroups = array_map('intval', $removeGroups);
 
-        $this->setRedirect('index.php?view=sites', $message, $type);
+	    $data['groups_remove'] = $removeGroups;
+
+	    try
+	    {
+		    $ids = $this->getIDsFromRequest($model, false);
+		    $model->batch($ids, $data);
+	    }
+	    catch (RuntimeException $e)
+	    {
+		    $type    = 'warning';
+		    $message = $e->getMessage();
+	    }
+
+	    $this->setRedirect('index.php?view=sites', $message, $type);
     }
 
 	/**
