@@ -58,6 +58,7 @@ class Sites extends Site
 			$groups     = array_merge($groups, $addGroups);
 			$groups     = array_unique($groups);
 			$groups     = array_diff($groups, $removeGroups);
+			$groups     = array_values($groups);
 
 			$hashAfter = $hashFunction($groups);
 
