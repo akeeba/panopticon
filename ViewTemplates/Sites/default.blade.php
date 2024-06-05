@@ -6,12 +6,12 @@
  */
 
 defined('AKEEBA') || die;
-
 /**
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  * @var \Akeeba\Panopticon\Model\Site      $model
  * @var \Akeeba\Panopticon\Model\Site      $site
  */
+
 $model = $this->getModel();
 $token = $this->container->session->getCsrfToken()->getValue();
 ?>
@@ -159,6 +159,55 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </tr>
         </tfoot>
     </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="batchModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="batchModalLabel">@lang('PANOPTICON_SITES_BATCH_TITLE')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@lang('PANOPTICON_APP_LBL_MESSAGE_CLOSE')"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mt-3 mb-4">
+                        <label for="name" class="col-sm-3 col-form-label">
+                            @lang('PANOPTICON_SITES_BATCH_LBL_ADD_TO_GROUP')
+                        </label>
+                        <div class="col-sm-6">
+                            {{ $this->container->html->select->genericList(
+                                data: $this->getModel()->getGroupsForSelect(includeEmpty: true),
+                                name: 'groups[]',
+                                attribs: [
+                                    'class' => 'form-select js-choice',
+                                    'multiple' => 'multiple',
+                                ],
+                                selected: []
+                            ) }}
+                        </div>
+                    </div>
+                    <div class="row mt-3 mb-4">
+                        <label for="name" class="col-sm-3 col-form-label">
+                            @lang('PANOPTICON_SITES_BATCH_LBL_REMOVE_FROM_GROUP')
+                        </label>
+                        <div class="col-sm-6">
+                            {{ $this->container->html->select->genericList(
+                                data: $this->getModel()->getGroupsForSelect(includeEmpty: true),
+                                name: 'groups_remove[]',
+                                attribs: [
+                                    'class' => 'form-select js-choice',
+                                    'multiple' => 'multiple',
+                                ],
+                                selected: []
+                            ) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="akeeba.System.submitForm('batch')">@lang('PANOPTICON_SITES_BATCH_PROCESS')</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <input type="hidden" name="boxchecked" id="boxchecked" value="0">
     <input type="hidden" name="task" id="task" value="browse">
