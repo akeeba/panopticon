@@ -212,7 +212,7 @@ class Html extends DataViewHtml
 		$result = $this->onBeforeBrowseCrud();
 
 		// Groups map
-		$this->groupMap = $this->getModel('groups')->getGroupMap();
+		$this->groupMap = $this->getModel('groups')->getGroupMap(false);
 
 		$user      = $this->container->userManager->getUser();
 		$canAdd    = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.addown');
