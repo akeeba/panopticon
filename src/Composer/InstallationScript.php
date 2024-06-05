@@ -11,8 +11,10 @@ use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
 use Awf\Download\Download;
+use Awf\Utils\Buffer;
 use Composer\Script\Event;
 use Symfony\Component\Finder\Finder;
+use ZipArchive;
 
 abstract class InstallationScript
 {
@@ -123,6 +125,49 @@ abstract class InstallationScript
 
 			self::copyFiles($from, $to, $names);
 		}
+	}
+
+	public static function tinyMCELanguages(Event $event): void
+	{
+		$io = $event->getIO();
+		$io->debug('Updating TinyMCE translation files');
+
+		$container = self::getAWFContainer();
+
+		$targetPath = $container->basePath . '/media/tinymce/langs';
+
+		if (!file_exists($targetPath))
+		{
+			mkdir($targetPath, 0755);
+		}
+
+		$download = new Download($container);
+		try
+		{
+			$data = $download->getFromURL('https://download.tiny.cloud/tinymce/community/languagepacks/7/langs.zip');
+		}
+		catch (\Throwable $e)
+		{
+			return;
+		}
+
+		if (empty($data))
+		{
+			return;
+		}
+
+		// Load the AWF Buffer
+		class_exists(Buffer::class);
+
+		$filePath = sys_get_temp_dir() . '/panopticon_tinymce_langs.zip';
+		file_put_contents($filePath, $data);
+		$data = null;
+
+		$zip = new ZipArchive();
+		$zip->open($filePath);
+		$zip->extractTo($targetPath);
+		$zip->close();
+		unlink($filePath);
 	}
 
 	/**

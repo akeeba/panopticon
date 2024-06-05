@@ -5,6 +5,7 @@
 /.env.production
 /.env.local
 /.env.dev
+/.env.docker
 /cache/**
 !/cache/.htaccess
 !/cache/web.config
@@ -43,3 +44,5 @@
 /release
 /1
 /docker-compose.override.yml
+/docker-compose-frankenphp.override.yml
+/docker-testing

@@ -100,7 +100,7 @@ class Configuration extends AWFConfiguration
 
 	public function getDefaultPath(): ?string
 	{
-		return $this->defaultPath = $this->defaultPath ?: APATH_ROOT . '/config.php';
+		return $this->defaultPath = $this->defaultPath ?: APATH_CONFIGURATION . '/config.php';
 	}
 
 	/**

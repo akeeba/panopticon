@@ -299,7 +299,8 @@
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyNodeDependencies",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::babel",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::sass",
-			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyPackageLock"
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyPackageLock",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::tinyMCELanguages"
 		],
 		"post-install-cmd": [
 			"@npm-deps",

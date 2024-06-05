@@ -315,6 +315,7 @@ class ActionSummaryEmail extends AbstractCallback
 				APATH_USER_CODE . '/ViewTemplates/Mailtemplates',
 			],
 		];
+		$container->language->loadLanguage($language ?: $container->appConfig->get('language', 'en-GB'));
 		$fakeView                = new FakeView($container, ['name' => 'Mailtemplates']);
 
 		try
@@ -336,7 +337,7 @@ class ActionSummaryEmail extends AbstractCallback
 		}
 
 		// Render the messages as plain text
-		$template     = $template = 'Mailtemplates/mail_action_summary' . (empty($language) ? '' : '.') . $language
+		$template     = 'Mailtemplates/mail_action_summary' . (empty($language) ? '' : '.') . $language
 		                            . 'text';
 		$renderedText = '';
 

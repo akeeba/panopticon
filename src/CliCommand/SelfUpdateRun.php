@@ -63,6 +63,17 @@ class SelfUpdateRun extends AbstractCommand
 			return Command::SUCCESS;
 		}
 
+		if (defined('APATH_IN_DOCKER') && APATH_IN_DOCKER)
+		{
+			$this->ioStyle->error([
+				'You are running Panopticon inside Docker.',
+				'You must NOT use Panopticon\'s self-update for this configuration. Please read',
+				'https://github.com/akeeba/panopticon/wiki/Using-Docker#updates'
+			]);
+
+			return Command::FAILURE;
+		}
+
 		$this->ioStyle->info(sprintf('Downloading version %s', $newVersion));
 
 		$tempFile = $model->download();
