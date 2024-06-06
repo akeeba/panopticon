@@ -3,7 +3,7 @@
 ## UI
 * [x] Main/site_wordpress
 * [x] Sites/item_wpupdate
-* [ ] Sites/item_wpplugins (equivalent to extensions)
+* [x] Sites/item_wpplugins (equivalent to extensions)
 
 ## Controllers
 * Sites

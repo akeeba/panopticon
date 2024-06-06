@@ -33,7 +33,7 @@ $wpVersionHelper = new WordPressVersion($this->getContainer());
 @repeatable('wpVersion', $wpVersion)
 {{{ $wpVersion }}}
 <?php
-$version = Version::create($wpVersion) ?>
+$version = Version::create($wpVersion ?? '0.0.0') ?>
 @if($version->isDev())
     <sup>
         <span class="badge bg-danger">
@@ -184,7 +184,7 @@ $version = Version::create($wpVersion) ?>
         @if ($canUpgrade)
             <div
                     data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPGRADABLE_TO', $latestJoomlaVersion)"
+                    data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPGRADABLE_TO', $latestWPVersion)"
 
             >
                 <div class="text-warning fw-bold d-inline-block">
@@ -195,7 +195,7 @@ $version = Version::create($wpVersion) ?>
                     <span class="fa fa-arrow-right" aria-hidden="true"></span>
                     <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_JOOMLA_CAN_BE_UPGRADED_SHORT')</span>
                     @yieldRepeatable('wpLogo')
-                    @yieldRepeatable('wpVersion', $latestJoomlaVersion)
+                    @yieldRepeatable('wpVersion', $latestWPVersion)
                 </div>
             </div>
         @else
