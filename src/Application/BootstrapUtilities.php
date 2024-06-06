@@ -539,7 +539,13 @@ PHP, $sourceCode
 			require_once APATH_CONFIGURATION . '/config.php';
 			ob_end_clean();
 
-			/** @noinspection PhpUndefinedClassInspection */
+			if (!class_exists(\AConfig::class))
+			{
+				$registry = null;
+
+				return $registry;
+			}
+
 			$registry->loadObject(new AConfig());
 		}
 

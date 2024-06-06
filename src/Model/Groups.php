@@ -55,7 +55,7 @@ class Groups extends DataModel
 	 * @return  array
 	 * @since   1.0.5
 	 */
-	public function getGroupMap(): array
+	public function getGroupMap(bool $forEnabledSitesOnly = true): array
 	{
 		$db = $this->getDbo();
 
@@ -64,13 +64,15 @@ class Groups extends DataModel
 			->select(
 				$query->jsonExtract($db->quoteName('config'), '$.config.groups')
 			)
-			->from($db->quoteName('#__sites'))
-			->where(
-				[
-					$db->quoteName('enabled') . ' = 1',
-					$query->jsonExtract($db->quoteName('config'), '$.config.groups[0]') . ' IS NOT NULL',
-				]
-			);
+			->from($db->quoteName('#__sites'));
+
+		if ($forEnabledSitesOnly) {
+			$query->where($db->quoteName('enabled') . ' = 1');
+		}
+
+		$query->where(
+			$query->jsonExtract($db->quoteName('config'), '$.config.groups[0]') . ' IS NOT NULL'
+		);
 
 		$rawItems = $db->setQuery($query)->loadColumn() ?: [];
 

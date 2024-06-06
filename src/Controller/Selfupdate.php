@@ -53,6 +53,17 @@ class Selfupdate extends Controller
 
 	public function preupdate()
 	{
+		if (defined('APATH_IN_DOCKER') && APATH_IN_DOCKER)
+		{
+			$this->setRedirect(
+				$this->container->router->route('index.php?view=selfupdate'),
+				$this->getLanguage()->text('PANOPTICON_SELFUPDATE_ERR_UNDERDOCKER'),
+				'error'
+			);
+
+			return;
+		}
+
 		if (!$this->getTasksPausedFlag())
 		{
 			$this->setTasksPausedFlag(true);
@@ -71,6 +82,17 @@ class Selfupdate extends Controller
 
 	public function update()
 	{
+		if (defined('APATH_IN_DOCKER') && APATH_IN_DOCKER)
+		{
+			$this->setRedirect(
+				$this->container->router->route('index.php?view=selfupdate'),
+				$this->getLanguage()->text('PANOPTICON_SELFUPDATE_ERR_UNDERDOCKER'),
+				'error'
+			);
+
+			return;
+		}
+
 		/** @var \Akeeba\Panopticon\Model\Selfupdate $model */
 		$model = $this->getModel();
 
@@ -97,6 +119,17 @@ class Selfupdate extends Controller
 
 	public function install()
 	{
+		if (defined('APATH_IN_DOCKER') && APATH_IN_DOCKER)
+		{
+			$this->setRedirect(
+				$this->container->router->route('index.php?view=selfupdate'),
+				$this->getLanguage()->text('PANOPTICON_SELFUPDATE_ERR_UNDERDOCKER'),
+				'error'
+			);
+
+			return;
+		}
+
 		/** @var \Akeeba\Panopticon\Model\Selfupdate $model */
 		$model = $this->getModel();
 

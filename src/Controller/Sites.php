@@ -60,6 +60,44 @@ class Sites extends DataController
 		return parent::execute($task);
 	}
 
+    /**
+     * Runs batch processes on selected sites
+     *
+     * @return void
+     * @throws Exception
+     */
+    public function batch(): void
+    {
+	    $type    = null;
+	    $message = $this->getLanguage()->text('PANOPTICON_SITES_BATCH_COMPLETED');
+
+	    /** @var \Akeeba\Panopticon\Model\Sites $model */
+	    $model = $this->getModel();
+
+	    $addGroups = $this->input->get('groups', [], 'raw');
+	    $addGroups = array_map('intval', $addGroups);
+
+	    $data['groups'] = $addGroups;
+
+	    $removeGroups = $this->input->get('groups_remove', [], 'raw');
+	    $removeGroups = array_map('intval', $removeGroups);
+
+	    $data['groups_remove'] = $removeGroups;
+
+	    try
+	    {
+		    $ids = $this->getIDsFromRequest($model, false);
+		    $model->batch($ids, $data);
+	    }
+	    catch (RuntimeException $e)
+	    {
+		    $type    = 'warning';
+		    $message = $e->getMessage();
+	    }
+
+	    $this->setRedirect('index.php?view=sites', $message, $type);
+    }
+
 	/**
 	 * Run the connection doctor on a site.
 	 *
