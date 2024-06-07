@@ -298,7 +298,7 @@ class JoomlaUpdate extends AbstractCallback
 	 */
 	protected function runEvent(string $event, object $task, Registry $storage): bool
 	{
-		$results = $this->container->eventDispatcher->trigger('onTaskBeforeJoomlaUpdate', [$task, $storage]);
+		$results = $this->container->eventDispatcher->trigger($event, [$task, $storage]);
 
 		// No handlers executed. We are done!
 		if (empty($results))

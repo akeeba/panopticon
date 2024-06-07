@@ -1,9 +1,8 @@
 # WordPress integration
 
 ## UI
-* [x] Main/site_wordpress
-* [x] Sites/item_wpupdate
-* [x] Sites/item_wpplugins (equivalent to extensions)
+* [ ] Review Akeeba Backup integration
+* [ ] Review Admin Tools integration
 
 ## Controllers
 * Sites
@@ -13,7 +12,7 @@
 
 ## Tasks
 
-* [ ] WordPressUpdate task (similar to JoomlaUpdate task)
+* [x] WordPressUpdate task (similar to JoomlaUpdate task)
 * [ ] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
 * [ ] Add WordPressUpdateDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
 * [ ] PluginsUpdate task (similar to ExtensionsUpdate task)
@@ -21,6 +20,10 @@
 * [ ] Add WordPressPluginsUpdatesDirector to WordPressUpdateDirector
 * [ ] AkeebaBackup task: work with WordPress
 * [ ] FileScanner task: work with WordPress
+
+## Mail Templates
+* [ ] wordpressupdate_installed
+* [ ] wordpressupdate_failed
 
 ## CLI
 
