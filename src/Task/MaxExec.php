@@ -54,7 +54,7 @@ class MaxExec extends AbstractCallback implements SymfonyStyleAwareInterface
 		}
 
 		// Clear the maxexec.lasttick indicator
-		$this->ioStyle->info('Clearing previous execution information');
+		$this->ioStyle?->info('Clearing previous execution information');
 		$this->logger->debug('Clearing the last tick indicator in the database');
 
 		$db    = $this->container->db;
@@ -97,7 +97,7 @@ class MaxExec extends AbstractCallback implements SymfonyStyleAwareInterface
 		$execTime  = 0.0;
 		$appConfig = $this->container->appConfig;
 
-		$bar       = $this->ioStyle->createProgressBar($maxExecution);
+		$bar       = $this->ioStyle?->createProgressBar($maxExecution);
 
 		$bar?->setRedrawFrequency(1);
 		$bar?->display();
