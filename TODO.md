@@ -45,6 +45,12 @@
 
 
 
+# WordPress plugin and theme keys
+
+Plugins: `plg_ID` e.g. `plg_admintoolswp/admintoolswp.php`
+
+Themes: `tpl_ID` e.g. `tpl_twentytwenty`
+
 
 # Documentation notes
 

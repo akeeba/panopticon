@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Awf\Mvc\Model;
 use Complexify\Complexify;
 use DateTimeZone;
@@ -125,11 +126,14 @@ class Sysconfig extends Model
 
 			$db    = $this->container->db;
 			$query =
-				$db->getQuery(true)->select($db->quoteName('config'))->from($db->quoteName('#__sites'))->where($db->quoteName('enabled') . ' = 1');
+				$db->getQuery(true)
+					->select($db->quoteName('config'))
+					->from($db->quoteName('#__sites'))
+					->where($db->quoteName('enabled') . ' = 1');
 
 			if (!empty($siteId))
 			{
-				$query->where($db->quoteName('id') . ' = ' . (int)$siteId);
+				$query->where($db->quoteName('id') . ' = ' . (int) $siteId);
 			}
 
 			$iterator = $db->setQuery($query)->getIterator();
@@ -157,21 +161,52 @@ class Sysconfig extends Model
 					continue;
 				}
 
+				$cmsType = $config?->cmsType ?? CMSType::JOOMLA->value;
+
 				foreach ($config?->extensions?->list ?? [] as $ext)
 				{
-					$extKey = $this->getExtensionShortname($ext->type, $ext->element, $ext->folder, $ext->client_id);
-
-					if (empty($extKey) || in_array($extKey, self::EXCLUDED_EXTENSIONS))
+					switch ($cmsType)
 					{
-						continue;
-					}
+						default:
+						case CMSType::UNKNOWN->value:
+							continue 2;
 
-					if ($ext->element === 'pkg_panopticon')
-					{
-						$preferences[$extKey] = 'major';
+						case CMSType::WORDPRESS->value:
+							$extKey = (($ext->type ?? null) === 'plugin' ? 'plg_' : 'tpl_')
+								. ($ext->extension_id ?? '');
+
+							if (empty($ext->extension_id ?? ''))
+							{
+								continue 2;
+							}
+
+							if (($ext->element ?? '') === 'panopticon.php')
+							{
+								$preferences[$extKey] = 'major';
+							}
+
+							$ext->client_id = 0;
+
+							break;
+
+						case CMSType::JOOMLA->value:
+							$extKey = $this->getExtensionShortname($ext->type, $ext->element, $ext->folder, $ext->client_id);
+
+							if (empty($extKey) || in_array($extKey, self::EXCLUDED_EXTENSIONS))
+							{
+								continue 2;
+							}
+
+							if ($ext->element === 'pkg_panopticon')
+							{
+								$preferences[$extKey] = 'major';
+							}
+
+							break;
 					}
 
 					$extensions[$extKey] = (object)[
+						'cmsType'     => $cmsType,
 						'element'     => $ext->element,
 						'type'        => $ext->type,
 						'folder'      => $ext->folder,
@@ -185,7 +220,14 @@ class Sysconfig extends Model
 				}
 			}
 
-			uasort($extensions, fn($a, $b) => $a->name <=> $b->name);
+			uasort($extensions, function($a, $b) {
+				if ($a->cmsType !== $b->cmsType)
+				{
+					return $a->cmsType <=> $b->cmsType;
+				}
+
+				return $a->name <=> $b->name;
+			});
 
 			return $extensions;
 		}, $beta);

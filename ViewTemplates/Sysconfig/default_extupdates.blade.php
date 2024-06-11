@@ -7,6 +7,8 @@
 
 defined('AKEEBA') || die;
 
+use \Akeeba\Panopticon\Library\Enumerations\CMSType;
+
 /**
  * @var \Akeeba\Panopticon\View\Sysconfig\Html $this
  */
@@ -80,6 +82,10 @@ $config = $this->container->appConfig;
             <caption class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION')</caption>
             <thead class="table-dark">
             <tr>
+                <th class="w-auto">
+                    <span class="fa fa-server" aria-hidden="true"></span>
+                    <span class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_CMS')</span>
+                </th>
                 <th>
                     @lang('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_NAME')
                 </th>
@@ -94,6 +100,18 @@ $config = $this->container->appConfig;
             <tbody>
             @foreach ($this->extUpdatePreferences as $key => $item)
             <tr class="extensions-filterable-row">
+                <td>
+                    @if($item->cmsType === CMSType::JOOMLA->value)
+                        <span class="fab fa-joomla text-secondary" aria-hidden="true"></span>
+                        <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_CMSTYPE_OPT_JOOMLA')</span>
+                    @elseif($item->cmsType === CMSType::WORDPRESS->value)
+                        <span class="fab fa-wordpress text-primary" aria-hidden="true"></span>
+                        <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_CMSTYPE_OPT_WORDPRESS')</span>
+                    @else
+                        <span class="fa fa-globe" aria-hidden="true"></span>
+                        <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_CMSTYPE_OPT_OTHER')</span>
+                    @endif
+                </td>
                 <td>
                     <span class="text-body-tertiary pe-2">
                         @if ($item->type === 'component')
@@ -150,7 +168,7 @@ $config = $this->container->appConfig;
                             'required' => 'required',
                         ];
 
-                        if ($key === 'pkg_panopticon')
+                        if ($key === 'pkg_panopticon' || str_ends_with($key, '/panopticon.php'))
                         {
                             $attribs['disabled'] = true;
                             $item->preference    = 'major';
