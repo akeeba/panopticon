@@ -810,6 +810,8 @@ class WordPressUpdate extends AbstractCallback
 		$body = $response->getBody();
 		$body = $this->sanitizeJson(trim($body ?? ''));
 
+		$this->logger->debug('Received response', ['response' => $body]);
+
 		if (!$this->jsonValidate($body))
 		{
 			throw new RuntimeException(
@@ -839,7 +841,7 @@ class WordPressUpdate extends AbstractCallback
 			);
 		}
 
-		if (!($parsedData['status'] ?? false))
+		if (!($parsedData['status'] ?? $parsedBody['status'] ?? false))
 		{
 			throw new RuntimeException(
 				$this->getLanguage()->sprintf(
@@ -850,7 +852,7 @@ class WordPressUpdate extends AbstractCallback
 			);
 		}
 
-		if (!($parsedData['found'] ?? false))
+		if (!($parsedData['found'] ?? $parsedBody['found'] ?? false))
 		{
 			throw new RuntimeException(
 				$this->getLanguage()->sprintf(
@@ -860,6 +862,7 @@ class WordPressUpdate extends AbstractCallback
 				)
 			);
 		}
-	}
 
+		$this->advanceState();
+	}
 }
