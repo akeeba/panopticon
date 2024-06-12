@@ -34,7 +34,7 @@
 * [X] SiteUpdateWordPress calls WordPressUpdate task
 * [ ] SiteUpdatePlugins calls PluginsUpdate task
 * [ ] TaskPluginsUpdatesDirector like TaskExtensionUpdatesDirector
-* [ ] TaskWordPressUpdateDirector like TaskJoomlaUpdatesDirector
+* [X] TaskWordPressUpdateDirector like TaskJoomlaUpdateDirector
 
 ## Internals
 
