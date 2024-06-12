@@ -27,6 +27,7 @@ use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueueWordPressUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Akeeba\Panopticon\View\Sites\Html;
 use Awf\Inflector\Inflector;
@@ -43,6 +44,7 @@ class Sites extends DataController
 {
 	use ACLTrait;
 	use EnqueueJoomlaUpdateTrait;
+	use EnqueueWordPressUpdateTrait;
 	use EnqueueExtensionUpdateTrait;
 	use AkeebaBackupIntegrationTrait;
 	use AdminToolsIntegrationTrait;
@@ -928,6 +930,151 @@ class Sites extends DataController
 		$this->setRedirect($url, $message, $type);
 
 		return true;
+	}
+
+	public function scheduleWordPressUpdate()
+	{
+		$this->csrfProtection();
+
+		$id    = $this->input->get->getInt('id', 0);
+		$force = $this->input->get->getBool('force', false);
+
+		/** @var SiteModel $site */
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
+
+		$site->findOrFail($id);
+
+		if ($site->cmsType() !== CMSType::WORDPRESS)
+		{
+			throw new RuntimeException('This is only possible with WordPress sites.');
+		}
+
+		try
+		{
+			/** @noinspection PhpParamsInspection */
+			$this->enqueueWordPressUpdate($site, $this->container, $force, $this->container->userManager->getUser());
+
+			// Update the core.lastAutoUpdateVersion after enqueueing
+			$this->saveSite(
+				$site,
+				function (Site $site)
+				{
+					$config = $site->getConfig();
+					$config->set('core.lastAutoUpdateVersion', $config->get('core.latest.version'));
+					$site->config = $config->toString();
+				}
+			);
+
+			$type    = 'info';
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_OK');
+		}
+		catch (Throwable $e)
+		{
+			$type    = 'error';
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_WPUPDATE_SCHEDULE_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
+	public function unscheduleWordPressUpdate()
+	{
+		$this->csrfProtection();
+
+		$id    = $this->input->get->getInt('id', 0);
+		$force = $this->input->get->getBool('force', false);
+
+		/** @var SiteModel $site */
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
+
+		$site->findOrFail($id);
+
+		if ($site->cmsType() !== CMSType::WORDPRESS)
+		{
+			throw new RuntimeException('This is only possible with WordPress sites.');
+		}
+
+		try
+		{
+			/** @var Task|null $task */
+			$task = $site->getJoomlaUpdateTask();
+
+			if ($task === null)
+			{
+				throw new RuntimeException('PANOPTICON_SITE_LBL_WPUPDATE_UNSCHEDULE_ERR_NOT_SCHEDULED');
+			}
+
+			if (in_array(
+				$task->last_exit_code, [
+					Status::WILL_RESUME->value,
+					Status::RUNNING->value,
+				]
+			))
+			{
+				throw new RuntimeException('PANOPTICON_SITE_LBL_WPUPDATE_UNSCHEDULE_ERR_RUNNING');
+			}
+
+			$task->last_exit_code = Status::OK->value;
+
+			$task->unpublish();
+		}
+		catch (Throwable $e)
+		{
+			$type    = 'error';
+			$message = $this->getLanguage()->sprintf('PANOPTICON_SITE_ERR_WPUPDATE_UNSCHEDULE_FAILED', $e->getMessage());
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
 	}
 
 	protected function onBeforeBrowse(): bool

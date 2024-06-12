@@ -6,8 +6,8 @@
 
 ## Controllers
 * Sites
-  * [ ] scheduleWordPressUpdate: similar to scheduleJoomlaUpdate
-  * [ ] unscheduleWordPressUpdate: similar to unscheduleJoomlaUpdate
+  * [x] scheduleWordPressUpdate: similar to scheduleJoomlaUpdate
+  * [x] unscheduleWordPressUpdate: similar to unscheduleJoomlaUpdate
   * [ ] schedulePluginUpdate: similar to scheduleExtensionUpdate
 
 ## Tasks
@@ -33,17 +33,17 @@
 * [ ] SiteAdd needs to specify CMS type, default to Joomla!
 * [X] SiteUpdateWordPress calls WordPressUpdate task
 * [ ] SiteUpdatePlugins calls PluginsUpdate task
-* [ ] TaskPluginsUpdatesDirector like TaskExtensionUpdatesDirector
 * [X] TaskWordPressUpdateDirector like TaskJoomlaUpdateDirector
+* [ ] TaskPluginsUpdatesDirector like TaskExtensionUpdatesDirector
 
 ## Internals
 
 * [X] EnqueueWordPressUpdateTrait: similar to EnqueueJoomlaUpdateTrait (method: enqueueWordPressUpdate)
 * [ ] EnqueuePluginsUpdateTrait: similar to EnqueueExtensionUpdateTrait (method: schedulePluginsUpdateForSite)
-* [ ] Model\AdminToolsIntegrationTrait: deal with WP
-* [ ] Controller\AdminToolsIntegrationTrait: deal with WP
 * [ ] Model\AkeebaBackupIntegrationTrait: deal with WP
 * [ ] Controller\AkeebaBackupIntegrationTrait: deal with WP
+* [ ] Model\AdminToolsIntegrationTrait: deal with WP
+* [ ] Controller\AdminToolsIntegrationTrait: deal with WP
 
 
 
