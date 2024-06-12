@@ -22,10 +22,10 @@
 * [ ] FileScanner task: work with WordPress
 
 ## Mail Templates
-* [ ] wordpressupdate_installed
-* [ ] wordpressupdate_failed
-* [ ] wordpressupdate_found
-* [ ] wordpressupdate_will_install
+* [x] wordpressupdate_found
+* [x] wordpressupdate_installed
+* [x] wordpressupdate_failed
+* [x] wordpressupdate_will_install
 
 ## CLI
 
