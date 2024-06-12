@@ -36,7 +36,7 @@
 
 ## Internals
 
-* [ ] EnqueueWordPressUpdateTrait: similar to EnqueueJoomlaUpdateTrait (method: enqueueWordPressUpdate)
+* [X] EnqueueWordPressUpdateTrait: similar to EnqueueJoomlaUpdateTrait (method: enqueueWordPressUpdate)
 * [ ] EnqueuePluginsUpdateTrait: similar to EnqueueExtensionUpdateTrait (method: schedulePluginsUpdateForSite)
 * [ ] Model\AdminToolsIntegrationTrait: deal with WP
 * [ ] Controller\AdminToolsIntegrationTrait: deal with WP
