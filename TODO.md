@@ -13,7 +13,7 @@
 ## Tasks
 
 * [x] WordPressUpdate task (similar to JoomlaUpdate task)
-* [ ] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
+* [X] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
 * [X] Add WordPressUpdateDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
 * [ ] PluginsUpdate task (similar to ExtensionsUpdate task)
 * [ ] WordPressPluginsUpdatesDirector task (similar to ExtensionUpdatesDirector task)
@@ -24,6 +24,8 @@
 ## Mail Templates
 * [ ] wordpressupdate_installed
 * [ ] wordpressupdate_failed
+* [ ] wordpressupdate_found
+* [ ] wordpressupdate_will_install
 
 ## CLI
 
