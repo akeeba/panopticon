@@ -42,6 +42,7 @@ class Setup extends Model
 		'extensionupdatesdirector'   => '*/10 * * * *',
 		'sendmail'                   => '* * * * *',
 		'uptimemonitor'              => '* * * * *$-1',
+		'wordpressupdatedirector'       => '*/3 * * * *',
 	];
 
 	private static bool|null $isRequiredMet = null;
