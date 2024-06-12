@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\CliCommand\Trait\PrintFormattedArrayTrait;
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\Overrides;
 use Akeeba\Panopticon\Model\Sites;
 use RuntimeException;
@@ -50,6 +51,13 @@ class SiteOverridesList extends AbstractCommand
 		catch (RuntimeException)
 		{
 			$this->ioStyle->error('No such site');
+
+			return Command::FAILURE;
+		}
+
+		if ($site->cmsType() !== CMSType::JOOMLA)
+		{
+			$this->ioStyle->error('This command only applies to Joomla! sites');
 
 			return Command::FAILURE;
 		}

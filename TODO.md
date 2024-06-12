@@ -13,8 +13,8 @@
 ## Tasks
 
 * [x] WordPressUpdate task (similar to JoomlaUpdate task)
-* [X] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
-* [X] Add WordPressUpdateDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
+* [x] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
+* [x] Add WordPressUpdateDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
 * [ ] PluginsUpdate task (similar to ExtensionsUpdate task)
 * [ ] WordPressPluginsUpdatesDirector task (similar to ExtensionUpdatesDirector task)
 * [ ] Add WordPressPluginsUpdatesDirector to WordPressUpdateDirector
@@ -29,16 +29,16 @@
 
 ## CLI
 
-* [ ] SiteOverridesList: decline for WP sites
+* [x] SiteOverridesList: decline for WP sites
 * [ ] SiteAdd needs to specify CMS type, default to Joomla!
-* [X] SiteUpdateWordPress calls WordPressUpdate task
+* [x] SiteUpdateWordPress calls WordPressUpdate task
 * [ ] SiteUpdatePlugins calls PluginsUpdate task
-* [X] TaskWordPressUpdateDirector like TaskJoomlaUpdateDirector
+* [x] TaskWordPressUpdateDirector like TaskJoomlaUpdateDirector
 * [ ] TaskPluginsUpdatesDirector like TaskExtensionUpdatesDirector
 
 ## Internals
 
-* [X] EnqueueWordPressUpdateTrait: similar to EnqueueJoomlaUpdateTrait (method: enqueueWordPressUpdate)
+* [x] EnqueueWordPressUpdateTrait: similar to EnqueueJoomlaUpdateTrait (method: enqueueWordPressUpdate)
 * [ ] EnqueuePluginsUpdateTrait: similar to EnqueueExtensionUpdateTrait (method: schedulePluginsUpdateForSite)
 * [ ] Model\AkeebaBackupIntegrationTrait: deal with WP
 * [ ] Controller\AkeebaBackupIntegrationTrait: deal with WP
