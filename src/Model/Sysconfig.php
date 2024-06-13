@@ -315,12 +315,12 @@ class Sysconfig extends Model
 	 *
 	 * @return  string|null
 	 */
-	public function getExtensionShortname(string $type, string $element, ?string $folder, int $client_id): ?string
+	public function getExtensionShortname(string $type, ?string $element, ?string $folder, int $client_id): ?string
 	{
 		return match ($type)
 		{
 			'component', 'file', 'files', 'library', 'package' => $element,
-			'plugin' => 'plg_' . ($folder ?? 'unknown') . '_' . $element,
+			'plugin' => 'plg_' . ($folder ?? 'unknown') . ($element === null ? '' : '_') . ($element ?? ''),
 			'module' => ($client_id === 0 ? 'a' : '') . $element,
 			'template' => ($client_id === 0 ? 'atpl_' : 'tpl_') . $element,
 			default => null,
