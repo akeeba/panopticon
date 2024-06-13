@@ -27,6 +27,7 @@ use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueuePluginUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueueWordPressUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Akeeba\Panopticon\View\Sites\Html;
@@ -46,6 +47,7 @@ class Sites extends DataController
 	use EnqueueJoomlaUpdateTrait;
 	use EnqueueWordPressUpdateTrait;
 	use EnqueueExtensionUpdateTrait;
+	use EnqueuePluginUpdateTrait;
 	use AkeebaBackupIntegrationTrait;
 	use AdminToolsIntegrationTrait;
 	use SaveSiteTrait;
@@ -1071,6 +1073,71 @@ class Sites extends DataController
 		{
 			$returnUri = $this->container->router->route(
 				sprintf('index.php?view=site&task=read&id=%s', $id)
+			);
+		}
+
+		$this->setRedirect($returnUri, $message, $type);
+	}
+
+	public function schedulePluginUpdate()
+	{
+		$this->csrfProtection();
+
+		$id     = $this->input->get->getString('id', '');
+		$siteId = $this->input->get->getInt('site_id', 0);
+
+		/** @var SiteModel $site */
+		$site = $this->getModel(
+			'Site', [
+				'modelTemporaryInstance' => true,
+				'modelClearState'        => true,
+				'modelClearInput'        => true,
+			]
+		);
+
+		$site->findOrFail($siteId);
+
+		if ($site->cmsType() !== CMSType::WORDPRESS)
+		{
+			throw new RuntimeException('This is only possible with WordPress sites.');
+		}
+
+		try
+		{
+			/** @noinspection PhpParamsInspection */
+			if ($this->enqueuePluginUpdate($site, $id, user: $this->container->userManager->getUser()))
+			{
+				/** @noinspection PhpParamsInspection */
+				$this->scheduleExtensionsUpdateForSite($site, $this->container);
+			}
+
+			$type    = 'info';
+			$message = $this->getLanguage()->text('PANOPTICON_SITE_LBL_PLUGIN_UPDATE_SCHEDULE_OK');
+		}
+		catch (Throwable $e)
+		{
+			$type    = 'error';
+			$message = $this->getLanguage()->sprintf(
+				'PANOPTICON_SITE_ERR_PLUGIN_UPDATE_SCHEDULE_FAILED', $e->getMessage()
+			);
+		}
+
+		$returnUri = $this->input->get->getBase64('return', '');
+
+		if (!empty($returnUri))
+		{
+			$returnUri = @base64_decode($returnUri);
+
+			if (!Uri::isInternal($returnUri))
+			{
+				$returnUri = null;
+			}
+		}
+
+		if (empty($returnUri))
+		{
+			$returnUri = $this->container->router->route(
+				sprintf('index.php?view=site&task=read&id=%s', $siteId)
 			);
 		}
 

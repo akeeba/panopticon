@@ -8,7 +8,7 @@
 * Sites
   * [x] scheduleWordPressUpdate: similar to scheduleJoomlaUpdate
   * [x] unscheduleWordPressUpdate: similar to unscheduleJoomlaUpdate
-  * [ ] schedulePluginUpdate: similar to scheduleExtensionUpdate
+  * [x] schedulePluginUpdate: similar to scheduleExtensionUpdate
 
 ## Tasks
 
@@ -17,7 +17,7 @@
 * [x] Add WordPressUpdateDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
 * [x] PluginsUpdate task (similar to ExtensionsUpdate task)
 * [x] PluginUpdatesDirector task (similar to ExtensionUpdatesDirector task)
-* [ ] Add WordPressPluginsUpdatesDirector to WordPressUpdateDirector
+* [x] Add PluginsUpdatesDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
 * [ ] AkeebaBackup task: work with WordPress
 * [ ] FileScanner task: work with WordPress
 
