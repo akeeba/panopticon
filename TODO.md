@@ -41,7 +41,7 @@
 ## Internals
 
 * [x] EnqueueWordPressUpdateTrait: similar to EnqueueJoomlaUpdateTrait (method: enqueueWordPressUpdate)
-* [ ] EnqueuePluginsUpdateTrait: similar to EnqueueExtensionUpdateTrait (method: schedulePluginsUpdateForSite)
+* [x] EnqueuePluginUpdateTrait: similar to EnqueueExtensionUpdateTrait (method: schedulePluginsUpdateForSite)
 * [ ] Model\AkeebaBackupIntegrationTrait: deal with WP
 * [ ] Controller\AkeebaBackupIntegrationTrait: deal with WP
 * [ ] Model\AdminToolsIntegrationTrait: deal with WP
