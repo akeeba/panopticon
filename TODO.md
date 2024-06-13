@@ -16,7 +16,7 @@
 * [x] WordPressUpdateDirector task (similar to JoomlaUpdateDirector task)
 * [x] Add WordPressUpdateDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
 * [x] PluginsUpdate task (similar to ExtensionsUpdate task)
-* [ ] WordPressPluginUpdatesDirector task (similar to ExtensionUpdatesDirector task)
+* [x] PluginUpdatesDirector task (similar to ExtensionUpdatesDirector task)
 * [ ] Add WordPressPluginsUpdatesDirector to WordPressUpdateDirector
 * [ ] AkeebaBackup task: work with WordPress
 * [ ] FileScanner task: work with WordPress
@@ -36,7 +36,7 @@
 * [x] SiteUpdateWordPress calls WordPressUpdate task
 * [x] SiteUpdatePlugins calls PluginsUpdate task
 * [x] TaskWordPressUpdateDirector like TaskJoomlaUpdateDirector
-* [ ] TaskPluginsUpdatesDirector like TaskExtensionUpdatesDirector
+* [ ] TaskPluginUpdatesDirector like TaskExtensionUpdatesDirector
 
 ## Internals
 
