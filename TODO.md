@@ -34,7 +34,7 @@
 * [x] SiteOverridesList: decline for WP sites
 * [ ] SiteAdd needs to specify CMS type, default to Joomla!
 * [x] SiteUpdateWordPress calls WordPressUpdate task
-* [ ] SiteUpdatePlugins calls PluginsUpdate task
+* [x] SiteUpdatePlugins calls PluginsUpdate task
 * [x] TaskWordPressUpdateDirector like TaskJoomlaUpdateDirector
 * [ ] TaskPluginsUpdatesDirector like TaskExtensionUpdatesDirector
 
