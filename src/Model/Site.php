@@ -1765,6 +1765,17 @@ class Site extends DataModel
 				{
 					$path .= '/wp-json';
 				}
+
+				/**
+				 * Explanation: A user accidentally selects Joomla!, pastes the API info, realises their mistake,
+				 * switches the type to WordPress but forgets to paste the API URL again. The Joomla! API code converted
+				 * <URL>/wp-json to <URL>/wp-json/api, and the if-block right above this comment converted *that* to
+				 * <URL>/wp-json/api/wp-json. We catch that, removing the /api/wp-json part.
+				 */
+				if (str_ends_with($path, '/wp-json/api/wp-json'))
+				{
+					$path = substr($path, 0, -12);
+				}
 				break;
 		}
 
