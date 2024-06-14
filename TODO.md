@@ -3,6 +3,8 @@
 ## UI
 * [ ] Review Akeeba Backup integration
 * [ ] Review Admin Tools integration
+* [ ] Core updates page
+* [ ] Extension updates page
 
 ## Controllers
 * Sites

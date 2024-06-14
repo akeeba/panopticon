@@ -393,13 +393,21 @@ $hasError            = !empty($lastError);
                     $hasUpdate         = !empty($currentVersion) && !empty($latestVersion)
                         && ($currentVersion != $latestVersion)
                         && version_compare($currentVersion, $latestVersion, 'lt');
+                    $isScheduled       = match($this->item->cmsType()) {
+	                    CMSType::JOOMLA => in_array($item->extension_id, $scheduledExtensions),
+                        CMSType::WORDPRESS => in_array(
+	                        (($item->type === 'plugin') ? 'plg_' : 'tpl_') . str_replace('/', '_', $item->extension_id),
+                            $scheduledExtensions
+                        ),
+                        default => false
+                    };
 
                     $cssClasses = 'extension-row';
                     $cssClasses .= $noUpdateSite ? ' filter-updatesite' : '';
                     $cssClasses .= $missingDownloadID ? ' filter-dlid' : '';
                     $cssClasses .= $naughtyUpdates ? ' filter-naughty' : '';
                     $cssClasses .= ($hasUpdate && !$noUpdateSite) ? ' filter-update' : ' filter-noupdate';
-                    $cssClasses .= $hasUpdate && (in_array($item->extension_id, $scheduledExtensions) || (!$error && $this->willExtensionAutoUpdate($item, $this->item))) ? ' filter-scheduled' :
+                    $cssClasses .= $hasUpdate && ($isScheduled || (!$error && $this->willExtensionAutoUpdate($item, $this->item))) ? ' filter-scheduled' :
                         ($hasUpdate ? ' filter-unscheduled' : '');
                     ?>
                 <tr class="{{ $cssClasses }}">
@@ -423,7 +431,7 @@ $hasError            = !empty($lastError);
                                 </span>
                             @endif
 
-                            @if (in_array($item->extension_id, $scheduledExtensions))
+                            @if ($isScheduled)
                                 <span class="badge bg-success">
                                     <span class="fa fa-hourglass-half" aria-hidden="true"
                                           data-bs-toggle="tooltip" data-bs-placement="top"
@@ -536,7 +544,7 @@ $hasError            = !empty($lastError);
                             </span>
 
                             {{-- Button to install the update (if not scheduled, or if schedule failed) --}}
-                            @if (!in_array($item->extension_id, $scheduledExtensions) && $hasUpdate && !$error && !$this->willExtensionAutoUpdate($item, $this->item))
+                            @if (!$isScheduled && $hasUpdate && !$error && !$this->willExtensionAutoUpdate($item, $this->item))
                                 @if ($this->item->cmsType() === CMSType::WORDPRESS)
                                     <?php $pluginKey = ($item->type === 'plugin' ? 'plg_' : 'tpl_') . str_replace('/', '_', $item->extension_id) ?>
                                     <a class="btn btn-sm btn-outline-primary" role="button"

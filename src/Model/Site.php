@@ -708,17 +708,22 @@ class Site extends DataModel
 
 	public function getExtensionsScheduledForUpdate(): array
 	{
-		$queueName = sprintf('extensions.%d', $this->getId());
-		$db        = $this->getDbo();
-		$query     = $db->getQuery(true);
+		$queueName    = sprintf('extensions.%d', $this->getId());
+		$altQueueName = sprintf('plugins.%d', $this->getId());
+		$db           = $this->getDbo();
+		$query        = $db->getQuery(true);
 		$query
 			->select($query->jsonExtract($db->quoteName('item'), '$.data'))
 			->from($db->quoteName('#__queue'))
 			->where(
 				[
-					$query->jsonExtract($db->quoteName('item'), '$.queueType') . ' = ' . $db->quote($queueName),
 					$query->jsonExtract($db->quoteName('item'), '$.siteId') . ' = ' . (int) $this->getId(),
 				]
+			)->extendWhere(
+				'AND', [
+				$query->jsonExtract($db->quoteName('item'), '$.queueType') . ' = ' . $db->quote($queueName),
+				$query->jsonExtract($db->quoteName('item'), '$.queueType') . ' = ' . $db->quote($altQueueName),
+			], 'OR'
 			);
 
 
