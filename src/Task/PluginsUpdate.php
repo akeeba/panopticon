@@ -28,7 +28,6 @@ use Akeeba\Panopticon\View\Mailtemplates\Html;
 use Awf\Registry\Registry;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\RequestOptions;
 use RuntimeException;
 
 #[AsTask(name: 'pluginsupdate', description: 'PANOPTICON_TASKTYPE_PLUGINSUPDATE')]
@@ -114,13 +113,13 @@ class PluginsUpdate extends AbstractCallback
 		if (is_object($item->getData()))
 		{
 			// This handles legacy data which might be in the database. Eventually, it can be removed.
-			$softwareId    = (string) ($data->id ?? 0);
+			$softwareId     = (string) ($data->id ?? 0);
 			$updateMode     = $data->mode ?? 'update';
 			$initiatingUser = $data->initiatingUser ?? 0;
 		}
 		else
 		{
-			$softwareId    = (string) $item->getData();
+			$softwareId     = (string) $item->getData();
 			$updateMode     = 'update';
 			$initiatingUser = 0;
 		}
@@ -140,6 +139,14 @@ class PluginsUpdate extends AbstractCallback
 		// Try to get the extension information from the site's config
 		$siteConfig = $site->getConfig() ?? new Registry();
 		$extensions = (array) $siteConfig->get('extensions.list');
+
+		$extKeys = array_map(
+			fn($item) => (($item->type === 'plugin') ? 'plg_' : 'tpl_') .
+		             trim(implode('_', [$item->folder, $item->element]), '_'),
+			$extensions
+		);
+
+		$extensions = array_combine($extKeys, $extensions);
 
 		if (!isset($extensions[$softwareId]))
 		{
@@ -186,12 +193,15 @@ class PluginsUpdate extends AbstractCallback
 
 		// Send the HTTP request
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
-		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/update');
+		[$url, $options] = $this->getRequestOptions($site, '/v1/panopticon/update');
 
-		$softwareType = $extensions[$softwareId]->type;
-		[,$softwareSlug] = explode('_', $softwareId, 2);
+		$urlSlugs = array_filter([
+			($extensions[$softwareId]->type === 'plugin') ? 'plugin' : 'theme',
+			$extensions[$softwareId]->folder,
+			$extensions[$softwareId]->element,
+		]);
 
-		$url = rtrim($url, '/') . '/' . $softwareType . '/' . $softwareSlug;
+		$url = rtrim($url, '/') . '/' . implode('/', $urlSlugs);
 
 		try
 		{
@@ -362,8 +372,7 @@ class PluginsUpdate extends AbstractCallback
 		// Update extensions.list and extensions.hasUpdates in the site's config storage
 		$this->saveSite(
 			$site,
-			function (Site $site) use ($softwareId)
-			{
+			function (Site $site) use ($softwareId) {
 				// Reload the site information, in case it changed while we were installing updates
 				$site->findOrFail($site->id);
 
@@ -607,11 +616,11 @@ class PluginsUpdate extends AbstractCallback
 	{
 		$this->saveSite(
 			$site,
-			function (Site $site) use ($softwareId)
-			{
+			function (Site $site) use ($softwareId) {
 				$siteConfig                    = $site->getConfig() ?? new Registry();
 				$lastSeenVersions              = $siteConfig->get('director.pluginupdates.lastSeen', []) ?: [];
-				$lastSeenVersions              = is_object($lastSeenVersions) ? (array) $lastSeenVersions : $lastSeenVersions;
+				$lastSeenVersions              = is_object($lastSeenVersions) ? (array) $lastSeenVersions
+					: $lastSeenVersions;
 				$lastSeenVersions              = is_array($lastSeenVersions) ? $lastSeenVersions : [];
 				$extensions                    = (array) $siteConfig->get('extensions.list');
 				$extensionItem                 = $extensions[$softwareId] ?? null;
@@ -646,8 +655,8 @@ class PluginsUpdate extends AbstractCallback
 			],
 		];
 		$container->language->loadLanguage($language ?: $container->appConfig->get('language', 'en-GB'));
-		$fakeView                = new Html($container);
-		$rendered                = '';
+		$fakeView = new Html($container);
+		$rendered = '';
 
 		foreach ($possibleTemplates as $template)
 		{

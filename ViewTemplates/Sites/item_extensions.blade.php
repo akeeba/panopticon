@@ -537,12 +537,22 @@ $hasError            = !empty($lastError);
 
                             {{-- Button to install the update (if not scheduled, or if schedule failed) --}}
                             @if (!in_array($item->extension_id, $scheduledExtensions) && $hasUpdate && !$error && !$this->willExtensionAutoUpdate($item, $this->item))
-                                <a class="btn btn-sm btn-outline-primary" role="button"
-                                   title="@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))"
-                                   href="@route(sprintf('index.php?view=site&task=scheduleExtensionUpdate&site_id=%d&id=%d&%s=1', $this->item->id, $item->extension_id, $token))">
-                                    <span class="fa fa-bolt" aria-hidden="true"></span>
-                                    <span class="visually-hidden">@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))</span>
-                                </a>
+                                @if ($this->item->cmsType() === CMSType::WORDPRESS)
+                                    <?php $pluginKey = ($item->type === 'plugin' ? 'plg_' : 'tpl_') . str_replace('/', '_', $item->extension_id) ?>
+                                    <a class="btn btn-sm btn-outline-primary" role="button"
+                                       title="@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))"
+                                       href="@route(sprintf('index.php?view=site&task=schedulePluginUpdate&site_id=%d&id=%s&%s=1', $this->item->id, $pluginKey, $token))">
+                                        <span class="fa fa-bolt" aria-hidden="true"></span>
+                                        <span class="visually-hidden">@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))</span>
+                                    </a>
+                                @else
+                                    <a class="btn btn-sm btn-outline-primary" role="button"
+                                       title="@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))"
+                                       href="@route(sprintf('index.php?view=site&task=scheduleExtensionUpdate&site_id=%d&id=%d&%s=1', $this->item->id, $item->extension_id, $token))">
+                                        <span class="fa fa-bolt" aria-hidden="true"></span>
+                                        <span class="visually-hidden">@sprintf('PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE', $this->escape($item->version->new))</span>
+                                    </a>
+                                @endif
                             @endif
                         @else
                             {{{ $item->version->current }}}

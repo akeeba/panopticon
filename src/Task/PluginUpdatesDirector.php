@@ -261,7 +261,12 @@ class PluginUpdatesDirector extends AbstractCallback
 					}
 				}
 
-				$added = $this->enqueuePluginUpdate($site, $item->extension_id, $effectivePreference);
+				$added = $this->enqueuePluginUpdate(
+					$site,
+					($item->type === 'plugin' ? 'plg_' : 'tpl_') .
+					       str_replace('/', '_', $item->extension_id), 
+					$effectivePreference
+				);
 
 				if ($added)
 				{

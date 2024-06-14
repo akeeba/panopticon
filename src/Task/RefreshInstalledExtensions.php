@@ -556,7 +556,15 @@ class RefreshInstalledExtensions extends AbstractCallback
 
 		return array_map(
 			function ($item): object {
-				[$folder, $element] = explode('/', $item?->id ?? '/');
+				if (str_contains($item?->id ?? '', '/'))
+				{
+					[$folder, $element] = explode('/', $item?->id ?? '/');
+				}
+				else
+				{
+					$folder = $item?->id ?? '';
+					$element = null;
+				}
 
 				return (object) [
 					'extension_id'   => $item?->id ?? null,
