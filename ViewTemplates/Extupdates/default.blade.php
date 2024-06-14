@@ -5,9 +5,10 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
-use Akeeba\Panopticon\Library\Version\Version;
-
 defined('AKEEBA') || die;
+
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Library\Version\Version;
 
 /**
  * @var \Akeeba\Panopticon\View\Extupdates\Html $this
@@ -249,6 +250,19 @@ JS;
 				$hasUpdate         = !empty($currentVersion) && !empty($latestVersion)
 				                     && ($currentVersion != $latestVersion)
 				                     && version_compare($currentVersion, $latestVersion, 'lt');
+				$isScheduled       = match($site->cmsType()) {
+					CMSType::JOOMLA => in_array($item->extension_id, $this->scheduledPerSite[$site->getId()]),
+                    CMSType::WORDPRESS => in_array(
+	                    (($item->type === 'plugin') ? 'plg_' : 'tpl_') . str_replace('/', '_', $item->extension_id),
+	                    $this->scheduledPerSite[$site->getId()]
+                    ),
+                    default => false
+                };
+				$extIdForUpdate    = match($site->cmsType()) {
+					CMSType::JOOMLA => (int) $item->extensionId,
+					CMSType::WORDPRESS => (($item->type === 'plugin') ? 'plg_' : 'tpl_') . str_replace('/', '_', $item->extension_id),
+                    default => '',
+				}
 				?>
             <tr>
                 <td>
@@ -256,7 +270,7 @@ JS;
                         @sprintf('PANOPTICON_EXTUPDATES_LBL_SELECT_EXTENSION', strip_tags($item->name), $site->name)
                     </label>
                     <input type="checkbox" id="cb{{{ $i }}}" name="eid[]"
-                           value="{{{ (int)$item->site_id . '_' . (int)$item->extension_id  }}}"
+                           value="{{{ (int)$item->site_id . '_' . $extIdForUpdate  }}}"
                            onclick="akeeba.System.isChecked(this.checked);" />
                 </td>
                 <td>
@@ -265,7 +279,11 @@ JS;
                         {{{ $site->name }}}
                     </a>
                     <div class="text-body-secondary">
-                        <span class="fab fa-fw fa-joomla text-info" aria-hidden="true"></span>
+                        @if ($site->cmsType() === CMSType::JOOMLA)
+                            <span class="fab fa-fw fa-joomla text-secondary" aria-hidden="true"></span>
+                        @elseif ($site->cmsType() === CMSType::WORDPRESS)
+                            <span class="fab fa-fw fa-wordpress text-info" aria-hidden="true"></span>
+                        @endif
                         {{{ $site->getConfig()->get('core.current.version')  }}}
                         &nbsp;
                         <span class="fab fa-fw fa-php text-primary" aria-hidden="true"></span>
@@ -344,7 +362,7 @@ JS;
                             <s>{{{ strip_tags($item->name) }}}</s>
                         @endif
 
-                        @if (in_array($item->extension_id, $this->scheduledPerSite[$site->getId()]))
+                        @if ($isScheduled)
                             <span class="badge bg-success">
                             <span class="fa fa-hourglass-half" aria-hidden="true"
                                   data-bs-toggle="tooltip" data-bs-placement="top"

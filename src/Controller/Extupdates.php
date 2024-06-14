@@ -9,8 +9,10 @@ namespace Akeeba\Panopticon\Controller;
 
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueuePluginUpdateTrait;
 use Awf\Mvc\Controller;
 use Awf\Uri\Uri;
 
@@ -19,6 +21,7 @@ defined('AKEEBA') || die;
 class Extupdates extends Controller
 {
 	use EnqueueExtensionUpdateTrait;
+	use EnqueuePluginUpdateTrait;
 	use ACLTrait;
 
 	public function execute($task)
@@ -72,7 +75,7 @@ class Extupdates extends Controller
 
 				[$siteId, $extensionId] = explode('_', $eid, 2);
 
-				if (!preg_match('#^\d+$#', $siteId) || !preg_match('#^\d+$#', $extensionId))
+				if (!preg_match('#^\d+$#', $siteId))
 				{
 					return null;
 				}
@@ -128,7 +131,7 @@ class Extupdates extends Controller
 			}
 
 			// You can only schedule updates if you have the admin or editown privilege on the site
-			$haveGlobalPrivilege = !$user->authorise('panopticon.admin', $site);
+			$haveGlobalPrivilege = $user->authorise('panopticon.admin', $site);
 			$canEditOwn          = $user->authorise('panopticon.editown', $site) && $site->created_by == $user->getId();
 
 			if (!$haveGlobalPrivilege && !$canEditOwn)
@@ -137,11 +140,23 @@ class Extupdates extends Controller
 			}
 
 			// Enqueue the update
-			if ($this->enqueueExtensionUpdate($site, $extensionId, 'major', $user))
+			if ($site->cmsType() === CMSType::JOOMLA)
 			{
-				$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
+				if ($this->enqueueExtensionUpdate($site, $extensionId, 'major', $user))
+				{
+					$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
 
-				$numScheduled++;
+					$numScheduled++;
+				}
+			}
+			elseif ($site->cmsType() === CMSType::WORDPRESS)
+			{
+				if ($this->enqueuePluginUpdate($site, $extensionId, 'major', $user))
+				{
+					$this->schedulePluginsUpdateForSite($site, $this->getContainer());
+
+					$numScheduled++;
+				}
 			}
 		}
 
