@@ -173,7 +173,7 @@ class Sysconfig extends Model
 
 						case CMSType::WORDPRESS->value:
 							$extKey = (($ext->type ?? null) === 'plugin' ? 'plg_' : 'tpl_')
-								. ($ext->extension_id ?? '');
+								. str_replace('/', '_', $ext->extension_id ?? '');
 
 							if (empty($ext->extension_id ?? ''))
 							{

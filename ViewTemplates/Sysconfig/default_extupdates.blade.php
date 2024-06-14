@@ -168,7 +168,7 @@ $config = $this->container->appConfig;
                             'required' => 'required',
                         ];
 
-                        if ($key === 'pkg_panopticon' || str_ends_with($key, '/panopticon.php'))
+                        if ($key === 'pkg_panopticon' || str_ends_with($key, '_panopticon.php'))
                         {
                             $attribs['disabled'] = true;
                             $item->preference    = 'major';
