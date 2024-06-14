@@ -163,13 +163,13 @@ class Html extends DataViewHtml
 	 */
 	protected array $extensions;
 
-	private ?string $curlError = null;
+	protected ?string $curlError = null;
 
-	private ?string $guzzleError = null;
+	protected ?string $guzzleError = null;
 
-	private ?int $httpCode;
+	protected ?int $httpCode;
 
-	private array $backupProfiles = [];
+	protected array $backupProfiles = [];
 
 	public function onBeforeConnectionDoctor(): bool
 	{
