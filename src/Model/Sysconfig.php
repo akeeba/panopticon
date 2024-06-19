@@ -207,13 +207,6 @@ class Sysconfig extends Model
 			fn($v) => is_string($v) && in_array($v, ['', 'email', 'none', 'major', 'minor', 'patch'])
 		);
 
-		// Filter the data keys
-		$data = array_filter(
-			$data,
-			[$this, 'isvalidShortname'],
-			ARRAY_FILTER_USE_KEY
-		);
-
 		if (empty($data))
 		{
 			return;
@@ -283,52 +276,6 @@ class Sysconfig extends Model
 			'template' => ($client_id === 0 ? 'atpl_' : 'tpl_') . $element,
 			default => null,
 		};
-	}
-
-	/**
-	 * Is this a valid short name for a Joomla! extension?
-	 *
-	 * @param   string  $shortname  The shortname to check.
-	 *
-	 * @return  bool
-	 */
-	public function isvalidShortname(string $shortname): bool
-	{
-		if (!str_contains($shortname, '_'))
-		{
-			return false;
-		}
-
-		$parts = explode('_', $shortname, 3);
-
-		if (!in_array($parts[0], ['pkg', 'com', 'plg', 'amod', 'mod', 'file', 'lib', 'tpl', 'atpl']))
-		{
-			return false;
-		}
-
-		$noEmptyparts = array_reduce(
-			$parts,
-			fn(bool $carry, $item) => $carry && (is_string($item) && !empty($item)),
-			true
-		);
-
-		switch ($parts[0])
-		{
-			case 'pkg':
-			case 'com':
-			case 'file':
-			case 'lib':
-			case 'mod':
-			case 'amod':
-			case 'tpl':
-			case 'atpl':
-				return count($parts) >= 2 && $noEmptyparts;
-
-			case 'plg':
-				return count($parts) >= 3 && $noEmptyparts;
-		}
-
-		return false;
 	}
 
 	public function getUptimeOptions()
