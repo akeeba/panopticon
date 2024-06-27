@@ -19,6 +19,7 @@ use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupInvalidBody;
 use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNoEndpoint;
 use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNotInstalled;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Logger\MemoryLogger;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupCannotConnectException;
@@ -81,7 +82,17 @@ trait AkeebaBackupIntegrationTrait
 
 		$client = $container->httpFactory->makeClient(cache: false, singleton: false);
 
-		[$url, $options] = $this->getRequestOptions($this, '/index.php/v1/panopticon/akeebabackup/info');
+		[$url, $options] = match ($this->cmsType())
+		{
+			CMSType::JOOMLA => $this->getRequestOptions($this, '/index.php/v1/panopticon/akeebabackup/info'),
+			CMSType::WORDPRESS => $this->getRequestOptions($this, '/v1/panopticon/akeebabackup/info'),
+			default => [null, null]
+		};
+
+		if ($url === null)
+		{
+			// TODO Raise exception: unsupported site
+		}
 
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
@@ -124,7 +135,11 @@ trait AkeebaBackupIntegrationTrait
 
 		// Do I have updated information?
 		$config      = $this->getConfig();
-		$info        = $results?->data?->attributes ?? null;
+		$info        = match ($this->cmsType()) {
+			CMSType::JOOMLA => $results?->data?->attributes ?? null,
+			CMSType::WORDPRESS => $results ?? null,
+			default => null
+		};
 		$currentInfo = $config->get('akeebabackup.info') ?: new stdClass();
 		$dirtyFlag   = false;
 
@@ -283,12 +298,30 @@ trait AkeebaBackupIntegrationTrait
 	{
 		$config     = $this->getConfig();
 		$extensions = (array) $config->get('extensions.list');
-		$extensions = array_filter(
-			$extensions,
-			fn(object $ext) => in_array(
-				$ext->element, ['pkg_akeebabackup', 'pkg_akeeba', 'com_akeebabackup', 'com_akeeba']
-			)
-		);
+
+		switch ($this->cmsType())
+		{
+			case CMSType::JOOMLA:
+				$extensions = array_filter(
+					$extensions,
+					fn(object $ext) => in_array(
+						$ext->element, ['pkg_akeebabackup', 'pkg_akeeba', 'com_akeebabackup', 'com_akeeba']
+					)
+				);
+				break;
+
+			case CMSType::WORDPRESS:
+				$extensions = array_filter(
+					$extensions,
+					fn(object $ext) => in_array($ext->element, ['akeebabackupwp.php'])
+				);
+				break;
+
+			default:
+				$extensions = [];
+				break;
+		}
+
 
 		return count($extensions) > 0;
 	}

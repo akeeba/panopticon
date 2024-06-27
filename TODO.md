@@ -1,7 +1,7 @@
 # WordPress integration
 
 ## UI
-* [ ] Review Akeeba Backup integration
+* [x] Review Akeeba Backup integration
 * [ ] Review Admin Tools integration
 * [x] Core Updates page
 * [x] Extension Updates page
@@ -20,7 +20,7 @@
 * [x] PluginsUpdate task (similar to ExtensionsUpdate task)
 * [x] PluginUpdatesDirector task (similar to ExtensionUpdatesDirector task)
 * [x] Add PluginsUpdatesDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
-* [ ] AkeebaBackup task: work with WordPress
+* [x] AkeebaBackup task: work with WordPress
 * [ ] FileScanner task: work with WordPress
 
 ## Mail Templates
@@ -44,8 +44,8 @@
 
 * [x] EnqueueWordPressUpdateTrait: similar to EnqueueJoomlaUpdateTrait (method: enqueueWordPressUpdate)
 * [x] EnqueuePluginUpdateTrait: similar to EnqueueExtensionUpdateTrait (method: schedulePluginsUpdateForSite)
-* [ ] Model\AkeebaBackupIntegrationTrait: deal with WP
-* [ ] Controller\AkeebaBackupIntegrationTrait: deal with WP
+* [x] Model\AkeebaBackupIntegrationTrait: deal with WP
+* [x] Controller\AkeebaBackupIntegrationTrait: deal with WP
 * [ ] Model\AdminToolsIntegrationTrait: deal with WP
 * [ ] Controller\AdminToolsIntegrationTrait: deal with WP
 
