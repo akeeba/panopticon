@@ -2,7 +2,7 @@
 
 ## UI
 * [x] Review Akeeba Backup integration
-* [ ] Review Admin Tools integration
+* [x] Review Admin Tools integration
 * [x] Core Updates page
 * [x] Extension Updates page
 
@@ -21,7 +21,7 @@
 * [x] PluginUpdatesDirector task (similar to ExtensionUpdatesDirector task)
 * [x] Add PluginsUpdatesDirector to \Akeeba\Panopticon\Model\Setup::DEFAULT_TASKS
 * [x] AkeebaBackup task: work with WordPress
-* [ ] FileScanner task: work with WordPress
+* [x] FileScanner task: work with WordPress
 
 ## Mail Templates
 * [x] wordpressupdate_found
@@ -33,8 +33,8 @@
 
 ## CLI
 
-* [x] SiteOverridesList: decline for WP sites
 * [ ] SiteAdd needs to specify CMS type, default to Joomla!
+* [x] SiteOverridesList: decline for WP sites
 * [x] SiteUpdateWordPress calls WordPressUpdate task
 * [x] SiteUpdatePlugins calls PluginsUpdate task
 * [x] TaskWordPressUpdateDirector like TaskJoomlaUpdateDirector
@@ -46,17 +46,14 @@
 * [x] EnqueuePluginUpdateTrait: similar to EnqueueExtensionUpdateTrait (method: schedulePluginsUpdateForSite)
 * [x] Model\AkeebaBackupIntegrationTrait: deal with WP
 * [x] Controller\AkeebaBackupIntegrationTrait: deal with WP
-* [ ] Model\AdminToolsIntegrationTrait: deal with WP
-* [ ] Controller\AdminToolsIntegrationTrait: deal with WP
-
-
+* [x] Model\AdminToolsIntegrationTrait: deal with WP
+* [x] Controller\AdminToolsIntegrationTrait: deal with WP
 
 # WordPress plugin and theme keys
 
 Plugins: `plg_ID` e.g. `plg_admintoolswp/admintoolswp.php`
 
 Themes: `tpl_ID` e.g. `tpl_twentytwenty`
-
 
 # Documentation notes
 

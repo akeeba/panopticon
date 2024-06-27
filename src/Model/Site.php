@@ -401,7 +401,7 @@ class Site extends DataModel
 	 * @return  string
 	 * @since   1.0.0
 	 */
-	public function getAdminUrl(): string
+	public function getAdminUrl(bool $withCustomAdminDir = true): string
 	{
 		$cmsType = $this->cmsType();
 		$url     = match ($cmsType)
@@ -423,6 +423,11 @@ class Site extends DataModel
 			CMSType::JOOMLA => 'administrator',
 			CMSType::WORDPRESS => 'wp-admin'
 		};
+
+		if (!$withCustomAdminDir)
+		{
+			$adminDir = $standardAdmin;
+		}
 
 		if (!empty($adminDir) && $adminDir !== $standardAdmin)
 		{

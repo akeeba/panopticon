@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Task;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -112,6 +113,13 @@ class FileScanner extends AbstractCallback
 				// Whatever
 			}
 
+			$this->logger->error(
+				sprintf(
+					'Invalid response from the remote server (%s)',
+					empty($result) ? 'no data' : 'response is not an object'
+				)
+			);
+
 			throw new \RuntimeException('Invalid response from the remote server.');
 		}
 
@@ -126,15 +134,20 @@ class FileScanner extends AbstractCallback
 		}
 
 		$storage->set('state', 'step');
-		$session = (array) $result->attributes?->session ?? null;
+		$resultBody = match ($this->site->cmsType()) {
+			CMSType::JOOMLA => $result->attributes ?? null,
+			CMSType::WORDPRESS => $result ?? null,
+			CMSType::UNKNOWN => null
+		};
+		$session    = (array) $resultBody?->session ?? null;
 		$storage->set('session', $session);
 
-		foreach ($result->attributes?->warnings ?? [] as $warning)
+		foreach ($resultBody?->warnings ?? [] as $warning)
 		{
 			$this->logger->warning($warning);
 		}
 
-		if ($result->attributes?->error)
+		if ($resultBody?->error)
 		{
 			// Log failed scan report
 			try
@@ -143,7 +156,7 @@ class FileScanner extends AbstractCallback
 					$this->site->id,
 					false,
 					[
-						'message' => $result->attributes?->error
+						'message' => $resultBody?->error
 					]
 				);
 
@@ -159,10 +172,12 @@ class FileScanner extends AbstractCallback
 				// Whatever
 			}
 
-			throw new \RuntimeException($result->attributes?->error);
+			$this->logger->error($resultBody?->error);
+
+			throw new \RuntimeException($resultBody?->error);
 		}
 
-		if ($result->attributes?->done)
+		if ($resultBody?->done)
 		{
 			$this->logger->info(
 				sprintf(
@@ -209,7 +224,10 @@ class FileScanner extends AbstractCallback
 	private function startScan(): ?object
 	{
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
-		[$url, $options] = $this->getRequestOptions($this->site, '/index.php/v1/panopticon/admintools/scanner/start');
+
+		$pathPrefix = $this->site->cmsType() === CMSType::JOOMLA ? '/index.php' : '';
+
+		[$url, $options] = $this->getRequestOptions($this->site, $pathPrefix . '/v1/panopticon/admintools/scanner/start');
 
 		$response = $httpClient->post($url, $options);
 
@@ -223,16 +241,27 @@ class FileScanner extends AbstractCallback
 		{
 			$error = array_pop($result->errors);
 
+			$this->logger->error($error->title);
+
 			throw new \RuntimeException($error->title, $error->code);
 		}
 
-		return $result?->data ?? null;
+		return match ($this->site->cmsType())
+		{
+			CMSType::JOOMLA => $result?->data ?? null,
+			CMSType::WORDPRESS => $result ?? null,
+			CMSType::UNKNOWN => null
+		};
 	}
 
 	private function stepScan(array|object $session): ?object
 	{
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
-		[$url, $options] = $this->getRequestOptions($this->site, '/index.php/v1/panopticon/admintools/scanner/step');
+
+		$pathPrefix = $this->site->cmsType() === CMSType::JOOMLA ? '/index.php' : '';
+
+		[$url, $options] = $this->getRequestOptions($this->site, $pathPrefix . '/v1/panopticon/admintools/scanner/step');
+
 		$options[RequestOptions::FORM_PARAMS]['session'] = (array) $session;
 
 		$response = $httpClient->post($url, $options);
@@ -247,9 +276,16 @@ class FileScanner extends AbstractCallback
 		{
 			$error = array_pop($result->errors);
 
+			$this->logger->error($error->title);
+
 			throw new \RuntimeException($error->title, $error->code);
 		}
 
-		return $result?->data ?? null;
+		return match ($this->site->cmsType())
+		{
+			CMSType::JOOMLA => $result?->data ?? null,
+			CMSType::WORDPRESS => $result ?? null,
+			CMSType::UNKNOWN => null
+		};
 	}
 }

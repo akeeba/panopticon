@@ -7,6 +7,7 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Task;
 use Awf\Uri\Uri;
@@ -86,11 +87,13 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         @lang('PANOPTICON_SCANNERTASKS_LBL_VIEW_MANUAL')
                     </a>
 
+                    {{--
                     <a href=""
                        role="button" class="btn btn-sm btn-outline-danger">
                         <span class="fa fa-refresh" aria-hidden="true"></span>
                         @lang('PANOPTICON_SCANNERTASKS_LBL_RESET')
                     </a>
+                    --}}
                 </div>
             </div>
         </div>
@@ -203,11 +206,27 @@ $token = $this->container->session->getCsrfToken()->getValue();
         <tbody>
         @foreach($this->scans as $scan)
             <?php
-            $backendUri = new Uri($this->item->getAdminUrl());
-            $backendUri->setVar('option', 'com_admintools');
-            $backendUri->setVar('view', 'Scanalerts');
-            $backendUri->setVar('scan_id', (int) $scan->id);
-            ?>
+            $backendUri = new Uri($this->item->getAdminUrl(false));
+
+			switch ($this->item->cmsType())
+			{
+                case CMSType::JOOMLA:
+	                $backendUri->setVar('option', 'com_admintools');
+	                $backendUri->setVar('view', 'Scanalerts');
+	                $backendUri->setVar('scan_id', (int) $scan->id);
+					break;
+
+                case CMSType::WORDPRESS:
+                    $backendUri->setPath(
+						rtrim($backendUri->getPath(), '/') . '/admin.php'
+                    );
+
+	                $backendUri->setVar('page', $this->item->adminToolsWordPressPluginSlug());
+	                $backendUri->setVar('view', 'Scanalerts');
+	                $backendUri->setVar('scan_id', (int) $scan->id);
+					break;
+            }
+			?>
             <tr>
                 <td class="d-none d-md-table-cell">
                     <a href="{{{ $backendUri->toString() }}}"
