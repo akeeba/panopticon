@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sites;
@@ -43,6 +44,16 @@ class SiteAdd extends AbstractCommand
 		$url          = (new Uri($input->getArgument('url')))->toString(
 			['scheme', 'user', 'pass', 'host', 'port', 'path', 'query']
 		);
+
+		$type = CMSType::tryFrom($input->getOption('type'));
+
+		if ($type === null)
+		{
+			$this->ioStyle->error('The site type must be one of the following: joomla, wordpress');
+
+			return Command::FAILURE;
+		}
+
 		$name         = $filter->clean($input->getOption('name'), 'string');
 		$token        = $filter->clean($input->getOption('token'), 'base64');
 		$enabled      = ($input->getOption('enabled') !== false) ? 1 : 0;
@@ -87,6 +98,7 @@ class SiteAdd extends AbstractCommand
 
 		$config = $model?->getConfig() ?? new Registry();
 		$config->set('config.apiKey', $token);
+		$config->set('cmsType', $type->value);
 
 		// Create an array of values to apply to the model
 		if ($adminUser | $adminPass)
@@ -169,6 +181,7 @@ class SiteAdd extends AbstractCommand
 			->addArgument('url', InputArgument::REQUIRED, 'The URL of the site to add')
 			->addOption('name', null, InputOption::VALUE_REQUIRED, 'How the site will be displayed as in Panopticon')
 			->addOption('token', 't', InputOption::VALUE_REQUIRED, 'API token')
+			->addOption('type', 'y', InputOption::VALUE_OPTIONAL, 'Type of site to add [joomla, wordpress]', 'joomla')
 			->addOption(
 				'enabled', 'e', InputOption::VALUE_NEGATABLE, 'Should the site be enabled after creation?', true
 			)

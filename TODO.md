@@ -33,7 +33,7 @@
 
 ## CLI
 
-* [ ] SiteAdd needs to specify CMS type, default to Joomla!
+* [x] SiteAdd needs to specify CMS type, default to Joomla!
 * [x] SiteOverridesList: decline for WP sites
 * [x] SiteUpdateWordPress calls WordPressUpdate task
 * [x] SiteUpdatePlugins calls PluginsUpdate task
