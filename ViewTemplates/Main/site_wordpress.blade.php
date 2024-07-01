@@ -132,7 +132,7 @@ $version = Version::create($wpVersion ?? '0.0.0') ?>
         </div>
     @endif
 
-    {{-- Is Wordpres update working at all? --}}
+    {{-- Is Wordpress update working at all? --}}
     @if($wpUpdateFailure)
         <div>
             <span class="fa fa-exclamation-triangle text-danger" aria-hidden="true"

@@ -230,7 +230,7 @@ class RefreshSiteInfo extends AbstractCallback
 				{
 					$this->logger->notice(
 						sprintf(
-							'Unknwon CMS type \'%s\' for site #%d (%s)',
+							'Unknown CMS type \'%s\' for site #%d (%s)',
 							$site->cmsType()->value ?? '(unknown)',
 							$site->id,
 							$site->name
