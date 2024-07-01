@@ -1,7 +1,8 @@
 <?php die(); ?>
-Akeeba Panopticon 1.1.4
+Akeeba Panopticon 1.2.0
 ================================================================================
-+ Much improved Docker support
++ WordPress support [gh-38]
++ Much improved Docker support [gh-697]
 + Translatable dates
 + Load TinyMCE translations
 + Batch processing sites

@@ -1,37 +1,39 @@
-This is mostly a bugfix version, but we also did manage to sneak in a new feature.
+Welcome to version 1.2! It took a while, but we have implemented a number of major new features and improvements.
 
-✨ **Send scheduled reports to specific groups** [gh-521] When you set up a scheduled email task, you can (optionally) select one or more user groups to send emails to. This allows you to fine-tune who receives the emails by creating and assigning user groups.
+**WordPress support**. You can now monitor WordPress sites. This feature has only been tested with WordPress 5.0 or later, with a few sites only. Please, treat it as a “beta” feature. 
+
+**Much improved Docker support**. You can now use a `.env.docker` file to configure the Docker instance instead of having to hack through the `docker-compose.yml` file. The dockerizer instance can have more than one CRON jobs running; this is user-configurable. You can upgrade the Docker instance without losing your settings just by updating the image and restarting the container. For this reason, the integrated Panopticon updater is _disabled_ when running under Docker.
+
+**Translatable dates**. Previously, you could change the date format, but not the language the dates where in. For example, you'd get "Monday, July 1, 2024" even when your language was set to, say, Greek. Now, the day and month names are properly translatable.
+
+**Load TinyMCE translations**. TinyMCE, the editor used for mail templates and site notes, comes with its own interface translations. Previously, only the English language was loaded. Now, we check if there's a translation which (kinda) matches your selected language and load it as well. Please note that TinyMCE's translations do not have a one-to-one mapping to Panopticon languages. We try to automatically find the best match. If this is not possible, or if the translation is partial, we fall back to English.
+
+**Batch processing sites**. You can now select multiple sites to assign them and/or remove them from groups.
 
 ## 🖥️ System Requirements
 
-* PHP 8.1, 8.2, or 8.3. PHP 8.2 recommended.
+* PHP 8.1, 8.2, or 8.3. PHP 8.3 recommended.
 * MySQL 5.7 or later, or MariaDB 10.3 or later. MySQL 8.0 recommended.
-* Ability to run CRON jobs, either command-line (recommended) or URLs with a frequency of once every minute and an
-  execution time of at least 30 seconds (up to 180 seconds is strongly preferred).
+* Ability to run CRON jobs, either command-line (recommended) or URLs with a frequency of once every minute and an execution time of at least 30 seconds (up to 180 seconds is strongly preferred).
 * Obviously, the server it runs on must be connected to the Internet, so it can communicate with your sites.
 
 ## 🔮 What's coming next?
 
 Development of Akeeba Panopticon takes place _in public_. You can see what we're planning, thinking of, and working on in [our issues tracker](https://github.com/akeeba/panopticon/issues).
 
-Kindly remember that the order and timeframe for implementation largely depends on our available time, our assessment of expected complexity, and interdependencies between features. Security issues and bugs always take priority over new features; there's no point polishing a broken glass. Thank you for your understanding!
-
 ## 📋 CHANGELOG
 
-* ✨ Send scheduled reports to specific groups [gh-521]
-* ✨ Connection doctor: detect Akeeba Backup Core for Joomla! 3
-* ✨ Improve the X-Mailer and Reply-To headers in sent emails
-* ✨ Internal support for sending email only to selected user groups
-* 🐞 🔺 Cannot launch installation due to a missing character
-* 🐞 🔺 Tasks would be picked up by multiple task runners running in parallel (MySQL race condition)
-* 🐞 ➖ No visible error message when the site information update fails [gh-523]
-* 🐞 ➖ PHPmailer throws a simple RuntimeException in some cases, which was not being caught
-* 🐞 ➖ Custom CLI commands in user_code where not autoloaded
-* 🐞 ➖ Custom tasks in user_code where not autoloaded
-* 🐞 🔻 Extraneous slash in mail messages' `[URL]` variable [gh-519]
-* 🐞 🔻 Joomla update failures could result in the wrong error message displayed
-* 🐞 🔻 Missing or small favicons can create layout issues [gh-522]
-* 🐞 🔻 Connection to Akeeba Backup reset when saving site without changing connection information [gh-534]
+* ✨ WordPress support [gh-38]
+* ✨ Much improved Docker support [gh-697]
+* ✨ Translatable dates
+* ✨ Load TinyMCE translations
+* ✨ Batch processing sites
+* 🐞➖ MaxExec task throws fatal exception when tasks are executed over the web
+* 🐞🔻 Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
+* 🐞🔻 Wrong language in mail Blade templates [gh-658]
+* 🐞🔻 Groups for disabled sites may not be displayed in the Sites admin page
+* 🐞🔻 Connection doctor: sometimes ends up with an error page instead of showing what is going on with the connection
+* 🐞🔻 High CPU usage warning when the server does not report CPU usage at all
 
 Legend:
 
