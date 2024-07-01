@@ -28,8 +28,8 @@
 * [x] wordpressupdate_installed
 * [x] wordpressupdate_failed
 * [x] wordpressupdate_will_install
-* [ ] plugins_update_done  (plus template)
-* [ ] plugin_update_found  (plus template)
+* [x] plugin_update_found
+* [x] plugins_update_done  (plus view template)
 
 ## CLI
 

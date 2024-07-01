@@ -88,6 +88,8 @@ class Mailtemplates extends DataModel
 			'joomlaupdate_failed'       => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_JOOMLAUPDATE_FAILED',
 			'extension_update_found'    => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSION_UPDATE_FOUND',
 			'extensions_update_done'    => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSIONS_UPDATE_DONE',
+			'plugin_update_found'       => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGIN_UPDATE_FOUND',
+			'plugins_update_done'       => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGINS_UPDATE_DONE',
 			'akeebabackup_success'      => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_SUCCESS',
 			'akeebabackup_fail'         => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_FAIL',
 			'selfupdate_found'          => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SELFUPDATE_FOUND',

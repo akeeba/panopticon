@@ -532,5 +532,157 @@ INSERT INTO `#__mailtemplates`
 ]]></query>
         </action>
 
+        <!-- Install mail template: plugin_update_found -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'plugin_update_found') x
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates`
+(`type`,`language`,`subject`,`html`,`plaintext`) VALUES
+    ('plugin_update_found', '*', '⚠️ [EXTENSION_NAME] [NEW_VERSION] is available for installation on “[SITE_NAME]”', '<div class="akemail-outer-wrapper">
+<table>
+<tbody>
+<tr>
+<td width="10%">&nbsp;</td>
+<td>
+<div class="akemail-wrapper">
+<div class="akemail-container"><!-- Logo Header -->
+<div class="akemail-logo"><a href="[URL]">&nbsp;<img src="[URL]/media/images/logo_bw.svg" alt="Panopticon &mdash; Site Monitoring">&nbsp;</a></div>
+<!-- Hello -->
+<div class="akemail-hello">
+<p>Hello,</p>
+</div>
+<!-- Main-Topic -->
+<div class="akemail-main-topic">
+<p>[EXTENSION_NAME] [NEW_VERSION] is available on &ldquo;[SITE_NAME]&rdquo;</p>
+</div>
+<!-- Message -->
+<div class="akemail-message">
+<p>[EXTENSION_NAME] version [NEW_VERSION] is now available for installation on your site &ldquo;<a href="[SITE_URL]">[SITE_NAME]</a>&rdquo;. Your site is currently running the older version [OLD_VERSION].</p>
+</div>
+<!-- Area Offer/Announcement -->
+<div class="akemail-announcement">
+<div class="akemail-announcement-box">
+<h3>Action required</h3>
+<p>The new version will <strong>NOT</strong> be installed automatically. You will have to install it yourself.</p>
+</div>
+<p class="akemail-announcement-note"><em>Note</em>: Akeeba Panopticon can be configured to install new versions of [EXTENSION_NAME] automatically.</p>
+<p class="akemail-announcement-visitlink">You can install the new [EXTENSION_NAME] version either from your site''s wp-admin page, or through the main control panel of <a href="[URL]">your Akeeba Panopticon installation</a>.</p>
+</div>
+<!-- Bye, Bye -->
+<div class="akemail-outro">
+<p>Have a great day!</p>
+</div>
+<!-- Footer -->
+<div class="akemail-footer">
+<p class="akemail-footer-sitelink">&nbsp;<a href="[URL]">Panopticon &mdash; Site Monitoring</a></p>
+</div>
+</div>
+<!-- Legal info -->
+<div class="akemail-legalinfo">
+<p>This is an automated email. Please do not reply to it.</p>
+</div>
+</div>
+</td>
+<td width="10%">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>', 'Hello,
+
+
+[EXTENSION_NAME] [NEW_VERSION] is available on “[SITE_NAME]”
+
+
+[EXTENSION_NAME] version [NEW_VERSION] is now available for installation on
+your site “[SITE_NAME] [SITE_URL]”. Your site is currently
+running the older version [OLD_VERSION].
+
+
+==============================================================================
+! ! ! ! !  ACTION REQUIRED  ! ! ! ! !
+==============================================================================
+
+The new version will NOT be installed automatically. You will have to
+install it yourself.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Note: Akeeba Panopticon can be configured to install new versions of
+[EXTENSION_NAME] automatically.
+
+==============================================================================
+
+
+You can install the new [EXTENSION_NAME] version either from
+your site''s wp-admin page, or through the main control panel of your
+Akeeba Panopticon installation ([URL]).
+
+Have a great day!
+
+------------------------------------------------------------------------------
+
+This email was sent by the Panopticon installation on [URL].
+This is an automated email. Please do not reply to it.
+');
+]]></query>
+        </action>
+
+        <!-- Install mail template: plugins_update_done -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'plugins_update_done') x
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates`
+(`type`,`language`,`subject`,`html`,`plaintext`) VALUES
+    ('plugins_update_done', '*', 'Automatic software updates on [SITE_NAME]', '<div class="akemail-outer-wrapper">
+<table>
+<tbody>
+<tr>
+<td width="10%">&nbsp;</td>
+<td>
+<div class="akemail-wrapper">
+<div class="akemail-container"><!-- Logo Header -->
+<div class="akemail-logo"><a href="[URL]">&nbsp;<img src="[URL]/media/images/logo_bw.svg" alt="Panopticon &mdash; Site Monitoring">&nbsp;</a></div>
+<!-- Hello -->
+<div class="akemail-hello">
+<p>Hello,</p>
+</div>
+[RENDERED_HTML] <!-- Bye, Bye -->
+<div class="akemail-outro">
+<p>Have a great day!</p>
+</div>
+<!-- Footer -->
+<div class="akemail-footer">
+<p class="akemail-footer-sitelink">&nbsp;<a href="[URL]">Panopticon &mdash; Site Monitoring</a></p>
+</div>
+</div>
+<!-- Legal info -->
+<div class="akemail-legalinfo">
+<p>This is an automated email. Please do not reply to it.</p>
+</div>
+</div>
+</td>
+<td width="10%">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>', 'Hello,
+
+
+[RENDERED_TEXT]
+
+
+Have a great day!
+
+------------------------------------------------------------------------------
+
+This email was sent by the Panopticon installation on [URL]
+This is an automated email. Please do not reply to it.');
+]]></query>
+        </action>
+
     </sql>
 </schema>
