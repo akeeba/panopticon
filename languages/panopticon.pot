@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.4\n"
-"POT-Creation-Date: 2024-05-30 10:14:49\n"
+"POT-Creation-Date: 2024-07-01 09:33:30\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -878,6 +878,11 @@ msgid "Disable"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_BTN_BATCH"
+msgid "Batch"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_APP_MENU_TITLE_ADMINISTRATION"
 msgid "Administration"
 msgstr ""
@@ -980,6 +985,26 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_ACTIONSUMMARYEMAIL"
 msgid "Sends a Site Action Summary email"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_WORDPRESSUPDATE"
+msgid "Update WordPress core"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_WORDPRESSUPDATEDIRECTOR"
+msgid "Schedule Automatic WordPress Update"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_PLUGINSUPDATE"
+msgid "Update installed WordPress plugins and themes"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_PLUGINUPDATESDIRECTOR"
+msgid "Schedule automatic WordPress plugin and theme updates"
 msgstr ""
 
 #, phpformat
@@ -1230,6 +1255,51 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_WILL_BE_UPDATED"
 msgid "Site %d (%s) will be updated from Joomla! %s to Joomla! %s."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NO_UPDATE_AVAILABLE"
+msgid "The site %s (%s) is on WordPress %s. The latest available version is %s. Therefore, it cannot be updated."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_LOG_WILL_BE_UPDATED"
+msgid "Site %d (%s) will be updated from WordPress %s to WordPress %s."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_LOG_BACKUP_DESCRIPTION"
+msgid "Automatic backup taken by Panopticon before upgrading to WordPress %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_LOG_INSTALLING"
+msgid "Installing WordPress update on site #%d (%s) starts now"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_HTTP"
+msgid "Installing WordPress update on site #%d (%s) has failed with HTTP error %d"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_WORDPRESS"
+msgid "Installing WordPress update on site #%d (%s) has failed with WordPress error %d: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_STATUS_FALSE"
+msgid "Installing WordPress update on site #%d (%s) has failed. The site provided no other error information."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NOT_FOUND"
+msgid "Installing WordPress update on site #%d (%s) has failed. The site claims no update has been found. Did you turn on automatic updates in WordPress, or have a different service update the site?"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_INVALID_JSON"
+msgid "Installing WordPress update on site #%d (%s) has failed. The server\'s response is not valid JSON."
 msgstr ""
 
 #, phpformat
@@ -3213,6 +3283,11 @@ msgid "Extensions Update"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITE_LBL_TAB_PLUGINS_AND_THEMES"
+msgid "Plugins &amp; Themes"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_NAME"
 msgid "Site Name"
 msgstr ""
@@ -3623,6 +3698,36 @@ msgid "The site will be considered up if the page contains this string. Do <em>N
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_BATCH_TITLE"
+msgid "Batch process the selected sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_BATCH_PROCESS"
+msgid "Process"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_BATCH_LBL_ADD_TO_GROUP"
+msgid "Add to group"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_BATCH_LBL_REMOVE_FROM_GROUP"
+msgid "Remove from group"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_BATCH_COMPLETED"
+msgid "The group membership of sites you selected has been processed."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_BATCH_ERR_NO_IDS"
+msgid "You have not selected any sites to process the group membership of."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_TITLE_READ"
 msgid "Site Information"
 msgstr ""
@@ -3953,6 +4058,41 @@ msgid "The Joomla! update availability information is provided by your site. Joo
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_OK"
+msgid "Scheduled the WordPress core update."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_ERR_WPUPDATE_SCHEDULE_FAILED"
+msgid "Scheduling the WordPress core update has failed."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_ERROR_CLEARED"
+msgid "The scheduling error has been cleared."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_ERROR_NOT_CLEARED"
+msgid "The scheduling error could not be cleared: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_UNSCHEDULE_ERR_NOT_SCHEDULED"
+msgid "There is no scheduled update."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_UNSCHEDULE_ERR_RUNNING"
+msgid "The scheduled update is already running."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_ERR_WPUPDATE_UNSCHEDULE_FAILED"
+msgid "Could not cancel the WordPress core update."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_HEAD"
 msgid "WordPress Update"
 msgstr ""
@@ -4030,6 +4170,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_UPDATE"
 msgid "Schedule Automatic Update to WordPress %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_PLUGIN_UPDATE_SCHEDULE_OK"
+msgid "Scheduled the plugin / theme update."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_ERR_PLUGIN_UPDATE_SCHEDULE_FAILED"
+msgid "Scheduling the plugin / theme update has failed."
 msgstr ""
 
 #, phpformat
@@ -6198,6 +6348,11 @@ msgid "Table of known extensions and their automatic update preferences"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_CMS"
+msgid "CMS Type"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_NAME"
 msgid "Extension name"
 msgstr ""
@@ -6763,6 +6918,26 @@ msgid "Joomla Core Update: Update failed"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_WORDPRESSUPDATE_FOUND"
+msgid "WordPress Core Update: Update found"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "WordPress Core Update: Update will be installed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress Core Update: Update installed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_WORDPRESSUPDATE_FAILED"
+msgid "WordPress Core Update: Update failed"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_SUCCESS"
 msgid "Akeeba Backup: Successful backup"
 msgstr ""
@@ -6780,6 +6955,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSIONS_UPDATE_DONE"
 msgid "Joomla! Extension Update: Autoupdate Results"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGIN_UPDATE_FOUND"
+msgid "Wordpress Plugin/Theme Update: Update Found"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGINS_UPDATE_DONE"
+msgid "Wordpress Plugin/Theme Update: Autoupdate Results"
 msgstr ""
 
 #, phpformat
@@ -6945,6 +7130,21 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_BTN_RUN_POSTUPGRADE"
 msgid "Run the Post-upgrade code"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SELFUPDATE_ERR_UNDERDOCKER"
+msgid "You cannot take this action when running Panopticon under Docker. Please refer to our documentation for the correct update instructions for this use case."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_HEAD"
+msgid "You are running Panopticon under Docker"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
+msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
 msgstr ""
 
 #, phpformat
@@ -9165,5 +9365,330 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_MONTHLY"
 msgid "Monthly"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_AR"
+msgid "Arabic"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_AR_SA"
+msgid "Arabic, Saudi Arabia"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_AZ"
+msgid "Azerbaijani"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_BE"
+msgid "Belarusian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_BG_BG"
+msgid "Bulgarian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_BN_BD"
+msgid "Bengali"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_CA"
+msgid "Catalan"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_CS"
+msgid "Czech"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_CY"
+msgid "Welsh"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_DA"
+msgid "Danish"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_DE"
+msgid "German"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_EL"
+msgid "Greek"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_EO"
+msgid "Esperanto"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ES"
+msgid "Spanish (Spain)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ES_MX"
+msgid "Spanish (Mexico)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ET"
+msgid "Estonian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_EU"
+msgid "Basque"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_FA"
+msgid "Persian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_FI"
+msgid "Finnish"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_FR_FR"
+msgid "French (France)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_GA"
+msgid "Irish"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_GL"
+msgid "Galician"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_HE_IL"
+msgid "Hebrew (Israel)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_HR"
+msgid "Croatian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_HU_HU"
+msgid "Hungarian (Hungary)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_HY"
+msgid "Armenian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ID"
+msgid "Indonesian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_IS_IS"
+msgid "Icelandic"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_IT"
+msgid "Italian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_JA"
+msgid "Japanese"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_KA_GE"
+msgid "Georgian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_KAB"
+msgid "Kabyle"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_KK"
+msgid "Kazakh"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_KO_KR"
+msgid "Korean (Korea)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_KU"
+msgid "Kurdish"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_LT"
+msgid "Lithuanina"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_LV"
+msgid "Latvian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_NB_NO"
+msgid "Norwegian Bokmål (Norway)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_NE"
+msgid "Nepali"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_NL"
+msgid "Dutch"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_NL_BE"
+msgid "Butch (Belgium)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_OC"
+msgid "Occitan"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_PL"
+msgid "Polish"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_PT_BR"
+msgid "Portuguese (Brazil)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_PT_PT"
+msgid "Portuguese (Portugal)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_RO"
+msgid "Romanian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_RU"
+msgid "Russian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_SK"
+msgid "Slovak"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_SL_SI"
+msgid "Slovenian (Slovenia)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_SQ"
+msgid "Albanina"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_SR"
+msgid "Serbian (Cyrillic)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_SV_SE"
+msgid "Swedish (Sweden)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_TA"
+msgid "Tamil"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_TG"
+msgid "Tajik"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_TH_TH"
+msgid "Thai (Thailand)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_TR"
+msgid "Turkish"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_UG"
+msgid "Uyghur"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_UK"
+msgid "Ukrainian"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_UZ"
+msgid "Uzbek"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_VI"
+msgid "Vietnamese"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_CN"
+msgid "Chinese Simplified (China)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_HK"
+msgid "Chinese Traditional (Hong Kong)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_MO"
+msgid "Chinese Traditional (Macau)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_SG"
+msgid "Chinese Traditional (Singapore)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_TW"
+msgid "Chinese Traditional (Taiwan)"
 msgstr ""
 
