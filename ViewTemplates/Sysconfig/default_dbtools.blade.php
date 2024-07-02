@@ -22,7 +22,7 @@ $config = $this->container->appConfig;
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="options[dbbackup_auto]" id="dbbackup_auto"
+                    <input class="form-check-input" type="checkbox" name="options[dbbackup_auto]" id="dbbackup_auto" value="1"
                            {{ $config->get('dbbackup_auto', true) ? 'checked' : '' }}
                     >
                     <label class="form-check-label" for="dbbackup_auto">
@@ -36,7 +36,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{-- dbbackup_compress --}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[dbbackup_auto]","values":["1"],"sign":"=","op":""}]'>
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[dbbackup_compress]" id="dbbackup_compress"
@@ -53,7 +53,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{-- dbbackup_maxfiles --}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[dbbackup_auto]","values":["1"],"sign":"=","op":""}]'>
             <label for="dbbackup_maxfiles" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_MAXFILES')
             </label>

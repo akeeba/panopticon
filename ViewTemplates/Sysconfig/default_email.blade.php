@@ -21,7 +21,7 @@ $user   = $this->container->userManager->getUser();
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="options[mail_online]" id="mail_online"
+                    <input class="form-check-input" type="checkbox" name="options[mail_online]" id="mail_online" value="1"
                             {{ $config->get('mail_online', false) ? 'checked' : '' }}
                     >
                     <label class="form-check-label" for="mail_online">
@@ -32,7 +32,7 @@ $user   = $this->container->userManager->getUser();
         </div>
 
         {{--immediate_email--}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[mail_online]","values":["1"],"sign":"=","op":""}]'>
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[immediate_email]" id="immediate_email"
@@ -46,7 +46,7 @@ $user   = $this->container->userManager->getUser();
         </div>
 
         {{--mail_inline_images--}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[mail_online]","values":["1"],"sign":"=","op":""}]'>
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" name="options[mail_inline_images]" id="mail_inline_images"
@@ -60,7 +60,7 @@ $user   = $this->container->userManager->getUser();
         </div>
 
         {{--mailer--}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[mail_online]","values":["1"],"sign":"=","op":""}]'>
             <label for="mailer" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_mailer')
             </label>
@@ -84,7 +84,7 @@ $user   = $this->container->userManager->getUser();
         </div>
 
         {{--mailfrom--}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[mail_online]","values":["1"],"sign":"=","op":""}]'>
             <label for="mailfrom" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_MAILFROM')
             </label>
@@ -96,7 +96,7 @@ $user   = $this->container->userManager->getUser();
         </div>
 
         {{--fromname--}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[mail_online]","values":["1"],"sign":"=","op":""}]'>
             <label for="fromname" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_FROMNAME')
             </label>
@@ -107,7 +107,7 @@ $user   = $this->container->userManager->getUser();
             </div>
         </div>
 
-        <div id="smtpSetup" data-showon='[{"field":"options[mailer]","values":["smtp"],"sign":"=","op":""}]'>
+        <div id="smtpSetup" data-showon='[{"field":"options[mailer]","values":["smtp"],"sign":"=","op":""},{"field":"options[mail_online]","values":["1"],"sign":"=","op":""}]'>
             {{--smtphost--}}
             <div class="row mb-3">
                 <label for="smtphost" class="col-sm-3 col-form-label">
@@ -161,7 +161,7 @@ $user   = $this->container->userManager->getUser();
             <div class="row mb-3">
                 <div class="col-sm-9 offset-sm-3">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" name="options[smtpauth]" id="smtpauth"
+                        <input class="form-check-input" type="checkbox" name="options[smtpauth]" id="smtpauth" value="1"
                                 {{ $config->get('smtpauth', false) ? 'checked' : '' }}
                         >
                         <label class="form-check-label" for="smtpauth">
@@ -172,7 +172,7 @@ $user   = $this->container->userManager->getUser();
             </div>
 
             {{--smtpuser--}}
-            <div class="row mb-3">
+            <div class="row mb-3" data-showon='[{"field":"options[smtpauth]","values":["1"],"sign":"=","op":""}]'>
                 <label for="smtpuser" class="col-sm-3 col-form-label">
                     @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPUSER')
                 </label>
@@ -184,7 +184,7 @@ $user   = $this->container->userManager->getUser();
             </div>
 
             {{--smtppass--}}
-            <div class="row mb-3">
+            <div class="row mb-3" data-showon='[{"field":"options[smtpauth]","values":["1"],"sign":"=","op":""}]'>
                 <label for="smtppass" class="col-sm-3 col-form-label">
                     @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_smtppass')
                 </label>
