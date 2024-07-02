@@ -21,7 +21,7 @@ $config = $this->container->appConfig;
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="options[proxy_enabled]" id="proxy_enabled"
+                    <input class="form-check-input" type="checkbox" name="options[proxy_enabled]" id="proxy_enabled" value="1"
                             {{ $config->get('proxy_enabled', false) ? 'checked' : '' }}
                     >
                     <label class="form-check-label" for="proxy_enabled">
@@ -32,7 +32,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{-- proxy_host --}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[proxy_enabled]","values":["1"],"sign":"=","op":""}]'>
             <label for="proxy_host" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_HOST')
             </label>
@@ -45,7 +45,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{-- proxy_port --}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[proxy_enabled]","values":["1"],"sign":"=","op":""}]'>
             <label for="proxy_port" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_PORT')
             </label>
@@ -58,7 +58,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{-- proxy_user --}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[proxy_enabled]","values":["1"],"sign":"=","op":""}]'>
             <label for="proxy_user" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_USER')
             </label>
@@ -70,7 +70,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{-- proxy_pass --}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[proxy_enabled]","values":["1"],"sign":"=","op":""}]'>
             <label for="proxy_pass" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_PASS')
             </label>
@@ -82,7 +82,7 @@ $config = $this->container->appConfig;
         </div>
 
         {{-- proxy_no --}}
-        <div class="row mb-3">
+        <div class="row mb-3" data-showon='[{"field":"options[proxy_enabled]","values":["1"],"sign":"=","op":""}]'>
             <label for="proxy_no" class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_NO')
             </label>

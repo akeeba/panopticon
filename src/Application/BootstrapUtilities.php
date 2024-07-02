@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Application;
 use AConfig;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\User\User;
+use Akeeba\Panopticon\Model\Loginfailures;
 use Awf\Registry\Registry;
 use Awf\Utils\Buffer;
 use Awf\Utils\Ip;
@@ -393,6 +394,36 @@ final class BootstrapUtilities
 		$language->loadLanguage($langCode);
 	}
 
+	public static function mySQLUseGMT()
+	{
+		try
+		{
+			Factory::getContainer()
+				->db
+				->setQuery("SET @@session.time_zone = '+0:00'")
+				->execute();
+		}
+		catch (Throwable $e)
+		{
+			// Ignore it if this fails.
+		}
+	}
+
+	public static function evaluateIPBlocking()
+	{
+		/** @var Loginfailures $loginfailures */
+		$loginfailures = Factory::getContainer()->mvcFactory->makeModel('Loginfailures');
+
+		if ($loginfailures->isIPBlocked())
+		{
+			header('HTTP/1.0 403 Forbidden');
+
+			@include APATH_THEMES . '/system/forbidden.html.php';
+
+			exit();
+		}
+	}
+
 	/**
 	 * Addresses MySQL errors about the sort buffer being too short, especially when sending email..
 	 *
@@ -403,7 +434,10 @@ final class BootstrapUtilities
 	{
 		try
 		{
-			\Akeeba\Panopticon\Factory::getContainer()->db->setQuery('SET sort_buffer_size = 256000000')->execute();
+			Factory::getContainer()
+				->db
+				->setQuery('SET sort_buffer_size = 256000000')
+				->execute();
 		}
 		catch (Throwable $e)
 		{

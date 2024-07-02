@@ -230,6 +230,34 @@ ALTER TABLE `#__reports` CHANGE `action` `action` ENUM('core_update_found','core
             ]]></query>
         </action>
 
+        <action table="#__login_failures" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__login_failures`
+(
+    `ip`      VARBINARY(16),
+    `mark`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    INDEX `#__login_failures_covering` (`ip`, `mark`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  DEFAULT COLLATE = utf8mb4_unicode_ci;
+            ]]></query>
+        </action>
+
+        <action table="#__login_lockouts" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__login_lockouts`
+(
+    `ip`      VARBINARY(16),
+    `until`   DATETIME NOT NULL,
+    PRIMARY KEY `#__login_lockouts_pk` (`ip`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  DEFAULT COLLATE = utf8mb4_unicode_ci;
+            ]]></query>
+        </action>
+
         <!-- Install the common CSS -->
         <action table="#__akeeba_common" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[
