@@ -10,11 +10,13 @@ Welcome to version 1.2! It took a while, but we have implemented a number of maj
 
 **Batch processing sites**. You can now select multiple sites to assign them and/or remove them from groups.
 
+**Control email sending for scheduled backups [gh-712]**. You can choose whether an email will be sent at the end of successful or failed _scheduled_ backup.
+
 ## 🖥️ System Requirements
 
 * PHP 8.1, 8.2, or 8.3. PHP 8.3 recommended.
 * MySQL 5.7 or later, or MariaDB 10.3 or later. MySQL 8.0 recommended.
-* Ability to run CRON jobs, either command-line (recommended) or URLs with a frequency of once every minute and an execution time of at least 30 seconds (up to 180 seconds is strongly preferred).
+* Ability to run CRON jobs, either command-line (recommended) or URLs with a frequency of once every minute, and an execution time of at least 30 seconds (up to 180 seconds is strongly preferred).
 * Obviously, the server it runs on must be connected to the Internet, so it can communicate with your sites.
 
 ## 🔮 What's coming next?
