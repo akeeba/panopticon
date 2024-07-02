@@ -234,7 +234,6 @@ trait AdminToolsIntegrationTrait
 			sprintf('index.php?view=site&task=read&id=%d', $model->getId())
 		);
 
-		Ip::setAllowIpOverrides(true);
 		$myIp = Ip::getUserIP();
 
 		try
