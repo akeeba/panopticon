@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2024-05-13 10:53:16\n"
-"PO-Revision-Date: 2024-05-14 01:14+0200\n"
+"POT-Creation-Date: 2024-07-01 09:33:30\n"
+"PO-Revision-Date: 2024-07-02 01:36+0200\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -707,6 +707,10 @@ msgctxt "PANOPTICON_BTN_DISABLE"
 msgid "Disable"
 msgstr "Deaktivieren"
 
+msgctxt "PANOPTICON_BTN_BATCH"
+msgid "Batch"
+msgstr "Stapelverarbeitung"
+
 msgctxt "PANOPTICON_APP_MENU_TITLE_ADMINISTRATION"
 msgid "Administration"
 msgstr "Administration"
@@ -790,6 +794,22 @@ msgstr "Überwacht Verfügbarkeit von Sites"
 msgctxt "PANOPTICON_TASKTYPE_ACTIONSUMMARYEMAIL"
 msgid "Sends a Site Action Summary email"
 msgstr "Sendet E-Mail der Aktionszusammenfassung der Site"
+
+msgctxt "PANOPTICON_TASKTYPE_WORDPRESSUPDATE"
+msgid "Update WordPress core"
+msgstr "WordPress-Core updaten"
+
+msgctxt "PANOPTICON_TASKTYPE_WORDPRESSUPDATEDIRECTOR"
+msgid "Schedule Automatic WordPress Update"
+msgstr "Automatisches WordPress-Update planen"
+
+msgctxt "PANOPTICON_TASKTYPE_PLUGINSUPDATE"
+msgid "Update installed WordPress plugins and themes"
+msgstr "Installierte WordPress-Plugins und Themes updaten"
+
+msgctxt "PANOPTICON_TASKTYPE_PLUGINUPDATESDIRECTOR"
+msgid "Schedule automatic WordPress plugin and theme updates"
+msgstr "Automatische WordPress-Plugin- und Theme-Updates planen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED"
 msgid "Site %d is disabled"
@@ -990,6 +1010,42 @@ msgstr "Auffrischung der Site-Informationen für gerade aktualisierte Site %d (%
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_WILL_BE_UPDATED"
 msgid "Site %d (%s) will be updated from Joomla! %s to Joomla! %s."
 msgstr "Site %d (%s) wird von Joomla! aktualisiert. %s zu Joomla! %s."
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NO_UPDATE_AVAILABLE"
+msgid "The site %s (%s) is on WordPress %s. The latest available version is %s. Therefore, it cannot be updated."
+msgstr "Site %s (%s) ist auf WordPress %s. Neuste verfügbare Version ist %s. Daher kann es nicht aktualisiert werden."
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_LOG_WILL_BE_UPDATED"
+msgid "Site %d (%s) will be updated from WordPress %s to WordPress %s."
+msgstr "Site %d (%s) wird von WordPress %s zu WordPress %s aktualisiert."
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_LOG_BACKUP_DESCRIPTION"
+msgid "Automatic backup taken by Panopticon before upgrading to WordPress %s"
+msgstr "Automatisches Backup erstellt durch Panopticon vor dem Upgrade auf WordPress %S"
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_LOG_INSTALLING"
+msgid "Installing WordPress update on site #%d (%s) starts now"
+msgstr "WordPress-Update-Installation auf Site %d (%s) startet jetzt"
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_HTTP"
+msgid "Installing WordPress update on site #%d (%s) has failed with HTTP error %d"
+msgstr "Installation des WordPress-Updates auf Site #%d (%s) ist mit HTTP-Fehler %d fehlgeschlagen"
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_WORDPRESS"
+msgid "Installing WordPress update on site #%d (%s) has failed with WordPress error %d: %s"
+msgstr "Installation des WordPress-Updates auf Site #%d (%s) ist mit WordPress-Fehler %d: %s fehlgeschlagen"
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_STATUS_FALSE"
+msgid "Installing WordPress update on site #%d (%s) has failed. The site provided no other error information."
+msgstr "Installation des WordPress-Updates auf Site #%d (%s) ist fehlgeschlagen. Site lieferte keine weiteren Fehlerinformationen."
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NOT_FOUND"
+msgid "Installing WordPress update on site #%d (%s) has failed. The site claims no update has been found. Did you turn on automatic updates in WordPress, or have a different service update the site?"
+msgstr "Installation des WordPress-Updates auf Site #%d (%s) ist fehlgeschlagen. Site behauptet, dass kein Update gefunden wurde. Wurden automatische Updates in WordPress aktiviert oder die Site von einem anderen Dienst aktualisiert?"
+
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_INVALID_JSON"
+msgid "Installing WordPress update on site #%d (%s) has failed. The server's response is not valid JSON."
+msgstr "Installation des WordPress-Updates auf Site #%d (%s) ist fehlgeschlagen. Antwort des Servers ist kein gültiges JSON."
 
 msgctxt "PANOPTICON_SETUP_TITLE"
 msgid "Installation"
@@ -2127,6 +2183,10 @@ msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_UPDATES_BROKEN"
 msgid "Joomla Update is not working correctly on this site"
 msgstr "Joomla-Update funktioniert auf dieser Site nicht ordnungsgemäß"
 
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WORDPRESS_UPDATES_BROKEN"
+msgid "WordPress update is not working correctly on this site"
+msgstr "WordPress-Update funktioniert auf dieser Site nicht ordnungsgemäß"
+
 msgctxt "PANOPTICON_MAIN_SITES_LBL_ERROR_SITEINFO"
 msgid "An error occurred updating the site information."
 msgstr "Beim Aktualisieren der Site-Informationen ist ein Fehler aufgetreten."
@@ -2154,6 +2214,10 @@ msgstr "Joomla! Versionsfamilie ist End of Life"
 msgctxt "PANOPTICON_MAIN_SITES_LBL_JOOMLA_EOL_MAJOR"
 msgid "This Joomla! major version is End of Life"
 msgstr "Joomla! Hauptversion ist End of Life"
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WP_EOL"
+msgid "This WordPress version is End of Life"
+msgstr "WordPress-Version ist End-of-Life"
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_UNKNOWN"
 msgid "Unknown"
@@ -2207,13 +2271,25 @@ msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE"
 msgid "ACTION REQUIRED. The Joomla!&reg; update task is stuck."
 msgstr "HANDLUNG ERFORDERLICH. Die Joomla!&reg; Update-Aufgabe bleibt hängen."
 
+msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_STUCK_UPDATE_WP"
+msgid "ACTION REQUIRED. The WordPress update task is stuck."
+msgstr "HANDLUNG ERFORDERLICH. WordPress-Update-Aufgabe bleibt hängen."
+
 msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_SCHEDULED_UPDATE"
 msgid "The Joomla!&reg; core update has been scheduled to run automatically."
 msgstr "Joomla!&reg; Core-update wurde so geplant, dass es automatisch ausgeführt wird."
 
+msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_SCHEDULED_UPDATE_WP"
+msgid "The WordPress core update has been scheduled to run automatically."
+msgstr "WordPress-Core-Update wurde so geplant, dass es automatisch ausgeführt wird."
+
 msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_RUNNING_UPDATE"
 msgid "The Joomla!&reg; core update is currently running."
 msgstr "Joomla!&reg; Core-Update läuft gerade."
+
+msgctxt "PANOPTICON_MAIN_SITES_LBL_CORE_RUNNING_UPDATE_WP"
+msgid "The WordPress core update is currently running."
+msgstr "WordPress-Core-Update läuft gerade."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_RUNNING_UPDATE"
 msgid "Extension updates are currently taking place."
@@ -2284,8 +2360,8 @@ msgid "Extensions update"
 msgstr "Erweiterungs-Update"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_CMSFAMILY"
-msgid "Joomla!&reg;"
-msgstr "Joomla!&reg;"
+msgid "CMS Version"
+msgstr "CMS-Version"
 
 msgctxt "PANOPTICON_MAIN_LBL_FILTER_PHPFAMILY"
 msgid "PHP"
@@ -2547,13 +2623,17 @@ msgctxt "PANOPTICON_SITE_LBL_TAB_OTHER_FEATURES"
 msgid "Other Features"
 msgstr "Weitere Features"
 
-msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE"
-msgid "Joomla!&reg; Update"
-msgstr "Joomla!&reg; Update"
+msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE_GENERIC"
+msgid "CMS Update"
+msgstr "CMS-Update"
 
 msgctxt "PANOPTICON_SITE_LBL_TAB_EXTUPDATE"
 msgid "Extensions Update"
 msgstr "Erweiterungs-Update"
+
+msgctxt "PANOPTICON_SITE_LBL_TAB_PLUGINS_AND_THEMES"
+msgid "Plugins &amp; Themes"
+msgstr "Plugins &amp; Themes"
 
 msgctxt "PANOPTICON_SITES_FIELD_NAME"
 msgid "Site Name"
@@ -2576,8 +2656,20 @@ msgid "Connecting your site"
 msgstr "Site verbinden"
 
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_BODY"
-msgid "First, install the Akeeba Panopticon Connector to your Joomla! site. Then, go to your site's backend and click on Components, Akeeba Panopticon Connector to find your connection information. Copy this information in the fields below."
-msgstr "Zunächst Akeeba Panopticon Connector auf der Joomla! Website installieren. Dann zum Backend der Site gehen und auf Komponenten klicken, Akeeba Panopticon Connector, um die Verbindungsinformationen zu finden. Diese Informationen in die Felder unten kopieren."
+msgid "First, install the Akeeba Panopticon Connector to your site. Then, retrieve the connection information and paste it below. Here is how to do it depending on your CMS:"
+msgstr "Zuerst den Akeeba Panopticon Connector auf der Site installieren. Dann die Verbindungsinformationen abrufen und unten einfügen. Abhängig vom CMS wie folgt vorgehen:"
+
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA4ORLATER"
+msgid "<strong>Joomla! 4 or later</strong>: Go to your site's backend and click on Components, Akeeba Panopticon Connector to find your connection information."
+msgstr "<strong>Joomla! 4 oder höher</strong>: Zum Backend der Site gehen und auf Komponenten, Akeeba Panopticon Connector klicken, um die Verbindungsinformationen zu finden."
+
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA3"
+msgid "<strong>Joomla! 3</strong>: Go to your site's backend and click on Extensions, Plugins. Click on System - Panopticon Connector for Joomla 3."
+msgstr "<strong>Joomla! 3</strong>: Zum Backend der Site gehen und auf Erweiterungen, Plugins klicken. Auf System – Panopticon Connector für Joomla 3 klicken."
+
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_WORDPRESS"
+msgid "<strong>WordPress</strong>: Go to your site's wp-admin and click on Tools, Panopticon."
+msgstr "<strong>WordPress</strong>: Zum wp-admin der Site gehen und klicken auf Werkzeuge, Panopticon klicken."
 
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_HERE"
 msgid "You can download the connector installation package from the following locations."
@@ -2590,6 +2682,10 @@ msgstr "Joomla! 4.x und neuer"
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_J3"
 msgid "Joomla 3.9 and 3.10"
 msgstr "Joomla! 3.9 und 3.10"
+
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_WP"
+msgid "WordPress"
+msgstr "WordPress"
 
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_HEAD"
 msgid "Administrator Directory Password Protection"
@@ -2867,6 +2963,30 @@ msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_STRING_HELP"
 msgid "The site will be considered up if the page contains this string. Do <em>NOT</em> use HTML; all tags and multiple whitespaces are removed before evaluating this string. Leave blank to consider any HTTP 2xx response as adequate proof the site is up."
 msgstr "Site wird als aktiv betrachtet, wenn die Seite diese Zeichenfolge enthält. <em>KEIN</em> HTML verwenden; Alle Tags und mehrere Leerzeichen werden entfernt, bevor diese Zeichenfolge ausgewertet wird. Feld leer lassen, um jede HTTP 2xx-Antwort als ausreichenden Beweis dafür zu betrachten, dass die Site aktiv ist."
 
+msgctxt "PANOPTICON_SITES_BATCH_TITLE"
+msgid "Batch process the selected sites"
+msgstr "Stapelverarbeitung der gewählten Sites"
+
+msgctxt "PANOPTICON_SITES_BATCH_PROCESS"
+msgid "Process"
+msgstr "Prozess"
+
+msgctxt "PANOPTICON_SITES_BATCH_LBL_ADD_TO_GROUP"
+msgid "Add to group"
+msgstr "Zur Gruppe hinzufügen"
+
+msgctxt "PANOPTICON_SITES_BATCH_LBL_REMOVE_FROM_GROUP"
+msgid "Remove from group"
+msgstr "Aus Gruppe entfernen"
+
+msgctxt "PANOPTICON_SITES_BATCH_COMPLETED"
+msgid "The group membership of sites you selected has been processed."
+msgstr "Gruppenmitgliedschaft der gewählten Sites wurde verarbeitet."
+
+msgctxt "PANOPTICON_SITES_BATCH_ERR_NO_IDS"
+msgid "You have not selected any sites to process the group membership of."
+msgstr "Es wurden keine Sites gewählt, deren Gruppenmitgliedschaft verarbeitet werden soll."
+
 msgctxt "PANOPTICON_SITES_TITLE_READ"
 msgid "Site Information"
 msgstr "Site Information"
@@ -2910,6 +3030,14 @@ msgstr "Planungsfehler wurde behoben."
 msgctxt "PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_ERROR_NOT_CLEARED"
 msgid "The scheduling error could not be cleared: %s"
 msgstr "Planungsfehler konnte nicht behoben werden: %s"
+
+msgctxt "PANOPTICON_SITE_BTN_CMSUPDATE_RELOAD"
+msgid "Reload Update information"
+msgstr "Update-Information neu laden"
+
+msgctxt "PANOPTICON_SITE_BTN_CMSUPDATE_RELOAD_SR"
+msgid "Reload Update information for site “%s”"
+msgstr "Update-Informationen für Site „%s“ neu laden"
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_OK"
 msgid "Scheduled the Joomla core update."
@@ -3123,6 +3251,106 @@ msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SOURCE_INFO"
 msgid "The Joomla! update availability information is provided by your site. Joomla! End-of-Life and security-only support dates are manually collected from the information published by the Joomla! project."
 msgstr "Joomla! Update-Verfügbarkeitsinformationen werden von dieser Site bereitgestellt. Joomla! End-of-Life- und Sicherheits-Supportdaten werden manuell aus den vom Joomla! Projekt veröffentlichten Informationen erfasst."
 
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_OK"
+msgid "Scheduled the WordPress core update."
+msgstr "WordPress-Core-Update geplant."
+
+msgctxt "PANOPTICON_SITE_ERR_WPUPDATE_SCHEDULE_FAILED"
+msgid "Scheduling the WordPress core update has failed."
+msgstr "Planung des WordPress-Core-Updates ist fehlgeschlagen."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_ERROR_CLEARED"
+msgid "The scheduling error has been cleared."
+msgstr "Planungsfehler wurde behoben."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_ERROR_NOT_CLEARED"
+msgid "The scheduling error could not be cleared: %s"
+msgstr "Planungsfehler konnte nicht behoben werden: %s"
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_UNSCHEDULE_ERR_NOT_SCHEDULED"
+msgid "There is no scheduled update."
+msgstr "Kein geplantes Update vorhanden."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_UNSCHEDULE_ERR_RUNNING"
+msgid "The scheduled update is already running."
+msgstr "Geplantes Update wird bereits ausgeführt."
+
+msgctxt "PANOPTICON_SITE_ERR_WPUPDATE_UNSCHEDULE_FAILED"
+msgid "Could not cancel the WordPress core update."
+msgstr "WordPress-Core-Update konnte nicht abgebrochen werden."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_HEAD"
+msgid "WordPress Update"
+msgstr "WordPress-Update"
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_AVAILABLE_UPDATE"
+msgid "WordPress %s is available"
+msgstr "WordPress %s ist verfügbar"
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_CURRENT_VERSION"
+msgid "Your site is currently using WordPress %s."
+msgstr "Site verwendet derzeit WordPress %s."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_IS_PATCH_RELEASE"
+msgid "This is a patch (point) update which is almost always safe."
+msgstr "Dies ist ein Patch-(Punkt-)Update, das fast immer sicher ist."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_IS_MINOR_RELEASE"
+msgid "This is a minor (version family) update which may affect your plugins, and themes."
+msgstr "Dies ist ein kleineres Update (Versionsfamilie), das sich auf Plugins und Themes auswirken kann."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_MINOR_RELEASE_ADMONISHMENT"
+msgid "It is a good idea to take a backup of your site, and test this update on a copy of your site first."
+msgstr "Es empfiehlt sich, eine Sicherungskopie der Site zu erstellen und dieses Update zuerst auf einer Kopie der Site zu testen."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_IS_MAJOR_RELEASE"
+msgid "This is a major version update which will most likely affect your plugins, and themes."
+msgstr "Dies ist ein größeres Versionsupdate, das sich höchstwahrscheinlich auf Plugins und Themes auswirkt."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_MAJOR_RELEASE_ADMONISHMENT"
+msgid "It is very strongly recommended that you take a backup of your site, and test this update on a copy of your site first."
+msgstr "Es wird dringend empfohlen, eine Sicherungskopie der Site zu erstellen und dieses Update zunächst auf einer Kopie der Site zu testen."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_EOL"
+msgid "WordPress %s is unsupported"
+msgstr "WordPress %s wird nicht unterstützt"
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_CANNOT_INSTALL"
+msgid "The newer WordPress version %s is available but cannot be installed because of your site preferences."
+msgstr "Neuere WordPress Version %s verfügbar, kann aber aufgrund der Site-Einstellungen nicht installiert werden."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_EOL_DATE"
+msgid "WordPress %s became End of Life on %s"
+msgstr "WordPress %s wurde am %s End-of-Life"
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_UP_TO_DATE"
+msgid "WordPress %s is up-to-date"
+msgstr "WordPress %s ist aktuell"
+
+msgctxt "PANOPTICON_SITE_BTN_WPUPDATE_RELOAD"
+msgid "Reload WordPress update information"
+msgstr "WordPress-Update-Informationen neu laden"
+
+msgctxt "PANOPTICON_SITE_BTN_WPUPDATE_RELOAD_SR"
+msgid "Reload WordPress update information for site “%s”"
+msgstr "WordPress-Update-Informationen für Site „%s“ neu laden"
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SOURCE_INFO"
+msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\\\"%s\\\" target=\\\"_blank\\\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
+msgstr "Informationen zur Verfügbarkeit des WordPress-Updates werden von der Site bereitgestellt. End-of-Life-Daten von WordPress stammen von <a href=\\\"%s\\\" target=\\\"_blank\\\">%1$s</a>. Das WordPress-Projekt veröffentlicht keine End-of-Security-Updates und/oder End-of-Life-Daten im Voraus, weshalb diese Informationen in Panopticon nicht angezeigt werden."
+
+msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_UPDATE"
+msgid "Schedule Automatic Update to WordPress %s"
+msgstr "Automatisches Update auf WordPress %s planen"
+
+msgctxt "PANOPTICON_SITE_LBL_PLUGIN_UPDATE_SCHEDULE_OK"
+msgid "Scheduled the plugin / theme update."
+msgstr "Plugin/Theme-Update geplant."
+
+msgctxt "PANOPTICON_SITE_ERR_PLUGIN_UPDATE_SCHEDULE_FAILED"
+msgid "Scheduling the plugin / theme update has failed."
+msgstr "Planung des Plugin/Theme-Updates ist fehlgeschlagen."
+
 msgctxt "PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N"
 msgid "%d template overrides need to be reviewed"
 msgstr "%d Template-Überschreibungen müssen geprüft werden"
@@ -3228,8 +3456,8 @@ msgid "PHP %s"
 msgstr "PHP %s"
 
 msgctxt "PANOPTICON_SITE_LBL_WHERE_DID_I_GET_DATA"
-msgid "Where did I get this data from?"
-msgstr "Woher kommen diese Daten?"
+msgid "Data source"
+msgstr "Datenquelle"
 
 msgctxt "PANOPTICON_SITE_LBL_PHP_UPDATE_AVAILABLE"
 msgid "The latest PHP %s version is %s. You need to update PHP on your server."
@@ -3398,6 +3626,26 @@ msgstr "Hohe Datenbank-Festplattennutzung (%0.2f%%)"
 msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_DB_DISK_WHAT"
 msgid "Your server's storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, leading to your site being unable to function properly."
 msgstr "Der Speicher des Servers ist fast ausgelastet. Wenn dieses Limit überschritten wird, können keine Datenbankvorgänge ausgeführt werden, die Daten löschen oder erstellen, was dazu führt, dass die Site nicht ordnungsgemäß funktioniert."
+
+msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_LABEL"
+msgid "CMS Type"
+msgstr "CMS-Typ"
+
+msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_DESCRIPTION"
+msgid "Which CMS does this site run on?"
+msgstr "Auf welchem ​​CMS läuft diese Seite?"
+
+msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_OPT_JOOMLA"
+msgid "Joomla!"
+msgstr "Joomla!"
+
+msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_OPT_WORDPRESS"
+msgid "WordPress"
+msgstr "WordPress"
+
+msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_OPT_OTHER"
+msgid "Other"
+msgstr "Anderes"
 
 msgctxt "PANOPTICON_SITE_LBL_EXTENSIONS_HEAD"
 msgid "Extensions"
@@ -4632,7 +4880,7 @@ msgid "Automatic Database Backups"
 msgstr "Automatische Datenbank-Backups"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_AUTO_HELP"
-msgid "Should I take daily, automatic backups of the important database tables?"
+msgid "Should Panopticon take daily, automatic backups of the important database tables?"
 msgstr "Sollen täglich automatische Backups der wichtigen Datenbanktabellen erstellt werden?"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_COMPRESS"
@@ -4640,7 +4888,7 @@ msgid "Compress Database Backups"
 msgstr "Datenbank-Backups komprimieren"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_COMPRESS_HELP"
-msgid "Should I compress the database backups with Gzip?"
+msgid "Should Panopticon compress the database backups with Gzip?"
 msgstr "Sollen Datenbank-Backups mit Gzip komprimiert werden?"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_MAXFILES"
@@ -4648,7 +4896,7 @@ msgid "Maximum Number Of Database Backups"
 msgstr "Maximale Anzahl Datenbank-Backups"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBBACKUP_MAXFILES_HELP"
-msgid "How many database backup files should I keep? Only applies to backups taken automatically, backups taken manually from the Database Backups page, and backups taken from the CLI to the default directory."
+msgid "How many database backup files should Panopticon keep? Only applies to backups taken automatically, backups taken manually from the Database Backups page, and backups taken from the CLI to the default directory."
 msgstr "Wie viele Datenbank-Backupdateien sollen aufbewahrt werden? Gilt nur für automatisch erstellte Backups, manuell von der Seite der Datenbank-Backups erstellte Backups und von der CLI in das Standardverzeichnis erstellte Backups."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_DATABASE_WARNING_HEAD"
@@ -4835,6 +5083,10 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
 msgid "Table of known extensions and their automatic update preferences"
 msgstr "Tabelle bekannter Erweiterungen und ihrer automatischen Update-Einstellungen"
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_CMS"
+msgid "CMS Type"
+msgstr "CMS-Typ"
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_NAME"
 msgid "Extension name"
 msgstr "Erweiterung"
@@ -4878,6 +5130,14 @@ msgstr "Modul"
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_TEMPLATE"
 msgid "Template"
 msgstr "Template"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_WP_PLUGIN"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTTYPE_WP_THEME"
+msgid "Theme"
+msgstr "Theme"
 
 msgctxt "PANOPTICON_SYSCONFIG_OPT_SHA512"
 msgid "SHA-512 (best security)"
@@ -5279,6 +5539,22 @@ msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_JOOMLAUPDATE_FAILED"
 msgid "Joomla Core Update: Update failed"
 msgstr "Joomla! Core-Update: Update fehlgeschlagen"
 
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_WORDPRESSUPDATE_FOUND"
+msgid "WordPress Core Update: Update found"
+msgstr "WordPress-Core-Update: Update gefunden"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "WordPress Core Update: Update will be installed"
+msgstr "WordPress-Core-Update: Update wird installiert"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress Core Update: Update installed"
+msgstr "WordPress-Core-Update: Update installiert"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_WORDPRESSUPDATE_FAILED"
+msgid "WordPress Core Update: Update failed"
+msgstr "WordPress-Core-Update: Update fehlgeschlagen"
+
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_SUCCESS"
 msgid "Akeeba Backup: Successful backup"
 msgstr "Akeeba Backup: Backup erfolgreich"
@@ -5294,6 +5570,14 @@ msgstr "Joomla! Erweiterungs-Update: Update gefunden"
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSIONS_UPDATE_DONE"
 msgid "Joomla! Extension Update: Autoupdate Results"
 msgstr "Joomla! Erweiterungs-Update: Zusammenfassung Autoupdate"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGIN_UPDATE_FOUND"
+msgid "Wordpress Plugin/Theme Update: Update Found"
+msgstr "WordPress-Plugin/Theme-Update: Update gefunden"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGINS_UPDATE_DONE"
+msgid "Wordpress Plugin/Theme Update: Autoupdate Results"
+msgstr "WordPress-Plugin/Theme-Update: Zusammenfassung Autoupdate"
 
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SELFUPDATE_FOUND"
 msgid "Panopticon: Update found"
@@ -5426,6 +5710,18 @@ msgstr "Zuletzt auf Updates überprüft am %s. Neuste Version ist %s."
 msgctxt "PANOPTICON_SELFUPDATE_BTN_RUN_POSTUPGRADE"
 msgid "Run the Post-upgrade code"
 msgstr "Post-Upgrade-Code ausführen"
+
+msgctxt "PANOPTICON_SELFUPDATE_ERR_UNDERDOCKER"
+msgid "You cannot take this action when running Panopticon under Docker. Please refer to our documentation for the correct update instructions for this use case."
+msgstr "Diese Aktion kann nicht ausgeführt werden, wenn Panopticon unter Docker läuft. Die korrekten Update-Anweisungen für diesen Anwendungsfall befinden sich in der Dokumentation."
+
+msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_HEAD"
+msgid "You are running Panopticon under Docker"
+msgstr "Panopticon läuft unter Docker"
+
+msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
+msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href='%s'>documentation instructions</a> to update the container, and the database."
+msgstr "Panopticon kann nicht direkt über seine Schnittstelle aktualisiert werden, wenn es unter Docker läuft. Stattdessen muss den <a href='%s'>Dokumentationsanweisungen</a> gefolgt werden, um den Container und die Datenbank zu aktualisieren."
 
 msgctxt "PANOPTICON_GROUPS_TITLE"
 msgid "Groups"
@@ -7202,3 +7498,271 @@ msgstr "Wöchentlich"
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_MONTHLY"
 msgid "Monthly"
 msgstr "Monatlich"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_AR"
+msgid "Arabic"
+msgstr "Arabisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_AR_SA"
+msgid "Arabic, Saudi Arabia"
+msgstr "Arabisch, Saudi-Arabien"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_AZ"
+msgid "Azerbaijani"
+msgstr "Aserbaidschanisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_BE"
+msgid "Belarusian"
+msgstr "Belarussisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_BG_BG"
+msgid "Bulgarian"
+msgstr "Bulgarisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_BN_BD"
+msgid "Bengali"
+msgstr "Bengalisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_CA"
+msgid "Catalan"
+msgstr "Katalanisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_CS"
+msgid "Czech"
+msgstr "Tschechisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_CY"
+msgid "Welsh"
+msgstr "Walisisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_DA"
+msgid "Danish"
+msgstr "Dänisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_DE"
+msgid "German"
+msgstr "Deutsch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_EL"
+msgid "Greek"
+msgstr "Griechisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_EO"
+msgid "Esperanto"
+msgstr "Esperanto"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ES"
+msgid "Spanish (Spain)"
+msgstr "Spanisch (Spanien)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ES_MX"
+msgid "Spanish (Mexico)"
+msgstr "Spanisch (Mexiko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ET"
+msgid "Estonian"
+msgstr "Estnisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_EU"
+msgid "Basque"
+msgstr "Baskisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_FA"
+msgid "Persian"
+msgstr "Persisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_FI"
+msgid "Finnish"
+msgstr "Finnisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_FR_FR"
+msgid "French (France)"
+msgstr "Französisch (Frankreich)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_GA"
+msgid "Irish"
+msgstr "Irisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_GL"
+msgid "Galician"
+msgstr "Galizisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_HE_IL"
+msgid "Hebrew (Israel)"
+msgstr "Hebräisch (Israel)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_HR"
+msgid "Croatian"
+msgstr "Kroatisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_HU_HU"
+msgid "Hungarian (Hungary)"
+msgstr "Ungarisch (Ungarn)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_HY"
+msgid "Armenian"
+msgstr "Armenisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ID"
+msgid "Indonesian"
+msgstr "Indonesisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_IS_IS"
+msgid "Icelandic"
+msgstr "Isländisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_IT"
+msgid "Italian"
+msgstr "Italienisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_JA"
+msgid "Japanese"
+msgstr "Japanisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KA_GE"
+msgid "Georgian"
+msgstr "Georgisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KAB"
+msgid "Kabyle"
+msgstr "Kabylisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KK"
+msgid "Kazakh"
+msgstr "Kasachisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KO_KR"
+msgid "Korean (Korea)"
+msgstr "Koreanisch (Korea)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KU"
+msgid "Kurdish"
+msgstr "Kurdisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_LT"
+msgid "Lithuanina"
+msgstr "Litauisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_LV"
+msgid "Latvian"
+msgstr "Lettisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_NB_NO"
+msgid "Norwegian Bokmål (Norway)"
+msgstr "Norwegisches Bokmål (Norwegen)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_NE"
+msgid "Nepali"
+msgstr "Nepalesisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_NL"
+msgid "Dutch"
+msgstr "Niederländisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_NL_BE"
+msgid "Butch (Belgium)"
+msgstr "Butch (Belgien)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_OC"
+msgid "Occitan"
+msgstr "Okzitanisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_PL"
+msgid "Polish"
+msgstr "Polnisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_PT_BR"
+msgid "Portuguese (Brazil)"
+msgstr "Portugiesisch (Brasilien)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_PT_PT"
+msgid "Portuguese (Portugal)"
+msgstr "Portugiesisch (Portugal)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_RO"
+msgid "Romanian"
+msgstr "Rumänisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_RU"
+msgid "Russian"
+msgstr "Russisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SK"
+msgid "Slovak"
+msgstr "Slowakisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SL_SI"
+msgid "Slovenian (Slovenia)"
+msgstr "Slowenisch (Slowenien)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SQ"
+msgid "Albanina"
+msgstr "Albanisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SR"
+msgid "Serbian (Cyrillic)"
+msgstr "Serbisch (Kyrillisch)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SV_SE"
+msgid "Swedish (Sweden)"
+msgstr "Schwedisch (Schweden)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_TA"
+msgid "Tamil"
+msgstr "Tamilisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_TG"
+msgid "Tajik"
+msgstr "Tadschikisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_TH_TH"
+msgid "Thai (Thailand)"
+msgstr "Thailändisch (Thailand)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_TR"
+msgid "Turkish"
+msgstr "Türkisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_UG"
+msgid "Uyghur"
+msgstr "Uigurisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_UK"
+msgid "Ukrainian"
+msgstr "Ukrainisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_UZ"
+msgid "Uzbek"
+msgstr "Usbekisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_VI"
+msgid "Vietnamese"
+msgstr "Vietnamesisch"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_CN"
+msgid "Chinese Simplified (China)"
+msgstr "Chinesisch Vereinfacht (China)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_HK"
+msgid "Chinese Traditional (Hong Kong)"
+msgstr "Chinesisch Traditionell (Hongkong)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_MO"
+msgid "Chinese Traditional (Macau)"
+msgstr "Chinesisch Traditionell (Macau)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_SG"
+msgid "Chinese Traditional (Singapore)"
+msgstr "Chinesisch Traditionell (Singapur)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_TW"
+msgid "Chinese Traditional (Taiwan)"
+msgstr "Chinesisch Traditionell (Taiwan)"
+
+#~ msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE"
+#~ msgid "Joomla!&reg; Update"
+#~ msgstr "Joomla!&reg; Update"
+
+#~ msgctxt "PANOPTICON_SITE_LBL_WHERE_DID_I_GET_DATA"
+#~ msgid "Where did I get this data from?"
+#~ msgstr "Woher kommen diese Daten?"
