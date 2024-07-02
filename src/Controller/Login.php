@@ -9,8 +9,10 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\Loginfailures;
 use Awf\Mvc\Controller;
 use Awf\Uri\Uri;
+use Awf\User\Exception\InvalidCredentials;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -38,6 +40,9 @@ class Login extends Controller
 			return true;
 		}
 
+		/** @var Loginfailures $loginFailureModel */
+		$loginFailureModel = $this->getContainer()->mvcFactory->makeModel('Loginfailures');
+
 		try
 		{
 			$this->csrfProtection();
@@ -63,6 +68,8 @@ class Login extends Controller
 			}
 
 			$this->setRedirect($url);
+
+			$loginFailureModel->cleanupOldFailures();
 		}
 		catch (Exception $e)
 		{
@@ -70,9 +77,12 @@ class Login extends Controller
 				'username' => $username, 'error' => $e->getMessage(), 'source' => $e->getFile() . ':' . $e->getLine(),
 			]);
 
+			// Handle automatic IP blocking on failed login attempts
+			$loginFailureModel->logFailure(true);
+
+			// Login failed. Go back to the login page and show the error message.
 			$router = $this->container->router;
 
-			// Login failed. Go back to the login page and show the error message
 			$this->setRedirect($router->route('index.php?view=login'), $e->getMessage(), 'error');
 		}
 

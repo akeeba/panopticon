@@ -35,6 +35,12 @@ BootstrapUtilities::loadConfiguration();
 BootstrapUtilities::setUpUserManager();
 BootstrapUtilities::fallbackLanguage();
 
+// Tell MySQL to use the GMT timezone for NOW() and other time functions (this preserves our sanity!)
+BootstrapUtilities::mySQLUseGMT();
+
+// Evaluate IP blocking
+BootstrapUtilities::evaluateIPBlocking();
+
 // Apply user-supplied code and miscellaneous files
 BootstrapUtilities::loadUserCode();
 

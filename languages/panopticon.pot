@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.0\n"
-"POT-Creation-Date: 2024-07-02 09:29:22\n"
+"POT-Creation-Date: 2024-07-02 20:35:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5903,6 +5903,11 @@ msgid "System Preferences"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_LOGINFAIL"
+msgid "Automatic IP blocking"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_HEAD"
 msgid "No extensions found"
 msgstr ""
@@ -5935,6 +5940,36 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DEBUG"
 msgid "Debug System"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_FAILURE_ENABLE"
+msgid "Automatic IP block on failed login attempts"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_MAX_FAILURES"
+msgid "Maximum login failures"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_FAILURE_WINDOW"
+msgid "Login failure window"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT"
+msgid "IP block time"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT_EXTEND"
+msgid "Extend IP lockout time"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT_EXTEND_HELP"
+msgid "When enabled, every time a blocked IP address tries to access Akeeba Panopticon it will have its lockout time reset, i.e. the lockout will be extended for another “IP lockout time” seconds. This penalises some bots, but it comes at the expense of slowing down legitimate access to Akeeba Panopticon."
 msgstr ""
 
 #, phpformat
@@ -9700,5 +9735,25 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_TW"
 msgid "Chinese Traditional (Taiwan)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_TITLE"
+msgid "Access Denied"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_HEAD"
+msgid "Access Denied"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_INFO"
+msgid "Your IP address, <code>%s</code>, has been temporarily blocked due to suspicious behaviour."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_EXTENDING"
+msgid "Trying to accessing this site before the ban expires will extend the length of the ban."
 msgstr ""
 
