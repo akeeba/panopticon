@@ -97,6 +97,34 @@ catch (InvalidArgumentException $e)
         </div>
     </div>
 
+    <div class="row mb-3">
+        <div class="col-sm-9 offset-sm-3">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" value="1"
+                       name="params[email_success]" id="email_success"
+                        {{ $params->get('email_success', 1) ? 'checked' : '' }}
+                >
+                <label class="form-check-label" for="email_success">
+                    @lang('PANOPTICON_BACKUPTASKS_LBL_EMAIL_SUCCESS')
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-9 offset-sm-3">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" value="1"
+                       name="params[email_fail]" id="email_fail"
+                        {{ $params->get('email_fail', 1) ? 'checked' : '' }}
+                >
+                <label class="form-check-label" for="email_fail">
+                    @lang('PANOPTICON_BACKUPTASKS_LBL_EMAIL_SUCCESS')
+                </label>
+            </div>
+        </div>
+    </div>
+
     <h4>@lang('PANOPTICON_BACKUPTASKS_LBL_SCHEDULE')</h4>
 
     {{-- CRON Expression --}}

@@ -169,7 +169,8 @@ class AkeebaBackup extends AbstractCallback
 					'BACKUP_RECORD' => $backupRecordId,
 					'ARCHIVE_NAME'  => $archive,
 					'MESSAGE'       => $errorMessage,
-				]
+				],
+				$params
 			);
 
 			$this->backupRecordsCacheBuster($site);
@@ -243,7 +244,8 @@ class AkeebaBackup extends AbstractCallback
 					'BACKUPID'      => $backupId,
 					'BACKUP_RECORD' => $backupRecordId,
 					'ARCHIVE_NAME'  => $archive,
-				]
+				],
+				$params
 			);
 		}
 		elseif (!empty($rawData?->Error))
@@ -287,7 +289,8 @@ class AkeebaBackup extends AbstractCallback
 					'BACKUP_RECORD' => $backupRecordId,
 					'ARCHIVE_NAME'  => $archive,
 					'MESSAGE'       => $rawData?->Error,
-				]
+				],
+				$params
 			);
 
 			$this->backupRecordsCacheBuster($site);
@@ -306,8 +309,22 @@ class AkeebaBackup extends AbstractCallback
 		return $rawData?->HasRun ? Status::WILL_RESUME->value : Status::OK->value;
 	}
 
-	private function sendEmail(string $type, Site $site, array $vars = []): void
+	private function sendEmail(string $type, Site $site, array $vars, Registry $params): void
 	{
+		// Am I supposed to send the email?
+		$checkKey = match ($type)
+		{
+			'akeebabackup_success' => 'email_success',
+			'akeebabackup_fail' => 'email_fail',
+			default => 'email_default',
+		};
+
+		if (!$params->get($checkKey, 1))
+		{
+			return;
+		}
+
+		// Add the basic site variables to the email
 		$vars = array_merge(
 			[
 				'SITE_NAME' => $site->name,
@@ -316,6 +333,7 @@ class AkeebaBackup extends AbstractCallback
 			], $vars
 		);
 
+		// Enqueue the email
 		$data = new Registry();
 		$data->set('template', $type);
 		$data->set('email_variables', $vars);

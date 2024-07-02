@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-07-01 09:33:30\n"
+"POT-Creation-Date: 2024-07-02 09:29:22\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicholas K. Dionysopoulos <nicholas@akeeba.com>\n"
 "Language-Team: \n"
@@ -8429,6 +8429,14 @@ msgstr "Χειροκίνητο"
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_VIEW_MANUAL"
 msgid "List Manual Backups"
 msgstr "Λίστα μη αυτόματων αντιγράφων ασφαλείας"
+
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_EMAIL_SUCCESS"
+msgid "Send email on success"
+msgstr "Αποστολή Μηνύματος Ηλεκτρονικού Ταχυδρομείου μετά την Επιτυχία"
+
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_EMAIL_FAIL"
+msgid "Send email on failure"
+msgstr "Αποστολή Μηνύματος Ηλεκτρονικού Ταχυδρομείου μετά την Αποτυχία"
 
 msgctxt "PANOPTICON_SCANNERTASKS_TITLE"
 msgid "PHP File Change Scanner Tasks"
