@@ -112,6 +112,23 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--avatars--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[avatars]" id="avatars"
+                            {{ $config->get('avatars', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="avatars">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS')
+                    </label>
+                </div>
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP')
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
