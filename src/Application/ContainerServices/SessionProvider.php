@@ -20,8 +20,18 @@ class SessionProvider
 {
 	public function __invoke(Container $c): Manager
 	{
+		try
+		{
+			$isHTTPS = Uri::getInstance()->getScheme() === 'https';
+		}
+		catch (\Exception $e)
+		{
+			$isHTTPS = false;
+		}
+
 		$appConfig = $c->appConfig;
-		$manager   = new Manager(
+
+		$manager = new Manager(
 			new SegmentFactory(),
 			new CsrfTokenFactory(),
 			$_COOKIE,
@@ -33,7 +43,7 @@ class SessionProvider
 				'gc_probability'         => 1,
 				'gc_divisor'             => 100,
 				'cookie_httponly'        => 1,
-				'cookie_secure'          => Uri::getInstance()->getScheme() === 'https' ? 1 : 0,
+				'cookie_secure'          => $isHTTPS ? 1 : 0,
 				'cookie_samesite'        => 'Strict',
 				'use_strict_mode'        => 1,
 				'use_cookies'            => 1,
