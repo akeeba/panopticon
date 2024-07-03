@@ -16,6 +16,8 @@ Welcome to version 1.2! It took a while, but we have implemented a number of maj
 
 **Check passwords against Have I Been Pwned [gh-728]**. Panopticon will check new passwords against the third party Have I Been Pwned service. If the password is found in online password leaks the user will be asked to use a different password. This feature can be disabled in the System Configuration, however we recommend that you _always_ keep this enabled for maximum protection of your monitored sites.
 
+**All session files are now in `tmp/session`, and encrypted**. In the past, Panopticon used PHP's default session save path. This means the session data stored is typically placed in a world-readable directory managed by your host along with other sites under the same account or, worse, server. This is bad because potentially privileged information is stored in plaintext where they can easily be found, and because PHP's session garbage collection might reap (delete) the sessions before the end of the session expiration time you have set up in System Configuration. The session files are now moved under the temporary folder of Panopticon (default: `tmp/session`) and their information is stored encrypted. Furthermore, we took a few extra security steps to make Panopticon more resistant to session hijacking, session fixing, and other similar session-based security issues.
+
 ## 🖥️ System Requirements
 
 * PHP 8.1, 8.2, or 8.3. PHP 8.3 recommended.

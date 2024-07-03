@@ -96,18 +96,6 @@ class Setup extends Controller
 
 			// Apply configuration settings to app config
 			$model->setSetupParameters();
-
-			/**
-			 * Try to connect to (S)FTP, if something like that was configured in the previous page.
-			 *
-			 * If it fails we get a nice exception to throw us to the previous page.
-			 *
-			 * @noinspection PhpUnusedLocalVariableInspection
-			 */
-			$fs          = FilesystemFactory::getAdapter($this->container, false);
-			$sessionPath = $this->container->session->getSavePath();
-
-			$this->container->application->createOrUpdateSessionPath($sessionPath, false);
 		}
 		catch (Exception $e)
 		{

@@ -24,7 +24,7 @@ $config = $this->container->appConfig;
                     <input class="form-check-input" type="checkbox" name="options[password_hibp]" id="password_hibp" value="1"
                             {{ $config->get('password_hibp', true) ? 'checked' : '' }}
                     >
-                    <label class="form-check-label" for="login_failure_enable">
+                    <label class="form-check-label" for="password_hibp">
                         @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP')
                     </label>
                 </div>

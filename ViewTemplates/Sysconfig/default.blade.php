@@ -27,6 +27,14 @@ $router = $this->getContainer()->router;
             </button>
         </li>
         <li class="nav-item" role="presentation">
+            <button type="button" id="sysconfigTabSecurity"
+                    class="nav-link" aria-selected="true"
+                    data-bs-toggle="tab" role="tab"
+                    data-bs-target="#sysconfigTabSecurityContent" aria-controls="sysconfigTabSecurityContent">
+                @lang('PANOPTICON_SYSCONFIG_LBL_TAB_SECURITY')
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
             <button type="button" id="sysconfigTabEmail"
                     class="nav-link" aria-selected="true"
                     data-bs-toggle="tab" role="tab"
@@ -57,13 +65,20 @@ $router = $this->getContainer()->router;
         >
             <div class="d-flex flex-column gap-3">
                 @include('Sysconfig/default_system')
-                @include('Sysconfig/default_loginfail')
-                @include('Sysconfig/default_passwordsec')
+                @include('Sysconfig/default_session')
                 @include('Sysconfig/default_caching')
                 @include('Sysconfig/default_logging')
                 @include('Sysconfig/default_proxy')
                 @include('Sysconfig/default_dbtools')
                 @include('Sysconfig/default_database')
+            </div>
+        </div>
+        <div class="tab-pane"
+             id="sysconfigTabSecurityContent" role="tabpanel" aria-labelledby="sysconfigTabSecurity" tabindex="-1"
+        >
+            <div class="d-flex flex-column gap-3">
+                @include('Sysconfig/default_passwordsec')
+                @include('Sysconfig/default_loginfail')
             </div>
         </div>
         <div class="tab-pane"

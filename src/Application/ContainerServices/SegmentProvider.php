@@ -8,8 +8,8 @@
 namespace Akeeba\Panopticon\Application\ContainerServices;
 
 
+use Akeeba\Panopticon\Library\Session\EncryptingEncoder;
 use Awf\Container\Container;
-use Awf\Session\Encoder\TransparentEncoder;
 use Awf\Session\Segment;
 
 defined('AKEEBA') || die;
@@ -18,9 +18,11 @@ class SegmentProvider
 {
 	public function __invoke(Container $c): Segment
 	{
-		$newSegment = $c->session->newSegment($c->session_segment_name);
+		$segmentName = hash_hmac('md5', $c->application_name, $c->appConfig->get('secret', ''));
 
-		$newSegment->setEncoder(new TransparentEncoder());
+		$newSegment = $c->session->newSegment($segmentName);
+
+		$newSegment->setEncoder(new EncryptingEncoder($c, true));
 
 		return $newSegment;
 	}

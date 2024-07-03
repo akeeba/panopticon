@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.0\n"
-"POT-Creation-Date: 2024-07-03 11:32:04\n"
+"POT-Creation-Date: 2024-07-03 18:03:52\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5813,6 +5813,11 @@ msgid "System"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_SECURITY"
+msgid "Security"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_DISPLAY"
 msgid "Display"
 msgstr ""
@@ -5910,6 +5915,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSWORD_SECURITY"
 msgid "Password Security"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SESSION"
+msgid "Session Storage"
 msgstr ""
 
 #, phpformat
@@ -6400,6 +6410,26 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER"
 msgid "Behind load balancer / reverse proxy"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT"
+msgid "Encrypt session data"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT_HELP"
+msgid "Session data will be stored on disk encrypted with a secret key unique to your Panopticon installation."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_SAVE_LEVELS"
+msgid "Session Path Levels"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_SAVE_LEVELS_HELP"
+msgid "Session save data files will be saved this many folders deep. 0 means all files in a single folder. Best keep it 0 unless you have thousands of concurrent sessions."
 msgstr ""
 
 #, phpformat

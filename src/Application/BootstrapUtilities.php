@@ -42,6 +42,8 @@ final class BootstrapUtilities
 	 */
 	static $tempCaCert = false;
 
+	private static $secret = null;
+
 	/**
 	 * Asserts that the server meets the minimum PHP version requirement
 	 *
@@ -341,6 +343,77 @@ final class BootstrapUtilities
 	}
 
 	/**
+	 * Make sure we have a secret key set up for this installation.
+	 *
+	 * If the application is not configured yet, the secret is stored in tmp/secret.php.
+	 *
+	 * If the application is configured, we check if we need to transcribe the secret to the config.php file. In case a
+	 * .env file is being used we cannot write the secret. In this case, we just transcribe the secret to the runtime
+	 * application configuration. The secret will be stored in the tmp/secret.php file.
+	 *
+	 * @return void
+	 * @throws \Random\RandomException
+	 */
+	public static function applySecret()
+	{
+		// Do I already have a secret, e.g. through user code?
+		if (self::$secret)
+		{
+			return;
+		}
+
+		// Do I have a configured secret?
+		$secret = trim(self::getInitialConfiguration()->get('secret', null) ?? '');
+
+		if (!empty($secret))
+		{
+			return;
+		}
+
+		// Do I have a temporary file defining a secret?
+		if (file_exists(APATH_TMP . '/secret.php'))
+		{
+			require_once APATH_TMP . '/secret.php';
+		}
+
+		if (defined('AKEEBA_SECRET'))
+		{
+			return;
+		}
+
+		// Create a new secret and save it into a temporary file.
+		$randomStringGenerator = function(int $length): string {
+			$allCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+			$baseLength    = \strlen($allCharacters);
+			$outString     = '';
+			$sourceBytes   = random_bytes($length + 1);
+			$baseShift     = \ord($sourceBytes[0]);
+
+			for ($i = 1; $i <= $length; ++$i)
+			{
+				$outString .= $allCharacters[($baseShift + \ord($sourceBytes[$i])) % $baseLength];
+				$baseShift += \ord($sourceBytes[$i]);
+			}
+
+			return $outString;
+		};
+
+		$secret       = $randomStringGenerator(64);
+		self::$secret = $secret;
+
+		$fileContent = <<< PHP
+<?php
+defined('AKEEBA') or die;
+if (!defined('AKEEBA_SECRET')) {
+	define('AKEEBA_SECRET', '{$secret}');
+}
+
+PHP;
+
+		file_put_contents(APATH_TMP . '/secret.php', $fileContent);
+	}
+
+	/**
 	 * Loads the application configuration, if it exists.
 	 *
 	 * @return  void
@@ -354,7 +427,33 @@ final class BootstrapUtilities
 			return;
 		}
 
-		Factory::getContainer()->appConfig->loadConfiguration();
+		$appConfig = Factory::getContainer()->appConfig;
+		$appConfig->loadConfiguration();
+
+		// Transfer the secret to the application configuration if necessary
+		$deleteOld = !empty(self::$secret);
+
+		if (self::$secret && !$appConfig->get('secret'))
+		{
+			$appConfig->set('secret', self::$secret);
+
+			if ($appConfig->isReadWrite())
+			{
+				try
+				{
+					$appConfig->saveConfiguration();
+				}
+				catch (\Exception $e)
+				{
+					$deleteOld = false;
+				}
+			}
+		}
+
+		if ($deleteOld && @file_exists(APATH_TMP . '/secret.php'))
+		{
+			@unlink(APATH_TMP . '/secret.php');
+		}
 	}
 
 	/**

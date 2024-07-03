@@ -23,6 +23,7 @@ require_once APATH_ROOT . '/vendor/autoload.php';
 BootstrapUtilities::applyExceptionsHandler();
 
 // Apply debug-related user preferences before the application initialisation
+BootstrapUtilities::applySecret();
 BootstrapUtilities::applyErrorReportingToPHP();
 BootstrapUtilities::applyDebugToConstant();
 BootstrapUtilities::conditionallyForceBladeRecompilation();

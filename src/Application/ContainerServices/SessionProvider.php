@@ -8,10 +8,11 @@
 namespace Akeeba\Panopticon\Application\ContainerServices;
 
 
+use Akeeba\Panopticon\Library\Session\SegmentFactory;
 use Awf\Container\Container;
 use Awf\Session\CsrfTokenFactory;
 use Awf\Session\Manager;
-use Awf\Session\SegmentFactory;
+use Awf\Uri\Uri;
 
 defined('AKEEBA') || die;
 
@@ -19,17 +20,24 @@ class SessionProvider
 {
 	public function __invoke(Container $c): Manager
 	{
-		return new Manager(
+		$appConfig = $c->appConfig;
+		$manager   = new Manager(
 			new SegmentFactory(),
 			new CsrfTokenFactory(),
 			$_COOKIE,
 			[
 				'save_handler'           => 'files',
 				'serialize_handler'      => 'php_serialize',
-				'cookie_lifetime'        => $c->appConfig->get('session_timeout', 1440) * 60,
-				'cookie_httponly'        => $this->cookie_params['httponly'] ?? 1,
-				'use_strict_mode'        => 0,
+				'cookie_lifetime'        => max($appConfig->get('session_timeout', 1440) * 60, 86400),
+				'gc_maxlifetime'         => max($appConfig->get('session_timeout', 1440) * 60, 86400),
+				'gc_probability'         => 1,
+				'gc_divisor'             => 100,
+				'cookie_httponly'        => 1,
+				'cookie_secure'          => Uri::getInstance()->getScheme() === 'https' ? 1 : 0,
+				'cookie_samesite'        => 'Strict',
+				'use_strict_mode'        => 1,
 				'use_cookies'            => 1,
+				'use_only_cookies'       => 1,
 				'cache_limiter'          => 'nocache',
 				'use_trans_sid'          => 0,
 				'sid_length'             => 42,
@@ -37,5 +45,20 @@ class SessionProvider
 				'lazy_write'             => 1,
 			]
 		);
+
+		// Use a custom cookie name instead of the generic PHPSESSID
+		$manager->setName('panopticon_session');
+
+		// Set the session save path
+		$sessionPath = APATH_TMP . '/session';
+
+		if (!@is_dir($sessionPath))
+		{
+			@mkdir($sessionPath, 0700, true);
+		}
+
+		$manager->setSavePath($sessionPath, (int) $appConfig->get('session_save_levels', 0));
+
+		return $manager;
 	}
 }

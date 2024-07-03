@@ -359,7 +359,6 @@ class Application extends AWFApplication
 		$this->preloadHints();
 
 		// Set up the session
-		$this->discoverSessionSavePath();
 		$this->container->session->start();
 
 		// Apply a forced language – but only if there is no logged-in user, or they have no language preference.
@@ -432,53 +431,6 @@ class Application extends AWFApplication
 
 		// Initialise the main menu
 		$this->initialiseMenu();
-	}
-
-	public function createOrUpdateSessionPath(string $path, bool $silent = true): void
-	{
-		try
-		{
-			$fs            = $this->container->fileSystem;
-			$protectFolder = false;
-
-			if (!@is_dir($path))
-			{
-				$fs->mkdir($path, 0777);
-			}
-			elseif (!is_writeable($path))
-			{
-				$fs->chmod($path, 0777);
-				$protectFolder = true;
-			}
-			else
-			{
-				if (!@file_exists($path . '/.htaccess'))
-				{
-					$protectFolder = true;
-				}
-
-				if (!@file_exists($path . '/web.config'))
-				{
-					$protectFolder = true;
-				}
-			}
-
-			if ($protectFolder)
-			{
-				$fs->copy($this->container->basePath . '/.htaccess', $path . '/.htaccess');
-				$fs->copy($this->container->basePath . '/web.config', $path . '/web.config');
-
-				$fs->chmod($path . '/.htaccess', 0644);
-				$fs->chmod($path . '/web.config', 0644);
-			}
-		}
-		catch (Exception $e)
-		{
-			if (!$silent)
-			{
-				throw $e;
-			}
-		}
 	}
 
 	private function initialiseMenu(?array $items = null, ?Item $parent = null): void
@@ -696,18 +648,6 @@ class Application extends AWFApplication
 		else
 		{
 			$this->container->segment->set('session_timestamp', $now);
-		}
-	}
-
-	private function discoverSessionSavePath(): void
-	{
-		$sessionPath = $this->container->session->getSavePath();
-
-		if (!@is_dir($sessionPath) || !@is_writable($sessionPath))
-		{
-			$sessionPath = APATH_TMP . '/session';
-			$this->createOrUpdateSessionPath($sessionPath);
-			$this->container->session->setSavePath($sessionPath);
 		}
 	}
 
