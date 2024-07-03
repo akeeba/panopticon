@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.0\n"
-"POT-Creation-Date: 2024-07-02 20:35:00\n"
+"POT-Creation-Date: 2024-07-03 11:32:04\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5908,6 +5908,11 @@ msgid "Automatic IP blocking"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSWORD_SECURITY"
+msgid "Password Security"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_HEAD"
 msgid "No extensions found"
 msgstr ""
@@ -5970,6 +5975,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT_EXTEND_HELP"
 msgid "When enabled, every time a blocked IP address tries to access Akeeba Panopticon it will have its lockout time reset, i.e. the lockout will be extended for another “IP lockout time” seconds. This penalises some bots, but it comes at the expense of slowing down legitimate access to Akeeba Panopticon."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP"
+msgid "Forbid using leaked passwords"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
 msgstr ""
 
 #, phpformat
@@ -6045,6 +6060,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PHPWARNINGS"
 msgid "PHP Version Messages in Main Page"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS"
+msgid "Show avatars for users"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
+msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
 msgstr ""
 
 #, phpformat
@@ -9755,5 +9780,10 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_EXTENDING"
 msgid "Trying to accessing this site before the ban expires will extend the length of the ban."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
+msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
 msgstr ""
 
