@@ -20,7 +20,7 @@ class Sysconfig extends Controller
 
 	private const CHECKBOX_KEYS = [
 		'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto', 'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth',
-		 'login_failure_enable', 'login_lockout_extend', 'avatars'
+		 'login_failure_enable', 'login_lockout_extend', 'avatars', 'password_hibp'
 	];
 
 	public function execute($task)

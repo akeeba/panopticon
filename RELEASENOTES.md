@@ -14,6 +14,8 @@ Welcome to version 1.2! It took a while, but we have implemented a number of maj
 
 **Auto-ban IPs after many failed login attempts**. Panopticon can temporarily block IP addresses if many failed login attempts have originated from them. This feature is enabled by default, but it can be turned off if it's a problem for you or your clients. The number of failed logins, the period they have to take place in, and the amount of time they will remain blocked is user-configurable. 
 
+**Check passwords against Have I Been Pwned [gh-728]**. Panopticon will check new passwords against the third party Have I Been Pwned service. If the password is found in online password leaks the user will be asked to use a different password. This feature can be disabled in the System Configuration, however we recommend that you _always_ keep this enabled for maximum protection of your monitored sites.
+
 ## 🖥️ System Requirements
 
 * PHP 8.1, 8.2, or 8.3. PHP 8.3 recommended.
@@ -26,18 +28,6 @@ Welcome to version 1.2! It took a while, but we have implemented a number of maj
 Development of Akeeba Panopticon takes place _in public_. You can see what we're planning, thinking of, and working on in [our issues tracker](https://github.com/akeeba/panopticon/issues).
 
 ## 📋 CHANGELOG
-
-* ✨ WordPress support [gh-38]
-* ✨ Much improved Docker support [gh-697]
-* ✨ Translatable dates
-* ✨ Load TinyMCE translations
-* ✨ Batch processing sites
-* 🐞➖ MaxExec task throws fatal exception when tasks are executed over the web
-* 🐞🔻 Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
-* 🐞🔻 Wrong language in mail Blade templates [gh-658]
-* 🐞🔻 Groups for disabled sites may not be displayed in the Sites admin page
-* 🐞🔻 Connection doctor: sometimes ends up with an error page instead of showing what is going on with the connection
-* 🐞🔻 High CPU usage warning when the server does not report CPU usage at all
 
 Legend:
 

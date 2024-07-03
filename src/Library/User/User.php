@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Library\User;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Password\HIBPCheck;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
 use Awf\Container\Container;
@@ -105,6 +106,22 @@ class User extends \Awf\User\User implements ContainerAwareInterface
 	{
 		return $this->groupPrivileges;
 	}
+
+	public function setPassword($password)
+	{
+		if (
+			$this->getContainer()->appConfig->get('password_hibp', 1)
+			&& (new HIBPCheck($this->getContainer()))->isPasswordLeaked($password)
+		)
+		{
+			throw new \RuntimeException(
+				$this->getContainer()->language->text('PANOPTICON_SYSERROR_LEAKED_PASSWORD')
+			);
+		}
+
+		parent::setPassword($password);
+	}
+
 
 	private function loadGroupPrivileges(): array
 	{

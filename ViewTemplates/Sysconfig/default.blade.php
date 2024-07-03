@@ -58,6 +58,7 @@ $router = $this->getContainer()->router;
             <div class="d-flex flex-column gap-3">
                 @include('Sysconfig/default_system')
                 @include('Sysconfig/default_loginfail')
+                @include('Sysconfig/default_passwordsec')
                 @include('Sysconfig/default_caching')
                 @include('Sysconfig/default_logging')
                 @include('Sysconfig/default_proxy')
