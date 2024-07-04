@@ -259,7 +259,7 @@ JS;
                     default => false
                 };
 				$extIdForUpdate    = match($site->cmsType()) {
-					CMSType::JOOMLA => (int) $item->extensionId,
+					CMSType::JOOMLA => (int) ($item->extension_id ?? 0),
 					CMSType::WORDPRESS => (($item->type === 'plugin') ? 'plg_' : 'tpl_') . str_replace('/', '_', $item->extension_id),
                     default => '',
 				}
@@ -390,7 +390,7 @@ JS;
                             </span>
                         </div>
                         @if ($this->container->userManager->getUser()->authorise('panopticon.admin', $site->id))
-                            <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $site->id, $extensionId, $token))"
+                            <a href="@route(sprintf('index.php?view=site&task=dlkey&id=%d&extension=%d&%s=1', $site->id, $extIdForUpdate, $token))"
                                class="ms-2 btn btn-outline-primary btn-sm" role="button">
                                 <span class="fa fa-pencil-square" aria-hidden="true"></span>
                                 <span class="visually-hidden">@lang('PANOPTICON_BTN_EDIT')</span>
