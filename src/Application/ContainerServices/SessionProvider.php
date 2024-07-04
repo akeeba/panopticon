@@ -60,15 +60,49 @@ class SessionProvider
 		$manager->setName('panopticon_session');
 
 		// Set the session save path
-		$sessionPath = APATH_TMP . '/session';
+		$sessionPath = $manager->getSavePath();
+		$levels      = 0;
 
-		if (!@is_dir($sessionPath))
+		if (
+			!$appConfig->get('session_use_default_path', true)
+			|| !@is_dir($sessionPath)
+			|| !@is_writable($sessionPath))
 		{
-			@mkdir($sessionPath, 0700, true);
+			$sessionPath = APATH_TMP . '/session';
+			$levels      = (int) $appConfig->get('session_save_levels', 0);
+
+			$this->createOrUpdateFolder($c, $sessionPath);
 		}
 
-		$manager->setSavePath($sessionPath, (int) $appConfig->get('session_save_levels', 0));
+		$manager->setSavePath($sessionPath, $levels);
 
 		return $manager;
+	}
+
+	public function createOrUpdateFolder(Container $c, string $path): void
+	{
+		$fs = $c->fileSystem;
+
+		if (!@is_dir($path))
+		{
+			$fs->mkdir($path, 0700);
+		}
+
+		if (!is_writeable($path))
+		{
+			$fs->chmod($path, 0777);
+		}
+
+		if (
+			!@file_exists($path . '/.htaccess')
+			|| !@file_exists($path . '/web.config')
+		)
+		{
+			$fs->copy($c->basePath . '/.htaccess', $path . '/.htaccess');
+			$fs->copy($c->basePath . '/web.config', $path . '/web.config');
+
+			$fs->chmod($path . '/.htaccess', 0644);
+			$fs->chmod($path . '/web.config', 0644);
+		}
 	}
 }

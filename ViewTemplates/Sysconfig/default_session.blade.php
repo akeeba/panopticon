@@ -65,6 +65,23 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--session_use_default_path--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[session_use_default_path]" id="session_use_default_path" value="1"
+                            {{ $config->get('session_use_default_path', true) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="session_use_default_path">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH')
+                    </label>
+                </div>
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH_HELP')
+                </div>
+            </div>
+        </div>
+
         {{--session_save_levels--}}
         <div class="row mb-3">
             <label for="session_save_levels" class="col-sm-3 col-form-label">
@@ -85,7 +102,7 @@ $config = $this->container->appConfig;
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" name="options[session_encrypt]" id="password_hibp" value="1"
+                    <input class="form-check-input" type="checkbox" name="options[session_encrypt]" id="session_encrypt" value="1"
                             {{ $config->get('session_encrypt', true) ? 'checked' : '' }}
                     >
                     <label class="form-check-label" for="session_encrypt">

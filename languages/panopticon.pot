@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.0\n"
-"POT-Creation-Date: 2024-07-03 20:53:03\n"
+"POT-Creation-Date: 2024-07-04 07:18:03\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5948,6 +5948,16 @@ msgid "Session Timeout"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH"
+msgid "Use Default PHP Session Save Path"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH_HELP"
+msgid "When enabled, Panopticon uses the <code>session.save_path</code> in your PHP configuration for saving PHP session data files. When disabled, Panopticon uses the <code>tmp/session</code> folder under your web root."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE"
 msgid "Time Zone"
 msgstr ""
@@ -6429,7 +6439,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_SAVE_LEVELS_HELP"
-msgid "Session save data files will be saved this many folders deep. 0 means all files in a single folder. Best keep it 0 unless you have thousands of concurrent sessions."
+msgid "Session save data files will be saved this many folders deep. 0 means all files in a single folder. Best keep it 0 unless you have thousands of concurrent sessions. Only applies when Use Default PHP Session Save Path is disabled."
 msgstr ""
 
 #, phpformat

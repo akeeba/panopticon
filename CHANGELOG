@@ -11,7 +11,8 @@ Akeeba Panopticon 1.2.0
 + Check passwords against HIBP [gh-728]
 ~ System Configuration uses more Show On tricks to show/hide relevant settings
 ~ Expose the Avatars setting in System Configuration [gh-729]
-~ All session files are now in tmp/session, and encrypted
+~ Session data contents are now encrypted at rest
+~ Session improvements
 # [LOW] Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
 # [LOW] Wrong language in mail Blade templates [gh-658]
 # [LOW] Groups for disabled sites may not be displayed in the Sites admin page
