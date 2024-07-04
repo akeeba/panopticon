@@ -88,6 +88,7 @@ class Loginfailures extends Model
 			// For the reasoning of this code see https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html
 			$db->setQuery('COMMIT')->execute();
 			$db->unlockTables();
+			$db->setQuery('SET autocommit = 1')->execute();
 		}
 
 		if (!$autoBlock)
@@ -158,6 +159,7 @@ class Loginfailures extends Model
 			// For the reasoning of this code see https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html
 			$db->setQuery('COMMIT')->execute();
 			$db->unlockTables();
+			$db->setQuery('SET autocommit = 1')->execute();
 		}
 
 	}
@@ -259,6 +261,7 @@ class Loginfailures extends Model
 			// For the reasoning of this code see https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html
 			$db->setQuery('COMMIT')->execute();
 			$db->unlockTables();
+			$db->setQuery('SET autocommit = 1')->execute();
 		}
 	}
 
@@ -344,6 +347,7 @@ class Loginfailures extends Model
 			// For the reasoning of this code see https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html
 			$db->setQuery('COMMIT')->execute();
 			$db->unlockTables();
+			$db->setQuery('SET autocommit = 1')->execute();
 		}
 	}
 
@@ -410,6 +414,7 @@ class Loginfailures extends Model
 			// For the reasoning of this code see https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html
 			$db->setQuery('COMMIT')->execute();
 			$db->unlockTables();
+			$db->setQuery('SET autocommit = 1')->execute();
 		}
 
 		return $failuresInWindow >= $maxAllowedFailures;

@@ -13,6 +13,7 @@ Akeeba Panopticon 1.2.0
 ~ Expose the Avatars setting in System Configuration [gh-729]
 ~ Session data contents are now encrypted at rest
 ~ Session improvements
+# [HIGH] Some tasks would disable MySQL autocommit without restoring it, leading to weird issues
 # [LOW] Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
 # [LOW] Wrong language in mail Blade templates [gh-658]
 # [LOW] Groups for disabled sites may not be displayed in the Sites admin page
