@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.0\n"
-"POT-Creation-Date: 2024-07-05 09:15:02\n"
+"POT-Creation-Date: 2024-07-05 09:18:57\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -9408,6 +9408,11 @@ msgid "The Scheduled Update Summary task has been saved"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_DELETED"
+msgid "The Scheduled Update Summary task has been deleted"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_RECIPIENTS"
 msgid "Recipients"
 msgstr ""
@@ -9440,6 +9445,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_LBL_ACTIONSUMMARYTASK_SAVED"
 msgid "The Scheduled Action Summary has been saved"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_ACTIONSUMMARYTASK_DELETED"
+msgid "The Scheduled Action Summary has been deleted"
 msgstr ""
 
 #, phpformat
