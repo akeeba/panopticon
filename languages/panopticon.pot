@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.0\n"
-"POT-Creation-Date: 2024-07-04 07:18:03\n"
+"POT-Creation-Date: 2024-07-05 09:15:02\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -7744,12 +7744,12 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
-msgid "Run once, then disable this backup schedule"
+msgid "Run once, then disable this schedule"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE"
-msgid "⚠️ Run once, then DELETE this backup schedule"
+msgid "⚠️ Run once, then DELETE this schedule"
 msgstr ""
 
 #, phpformat
