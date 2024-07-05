@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2024-07-01 09:33:30\n"
-"PO-Revision-Date: 2024-07-02 01:36+0200\n"
+"POT-Creation-Date: 2024-07-05 09:15:02\n"
+"PO-Revision-Date: 2024-07-05 18:10+0200\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -537,7 +537,7 @@ msgstr "Abmelden"
 
 msgctxt "PANOPTICON_APP_LBL_SHOW_HIDE_HELP"
 msgid "Show/Hide Help"
-msgstr "Hilfe anzeigen/ausblenden"
+msgstr "Hilfe anzeigen / ausblenden"
 
 msgctxt "PANOPTICON_APP_LBL_TOOLBAR"
 msgid "Toolbar"
@@ -3337,7 +3337,7 @@ msgstr "WordPress-Update-Informationen für Site „%s“ neu laden"
 
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SOURCE_INFO"
 msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\\\"%s\\\" target=\\\"_blank\\\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
-msgstr "Informationen zur Verfügbarkeit des WordPress-Updates werden von der Site bereitgestellt. End-of-Life-Daten von WordPress stammen von <a href=\\\"%s\\\" target=\\\"_blank\\\">%1$s</a>. Das WordPress-Projekt veröffentlicht keine End-of-Security-Updates und/oder End-of-Life-Daten im Voraus, weshalb diese Informationen in Panopticon nicht angezeigt werden."
+msgstr "Informationen zur Verfügbarkeit des WordPress-Updates werden von der Site bereitgestellt. End-of-Life-Daten von WordPress stammen von <a href=\"%s\" target=\"_blank\">%1$s</a>. Das WordPress-Projekt veröffentlicht keine End-of-Security-Updates und/oder End-of-Life-Daten im Voraus, weshalb diese Informationen in Panopticon nicht angezeigt werden."
 
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_UPDATE"
 msgid "Schedule Automatic Update to WordPress %s"
@@ -4521,7 +4521,7 @@ msgstr "SSL/TLS-Zertifikat abgelaufen? In diesem Fall muss es erneuert werden. B
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
 msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate's revocation status</a>. If it's been revoked you will need a new certificate."
-msgstr "SSL/TLS-Zertifikat widerrufen? Manchmal entscheiden sich Zertifizierungsstellen oder Besitzer eines SSL/TLS-Zertifikats dafür, es zu widerrufen. Zertifizierungsstellen werden dies beispielsweise tun, wenn sie Betrug vermuten oder glauben, dass ihre Infrastruktur, die zur Ausstellung eines Zertifikats verwendet wurde, kompromittiert wurde. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Den Widerrufsstatus des Zertifikats prüfen</a>. Wenn es widerrufen wurde, wird ein neues Zertifikat benötigt."
+msgstr "SSL/TLS-Zertifikat widerrufen? Manchmal entscheiden sich Zertifizierungsstellen oder Besitzer eines SSL/TLS-Zertifikats dafür, es zu widerrufen. Zertifizierungsstellen werden dies beispielsweise tun, wenn sie Betrug vermuten oder glauben, dass ihre Infrastruktur, die zur Ausstellung eines Zertifikats verwendet wurde, kompromittiert wurde. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status\" target=\"_blank\">Den Widerrufsstatus des Zertifikats prüfen</a>. Wenn es widerrufen wurde, wird ein neues Zertifikat benötigt."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
 msgid "Is it possible that your server serves the wrong SSL/TLS certificate? This may happen if you have recently switched to a new certificate, either manually or as part of an automated certificate rotation process (e.g. when your host issues a new certificate through Let's Encrypt). When the certificate changes the web server needs to be reloaded or restarted. In some rare cases this might not happen - or an inexperienced systems administrator may forget to do it. Please contact your host / systems administrator to check that and, if necessary, reload or restart the web server process."
@@ -4655,6 +4655,10 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_SYSTEM"
 msgid "System"
 msgstr "System"
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_SECURITY"
+msgid "Security"
+msgstr "Sicherheit"
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_DISPLAY"
 msgid "Display"
 msgstr "Anzeige"
@@ -4676,8 +4680,8 @@ msgid "Caching"
 msgstr "Caching"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES"
-msgid "Joomla!&reg; Updates"
-msgstr "Joomla!&reg; Updates"
+msgid "CMS Updates"
+msgstr "CMS-Updates"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_DATABASE"
 msgid "Database Connection"
@@ -4727,6 +4731,18 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SYSTEM"
 msgid "System Preferences"
 msgstr "Systemeinstellungen"
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_LOGINFAIL"
+msgid "Automatic IP blocking"
+msgstr "Automatische IP-Blockierung"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSWORD_SECURITY"
+msgid "Password Security"
+msgstr "Passwort-Sicherheit"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SESSION"
+msgid "Session Storage"
+msgstr "Sitzungsspeicher"
+
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_HEAD"
 msgid "No extensions found"
 msgstr "Keine Erweiterungen gefunden"
@@ -4747,6 +4763,14 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TIMEOUT"
 msgid "Session Timeout"
 msgstr "Sitzungs-Zeitüberschreitung"
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH"
+msgid "Use Default PHP Session Save Path"
+msgstr "Standardspeicherpfad für PHP-Sitzungen verwenden"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH_HELP"
+msgid "When enabled, Panopticon uses the <code>session.save_path</code> in your PHP configuration for saving PHP session data files. When disabled, Panopticon uses the <code>tmp/session</code> folder under your web root."
+msgstr "Wenn aktiviert, verwendet Panopticon den <code>session.save_path</code> in der PHP-Konfiguration zum Speichern von PHP-Sitzungsdatendateien. Wenn deaktiviert, verwendet Panopticon den Ordner <code>tmp/session</code> unter dem Web-Root."
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE"
 msgid "Time Zone"
 msgstr "Zeitzone"
@@ -4754,6 +4778,38 @@ msgstr "Zeitzone"
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DEBUG"
 msgid "Debug System"
 msgstr "Debug System"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_FAILURE_ENABLE"
+msgid "Automatic IP block on failed login attempts"
+msgstr "Automatische IP-Blockierung bei fehlgeschlagenen Anmeldeversuchen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_MAX_FAILURES"
+msgid "Maximum login failures"
+msgstr "Maximale Anzahl an Anmeldefehlern"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_FAILURE_WINDOW"
+msgid "Login failure window"
+msgstr "Fenster mit fehlgeschlagener Anmeldung"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT"
+msgid "IP block time"
+msgstr "IP-Blockierungszeit"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT_EXTEND"
+msgid "Extend IP lockout time"
+msgstr "IP-Sperrzeit verlängern"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT_EXTEND_HELP"
+msgid "When enabled, every time a blocked IP address tries to access Akeeba Panopticon it will have its lockout time reset, i.e. the lockout will be extended for another “IP lockout time” seconds. This penalises some bots, but it comes at the expense of slowing down legitimate access to Akeeba Panopticon."
+msgstr "Wenn aktiviert, wird jedes Mal, wenn eine blockierte IP-Adresse versucht, auf Akeeba Panopticon zuzugreifen, ihre Sperrzeit zurückgesetzt, d.h. die Sperrung wird um weitere „IP-Sperrzeit“-Sekunden verlängert. Dies bestraft einige Bots, geht jedoch zu Lasten der Verlangsamung des legitimen Zugriffs auf Akeeba Panopticon."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP"
+msgid "Forbid using leaked passwords"
+msgstr "Verwendung geleakter Passwörter verbieten"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' _target='blank'>Have I Been Pwned</a>."
+msgstr "Verhindert, dass Benutzer Passwörter verwenden, die in Online-Passwortlecks-Listen gefunden werden. Unterstützt durch den Drittanbieterdienst <a href=\"https://haveibeenpwned.com\" _target=\"blank\">Have I Been Pwned</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
 msgid "Anonymous Usage Statistics Collection"
@@ -4814,6 +4870,14 @@ msgstr "Panopticon lädt immer bis zu 50 Seiten pro HTTP-Anfrage. Maximale Anzah
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PHPWARNINGS"
 msgid "PHP Version Messages in Main Page"
 msgstr "PHP-Versionsmeldungen auf der Hauptseite"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS"
+msgid "Show avatars for users"
+msgstr "Avatare für Benutzer anzeigen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
+msgstr "Avatare für Benutzer anzeigen. Diese Funktion wird vom Drittanbieterdienst <a href=\"https://de.gravatar.com\" _target=\"_blank\">Gravatar</a> bereitgestellt."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
 msgid "Web CRON Key"
@@ -5078,6 +5142,22 @@ msgstr "Installation von Panopticon abgeschlossen?"
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER"
 msgid "Behind load balancer / reverse proxy"
 msgstr "Hinter Load Balancer / Reverse Proxy"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT"
+msgid "Encrypt session data"
+msgstr "Sitzungsdaten verschlüsseln"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT_HELP"
+msgid "Session data will be stored on disk encrypted with a secret key unique to your Panopticon installation."
+msgstr "Sitzungsdaten werden auf der Festplatte gespeichert und mit einem geheimen Schlüssel verschlüsselt, der für die Panopticon-Installation einzigartig ist."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_SAVE_LEVELS"
+msgid "Session Path Levels"
+msgstr "Sitzungspfad-Ebenen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_SAVE_LEVELS_HELP"
+msgid "Session save data files will be saved this many folders deep. 0 means all files in a single folder. Best keep it 0 unless you have thousands of concurrent sessions. Only applies when Use Default PHP Session Save Path is disabled."
+msgstr "Sitzungsspeicher-Datendateien werden so viele Ordner tief gespeichert. 0 bedeutet alle Dateien in einem einzigen Ordner. Am besten den Wert 0 beibehalten, es sei denn, es existieren Tausende gleichzeitiger Sitzungen. Gilt nur, wenn Standard-PHP-Sitzungsspeicherpfad verwenden deaktiviert ist."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
 msgid "Table of known extensions and their automatic update preferences"
@@ -5721,7 +5801,7 @@ msgstr "Panopticon läuft unter Docker"
 
 msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
 msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href='%s'>documentation instructions</a> to update the container, and the database."
-msgstr "Panopticon kann nicht direkt über seine Schnittstelle aktualisiert werden, wenn es unter Docker läuft. Stattdessen muss den <a href='%s'>Dokumentationsanweisungen</a> gefolgt werden, um den Container und die Datenbank zu aktualisieren."
+msgstr "Panopticon kann nicht direkt über seine Schnittstelle aktualisiert werden, wenn es unter Docker läuft. Stattdessen muss den <a href=\"%s\">Dokumentationsanweisungen</a> gefolgt werden, um den Container und die Datenbank zu aktualisieren."
 
 msgctxt "PANOPTICON_GROUPS_TITLE"
 msgid "Groups"
@@ -5869,7 +5949,7 @@ msgstr "E-Mail"
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
 msgid "The email address is used to email the user, as well as displaying the user's picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
-msgstr "E-Mail-Adresse wird verwendet, um E-Mails an den Benutzer zu senden und das Bild des Benutzers über den <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>-Dienst eines Drittanbieters anzuzeigen."
+msgstr "E-Mail-Adresse wird verwendet, um E-Mails an den Benutzer zu senden und das Bild des Benutzers über den <a href=\"https://de.gravatar.com\" target=\"_blank\">Gravatar</a>-Dienst eines Drittanbieters anzuzeigen."
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD"
 msgid "Password"
@@ -6120,16 +6200,16 @@ msgid "Repeat according to schedule"
 msgstr "Nach Zeitplan wiederholen"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
-msgid "Run once, then disable this backup schedule"
-msgstr "Backup-Plan einmal ausführen und dann deaktivieren"
+msgid "Run once, then disable this schedule"
+msgstr "Einmal ausführen, dann diesen Zeitplan deaktivieren"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE"
-msgid "⚠️ Run once, then DELETE this backup schedule"
-msgstr "⚠️ Backup-Plan einmal ausführen und dann LÖSCHEN"
+msgid "⚠️ Run once, then DELETE this schedule"
+msgstr "⚠️ Einmal ausführen, dann diesen Zeitplan LÖSCHEN"
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The backup schedule is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
-msgstr "Backup-Zeitplan ist ein <a href='%s' target='_blank'>CRON-Ausdruck</a>. Es wird die Zeitzone %s verwendet."
+msgstr "Backup-Zeitplan ist ein <a href=\"%s\" target=\"_blank\">CRON-Ausdruck</a>. Es wird die Zeitzone %s verwendet."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE"
 msgid "– Profile –"
@@ -6190,6 +6270,14 @@ msgstr "Manuell"
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_VIEW_MANUAL"
 msgid "List Manual Backups"
 msgstr "Manuelle Backups auflisten"
+
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_EMAIL_SUCCESS"
+msgid "Send email on success"
+msgstr "Bei Erfolg E-Mail senden"
+
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_EMAIL_FAIL"
+msgid "Send email on failure"
+msgstr "Bei Fehler E-Mail senden"
 
 msgctxt "PANOPTICON_SCANNERTASKS_TITLE"
 msgid "PHP File Change Scanner Tasks"
@@ -6269,7 +6357,7 @@ msgstr "⚠️ Scan-Zeitplan einmal ausführen und dann LÖSCHEN"
 
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The scan schedule is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
-msgstr "Scan-Zeitplan ist ein <a href='%s' target='_blank'>CRON-Ausdruck</a>. Zeitzone %s wird verwendet."
+msgstr "Scan-Zeitplan ist ein <a href=\"%s\" target=\"_blank\">CRON-Ausdruck</a>. Zeitzone %s wird verwendet."
 
 msgctxt "PANOPTICON_LBL_SCANNERTASK_DELETED"
 msgid "The scan schedule has been deleted."
@@ -6629,7 +6717,7 @@ msgstr "Generierten 6-stelligen Code in das Feld unten eingeben auf „Speichern
 
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_SOFTWARE"
 msgid "Looking for compatible authenticator software? We have tested with <a href=\"https://keepassxc.org/\">KeePassXC</a>, <a href=\"https://strongboxsafe.com/\">Strongbox</a>, <a href=\"https://1password.com/\">1Password</a>, <a href=\"https://en.wikipedia.org/wiki/Google_Authenticator\">Google Authenticator</a>, <a href=\"https://authy.com/\">Twilio Authy</a>, and the built-in feature in macOS / iOS / iPadOS."
-msgstr "Auf der Suche nach kompatibler Authenticator-Software? Wir haben mit <a href=\"https://keepassxc.org/\">KeePassXC</a>, <a href=\"https://strongboxsafe.com/de/\">Strongbox</a>, <a href=\"https://1password.com/de/\">1Password</a>, <a href=\"https://de.wikipedia.org/wiki/Google_Authenticator\">Google Authenticator</a>, <a href=\"https://authy.com/\">Twilio Authy</a> und die integrierte Funktion in macOS / iOS / iPadOS getestet."
+msgstr "Auf der Suche nach kompatibler Authenticator-Software? Wir haben mit <a href=\"https://keepassxc.org\">KeePassXC</a>, <a href=\"https://strongboxsafe.com/de\">Strongbox</a>, <a href=\"https://1password.com/de\">1Password</a>, <a href=\"https://de.wikipedia.org/wiki/Google_Authenticator\">Google Authenticator</a>, <a href=\"https://authy.com\">Twilio Authy</a> und die integrierte Funktion in macOS / iOS / iPadOS getestet."
 
 msgctxt "PANOPTICON_MFA_LBL_HELP"
 msgid "Help on the wiki"
@@ -7417,7 +7505,7 @@ msgstr "Zusammenfassung geplanter Updates bearbeiten"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The schedule for update summary emails is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
-msgstr "Zeitplan für Update-Zusammenfassungs-E-Mails ist ein <a href='%s' target='_blank'>CRON-Ausdruck</a>. Zeitzone %s wird verwendet."
+msgstr "Zeitplan für Update-Zusammenfassungs-E-Mails ist ein <a href=\"%s\" target=\"_blank\">CRON-Ausdruck</a>. Zeitzone %s wird verwendet."
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_OPTIONS"
 msgid "Email Options"
@@ -7473,7 +7561,7 @@ msgstr "Zusammenfassung geplanter Aktionen wurde gespeichert"
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The Site Action Summary schedule is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
-msgstr "Zeitplan für Site-Aktionszusammenfassung ist ein <a href='%s' target='_blank'>CRON-Ausdruck</a>. Zeitzone %s wird verwendet."
+msgstr "Zeitplan für Site-Aktionszusammenfassung ist ein <a href=\"%s\" target=\"_blank\">CRON-Ausdruck</a>. Zeitzone %s wird verwendet."
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_OPTIONS"
 msgid "Report Options"
@@ -7758,6 +7846,38 @@ msgstr "Chinesisch Traditionell (Singapur)"
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_TW"
 msgid "Chinese Traditional (Taiwan)"
 msgstr "Chinesisch Traditionell (Taiwan)"
+
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_TITLE"
+msgid "Access Denied"
+msgstr "Zugang verweigert"
+
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_HEAD"
+msgid "Access Denied"
+msgstr "Zugang verweigert"
+
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_INFO"
+msgid "Your IP address, <code>%s</code>, has been temporarily blocked due to suspicious behaviour."
+msgstr "Die verwendete IP-Adresse <code>%s</code> wurde aufgrund verdächtigen Verhaltens vorübergehend gesperrt."
+
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_EXTENDING"
+msgid "Trying to accessing this site before the ban expires will extend the length of the ban."
+msgstr "Der Versuch, vor Ablauf des Verbots auf diese Website zuzugreifen, verlängert die Dauer des Verbots."
+
+msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
+msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
+msgstr "Das zur späteren Verwendung eingegebene Passwort ist in Online-Passwortlecks-Listen enthalten. Bitte anderes Passwort verwenden."
+
+#~ msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
+#~ msgid "Run once, then disable this backup schedule"
+#~ msgstr "Backup-Plan einmal ausführen und dann deaktivieren"
+
+#~ msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE"
+#~ msgid "⚠️ Run once, then DELETE this backup schedule"
+#~ msgstr "⚠️ Backup-Plan einmal ausführen und dann LÖSCHEN"
+
+#~ msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES"
+#~ msgid "Joomla!&reg; Updates"
+#~ msgstr "Joomla!&reg; Updates"
 
 #~ msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE"
 #~ msgid "Joomla!&reg; Update"
