@@ -93,6 +93,23 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--behind_load_balancer--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[behind_load_balancer]" id="behind_load_balancer"
+                            {{ $config->get('behind_load_balancer', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="behind_load_balancer">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER')
+                    </label>
+                </div>
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER_HELP')
+                </div>
+            </div>
+        </div>
+
         {{--debug--}}
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
