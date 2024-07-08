@@ -50,8 +50,6 @@ class SessionProvider
 				'use_only_cookies'       => 1,
 				'cache_limiter'          => 'nocache',
 				'use_trans_sid'          => 0,
-				'sid_length'             => 42,
-				'sid_bits_per_character' => 6,
 				'lazy_write'             => 1,
 			]
 		);
