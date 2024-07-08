@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "0cdd4f66acee7c2752a308a58c70c5c2f0929fa8"
+                "reference": "61b04046462bbd36b6b7a82961c235c777472a31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/0cdd4f66acee7c2752a308a58c70c5c2f0929fa8",
-                "reference": "0cdd4f66acee7c2752a308a58c70c5c2f0929fa8",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/61b04046462bbd36b6b7a82961c235c777472a31",
+                "reference": "61b04046462bbd36b6b7a82961c235c777472a31",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "issues": "https://github.com/akeeba/awf/issues",
                 "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2024-07-03T17:00:59+00:00"
+            "time": "2024-07-08T16:12:53+00:00"
         },
         {
             "name": "akeeba/json-backup-api",
@@ -135,12 +135,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/stats_collector.git",
-                "reference": "14af03747acfa158bb389963893a06c6f359192e"
+                "reference": "22adf89ca92ab4fd4702ea7076c2900a797ffa97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/14af03747acfa158bb389963893a06c6f359192e",
-                "reference": "14af03747acfa158bb389963893a06c6f359192e",
+                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/22adf89ca92ab4fd4702ea7076c2900a797ffa97",
+                "reference": "22adf89ca92ab4fd4702ea7076c2900a797ffa97",
                 "shasum": ""
             },
             "require": {
@@ -178,7 +178,7 @@
                 "source": "https://github.com/akeeba/stats_collector/tree/main",
                 "issues": "https://github.com/akeeba/stats_collector/issues"
             },
-            "time": "2024-06-25T16:50:47+00:00"
+            "time": "2024-07-08T16:07:49+00:00"
         },
         {
             "name": "brick/math",
@@ -451,16 +451,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "0c5ccfcfea312b5c5a190a21ac5cef93f74baf99"
+                "reference": "063d9aa8696582f5a41dffbbaf3c81024f0a604a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/0c5ccfcfea312b5c5a190a21ac5cef93f74baf99",
-                "reference": "0c5ccfcfea312b5c5a190a21ac5cef93f74baf99",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/063d9aa8696582f5a41dffbbaf3c81024f0a604a",
+                "reference": "063d9aa8696582f5a41dffbbaf3c81024f0a604a",
                 "shasum": ""
             },
             "require": {
@@ -470,7 +470,7 @@
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.10",
-                "psr/log": "^1.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
                 "symfony/phpunit-bridge": "^4.2 || ^5",
                 "symfony/process": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
@@ -507,7 +507,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.5.0"
+                "source": "https://github.com/composer/ca-bundle/tree/1.5.1"
             },
             "funding": [
                 {
@@ -523,7 +523,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-15T14:00:32+00:00"
+            "time": "2024-07-08T15:28:20+00:00"
         },
         {
             "name": "delight-im/alphabets",
@@ -633,16 +633,16 @@
         },
         {
             "name": "dflydev/dot-access-data",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dflydev/dflydev-dot-access-data.git",
-                "reference": "f41715465d65213d644d3141a6a93081be5d3549"
+                "reference": "a23a2bf4f31d3518f3ecb38660c95715dfead60f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-data/zipball/f41715465d65213d644d3141a6a93081be5d3549",
-                "reference": "f41715465d65213d644d3141a6a93081be5d3549",
+                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-data/zipball/a23a2bf4f31d3518f3ecb38660c95715dfead60f",
+                "reference": "a23a2bf4f31d3518f3ecb38660c95715dfead60f",
                 "shasum": ""
             },
             "require": {
@@ -702,9 +702,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dflydev/dflydev-dot-access-data/issues",
-                "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.2"
+                "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.3"
             },
-            "time": "2022-10-27T11:44:00+00:00"
+            "time": "2024-07-08T12:26:09+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
