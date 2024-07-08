@@ -40,7 +40,7 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
 
 @section('jUpdateLastErrorModal')
 	<?php
-	$siteInfoLastErrorModalID = 'silem-' . md5(random_bytes(120)); ?>
+	$siteInfoLastErrorModalID = 'silem-' . hash('md5', random_bytes(120)); ?>
     <div class="btn btn-danger btn-sm px-1 py-0" aria-hidden="true"
          data-bs-toggle="modal" data-bs-target="#{{ $siteInfoLastErrorModalID }}"
     >

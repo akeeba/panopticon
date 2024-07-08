@@ -38,7 +38,7 @@ class Sites extends Site
 		$hashFunction = function (array $groups): string {
 			asort($groups);
 
-			return md5(implode(':', array_filter($groups)));
+			return hash('md5', implode(':', array_filter($groups)));
 		};
 
 		foreach ($ids as $id)

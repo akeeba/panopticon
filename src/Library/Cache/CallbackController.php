@@ -180,7 +180,7 @@ class CallbackController
 		{
 			$hash = spl_object_hash($callback);
 
-			return sha1($hash . serialize([$args]));
+			return hash('sha1', $hash . serialize([$args]));
 		}
 
 		if (\is_array($callback) && \is_object($callback[0]))
@@ -190,6 +190,6 @@ class CallbackController
 			$callback[0] = $vars;
 		}
 
-		return md5(serialize([$callback, $args]));
+		return hash('md5', serialize([$callback, $args]));
 	}
 }

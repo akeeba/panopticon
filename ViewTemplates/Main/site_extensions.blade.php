@@ -35,7 +35,7 @@ $lastError     = $this->getLastExtensionsUpdateError($config);
 	</div>
 	<div class="d-flex flex-column flex-md-row gap-2">
 		@if ($lastError)
-			<?php $extensionsLastErrorModalID = 'exlem-' . md5(random_bytes(120)); ?>
+			<?php $extensionsLastErrorModalID = 'exlem-' . hash('md5', random_bytes(120)); ?>
 			<div>
 				<div class="btn btn-danger btn-sm" aria-hidden="true"
 					 data-bs-toggle="modal" data-bs-target="#{{ $extensionsLastErrorModalID }}"

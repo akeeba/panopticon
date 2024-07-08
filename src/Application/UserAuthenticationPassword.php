@@ -34,10 +34,10 @@ class UserAuthenticationPassword extends Authentication
 				return $this->timingSafeEquals($parts[1], hash('sha256', $password . $parts[2], false));
 
 			case 'SHA1':
-				return $this->timingSafeEquals($parts[1], sha1($password . $parts[2]));
+				return $this->timingSafeEquals($parts[1], hash('sha1', $password . $parts[2]));
 
 			case 'MD5':
-				return $this->timingSafeEquals($parts[1], md5($password . $parts[2]));
+				return $this->timingSafeEquals($parts[1], hash('md5', $password . $parts[2]));
 		}
 
 		// If all else fails, we assume we can't verify this password

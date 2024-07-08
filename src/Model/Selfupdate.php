@@ -293,7 +293,7 @@ class Selfupdate extends Model
 			if (is_file($targetLocation))
 			{
 				$oldLength = @filesize($targetLocation) ?: 0;
-				$oldMD5    = md5_file($targetLocation) ?: '00000000000000000000000000000000';
+				$oldMD5    = hash_file('md5', $targetLocation) ?: '00000000000000000000000000000000';
 				$response  = $httpClient->head($url, $options);
 				$newLength = $response->getHeader('Content-Length');
 				$newMD5    = $response->getHeader('Content-MD5');

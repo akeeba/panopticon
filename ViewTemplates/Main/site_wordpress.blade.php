@@ -89,7 +89,7 @@ $version = Version::create($wpVersion ?? '0.0.0') ?>
     {{-- Did we have an error last time we tried to update the site information? --}}
     @if ($lastError)
 			<?php
-			$siteInfoLastErrorModalID = 'silem-' . md5(random_bytes(120)); ?>
+			$siteInfoLastErrorModalID = 'silem-' . hash('md5', random_bytes(120)); ?>
         <div>
             <div class="btn btn-danger btn-sm" aria-hidden="true"
                  data-bs-toggle="modal" data-bs-target="#{{ $siteInfoLastErrorModalID }}"

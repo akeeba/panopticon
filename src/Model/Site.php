@@ -1207,7 +1207,8 @@ class Site extends DataModel
 			$container,
 			$pool
 		);
-		$cacheKey           = sha1(
+		$cacheKey           = hash(
+			'sha1',
 			sprintf(
 				'favicon-%d-%s-%d-%s-%s', $this->getId(), $this->getBaseUrl(), $minSize, $type ?? '',
 				$asDataUrl ? 'data' : 'url'

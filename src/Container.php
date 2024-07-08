@@ -37,7 +37,8 @@ class Container extends AWFContainer
 		$values['application_name']     ??= 'Panopticon';
 		$values['applicationNamespace'] ??= 'Akeeba\\Panopticon';
 		$values['basePath']             ??= APATH_ROOT;
-		$values['session_segment_name'] ??= sha1(
+		$values['session_segment_name'] ??= hash(
+			'sha1',
 			__DIR__ . '-' . AKEEBA_PANOPTICON_VERSION . '-' . AKEEBA_PANOPTICON_DATE
 		);
 		$values['session']              = new SessionProvider();

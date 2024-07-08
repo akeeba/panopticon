@@ -45,7 +45,8 @@ class HttpFactory
 		bool          $singleton = true
 	): Client
 	{
-		$signature = md5(
+		$signature = hash(
+			'md5',
 			($stack ? serialize($stack) : '*NULL*')
 			. '#' .
 			(!empty($clientOptions) ? serialize($clientOptions) : '*NULL*')

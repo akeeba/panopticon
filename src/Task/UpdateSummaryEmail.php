@@ -226,7 +226,8 @@ class UpdateSummaryEmail extends AbstractCallback
 	 */
 	private function getUpdatesIdentifier(): string
 	{
-		return sha1(
+		return hash(
+			'sha1',
 			json_encode($this->coreUpdate) . '::#::' . json_encode($this->extensionUpdates)
 		);
 	}

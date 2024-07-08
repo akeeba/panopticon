@@ -591,11 +591,11 @@ class Application extends AWFApplication
 		}
 		elseif (function_exists('sha1'))
 		{
-			$sessionKey = sha1($uniqueData);
+			$sessionKey = hash('sha1', $uniqueData, false);
 		}
 		elseif (function_exists('md5'))
 		{
-			$sessionKey = md5($uniqueData);
+			$sessionKey = hash('md5', $uniqueData, false);
 		}
 		elseif (function_exists('crc32'))
 		{
@@ -764,13 +764,14 @@ class Application extends AWFApplication
 
 	private function setupMediaVersioning(): void
 	{
-		$this->getContainer()->mediaQueryKey = md5(microtime(false));
+		$this->getContainer()->mediaQueryKey = hash('md5', microtime(false));
 		$isDebug                             = !defined('AKEEBADEBUG');
 		$isDevelopment                       = Version::getInstance()->isDev();
 
 		if (!$isDebug && !$isDevelopment)
 		{
-			$this->getContainer()->mediaQueryKey = md5(
+			$this->getContainer()->mediaQueryKey = hash(
+				'md5',
 				__DIR__ . ':' . AKEEBA_PANOPTICON_VERSION . ':' . AKEEBA_PANOPTICON_DATE
 			);
 		}

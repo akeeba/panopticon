@@ -1289,7 +1289,7 @@ class JoomlaUpdate extends AbstractCallback
 		// Prepare the POST data
 		$postData                = (array) $data;
 		$postData['password']    = $storage->get('update.password', '');
-		$postData['_randomJunk'] = sha1(random_bytes(32));
+		$postData['_randomJunk'] = hash('sha1', random_bytes(32));
 
 		// Prepare the client options
 		$client                                         = $this->container->httpFactory->makeClient(cache: false);

@@ -58,7 +58,7 @@ class HIBPCheck implements ContainerAwareInterface
 	 */
 	public function isPasswordLeaked(string $password): bool
 	{
-		$sum     = strtoupper(sha1($password));
+		$sum     = strtoupper(hash('sha1', $password));
 		$key     = substr($sum, 0, 5);
 		$url     = sprintf(self::API_URL_MASK, $key);
 		$options = $this->container->httpFactory->getDefaultRequestOptions();
