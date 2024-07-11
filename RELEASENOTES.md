@@ -1,6 +1,6 @@
 Welcome to version 1.2! It took a while, but we have implemented a number of major new features and improvements.
 
-**WordPress support**. You can now monitor WordPress sites. This feature has only been tested with WordPress 5.0 or later, with a few sites only. Please, treat it as a “beta” feature. 
+**WordPress support**. You can now monitor WordPress sites. This feature has only been tested with WordPress 5.0 or later, with a few sites only. Please, treat it as a “beta” feature.
 
 **Much improved Docker support**. You can now use a `.env.docker` file to configure the Docker instance instead of having to hack through the `docker-compose.yml` file. The dockerizer instance can have more than one CRON jobs running; this is user-configurable. You can upgrade the Docker instance without losing your settings just by updating the image and restarting the container. For this reason, the integrated Panopticon updater is _disabled_ when running under Docker.
 
@@ -12,13 +12,13 @@ Welcome to version 1.2! It took a while, but we have implemented a number of maj
 
 **Control email sending for scheduled backups [gh-712]**. You can choose whether an email will be sent at the end of successful or failed _scheduled_ backup.
 
-**Auto-ban IPs after many failed login attempts**. Panopticon can temporarily block IP addresses if many failed login attempts have originated from them. This feature is enabled by default, but it can be turned off if it's a problem for you or your clients. The number of failed logins, the period they have to take place in, and the amount of time they will remain blocked is user-configurable. 
+**Auto-ban IPs after many failed login attempts**. Panopticon can temporarily block IP addresses if many failed login attempts have originated from them. This feature is enabled by default, but it can be turned off if it's a problem for you or your clients. The number of failed logins, the period they have to take place in, and the amount of time they will remain blocked is user-configurable.
 
 **Check passwords against Have I Been Pwned [gh-728]**. Panopticon will check new passwords against the third party Have I Been Pwned service. If the password is found in online password leaks the user will be asked to use a different password. This feature can be disabled in the System Configuration, however we recommend that you _always_ keep this enabled for maximum protection of your monitored sites.
 
-**Session data contents are now encrypted at rest**. Panopticon uses PHP's default session save path. This means the session data stored is typically placed in a world-readable directory managed by your host along with other sites under the same account or, worse, server. This is bad because potentially privileged information is stored in plaintext where they can easily be found. The contents of the session files are now encrypted with a key generated randomly for each Panopticon installation. 
+**Session data contents are now encrypted at rest**. Panopticon uses PHP's default session save path. This means the session data stored is typically placed in a world-readable directory managed by your host along with other sites under the same account or, worse, server. This is bad because potentially privileged information is stored in plaintext where they can easily be found. The contents of the session files are now encrypted with a key generated randomly for each Panopticon installation.
 
-**Session improvements**. There's an option to force Panopticon to use the `tmp/session` folder under its root as the PHP session save path, regardless of whether your host offers a writeable PHP session path already. This addresses the issue of getting logged out of Panopticon because PHP's session garbage collection reaped your session files before your session actualyl expired.  Furthermore, we took a few extra security steps to make Panopticon more resistant to session hijacking, session fixing, and other similar session-related security issues.
+**Session improvements**. There's an option to force Panopticon to use the `tmp/session` folder under its root as the PHP session save path, regardless of whether your host offers a writeable PHP session path already. This addresses the issue of getting logged out of Panopticon because PHP's session garbage collection reaped your session files before your session actually expired.  Furthermore, we took a few extra security steps to make Panopticon more resistant to session hijacking, session fixing, and other similar session-related security issues.
 
 ## 🖥️ System Requirements
 
