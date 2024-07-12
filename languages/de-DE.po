@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2024-07-05 09:15:02\n"
-"PO-Revision-Date: 2024-07-05 18:10+0200\n"
+"POT-Creation-Date: 2024-07-05 09:18:57\n"
+"PO-Revision-Date: 2024-07-12 16:45+0200\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -7529,7 +7529,11 @@ msgstr "Wenn aktiviert, sendet Panopticon keine E-Mail, wenn die Liste der ausst
 
 msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_SAVED"
 msgid "The Scheduled Update Summary task has been saved"
-msgstr "Geplante Update-Zusammenfassung Aufgabe wurde gespeichert"
+msgstr "Geplante-Update-Zusammenfassung wurde gespeichert"
+
+msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_DELETED"
+msgid "The Scheduled Update Summary task has been deleted"
+msgstr "Geplante-Update-Zusammenfassung wurde gelöscht"
 
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_RECIPIENTS"
 msgid "Recipients"
@@ -7558,6 +7562,10 @@ msgstr "Zusammenfassung geplanter Aktionen bearbeiten"
 msgctxt "PANOPTICON_LBL_ACTIONSUMMARYTASK_SAVED"
 msgid "The Scheduled Action Summary has been saved"
 msgstr "Zusammenfassung geplanter Aktionen wurde gespeichert"
+
+msgctxt "PANOPTICON_LBL_ACTIONSUMMARYTASK_DELETED"
+msgid "The Scheduled Action Summary has been deleted"
+msgstr "Geplante-Aktionen-Zusammenfassung wurde gelöscht"
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The Site Action Summary schedule is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
