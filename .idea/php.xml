@@ -75,7 +75,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
       <path value="$PROJECT_DIR$/vendor/jfcherng/php-mb-string" />
-      <path value="$PROJECT_DIR$/vendor/web-auth/metadata-service" />
       <path value="$PROJECT_DIR$/vendor/web-auth/webauthn-lib" />
       <path value="$PROJECT_DIR$/vendor/mcrumley/php-complexify" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
