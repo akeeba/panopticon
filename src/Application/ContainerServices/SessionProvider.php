@@ -22,7 +22,7 @@ class SessionProvider
 	{
 		try
 		{
-			$isHTTPS = Uri::getInstance()->getScheme() === 'https';
+			$isHTTPS = isset($_SERVER['HTTP_HOST']) && Uri::getInstance()->getScheme() === 'https';
 		}
 		catch (\Exception $e)
 		{
