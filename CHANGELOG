@@ -15,12 +15,13 @@ Akeeba Panopticon 1.2.0
 ~ Session improvements
 ~ Expose the Behind Load Balancer configuration setting
 # [HIGH] Some tasks would disable MySQL autocommit without restoring it, leading to weird issues
+# [MEDIUM] MaxExec task throws fatal exception when tasks are executed over the web
 # [LOW] Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
 # [LOW] Wrong language in mail Blade templates [gh-658]
 # [LOW] Groups for disabled sites may not be displayed in the Sites admin page
-# [MEDIUM] MaxExec task throws fatal exception when tasks are executed over the web
 # [LOW] Connection doctor: sometimes ends up with an error page instead of showing what is going on with the connection
 # [LOW] High CPU usage warning when the server does not report CPU usage at all
+# [LOW] Update failure email missing site name if site is already up-to-date
 
 Akeeba Panopticon 1.1.3
 ================================================================================

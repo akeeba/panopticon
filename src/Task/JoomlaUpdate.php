@@ -167,11 +167,7 @@ class JoomlaUpdate extends AbstractCallback
 			// Send email about the failed update
 			if ($storage->get('email_error', true))
 			{
-				$this->sendEmail(
-					'joomlaupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
-						'MESSAGE' => $e->getMessage(),
-					]
-				);
+				$this->sendFailureEmail($task, $storage, $e);
 			}
 
 			// Rethrow the exception so that the task gets the "knocked out" state
@@ -331,20 +327,29 @@ class JoomlaUpdate extends AbstractCallback
 	private function runInit(object $task, Registry $storage): void
 	{
 		// Initialise the email variables
-		$storage->set(
-			'email_variables', [
-				'NEW_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
-				'OLD_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
-				'SITE_NAME'   => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
-				'SITE_URL'    => 'https://www.example.com',
-			]
-		);
+		$emailVariables = [
+			'NEW_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
+			'OLD_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
+			'SITE_NAME'   => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
+			'SITE_URL'    => 'https://www.example.com',
+		];
+		$storage->set('email_variables', $emailVariables);
 
 		// Remember when we started installing the update
 		$storage->set('start_timestamp', time());
 
 		// Try to get the site
 		$site = $this->getSite($task);
+
+		$emailVariables = array_merge(
+			$emailVariables,
+			[
+				'SITE_NAME'   => $site->name,
+				'SITE_URL'    => $site->getBaseUrl(),
+			]
+		);
+		$storage->set('email_variables', $emailVariables);
+		$storage->set('site_id', $site->id);
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
@@ -385,6 +390,18 @@ class JoomlaUpdate extends AbstractCallback
 		$storage->set('oldVersion', $currentVersion);
 		$storage->set('newVersion', $latestVersion);
 
+		$emailVariables = array_merge(
+			$emailVariables,
+			[
+				'NEW_VERSION' => $latestVersion,
+				'OLD_VERSION' => $currentVersion,
+			]
+		);
+		$storage->set('email_variables', $emailVariables);
+		$storage->set('email_cc', $this->getSiteNotificationEmails($config));
+		$storage->set('email_after', (bool) ($config?->config?->core_update?->email_after ?? true));
+		$storage->set('email_error', (bool) ($config?->config?->core_update?->email_error ?? true));
+
 		if (
 			!$force && !empty($currentVersion) && !empty($latestVersion)
 			&& version_compare($currentVersion, $latestVersion, 'ge')
@@ -409,24 +426,6 @@ class JoomlaUpdate extends AbstractCallback
 				)
 			);
 		}
-
-		$storage->set(
-			'email_variables', [
-				'NEW_VERSION' => $latestVersion,
-				'OLD_VERSION' => $currentVersion,
-				'SITE_NAME'   => $site->name,
-				'SITE_URL'    => $site->getBaseUrl(),
-			]
-		);
-		$storage->set('site_id', $site->id);
-
-		$cc = $this->getSiteNotificationEmails($config);
-
-		$storage->set('email_cc', $cc);
-
-		$storage->set('email_after', (bool) ($config?->config?->core_update?->email_after ?? true));
-		$storage->set('email_error', (bool) ($config?->config?->core_update?->email_error ?? true));
-
 
 		// Finally, advance the state
 		$this->advanceState();
@@ -1862,4 +1861,73 @@ class JoomlaUpdate extends AbstractCallback
 
 		$this->advanceState();
 	}
+
+	/**
+	 * Sends a failure email
+	 *
+	 * @param   object     $task
+	 * @param   Registry   $storage
+	 * @param   Throwable  $e
+	 *
+	 * @return  void
+	 * @since   1.2.0 Moved into its own method
+	 */
+	private function sendFailureEmail(object $task, Registry $storage, Throwable $e): void
+	{
+		// Ensure there are not stray transactions
+		try
+		{
+			$this->container->db->transactionCommit();
+		}
+		catch (Exception)
+		{
+			// Okay...
+		}
+
+		// Get the start time, end time, and actual duration
+		$startTime = $storage->get('start_timestamp', null);
+		$endTime   = $startTime === null ? null : time();
+
+		/**
+		 * Only send emails if we didn't reinstall the same version AND if we are asked to send emails after
+		 * Joomla! update.
+		 */
+		$vars       = $storage->get('email_variables', []);
+		$vars       = (array) $vars;
+		$newVersion = $vars['NEW_VERSION'] ?? null;
+		$oldVersion = $vars['OLD_VERSION'] ?? null;
+
+		$perLanguageVariables = [];
+		foreach ($this->getAllKnownLanguages() as $lang)
+		{
+			$langObject = $this->getContainer()->languageFactory($lang);
+
+			if ($startTime === null)
+			{
+				$perLanguageVariables[$lang] = [
+					'START_TIME' => $langObject->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_TIME'),
+					'END_TIME'   => $langObject->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_TIME'),
+					'DURATION'   => $langObject->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_DURATION'),
+				];
+			}
+			else
+			{
+				$basicHtmlHelper = $this->container->html->basic;
+
+				$perLanguageVariables[$lang] = [
+					'START_TIME' => $basicHtmlHelper->date('@' . $startTime, $langObject->text('DATE_FORMAT_LC7')),
+					'END_TIME'   => $basicHtmlHelper->date('@' . $endTime, $langObject->text('DATE_FORMAT_LC7')),
+					'DURATION'   => $this->timeAgo($startTime, $endTime, languageObject: $langObject),
+				];
+			}
+		}
+
+		$storage->set('email_variables_by_lang', $perLanguageVariables);
+
+		$this->sendEmail('joomlaupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
+				'MESSAGE' => $e->getMessage(),
+			]
+		);
+	}
+
 }
