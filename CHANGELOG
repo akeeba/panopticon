@@ -22,6 +22,7 @@ Akeeba Panopticon 1.2.0
 # [LOW] Connection doctor: sometimes ends up with an error page instead of showing what is going on with the connection
 # [LOW] High CPU usage warning when the server does not report CPU usage at all
 # [LOW] Update failure email missing site name if site is already up-to-date
+# [LOW] Update Director would claim a site is enqueued for updates when it's not
 
 Akeeba Panopticon 1.1.3
 ================================================================================
