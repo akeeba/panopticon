@@ -334,20 +334,29 @@ class WordPressUpdate extends AbstractCallback
 	private function runInit(object $task, Registry $storage): void
 	{
 		// Initialise the email variables
-		$storage->set(
-			'email_variables', [
-				'NEW_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
-				'OLD_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
-				'SITE_NAME'   => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
-				'SITE_URL'    => 'https://www.example.com',
-			]
-		);
+		$emailVariables = [
+			'NEW_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
+			'OLD_VERSION' => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION'),
+			'SITE_NAME'   => $this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_SITE'),
+			'SITE_URL'    => 'https://www.example.com',
+		];
+		$storage->set('email_variables', $emailVariables);
 
 		// Remember when we started installing the update
 		$storage->set('start_timestamp', time());
 
 		// Try to get the site
 		$site = $this->getSite($task);
+
+		$emailVariables = array_merge(
+			$emailVariables,
+			[
+				'SITE_NAME'   => $site->name,
+				'SITE_URL'    => $site->getBaseUrl(),
+			]
+		);
+		$storage->set('email_variables', $emailVariables);
+		$storage->set('site_id', $site->id);
 
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
 
@@ -388,6 +397,19 @@ class WordPressUpdate extends AbstractCallback
 		$storage->set('oldVersion', $currentVersion);
 		$storage->set('newVersion', $latestVersion);
 
+		$emailVariables = array_merge(
+			$emailVariables,
+			[
+				'NEW_VERSION' => $latestVersion,
+				'OLD_VERSION' => $currentVersion,
+			]
+		);
+		$storage->set('email_variables', $emailVariables);
+		$storage->set('email_cc', $this->getSiteNotificationEmails($config));
+		$storage->set('email_after', (bool) ($config?->config?->core_update?->email_after ?? true));
+		$storage->set('email_error', (bool) ($config?->config?->core_update?->email_error ?? true));
+
+
 		if (
 			!$force && !empty($currentVersion) && !empty($latestVersion)
 			&& version_compare($currentVersion, $latestVersion, 'ge')
@@ -412,24 +434,6 @@ class WordPressUpdate extends AbstractCallback
 				)
 			);
 		}
-
-		$storage->set(
-			'email_variables', [
-				'NEW_VERSION' => $latestVersion,
-				'OLD_VERSION' => $currentVersion,
-				'SITE_NAME'   => $site->name,
-				'SITE_URL'    => $site->getBaseUrl(),
-			]
-		);
-		$storage->set('site_id', $site->id);
-
-		$cc = $this->getSiteNotificationEmails($config);
-
-		$storage->set('email_cc', $cc);
-
-		$storage->set('email_after', (bool) ($config?->config?->core_update?->email_after ?? true));
-		$storage->set('email_error', (bool) ($config?->config?->core_update?->email_error ?? true));
-
 
 		// Finally, advance the state
 		$this->advanceState();

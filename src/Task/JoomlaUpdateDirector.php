@@ -239,6 +239,12 @@ class JoomlaUpdateDirector extends AbstractCallback
 
 				case "email":
 				default:
+					// Do I have to send an email?
+					if (!$this->mustSchedule($site, true))
+					{
+						continue 2;
+					}
+
 					$this->logger->info(
 						sprintf(
 							'Site %d (%s) is configured to only send an email about Joomla! %s availability.',
@@ -248,16 +254,16 @@ class JoomlaUpdateDirector extends AbstractCallback
 						)
 					);
 
-					// Do I have to send an email?
-					if (!$this->mustSchedule($site, true))
-					{
-						continue 2;
-					}
-
 					$this->sendEmail('joomlaupdate_found', $site);
 					break;
 
 				case "update":
+					// Do I have to enqueue?
+					if (!$this->mustSchedule($site, false))
+					{
+						continue 2;
+					}
+
 					$this->logger->info(
 						sprintf(
 							'Site %d (%s) will be queued for update to Joomla! %s.',
@@ -266,12 +272,6 @@ class JoomlaUpdateDirector extends AbstractCallback
 							$siteConfig->get('core.latest.version')
 						)
 					);
-
-					// Do I have to enqueue?
-					if (!$this->mustSchedule($site, false))
-					{
-						continue 2;
-					}
 
 					// Send email
 					$this->sendEmail('joomlaupdate_will_install', $site);
