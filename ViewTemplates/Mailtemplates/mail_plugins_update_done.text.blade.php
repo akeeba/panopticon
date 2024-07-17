@@ -62,7 +62,7 @@ The following software has been updated successfully:
 	    $message = is_string($message) ? $message : '';
 		$message = strip_tags($message);
 
-		$type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
+		$type = is_array($item) ? ($item['type'] ?? 'info') : 'info';
 		$type = is_string($type) ? $type : 'info';
 
 		return sprintf('[%s] %s', strtoupper($type), strip_tags($message));

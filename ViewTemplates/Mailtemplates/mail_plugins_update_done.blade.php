@@ -30,7 +30,7 @@ $hasSuccess = array_reduce(
 $moreThanOne = count($updateStatus) > 1;
 
 ?>
-        <!-- Main-Topic -->
+<!-- Main-Topic -->
 <div class="akemail-main-topic">
     <p>
         @if ($hasFailed && !$hasSuccess)
@@ -63,7 +63,7 @@ $moreThanOne = count($updateStatus) > 1;
                 $message = is_string($message) ? $message : '';
                 $message = strip_tags($message);
 
-                $type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
+                $type = is_array($item) ? ($item['type'] ?? 'info') : 'info';
                 $type = is_string($type) ? $type : 'info';
 
                 return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
