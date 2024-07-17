@@ -57,6 +57,7 @@ class TaskJoomlaUpdateDirector extends AbstractCommand
 		$registry->set('limitStart', 0);
 		$registry->set('limit', $input->getOption('batchSize'));
 		$registry->set('force', $input->getOption('force'));
+		$registry->set('force_queue', $input->getOption('force_queue'));
 		$registry->set('filter.ids', $input->getOption('id'));
 
 		do
@@ -71,6 +72,7 @@ class TaskJoomlaUpdateDirector extends AbstractCommand
 	{
 		$this
 			->addOption('force', 'f', InputOption::VALUE_NEGATABLE, 'Force processing sites, regardless of when we last did that', false)
+			->addOption('force_queue', null, InputOption::VALUE_NEGATABLE, 'Always enqueue sites for updates, even when it is not necessary', false)
 			->addOption('batchSize', null, InputOption::VALUE_OPTIONAL, 'Number of sites to process at once', 10)
 			->addOption('id', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL, 'Site IDs to update. Omit for all.', []);
 	}

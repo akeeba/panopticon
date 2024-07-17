@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Task;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Exception\CoreUpdate\NonEmailedRuntimeException;
 use Akeeba\Panopticon\Helper\LanguageListTrait;
 use Akeeba\Panopticon\Library\Aes\Ctr;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
@@ -165,7 +166,7 @@ class JoomlaUpdate extends AbstractCallback
 			}
 
 			// Send email about the failed update
-			if ($storage->get('email_error', true))
+			if ($storage->get('email_error', true) && !$e instanceof NonEmailedRuntimeException)
 			{
 				$this->sendFailureEmail($task, $storage, $e);
 			}
@@ -356,7 +357,7 @@ class JoomlaUpdate extends AbstractCallback
 		// Is the site enabled?
 		if (!$site->enabled)
 		{
-			throw new RuntimeException(
+			throw new NonEmailedRuntimeException(
 				$this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED', $task->site_id)
 			);
 		}
@@ -407,14 +408,15 @@ class JoomlaUpdate extends AbstractCallback
 			&& version_compare($currentVersion, $latestVersion, 'ge')
 		)
 		{
-			throw new RuntimeException(
+			throw new NonEmailedRuntimeException(
 				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_UPDATE_AVAILABLE', $site->id,
 					$site->name, $currentVersion, $latestVersion
 				)
 			);
 		}
-		elseif (!empty($currentVersion) && !empty($latestVersion))
+
+		if (!empty($currentVersion) && !empty($latestVersion))
 		{
 			$this->logger->info(
 				$this->getLanguage()->sprintf(
@@ -423,6 +425,16 @@ class JoomlaUpdate extends AbstractCallback
 					$site->name,
 					$currentVersion,
 					$latestVersion
+				)
+			);
+		}
+		else
+		{
+			throw new NonEmailedRuntimeException(
+				sprintf(
+					'The current or latest version is missing on site #%d (%s). Is the site already updated?',
+					$site->id,
+					$site->name,
 				)
 			);
 		}

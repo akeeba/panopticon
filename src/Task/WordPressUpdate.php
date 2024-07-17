@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Task;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Exception\CoreUpdate\NonEmailedRuntimeException;
 use Akeeba\Panopticon\Helper\LanguageListTrait;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
@@ -142,7 +143,7 @@ class WordPressUpdate extends AbstractCallback
 			}
 
 			// Send email about the failed update
-			if ($storage->get('email_error', true))
+			if ($storage->get('email_error', true) && !$e instanceof NonEmailedRuntimeException)
 			{
 				$this->sendEmail(
 					'wordpressupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
@@ -363,7 +364,7 @@ class WordPressUpdate extends AbstractCallback
 		// Is the site enabled?
 		if (!$site->enabled)
 		{
-			throw new RuntimeException(
+			throw new NonEmailedRuntimeException(
 				$this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED', $task->site_id)
 			);
 		}
@@ -415,14 +416,15 @@ class WordPressUpdate extends AbstractCallback
 			&& version_compare($currentVersion, $latestVersion, 'ge')
 		)
 		{
-			throw new RuntimeException(
+			throw new NonEmailedRuntimeException(
 				$this->getLanguage()->sprintf(
 					'PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NO_UPDATE_AVAILABLE', $site->id,
 					$site->name, $currentVersion, $latestVersion
 				)
 			);
 		}
-		elseif (!empty($currentVersion) && !empty($latestVersion))
+
+		if (!empty($currentVersion) && !empty($latestVersion))
 		{
 			$this->logger->info(
 				$this->getLanguage()->sprintf(
@@ -431,6 +433,16 @@ class WordPressUpdate extends AbstractCallback
 					$site->name,
 					$currentVersion,
 					$latestVersion
+				)
+			);
+		}
+		else
+		{
+			throw new NonEmailedRuntimeException(
+				sprintf(
+					'The current or latest version is missing on site #%d (%s). Is the site already updated?',
+					$site->id,
+					$site->name,
 				)
 			);
 		}

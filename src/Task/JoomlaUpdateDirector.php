@@ -43,6 +43,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 		$limitStart = (int) $storage->get('limitStart', 0);
 		$limit      = (int) $storage->get('limit', $params->get('limit', 100));
 		$force      = (bool) $storage->get('force', $params->get('force', false));
+		$forceQueue = (bool) $storage->get('force_queue', $params->get('force_queue', false));
 		$filterIDs  = $storage->get('filter.ids', $params->get('ids', []));
 
 		/**
@@ -240,7 +241,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 				case "email":
 				default:
 					// Do I have to send an email?
-					if (!$this->mustSchedule($site, true))
+					if (!$forceQueue && !$this->mustSchedule($site, true))
 					{
 						continue 2;
 					}
@@ -259,7 +260,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 
 				case "update":
 					// Do I have to enqueue?
-					if (!$this->mustSchedule($site, false))
+					if (!$forceQueue && !$this->mustSchedule($site, false))
 					{
 						continue 2;
 					}

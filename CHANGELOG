@@ -14,6 +14,7 @@ Akeeba Panopticon 1.2.0
 ~ Session data contents are now encrypted at rest
 ~ Session improvements
 ~ Expose the Behind Load Balancer configuration setting
+~ Do not send a failure email if a site queued for update is already updated, or disabled
 # [HIGH] Some tasks would disable MySQL autocommit without restoring it, leading to weird issues
 # [MEDIUM] MaxExec task throws fatal exception when tasks are executed over the web
 # [LOW] Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
