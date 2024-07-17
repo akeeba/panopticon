@@ -662,7 +662,7 @@ class PluginsUpdate extends AbstractCallback
 		{
 			try
 			{
-				$rendered = $fakeView->loadAnyTemplate(
+				$rendered = $rendered ?: $fakeView->loadAnyTemplate(
 					$template,
 					[
 						'updateStatus' => $updateStatus,
@@ -687,7 +687,7 @@ class PluginsUpdate extends AbstractCallback
 		{
 			try
 			{
-				$renderedText = $fakeView->loadAnyTemplate(
+				$renderedText = $renderedText ?: $fakeView->loadAnyTemplate(
 					$template,
 					[
 						'updateStatus' => $updateStatus,
