@@ -5084,7 +5084,7 @@ msgid "When An Update Is Found"
 msgstr "Wenn ein Update gefunden wird"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_COREUPDATE_INSTALL_HELP"
-msgid "Do nothing: no action is taken. Send email: An email is sent, nothing is installed. Patch: Only patch versions (e.g. 1.2.<strong>3</strong> to 1.2.<strong>4</strong>) are installed; an email is sent otherwise. Minor: Only path and minor versions (e.g. 1.<strong>2</strong>.x to 1.<strong>3</strong>.x) are installed; an email is sent otherwise. Any version: installs all updates, even if the major version changes (e.g. <strong>1</strong>.x to <strong>2</strong>.x)."
+msgid "Do nothing: no action is taken. Send email: An email is sent, nothing is installed. Patch: Only patch versions (e.g. 1.2.<strong>3</strong> to 1.2.<strong>4</strong>) are installed; an email is sent otherwise. Minor: Only patch and minor versions (e.g. 1.<strong>2</strong>.x to 1.<strong>3</strong>.x) are installed; an email is sent otherwise. Any version: installs all updates, even if the major version changes (e.g. <strong>1</strong>.x to <strong>2</strong>.x)."
 msgstr "Nichts tun: Es werden keine Maßnahmen ergriffen. E-Mail senden: Eine E-Mail wird gesendet, es wird nichts installiert. Patch: Es werden nur Patch-Versionen (z.B. 1.2.<strong>3</strong> bis 1.2.<strong>4</strong>) installiert; andernfalls wird eine E-Mail gesendet. Nebenversionen: Nur Pfad- und Nebenversionen (z.B. 1.<strong>2</strong>.x bis 1.<strong>3</strong>.x) werden installiert; andernfalls wird eine E-Mail gesendet. Alle Versionen: Installiert alle Updates, auch wenn sich die Hauptversion ändert (z. B. <strong>1</strong>.x zu <strong>2</strong>.x)."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL"
