@@ -33,6 +33,31 @@ Development of Akeeba Panopticon takes place _in public_. You can see what we're
 
 ## 📋 CHANGELOG
 
+* ✨ WordPress support [gh-38]
+* ✨ Much improved Docker support [gh-697]
+* ✨ Translatable dates
+* ✨ Load TinyMCE translations
+* ✨ Batch processing sites
+* ✨ Control email sending for scheduled backups [gh-712]
+* ✨ Auto-ban IPs after many failed login attempts
+* ✨ Check passwords against HIBP [gh-728]
+* ✏️ System Configuration uses more Show On tricks to show/hide relevant settings
+* ✏️ Expose the Avatars setting in System Configuration [gh-729]
+* ✏️ Session data contents are now encrypted at rest
+* ✏️ Session improvements
+* ✏️ Expose the Behind Load Balancer configuration setting
+* ✏️ Do not send a failure email if a site queued for update is already updated, or disabled
+* 🐞 🔺 Some tasks would disable MySQL autocommit without restoring it, leading to weird issues
+* 🐞 ➖ MaxExec task throws fatal exception when tasks are executed over the web
+* 🐞 🔻 Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
+* 🐞 🔻 Wrong language in mail Blade templates [gh-658]
+* 🐞 🔻 Groups for disabled sites may not be displayed in the Sites admin page
+* 🐞 🔻 Connection doctor: sometimes ends up with an error page instead of showing what is going on with the connection
+* 🐞 🔻 High CPU usage warning when the server does not report CPU usage at all
+* 🐞 🔻 Update failure email missing site name if site is already up-to-date
+* 🐞 🔻 Update Director would claim a site is enqueued for updates when it's not
+* 🐞 🔻 Per-language overrides of extension update emails might not have an effect
+
 Legend:
 
 * 🚨 Security update
