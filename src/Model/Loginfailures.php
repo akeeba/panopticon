@@ -22,6 +22,8 @@ use Exception;
  */
 class Loginfailures extends Model
 {
+	static ?bool $isAvailable = null;
+
 	/**
 	 * Log a failed login attempt.
 	 *
@@ -33,6 +35,11 @@ class Loginfailures extends Model
 	 */
 	public function logFailure(bool $autoBlock = true): void
 	{
+		if (!$this->isAvailable())
+		{
+			return;
+		}
+
 		// Is the feature enabled?
 		if (!((bool) $this->getContainer()->appConfig->get('login_failure_enable', 1)))
 		{
@@ -115,6 +122,11 @@ class Loginfailures extends Model
 	 */
 	public function cleanupOldFailures(): void
 	{
+		if (!$this->isAvailable())
+		{
+			return;
+		}
+
 		// Is the feature enabled?
 		if (!((bool) $this->getContainer()->appConfig->get('login_failure_enable', 1)))
 		{
@@ -142,7 +154,8 @@ class Loginfailures extends Model
 			->where(
 				[
 					$db->quoteName('ip') . ' = INET6_ATON(' . $db->quote($ip) . ')',
-					$db->quoteName('mark') . ' < DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL ' . intval($maxSeconds) . ' SECOND)',
+					$db->quoteName('mark') . ' < DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL ' . intval($maxSeconds)
+					. ' SECOND)',
 				]
 			);
 
@@ -180,6 +193,11 @@ class Loginfailures extends Model
 	 */
 	public function isIPBlocked(): bool
 	{
+		if (!$this->isAvailable())
+		{
+			return false;
+		}
+
 		// Is the feature enabled?
 		if (!((bool) $this->getContainer()->appConfig->get('login_failure_enable', 1)))
 		{
@@ -278,6 +296,11 @@ class Loginfailures extends Model
 	 */
 	public function blockIp(): void
 	{
+		if (!$this->isAvailable())
+		{
+			return;
+		}
+
 		// Is the feature enabled?
 		if (!((bool) $this->getContainer()->appConfig->get('login_failure_enable', 1)))
 		{
@@ -326,10 +349,12 @@ class Loginfailures extends Model
 				// Insert a record
 				$insertQuery = $db->getQuery(true)
 					->insert($db->quoteName('#__login_lockouts'))
-					->columns([
-						$db->quoteName('ip'),
-						$db->quoteName('until')
-					])
+					->columns(
+						[
+							$db->quoteName('ip'),
+							$db->quoteName('until'),
+						]
+					)
 					->values(
 						'INET6_ATON(' . $db->quote($ip) . '), DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL '
 						. (int) $lockoutTime . ' SECOND)'
@@ -362,6 +387,11 @@ class Loginfailures extends Model
 	 */
 	public function mustBeBlocked(): bool
 	{
+		if (!$this->isAvailable())
+		{
+			return false;
+		}
+
 		// Is the feature enabled?
 		if (!((bool) $this->getContainer()->appConfig->get('login_failure_enable', 1)))
 		{
@@ -418,6 +448,29 @@ class Loginfailures extends Model
 		}
 
 		return $failuresInWindow >= $maxAllowedFailures;
+	}
+
+	private function    isAvailable(): bool
+	{
+		if (self::$isAvailable !== null)
+		{
+			return self::$isAvailable;
+		}
+
+		try
+		{
+			$db     = $this->container->db;
+			$query  = 'SHOW TABLES LIKE ' . $db->quote('#__login_failures');
+			$tables = $db->setQuery($query)->loadColumn();
+
+			self::$isAvailable = !empty($tables);
+		}
+		catch (\Throwable $e)
+		{
+			self::$isAvailable = false;
+		}
+
+		return self::$isAvailable;
 	}
 
 	/**

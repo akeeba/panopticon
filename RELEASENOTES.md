@@ -33,6 +33,7 @@ Development of Akeeba Panopticon takes place _in public_. You can see what we're
 
 ## 📋 CHANGELOG
 
+* ‼️ Fixing a chicken and egg issue not allowing the update to proceed correctly
 * ✨ WordPress support [gh-38]
 * ✨ Much improved Docker support [gh-697]
 * ✨ Translatable dates

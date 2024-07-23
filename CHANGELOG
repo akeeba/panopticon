@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 1.2.1
+================================================================================
+! Fixing a chicken and egg issue not allowing the update to proceed correctly
+
 Akeeba Panopticon 1.2.0
 ================================================================================
 + WordPress support [gh-38]

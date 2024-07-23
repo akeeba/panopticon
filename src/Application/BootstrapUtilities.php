@@ -513,14 +513,25 @@ PHP;
 		/** @var Loginfailures $loginfailures */
 		$loginfailures = Factory::getContainer()->mvcFactory->makeModel('Loginfailures');
 
-		if ($loginfailures->isIPBlocked())
+		try
 		{
+			$isIPBlocked = $loginfailures->isIPBlocked();
+		}
+		catch (\Exception $e)
+		{
+			return;
+		}
+
+		if (!$isIPBlocked)
+		{
+			return;
+		}
+
 			header('HTTP/1.0 403 Forbidden');
 
-			@include APATH_THEMES . '/system/forbidden.html.php';
+		@include APATH_THEMES . '/system/forbidden.html.php';
 
-			exit();
-		}
+		exit();
 	}
 
 	/**

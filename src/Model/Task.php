@@ -202,7 +202,7 @@ class Task extends DataModel
 				? $this->cron_expression
 				: new CronExpression($this->cron_expression);
 			// Warning! The last execution time is ALWAYS stored in UTC
-			$relativeTime         = ($this->container->dateFactory($this->last_execution ?: 'now', 'UTC'))->toW3C();
+			$relativeTime         = ($this->container->dateFactory($this->last_execution ?: 'now', 'UTC'))->format('Y-m-d\TH:i:sP', false, false);
 			// The call to getNextRunDate must use our local timezone because the CRON expression is in local time
 			$nextRun              = $cron_expression->getNextRunDate($relativeTime, timeZone: $tz)->format(DATE_W3C);
 
