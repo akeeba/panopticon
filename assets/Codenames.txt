@@ -3,7 +3,7 @@ Perihelion [Betas]
 Halo [RCs]
 Morn [1.0]
 Dawn [1.1]
-Twilight
+Twilight [1.2]
 Aurora
 Daybreak
 Sunrise
