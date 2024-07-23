@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.2.0\n"
-"POT-Creation-Date: 2024-07-05 09:18:57\n"
+"Project-Id-Version: 1.2.1\n"
+"POT-Creation-Date: 2024-07-24 01:00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.2.0\n"
+"X-Generator: Panopticon manual edited to 1.2.1\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
