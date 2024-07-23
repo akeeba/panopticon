@@ -205,13 +205,13 @@ $eolDate                  = $versionFamilyInfo?->dates?->eol ?? null;
     @endif
 
     @if ($showScheduleButton)
-        <a href="@route(sprintf('index.php?view=site&task=scheduleJoomlaUpdate&id=%d&%s=1', $this->item->id, $token))"
+        <a href="@route(sprintf('index.php?view=site&task=scheduleWordPressUpdate&id=%d&%s=1', $this->item->id, $token))"
            class="btn btn-outline-warning" role="button">
             <span class="fa fa-clock" aria-hidden="true"></span>
             @sprintf('PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_UPDATE', $this->escape($latestVersion))
         </a>
     @elseif($showCancelScheduleButton)
-        <a href="@route(sprintf('index.php?view=site&task=unscheduleJoomlaUpdate&id=%d&%s=1', $this->item->id, $token))"
+        <a href="@route(sprintf('index.php?view=site&task=unscheduleWordPressUpdate&id=%d&%s=1', $this->item->id, $token))"
            class="btn btn-outline-danger" role="button">
             <span class="fa fa-cancel" aria-hidden="true"></span>
             @lang('PANOPTICON_SITE_LBL_JUPDATE_UNSCHEDULE_UPDATE')
