@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.2.1\n"
-"POT-Creation-Date: 2024-07-24 01:00:00\n"
+"Project-Id-Version: 1.2.0\n"
+"POT-Creation-Date: 2024-07-26 10:58:06\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon manual edited to 1.2.1\n"
+"X-Generator: Panopticon ini_to_po 1.2.0\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -9841,3 +9841,4 @@ msgstr ""
 msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
 msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
 msgstr ""
+
