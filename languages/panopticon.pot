@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.2.0\n"
-"POT-Creation-Date: 2024-07-05 09:18:57\n"
+"Project-Id-Version: 1.2.1\n"
+"POT-Creation-Date: 2024-07-24 01:00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.2.0\n"
+"X-Generator: Panopticon manual edited to 1.2.1\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -6423,6 +6423,11 @@ msgid "Behind load balancer / reverse proxy"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER_HELP"
+msgid "Only enable if your installation is behind a non-transparent proxy (e.g. Varnish), load balancer (e.g. HAProxy), CDN (e.g. CloudFlare), or security service (e.g. Sucuri) which conveys the real IP address of the visitor through the HTTP header <code>X-Forwarded-For</code>."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT"
 msgid "Encrypt session data"
 msgstr ""
@@ -9836,4 +9841,3 @@ msgstr ""
 msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
 msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
 msgstr ""
-
