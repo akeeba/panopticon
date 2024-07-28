@@ -47,7 +47,15 @@ class Configuration extends AWFConfiguration
 	 */
 	public function loadConfiguration($filePath = null)
 	{
-		// First, we will attempt to load .env files
+		// For containerized installations we will try to load from environment variables
+		if ($this->loadFromServerEnvironment())
+		{
+			$this->isReadWrite = false;
+
+			return;
+		}
+
+		// Attempt to load from .env files
 		if ($this->loadDotenv())
 		{
 			$this->isReadWrite = false;
@@ -147,7 +155,7 @@ class Configuration extends AWFConfiguration
 		$dotEnv->ifPresent('PANOPTICON_DBENCRYPTION')->isBoolean();
 
 		// Apply .env variables into the application configuration repository
-		foreach($varsLoaded as $k => $v)
+		foreach ($varsLoaded as $k => $v)
 		{
 			if (!str_starts_with($k, 'PANOPTICON_'))
 			{
@@ -161,5 +169,67 @@ class Configuration extends AWFConfiguration
 
 		return true;
 	}
+
+	/**
+	 * Load the configuration from the container's environment.
+	 *
+	 * This only applies when Panopticon is containerised, and only when the PANOPTICON_USING_ENV environment
+	 * variable is set to 1.
+	 *
+	 * @return  bool
+	 * @since   1.2.1
+	 */
+	private function loadFromServerEnvironment(): bool
+	{
+		// For this to have any effect we must be running under Docker and PANOPTICON_USING_ENV must be set to 1.
+		$usingEnv = $_ENV['PANOPTICON_USING_ENV'] ?? 0;
+
+		if (!defined('APATH_IN_DOCKER') || !constant('APATH_IN_DOCKER') || !$usingEnv)
+		{
+			return false;
+		}
+
+		// Map some .env.docker keys to Panopticon configuration variables
+		$map = [
+			'MYSQL_DATABASE'       => 'dbname',
+			'MYSQL_USER'           => 'dbuser',
+			'MYSQL_PASSWORD'       => 'dbpass',
+			'PANOPTICON_DB_HOST'   => 'dbhost',
+			'PANOPTICON_DB_PREFIX' => 'prefix',
+			'TZ'                   => 'timezone',
+		];
+
+		foreach ($map as $envKey => $configKey)
+		{
+			if (!isset($_ENV[$envKey]))
+			{
+				continue;
+			}
+
+			$this->set($configKey, $_ENV[$envKey]);
+		}
+
+		// Import all other PANOPTICON_* environment variables
+		foreach ($_ENV as $key => $value)
+		{
+			$key = strtolower($key);
+
+			if (!str_starts_with($key, 'panopticon_'))
+			{
+				continue;
+			}
+
+			// Values `true`/`false` are always cast to bool
+			if (in_array(strtolower($value ?: ''), ['true', 'false']))
+			{
+				$value = strtolower($value ?: '') === 'true';
+			}
+
+			$this->set(substr($key, 11), $value);
+		}
+
+		return true;
+	}
+
 
 }

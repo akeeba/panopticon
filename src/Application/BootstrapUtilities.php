@@ -178,6 +178,12 @@ final class BootstrapUtilities
 	 */
 	public static function hasConfiguration(bool $dotEnvOnly = false): bool
 	{
+		// Special case: I am containerised, and PANOPTICON_USING_ENV is 1
+		if (defined('APATH_IN_DOCKER') && constant('APATH_IN_DOCKER') && ($_ENV['PANOPTICON_USING_ENV'] ?? 0))
+		{
+			return true;
+		}
+
 		$environment = $_SERVER['PANOPTICON_ENVIRONMENT'] ?? $_ENV['PANOPTICON_ENVIRONMENT'] ?? 'production';
 
 		$filePaths = [

@@ -13,8 +13,6 @@
 ##
 ################################################################################
 
-version: "3.5"
-
 services:
   # The web application container, based on FrankenPHP (https://frankenphp.dev).
   php:

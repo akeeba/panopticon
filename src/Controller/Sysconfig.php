@@ -28,6 +28,18 @@ class Sysconfig extends Controller
 	{
 		$this->aclCheck($task);
 
+		// Special case: I am containerised, and PANOPTICON_USING_ENV is 1
+		if (defined('APATH_IN_DOCKER') && constant('APATH_IN_DOCKER') && ($_ENV['PANOPTICON_USING_ENV'] ?? 0))
+		{
+			$this->setRedirect(
+				$this->getContainer()->router->route('index.php'),
+				$this->getLanguage()->text('PANOPTICON_SYSCONFIG_ERR_USING_DOTENV'),
+				'error'
+			);
+
+			return true;
+		}
+
 		if (BootstrapUtilities::hasConfiguration(true))
 		{
 			$this->setRedirect(
