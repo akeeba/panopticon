@@ -568,7 +568,7 @@ SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` 
             <query><![CDATA[
 INSERT INTO `#__mailtemplates`
 (`type`,`language`,`subject`,`html`,`plaintext`) VALUES
-    ('plugin_update_found', '*', '⚠️ [EXTENSION_NAME] [NEW_VERSION] is available for installation on “[SITE_NAME]”', '<div class="akemail-outer-wrapper">
+    ('plugin_update_found', '*', '⚠️ [SOFTWARE_NAME] [NEW_VERSION] is available for installation on “[SITE_NAME]”', '<div class="akemail-outer-wrapper">
 <table>
 <tbody>
 <tr>
@@ -583,11 +583,11 @@ INSERT INTO `#__mailtemplates`
 </div>
 <!-- Main-Topic -->
 <div class="akemail-main-topic">
-<p>[EXTENSION_NAME] [NEW_VERSION] is available on &ldquo;[SITE_NAME]&rdquo;</p>
+<p>[SOFTWARE_NAME] [NEW_VERSION] is available on &ldquo;[SITE_NAME]&rdquo;</p>
 </div>
 <!-- Message -->
 <div class="akemail-message">
-<p>[EXTENSION_NAME] version [NEW_VERSION] is now available for installation on your site &ldquo;<a href="[SITE_URL]">[SITE_NAME]</a>&rdquo;. Your site is currently running the older version [OLD_VERSION].</p>
+<p>[SOFTWARE_NAME] version [NEW_VERSION] is now available for installation on your site &ldquo;<a href="[SITE_URL]">[SITE_NAME]</a>&rdquo;. Your site is currently running the older version [OLD_VERSION].</p>
 </div>
 <!-- Area Offer/Announcement -->
 <div class="akemail-announcement">
@@ -595,8 +595,8 @@ INSERT INTO `#__mailtemplates`
 <h3>Action required</h3>
 <p>The new version will <strong>NOT</strong> be installed automatically. You will have to install it yourself.</p>
 </div>
-<p class="akemail-announcement-note"><em>Note</em>: Akeeba Panopticon can be configured to install new versions of [EXTENSION_NAME] automatically.</p>
-<p class="akemail-announcement-visitlink">You can install the new [EXTENSION_NAME] version either from your site''s wp-admin page, or through the main control panel of <a href="[URL]">your Akeeba Panopticon installation</a>.</p>
+<p class="akemail-announcement-note"><em>Note</em>: Akeeba Panopticon can be configured to install new versions of [SOFTWARE_NAME] automatically.</p>
+<p class="akemail-announcement-visitlink">You can install the new [SOFTWARE_NAME] version either from your site''s wp-admin page, or through the main control panel of <a href="[URL]">your Akeeba Panopticon installation</a>.</p>
 </div>
 <!-- Bye, Bye -->
 <div class="akemail-outro">
@@ -620,10 +620,10 @@ INSERT INTO `#__mailtemplates`
 </div>', 'Hello,
 
 
-[EXTENSION_NAME] [NEW_VERSION] is available on “[SITE_NAME]”
+[SOFTWARE_NAME] [NEW_VERSION] is available on “[SITE_NAME]”
 
 
-[EXTENSION_NAME] version [NEW_VERSION] is now available for installation on
+[SOFTWARE_NAME] version [NEW_VERSION] is now available for installation on
 your site “[SITE_NAME] [SITE_URL]”. Your site is currently
 running the older version [OLD_VERSION].
 
@@ -638,12 +638,12 @@ install it yourself.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note: Akeeba Panopticon can be configured to install new versions of
-[EXTENSION_NAME] automatically.
+[SOFTWARE_NAME] automatically.
 
 ==============================================================================
 
 
-You can install the new [EXTENSION_NAME] version either from
+You can install the new [SOFTWARE_NAME] version either from
 your site''s wp-admin page, or through the main control panel of your
 Akeeba Panopticon installation ([URL]).
 

@@ -557,6 +557,10 @@ class PluginsUpdate extends AbstractCallback
 			'SOFTWARE_NAME'        => $extension?->name,
 			'SOFTWARE_DESCRIPTION' => $extension?->description,
 			'SOFTWARE_AUTHOR'      => $extension?->author,
+			'EXTENSION_TYPE'        => $extension?->type,
+			'EXTENSION_NAME'        => $extension?->name,
+			'EXTENSION_DESCRIPTION' => $extension?->description,
+			'EXTENSION_AUTHOR'      => $extension?->author,
 		];
 
 		// Get the CC email addresses

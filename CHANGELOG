@@ -2,6 +2,7 @@
 Akeeba Panopticon 1.2.2
 ================================================================================
 + Optional environment variables-only configuration of containerized Panopticon [gh-696]
+# [LOW] Wrong lang string used in WordPress plugin/theme update emails
 
 Akeeba Panopticon 1.2.1
 ================================================================================
