@@ -202,25 +202,6 @@ class JoomlaUpdateDirector extends AbstractCallback
 			// Get the site's configuration
 			$siteConfig = $site->getConfig() ?? new Registry();
 
-			// Log a report entry: we found an update for the site
-			try
-			{
-				Reports::fromCoreUpdateFound(
-					$site->getId(),
-					$siteConfig->get('core.current.version'),
-					$siteConfig->get('core.latest.version')
-				)->save();
-			}
-			catch (\Throwable $e)
-			{
-				$this->logger->error(
-					sprintf(
-						'Problem saving report log entry [%s:%s]: %d %s',
-						$e->getFile(), $e->getLine(), $e->getCode(), $e->getMessage()
-					)
-				);
-			}
-
 			// Process the update action for the site
 			$updateAction = $siteConfig->get("config.core_update.install", '')
 				?: $this->container->appConfig->get('tasks_coreupdate_install', 'patch');
@@ -229,6 +210,14 @@ class JoomlaUpdateDirector extends AbstractCallback
 			switch ($updateAction)
 			{
 				case "none":
+					if (!$this->mustSchedule($site, true))
+					{
+						continue 2;
+					}
+
+					// Log a report entry: we found an update for the site
+					$this->logCoreUpdateFoundToSiteReports($site, $siteConfig);
+
 					$this->logger->info(
 						sprintf(
 							'Site %d (%s) is configured to neither update, nor send emails.',
@@ -236,6 +225,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 							$site->name
 						)
 					);
+
 					break;
 
 				case "email":
@@ -245,6 +235,9 @@ class JoomlaUpdateDirector extends AbstractCallback
 					{
 						continue 2;
 					}
+
+					// Log a report entry: we found an update for the site
+					$this->logCoreUpdateFoundToSiteReports($site, $siteConfig);
 
 					$this->logger->info(
 						sprintf(
@@ -265,6 +258,9 @@ class JoomlaUpdateDirector extends AbstractCallback
 						continue 2;
 					}
 
+					// Log a report entry: we found an update for the site
+					$this->logCoreUpdateFoundToSiteReports($site, $siteConfig);
+
 					$this->logger->info(
 						sprintf(
 							'Site %d (%s) will be queued for update to Joomla! %s.',
@@ -278,6 +274,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 					$this->sendEmail('joomlaupdate_will_install', $site);
 
 					// Enqueue task
+					/** @noinspection PhpParamsInspection */
 					$this->enqueueJoomlaUpdate($site, $this->container);
 					break;
 			}
@@ -462,6 +459,36 @@ class JoomlaUpdateDirector extends AbstractCallback
 		);
 
 		return true;
+	}
+
+	/**
+	 * Add a Site Reports log entry about finding a new CMS version.
+	 *
+	 * @param   Site      $site
+	 * @param   Registry  $siteConfig
+	 *
+	 * @return  void
+	 * @since   1.2.2
+	 */
+	private function logCoreUpdateFoundToSiteReports(Site $site, Registry $siteConfig): void
+	{
+		try
+		{
+			Reports::fromCoreUpdateFound(
+				$site->getId(),
+				$siteConfig->get('core.current.version'),
+				$siteConfig->get('core.latest.version')
+			)->save();
+		}
+		catch (\Throwable $e)
+		{
+			$this->logger->error(
+				sprintf(
+					'Problem saving report log entry [%s:%s]: %d %s',
+					$e->getFile(), $e->getLine(), $e->getCode(), $e->getMessage()
+				)
+			);
+		}
 	}
 
 }
