@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0.1\n"
-"POT-Creation-Date: 2024-04-23 23:23:23\n"
+"Project-Id-Version: 1.2.0\n"
+"POT-Creation-Date: 2024-08-10 17:21:23\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Richard Dvořák <rd@r3d.de>\n"
 "Language-Team: Richard Dvořák, rd@r3d.de\n"
@@ -7202,3 +7202,283 @@ msgstr "Týdně"
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_PERIOD_MONTHLY"
 msgid "Monthly"
 msgstr "Měsíčně"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_AR"
+msgid "Arabic"
+msgstr "Arabština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_AR_SA"
+msgid "Arabic, Saudi Arabia"
+msgstr "Arabština, Saúdská Arábie"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_AZ"
+msgid "Azerbaijani"
+msgstr "Ázerbájdžánština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_BE"
+msgid "Belarusian"
+msgstr "Běloruština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_BG_BG"
+msgid "Bulgarian"
+msgstr "Bulharština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_BN_BD"
+msgid "Bengali"
+msgstr "Bengálština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_CA"
+msgid "Catalan"
+msgstr "Katalánština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_CS"
+msgid "Czech"
+msgstr "Čeština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_CY"
+msgid "Welsh"
+msgstr "Velština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_DA"
+msgid "Danish"
+msgstr "Dánština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_DE"
+msgid "German"
+msgstr "Němčina"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_EL"
+msgid "Greek"
+msgstr "Řečtina"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_EO"
+msgid "Esperanto"
+msgstr "Esperanto"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ES"
+msgid "Spanish (Spain)"
+msgstr "Španělština (Španělsko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ES_MX"
+msgid "Spanish (Mexico)"
+msgstr "Španělština (Mexiko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ET"
+msgid "Estonian"
+msgstr "Estonština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_EU"
+msgid "Basque"
+msgstr "Baskičtina"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_FA"
+msgid "Persian"
+msgstr "Perština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_FI"
+msgid "Finnish"
+msgstr "Finština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_FR_FR"
+msgid "French (France)"
+msgstr "Francouzština (Francie)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_GA"
+msgid "Irish"
+msgstr "Irština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_GL"
+msgid "Galician"
+msgstr "Galicijština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_HE_IL"
+msgid "Hebrew (Israel)"
+msgstr "Hebrejština (Izrael)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_HR"
+msgid "Croatian"
+msgstr "Chorvatština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_HU_HU"
+msgid "Hungarian (Hungary)"
+msgstr "Maďarština (Maďarsko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_HY"
+msgid "Armenian"
+msgstr "Arménština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ID"
+msgid "Indonesian"
+msgstr "Indonéština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_IS_IS"
+msgid "Icelandic"
+msgstr "Islandština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_IT"
+msgid "Italian"
+msgstr "Italština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_JA"
+msgid "Japanese"
+msgstr "Japonština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KA_GE"
+msgid "Georgian"
+msgstr "Gruzínština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KAB"
+msgid "Kabyle"
+msgstr "Kabylština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KK"
+msgid "Kazakh"
+msgstr "Kazaština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KO_KR"
+msgid "Korean (Korea)"
+msgstr "Korejština (Korea)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_KU"
+msgid "Kurdish"
+msgstr "Kurdština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_LT"
+msgid "Lithuanina"
+msgstr "Litevština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_LV"
+msgid "Latvian"
+msgstr "Lotyština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_NB_NO"
+msgid "Norwegian Bokmål (Norway)"
+msgstr "Norština Bokmål (Norsko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_NE"
+msgid "Nepali"
+msgstr "Nepálština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_NL"
+msgid "Dutch"
+msgstr "Nizozemština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_NL_BE"
+msgid "Butch (Belgium)"
+msgstr "Nizozemština (Belgie)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_OC"
+msgid "Occitan"
+msgstr "Okcitánština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_PL"
+msgid "Polish"
+msgstr "Polština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_PT_BR"
+msgid "Portuguese (Brazil)"
+msgstr "Portugalština (Brazílie)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_PT_PT"
+msgid "Portuguese (Portugal)"
+msgstr "Portugalština (Portugalsko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_RO"
+msgid "Romanian"
+msgstr "Rumunština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_RU"
+msgid "Russian"
+msgstr "Ruština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SK"
+msgid "Slovak"
+msgstr "Slovenština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SL_SI"
+msgid "Slovenian (Slovenia)"
+msgstr "Slovinština (Slovinsko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SQ"
+msgid "Albanina"
+msgstr "Albanština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SR"
+msgid "Serbian (Cyrillic)"
+msgstr "Srbština (Cyrilice)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_SV_SE"
+msgid "Swedish (Sweden)"
+msgstr "Švédština (Švédsko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_TA"
+msgid "Tamil"
+msgstr "Tamilština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_TG"
+msgid "Tajik"
+msgstr "Tádžičtina"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_TH_TH"
+msgid "Thai (Thailand)"
+msgstr "Thajština (Thajsko)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_TR"
+msgid "Turkish"
+msgstr "Turečtina"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_UG"
+msgid "Uyghur"
+msgstr "Ujgurština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_UK"
+msgid "Ukrainian"
+msgstr "Ukrajinština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_UZ"
+msgid "Uzbek"
+msgstr "Uzbečtina"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_VI"
+msgid "Vietnamese"
+msgstr "Vietnamština"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_CN"
+msgid "Chinese Simplified (China)"
+msgstr "Zjednodušená čínština (Čína)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_HK"
+msgid "Chinese Traditional (Hong Kong)"
+msgstr "Tradiční čínština (Hongkong"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_MO"
+msgid "Chinese Traditional (Macau)"
+msgstr "Tradiční čínština (Macao)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_SG"
+msgid "Chinese Traditional (Singapore)"
+msgstr "Tradiční čínština (Singapur)"
+
+msgctxt "PANOPTICON_TINYMCE_LANG_ZH_TW"
+msgid "Chinese Traditional (Taiwan)"
+msgstr "Tradiční čínština (Tchaj-wan)"
+
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_TITLE"
+msgid "Access Denied"
+msgstr "Přístup odepřen"
+
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_HEAD"
+msgid "Access Denied"
+msgstr "Přístup odepřen"
+
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_INFO"
+msgid "Your IP address, <code>%s</code>, has been temporarily blocked due to suspicious behaviour."
+msgstr "Vaše IP adresa, <code>%s</code>, byla dočasně zablokována kvůli podezřelému chování."
+
+msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_EXTENDING"
+msgid "Trying to accessing this site before the ban expires will extend the length of the ban."
+msgstr "Pokus o přístup na tuto stránku před vypršením zákazu prodlouží dobu zákazu."
+
+msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
+msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
+msgstr "Heslo, které se snažíte použít, bylo nalezeno v únikách hesel na internetu, což hackerům velmi usnadňuje jeho uhodnutí. Použijte prosím jiné heslo."
