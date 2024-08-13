@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
-"POT-Creation-Date: 2024-07-24 01:00:00\n"
-"PO-Revision-Date: 2024-07-24 01:21+0200\n"
+"POT-Creation-Date: 2024-08-13 13:58:54\n"
+"PO-Revision-Date: 2024-08-13 20:53+0200\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -4647,6 +4647,10 @@ msgctxt "PANOPTICON_SYSCONFIG_ERR_USING_DOTENV"
 msgid "You cannot view or modify the System Configuration in Panopticon when using .env files for its configuration. Please edit the .env file itself."
 msgstr "Die Systemkonfiguration in Panopticon kann nicht angezeigt oder geändert werden, wenn .env-Dateien für die Konfiguration verwendet werden. Bitte die .env-Datei selbst bearbeiten."
 
+msgctxt "PANOPTICON_SYSCONFIG_ERR_USING_ENVIRONMENT"
+msgid "You cannot view or modify the System Configuration in Panopticon when it runs containerized and you have set the <code>PANOPTICON_USING_ENV</code> environment variable to 1. Please configure Panopticon by setting environment variables instead."
+msgstr "Die Systemkonfiguration in Panopticon kann nicht angezeigt oder geändert werden, wenn es im Container ausgeführt wird und die Umgebungsvariable <code>PANOPTICON_USING_ENV</code> auf 1 gesetzt wurde. Bitte Panopticon so konfigurieren, dass stattdessen Umgebungsvariablen festgelegt werden."
+
 msgctxt "PANOPTICON_SYSCONFIG_BTN_PHPINFO"
 msgid "PHP Information"
 msgstr "PHP-Information"
@@ -7878,23 +7882,3 @@ msgstr "Der Versuch, vor Ablauf des Verbots auf diese Website zuzugreifen, verl�
 msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
 msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
 msgstr "Das zur späteren Verwendung eingegebene Passwort ist in Online-Passwortlecks-Listen enthalten. Bitte anderes Passwort verwenden."
-
-#~ msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
-#~ msgid "Run once, then disable this backup schedule"
-#~ msgstr "Backup-Plan einmal ausführen und dann deaktivieren"
-
-#~ msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_RUN_ONCE_DELETE"
-#~ msgid "⚠️ Run once, then DELETE this backup schedule"
-#~ msgstr "⚠️ Backup-Plan einmal ausführen und dann LÖSCHEN"
-
-#~ msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_COREUPDATES"
-#~ msgid "Joomla!&reg; Updates"
-#~ msgstr "Joomla!&reg; Updates"
-
-#~ msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE"
-#~ msgid "Joomla!&reg; Update"
-#~ msgstr "Joomla!&reg; Update"
-
-#~ msgctxt "PANOPTICON_SITE_LBL_WHERE_DID_I_GET_DATA"
-#~ msgid "Where did I get this data from?"
-#~ msgstr "Woher kommen diese Daten?"
