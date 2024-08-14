@@ -5,6 +5,7 @@ Akeeba Panopticon 1.2.2
 ~ Do not log CMS Update Found more than once per version
 # [LOW] Wrong lang string used in WordPress plugin/theme update emails
 # [LOW] PHP warnings running Connection Doctor on WordPress sites
+# [LOW] Wrong "email" label on Backup options [gh-771]
 
 Akeeba Panopticon 1.2.1
 ================================================================================

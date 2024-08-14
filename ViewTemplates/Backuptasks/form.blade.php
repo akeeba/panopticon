@@ -119,7 +119,7 @@ catch (InvalidArgumentException $e)
                         {{ $params->get('email_fail', 1) ? 'checked' : '' }}
                 >
                 <label class="form-check-label" for="email_fail">
-                    @lang('PANOPTICON_BACKUPTASKS_LBL_EMAIL_SUCCESS')
+                    @lang('PANOPTICON_BACKUPTASKS_LBL_EMAIL_FAIL')
                 </label>
             </div>
         </div>
