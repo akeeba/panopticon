@@ -20,6 +20,7 @@ use Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled;
 use Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL;
 use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
 use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Awf\Uri\Uri;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -132,7 +133,10 @@ trait SiteTestConnectionWPTrait
 			if (!str_contains($bodyContent, '"_links": {'))
 			{
 				throw new APIApplicationIsBroken(
-					sprintf('The API application does not work property (HTTP %d with invalid response)', $response->getStatusCode())
+					sprintf(
+						'The API application does not work property (HTTP %d with invalid response)',
+						$response->getStatusCode()
+					)
 				);
 			}
 
@@ -197,7 +201,9 @@ trait SiteTestConnectionWPTrait
 				&& $temp['data']['status'] == 401
 			)
 			{
-				throw new APIInvalidCredentials('The API Token is invalid, or you have not enabled the Panopticon Connector plugin on your site.');
+				throw new APIInvalidCredentials(
+					'The API Token is invalid, or you have not enabled the Panopticon Connector plugin on your site.'
+				);
 			}
 
 			throw new FrontendPasswordProtection();
@@ -245,13 +251,12 @@ trait SiteTestConnectionWPTrait
 		$warnings = [];
 
 		// Check if Akeeba Backup and its API plugin are enabled
-		$allEnabled = array_reduce(
+		$allEnabled = count(
 			array_filter(
-				$results->data,
+				$results,
 				fn(object $data) => str_contains($data->name ?? '', 'Akeeba Backup')
-			),
-			fn(bool $carry, object $data) => $carry && ($data->status ?? null) == 'active',
-			true
+				                    && ($data->status ?? null) === 'active'
+			)
 		);
 
 		if (!$allEnabled)
@@ -259,14 +264,13 @@ trait SiteTestConnectionWPTrait
 			$warnings[] = 'akeebabackup';
 		}
 
-		// Check for Admin Tools component
-		$allEnabled = array_reduce(
+		// Check for Admin Tools plugin
+		$allEnabled = count(
 			array_filter(
-				$results->data,
+				$results,
 				fn(object $data) => str_contains($data->name ?? '', 'Admin Tools')
-			),
-			fn(bool $carry, object $data) => $carry && ($data->status ?? null) == 'active',
-			true
+				                    && ($data->status ?? null) === 'active'
+			)
 		);
 
 		if (!$allEnabled)
