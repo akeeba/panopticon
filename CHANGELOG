@@ -4,6 +4,7 @@ Akeeba Panopticon 1.2.2
 + Optional environment variables-only configuration of containerized Panopticon [gh-696]
 + Clear the cache when relinking a site to Akeeba Backup
 ~ Do not log CMS Update Found more than once per version
+# [MEDIUM] Repeated emails for WordPress plugin updates
 # [LOW] Wrong lang string used in WordPress plugin/theme update emails
 # [LOW] PHP warnings running Connection Doctor on WordPress sites
 # [LOW] Wrong "email" label on Backup options [gh-771]

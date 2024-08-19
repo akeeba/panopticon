@@ -623,11 +623,26 @@ class PluginsUpdate extends AbstractCallback
 			function (Site $site) use ($softwareId) {
 				$siteConfig                    = $site->getConfig() ?? new Registry();
 				$lastSeenVersions              = $siteConfig->get('director.pluginupdates.lastSeen', []) ?: [];
-				$lastSeenVersions              = is_object($lastSeenVersions) ? (array) $lastSeenVersions
+				$lastSeenVersions              = is_object($lastSeenVersions)
+					? (array) $lastSeenVersions
 					: $lastSeenVersions;
-				$lastSeenVersions              = is_array($lastSeenVersions) ? $lastSeenVersions : [];
+				$lastSeenVersions              = is_array($lastSeenVersions)
+					? $lastSeenVersions
+					: [];
 				$extensions                    = (array) $siteConfig->get('extensions.list');
-				$extensionItem                 = $extensions[$softwareId] ?? null;
+				$sysConfigModel                = $this->container->mvcFactory->makeTempModel('Sysconfig');
+				$extensionItem                 = array_reduce(
+					$extensions,
+					fn(?object $carry, object $e) => $carry
+					                                 ?? (
+					                                 ($sysConfigModel->getExtensionShortname(
+							                                 $e->type, $e->element, $e->folder, $e->client_id
+						                                 ) === $softwareId)
+						                                 ? $e
+						                                 : null
+					                                 ),
+					null
+				);
 				$latestVersion                 = $extensionItem?->version?->new;
 				$lastSeenVersions[$softwareId] = $latestVersion;
 

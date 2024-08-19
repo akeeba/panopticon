@@ -156,7 +156,8 @@ class PluginUpdatesDirector extends AbstractCallback
 					}
 
 					// Skip plugin / theme if its new version is the same we last saw trying to update it.
-					$lastSeenVersion = $lastSeenVersions[$item->extension_id] ?? null;
+					$key  = $sysConfigModel->getExtensionShortname($item->type, $item->element, $item->folder, $item->client_id);
+					$lastSeenVersion = $lastSeenVersions[$key] ?? null;
 
 					if ($lastSeenVersion !== null && $lastSeenVersion == $newVersion)
 					{
