@@ -44,6 +44,7 @@
         <exclude name="assets/**" />
         <exclude name="build/**" />
         <exclude name="documentation/**" />
+        <exclude name="docker-testing/**" />
         <exclude name="node_modules/**" />
         <exclude name="release/**" />
 
@@ -81,16 +82,22 @@
         <exclude name="media/webfonts/.gitkeep" />
 
         <!-- Exclude cache, log, tmp files -->
-        <exclude name="cache/**" />
-        <include name="cache/.htaccess" />
-        <include name="cache/web.config" />
+        <exclude name="cache/admintools/**" />
+        <exclude name="cache/akeebabackup/**" />
+        <exclude name="cache/db_backups/**" />
+        <exclude name="cache/extensions/**" />
+        <exclude name="cache/favicon/**" />
+        <exclude name="cache/http/**" />
+        <exclude name="cache/system/**" />
 
         <exclude name="log/*.log" />
         <exclude name="log/*.php" />
         <exclude name="log/*.gz" />
 
         <exclude name="tmp/compiled_templates/**" />
+        <exclude name="tmp/session/**" />
 
+        <exclude name="user_code/ViewTemplates/**" />
         <exclude name="user_code/*.php" />
         <exclude name="user_code/*.pem" />
         <exclude name="user_code/*.json" />
