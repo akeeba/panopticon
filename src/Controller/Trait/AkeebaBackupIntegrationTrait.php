@@ -7,10 +7,12 @@
 
 namespace Akeeba\Panopticon\Controller\Trait;
 
+use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Uri\Uri;
 use Exception;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\CacheInterface;
 use Throwable;
 
@@ -336,6 +338,20 @@ trait AkeebaBackupIntegrationTrait
 				function (Site $model)
 				{
 					$dirty = $model->testAkeebaBackupConnection(true);
+
+					$container = $this->getContainer();
+					/** @var FilesystemAdapter $pool */
+					$pool      = $container->cacheFactory->pool('akeebabackup');
+
+					for ($from = 0; $from < 1000; $from += 10)
+					{
+						foreach ([0, 1, 5, 10, 15, 20, 50, 100, 200, 300, 400, 500] as $limit)
+						{
+							$pool->delete(sprintf('backupList-%d-%d-%d', $model->id, $from, $limit));
+						}
+					}
+
+					$pool->delete(sprintf('profilesList-%d', $model->id));
 
 					if (!$dirty)
 					{

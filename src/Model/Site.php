@@ -24,6 +24,7 @@ use Akeeba\Panopticon\Model\Trait\SiteTestConnectionWPTrait;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Awf\Container\Container;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
@@ -71,6 +72,7 @@ class Site extends DataModel
 	use CmsFamilyFilterSeparatorTrait;
 	use SiteTestConnectionJoomlaTrait;
 	use SiteTestConnectionWPTrait;
+	use SaveSiteTrait;
 
 	/**
 	 * Represents the configuration for a site as a Registry object.
