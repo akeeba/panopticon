@@ -1,24 +1,10 @@
-Welcome to version 1.2! It took a while, but we have implemented a number of major new features and improvements.
+This version is a maintenance release. We implemented some new features to make your lives easier.
 
-**WordPress support**. You can now monitor WordPress sites. This feature has only been tested with WordPress 5.0 or later, with a few sites only. Please, treat it as a “beta” feature.
+**Optional environment variables-only configuration of containerized Panopticon** [gh-696]. You can now configure a containerized Panopticon installation (e.g. one running in Docker) using nothing but environment variables.
 
-**Much improved Docker support**. You can now use a `.env.docker` file to configure the Docker instance instead of having to hack through the `docker-compose.yml` file. The dockerizer instance can have more than one CRON jobs running; this is user-configurable. You can upgrade the Docker instance without losing your settings just by updating the image and restarting the container. For this reason, the integrated Panopticon updater is _disabled_ when running under Docker.
+**Clear the cache when relinking a site to Akeeba Backup**. Not strictly necessary, but it should alleviate the need to click on the refresh button after relinking to Akeeba Backup before you see an up-to-date list of backup records for that site.
 
-**Translatable dates**. Previously, you could change the date format, but not the language the dates where in. For example, you'd get "Monday, July 1, 2024" even when your language was set to, say, Greek. Now, the day and month names are properly translatable.
-
-**Load TinyMCE translations**. TinyMCE, the editor used for mail templates and site notes, comes with its own interface translations. Previously, only the English language was loaded. Now, we check if there's a translation which (kinda) matches your selected language and load it as well. Please note that TinyMCE's translations do not have a one-to-one mapping to Panopticon languages. We try to automatically find the best match. If this is not possible, or if the translation is partial, we fall back to English.
-
-**Batch processing sites**. You can now select multiple sites to assign them and/or remove them from groups.
-
-**Control email sending for scheduled backups [gh-712]**. You can choose whether an email will be sent at the end of successful or failed _scheduled_ backup.
-
-**Auto-ban IPs after many failed login attempts**. Panopticon can temporarily block IP addresses if many failed login attempts have originated from them. This feature is enabled by default, but it can be turned off if it's a problem for you or your clients. The number of failed logins, the period they have to take place in, and the amount of time they will remain blocked is user-configurable.
-
-**Check passwords against Have I Been Pwned [gh-728]**. Panopticon will check new passwords against the third party Have I Been Pwned service. If the password is found in online password leaks the user will be asked to use a different password. This feature can be disabled in the System Configuration, however we recommend that you _always_ keep this enabled for maximum protection of your monitored sites.
-
-**Session data contents are now encrypted at rest**. Panopticon uses PHP's default session save path. This means the session data stored is typically placed in a world-readable directory managed by your host along with other sites under the same account or, worse, server. This is bad because potentially privileged information is stored in plaintext where they can easily be found. The contents of the session files are now encrypted with a key generated randomly for each Panopticon installation.
-
-**Session improvements**. There's an option to force Panopticon to use the `tmp/session` folder under its root as the PHP session save path, regardless of whether your host offers a writeable PHP session path already. This addresses the issue of getting logged out of Panopticon because PHP's session garbage collection reaped your session files before your session actually expired.  Furthermore, we took a few extra security steps to make Panopticon more resistant to session hijacking, session fixing, and other similar session-related security issues.
+**Do not log CMS Update Found more than once per version**. The site actions report would log the CMS update found every time Panopticon checked for an update. This was rather obnoxious and would effectively make useful information hard to find among the endless spam of that message if updates to a site were not installed right away.
 
 ## 🖥️ System Requirements
 
@@ -33,31 +19,13 @@ Development of Akeeba Panopticon takes place _in public_. You can see what we're
 
 ## 📋 CHANGELOG
 
-* ‼️ Fixing a chicken and egg issue not allowing the update to proceed correctly
-* ✨ WordPress support [gh-38]
-* ✨ Much improved Docker support [gh-697]
-* ✨ Translatable dates
-* ✨ Load TinyMCE translations
-* ✨ Batch processing sites
-* ✨ Control email sending for scheduled backups [gh-712]
-* ✨ Auto-ban IPs after many failed login attempts
-* ✨ Check passwords against HIBP [gh-728]
-* ✏️ System Configuration uses more Show On tricks to show/hide relevant settings
-* ✏️ Expose the Avatars setting in System Configuration [gh-729]
-* ✏️ Session data contents are now encrypted at rest
-* ✏️ Session improvements
-* ✏️ Expose the Behind Load Balancer configuration setting
-* ✏️ Do not send a failure email if a site queued for update is already updated, or disabled
-* 🐞 🔺 Some tasks would disable MySQL autocommit without restoring it, leading to weird issues
-* 🐞 ➖ MaxExec task throws fatal exception when tasks are executed over the web
-* 🐞 🔻 Wrong message about not having Akeeba Backup installed shown when adding a new site [gh-661]
-* 🐞 🔻 Wrong language in mail Blade templates [gh-658]
-* 🐞 🔻 Groups for disabled sites may not be displayed in the Sites admin page
-* 🐞 🔻 Connection doctor: sometimes ends up with an error page instead of showing what is going on with the connection
-* 🐞 🔻 High CPU usage warning when the server does not report CPU usage at all
-* 🐞 🔻 Update failure email missing site name if site is already up-to-date
-* 🐞 🔻 Update Director would claim a site is enqueued for updates when it's not
-* 🐞 🔻 Per-language overrides of extension update emails might not have an effect
+* ✨ Optional environment variables-only configuration of containerized Panopticon [gh-696]
+* ✨ Clear the cache when relinking a site to Akeeba Backup
+* ✏️ Do not log CMS Update Found more than once per version
+* 🐞 Repeated emails for WordPress plugin updates
+* 🐞 Wrong lang string used in WordPress plugin/theme update emails
+* 🐞 PHP warnings running Connection Doctor on WordPress sites
+* 🐞 Wrong "email" label on Backup options [gh-771]
 
 Legend:
 
@@ -66,4 +34,4 @@ Legend:
 * ✨ New feature
 * ✂️ Removed feature
 * ✏️ Miscellaneous change
-* 🐞 Bug fix (🔺 High priority, ➖ Medium priority, 🔻 Low priority)
+* 🐞 Bug fix
