@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
 "POT-Creation-Date: 2024-08-13 13:58:54\n"
-"PO-Revision-Date: 2024-08-27 15:38+0200\n"
+"PO-Revision-Date: 2024-08-27 16:42+0200\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2801,7 +2801,7 @@ msgstr "Steuert, ob die Site auf der Übersichtsseite angezeigt wird, ob ihre In
 
 msgctxt "PANOPTICON_LBL_SITE_OWNERSHIP"
 msgid "Site Ownership"
-msgstr "Site-Eigentum"
+msgstr "Eigentümer der Site"
 
 msgctxt "PANOPTICON_LBL_SITE_OWNERSHIP_NON_SUPER"
 msgid "If you need the site ownership information modified please contact a user with administration or superuser privileges."
