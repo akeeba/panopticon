@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.6-dev202312011316\n"
 "POT-Creation-Date: 2024-08-13 13:58:54\n"
-"PO-Revision-Date: 2024-08-13 20:53+0200\n"
+"PO-Revision-Date: 2024-08-27 16:42+0200\n"
 "Last-Translator: Gerd Seyfarth <mail@netsecond.net>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -929,19 +929,19 @@ msgstr "Mehrteiliger Download des Update-Pakets auf Site %d (%s) fehlgeschlagen;
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_EVENTS"
 msgid "Executing pre-update events for site %d (%s)"
-msgstr "Ereignisse vor Update für Site %d (%s) werden ausgeführt"
+msgstr "Vorbereitende Aktionen für Update der Site %d (%s) werden ausgeführt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_WILL_CONTINUE"
 msgid "Will continue executing pre-update events for site %d (%s)"
-msgstr "Ereignisse vor Update für Site %d (%s) werden fortgesetzt"
+msgstr "Vorbereitende Aktionen für Update der Site %d (%s) werden fortgesetzt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREUPDATE_FINISHED"
 msgid "Finished executing pre-update events for site %d (%s)"
-msgstr "Ereignisse vor Update für die Site %d (%s) wurden ausgeführt"
+msgstr "Vorbereitende Aktionen für Update der Site %d (%s) wurden ausgeführt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DONE"
 msgid "Done backing up before updating site %d (%s)"
-msgstr "Backup vor Update der Website %d (%s) abgeschlossen"
+msgstr "Backup vor Update der Site %d (%s) abgeschlossen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DESCRIPTION"
 msgid "Automatic backup taken by Panopticon before upgrading to Joomla! %s"
@@ -989,15 +989,15 @@ msgstr "Update für Site %d (%s) wird abgeschlossen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_EVENTS"
 msgid "Executing post-update events for site %d (%s)"
-msgstr "Ereignisse vor Update für Site %d (%s) werden ausgeführt"
+msgstr "Nachfolgende Aktionen nach Update der Site %d (%s) werden ausgeführt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_WILL_CONTINUE"
 msgid "Will continue executing post-update events for site %d (%s)"
-msgstr "Ereignisse vor Update für Site %d (%s) werden fortgesetzt"
+msgstr "Nachfolgende Aktionen nach Update der Site %d (%s) werden fortgesetzt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_POSTUPDATE_FINISHED"
 msgid "Finished executing post-update events for site %d (%s)"
-msgstr "Ereignisse vor Update für Site %d (%s) abgeschlossen"
+msgstr "Nachfolgende Aktionen nach Update der Site %d (%s) wurden ausgeführt"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_UPDATES"
 msgid "Reloading Joomla update information on site %d (%s)"
@@ -1005,11 +1005,11 @@ msgstr "Joomla-Update-Informationen werden auf Site %d (%s) neu geladen"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_RELOAD_SITEINFO"
 msgid "Refreshing the site information for the just updated site %d (%s)"
-msgstr "Auffrischung der Site-Informationen für gerade aktualisierte Site %d (%s)"
+msgstr "Aktualisierung der Site-Informationen für frisch aktualisierte Site %d (%s)"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_WILL_BE_UPDATED"
 msgid "Site %d (%s) will be updated from Joomla! %s to Joomla! %s."
-msgstr "Site %d (%s) wird von Joomla! aktualisiert. %s zu Joomla! %s."
+msgstr "Site %d (%s) wird von Joomla! %s zu Joomla! %s aktualisiert."
 
 msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NO_UPDATE_AVAILABLE"
 msgid "The site %s (%s) is on WordPress %s. The latest available version is %s. Therefore, it cannot be updated."
@@ -2801,7 +2801,7 @@ msgstr "Steuert, ob die Site auf der Übersichtsseite angezeigt wird, ob ihre In
 
 msgctxt "PANOPTICON_LBL_SITE_OWNERSHIP"
 msgid "Site Ownership"
-msgstr "Site-Eigentum"
+msgstr "Eigentümer der Site"
 
 msgctxt "PANOPTICON_LBL_SITE_OWNERSHIP_NON_SUPER"
 msgid "If you need the site ownership information modified please contact a user with administration or superuser privileges."
@@ -3113,7 +3113,7 @@ msgstr "Dies ist ein Patch-(Punkt-)Update, das fast immer sicher ist."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_IS_MINOR_RELEASE"
 msgid "This is a minor (version family) update which may affect your template overrides, templates, and some third party extensions."
-msgstr "Dies ist ein kleineres Update (Versionsfamilie), das sich auf Vorlagenüberschreibungen, Vorlagen und einige Erweiterungen von Drittanbietern auswirken kann."
+msgstr "Dies ist ein kleineres Update (Versionsfamilie), das sich auf Template-Overrides, Templates und einige Erweiterungen von Drittanbietern auswirken kann."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_MINOR_RELEASE_ADMONISHMENT"
 msgid "It is a good idea to take a backup of your site, and test this update on a copy of your site first."
@@ -3121,7 +3121,7 @@ msgstr "Es empfiehlt sich, eine Sicherungskopie der Site zu erstellen und dieses
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_IS_MAJOR_RELEASE"
 msgid "This is a major version update which will most likely affect your template overrides, templates, and possibly some third party extensions."
-msgstr "Hierbei handelt es sich um ein größeres Versionsupdate, das sich höchstwahrscheinlich auf Vorlagenüberschreibungen, Vorlagen und möglicherweise einige Erweiterungen von Drittanbietern auswirkt."
+msgstr "Hierbei handelt es sich um ein größeres Versionsupdate, das sich höchstwahrscheinlich auf Template-Overrides, Templates und möglicherweise einige Erweiterungen von Drittanbietern auswirkt."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_MAJOR_RELEASE_ADMONISHMENT"
 msgid "It is very strongly recommended that you take a backup of your site, and test this update on a copy of your site first."
@@ -3353,15 +3353,15 @@ msgstr "Planung des Plugin/Theme-Updates ist fehlgeschlagen."
 
 msgctxt "PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N"
 msgid "%d template overrides need to be reviewed"
-msgstr "%d Template-Überschreibungen müssen geprüft werden"
+msgstr "%d Template-Overrides müssen geprüft werden"
 
 msgctxt "PANOPTICON_SITE_LBL_TEMPLATE_OVERRIDES_CHANGED_N_1"
 msgid "One template override needs to be reviewed"
-msgstr "Eine Template-Überschreibung muss geprüft werden"
+msgstr "Ein Template-Override muss geprüft werden"
 
 msgctxt "PANOPTICON_SITE_BTN_TEMPLATE_OVERRIDES_CHECK"
 msgid "Check Template Overrides"
-msgstr "Template-Überschreibungen prüfen"
+msgstr "Template-Overrides prüfen"
 
 msgctxt "PANOPTICON_SITE_LBL_EXTENSION_UPDATE_SCHEDULE_UPDATE"
 msgid "Schedule Automatic Update to version %s"
@@ -6733,7 +6733,7 @@ msgstr "Hilfe im Wiki"
 
 msgctxt "PANOPTICON_OVERRIDES_TITLE"
 msgid "Template Overrides"
-msgstr "Template-Überschreibungen"
+msgstr "Template-Overrides"
 
 msgctxt "PANOPTICON_OVERRIDES_TITLE_READ"
 msgid "Compare an Override"
@@ -6741,7 +6741,7 @@ msgstr "Überschreibung vergleichen"
 
 msgctxt "PANOPTICON_OVERRIDES_TABLE_COMMENT"
 msgid "Table of template overrides which have changed on the remote site"
-msgstr "Tabelle der Template-Überschreibungen, die auf der Remote-Site geändert wurden"
+msgstr "Tabelle der Template-Overrides, die auf der Remote-Site geändert wurden"
 
 msgctxt "PANOPTICON_OVERRIDES_LBL_FIELD_TEMPLATE"
 msgid "Template"
@@ -6793,7 +6793,7 @@ msgstr "Template-Überschreibung oder entsprechende Originaldatei möglicherweis
 
 msgctxt "PANOPTICON_OVERRIDES_LBL_NO_OVERRIDE_SUGGESTION"
 msgid "Please visit your site's administrator backend to inspect the template overrides."
-msgstr "Bitte Administrator-Backend der Site aufrufen, um Template-Überschreibungen zu prüfen."
+msgstr "Bitte Administrator-Backend der Site aufrufen, um Template-Overrides zu prüfen."
 
 msgctxt "PANOPTICON_LOGS_TITLE"
 msgid "Log Files"
