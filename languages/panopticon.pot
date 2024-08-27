@@ -7344,17 +7344,17 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_USER_SAVED"
-msgid "The user account has been saved"
+msgid "The user account has been saved."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_USER_DELETED"
-msgid "The user account has been deleted"
+msgid "The user account has been deleted."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_USER_COPIED"
-msgid "The user account has been copied"
+msgid "The user account has been copied."
 msgstr ""
 
 #, phpformat
@@ -9846,4 +9846,3 @@ msgstr ""
 msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
 msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
 msgstr ""
-
