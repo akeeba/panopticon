@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 1.2.3
+================================================================================
+# [HIGH] Cannot connect to really old WordPress installations (WordPress 5.5 and earlier)
+
 Akeeba Panopticon 1.2.2
 ================================================================================
 + Optional environment variables-only configuration of containerized Panopticon [gh-696]

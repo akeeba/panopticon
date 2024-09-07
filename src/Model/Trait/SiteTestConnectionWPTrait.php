@@ -149,7 +149,7 @@ trait SiteTestConnectionWPTrait
 		}
 
 		// Try to access wp/v2/plugins **authenticated**
-		[$url, $options] = $this->getRequestOptions($this, '/wp/v2/plugins?per_page=100');
+		[$url, $options] = $this->getRequestOptions($this, '/wp/v2/posts?per_page=100');
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
 		$session->set('testconnection.step', 'Authenticated access (can I get information out of the API?)');
