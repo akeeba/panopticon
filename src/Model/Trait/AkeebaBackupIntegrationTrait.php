@@ -227,14 +227,28 @@ trait AkeebaBackupIntegrationTrait
 
 				$httpClient = new HttpClientGuzzle($options);
 				$apiClient  = new Connector($httpClient);
+				$foundConfig = false;
 
 				try
 				{
-					$apiClient->autodetect();
+					$apiClient->information();
+					$foundConfig = true;
 				}
-				catch (Throwable)
+				catch (Exception $e)
 				{
-					continue;
+					// Nothing
+				}
+
+				if (!$foundConfig)
+				{
+					try
+					{
+						$apiClient->autodetect();
+					}
+					catch (Throwable)
+					{
+						continue;
+					}
 				}
 
 				$newEndpointConfiguration = (object) $httpClient->getOptions()->toArray();

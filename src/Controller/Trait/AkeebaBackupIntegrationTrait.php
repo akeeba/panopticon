@@ -7,7 +7,6 @@
 
 namespace Akeeba\Panopticon\Controller\Trait;
 
-use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Uri\Uri;
@@ -31,9 +30,19 @@ trait AkeebaBackupIntegrationTrait
 			return false;
 		}
 
-		if (!$this->akeebaBackupRelinkInternal($id))
+		try
 		{
-			return false;
+			if (!$this->akeebaBackupRelinkInternal($id))
+			{
+				return false;
+			}
+		}
+		catch (Throwable $e)
+		{
+			$this->setRedirectWithMessage(
+				$this->container->router->route(sprintf('index.php?view=site&task=read&id=%d&akeebaBackupForce=1', $id)),
+				$e->getMessage()
+			);
 		}
 
 		$this->setRedirectWithMessage(
@@ -367,10 +376,6 @@ trait AkeebaBackupIntegrationTrait
 					}
 				}
 			);
-		}
-		catch (Throwable)
-		{
-			return false;
 		}
 		finally
 		{
