@@ -77,10 +77,20 @@ $eolDate                  = $versionFamilyInfo?->dates?->eol ?? null;
 @stop
 
 @section('wpUpdateStatus')
-    @if ($this->siteConfig->get('core.canUpgrade', false))
+    @if (empty($currentVersion))
+        <div class="alert alert-danger">
+            <h4 class="alert alert-heading h5 p-0">
+                <span class="fab fa-wordpress d-none d-md-inline" aria-hidden="true"></span>
+                @lang('PANOPTICON_SITE_LBL_WPUPDATE_NO_VERSION_HEAD')
+            </h4>
+            <p>
+                @lang('PANOPTICON_SITE_LBL_WPUPDATE_NO_VERSION_BODY')
+            </p>
+        </div>
+    @elseif ($this->siteConfig->get('core.canUpgrade', false))
         <div class="alert alert-warning">
             <h4 class="alert alert-heading h5 p-0">
-                <span class="fab fa-joomla d-none d-md-inline" aria-hidden="true"></span>
+                <span class="fab fa-wordpress d-none d-md-inline" aria-hidden="true"></span>
                 @sprintf('PANOPTICON_SITE_LBL_WPUPDATE_AVAILABLE_UPDATE', $this->escape($latestVersion))
             </h4>
             <p class="mb-1">
@@ -221,7 +231,7 @@ $eolDate                  = $versionFamilyInfo?->dates?->eol ?? null;
 
 <div class="card">
     <h3 class="card-header h4 d-flex flex-row gap-1 align-items-center">
-        <span class="fab fa-joomla d-none d-md-inline" aria-hidden="true"></span>
+        <span class="fab fa-wordpress d-none d-md-inline" aria-hidden="true"></span>
         <span class="flex-grow-1">@lang('PANOPTICON_SITE_LBL_WPUPDATE_HEAD')</span>
         <a class="btn btn-outline-secondary btn-sm" role="button"
            href="@route(sprintf('index.php?view=site&task=refreshSiteInformation&id=%d&%s=1', $this->item->id, $token))"

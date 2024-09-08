@@ -82,7 +82,17 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
 @stop
 
 @section('jUpdateStatus')
-    @if(!$this->siteConfig->get('core.extensionAvailable', true))
+    @if (empty($currentVersion))
+        <div class="alert alert-danger">
+            <h4 class="alert alert-heading h5 p-0">
+                <span class="fab fa-joomla d-none d-md-inline" aria-hidden="true"></span>
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_NO_VERSION_HEAD')
+            </h4>
+            <p>
+                @lang('PANOPTICON_SITE_LBL_JUPDATE_NO_VERSION_BODY')
+            </p>
+        </div>
+    @elseif(!$this->siteConfig->get('core.extensionAvailable', true))
         <div class="alert alert-danger">
             <h4 class="alert-heading h6">
                 <span class="fa fa-xmark-circle" aria-hidden="true"></span>
