@@ -145,8 +145,13 @@ class WordPressVersion
 		return $ret;
 	}
 
-	public function isEOL(string $version): bool
+	public function isEOL(?string $version): bool
 	{
+		if (empty($version))
+		{
+			return false;
+		}
+
 		$versionInformation = $this->getVersionInformation($version);
 
 		return $versionInformation->eol;

@@ -252,7 +252,7 @@ class Main extends Model
 				foreach ($types as $type)
 				{
 					uasort($temp[$type], function ($a, $b) {
-						version_compare($a, $b);
+						version_compare($a ?? '0.0.0', $b ?? '0.0.0');
 					});
 				}
 
