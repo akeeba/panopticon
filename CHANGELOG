@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.2.3
 ================================================================================
++ Domain registration and expiration warnings
 # [HIGH] Cannot connect to really old WordPress installations (WordPress 5.5 and earlier)
 # [HIGH] Cannot connect to old Akeeba Backup for WordPress (version 7)
 # [HIGH] PHP error when WordPress fails to provide version information

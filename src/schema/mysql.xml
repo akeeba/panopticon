@@ -712,5 +712,99 @@ This is an automated email. Please do not reply to it.');
 ]]></query>
         </action>
 
+        <!-- Install mail template: domain_expiring -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'domain_expiring') x
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (type, language, subject, html, plaintext) values ('domain_expiring', '*', '⚠️ The domain name for “[SITE_NAME]” expires soon', '<div class="akemail-outer-wrapper">
+<table>
+<tbody>
+<tr>
+<td width="10%">&nbsp;</td>
+<td>
+<div class="akemail-wrapper">
+<div class="akemail-container"><!-- Logo Header -->
+<div class="akemail-logo"><a href="[URL]">&nbsp;<img src="[URL]/media/images/logo_bw.svg" alt="Panopticon &mdash; Site Monitoring">&nbsp;</a></div>
+<!-- Hello -->
+<div class="akemail-hello">
+<p>Hello,</p>
+</div>
+<!-- Main-Topic -->
+<div class="akemail-main-topic">
+<p>The domain name for &ldquo;[SITE_NAME]&rdquo; expires soon</p>
+</div>
+<!-- Message -->
+<div class="akemail-message">
+<p>The domain name <code>[DOMAIN]</code> for your site &ldquo;<a href="[SITE_URL]">[SITE_NAME]</a>&rdquo; will expire soon, on [EXPIRATION]. Please renew your domain name with your registrar ([REGISTRAR]) to prevent losing access to your domain name, and therefore your site.</p>
+<p><strong>ℹ️ Kind reminder</strong>: If you let your domain expire someone else may register it. In this case, you will be unable to use this domain name for your site and email.</p>
+</div>
+<!-- Area Offer/Announcement -->
+<div class="akemail-announcement">
+<div class="akemail-announcement-box">
+<h3>Action required</h3>
+<p>You need to renew your domain name, [DOMAIN].</p>
+</div>
+<p class="akemail-announcement-note"><em>Note</em>: Akeeba Panopticon cannot renew domains. This is something you need to do manually through your registrar which may be different than the hosting company you use for your site. If you have already renewed your domain, don''t panic; the domain registration information publicly available to tools like Akeeba Panopticon takes a few days to be updated.</p>
+</div>
+<div class="akemail-outro">
+<p>Have a great day!</p>
+</div>
+<!-- Footer -->
+<div class="akemail-footer">
+<p class="akemail-footer-sitelink">&nbsp;<a href="[URL]">Panopticon &mdash; Site Monitoring</a></p>
+</div>
+</div>
+<!-- Legal info -->
+<div class="akemail-legalinfo">
+<p>This is an automated email. Please do not reply to it.</p>
+</div>
+</div>
+</td>
+<td width="10%">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>', 'Hello,
+
+
+The domain name for “[SITE_NAME]” expires soon
+
+
+The domain name [DOMAIN] for your site “[SITE_NAME] [/[SITE_URL]]”
+will expire soon, on [EXPIRATION]. Please renew your domain name with
+your registrar ([REGISTRAR]) to prevent losing access to your domain
+name, and therefore your site.
+
+ℹ️ KIND REMINDER: If you let your domain expire someone else may
+register it. In this case, you will be unable to use this domain name
+for your site and email.
+
+==============================================================================
+! ! ! ! !  ACTION REQUIRED  ! ! ! ! !
+==============================================================================
+
+You need to renew your domain name, [DOMAIN].
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+_Note_: Akeeba Panopticon cannot renew domains. This is something you
+need to do manually through your registrar which may be different than
+the hosting company you use for your site. If you have already renewed
+your domain, don''t panic; the domain registration information publicly
+available to tools like Akeeba Panopticon takes a few days to be updated.
+
+==============================================================================
+
+Have a great day!
+
+------------------------------------------------------------------------------
+
+This email was sent by the Panopticon installation on [URL]
+This is an automated email. Please do not reply to it.');
+]]></query>
+        </action>
+
     </sql>
 </schema>

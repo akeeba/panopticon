@@ -38,6 +38,11 @@ use Exception;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\RequestOptions;
+use Iodev\Whois\Exceptions\ConnectionException;
+use Iodev\Whois\Exceptions\ServerMismatchException;
+use Iodev\Whois\Exceptions\WhoisException;
+use Iodev\Whois\Factory as WhoisFactory;
+use Iodev\Whois\Loaders\CurlLoader;
 use Psr\Cache\CacheException;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
@@ -1249,6 +1254,147 @@ class Site extends DataModel
         }
 
 		return sprintf("data:%s;base64,%s", 'image/svg+xml', base64_encode($contents));
+	}
+
+	/**
+	 * Returns select WHOIS information for the domain.
+	 *
+	 * @param   int  $timeout  The network timeout, in seconds
+	 *
+	 * @return  object|null
+	 */
+	#[\JetBrains\PhpStorm\ObjectShape([
+		'created'     => 'string|null',
+		'expiration'  => 'string|null',
+		'registrar'   => 'string|null',
+		'nameservers' => 'string[]|null',
+	])]
+	public function getWhoIsInformation(int $timeout = 3): ?object
+	{
+		/** @var \Akeeba\Panopticon\Container $container */
+		$container          = $this->getContainer();
+		$pool               = $container->cacheFactory->pool('whois');
+		$callbackController = new CallbackController(
+			$container,
+			$pool
+		);
+		$cacheKey           = hash(
+			'sha1',
+			"whois-{$this->getId()}-{$this->getBaseUrl()}"
+		);
+
+		return $callbackController
+			       ->get(
+				       function ($timeout) {
+					       // Get the hostname and port from the URL
+					       try
+					       {
+						       // This gets the domain.tld for the site; very important when we're given a subdomain.
+						       $hostname           = Uri::getInstance($this->getBaseUrl())->getHost();
+						       $parts              = explode('.', $hostname);
+						       $parts              = array_slice($parts, -2);
+						       $applicableHostname = implode('.', $parts);
+						       $info               = WhoisFactory::get()
+							       ->createWhois(new CurlLoader($timeout))
+							       ->loadDomainInfo($applicableHostname);
+					       }
+					       catch (Exception)
+					       {
+						       return null;
+					       }
+
+					       if (empty($info))
+					       {
+						       return null;
+					       }
+
+					       return (object) [
+						       'domain'      => $info->domainName,
+						       'created'     => $info->creationDate,
+						       'expiration'  => $info->expirationDate,
+						       'registrar'   => $info->registrar,
+						       'nameservers' => $info->nameServers,
+					       ];
+				       },
+				       [$timeout],
+				       $cacheKey,
+				       86400
+			       );
+	}
+
+	public function getDomainValidityStatus(): int
+	{
+		$created = $this->getConfig()->get('whois.created', null);
+		$expires = $this->getConfig()->get('whois.expiration', null);
+
+		try
+		{
+			$created = empty($created) ? null : new DateTime($created);
+		}
+		catch (\Throwable)
+		{
+			$created = null;
+		}
+
+		try
+		{
+			$expires = empty($expires) ? null : new DateTime($expires);
+		}
+		catch (\Throwable)
+		{
+			$expires = null;
+		}
+
+		// No valid Created or Expires date: -1 (unknown state)
+		if (empty($created) && empty($expires))
+		{
+			return -1;
+		}
+
+		$warning  = $this->getConfig()->get('config.domain.warning', 180);
+		$now      = new DateTime();
+		$warnDate = $warning > 0
+			? (new DateTime())->add(new \DateInterval(sprintf('P%sD', $warning)))
+			: $now;
+
+		// Both Created and Expires defined, both within range: 0 (valid)
+		if (!empty($created) && !empty($expires) && $created <= $now && $expires >= $now && $expires > $warnDate)
+		{
+			return 0;
+		}
+
+		// Only Created defined and is valid: 0 (valid)
+		if (!empty($created) && empty($expires) && $created <= $now)
+		{
+			return 0;
+		}
+
+		// Only Expires defined and is valid: 0 (valid)
+		if (empty($created) && !empty($expires) && $expires >= $now && $expires > $warnDate)
+		{
+			return 0;
+		}
+
+		// Created is defined but invalid: 1 (too soon)
+		if (!empty($created) && $created > $now)
+		{
+			return 1;
+		}
+
+		// Too close to the expiration date: 2 (expiration warning)
+		if ($warning > 0 && !empty($expires) && $expires >= $now && $expires <= $warnDate)
+		{
+			return 2;
+		}
+
+		// Expires is defined but invalid: 3 (expired)
+		if (!empty($expires) && $expires < $now)
+		{
+			return 3;
+		}
+
+		// No idea WTF is going on: -1
+		return -1;
 	}
 
 	/**

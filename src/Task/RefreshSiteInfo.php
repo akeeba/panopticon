@@ -380,6 +380,9 @@ class RefreshSiteInfo extends AbstractCallback
 							// Retrieve the SSL / TLS certificate information
 							$config->set('ssl', $site->getCertificateInformation());
 
+							// Retrieve the WHOIS information
+							$config->set('whois', $site->getWhoIsInformation());
+
 							// Latest backup information
 							if ($site->hasAkeebaBackup())
 							{
@@ -534,6 +537,9 @@ class RefreshSiteInfo extends AbstractCallback
 
 							// Retrieve the SSL / TLS certificate information
 							$config->set('ssl', $site->getCertificateInformation());
+
+							// Retrieve the WHOIS information
+							$config->set('whois', $site->getWhoIsInformation());
 
 							// Latest backup information
 							if ($site->hasAkeebaBackup())

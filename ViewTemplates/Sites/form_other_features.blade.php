@@ -35,6 +35,26 @@ $extra   = $this->getContainer()->eventDispatcher->trigger('onSiteDisplayAddEdit
 </div>
 
 <div class="row mt-3 mb-4">
+    <label for="config_ssl_warning" class="col-sm-3 col-form-label">
+        @lang('PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING')
+    </label>
+    <div class="col-sm-9">
+        <div class="input-group">
+            <input type="text" class="form-control"
+                   name="config[config.domain.warning]" id="config_domain_warning"
+                   value="{{ $config->get('config.domain.warning', 180) }}"
+            >
+            <div class="input-group-text">
+                @lang('PANOPTICON_SYSCONFIG_LBL_UOM_DAYS')
+            </div>
+        </div>
+        <div class="form-text">
+            @lang('PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING_HELP')
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3 mb-4">
     <label for="config_backup_max_age" class="col-sm-3 col-form-label">
         @lang('PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE')
     </label>

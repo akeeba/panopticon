@@ -98,6 +98,7 @@ class Mailtemplates extends DataModel
 			'ssl_tls_expiring'          => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SSL_TLS_EXPIRING',
 			'site_down'                 => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_DOWN',
 			'site_up'                   => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_UP',
+			'domain_expiring'           => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_DOMAIN_EXPIRING',
 		];
 	}
 }

@@ -48,6 +48,7 @@
 		"dragonmantank/cron-expression": "^3.3.2",
 		"guzzlehttp/guzzle": "^7.5",
 		"jfcherng/php-diff": "^6.15",
+		"io-developer/php-whois": "^4.1.10",
 		"kevinrob/guzzle-cache-middleware": "^5.0",
 		"league/commonmark": "^2.4",
 		"mcrumley/php-complexify": "^0.4.1",

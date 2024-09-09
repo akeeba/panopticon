@@ -34,6 +34,7 @@ class Setup extends Model
 		'logrotate'                  => '@daily',
 		'databasebackup'             => '@daily',
 		'ssltlsexpiration'           => '@daily',
+		'domainexpiration'           => '0 0 * * 1',
 		'usagestats'                 => '0 */12 * * *',
 		'selfupdatefinder'           => '0 */6 * * *',
 		'refreshsiteinfo'            => '*/15 * * * *',

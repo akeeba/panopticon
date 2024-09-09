@@ -24,6 +24,9 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
              alt="">
     @endif
     <span class="flex-grow-1">{{{ $this->item->name }}}</span>
+    @if (!empty($this->siteConfig->get('whois')))
+        @include('Sites/item_whois')
+    @endif
     @if (!empty($this->siteConfig->get('ssl')))
         @include('Sites/item_ssl')
     @endif
