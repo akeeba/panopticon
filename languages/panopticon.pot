@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.2.2\n"
-"POT-Creation-Date: 2024-09-08 15:17:28\n"
+"Project-Id-Version: 1.2.3\n"
+"POT-Creation-Date: 2024-09-13 05:30:27\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.2.2\n"
+"X-Generator: Panopticon ini_to_po 1.2.3\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -1005,6 +1005,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_PLUGINUPDATESDIRECTOR"
 msgid "Schedule automatic WordPress plugin and theme updates"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_DOMAINEXPIRATION"
+msgid "Send emails about domain expiration"
 msgstr ""
 
 #, phpformat
@@ -3553,6 +3558,16 @@ msgid "Panopticon will warn you that your site\'s SSL/TLS certificate is expirin
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING"
+msgid "Domain Expiration First Warning"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING_HELP"
+msgid "Panopticon will warn you that your site\'s domain name is expiring this many days before it expires. 0 disables the warning."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE"
 msgid "Maximum Backup Age"
 msgstr ""
@@ -3660,6 +3675,96 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_INVALID_SIG"
 msgid "The signature of your SSL/TLS certificate cannot be verified against the Certification Authorities known to the server. This usually means that you are using a self-signed certificate which will be rejected by browsers."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO"
+msgid "Domain Information"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID_HEAD"
+msgid "Unknown Validity"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID"
+msgid "We could not retrieve the domain\'s expiration date. Either the domain name does not appear in the WHOIS database, or you are using a domain name which only resolves locally."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TOOSOON_HEAD"
+msgid "Invalid (Too Soon)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TOOSOON"
+msgid "The domain registrar claims the domain name was registered in a future date. This does not seem right."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRING_HEAD"
+msgid "Imminent Expiration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRING"
+msgid "The domain name will expire soon. You need to renew it with your registrar to avoid losing it."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED_HEAD"
+msgid "Expired"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
+msgid "The domain name has expired. You might still be able to access the domain due to your registrar\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS_HEAD"
+msgid "Missing nameservers"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS"
+msgid "There are no nameservers reported in the WHOIS database. A site without valid nameservers will not be accessible on the Internet. If you recently assigned nameservers to the domain don\'t panic; it may take up to 5 days for this information to propagate."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TABLE_CAPTION"
+msgid "Table of domain information"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_DOMAIN"
+msgid "Domain"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_REGISTERED"
+msgid "Registered On"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRES"
+msgid "Expires On"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_REGISTRAR"
+msgid "Registrar"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NAMESERVERS"
+msgid "Nameservers"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_CACHING_NOTICE"
+msgid "Domain registration information may be cached in the WHOIS servers for a period ranging from a few hours to a few days. As a result, the information above may be out of date."
 msgstr ""
 
 #, phpformat
@@ -7143,6 +7248,11 @@ msgid "Site Action Summary"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_DOMAIN_EXPIRING"
+msgid "Domain Expires Soon"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_TITLE"
 msgid "Update Panopticon"
 msgstr ""
@@ -7374,17 +7484,17 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_USER_SAVED"
-msgid "The user account has been saved"
+msgid "The user account has been saved."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_USER_DELETED"
-msgid "The user account has been deleted"
+msgid "The user account has been deleted."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_USER_COPIED"
-msgid "The user account has been copied"
+msgid "The user account has been copied."
 msgstr ""
 
 #, phpformat
