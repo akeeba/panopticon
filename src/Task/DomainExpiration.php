@@ -166,14 +166,6 @@ class DomainExpiration extends AbstractCallback
 	{
 		$db = $this->getContainer()->db;
 
-		/**
-		 * SELECT `id`
-		 * FROM #__sites
-		 * WHERE
-		 * JSON_EXTRACT(config, '$.ssl.validTo') IS NOT NULL
-		 * AND
-		 * DATE_SUB(JSON_EXTRACT(config, '$.ssl.validTo'), INTERVAL CAST(IFNULL(JSON_EXTRACT(config, '$.config.ssl.warning'), 7) AS UNSIGNED) DAY) <= NOW()
-		 */
 		$query = $db->getQuery(true)
 			->select($db->quoteName('id'))
 			->from($db->quoteName('#__sites'))

@@ -1329,7 +1329,7 @@ class Site extends DataModel
 
 		try
 		{
-			$created = empty($created) ? null : new DateTime($created);
+			$created = empty($created) ? null : new DateTime('@' . $created);
 		}
 		catch (\Throwable)
 		{
@@ -1338,7 +1338,7 @@ class Site extends DataModel
 
 		try
 		{
-			$expires = empty($expires) ? null : new DateTime($expires);
+			$expires = empty($expires) ? null : new DateTime('@' . $expires);
 		}
 		catch (\Throwable)
 		{
