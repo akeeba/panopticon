@@ -79,5 +79,19 @@ $config = $this->container->appConfig;
                 ) }}
             </div>
         </div>
+
+        {{--mfa_max_tries--}}
+        <div class="row mb-3">
+            <label for="mfa_max_tries" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_MAX_TRIES')
+            </label>
+            <div class="col-sm-9">
+                <input type="number" min="1" max="1000"
+                       name="mfa_max_tries" id="mfa_max_tries"
+                       class="form-control"
+                       value="{{ (int) $config->get('mfa_max_tries', 3) ?: 3 }}" />
+            </div>
+        </div>
+
     </div>
 </div>

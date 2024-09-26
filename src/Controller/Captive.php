@@ -164,6 +164,29 @@ class Captive extends Controller
 				$loginFailureModel->logFailure(true);
 			}
 
+			// Apply Maximum MFA tries
+			$maxMFATries  = (int) $this->getContainer()->appConfig->get('mfa_max_tries', 3);
+			$maxMFATries  = min(max($maxMFATries, 1), 10000);
+			$currentTries = (int) $this->getContainer()->segment->get('panopticon.mfa.tries', 0);
+
+			$this->getContainer()->segment->set('panopticon.mfa.tries', ++$currentTries);
+
+			if ($currentTries >= $maxMFATries)
+			{
+				$logger   = $this->container->loggerFactory->get('login');
+				$manager  = $this->container->userManager;
+				$username = $manager->getUser()->getUsername();
+				$router   = $this->container->router;
+
+				$logger->info('Logged out (maximum MFA tries)', ['username' => $username]);
+				$manager->logoutUser();
+
+				$this->setRedirect(
+					$router->route('index.php?view=login'),
+					$this->getContainer()->language->text('PANOPTICON_APP_ERR_MFA_LOGOUT')
+				);
+			}
+
 			return true;
 		}
 		
