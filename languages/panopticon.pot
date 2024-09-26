@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.3\n"
-"POT-Creation-Date: 2024-09-13 05:30:27\n"
+"POT-Creation-Date: 2024-09-26 07:22:26\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -895,6 +895,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_LANGUAGE"
 msgid "Language"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APP_ERR_MFA_LOGOUT"
+msgid "Too many failed Multi-factor Authentication attempts. Please retry logging in."
 msgstr ""
 
 #, phpformat
@@ -6958,6 +6963,31 @@ msgid "You have disabled Mail Sending; no email will be sent."
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_SUPERUSER"
+msgid "Force MFA for Superusers"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_ADMIN"
+msgid "Force MFA for Administrators"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_FORCE_GROUPS"
+msgid "Force MFA for these Groups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_COUNTS_AS_LOGIN_FAILURE"
+msgid "MFA failure counts as login failure"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_MAX_TRIES"
+msgid "Maximum MFA tries"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_TASKS_TITLE"
 msgid "Tasks"
 msgstr ""
@@ -7660,6 +7690,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_HELP"
 msgid "The Dashboard layout is simpler to understand, but uses more browser resources."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_NEEDED"
+msgid "You must set up Multi-factor Authentication to be allowed further access to this application."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_COMPLETE"
+msgid "You can now click on the Cancel button in the toolbar to return to the application."
 msgstr ""
 
 #, phpformat
