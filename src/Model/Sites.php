@@ -7,9 +7,6 @@
 
 namespace Akeeba\Panopticon\Model;
 
-use Awf\Registry\Registry;
-use Awf\Text\LanguageAwareTrait;
-
 defined('AKEEBA') || die;
 
 /**

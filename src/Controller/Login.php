@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Model\Loginfailures;
 use Awf\Mvc\Controller;
 use Awf\Uri\Uri;
-use Awf\User\Exception\InvalidCredentials;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Throwable;

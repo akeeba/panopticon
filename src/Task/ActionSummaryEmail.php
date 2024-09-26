@@ -18,7 +18,6 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\View\FakeView;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
-use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Awf\Mvc\DataModel\Collection;

@@ -18,8 +18,6 @@ use Awf\Registry\Registry;
 use Cesargb\Log\Exceptions\RotationFailed;
 use Cesargb\Log\Rotation;
 use DirectoryIterator;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 
 #[AsTask(
 	name: 'logrotate',

@@ -11,7 +11,6 @@ use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Mfa as MfaModel;
 use Awf\Container\ContainerAwareInterface;
 use Awf\Container\ContainerAwareTrait;
-use Awf\Mvc\DataModel;
 use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialUserEntity;

@@ -15,7 +15,6 @@ use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
-use Akeeba\Panopticon\Task\LogRotate as LogRotateTask;
 use Akeeba\Panopticon\Task\SSLTLSExpiration;
 use Awf\Registry\Registry;
 use Symfony\Component\Console\Attribute\AsCommand;

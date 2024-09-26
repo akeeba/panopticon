@@ -11,12 +11,9 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Mailtemplates;
-use Awf\Application\Application;
 use Awf\Container\ContainerAwareInterface;
 use Awf\Container\ContainerAwareTrait;
 use Awf\Mailer\Mailer as AWFMailer;
-use Awf\Mvc\Model;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 
 class Mailer extends AWFMailer implements ContainerAwareInterface

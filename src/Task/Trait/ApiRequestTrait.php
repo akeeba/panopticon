@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\Task\Trait;
 
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\Site;
-use Awf\Registry\Registry;
 use GuzzleHttp\RequestOptions;
 
 defined('AKEEBA') || die;

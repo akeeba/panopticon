@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\Exception;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
-use Awf\Text\Text;
 use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 use Throwable;

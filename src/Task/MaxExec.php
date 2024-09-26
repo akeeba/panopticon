@@ -14,8 +14,6 @@ use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Task\SymfonyStyleAwareInterface;
 use Akeeba\Panopticon\Library\Task\SymfonyStyleAwareTrait;
 use Awf\Registry\Registry;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 
 defined('AKEEBA') || die;
 

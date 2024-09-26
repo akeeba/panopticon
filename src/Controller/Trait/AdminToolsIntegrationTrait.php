@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\Controller\Trait;
 
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
-use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Awf\Utils\Ip;
 use Throwable;
 

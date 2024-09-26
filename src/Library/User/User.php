@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Password\HIBPCheck;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
-use Awf\Container\Container;
 use Awf\Container\ContainerAwareInterface;
 use Awf\Container\ContainerAwareTrait;
 use Awf\Registry\Registry;

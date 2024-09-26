@@ -11,7 +11,6 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
 use Awf\Container\Container;
-use Awf\Filesystem\File;
 use Awf\Uri\Uri;
 use Awf\Utils\Template;
 use Delight\Random\Random;

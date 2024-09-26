@@ -11,17 +11,10 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\CliCommand\Trait\ConsoleLoggerTrait;
-use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Library\Logger\ForkedLogger;
 use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
-use Akeeba\Panopticon\Model\Task;
-use Awf\Date\Date;
-use Awf\Mvc\Model;
-use Awf\Timer\Timer;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(

@@ -11,7 +11,6 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Helper\HttpResponseCodeTrait;
 use Akeeba\Panopticon\Model\Task;
-use Awf\Date\Date;
 use Awf\Mvc\Controller;
 use Awf\Timer\Timer;
 use Throwable;

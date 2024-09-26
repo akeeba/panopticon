@@ -10,10 +10,8 @@ namespace Akeeba\Panopticon\CliCommand;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
-use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Site;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

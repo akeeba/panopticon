@@ -14,9 +14,7 @@ use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Library\Task\TasksPausedTrait;
 use Akeeba\Panopticon\Model\Main as MainModel;
 use Awf\Container\Container;
-use Awf\Date\Date;
 use Awf\Document\Json;
-use Awf\Inflector\Inflector;
 use Awf\Mvc\Controller;
 
 class Main extends Controller

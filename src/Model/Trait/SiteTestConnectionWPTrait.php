@@ -20,13 +20,11 @@ use Akeeba\Panopticon\Exception\SiteConnection\PanopticonConnectorNotEnabled;
 use Akeeba\Panopticon\Exception\SiteConnection\SelfSignedSSL;
 use Akeeba\Panopticon\Exception\SiteConnection\SSLCertificateProblem;
 use Akeeba\Panopticon\Exception\SiteConnection\WebServicesInstallerNotEnabled;
-use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Awf\Uri\Uri;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use RuntimeException;
-use stdClass;
 use Throwable;
 
 trait SiteTestConnectionWPTrait

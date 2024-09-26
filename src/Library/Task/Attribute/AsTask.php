@@ -8,7 +8,6 @@
 namespace Akeeba\Panopticon\Library\Task\Attribute;
 
 use Akeeba\Panopticon\Factory;
-use Awf\Text\Text;
 
 defined('AKEEBA') || die;
 

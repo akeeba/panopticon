@@ -14,7 +14,6 @@ use Akeeba\Panopticon\Library\Task\CallbackInterface;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Library\Task\SymfonyStyleAwareInterface;
 use Awf\Container\Container;
-use Awf\Database\Driver;
 use Awf\Date\Date;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;

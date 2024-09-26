@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Exception\AccessDenied;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Mvc\DataController;
-use Awf\Mvc\Model;
 use Awf\Uri\Uri;
 
 class Overrides extends DataController

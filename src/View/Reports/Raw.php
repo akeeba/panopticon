@@ -8,8 +8,6 @@
 namespace Akeeba\Panopticon\View\Reports;
 
 
-use Akeeba\Panopticon\View\Reports\Html;
-
 defined('AKEEBA') || die;
 
 class Raw extends Html

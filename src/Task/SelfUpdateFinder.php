@@ -9,8 +9,6 @@ namespace Akeeba\Panopticon\Task;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Library\Queue\QueueItem;
-use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -18,8 +16,6 @@ use Akeeba\Panopticon\Model\Selfupdate;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Awf\Registry\Registry;
 use Awf\User\User;
-use Psr\Cache\CacheException;
-use Psr\Cache\InvalidArgumentException;
 
 #[AsTask(
 	name: 'selfupdatefinder',

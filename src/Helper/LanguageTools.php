@@ -8,7 +8,6 @@
 namespace Akeeba\Panopticon\Helper;
 
 use DirectoryIterator;
-use RuntimeException;
 
 defined('AKEEBA') || die;
 

@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\Status;
-use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Task;
 use Akeeba\Panopticon\Task\Trait\AdminToolsTrait;
 use Awf\Date\Date;
