@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
 use Awf\Uri\Uri;
+use Awf\Utils\ArrayHelper;
 
 class Sysconfig extends Controller
 {
@@ -129,6 +130,9 @@ class Sysconfig extends Controller
 
 		// Handled the forced MFA groups
 		$mfaForceGroups = $this->input->get('mfa_force_groups', [], 'array') ?: [];
+		$mfaForceGroups = is_string($mfaForceGroups)
+			? array_filter(ArrayHelper::toInteger(explode(',', $mfaForceGroups)))
+			: $mfaForceGroups;
 		$mfaForceGroups = is_array($mfaForceGroups) ? $mfaForceGroups : [$mfaForceGroups];
 		$config->set('mfa_force_groups', $mfaForceGroups);
 
