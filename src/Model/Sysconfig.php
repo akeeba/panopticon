@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Awf\Mvc\Model;
+use Awf\User\User;
 use Complexify\Complexify;
 use DateTimeZone;
 use Exception;
@@ -386,6 +387,37 @@ class Sysconfig extends Model
 			]
 		);
 	}
+
+	/**
+	 * Get the user groups which can be applied by the given user to this site
+	 *
+	 * @param   User|null  $user  The user. NULL for currently logged in user.
+	 *
+	 * @return  array Keyed array of id=>title, i.e. [id=>title, ...]
+	 * @since   1.2.3
+	 */
+	public function getGroupsForSelect(?User $user = null, bool $includeEmpty = false): array
+	{
+		$db    = $this->getContainer()->db;
+		$query = $db->getQuery(true)
+			->select(
+				[
+					$db->quoteName('id'),
+					$db->quoteName('title'),
+				]
+			)
+			->from($db->quoteName('#__groups'));
+
+		$ret = array_map(fn($x) => $x->title, $db->setQuery($query)->loadObjectList('id') ?: []);
+
+		if ($includeEmpty)
+		{
+			$ret[''] = $this->getLanguage()->text('PANOPTICON_SITES_LBL_GROUPS_PLACEHOLDER');
+		}
+
+		return $ret;
+	}
+
 
 	/**
 	 * Returns the extension update preferences, global or per site.

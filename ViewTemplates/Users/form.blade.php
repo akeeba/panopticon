@@ -35,7 +35,7 @@ JS;
       name="adminForm" id="adminForm"
       class="row g-2"
 >
-    <div class="row g-2">
+    <div class="row g-2 {{ $this->collapseForMFA ? 'collapse' : '' }}">
         <div class="col-12 col-lg-6">
             <div class="card card-body">
                 <p class="card-title fs-5 fw-semibold mt-1 mb-3">
@@ -258,5 +258,6 @@ JS;
     <input type="hidden" name="id" value="{{ $model->getId() ?? 0 }}">
     <input type="hidden" name="token" value="@token()">
     <input type="hidden" name="task" id="task" value="browse">
+    <input type="hidden" name="collapseForMFA" id="collapseForMFA" value="{{ $this->collapseForMFA ? 1 : 0 }}">
 
 </form>

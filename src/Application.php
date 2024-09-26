@@ -402,6 +402,7 @@ class Application extends AWFApplication
 
 			if (!$this->needsMFA())
 			{
+				$this->conditionalRedirectToCaptiveSetup();
 				$this->conditionalRedirectToCronSetup();
 
 				if (
@@ -824,6 +825,26 @@ class Application extends AWFApplication
 		}
 
 		$captiveUrl = $this->container->router->route('index.php?view=captive');
+
+		$this->redirect($captiveUrl);
+	}
+
+	private function conditionalRedirectToCaptiveSetup(): void
+	{
+		if (!$this->needsMFAForcedSetup())
+		{
+			return;
+		}
+
+		$user = $this->getContainer()->userManager->getUser();
+		$captiveUrl = $this->getContainer()
+			->router
+			->route(
+				sprintf(
+					"index.php?view=users&task=edit&id=%s&collapseForMFA=1",
+					$user->getId()
+				)
+			);
 
 		$this->redirect($captiveUrl);
 	}

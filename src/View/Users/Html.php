@@ -44,6 +44,8 @@ class Html extends BaseHtmlView
 
 	protected bool $canEditMFA = false;
 
+	public bool $collapseForMFA = false;
+
 	use ShowOnTrait;
 	use CrudTasksTrait
 	{
@@ -95,6 +97,12 @@ JS;
 		if ($ret)
 		{
 			$this->prepareMFAProperties();
+		}
+
+		if ($this->collapseForMFA)
+		{
+			$this->container->application->getDocument()->getToolbar()->removeButtonByName('save');
+			$this->container->application->getDocument()->getToolbar()->removeButtonByName('apply');
 		}
 
 		return $ret;

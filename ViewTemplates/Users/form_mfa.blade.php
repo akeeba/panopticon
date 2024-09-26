@@ -25,6 +25,18 @@ $token = $container->session->getCsrfToken()->getValue();
             @lang('PANOPTICON_MFA_LBL_GUI_HEAD')
         </h3>
 
+        @if($this->collapseForMFA && !$this->mfaActive)
+            <div class="alert alert-warning">
+                <span class="fa fa-warning" aria-hidden="true"></span>
+                @lang('PANOPTICON_USERS_LBL_FORCED_MFA_NEEDED')
+            </div>
+        @elseif($this->collapseForMFA)
+            <div class="alert alert-info">
+                <span class="fa fa-info-circle" aria-hidden="true"></span>
+                @lang('PANOPTICON_USERS_LBL_FORCED_MFA_COMPLETE')
+            </div>
+        @endif
+
         {{-- What is this --}}
         <div class="form-text mb-2 p-2">
             @lang('PANOPTICON_MFA_LBL_DESCRIPTION')

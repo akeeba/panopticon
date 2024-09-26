@@ -27,6 +27,8 @@ class Users extends DataController
 
 	protected function onBeforeEdit()
 	{
+		$this->getView()->collapseForMFA = $this->input->get('collapseForMFA', 0);
+
 		return $this->isThisMyOwnUserOrAmISuper();
 	}
 
@@ -58,6 +60,7 @@ class Users extends DataController
 	protected function onBeforeSave()
 	{
 		$this->overrideRedirectForNonSuper();
+		$this->overrideRedirectForForcedMFA();
 
 		return $this->isThisMyOwnUserOrAmISuper();
 	}
@@ -65,13 +68,29 @@ class Users extends DataController
 	protected function onBeforeApply()
 	{
 		$this->overrideRedirectForNonSuper();
+		$this->overrideRedirectForForcedMFA();
 
 		return $this->isThisMyOwnUserOrAmISuper();
+	}
+
+	protected function onAfterApply()
+	{
+		if (!$this->input->get('collapseForMFA', 0))
+		{
+			return true;
+		}
+
+		$returnUrl = $this->input->getBase64('returnUrl');
+
+		$this->setRedirect(base64_decode($returnUrl));
+
+		return true;
 	}
 
 	protected function onBeforeCancel()
 	{
 		$this->overrideRedirectForNonSuper();
+		$this->overrideRedirectForForcedMFA();
 
 		return $this->isThisMyOwnUserOrAmISuper();
 	}
@@ -322,4 +341,31 @@ class Users extends DataController
 		$this->input->set('returnurl', base64_encode($returnUrl));
 	}
 
+	private function overrideRedirectForForcedMFA()
+	{
+		if (!$this->input->get('collapseForMFA', 0))
+		{
+			return;
+		}
+
+		if (!$this->getContainer()->application->userNeedsMFARecords())
+		{
+			$returnUrl = $this->getContainer()->router->route("index.php");
+			$this->input->set('returnurl', base64_encode($returnUrl));
+
+			return;
+		}
+
+		$user = $this->getContainer()->userManager->getUser();
+		$returnUrl = $this->getContainer()
+			->router
+			->route(
+				sprintf(
+					"index.php?view=users&task=edit&id=%s&collapseForMFA=1",
+					$user->getId()
+				)
+			);
+
+		$this->input->set('returnurl', base64_encode($returnUrl));
+	}
 }

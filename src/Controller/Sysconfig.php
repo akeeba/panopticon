@@ -21,7 +21,7 @@ class Sysconfig extends Controller
 	private const CHECKBOX_KEYS = [
 		'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto', 'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth',
 		 'login_failure_enable', 'login_lockout_extend', 'avatars', 'password_hibp',
-		'session_encrypt', 'session_use_default_path'
+		'session_encrypt', 'session_use_default_path', 'mfa_superuser', 'mfa_admin'
 	];
 
 	public function execute($task)
@@ -126,6 +126,11 @@ class Sysconfig extends Controller
 		}
 
 		$config->set('fs', null);
+
+		// Handled the forced MFA groups
+		$mfaForceGroups = $this->input->get('mfa_force_groups', [], 'array') ?: [];
+		$mfaForceGroups = is_array($mfaForceGroups) ? $mfaForceGroups : [$mfaForceGroups];
+		$config->set('mfa_force_groups', $mfaForceGroups);
 
 		// Save the appConfig to disk
 		$this->container->appConfig->saveConfiguration();
