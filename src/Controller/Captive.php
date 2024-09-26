@@ -157,6 +157,13 @@ class Captive extends Controller
 			$message    = $this->getLanguage()->text('PANOPTICON_MFA_ERR_INVALID_CODE');
 			$this->setRedirect($captiveURL, $message, 'error');
 
+			// Optionally count this as a login failure
+			if ($this->getContainer()->appConfig->get('mfa_counts_as_login_failure', 0))
+			{
+				$loginFailureModel = $this->getContainer()->mvcFactory->makeModel('Loginfailures');
+				$loginFailureModel->logFailure(true);
+			}
+
 			return true;
 		}
 		

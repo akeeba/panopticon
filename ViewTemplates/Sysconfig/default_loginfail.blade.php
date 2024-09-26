@@ -31,6 +31,20 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--mfa_counts_as_login_failure--}}
+        <div class="row mb-3" data-showon='[{"field":"options[login_failure_enable]","values":["1"],"sign":"=","op":""}]'>
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[mfa_counts_as_login_failure]" id="mfa_counts_as_login_failure" value="1"
+                            {{ $config->get('mfa_counts_as_login_failure', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="mfa_counts_as_login_failure">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_COUNTS_AS_LOGIN_FAILURE')
+                    </label>
+                </div>
+            </div>
+        </div>
+
         {{-- login_max_failures --}}
         <div class="row mb-3" data-showon='[{"field":"options[login_failure_enable]","values":["1"],"sign":"=","op":""}]'>
             <label for="login_max_failures" class="col-sm-3 col-form-label">
