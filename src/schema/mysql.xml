@@ -184,6 +184,22 @@ CREATE TABLE IF NOT EXISTS `#__mfa`
             ]]></query>
         </action>
 
+        <action table="#__passkeys" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__passkeys`
+(
+    `id`         SERIAL,
+    `user_id`    BIGINT UNSIGNED NOT NULL COMMENT 'Credential ID',
+    `label`      VARCHAR(255)    NOT NULL COMMENT 'User handle',
+    `credential` MEDIUMTEXT      NOT NULL COMMENT 'Attested credential data, JSON format',
+    INDEX `#__passkey_user` (`user_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  DEFAULT COLLATE = utf8mb4_unicode_ci;
+            ]]></query>
+        </action>
+
         <action table="#__groups" canfail="0">
             <condition type="missing" value=""/>
             <query><![CDATA[

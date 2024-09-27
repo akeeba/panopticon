@@ -5,14 +5,19 @@
  */
 
 (() => {
-    const onDOMContentLoaded = () => {
+    const handleLanguageChange = () =>
+    {
         document.getElementById('language')
-            ?.addEventListener('change', () => {
-                const language = document.getElementById('language').value;
-                const url = akeeba.System.getOptions('login.url');
+                ?.addEventListener('change', () => {
+                    const language = document.getElementById('language').value;
+                    const url = akeeba.System.getOptions('login.url');
 
-                window.location = url + language;
-            });
+                    window.location = url + language;
+                });
+    }
+
+    const onDOMContentLoaded = () => {
+        handleLanguageChange();
     };
 
     if (document.readyState === "loading") {

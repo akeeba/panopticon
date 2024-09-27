@@ -95,6 +95,12 @@ trait ACLTrait
 			'browse'  => ['read'],
 			'read'    => ['read'],
 		],
+		'passkeys' => [
+			'*' => ['*'],
+		],
+		'passkey' => [
+			'*' => ['*'],
+		],
 		'setup'         => [
 			'cron' => ['super'],
 			'*'    => ['#'],

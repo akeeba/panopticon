@@ -247,6 +247,17 @@ JS;
         @endif
     </div>
 
+    @if($this->passkeyVariables['enabled'] && $this->passkeyVariables['allow_add'])
+    @js('passkeys.min.js', $this->getContainer()->application, defer: true)
+    <div class="row g-2 {{ $this->collapseForMFA ? 'collapse' : '' }}">
+        <div class="row g-2">
+            <div class="col-12" id="passkey-management-interface">
+                @include('Users/form_passkeys', $this->passkeyVariables)
+            </div>
+        </div>
+    </div>
+    @endif
+
     @if ($this->canEditMFA)
     <div class="row g-2">
         <div class="col-12">

@@ -9,12 +9,15 @@ namespace Akeeba\Panopticon\View\Users;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\User\User;
+use Akeeba\Panopticon\Model\Passkeys;
 use Akeeba\Panopticon\Model\Users;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
 use Awf\Utils\Template;
+use JetBrains\PhpStorm\ArrayShape;
 
 class Html extends BaseHtmlView
 {
@@ -43,6 +46,17 @@ class Html extends BaseHtmlView
 	public string $defaultMethod = '';
 
 	protected bool $canEditMFA = false;
+
+	/** @var array{enabled: bool, user: ?\Akeeba\Panopticon\Library\User\User, allow_add: bool, credentials: array, error: ?string, showImages: bool} */
+	#[ArrayShape([
+		'enabled'     => 'bool',
+		'user'        => '\Akeeba\Panopticon\Library\User\User|null',
+		'allow_add'   => 'bool',
+		'credentials' => 'array',
+		'error'       => 'string|null',
+		'showImages'  => 'bool',
+	])]
+	protected array $passkeyVariables = [];
 
 	public bool $collapseForMFA = false;
 
@@ -94,10 +108,16 @@ JS;
 
 		$ret = $this->onBeforeEditCrud();
 
-		if ($ret)
+		if (!$ret)
 		{
-			$this->prepareMFAProperties();
+			return $ret;
 		}
+
+		$this->prepareMFAProperties();
+		$this->passkeyVariables = $this->container
+			->mvcFactory
+			->makeTempModel('Passkeys')
+			->getDisplayVariables($this->container->userManager->getUser($this->getModel()->getId()));
 
 		if ($this->collapseForMFA)
 		{
@@ -201,5 +221,4 @@ JS;
 			];
 		}
 	}
-
 }
