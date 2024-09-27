@@ -77,6 +77,7 @@ $router = $this->getContainer()->router;
              id="sysconfigTabSecurityContent" role="tabpanel" aria-labelledby="sysconfigTabSecurity" tabindex="-1"
         >
             <div class="d-flex flex-column gap-3">
+                @include('Sysconfig/default_passkey')
                 @include('Sysconfig/default_passwordsec')
                 @include('Sysconfig/default_loginfail')
             </div>
