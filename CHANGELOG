@@ -5,6 +5,7 @@ Akeeba Panopticon 1.2.3
 + Force MFA for specific user groups, superusers, or administrators [gh-723]
 + Option to treat MFA failures as login failures [gh-723]
 + Enforce a maximum number of MFA attempts [gh-723]
++ Accurate PHP CLI path in the CRON job setup page
 # [HIGH] Cannot connect to really old WordPress installations (WordPress 5.5 and earlier)
 # [HIGH] Cannot connect to old Akeeba Backup for WordPress (version 7)
 # [HIGH] PHP error when WordPress fails to provide version information

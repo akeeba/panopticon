@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77b37f1e378795547027a677c9def1a1",
+    "content-hash": "a5fb21d2df6324c856383c5016838881",
     "packages": [
         {
             "name": "akeeba/awf",
@@ -128,6 +128,54 @@
                 "source": "https://github.com/akeeba/json-backup-api/tree/1.0.1"
             },
             "time": "2023-06-12T18:29:41+00:00"
+        },
+        {
+            "name": "akeeba/phpfinder",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akeeba/phpfinder.git",
+                "reference": "31c15bce25469d00fd97cdfdd3ece75df513e274"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akeeba/phpfinder/zipball/31c15bce25469d00fd97cdfdd3ece75df513e274",
+                "reference": "31c15bce25469d00fd97cdfdd3ece75df513e274",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0 <=8.4"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Akeeba\\PHPFinder\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicholas K. Dionysopoulos",
+                    "email": "nicholas_NO_SPAM_PLEASE@akeeba.com",
+                    "homepage": "http://www.dionysopoulos.me",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Locate the PHP CLI binary on the server",
+            "homepage": "https://github.com/akeeba/phpfinder",
+            "keywords": [
+                "cli",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/akeeba/phpfinder/issues",
+                "source": "https://github.com/akeeba/phpfinder/tree/master"
+            },
+            "time": "2024-09-30T13:29:38+00:00"
         },
         {
             "name": "akeeba/stats_collector",
@@ -5554,6 +5602,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "akeeba/awf": 20,
+        "akeeba/phpfinder": 20,
         "akeeba/stats_collector": 20
     },
     "prefer-stable": false,

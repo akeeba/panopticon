@@ -12,7 +12,8 @@ defined('AKEEBA') || die;
 /** @var \Akeeba\Panopticon\View\Setup\Html $this */
 
 $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
-
+$phpPath        = \Akeeba\PHPFinder\PHPFinder::make()->getBestPath(PHP_VERSION);
+$displayPhpPath = $phpPath ?? (PHP_OS_FAMILY === 'Windows' ? 'C:\\path\\to\\php.exe' : '/path/to/php');
 ?>
 
 <!-- Instructions -->
@@ -58,11 +59,13 @@ $whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
 						<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_CLI_CREATE_A_JOB') ?>
 					</p>
 					<p>
-						<code><i>/path/to/php</i> <?= APATH_ROOT ?>/cli/panopticon.php task:run --loop >/dev/null 2>&1</code>
+						<code><i><?= $displayPhpPath ?></i> <?= APATH_ROOT ?>/cli/panopticon.php task:run --loop >/dev/null 2>&1</code>
 					</p>
+					<?php if ($phpPath === null): ?>
 					<p>
 						<?= $this->getLanguage()->sprintf('PANOPTICON_SETUP_LBL_CRON_REPLACE_PHP_CLI', PHP_VERSION) ?>
 					</p>
+					<?php endif ?>
 					<p class="small text-muted">
 						<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_IF_UNSURE') ?>
 					</p>
