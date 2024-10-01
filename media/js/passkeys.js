@@ -7,7 +7,7 @@
 window.akeeba              = window.akeeba || {};
 window.akeeba.Passwordless = window.akeeba.Passwordless || {};
 
-((System, Passwordless, document) =>
+((Ajax, System, Passwordless, document) =>
 {
     "use strict";
 
@@ -32,8 +32,8 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
             resident: resident ? 1 : 0
         };
 
-        System.ajax(
-            System.getOptions("panopticon.passkey.initURL"),
+        Ajax.ajax(
+            System.getOptions("panopticon.passkey").initURL,
             {
                 method:  "POST",
                 data:    postBackData,
@@ -47,7 +47,7 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
                              }
                              catch (exception)
                              {
-                                 reportErrorToUser(Joomla.Text._("PANOPTICON_PASSKEYS_ERR_XHR_INITCREATE"));
+                                 reportErrorToUser(System.Text._("PANOPTICON_PASSKEYS_ERR_XHR_INITCREATE"));
                              }
                          },
                 error:   (xhr) =>
@@ -68,7 +68,7 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
     // eslint-disable-next-line no-unused-vars
     Passwordless.createCredentials = (publicKey) =>
     {
-        const postURL             = System.getOptions("panopticon.passkey.createURL");
+        const postURL             = System.getOptions("panopticon.passkey").createURL;
         const arrayToBase64String = (a) => btoa(String.fromCharCode(...a));
         const base64url2base64    = (input) =>
         {
@@ -123,7 +123,7 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
                          data: btoa(JSON.stringify(publicKeyCredential)),
                      };
 
-                     Joomla.request(
+                     Ajax.ajax(
                          postURL,
                          {
                              method:  "POST",
@@ -143,9 +143,8 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
                                           elContainer.outerHTML = responseHTML;
 
                                           Passwordless.initManagement();
-                                          Passwordless.reactivateTooltips();
                                       },
-                             onError: (xhr) =>
+                             error: (xhr) =>
                                       {
                                           reportErrorToUser(`${xhr.status} ${xhr.statusText}`);
                                       },
@@ -160,8 +159,6 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
                  });
     };
 
-    // TODO Edit me
-
     /**
      * Edit label button
      *
@@ -170,19 +167,18 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
     // eslint-disable-next-line no-unused-vars
     Passwordless.editLabel = (that) =>
     {
-        const paths   = Joomla.getOptions("system.paths");
-        const postURL = `${paths ? `${paths.base}/index.php` : window.location.pathname}`;
+        const postURL = System.getOptions("panopticon.passkey").saveLabelURL;
 
         // Find the UI elements
         const elTR         = that.parentElement.parentElement;
         const credentialId = elTR.dataset.credential_id;
-        const elTDs        = elTR.querySelectorAll(".plg_system_passwordless-cell");
+        const elTDs        = elTR.querySelectorAll(".passkey-cell");
         const elLabelTD    = elTDs[0];
         const elButtonsTD  = elTDs[1];
         const elButtons    = elButtonsTD.querySelectorAll("button");
         const elEdit       = elButtons[0];
         const elDelete     = elButtons[1];
-        const elLabel      = elLabelTD.querySelectorAll(".plg_system_passwordless-label")[0];
+        const elLabel      = elLabelTD.querySelectorAll(".passkey-label")[0];
 
         // Show the editor
         const oldLabel = elLabel.innerText;
@@ -201,61 +197,56 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
 
         const elSave     = document.createElement("button");
         elSave.className = "btn btn-success btn-sm me-1 mb-1 flex-grow-1";
-        elSave.innerText = Joomla.Text._("PLG_SYSTEM_PASSWORDLESS_MANAGE_BTN_SAVE_LABEL");
+        elSave.innerText = System.Text._("PANOPTICON_PASSKEYS_MANAGE_BTN_SAVE_LABEL");
         elSave.addEventListener("click", () =>
         {
             const elNewLabel = elInput.value;
 
             if (elNewLabel !== "")
             {
-                const postBackData                            = {
-                    option:        "com_ajax",
-                    group:         "system",
-                    plugin:        "passwordless",
-                    format:        "json",
-                    encoding:      "json",
-                    akaction:      "savelabel",
+                const postBackData = {
                     credential_id: credentialId,
                     new_label:     elNewLabel,
                 };
-                postBackData[Joomla.getOptions("csrf.token")] = 1;
 
-                Joomla.request({
-                    url:    postURL,
-                    method: "POST",
-                    data:   interpolateParameters(postBackData),
-                    onSuccess(rawResponse)
+                Ajax.ajax(
+                    postURL,
                     {
-                        let result = false;
-
-                        try
+                        method: "POST",
+                        data:   postBackData,
+                        success(rawResponse)
                         {
-                            result = JSON.parse(rawResponse);
-                        }
-                        catch (exception)
-                        {
-                            result = (rawResponse === "true");
-                        }
+                            let result = false;
 
-                        if (result !== true)
-                        {
-                            reportErrorToUser(
-                                Joomla.Text._("PLG_SYSTEM_PASSWORDLESS_ERR_LABEL_NOT_SAVED"),
-                            );
+                            try
+                            {
+                                result = JSON.parse(rawResponse);
+                            }
+                            catch (exception)
+                            {
+                                result = (rawResponse === "true");
+                            }
 
-                            elCancel.click();
-                        }
-                    },
-                    onError: (xhr) =>
-                             {
-                                 reportErrorToUser(
-                                     `${Joomla.Text._("PLG_SYSTEM_PASSWORDLESS_ERR_LABEL_NOT_SAVED")
-                                     } -- ${xhr.status} ${xhr.statusText}`,
-                                 );
+                            if (result !== true)
+                            {
+                                reportErrorToUser(
+                                    System.Text._("PANOPTICON_PASSKEYS_ERR_LABEL_NOT_SAVED"),
+                                );
 
-                                 elCancel.click();
-                             },
-                });
+                                elCancel.click();
+                            }
+                        },
+                        error: (xhr) =>
+                                 {
+                                     reportErrorToUser(
+                                         `${System.Text._("PANOPTICON_PASSKEYS_ERR_LABEL_NOT_SAVED")
+                                         } -- ${xhr.status} ${xhr.statusText}`,
+                                     );
+
+                                     elCancel.click();
+                                 },
+                    }
+                );
             }
 
             elLabel.innerText = elNewLabel;
@@ -267,7 +258,7 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
 
         const elCancel     = document.createElement("button");
         elCancel.className = "btn btn-danger btn-sm me-1 mb-1 flex-grow-1";
-        elCancel.innerText = Joomla.Text._("PLG_SYSTEM_PASSWORDLESS_MANAGE_BTN_CANCEL_LABEL");
+        elCancel.innerText = System.Text._("PANOPTICON_PASSKEYS_MANAGE_BTN_CANCEL_LABEL");
         elCancel.addEventListener("click", () =>
         {
             elLabel.innerText = oldLabel;
@@ -298,13 +289,12 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
     // eslint-disable-next-line no-unused-vars
     Passwordless.delete = (that) =>
     {
-        const paths   = Joomla.getOptions("system.paths");
-        const postURL = `${paths ? `${paths.base}/index.php` : window.location.pathname}`;
+        const postURL = System.getOptions("panopticon.passkey").deleteURL;
 
         // Find the UI elements
         const elTR         = that.parentElement.parentElement;
         const credentialId = elTR.dataset.credential_id;
-        const elTDs        = elTR.querySelectorAll(".plg_system_passwordless-cell");
+        const elTDs        = elTR.querySelectorAll(".passkey-cell");
         const elButtonsTD  = elTDs[1];
         const elButtons    = elButtonsTD.querySelectorAll("button");
         const elEdit       = elButtons[0];
@@ -314,107 +304,56 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
         elDelete.disabled = true;
 
         // Delete the record
-        const postBackData                            = {
-            option:        "com_ajax",
-            group:         "system",
-            plugin:        "passwordless",
-            format:        "json",
-            encoding:      "json",
-            akaction:      "delete",
+        const postBackData = {
             credential_id: credentialId,
         };
-        postBackData[Joomla.getOptions("csrf.token")] = 1;
 
-        Joomla.request({
-            url:    postURL,
-            method: "POST",
-            data:   interpolateParameters(postBackData),
-            onSuccess(rawResponse)
+        Ajax.ajax(
+            postURL,
             {
-                let result = false;
-
-                try
+                method: "POST",
+                data:   postBackData,
+                success(rawResponse)
                 {
-                    result = JSON.parse(rawResponse);
-                }
-                catch (e)
-                {
-                    result = (rawResponse === "true");
-                }
+                    let result = false;
 
-                if (result !== true)
-                {
-                    reportErrorToUser(
-                        Joomla.Text._("PLG_SYSTEM_PASSWORDLESS_ERR_NOT_DELETED"),
-                    );
+                    try
+                    {
+                        result = JSON.parse(rawResponse);
+                    }
+                    catch (e)
+                    {
+                        result = (rawResponse === "true");
+                    }
 
-                    elEdit.disabled   = false;
-                    elDelete.disabled = false;
+                    if (result !== true)
+                    {
+                        reportErrorToUser(
+                            System.Text._("PANOPTICON_PASSKEYS_ERR_NOT_DELETED"),
+                        );
 
-                    return;
-                }
+                        elEdit.disabled   = false;
+                        elDelete.disabled = false;
 
-                elTR.parentElement.removeChild(elTR);
-            },
-            onError: (xhr) =>
-                     {
-                         elEdit.disabled   = false;
-                         elDelete.disabled = false;
-                         reportErrorToUser(
-                             `${Joomla.Text._("PLG_SYSTEM_PASSWORDLESS_ERR_NOT_DELETED")
-                             } -- ${xhr.status} ${xhr.statusText}`,
-                         );
-                     },
-        });
+                        return;
+                    }
+
+                    elTR.parentElement.removeChild(elTR);
+                },
+                error: (xhr) =>
+                         {
+                             elEdit.disabled   = false;
+                             elDelete.disabled = false;
+                             reportErrorToUser(
+                                 `${System.Text._("PANOPTICON_PASSKEYS_ERR_NOT_DELETED")
+                                 } -- ${xhr.status} ${xhr.statusText}`,
+                             );
+                         },
+            }
+        );
 
         return false;
     };
-
-    Passwordless.reactivateTooltips = () =>
-    {
-        const tooltips = Joomla.getOptions("bootstrap.tooltip");
-        if (typeof tooltips === "object" && tooltips !== null)
-        {
-            Object.keys(tooltips).forEach((tooltip) =>
-            {
-                const opt     = tooltips[tooltip];
-                const options = {
-                    animation:         opt.animation ? opt.animation : true,
-                    container:         opt.container ? opt.container : false,
-                    delay:             opt.delay ? opt.delay : 0,
-                    html:              opt.html ? opt.html : false,
-                    selector:          opt.selector ? opt.selector : false,
-                    trigger:           opt.trigger ? opt.trigger : "hover focus",
-                    fallbackPlacement: opt.fallbackPlacement ? opt.fallbackPlacement : null,
-                    boundary:          opt.boundary ? opt.boundary : "clippingParents",
-                    title:             opt.title ? opt.title : "",
-                    customClass:       opt.customClass ? opt.customClass : "",
-                    sanitize:          opt.sanitize ? opt.sanitize : true,
-                    sanitizeFn:        opt.sanitizeFn ? opt.sanitizeFn : null,
-                    popperConfig:      opt.popperConfig ? opt.popperConfig : null,
-                };
-
-                if (opt.placement)
-                {
-                    options.placement = opt.placement;
-                }
-                if (opt.template)
-                {
-                    options.template = opt.template;
-                }
-                if (opt.allowList)
-                {
-                    options.allowList = opt.allowList;
-                }
-
-                const elements = Array.from(document.querySelectorAll(tooltip));
-                if (elements.length)
-                {
-                    elements.map((el) => new window.bootstrap.Tooltip(el, options));
-                }
-            });
-        }
-    }
 
     /**
      * Add New Authenticator button click handler
@@ -485,21 +424,21 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
      */
     Passwordless.initManagement = () =>
     {
-        const addButton = document.getElementById("plg_system_passwordless-manage-add");
+        const addButton = document.getElementById("passkey-manage-add");
 
         if (addButton)
         {
             addButton.addEventListener("click", Passwordless.addOnClick);
         }
 
-        const addPasskeyButton = document.getElementById("plg_system_passwordless-manage-addresident");
+        const addPasskeyButton = document.getElementById("passkey-manage-addresident");
 
         if (addPasskeyButton)
         {
             addPasskeyButton.addEventListener("click", Passwordless.addPasskeyOnClick);
         }
 
-        const editLabelButtons = [].slice.call(document.querySelectorAll(".plg_system_passwordless-manage-edit"));
+        const editLabelButtons = [].slice.call(document.querySelectorAll(".passkey-manage-edit"));
         if (editLabelButtons.length)
         {
             editLabelButtons.forEach((button) =>
@@ -508,7 +447,7 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
             });
         }
 
-        const deleteButtons = [].slice.call(document.querySelectorAll(".plg_system_passwordless-manage-delete"));
+        const deleteButtons = [].slice.call(document.querySelectorAll(".passkey-manage-delete"));
         if (deleteButtons.length)
         {
             deleteButtons.forEach((button) =>
@@ -518,12 +457,10 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
         }
     };
 
-    // Initialization. Runs on DOM content loaded since this script is always loaded deferred.
-    Passwordless.initManagement();
-
     const onDOMContentLoaded = () =>
     {
-
+        // Initialization. Runs on DOM content loaded since this script is always loaded deferred.
+        Passwordless.initManagement();
     }
 
     if (document.readyState === "loading")
@@ -534,4 +471,4 @@ window.akeeba.Passwordless = window.akeeba.Passwordless || {};
     {
         onDOMContentLoaded();
     }
-})(akeeba.System, window.akeeba.Passwordless, document)
+})(akeeba.Ajax, akeeba.System, window.akeeba.Passwordless, document)

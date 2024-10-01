@@ -30,11 +30,14 @@ final class Passkeys extends Model
 {
 	private Authentication $authenticationHelper;
 
+	private LoggerInterface $logger;
+
 	/** @inheritDoc */
 	final public function __construct(?Container $container = null)
 	{
 		parent::__construct($container);
 
+		$this->logger               = $this->getContainer()->loggerFactory->get('passkey');
 		$this->authenticationHelper = new Authentication(
 			new CredentialRepository()
 		);
@@ -98,9 +101,16 @@ final class Passkeys extends Model
 	 */
 	final public function getCreateOptions(bool $resident = false): PublicKeyCredentialCreationOptions
 	{
+		$this->logger->debug(
+			sprintf(
+				'Generating the Public Key Creation Options for a new %s authenticator attestation',
+				$resident ? 'resident' : 'roaming'
+			)
+		);
+
 		$session = $this->getContainer()->segment;
 		$user    = $this->getContainer()->userManager->getUser();
-		$session->set('panopticon.registration_user_id', $user->getId());
+		$session->set('passkey.registration_user_id', $user->getId());
 
 		return $this->authenticationHelper->getPubKeyCreationOptions($user, $resident);
 	}
@@ -118,10 +128,12 @@ final class Passkeys extends Model
 	 */
 	final public function save(?string $data): void
 	{
+		$this->logger->debug('Performing attestation of a new authenticator');
+
 		$session = $this->getContainer()->segment;
 		$lang    = $this->getContainer()->language;
 
-		$storedUserId = $session->get('panopticon.registration_user_id', 0);
+		$storedUserId = $session->get('passkey.registration_user_id', 0);
 		$thatUser     = empty($storedUserId)
 			? $this->getContainer()->userManager->getUser()
 			: $this->getContainer()->userManager->getUser($storedUserId);
@@ -129,9 +141,18 @@ final class Passkeys extends Model
 
 		if (!$thatUser->getId() || $thatUser->getId() != $myUser->getId())
 		{
+			$this->logger->notice(
+				sprintf(
+					'Attestation failed. Requested for user ID %d, current user ID %d and found user ID %d.',
+					$storedUserId,
+					$myUser->getId(),
+					$thatUser->getId()
+				)
+			);
+
 			// Unset the session variables used for registering authenticators (security precaution).
-			$session->remove('panopticon.registration_user_id');
-			$session->remove('panopticon.publicKeyCredentialCreationOptions');
+			$session->remove('passkey.registration_user_id');
+			$session->remove('passkey.publicKeyCredentialCreationOptions');
 
 			// Politely tell the presumed hacker trying to abuse this callback to go away.
 			throw new RuntimeException($lang->text('PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_USER'));
@@ -145,18 +166,27 @@ final class Passkeys extends Model
 			// Try to validate the browser data. If there's an error I won't save anything and pass the message to the GUI.
 			$publicKeyCredentialSource = $this->authenticationHelper->validateAttestationResponse($data);
 		}
+		catch (\Throwable $e)
+		{
+			$this->debugLogThrowable($e);
+
+			throw $e;
+		}
 		finally
 		{
 			// Unset the session variables used for registering authenticators (security precaution).
-			$session->remove('panopticon.registration_user_id');
-			$session->remove('panopticon.publicKeyCredentialCreationOptions');
-
+			$session->remove('passkey.registration_user_id');
+			$session->remove('passkey.publicKeyCredentialCreationOptions');
 		}
 
 		if (
 			!is_object($publicKeyCredentialSource)
 			|| !($publicKeyCredentialSource instanceof PublicKeyCredentialSource))
 		{
+			$this->logger->notice(
+				'No attested data. The authenticator has not been added.'
+			);
+
 			$publicKeyCredentialSource = null;
 
 			throw new RuntimeException($lang->text('PANOPTICON_PASSKEYS_ERR_CREATE_NO_ATTESTED_DATA'));
@@ -176,19 +206,35 @@ final class Passkeys extends Model
 	 */
 	final public function saveLabel(?string $credentialId, ?string $newLabel): bool
 	{
-		$repository = $this->authenticationHelper->getCredentialsRepository();
+		$repository   = $this->authenticationHelper->getCredentialsRepository();
+		$credentialId = @base64_decode($credentialId);
 
 		if (empty($credentialId))
 		{
+			$this->logger->error('Change label failed. No credential ID given.');
+
 			return false;
 		}
 
-		$credentialId = base64_decode($credentialId);
-
-		if (empty($credentialId) || !$repository->has($credentialId) || empty($newLabel))
+		if (empty($credentialId) || !$repository->has($credentialId))
 		{
+			$this->logger->error(
+				sprintf(
+					'Change label failed. Invalid credential ID "%s" given.',
+					$credentialId
+				)
+			);
+
 			return false;
 		}
+
+		if (empty($newLabel))
+		{
+			$this->logger->error('Change label failed. No new label given.');
+
+			return false;
+		}
+
 
 		// Make sure I am editing my own key
 		try
@@ -197,7 +243,7 @@ final class Passkeys extends Model
 			$user             = $this->getContainer()->userManager->getUser();
 			$myHandle         = $repository->getHandleFromUserId($user->getId());
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return false;
 		}
@@ -230,19 +276,10 @@ final class Passkeys extends Model
 	 */
 	final public function delete(string $credentialId): bool
 	{
-		$session = $this->getContainer()->segment;
-		$lang    = $this->getContainer()->language;
-
-		$repository = $this->authenticationHelper->getCredentialsRepository();
+		$repository   = $this->authenticationHelper->getCredentialsRepository();
+		$credentialId = @base64_decode($credentialId);
 
 		// Is this a valid credential?
-		if (empty($credentialId))
-		{
-			return false;
-		}
-
-		$credentialId = base64_decode($credentialId);
-
 		if (empty($credentialId) || !$repository->has($credentialId))
 		{
 			return false;
@@ -296,7 +333,7 @@ final class Passkeys extends Model
 		$userManager = $this->getContainer()->userManager;
 
 		// Retrieve data from the request
-		$returnUrl ??= base64_encode($session->get('panopticon.returnUrl', Uri::current()));
+		$returnUrl ??= base64_encode($session->get('passkey.returnUrl', Uri::current()));
 		$returnUrl = base64_decode($returnUrl);
 
 		// For security reasons the post-login redirection URL must be internal to the site.
@@ -307,7 +344,7 @@ final class Passkeys extends Model
 		}
 
 		// Get the return URL
-		$session->set('panopticon.returnUrl', $returnUrl);
+		$session->set('passkey.returnUrl', $returnUrl);
 
 		// Is the username valid?
 		$userId = empty($username) ? 0 : $userManager->getUserByUsername($username);
@@ -317,7 +354,7 @@ final class Passkeys extends Model
 		$publicKeyCredentialRequestOptions = $this->authenticationHelper
 			->getPubkeyRequestOptions($effectiveUser);
 
-		$session->set('panopticon.userId', $userId);
+		$session->set('passkey.userId', $userId);
 
 		// Return the JSON encoded data to the caller
 		return json_encode($publicKeyCredentialRequestOptions, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
@@ -339,8 +376,8 @@ final class Passkeys extends Model
 		$userManager = $this->getContainer()->userManager;
 		$lang        = $this->getContainer()->language;
 
-		$returnUrl = $session->get('panopticon.returnUrl', Uri::base());
-		$userId    = $session->get('panopticon.userId', 0);
+		$returnUrl = $session->get('passkey.returnUrl', Uri::base());
+		$userId    = $session->get('passkey.userId', 0);
 
 		$redirectMessage = '';
 		$redirectType    = 'info';
@@ -416,7 +453,7 @@ final class Passkeys extends Model
 		}
 		catch (\Throwable $e)
 		{
-			$session->set('panopticon.publicKeyCredentialRequestOptions', null);
+			$session->set('passkey.publicKeyCredentialRequestOptions', null);
 
 			$redirectMessage = $e->getMessage();
 			$redirectType    = 'error';
@@ -431,14 +468,25 @@ final class Passkeys extends Model
 			 */
 
 			// Remove temporary information for security reasons
-			$session->set('panopticon.publicKeyCredentialRequestOptions', null);
-			$session->set('panopticon.userHandle', null);
-			$session->set('panopticon.returnUrl', null);
-			$session->set('panopticon.userId', null);
+			$session->set('passkey.publicKeyCredentialRequestOptions', null);
+			$session->set('passkey.userHandle', null);
+			$session->set('passkey.returnUrl', null);
+			$session->set('passkey.userId', null);
 
 			// Redirect back to the page we were before.
 			$this->getContainer()->application->redirect($returnUrl, $redirectMessage, $redirectType);
 		}
+	}
+
+	/**
+	 * Retrieve the Authentication helper instance
+	 *
+	 * @return  Authentication
+	 * @since   1.2.3
+	 */
+	public function getAuthenticationHelper(): Authentication
+	{
+		return $this->authenticationHelper;
 	}
 
 	/**
@@ -522,5 +570,27 @@ final class Passkeys extends Model
 		);
 
 		$loginFailureModel->logFailure(true);
+	}
+
+	private function debugLogThrowable(\Throwable $e)
+	{
+		$this->logger->info(str_repeat('-', 10) . ' EXCEPTION ' . str_repeat('-', 10));
+		$this->logger->error($e->getMessage());
+		$this->logger->debug($e->getFile() . ':' . $e->getLine());
+
+		foreach (explode("\n", $e->getTraceAsString()) as $line)
+		{
+			$this->logger->debug($line);
+		}
+
+		if ($previous = $e->getPrevious())
+		{
+			$this->logger->info('Related to previous exception:');
+			$this->debugLogThrowable($previous);
+		}
+		else
+		{
+			$this->logger->info(str_repeat('-', 40));
+		}
 	}
 }

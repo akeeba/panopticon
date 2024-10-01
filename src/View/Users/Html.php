@@ -73,7 +73,9 @@ class Html extends BaseHtmlView
 
 		if (empty($this->getTitle()))
 		{
-			$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
+			$this->setTitle(
+				$this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE')
+			);
 		}
 
 		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
@@ -93,7 +95,9 @@ class Html extends BaseHtmlView
 
 	protected function onBeforeEdit()
 	{
-		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
+		$app = $this->getContainer()->application;
+
+		Template::addJs('media://js/showon.js', $app, defer: true);
 
 		$js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {
@@ -118,6 +122,37 @@ JS;
 			->mvcFactory
 			->makeTempModel('Passkeys')
 			->getDisplayVariables($this->container->userManager->getUser($this->getModel()->getId()));
+
+		if ($this->passkeyVariables['enabled'] && $this->passkeyVariables['allow_add'])
+		{
+			$router = $this->getContainer()->router;
+			$doc    = $app->getDocument();
+			$token  = $this->getContainer()->session->getCsrfToken()->getValue();
+
+			$doc->lang('PANOPTICON_PASSKEYS_ERR_LABEL_NOT_SAVED');
+			$doc->lang('PANOPTICON_PASSKEYS_ERR_NOT_DELETED');
+			$doc->lang('PANOPTICON_PASSKEYS_ERR_NO_BROWSER_SUPPORT');
+			$doc->lang('PANOPTICON_PASSKEYS_ERR_XHR_INITCREATE');
+			$doc->lang('PANOPTICON_PASSKEYS_MANAGE_BTN_CANCEL_LABEL');
+			$doc->lang('PANOPTICON_PASSKEYS_MANAGE_BTN_SAVE_LABEL');
+			$doc->addScriptOptions(
+				'panopticon.passkey',
+				[
+					'initURL'      => $router->route(
+						sprintf("index.php?view=Passkeys&task=initCreate&format=json&%s=1", $token)
+					),
+					'createURL'    => $router->route(
+						sprintf("index.php?view=Passkeys&task=create&format=raw&%s=1", $token)
+					),
+					'saveLabelURL' => $router->route(
+						sprintf("index.php?view=Passkeys&task=saveLabel&format=json&%s=1", $token)
+					),
+					'deleteURL'    => $router->route(
+						sprintf("index.php?view=Passkeys&task=delete&format=json&%s=1", $token)
+					),
+				]
+			);
+		}
 
 		if ($this->collapseForMFA)
 		{

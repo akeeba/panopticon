@@ -33,7 +33,7 @@ if (!$allow_add)
 }
 elseif (!$hasBcMath && !$hasBcMath)
 {
-	$error     = Text::_('PANOPTICON_PASSKEYS_ERR_WEBAUTHN_REQUIRES_GMP_OR_BCMATCH');
+	$error     = $lang->text('PANOPTICON_PASSKEYS_ERR_WEBAUTHN_REQUIRES_GMP_OR_BCMATCH');
 	$allow_add = false;
 }
 
@@ -50,8 +50,7 @@ elseif (!$hasBcMath && !$hasBcMath)
         </div>
 
         <div>
-            @if (is_string($error) && !empty($error))
-                :
+            @if (is_string($error ?? '') && !empty($error ?? ''))
                 <div class="alert alert-danger">
                     {{{ $error }}}
                 </div>
@@ -116,7 +115,7 @@ elseif (!$hasBcMath && !$hasBcMath)
                         </button>
                     </div>
 
-                    <div class="flex-grow-1 mx-2 d-flex flex-column align-items-center">
+                    <div class="flex-grow-1 mx-2 d-flex flex-column align-items-center d-none">
                         <button
                                 type="button"
                                 id="passkey-manage-add"

@@ -241,14 +241,13 @@ JS;
                 </fieldset>
 
             </div>
-
-            {{-- TODO Multi-factor Authentication Administration --}}
         </div>
         @endif
     </div>
 
+    {{-- Passkey login administration --}}
     @if($this->passkeyVariables['enabled'] && $this->passkeyVariables['allow_add'])
-    @js('passkeys.min.js', $this->getContainer()->application, defer: true)
+    @js('js/passkeys.min.js', $this->getContainer()->application, defer: true)
     <div class="row g-2 {{ $this->collapseForMFA ? 'collapse' : '' }}">
         <div class="row g-2">
             <div class="col-12" id="passkey-management-interface">
@@ -258,6 +257,7 @@ JS;
     </div>
     @endif
 
+    {{-- Multi-factor Authentication administration --}}
     @if ($this->canEditMFA)
     <div class="row g-2">
         <div class="col-12">

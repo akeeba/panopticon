@@ -17,6 +17,9 @@ use Cose\Algorithm\Signature\EdDSA;
 use Cose\Algorithm\Signature\RSA;
 use Cose\Algorithms;
 use GuzzleHttp\Psr7\HttpFactory;
+use ParagonIE\ConstantTime\Base64;
+use ParagonIE\ConstantTime\Base64UrlSafe;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Webauthn\AttestationStatement\AndroidKeyAttestationStatementSupport;
 use Webauthn\AttestationStatement\AppleAttestationStatementSupport;
@@ -57,8 +60,11 @@ final class Authentication implements AuthenticationInterface
 	 */
 	protected PublicKeyCredentialSourceRepository $credentialsRepository;
 
-	public function __construct(?PublicKeyCredentialSourceRepository $credRepo = null)
+	private LoggerInterface $logger;
+
+	public function __construct(?PublicKeyCredentialSourceRepository $credRepo = null, ?LoggerInterface $logger = null)
 	{
+		$this->logger                = $logger ?? Factory::getContainer()->loggerFactory->get('passkey');
 		$this->credentialsRepository = $credRepo;
 	}
 
@@ -66,6 +72,8 @@ final class Authentication implements AuthenticationInterface
 		?PublicKeyCredentialSourceRepository $credRepo = null
 	)
 	{
+		$credRepo ??= new CredentialRepository();
+
 		return new self($credRepo);
 	}
 
@@ -285,11 +293,10 @@ final class Authentication implements AuthenticationInterface
 		// Save data in the session
 		$session = Factory::getContainer()->segment;
 		$session->set(
-			'panopticon.publicKeyCredentialCreationOptions',
+			'passkey.publicKeyCredentialCreationOptions',
 			base64_encode(serialize($publicKeyCredentialCreationOptions))
 		);
-		$session->set('panopticon.registration_user_id', $user->getId());
-		$session->set('panopticon.registration_user_id', $user->getId());
+		$session->set('passkey.registration_user_id', $user->getId());
 
 		return $publicKeyCredentialCreationOptions;
 	}
@@ -304,10 +311,14 @@ final class Authentication implements AuthenticationInterface
 		$lang      = $container->language;
 
 		// Retrieve the PublicKeyCredentialCreationOptions object created earlier and perform sanity checks
-		$encodedOptions = $session->get('panopticon.publicKeyCredentialCreationOptions', null);
+		$encodedOptions = $session->get('passkey.publicKeyCredentialCreationOptions', null);
 
 		if (empty($encodedOptions))
 		{
+			$this->logger->notice(
+				'Cannot retrieve passkey.publicKeyCredentialCreationOptions from the session'
+			);
+
 			throw new RuntimeException($lang->text('PANOPTICON_PASSKEYS_ERR_CREATE_NO_PK'));
 		}
 
@@ -318,6 +329,10 @@ final class Authentication implements AuthenticationInterface
 		}
 		catch (\Exception)
 		{
+			$this->logger->notice(
+				'The passkey.publicKeyCredentialCreationOptions in the session is invalid'
+			);
+
 			$publicKeyCredentialCreationOptions = null;
 		}
 
@@ -328,12 +343,19 @@ final class Authentication implements AuthenticationInterface
 		}
 
 		// Retrieve the stored user ID and make sure it's the same one in the request.
-		$storedUserId = $session->get('panopticon.registration_user_id', 0);
+		$storedUserId = $session->get('passkey.registration_user_id', 0);
 		$myUser       = $container->userManager->getUser();
 		$myUserId     = $myUser->getId();
 
-		if ($myUser->getId() || $myUserId != $storedUserId)
+		if (!$myUser->getId() || $myUserId != $storedUserId)
 		{
+			$this->logger->notice(
+				sprintf(
+					'Invalid user! We asked the authenticator to attest user ID %d, the current user ID is %d',
+					$storedUserId, $myUserId
+				)
+			);
+
 			throw new RuntimeException($lang->text('PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_USER'));
 		}
 
@@ -361,18 +383,12 @@ final class Authentication implements AuthenticationInterface
 		// Attestation Object Loader
 		$attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
 
-		if (isset($this->logger))
-		{
-			$attestationObjectLoader->setLogger($this->logger);
-		}
+		$attestationObjectLoader->setLogger($this->logger);
 
 		// Public Key Credential Loader
 		$publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
 
-		if (isset($this->logger))
-		{
-			$publicKeyCredentialLoader->setLogger($this->logger);
-		}
+		$publicKeyCredentialLoader->setLogger($this->logger);
 
 		// Extension output checker handler
 		$extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler();
@@ -385,10 +401,7 @@ final class Authentication implements AuthenticationInterface
 			$extensionOutputCheckerHandler
 		);
 
-		if (isset($this->logger))
-		{
-			$authenticatorAttestationResponseValidator->setLogger($this->logger);
-		}
+		$authenticatorAttestationResponseValidator->setLogger($this->logger);
 
 		// Note: Any Throwable from this point will bubble up to the GUI
 
@@ -397,7 +410,9 @@ final class Authentication implements AuthenticationInterface
 
 		// Load the data
 		$publicKeyCredential = $publicKeyCredentialLoader->load(
-			base64_decode($data)
+			base64_decode(
+				$this->reshapeRegistrationData($data)
+			)
 		);
 		$response            = $publicKeyCredential->getResponse();
 
@@ -421,10 +436,12 @@ final class Authentication implements AuthenticationInterface
 
 	final public function getPubkeyRequestOptions(?User $user): ?PublicKeyCredentialRequestOptions
 	{
+		$this->logger->debug('Creating PK request options');
+
 		$container = Factory::getContainer();
 		$session   = $container->segment;
 
-		$registeredPublicKeyCredentialDescriptors    = is_null($user)
+		$registeredPublicKeyCredentialDescriptors = is_null($user)
 			? []
 			: $this->getPubKeyDescriptorsForUser($user);
 
@@ -441,7 +458,9 @@ final class Authentication implements AuthenticationInterface
 			->setExtensions($extensions);
 
 		// Save in session. This is used during the verification stage to prevent replay attacks.
-		$session->set('panopticon.publicKeyCredentialRequestOptions', base64_encode(serialize($publicKeyCredentialRequestOptions)));
+		$session->set(
+			'passkey.publicKeyCredentialRequestOptions', base64_encode(serialize($publicKeyCredentialRequestOptions))
+		);
 
 		return $publicKeyCredentialRequestOptions;
 	}
@@ -453,7 +472,7 @@ final class Authentication implements AuthenticationInterface
 		$lang      = $container->language;
 
 		// Make sure the public key credential request options in the session are valid
-		$encodedPkOptions                  = $session->get('panopticon.publicKeyCredentialRequestOptions', null);
+		$encodedPkOptions                  = $session->get('passkey.publicKeyCredentialRequestOptions', null);
 		$serializedOptions                 = base64_decode($encodedPkOptions);
 		$publicKeyCredentialRequestOptions = unserialize($serializedOptions);
 
@@ -461,6 +480,10 @@ final class Authentication implements AuthenticationInterface
 		    || empty($publicKeyCredentialRequestOptions)
 		    || !($publicKeyCredentialRequestOptions instanceof PublicKeyCredentialRequestOptions))
 		{
+			$this->logger->notice(
+				'Cannot retrieve valid passkey.publicKeyCredentialRequestOptions from the session'
+			);
+
 			throw new RuntimeException($lang->text('PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
@@ -468,6 +491,10 @@ final class Authentication implements AuthenticationInterface
 
 		if (empty($data))
 		{
+			$this->logger->notice(
+				'No or invalid assertion data received from the browser'
+			);
+
 			throw new RuntimeException($lang->text('PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
 		}
 
@@ -492,18 +519,12 @@ final class Authentication implements AuthenticationInterface
 		// Attestation Object Loader
 		$attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
 
-		if (isset($this->logger))
-		{
-			$attestationObjectLoader->setLogger($this->logger);
-		}
+		$attestationObjectLoader->setLogger($this->logger);
 
 		// Public Key Credential Loader
 		$publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
 
-		if (isset($this->logger))
-		{
-			$publicKeyCredentialLoader->setLogger($this->logger);
-		}
+		$publicKeyCredentialLoader->setLogger($this->logger);
 
 		// The token binding handler
 		$tokenBindingHandler = new TokenBindingNotSupportedHandler();
@@ -519,16 +540,15 @@ final class Authentication implements AuthenticationInterface
 			$coseAlgorithmManager
 		);
 
-		if (isset($this->logger))
-		{
-			$authenticatorAssertionResponseValidator->setLogger($this->logger);
-		}
+		$authenticatorAssertionResponseValidator->setLogger($this->logger);
 
 		// Initialise a PSR-7 request object using Laminas Diactoros
 		$request = (new HttpFactory())->createServerRequest('', Uri::current(), $_SERVER);
 
 		// Load the data
-		$publicKeyCredential = $publicKeyCredentialLoader->load($data);
+		$publicKeyCredential = $publicKeyCredentialLoader->load(
+			$this->reshapeValidationData($data)
+		);
 		$response            = $publicKeyCredential->getResponse();
 
 		// Check if the response is an Authenticator Assertion Response
@@ -551,5 +571,122 @@ final class Authentication implements AuthenticationInterface
 			$request,
 			$userHandle
 		);
+	}
+
+	/**
+	 * Reshape the PassKey validation data.
+	 *
+	 * Some of the data returned from the browser are encoded using regular Base64 (instead of URL-safe Base64) and/or
+	 * have padding. The WebAuthn library requires all data to be encoded using the URL-safe Base64 algorithm *without*
+	 * padding.
+	 *
+	 * This method will safely convert between the actual and the desired format.
+	 *
+	 * @param   string  $data
+	 *
+	 * @return  string
+	 * @since   1.0.0
+	 */
+	private function reshapeValidationData(string $data): string
+	{
+		$decodedData = @json_decode($data);
+
+		if (empty($decodedData) || !is_object($decodedData))
+		{
+			return $data;
+		}
+
+		if ($decodedData->id ?? null)
+		{
+			$decodedData->id = Base64UrlSafe::encodeUnpadded(Base64UrlSafe::decode($decodedData->id));
+		}
+
+		if ($decodedData->rawId ?? null)
+		{
+			$decodedData->rawId = Base64::encodeUnpadded(Base64UrlSafe::decode($decodedData->id));
+		}
+
+		if (!is_object($decodedData->response ?? null))
+		{
+			return json_encode($decodedData);
+		}
+
+		foreach ($decodedData->response as $key => $value)
+		{
+
+			$decodedData->response->{$key} = Base64UrlSafe::encodeUnpadded(Base64::decode($decodedData->response->{$key}));
+		}
+
+		return json_encode($decodedData);
+	}
+
+	/**
+	 * Reshape the PassKey registration data.
+	 *
+	 * Some of the data returned from the browser are encoded using regular Base64 (instead of URL-safe Base64) and/or
+	 * have padding. The WebAuthn library requires all data to be encoded using the URL-safe Base64 algorithm *without*
+	 * padding.
+	 *
+	 * This method will safely convert between the actual and the desired format.
+	 *
+	 * @param   string  $data
+	 *
+	 * @return  string
+	 * @since   1.0.0
+	 */
+	private function reshapeRegistrationData(string $data): string
+	{
+		$json = @Base64UrlSafe::decode($data);
+
+		if ($json === false)
+		{
+			return $data;
+		}
+
+		$decodedData = @json_decode($json);
+
+		if (empty($decodedData) || !is_object($decodedData))
+		{
+			return $data;
+		}
+
+		if (!isset($decodedData->response) || !is_object($decodedData->response))
+		{
+			return $data;
+		}
+
+		$clientDataJSON = $decodedData->response->clientDataJSON ?? null;
+
+		if ($clientDataJSON)
+		{
+			$json = Base64UrlSafe::decode($clientDataJSON);
+
+			if ($json !== false)
+			{
+				$clientDataJSON = @json_decode($json);
+
+				if (!empty($clientDataJSON) && is_object($clientDataJSON) && isset($clientDataJSON->challenge))
+				{
+					$clientDataJSON->challenge = Base64UrlSafe::encodeUnpadded(Base64UrlSafe::decode($clientDataJSON->challenge));
+
+					$decodedData->response->clientDataJSON = Base64UrlSafe::encodeUnpadded(json_encode($clientDataJSON));
+				}
+
+			}
+		}
+
+		$attestationObject = $decodedData->response->attestationObject ?? null;
+
+		if ($attestationObject)
+		{
+			$decoded = Base64::decode($attestationObject);
+
+			if ($decoded !== false)
+			{
+				$decodedData->response->attestationObject = Base64UrlSafe::encodeUnpadded($decoded);
+			}
+		}
+
+		return Base64UrlSafe::encodeUnpadded(json_encode($decodedData));
 	}
 }
