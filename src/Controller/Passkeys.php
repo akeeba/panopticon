@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\View\Passkeys\Json;
 use Awf\Mvc\Controller;
-use Psr\Log\LoggerInterface;
 
 class Passkeys extends Controller
 {
@@ -55,6 +54,15 @@ class Passkeys extends Controller
 		$this->display();
 	}
 
+	/**
+	 * Validate the attestation response.
+	 *
+	 * This stores a new passkey.
+	 *
+	 * @return  void
+	 * @throws  \Exception
+	 * @since   1.2.3
+	 */
 	public function create()
 	{
 		$this->csrfProtection();
@@ -69,7 +77,6 @@ class Passkeys extends Controller
 		 * please, DO NOT remove this sanity check!
 		 */
 		$session      = $this->getContainer()->segment;
-		$lang         = $this->getContainer()->language;
 		$storedUserId = $session->get('passkey.registration_user_id', 0);
 		$thatUser     = $this->getContainer()->userManager->getUser($storedUserId ?: null);
 		$myUser       = $this->getContainer()->userManager->getUser(null);
@@ -107,6 +114,12 @@ class Passkeys extends Controller
 		echo $this->getView()->loadAnyTemplate('Users/form_passkeys', $layoutParameters);
 	}
 
+	/**
+	 * Saves a new label for the specified credential.
+	 *
+	 * @return  void
+	 * @since   1.2.3
+	 */
 	public function saveLabel()
 	{
 		$this->csrfProtection();
@@ -119,6 +132,13 @@ class Passkeys extends Controller
 		$this->display();
 	}
 
+	/**
+	 * Deletes the specified credential.
+	 *
+	 * @return  void
+	 * @throws  \Exception
+	 * @since   1.2.3
+	 */
 	public function delete()
 	{
 		$this->csrfProtection();
@@ -130,6 +150,15 @@ class Passkeys extends Controller
 		$this->display();
 	}
 
+	/**
+	 * Returns the login challenge.
+	 *
+	 * This is the first step to logging into the site using a passkey.
+	 *
+	 * @return  void
+	 * @throws  \Exception
+	 * @since   1.2.3
+	 */
 	public function challenge()
 	{
 		$this->csrfProtection();
@@ -141,6 +170,15 @@ class Passkeys extends Controller
 		$this->display();
 	}
 
+	/**
+	 * Validates the assertion response.
+	 *
+	 * This is the second step to logging into the site using a passkey.
+	 *
+	 * @return  void
+	 * @throws  \Exception
+	 * @since   1.2.3
+	 */
 	public function login()
 	{
 		$this->csrfProtection();
@@ -148,6 +186,12 @@ class Passkeys extends Controller
 		$this->getModel()->login($this->input->get('data', null, 'raw'));
 	}
 
+	/**
+	 * Runs before executing any task
+	 *
+	 * @return  bool
+	 * @since   1.2.3
+	 */
 	protected function onBeforeExecute(): bool
 	{
 		$this->disableLegacyHashes();
@@ -155,6 +199,15 @@ class Passkeys extends Controller
 		return true;
 	}
 
+	/**
+	 * Disable the legacy triple hashes in front and behind JSON responses.
+	 *
+	 * AWF will automatically add the `###` marker in front of and behind the JSON-encoded response in AJAX requests
+	 * going through a JSON view. We don't want to do that here.
+	 *
+	 * @return  void
+	 * @since   1.2.3
+	 */
 	private function disableLegacyHashes(): void
 	{
 		$doc = $this->getContainer()->application->getDocument();
