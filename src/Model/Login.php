@@ -9,6 +9,8 @@ namespace Akeeba\Panopticon\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Passkey\CredentialRepository;
+use Akeeba\Panopticon\Library\User\User;
 use Awf\Mvc\Model;
 
 /**
@@ -20,5 +22,41 @@ use Awf\Mvc\Model;
  */
 class Login extends Model
 {
+	/**
+	 * Is the user allowed to log into the site with a password?
+	 *
+	 * @param   string|null  $username  The username to check
+	 *
+	 * @return  bool
+	 * @since   1.2.3
+	 */
+	public function canUserLoginWithPassword(?string $username): bool
+	{
+		$user = $this->getContainer()->userManager->getUserByUsername($username);
+
+		// If the user was not found we return a fake "true" so that the regular login process records a fail.
+		if (!$user->getId())
+		{
+			return true;
+		}
+
+		// This only applies if the user has passkeys on their account.
+		$hasPasskeys = count((new CredentialRepository())->getAll($user->getId())) > 0;
+
+		if (!$hasPasskeys)
+		{
+			return true;
+		}
+
+		// Get the global option
+		$loginNoPasswordGlobal = $this->getContainer()->appConfig->get('passkey_login_no_password', 'user');
+
+		return match ($loginNoPasswordGlobal)
+		{
+			'always' => false,
+			'never' => true,
+			'user' => !$user->getParameters()->get('passkey_login_no_password', false),
+		};
+	}
 
 }

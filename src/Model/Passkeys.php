@@ -68,12 +68,13 @@ final class Passkeys extends Model
 	final public function getDisplayVariables(?User $forUser): array
 	{
 		$ret = [
-			'enabled'     => $this->isEnabled(),
-			'user'        => null,
-			'allow_add'   => false,
-			'credentials' => [],
-			'error'       => '',
-			'showImages'  => true,
+			'enabled'         => $this->isEnabled(),
+			'user'            => null,
+			'allow_add'       => false,
+			'credentials'     => [],
+			'error'           => '',
+			'showImages'      => true,
+			'user_decides_pw' => false,
 		];
 
 		if (!$ret['enabled'])
@@ -81,10 +82,11 @@ final class Passkeys extends Model
 			return $ret;
 		}
 
-		$forUser            ??= $this->getContainer()->userManager->getUser();
-		$ret['user']        = $this->getContainer()->userManager->getUser();
-		$ret['allow_add']   = $forUser->getId() === $ret['user']->getId();
-		$ret['credentials'] = (new CredentialRepository())->getAll($forUser->getId());
+		$forUser                ??= $this->getContainer()->userManager->getUser();
+		$ret['user']            = $this->getContainer()->userManager->getUser();
+		$ret['allow_add']       = $forUser->getId() === $ret['user']->getId();
+		$ret['credentials']     = (new CredentialRepository())->getAll($forUser->getId());
+		$ret['user_decides_pw'] = $this->getContainer()->appConfig->get('passkey_login_no_password', 'user') === 'user';
 
 		return $ret;
 	}
@@ -332,7 +334,7 @@ final class Passkeys extends Model
 	{
 		$this->logger->info('Creating a passkey login challenge');
 
-		$session     = $this->getContainer()->segment;
+		$session = $this->getContainer()->segment;
 
 		// Retrieve data from the request
 		$returnUrl ??= base64_encode($session->get('passkey.returnUrl', Uri::current()));
@@ -364,8 +366,8 @@ final class Passkeys extends Model
 	 */
 	public function login(?string $data): void
 	{
-		$session     = $this->getContainer()->segment;
-		$lang        = $this->getContainer()->language;
+		$session = $this->getContainer()->segment;
+		$lang    = $this->getContainer()->language;
 
 		$returnUrl = $session->get('passkey.returnUrl', Uri::base());
 

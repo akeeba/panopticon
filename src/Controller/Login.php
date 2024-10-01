@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Model\Loginfailures;
 use Awf\Mvc\Controller;
 use Awf\Uri\Uri;
+use Awf\User\Exception\InvalidUser;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -50,6 +51,25 @@ class Login extends Controller
 			$username = $this->input->get('username', '', 'raw');
 			$password = $this->input->get('password', '', 'raw');
 			$secret   = $this->input->get('secret', '', 'raw');
+
+			// Make sure password login is allowed
+			if (!$this->getModel()->canUserLoginWithPassword($username))
+			{
+				// Log the real reason.
+				$logger->error('This user account has enabled passkey-only login.', [
+					'username' => $username
+				]);
+
+				/**
+				 * Throw a generic error to confuse potential attackers.
+				 *
+				 * The idea here is that if the real reason was surfaced to the user interface, an attacker could abuse
+				 * this feature to identify valid usernames with passkeys enabled. It wouldn't do much good to them, but
+				 * it's _still_ an enumeration attack with potentially unknown consequences. As such, it has to be
+				 * stopped anyway.
+				 */
+				throw new InvalidUser($this->getContainer()->language->text('AWF_USER_ERROR_AUTHERROR'), 403);
+			}
 
 			// Try to log in the user
 			$manager = $this->container->userManager;

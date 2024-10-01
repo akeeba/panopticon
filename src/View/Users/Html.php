@@ -47,17 +47,37 @@ class Html extends BaseHtmlView
 
 	protected bool $canEditMFA = false;
 
-	/** @var array{enabled: bool, user: ?\Akeeba\Panopticon\Library\User\User, allow_add: bool, credentials: array, error: ?string, showImages: bool} */
+	/**
+	 * Can the user decide whether to disable password logins when passkeys are enabled?
+	 *
+	 * @var    bool
+	 * @since  1.2.3
+	 */
+	protected bool $canDecideDisablePassword = false;
+
+	/**
+	 * Variables used for setting up passkeys
+	 *
+	 * @var    array
+	 * @since  1.2.3
+	 */
 	#[ArrayShape([
-		'enabled'     => 'bool',
-		'user'        => '\Akeeba\Panopticon\Library\User\User|null',
-		'allow_add'   => 'bool',
-		'credentials' => 'array',
-		'error'       => 'string|null',
-		'showImages'  => 'bool',
+		'enabled'         => 'bool',
+		'user'            => '\Akeeba\Panopticon\Library\User\User|null',
+		'allow_add'       => 'bool',
+		'credentials'     => 'array',
+		'error'           => 'string|null',
+		'showImages'      => 'bool',
+		'user_decides_pw' => 'bool',
 	])]
 	protected array $passkeyVariables = [];
 
+	/**
+	 * Collapse other features for forced MFA setip
+	 *
+	 * @var    bool
+	 * @since  1.2.3
+	 */
 	public bool $collapseForMFA = false;
 
 	use ShowOnTrait;
@@ -122,6 +142,8 @@ JS;
 			->mvcFactory
 			->makeTempModel('Passkeys')
 			->getDisplayVariables($this->container->userManager->getUser($this->getModel()->getId()));
+
+		$this->canDecideDisablePassword = $this->passkeyVariables['user_decides_pw'];
 
 		if ($this->passkeyVariables['enabled'] && $this->passkeyVariables['allow_add'])
 		{

@@ -122,8 +122,19 @@ class Users extends DataController
 		$params = [
 			'language' => $this->input->post->getCmd('language', ''),
 			'main_layout' => $this->input->post->getCmd('main_layout', 'default'),
+			'passkey_login_no_password' => $this->input->post->getBool('passkey_login_no_password', false),
 		];
 
+		// Only allow setting passkey_login_no_password if passkeys are enabled, and the user is allowed to decide.
+		$canDecide = $this->getContainer()->mvcFactory->makeTempModel('Passkeys')->isEnabled()
+			&& $this->getContainer()->appConfig->get('passkey_login_no_password', 'user') === 'user';
+
+		if (!$canDecide)
+		{
+			unset($params['passkey_login_no_password']);
+		}
+
+		// Apply groups if the editing user is a Super User
 		if (!$myself->getPrivilege('panopticon.super'))
 		{
 			$data['username']    = $savedUser->getUsername();

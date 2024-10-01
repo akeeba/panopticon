@@ -106,6 +106,23 @@ JS;
                     </div>
                 </div>
 
+                {{-- passkey_login_no_password --}}
+                @if ($this->canDecideDisablePassword)
+                <div class="row mb-3">
+                    <div class="col-sm-9 offset-sm-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                   name="passkey_login_no_password" value="1"
+                                   {{ $user->getParameters()->get('passkey_login_no_password', false) ? 'checked' : '' }}
+                                   id="passkey_login_no_password">
+                            <label class="form-check-label" for="passkey_login_no_password">
+                                @lang('PANOPTICON_USERS_LBL_FIELD_PASSKEY_LOGIN_NO_PASSWORD')
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
                 {{-- You can only edit groups when you're a Superuser --}}
                 @if ($this->container->userManager->getUser()->getPrivilege('panopticon.super'))
                     {{-- Groups--}}
