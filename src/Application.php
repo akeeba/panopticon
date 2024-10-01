@@ -29,7 +29,7 @@ class Application extends AWFApplication
 	/**
 	 * List of view names we're allowed to access directly, without a login, and without redirection to the setup view
 	 */
-	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup'];
+	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup', 'passkeys'];
 
 	/**
 	 * Main menu structure

@@ -96,10 +96,14 @@ trait ACLTrait
 			'read'    => ['read'],
 		],
 		'passkeys' => [
-			'*' => ['*'],
+			'*'         => ['*'],
+			'challenge' => ['#'],
+			'login'     => ['#'],
 		],
 		'passkey' => [
-			'*' => ['*'],
+			'*'         => ['*'],
+			'challenge' => ['#'],
+			'login'     => ['#'],
 		],
 		'setup'         => [
 			'cron' => ['super'],

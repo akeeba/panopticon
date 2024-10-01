@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\View\Login;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Model\Passkeys;
 use Awf\Mvc\View;
 use Awf\Utils\Template;
 
@@ -24,15 +25,18 @@ class Html extends View
 
 	public ?string $returnUrl;
 
+	public bool $hasPasskeys = false;
+
 	public function onBeforeMain()
 	{
 		Template::addJs('media://js/login.min.js', $this->getContainer()->application, defer: true);
 
-		$this->getContainer()->application->getDocument()
-			->addScriptOptions(
-				'login.url',
-				$this->getContainer()->router->route('index.php?view=login&lang=')
-			);
+		$doc = $this->getContainer()->application->getDocument();
+
+		$doc->addScriptOptions(
+			'login.url',
+			$this->getContainer()->router->route('index.php?view=login&lang=')
+		);
 
 		$this->container->input->set('tmpl', 'component');
 
@@ -40,6 +44,29 @@ class Html extends View
 		$this->password  = $this->container->segment->getFlash('auth_password');
 		$this->secret    = $this->container->segment->getFlash('auth_secret');
 		$this->autologin = $this->container->segment->getFlash('auto_login');
+
+		$router = $this->getContainer()->router;
+		$token  = $this->getContainer()->session->getCsrfToken()->getValue();
+
+		/** @var Passkeys $passkeysModel */
+		$passkeysModel     = $this->getContainer()->mvcFactory->makeTempModel('Passkeys');
+		$this->hasPasskeys = $passkeysModel->isEnabled();
+
+		if ($this->hasPasskeys)
+		{
+			$doc->lang('PANOPTICON_PASSKEYS_ERR_INVALID_USERNAME');
+			$doc->addScriptOptions(
+				'passkey', [
+					'challengeURL' => $router->route(
+						sprintf('index.php?view=passkeys&task=challenge&format=json&%s=1', $token)
+					),
+					'loginURL'     => $router->route(
+						sprintf('index.php?view=passkeys&task=login&format=raw&%s=1', $token)
+					),
+				]
+			);
+		}
+
 
 		return true;
 	}

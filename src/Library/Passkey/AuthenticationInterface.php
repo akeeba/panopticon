@@ -92,14 +92,12 @@ interface AuthenticationInterface
 	 *
 	 * This is used in the first step of the assertion (login) flow.
 	 *
-	 * @param   User|null  $user  The Panopticon user to get the PK request options for
-	 *
 	 * @return  PublicKeyCredentialRequestOptions
 	 *
 	 * @throws  Exception
 	 * @since   2.0.0
 	 */
-	public function getPubkeyRequestOptions(?User $user): ?PublicKeyCredentialRequestOptions;
+	public function getPubkeyRequestOptions(): ?PublicKeyCredentialRequestOptions;
 
 	/**
 	 * Validate the authenticator assertion.
@@ -115,5 +113,5 @@ interface AuthenticationInterface
 	 * @throws  Exception
 	 * @since   2.0.0
 	 */
-	public function validateAssertionResponse(string $data, ?User $user): PublicKeyCredentialSource;
+	public function validateAssertionResponse(string $data): PublicKeyCredentialSource;
 }

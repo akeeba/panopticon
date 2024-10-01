@@ -155,12 +155,13 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		$lang = Factory::getContainer()->language;
 
 		// Default values for saving a new credential source
-		$defaultName         = $lang->text('PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR');
-		$credentialId        = base64_encode($publicKeyCredentialSource->getPublicKeyCredentialId());
-		$user                = Factory::getContainer()->userManager->getUser();
-		$o                   = (object) [
+		$defaultName  = $lang->text('PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR');
+		$credentialId = base64_encode($publicKeyCredentialSource->getPublicKeyCredentialId());
+		$user         = Factory::getContainer()->userManager->getUser();
+		$userHandle   = $publicKeyCredentialSource->userHandle ?: $this->getHandleFromUserId($user->getId());
+		$o            = (object) [
 			'id'         => $credentialId,
-			'user_id'    => $this->getHandleFromUserId($user->getId()),
+			'user_id'    => $userHandle,
 			'label'      => $lang->sprintf(
 				'PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR_LABEL',
 				$defaultName,
@@ -168,9 +169,9 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 			),
 			'credential' => json_encode($publicKeyCredentialSource),
 		];
-		$update              = false;
+		$update       = false;
 
-		$db     = $this->getDatabase();
+		$db = $this->getDatabase();
 
 		// Try to find an existing record
 		try
@@ -265,8 +266,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		 *
 		 * @return  array
 		 */
-		$recordsMapperClosure = function ($record)
-		{
+		$recordsMapperClosure = function ($record) {
 			try
 			{
 				$data = json_decode($record['credential'], true);

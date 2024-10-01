@@ -19,6 +19,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Webauthn\PublicKeyCredentialCreationOptions;
+use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
 
 /**
@@ -327,10 +328,11 @@ final class Passkeys extends Model
 	 * @throws  Exception
 	 * @since   1.2.3
 	 */
-	final public function challenge(?string $username, ?string $returnUrl): string
+	final public function challenge(?string $returnUrl = null): PublicKeyCredentialRequestOptions
 	{
+		$this->logger->info('Creating a passkey login challenge');
+
 		$session     = $this->getContainer()->segment;
-		$userManager = $this->getContainer()->userManager;
 
 		// Retrieve data from the request
 		$returnUrl ??= base64_encode($session->get('passkey.returnUrl', Uri::current()));
@@ -347,17 +349,7 @@ final class Passkeys extends Model
 		$session->set('passkey.returnUrl', $returnUrl);
 
 		// Is the username valid?
-		$userId = empty($username) ? 0 : $userManager->getUserByUsername($username);
-		$myUser = $userManager->getUser($userId);
-
-		$effectiveUser                     = $userId === 0 ? null : $myUser;
-		$publicKeyCredentialRequestOptions = $this->authenticationHelper
-			->getPubkeyRequestOptions($effectiveUser);
-
-		$session->set('passkey.userId', $userId);
-
-		// Return the JSON encoded data to the caller
-		return json_encode($publicKeyCredentialRequestOptions, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+		return $this->authenticationHelper->getPubkeyRequestOptions();
 	}
 
 	/**
@@ -373,11 +365,9 @@ final class Passkeys extends Model
 	public function login(?string $data): void
 	{
 		$session     = $this->getContainer()->segment;
-		$userManager = $this->getContainer()->userManager;
 		$lang        = $this->getContainer()->language;
 
 		$returnUrl = $session->get('passkey.returnUrl', Uri::base());
-		$userId    = $session->get('passkey.userId', 0);
 
 		$redirectMessage = '';
 		$redirectType    = 'info';
@@ -389,49 +379,7 @@ final class Passkeys extends Model
 				throw new RuntimeException('PANOPTICON_PASSKEYS_ERR_DISABLED');
 			}
 
-			// Validate the authenticator response and get the user handle
-			$credentialRepository = $this->authenticationHelper->getCredentialsRepository();
-
-			// Login Flow 1: Login with a non-resident key
-			if (!empty($userId))
-			{
-				// Make sure the user exists
-				$user = $userManager->getUser($userId);
-
-				if ($user->getId() != $userId)
-				{
-					throw new RuntimeException($lang->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
-				}
-
-				// Validate the authenticator response and get the user handle
-				$userHandle = $this->getUserHandleFromResponse($user, $data);
-
-				if (is_null($userHandle))
-				{
-					throw new RuntimeException($lang->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
-				}
-
-				// Does the user handle match the user ID? This should never trigger by definition of the login check.
-				$validUserHandle = $credentialRepository->getHandleFromUserId($userId);
-
-				if ($userHandle != $validUserHandle)
-				{
-					throw new RuntimeException($lang->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
-				}
-
-				if ($user->getId() != $userId)
-				{
-					throw new RuntimeException($lang->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
-				}
-
-				// Login the user
-				$this->loginUser((int) $userId);
-
-				return;
-			}
-
-			// Login Flow 2: Login with a resident key
-			$userHandle = $this->getUserHandleFromResponse(null, $data);
+			$userHandle = $this->getUserHandleFromResponse($data);
 
 			if (is_null($userHandle))
 			{
@@ -439,8 +387,7 @@ final class Passkeys extends Model
 			}
 
 			// Get the user ID from the user handle
-			$repo   = $this->authenticationHelper->getCredentialsRepository();
-			$userId = $repo->getUserIdFromHandle($userHandle);
+			$userId = $this->authenticationHelper->getCredentialsRepository()->getUserIdFromHandle($userHandle);
 
 			// If the user was not found show an error
 			if ($userId <= 0)
@@ -453,6 +400,12 @@ final class Passkeys extends Model
 		}
 		catch (\Throwable $e)
 		{
+			echo "<pre>";
+			echo $e->getMessage() . "\n";
+			echo $e->getFile() . ':' . $e->getLine() . "\n";
+			echo $e->getTraceAsString();
+			die('derp');
+
 			$session->set('passkey.publicKeyCredentialRequestOptions', null);
 
 			$redirectMessage = $e->getMessage();
@@ -471,7 +424,6 @@ final class Passkeys extends Model
 			$session->set('passkey.publicKeyCredentialRequestOptions', null);
 			$session->set('passkey.userHandle', null);
 			$session->set('passkey.returnUrl', null);
-			$session->set('passkey.userId', null);
 
 			// Redirect back to the page we were before.
 			$this->getContainer()->application->redirect($returnUrl, $redirectMessage, $redirectType);
@@ -496,16 +448,12 @@ final class Passkeys extends Model
 	 * @throws  Exception
 	 * @since   1.2.3
 	 */
-	private function getUserHandleFromResponse(?User $user, ?string $data): ?string
+	private function getUserHandleFromResponse(?string $data): ?string
 	{
 		// Retrieve data from the request and session
-		$pubKeyCredentialSource = $this->authenticationHelper
-			->validateAssertionResponse(
-				$data,
-				$user
-			);
-
-		return $pubKeyCredentialSource ? $pubKeyCredentialSource->getUserHandle() : null;
+		return $this->authenticationHelper
+			->validateAssertionResponse($data)
+			->getUserHandle();
 	}
 
 	/**

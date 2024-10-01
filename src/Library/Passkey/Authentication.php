@@ -434,17 +434,12 @@ final class Authentication implements AuthenticationInterface
 		);
 	}
 
-	final public function getPubkeyRequestOptions(?User $user): ?PublicKeyCredentialRequestOptions
+	final public function getPubkeyRequestOptions(): ?PublicKeyCredentialRequestOptions
 	{
 		$this->logger->debug('Creating PK request options');
 
 		$container = Factory::getContainer();
 		$session   = $container->segment;
-
-		$registeredPublicKeyCredentialDescriptors = is_null($user)
-			? []
-			: $this->getPubKeyDescriptorsForUser($user);
-
 		$challenge = random_bytes(32);
 
 		// Extensions
@@ -453,7 +448,7 @@ final class Authentication implements AuthenticationInterface
 		// Public Key Credential Request Options
 		$publicKeyCredentialRequestOptions = (new PublicKeyCredentialRequestOptions($challenge))
 			->setTimeout(60000)
-			->allowCredentials(... $registeredPublicKeyCredentialDescriptors)
+			->allowCredentials(... [])
 			->setUserVerification(PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED)
 			->setExtensions($extensions);
 
@@ -465,7 +460,7 @@ final class Authentication implements AuthenticationInterface
 		return $publicKeyCredentialRequestOptions;
 	}
 
-	final public function validateAssertionResponse(string $data, ?User $user): PublicKeyCredentialSource
+	final public function validateAssertionResponse(string $data): PublicKeyCredentialSource
 	{
 		$container = Factory::getContainer();
 		$session   = $container->segment;
@@ -560,16 +555,12 @@ final class Authentication implements AuthenticationInterface
 		/** @var AuthenticatorAssertionResponse $authenticatorAssertionResponse */
 		$authenticatorAssertionResponse = $publicKeyCredential->getResponse();
 
-		$userEntity = ($user === null || !$user->getId()) ? null : $this->getUserEntity($user);
-		$userHandle = ($userEntity === null) ? null : $userEntity->getId();
-
-
 		return $authenticatorAssertionResponseValidator->check(
 			$publicKeyCredential->getRawId(),
 			$authenticatorAssertionResponse,
 			$publicKeyCredentialRequestOptions,
 			$request,
-			$userHandle
+			null
 		);
 	}
 
@@ -614,7 +605,9 @@ final class Authentication implements AuthenticationInterface
 		foreach ($decodedData->response as $key => $value)
 		{
 
-			$decodedData->response->{$key} = Base64UrlSafe::encodeUnpadded(Base64::decode($decodedData->response->{$key}));
+			$decodedData->response->{$key} = Base64UrlSafe::encodeUnpadded(
+				Base64::decode($decodedData->response->{$key})
+			);
 		}
 
 		return json_encode($decodedData);
@@ -667,9 +660,13 @@ final class Authentication implements AuthenticationInterface
 
 				if (!empty($clientDataJSON) && is_object($clientDataJSON) && isset($clientDataJSON->challenge))
 				{
-					$clientDataJSON->challenge = Base64UrlSafe::encodeUnpadded(Base64UrlSafe::decode($clientDataJSON->challenge));
+					$clientDataJSON->challenge = Base64UrlSafe::encodeUnpadded(
+						Base64UrlSafe::decode($clientDataJSON->challenge)
+					);
 
-					$decodedData->response->clientDataJSON = Base64UrlSafe::encodeUnpadded(json_encode($clientDataJSON));
+					$decodedData->response->clientDataJSON = Base64UrlSafe::encodeUnpadded(
+						json_encode($clientDataJSON)
+					);
 				}
 
 			}

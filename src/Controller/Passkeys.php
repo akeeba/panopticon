@@ -130,6 +130,24 @@ class Passkeys extends Controller
 		$this->display();
 	}
 
+	public function challenge()
+	{
+		$this->csrfProtection();
+
+		$this->getView()->response = $this->getModel()->challenge(
+			$this->input->getBase64('return_url', null)
+		);
+
+		$this->display();
+	}
+
+	public function login()
+	{
+		$this->csrfProtection();
+
+		$this->getModel()->login($this->input->get('data', null, 'raw'));
+	}
+
 	protected function onBeforeExecute(): bool
 	{
 		$this->disableLegacyHashes();

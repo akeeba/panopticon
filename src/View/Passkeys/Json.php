@@ -17,6 +17,6 @@ class Json extends BaseView
 
 	public function display($tpl = null)
 	{
-		echo json_encode($this->response);
+		echo json_encode($this->response, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 	}
 }
