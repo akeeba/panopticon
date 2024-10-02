@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\PassKeys;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Plugin\TOTP;
+use Akeeba\Panopticon\Library\Passkey\PasskeyTrait;
 use Akeeba\Panopticon\Library\Version\Version;
 use Awf\Application\Application as AWFApplication;
 use Awf\Application\TransparentAuthentication;
@@ -25,6 +26,7 @@ use function array_map;
 class Application extends AWFApplication
 {
 	use MFATrait;
+	use PasskeyTrait;
 
 	/**
 	 * List of view names we're allowed to access directly, without a login, and without redirection to the setup view
@@ -403,6 +405,7 @@ class Application extends AWFApplication
 			if (!$this->needsMFA())
 			{
 				$this->conditionalRedirectToCaptiveSetup();
+				$this->conditionalRedirectToPasskeySetup();
 				$this->conditionalRedirectToCronSetup();
 
 				if (
@@ -836,15 +839,31 @@ class Application extends AWFApplication
 			return;
 		}
 
-		$user = $this->getContainer()->userManager->getUser();
-		$captiveUrl = $this->getContainer()
-			->router
-			->route(
-				sprintf(
-					"index.php?view=users&task=edit&id=%s&collapseForMFA=1",
-					$user->getId()
-				)
-			);
+		$user       = $this->getContainer()->userManager->getUser();
+		$captiveUrl = $this->getContainer()->router->route(
+			sprintf(
+				"index.php?view=users&task=edit&id=%s&collapseForMFA=1",
+				$user->getId()
+			)
+		);
+
+		$this->redirect($captiveUrl);
+	}
+
+	private function conditionalRedirectToPasskeySetup(): void
+	{
+		if (!$this->needsPasskeyForcedSetup())
+		{
+			return;
+		}
+
+		$user       = $this->getContainer()->userManager->getUser();
+		$captiveUrl = $this->getContainer()->router->route(
+			sprintf(
+				"index.php?view=users&task=edit&id=%s&collapseForPasskey=1",
+				$user->getId()
+			)
+		);
 
 		$this->redirect($captiveUrl);
 	}

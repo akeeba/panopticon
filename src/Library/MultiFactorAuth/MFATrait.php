@@ -15,7 +15,7 @@ use Exception;
 
 trait MFATrait
 {
-	private $mfaAllowedViews = ['cron', 'captive', 'mfamethods', 'login', 'logout'];
+	private $mfaAllowedViews = ['cron', 'captive', 'mfamethods', 'passkeys', 'login', 'logout'];
 
 	/**
 	 * Does the user need to complete MFA authentication before being allowed to access the site?

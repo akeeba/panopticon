@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Library\Passkey\Authentication;
 use Awf\Mvc\DataController;
 use Awf\Utils\ArrayHelper;
 use RuntimeException;
@@ -27,7 +28,8 @@ class Users extends DataController
 
 	protected function onBeforeEdit()
 	{
-		$this->getView()->collapseForMFA = $this->input->get('collapseForMFA', 0);
+		$this->getView()->collapseForMFA     = $this->input->get('collapseForMFA', 0);
+		$this->getView()->collapseForPasskey = $this->input->get('collapseForPasskey', 0);
 
 		return $this->isThisMyOwnUserOrAmISuper();
 	}
@@ -75,7 +77,10 @@ class Users extends DataController
 
 	protected function onAfterApply()
 	{
-		if (!$this->input->get('collapseForMFA', 0))
+		$collapseForMFA     = $this->input->get('collapseForMFA', 0);
+		$collapseForPasskey = $this->input->get('collapseForPasskey', 0);
+
+		if (!$collapseForMFA && !$collapseForPasskey)
 		{
 			return true;
 		}
@@ -120,14 +125,14 @@ class Users extends DataController
 		];
 
 		$params = [
-			'language' => $this->input->post->getCmd('language', ''),
-			'main_layout' => $this->input->post->getCmd('main_layout', 'default'),
+			'language'                  => $this->input->post->getCmd('language', ''),
+			'main_layout'               => $this->input->post->getCmd('main_layout', 'default'),
 			'passkey_login_no_password' => $this->input->post->getBool('passkey_login_no_password', false),
 		];
 
 		// Only allow setting passkey_login_no_password if passkeys are enabled, and the user is allowed to decide.
 		$canDecide = $this->getContainer()->mvcFactory->makeTempModel('Passkeys')->isEnabled()
-			&& $this->getContainer()->appConfig->get('passkey_login_no_password', 'user') === 'user';
+		             && $this->getContainer()->appConfig->get('passkey_login_no_password', 'user') === 'user';
 
 		if (!$canDecide)
 		{
@@ -157,7 +162,9 @@ class Users extends DataController
 
 				if (empty($username))
 				{
-					throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'), 403);
+					throw new RuntimeException(
+						$this->getLanguage()->text('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'), 403
+					);
 				}
 
 				// Is there another user by the same username?
@@ -167,7 +174,8 @@ class Users extends DataController
 					) !== null)
 				{
 					throw new RuntimeException(
-						$this->getLanguage()->sprintf('PANOPTICON_USERS_ERR_USERNAME_EXISTS', htmlentities($username)), 403
+						$this->getLanguage()->sprintf('PANOPTICON_USERS_ERR_USERNAME_EXISTS', htmlentities($username)),
+						403
 					);
 				}
 
@@ -190,7 +198,9 @@ class Users extends DataController
 				}
 				elseif (!$passwordsMatch)
 				{
-					throw new RuntimeException($this->getLanguage()->text('PANOPTICON_USERS_ERR_PASSWORD_MISMATCH'), 403);
+					throw new RuntimeException(
+						$this->getLanguage()->text('PANOPTICON_USERS_ERR_PASSWORD_MISMATCH'), 403
+					);
 				}
 
 				$savedUser->setPassword($password);
@@ -235,7 +245,9 @@ class Users extends DataController
 						'panopticon.super', $permissions
 					))
 				{
-					throw new RuntimeException($this->getLanguage()->text('PANOPTICON_USERS_ERR_CANT_REMOVE_SELF_SUPER'), 403);
+					throw new RuntimeException(
+						$this->getLanguage()->text('PANOPTICON_USERS_ERR_CANT_REMOVE_SELF_SUPER'), 403
+					);
 				}
 
 				foreach (['super', 'admin', 'view', 'run', 'addown', 'editown'] as $k)
@@ -354,12 +366,43 @@ class Users extends DataController
 
 	private function overrideRedirectForForcedMFA()
 	{
-		if (!$this->input->get('collapseForMFA', 0))
+		$collapseForMFA     = $this->input->get('collapseForMFA', 0);
+		$collapseForPasskey = $this->input->get('collapseForPasskey', 0);
+
+		if (!$collapseForMFA && !$collapseForPasskey)
 		{
 			return;
 		}
 
-		if (!$this->getContainer()->application->userNeedsMFARecords())
+		// $collapseForMFA is TRUE
+		if ($collapseForMFA)
+		{
+			if (!$this->getContainer()->application->userNeedsMFARecords())
+			{
+				$returnUrl = $this->getContainer()->router->route("index.php");
+				$this->input->set('returnurl', base64_encode($returnUrl));
+
+				return;
+			}
+
+			$user      = $this->getContainer()->userManager->getUser();
+			$returnUrl = $this->getContainer()->router->route(
+				sprintf(
+					"index.php?view=users&task=edit&id=%s&collapseForMFA=1",
+					$user->getId()
+				)
+			);
+
+			$this->input->set('returnurl', base64_encode($returnUrl));
+
+			return;
+		}
+
+		// $collapseForPasskey is TRUE
+		$user         = $this->getContainer()->userManager->getUser();
+		$needsPasskey = count((new Authentication())->getCredentialsRepository()->getAll($user->getId())) == 0;
+
+		if (!$needsPasskey)
 		{
 			$returnUrl = $this->getContainer()->router->route("index.php");
 			$this->input->set('returnurl', base64_encode($returnUrl));
@@ -367,15 +410,13 @@ class Users extends DataController
 			return;
 		}
 
-		$user = $this->getContainer()->userManager->getUser();
-		$returnUrl = $this->getContainer()
-			->router
-			->route(
-				sprintf(
-					"index.php?view=users&task=edit&id=%s&collapseForMFA=1",
-					$user->getId()
-				)
-			);
+		$user      = $this->getContainer()->userManager->getUser();
+		$returnUrl = $this->getContainer()->router->route(
+			sprintf(
+				"index.php?view=users&task=edit&id=%s&collapseForPasskey=1",
+				$user->getId()
+			)
+		);
 
 		$this->input->set('returnurl', base64_encode($returnUrl));
 	}

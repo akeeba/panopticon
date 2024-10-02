@@ -65,7 +65,7 @@ final class Authentication implements AuthenticationInterface
 	public function __construct(?PublicKeyCredentialSourceRepository $credRepo = null, ?LoggerInterface $logger = null)
 	{
 		$this->logger                = $logger ?? Factory::getContainer()->loggerFactory->get('passkey');
-		$this->credentialsRepository = $credRepo;
+		$this->credentialsRepository = $credRepo ?? new CredentialRepository();
 	}
 
 	final public static function create(

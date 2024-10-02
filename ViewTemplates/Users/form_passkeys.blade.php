@@ -44,10 +44,23 @@ elseif (!$hasBcMath && !$hasBcMath)
             <span class="fa fa-key" aria-hidden="true"></span>
             @lang('PANOPTICON_PASSKEYS_TITLE')
         </h3>
-        {{-- What is this --}}
-        <div class="form-text mb-2 p-2">
-            @lang('PANOPTICON_PASSKEYS_DESCRIPTION')
-        </div>
+
+        @if(($this->collapseForPasskey ?? false) && !count($this->passkeyVariables['credentials']))
+            <div class="alert alert-warning">
+                <span class="fa fa-warning" aria-hidden="true"></span>
+                @lang('PANOPTICON_PASSKEYS_LBL_FORCED_NEEDED')
+            </div>
+        @elseif(($this->collapseForPasskey ?? false))
+            <div class="alert alert-info">
+                <span class="fa fa-info-circle" aria-hidden="true"></span>
+                @lang('PANOPTICON_PASSKEYS_LBL_FORCED_COMPLETE')
+            </div>
+        @else
+            {{-- What is this --}}
+            <div class="form-text mb-2 p-2">
+                @lang('PANOPTICON_PASSKEYS_DESCRIPTION')
+            </div>
+        @endif
 
         <div>
             @if (is_string($error ?? '') && !empty($error ?? ''))

@@ -73,12 +73,20 @@ class Html extends BaseHtmlView
 	protected array $passkeyVariables = [];
 
 	/**
-	 * Collapse other features for forced MFA setip
+	 * Collapse other features for forced MFA setup
 	 *
 	 * @var    bool
 	 * @since  1.2.3
 	 */
 	public bool $collapseForMFA = false;
+
+	/**
+	 * Collapse other features for forced passkey setup
+	 *
+	 * @var   bool
+	 * @since 1.2.3
+	 */
+	public bool $collapseForPasskey = false;
 
 	use ShowOnTrait;
 	use CrudTasksTrait
@@ -176,7 +184,7 @@ JS;
 			);
 		}
 
-		if ($this->collapseForMFA)
+		if ($this->collapseForMFA || $this->collapseForPasskey)
 		{
 			$this->container->application->getDocument()->getToolbar()->removeButtonByName('save');
 			$this->container->application->getDocument()->getToolbar()->removeButtonByName('apply');
