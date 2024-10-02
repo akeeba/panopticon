@@ -135,12 +135,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/phpfinder.git",
-                "reference": "31c15bce25469d00fd97cdfdd3ece75df513e274"
+                "reference": "3170e283062275c7d1034214076043515db6305c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/phpfinder/zipball/31c15bce25469d00fd97cdfdd3ece75df513e274",
-                "reference": "31c15bce25469d00fd97cdfdd3ece75df513e274",
+                "url": "https://api.github.com/repos/akeeba/phpfinder/zipball/3170e283062275c7d1034214076043515db6305c",
+                "reference": "3170e283062275c7d1034214076043515db6305c",
                 "shasum": ""
             },
             "require": {
@@ -175,7 +175,7 @@
                 "issues": "https://github.com/akeeba/phpfinder/issues",
                 "source": "https://github.com/akeeba/phpfinder/tree/master"
             },
-            "time": "2024-09-30T13:29:38+00:00"
+            "time": "2024-10-01T08:29:39+00:00"
         },
         {
             "name": "akeeba/stats_collector",
