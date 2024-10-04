@@ -402,12 +402,6 @@ final class Passkeys extends Model
 		}
 		catch (\Throwable $e)
 		{
-			echo "<pre>";
-			echo $e->getMessage() . "\n";
-			echo $e->getFile() . ':' . $e->getLine() . "\n";
-			echo $e->getTraceAsString();
-			die('derp');
-
 			$session->set('passkey.publicKeyCredentialRequestOptions', null);
 
 			$redirectMessage = $e->getMessage();
