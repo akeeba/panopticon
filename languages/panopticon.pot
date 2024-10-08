@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.3\n"
-"POT-Creation-Date: 2024-09-26 07:22:26\n"
+"POT-Creation-Date: 2024-10-08 08:26:19\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -6068,6 +6068,11 @@ msgid "Session Storage"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSKEY"
+msgid "Passkey login"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_HEAD"
 msgid "No extensions found"
 msgstr ""
@@ -6590,6 +6595,41 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_SAVE_LEVELS_HELP"
 msgid "Session save data files will be saved this many folders deep. 0 means all files in a single folder. Best keep it 0 unless you have thousands of concurrent sessions. Only applies when Use Default PHP Session Save Path is disabled."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN"
+msgid "Login with passkey"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_NO_MFA"
+msgid "Bypass MFA when using a passkey"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_NO_PASSWORD"
+msgid "Disable password login when login with passkey is set up"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_NO_PASSWORD_OPT_USER"
+msgid "Let the user decide"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_FORCE_GROUPS"
+msgid "Force passkey login for these groups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_FORCE_SUPERUSER"
+msgid "Force passkey login for Superusers"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_FORCE_ADMIN"
+msgid "Force passkey login for Administrators"
 msgstr ""
 
 #, phpformat
@@ -7625,6 +7665,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD_HELP"
 msgid "Leave empty if you do not wish to change the password of this user account."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSKEY_LOGIN_NO_PASSWORD"
+msgid "Disable password login when passkeys are available"
 msgstr ""
 
 #, phpformat
@@ -10000,6 +10045,231 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_TW"
 msgid "Chinese Traditional (Taiwan)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_TITLE"
+msgid "Passkey authentication"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_DESCRIPTION"
+msgid "You can log in using a passkey &ndash;managed by your browser, and/or device&ndash; instead of your password. Passkeys are more secure."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR"
+msgid "Passkey"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR_LABEL"
+msgid "%s added on %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_TABLE_CAPTION"
+msgid "Table of passkeys."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_FIELD_N_AUTHENTICATORS_REGISTERED"
+msgid "%d passkeys already set up: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_FIELD_N_AUTHENTICATORS_REGISTERED_0"
+msgid "No passkeys have been set up yet"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_FIELD_N_AUTHENTICATORS_REGISTERED_1"
+msgid "One passkey already set up: %2$s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_FIELD_KEYLABEL_LABEL"
+msgid "Name"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_FIELD_KEYLABEL_DESC"
+msgid "A short name for your login method."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_HEADER_NOMETHODS_LABEL"
+msgid "No passkeys have been set up yet."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_HEADER_ACTIONS_LABEL"
+msgid "Actions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_DELETE_LABEL"
+msgid "Remove"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_EDIT_LABEL"
+msgid "Edit name"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_ADD_LABEL"
+msgid "Add new authenticator"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_ADDRESIDENT_LABEL"
+msgid "Add new passkey"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_SAVE_LABEL"
+msgid "Save"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_CANCEL_LABEL"
+msgid "Cancel"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_LBL_WHATISTHIS"
+msgid "What is this?"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_LBL_FORCED_NEEDED"
+msgid "You must set up a passkey to be allowed further access to this application."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_LBL_FORCED_COMPLETE"
+msgid "You can now click on the Cancel button in the toolbar to return to the application."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_DISABLED"
+msgid "Passkey login is disabled"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_NO_STORED_CREDENTIAL"
+msgid "Cannot find the stored credentials for your passkey."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CORRUPT_STORED_CREDENTIAL"
+msgid "The stored credentials are corrupt for your user account. Log in using another method, then remove and add again your passkey."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CANT_STORE_FOR_GUEST"
+msgid "Cannot possibly store credentials without a user!"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREDENTIAL_ID_ALREADY_IN_USE"
+msgid "Cannot save credentials. These credentials are already being used by a different user."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_USER_REMOVED"
+msgid "The user for this passkey seems to no longer exist on this site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_NO_BROWSER_SUPPORT"
+msgid "Sorry, your browser does not support passkeys. You will need to log into this site using your username and password."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_NO_PK"
+msgid "The server has not issued a Public Key for passkey registration but somehow received a passkey registration request from the browser. This means that someone tried to hack you or something is broken."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_PK"
+msgid "The passkey registration has failed. The authenticator response received from the browser does not match the Public Key issued by the server. This means that someone tried to hack you or something is broken."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_USER"
+msgid "For security reasons you are not allowed to register passkeys on behalf of another user."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_NO_ATTESTED_DATA"
+msgid "Something went wrong but no further information about the error is available at this time. Please retry registering your passkey."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_LABEL_NOT_SAVED"
+msgid "Could not save the new label"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_NOT_DELETED"
+msgid "Could not remove the passkey"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST"
+msgid "Invalid passwordless login request. Something is broken or this is an attempt to hack the site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CANNOT_FIND_USERNAME"
+msgid "Cannot find the username field. Sorry, passkeys will not work on this site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_EMPTY_USERNAME"
+msgid "You need to enter your username (but NOT your password) before clicking the Passwordless Login button."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_INVALID_USERNAME"
+msgid "The specified username does not correspond to a user account that has enabled passwordless login on this site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_INVALID_USERNAME_RESIDENT"
+msgid "The passkey you selected does not correspond to an active user of this site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_WEBAUTHN_REQUIRES_GMP_OR_BCMATCH"
+msgid "One of the PHP extensions GMP and BCMath must be installed and enabled on your server to add passkeys."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_CANNOT_ADD_FOR_A_USER"
+msgid "You cannot add or remove passkeys on behalf of users. Users must login, and set up their own passkeys."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_NOPASSWORDLOGIN"
+msgid "You are not allowed to log into the site with a username and password."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_AJAX_INVALIDACTION"
+msgid "Invalid ajax action"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_ERR_XHR_INITCREATE"
+msgid "Cannot get the passkey registration information from your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_PASSKEYS_BTN_LOGIN"
+msgid "Passkey login"
 msgstr ""
 
 #, phpformat
