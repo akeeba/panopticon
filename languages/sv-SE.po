@@ -9681,350 +9681,350 @@ msgstr "Månadsvis"
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_AR"
 msgid "Arabic"
-msgstr ""
+msgstr "Arabiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_AR_SA"
 msgid "Arabic, Saudi Arabia"
-msgstr ""
+msgstr "Arabiska, Saudiarabien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_AZ"
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Azerbajdzjanska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_BE"
 msgid "Belarusian"
-msgstr ""
+msgstr "Vitryska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_BG_BG"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgariska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_BN_BD"
 msgid "Bengali"
-msgstr ""
+msgstr "Bengaliska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_CA"
 msgid "Catalan"
-msgstr ""
+msgstr "Katalanska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_CS"
 msgid "Czech"
-msgstr ""
+msgstr "Tjeckiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_CY"
 msgid "Welsh"
-msgstr ""
+msgstr "Walesiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_DA"
 msgid "Danish"
-msgstr ""
+msgstr "Danska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_DE"
 msgid "German"
-msgstr ""
+msgstr "Tyska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_EL"
 msgid "Greek"
-msgstr ""
+msgstr "Grekiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_EO"
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ES"
 msgid "Spanish (Spain)"
-msgstr ""
+msgstr "Spanska (Spanien)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ES_MX"
 msgid "Spanish (Mexico)"
-msgstr ""
+msgstr "Spanska (Mexiko)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ET"
 msgid "Estonian"
-msgstr ""
+msgstr "Estniska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_EU"
 msgid "Basque"
-msgstr ""
+msgstr "Baskiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_FA"
 msgid "Persian"
-msgstr ""
+msgstr "Persiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_FI"
 msgid "Finnish"
-msgstr ""
+msgstr "Finska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_FR_FR"
 msgid "French (France)"
-msgstr ""
+msgstr "Franska (Frankrike)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_GA"
 msgid "Irish"
-msgstr ""
+msgstr "Iriska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_GL"
 msgid "Galician"
-msgstr ""
+msgstr "Galiciska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_HE_IL"
 msgid "Hebrew (Israel)"
-msgstr ""
+msgstr "Hebreiska (Israel)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_HR"
 msgid "Croatian"
-msgstr ""
+msgstr "Kroatiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_HU_HU"
 msgid "Hungarian (Hungary)"
-msgstr ""
+msgstr "Ungerska (Ungern)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_HY"
 msgid "Armenian"
-msgstr ""
+msgstr "Armeniska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ID"
 msgid "Indonesian"
-msgstr ""
+msgstr "Indonesiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_IS_IS"
 msgid "Icelandic"
-msgstr ""
+msgstr "Isländska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_IT"
 msgid "Italian"
-msgstr ""
+msgstr "Italienska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_JA"
 msgid "Japanese"
-msgstr ""
+msgstr "Japanska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KA_GE"
 msgid "Georgian"
-msgstr ""
+msgstr "Georgiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KAB"
 msgid "Kabyle"
-msgstr ""
+msgstr "Kabylen"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KK"
 msgid "Kazakh"
-msgstr ""
+msgstr "Kazakiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KO_KR"
 msgid "Korean (Korea)"
-msgstr ""
+msgstr "Koreanska (Korea)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KU"
 msgid "Kurdish"
-msgstr ""
+msgstr "Kurdiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_LT"
 msgid "Lithuanina"
-msgstr ""
+msgstr "Litauiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_LV"
 msgid "Latvian"
-msgstr ""
+msgstr "Lettiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_NB_NO"
 msgid "Norwegian Bokmål (Norway)"
-msgstr ""
+msgstr "Norska Bokmål (Norge)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_NE"
 msgid "Nepali"
-msgstr ""
+msgstr "Nepalesiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_NL"
 msgid "Dutch"
-msgstr ""
+msgstr "Nederländska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_NL_BE"
-msgid "Butch (Belgium)"
-msgstr ""
+msgid "Dutch (Belgium)"
+msgstr "Nederländska (Belgien)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_OC"
 msgid "Occitan"
-msgstr ""
+msgstr "Occitanska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_PL"
 msgid "Polish"
-msgstr ""
+msgstr "Polska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_PT_BR"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Portugisiska (Brasilien)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_PT_PT"
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "Portugisiska (Portugal)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_RO"
 msgid "Romanian"
-msgstr ""
+msgstr "Rumänska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_RU"
 msgid "Russian"
-msgstr ""
+msgstr "Ryska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SK"
 msgid "Slovak"
-msgstr ""
+msgstr "Slovakiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SL_SI"
 msgid "Slovenian (Slovenia)"
-msgstr ""
+msgstr "Slovenska (Slovenien)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SQ"
 msgid "Albanina"
-msgstr ""
+msgstr "Albanska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SR"
 msgid "Serbian (Cyrillic)"
-msgstr ""
+msgstr "Serbiska (Kyrilliska)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SV_SE"
 msgid "Swedish (Sweden)"
-msgstr ""
+msgstr "Svenska (Sverige)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_TA"
 msgid "Tamil"
-msgstr ""
+msgstr "Tamil"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_TG"
 msgid "Tajik"
-msgstr ""
+msgstr "Tadzjikiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_TH_TH"
 msgid "Thai (Thailand)"
-msgstr ""
+msgstr "Thailändska (Thailand)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_TR"
 msgid "Turkish"
-msgstr ""
+msgstr "Turkiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_UG"
 msgid "Uyghur"
-msgstr ""
+msgstr "Uiguriska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_UK"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_UZ"
 msgid "Uzbek"
-msgstr ""
+msgstr "Uzbekiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_VI"
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamesiska"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_CN"
 msgid "Chinese Simplified (China)"
-msgstr ""
+msgstr "Förenklad kinesiska (Kina)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_HK"
 msgid "Chinese Traditional (Hong Kong)"
-msgstr ""
+msgstr "Traditionell kinesiska (Hongkong)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_MO"
 msgid "Chinese Traditional (Macau)"
-msgstr ""
+msgstr "Traditionell kinesiska (Macao)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_SG"
 msgid "Chinese Traditional (Singapore)"
-msgstr ""
+msgstr "Traditionell kinesiska (Singapore)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_TW"
 msgid "Chinese Traditional (Taiwan)"
-msgstr ""
+msgstr "Traditionell kinesiska (Taiwan)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_TITLE"
 msgid "Access Denied"
-msgstr ""
+msgstr "Åtkomst nekad"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_HEAD"
 msgid "Access Denied"
-msgstr ""
+msgstr "Åtkomst nekad"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_INFO"
 msgid "Your IP address, <code>%s</code>, has been temporarily blocked due to suspicious behaviour."
-msgstr ""
+msgstr "Din IP-adress, <code>%s</code>, har tillfälligt blockerats på grund av misstänkt beteende."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_EXTENDING"
 msgid "Trying to accessing this site before the ban expires will extend the length of the ban."
-msgstr ""
+msgstr "Att försöka komma åt den här webbplatsen innan spärren går ut kommer att förlänga spärrens längd."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
 msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
-msgstr ""
+msgstr "Lösenordet du försöker använda finns med i läckta lösenordslistor online, vilket gör det mycket lätt för hackare att gissa att det är detta du använder. Vänligen använd ett annat lösenord."
 
