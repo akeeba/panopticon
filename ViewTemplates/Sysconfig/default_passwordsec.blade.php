@@ -34,6 +34,111 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        <div class="row mb-3 mt-4">
+            <div class="col-sm-9 offset-sm-3">
+                <h4 class="h5">@lang('PANOPTICON_SYSCONFIG_LBL_PWRESET')</h4>
+            </div>
+        </div>
+
+        {{-- pwreset --}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[pwreset]" id="pwreset" value="1"
+                            {{ $config->get('pwreset', true) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="debug">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET')
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        {{-- pwreset_mfa --}}
+        <div class="row mb-3" data-showon='[{"field":"options[pwreset]","values":["1"],"sign":"=","op":""}]'>
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[pwreset_mfa]" id="pwreset_mfa"
+                            {{ $config->get('pwreset_mfa', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="debug">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MFA')
+                    </label>
+                    <div class="form-text">@lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_COMMON_SECURITY_NOTE')</div>
+                </div>
+            </div>
+        </div>
+
+        {{-- pwreset_passkeys --}}
+        <div class="row mb-3" data-showon='[{"field":"options[pwreset]","values":["1"],"sign":"=","op":""}]'>
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[pwreset_passkeys]" id="pwreset_passkeys"
+                            {{ $config->get('pwreset_passkeys', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="debug">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_PASSKEYS')
+                    </label>
+                    <div class="form-text">@lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_COMMON_SECURITY_NOTE')</div>
+                </div>
+            </div>
+        </div>
+
+        {{-- pwreset_superuser --}}
+        <div class="row mb-3" data-showon='[{"field":"options[pwreset]","values":["1"],"sign":"=","op":""}]'>
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[pwreset_superuser]" id="pwreset_superuser"
+                            {{ $config->get('pwreset_superuser', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="debug">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_SUPERUSER')
+                    </label>
+                    <div class="form-text">@lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_COMMON_SECURITY_NOTE')</div>
+                </div>
+            </div>
+        </div>
+
+        {{-- pwreset_admin --}}
+        <div class="row mb-3" data-showon='[{"field":"options[pwreset]","values":["1"],"sign":"=","op":""}]'>
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[pwreset_admin]" id="pwreset_admin"
+                            {{ $config->get('pwreset_admin', false) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="debug">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_ADMIN')
+                    </label>
+                    <div class="form-text">@lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_COMMON_SECURITY_NOTE')</div>
+                </div>
+            </div>
+        </div>
+
+        {{-- pwreset_groups --}}
+        <div class="row mb-3" data-showon='[{"field":"options[pwreset]","values":["1"],"sign":"=","op":""}]'>
+            <label for="pwreset_groups" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS')
+            </label>
+            <div class="col-sm-9">
+                {{ $this->container->html->select->genericList(
+                    data: $this->getModel()->getGroupsForSelect(includeEmpty: false),
+                    name: 'pwreset_groups[]',
+                    attribs: [
+                        'class' => 'form-select js-choice',
+                        'multiple' => 'multiple',
+                    ],
+                    selected: $config->get('pwreset_groups', [])
+                ) }}
+                <div class="form-text">@lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS_HELP')</div>
+            </div>
+        </div>
+
+        <div class="row mb-3 mt-4">
+            <div class="col-sm-9 offset-sm-3">
+                <h4 class="h5">@lang('PANOPTICON_MFA_HEAD_MFA_PAGE')</h4>
+            </div>
+        </div>
+
         {{--mfa_superuser--}}
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">

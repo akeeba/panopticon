@@ -24,7 +24,8 @@ class Sysconfig extends Controller
 		'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto', 'dbbackup_compress', 'mail_online',
 		'mail_inline_images', 'smtpauth',  'login_failure_enable', 'login_lockout_extend', 'avatars', 'password_hibp',
 		'session_encrypt', 'session_use_default_path', 'mfa_superuser', 'mfa_admin', 'passkey_login',
-		'passkey_login_no_mfa', 'passkey_login_force_superuser', 'passkey_login_force_admin'
+		'passkey_login_no_mfa', 'passkey_login_force_superuser', 'passkey_login_force_admin',
+		'pwreset', 'pwreset_mfa', 'pwreset_passkeys', 'pwreset_superuser', 'pwreset_admin',
 	];
 
 	public function execute($task)
@@ -130,21 +131,10 @@ class Sysconfig extends Controller
 
 		$config->set('fs', null);
 
-		// Handle the forced MFA groups
-		$mfaForceGroups = $this->input->get('mfa_force_groups', [], 'array') ?: [];
-		$mfaForceGroups = is_string($mfaForceGroups)
-			? array_filter(ArrayHelper::toInteger(explode(',', $mfaForceGroups)))
-			: $mfaForceGroups;
-		$mfaForceGroups = is_array($mfaForceGroups) ? $mfaForceGroups : [$mfaForceGroups];
-		$config->set('mfa_force_groups', $mfaForceGroups);
-
-		// Handle the forced passkey groups
-		$passkeyForceGroups = $this->input->get('passkey_login_force_groups', [], 'array') ?: [];
-		$passkeyForceGroups = is_string($passkeyForceGroups)
-			? array_filter(ArrayHelper::toInteger(explode(',', $passkeyForceGroups)))
-			: $passkeyForceGroups;
-		$passkeyForceGroups = is_array($passkeyForceGroups) ? $passkeyForceGroups : [$passkeyForceGroups];
-		$config->set('passkey_login_force_groups', $passkeyForceGroups);
+		// Handle the fields with lists of user groups
+		$this->handleGroupsListField('mfa_force_groups');
+		$this->handleGroupsListField('passkey_login_force_groups');
+		$this->handleGroupsListField('pwreset_groups');
 
 		// Save the appConfig to disk
 		$this->container->appConfig->saveConfiguration();
@@ -180,5 +170,16 @@ class Sysconfig extends Controller
 		$url = $this->container->router->route('index.php?view=main');
 
 		$this->setRedirect($url);
+	}
+
+	private function handleGroupsListField(string $configKey): void
+	{
+		$groups = $this->input->get($configKey, [], 'array') ?: [];
+		$groups = is_string($groups)
+			? array_filter(ArrayHelper::toInteger(explode(',', $groups)))
+			: $groups;
+		$groups = is_array($groups) ? $groups : [$groups];
+
+		$this->container->appConfig->set($configKey, $groups);
 	}
 }
