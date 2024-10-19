@@ -54,6 +54,37 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{-- pwreset_mintime --}}
+        <div class="row mb-3" data-showon='[{"field":"options[pwreset]","values":["1"],"sign":"=","op":""}]'>
+            <label for="pwreset_mintime" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MINTIME')
+            </label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <input type="number" class="form-control" id="pwreset_mintime" name="options[pwreset_mintime]"
+                           value="{{{ $config->get('pwreset_mintime', 300) }}}"
+                           min="0" required
+                    >
+                    <div class="input-group-text">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_UOM_SECONDS')
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- pwreset_maxfails --}}
+        <div class="row mb-3" data-showon='[{"field":"options[pwreset]","values":["1"],"sign":"=","op":""}]'>
+            <label for="pwreset_maxfails" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MAXFAILS')
+            </label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" id="pwreset_maxfails" name="options[pwreset_maxfails]"
+                       value="{{{ $config->get('pwreset_maxfails', 3) }}}"
+                       min="0" required
+                >
+            </div>
+        </div>
+
         {{-- pwreset_mfa --}}
         <div class="row mb-3" data-showon='[{"field":"options[pwreset]","values":["1"],"sign":"=","op":""}]'>
             <div class="col-sm-9 offset-sm-3">
