@@ -1,5 +1,5 @@
 <?php die(); ?>
-Akeeba Panopticon 1.2.3
+Akeeba Panopticon 1.3.0
 ================================================================================
 + Domain registration and expiration warnings
 + Force MFA for specific user groups, superusers, or administrators [gh-723]

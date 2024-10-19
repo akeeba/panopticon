@@ -713,6 +713,7 @@ class Application extends AWFApplication
 	{
 		// Get the view. Necessary to go through $this->getContainer()->input as it may have already changed.
 		$view = $this->getContainer()->input->getCmd('view', '');
+		$task = $this->getContainer()->input->getCmd('task', '');
 
 		// Get the user manager
 		$manager = $this->container->userManager;
@@ -727,6 +728,14 @@ class Application extends AWFApplication
 
 				$this->getLanguage()->loadLanguage($lang ?: 'en-GB');
 			}
+		}
+
+		/**
+		 * Special case: password reset
+		 */
+		if ($view === 'users' && in_array($task, ['pwreset', 'confirmreset']))
+		{
+			return;
 		}
 
 		/**
@@ -810,7 +819,17 @@ class Application extends AWFApplication
 
 		// Do not redirect if we're in a view which is allowed to be accessed directly (check, cron, login, setup)
 		$view = $this->getContainer()->input->getCmd('view', '');
+		$task = $this->getContainer()->input->getCmd('task', '');
 
+		/**
+		 * Special case: password reset
+		 */
+		if ($view === 'users' && in_array($task, ['pwreset', 'confirmreset']))
+		{
+			return;
+		}
+
+		// Other views
 		if (in_array($view, self::NO_LOGIN_VIEWS))
 		{
 			return;

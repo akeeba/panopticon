@@ -7,6 +7,7 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
 use Awf\Text\Text;
 use Awf\Utils\Template;
 
@@ -16,6 +17,8 @@ use Awf\Utils\Template;
 $css = <<< CSS
 svg.panopticonLogoColour {height: 6em;margin-bottom: 1em;}
 CSS;
+
+$canPWReset = Factory::getContainer()->appConfig->get('pwreset', true);
 
 ?>
 @inlinecss($css)
@@ -54,28 +57,39 @@ CSS;
             </button>
 
             @if($this->hasPasskeys)
-            <button type="button" class="w-100 btn btn-secondary btn-lg border-primary border-2 passkey_login_button"
-                    id="btnPasskeyLogin">
-                {{ @file_get_contents(Template::parsePath('media://images/passkey-white.svg', true, $this->getContainer()->application)) }}
-                <span class="ms-1">
+                <button type="button"
+                        class="w-100 btn btn-secondary btn-lg border-primary border-2 passkey_login_button"
+                        id="btnPasskeyLogin">
+                    {{ @file_get_contents(Template::parsePath('media://images/passkey-white.svg', true, $this->getContainer()->application)) }}
+                    <span class="ms-1">
                     @lang('PANOPTICON_PASSKEYS_BTN_LOGIN')
                 </span>
-            </button>
+                </button>
             @endif
         </div>
 
-        <div class="mt-4 mb-1 d-flex flex-row justify-content-end">
-            <label for="language" class="visually-hidden">
-                @lang('PANOPTICON_LOGIN_LBL_LANGUAGE')
-            </label>
-            {{ $this->getContainer()->helper->setup->languageOptions(
-                $this->getContainer()->segment->get('panopticon.forced_language', ''),
-                name: 'language',
-                id: 'language',
-                attribs: ['class' => 'form-select', 'style' => 'width: min(19em, 100%)'],
-                addUseDefault: true,
-                namesAlsoInEnglish: false
-            ) }}
+        <div class="mt-4 mb-1 d-flex flex-row {{ $canPWReset ? '' : 'justify-content-end' }}">
+            @if ($canPWReset)
+            <div class="flex-grow-1">
+                <a href="@route('index.php?view=users&task=pwreset')"
+                   class="btn btn-link text-decoration-none"
+                >@lang('PANOPTICON_USERS_LBL_PWRESET_PROMPT')</a>
+            </div>
+            @endif
+
+            <div>
+                <label for="language" class="visually-hidden">
+                    @lang('PANOPTICON_LOGIN_LBL_LANGUAGE')
+                </label>
+                {{ $this->getContainer()->helper->setup->languageOptions(
+                    $this->getContainer()->segment->get('panopticon.forced_language', ''),
+                    name: 'language',
+                    id: 'language',
+                    attribs: ['class' => 'form-select', 'style' => 'width: min(19em, 100%)'],
+                    addUseDefault: true,
+                    namesAlsoInEnglish: false
+                ) }}
+            </div>
         </div>
 
         <input type="hidden" name="token" value="@token()">

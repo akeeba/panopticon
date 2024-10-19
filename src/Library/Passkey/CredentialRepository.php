@@ -232,7 +232,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 	 *
 	 * @param   int  $userId  The user ID
 	 *
-	 * @return  array
+	 * @return  array<PublicKeyCredentialSource|null>
 	 *
 	 * @since   1.2.3
 	 */

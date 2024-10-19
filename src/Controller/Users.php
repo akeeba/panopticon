@@ -10,7 +10,9 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Passkey\Authentication;
+use Akeeba\Panopticon\View\Users\Html;
 use Awf\Mvc\DataController;
 use Awf\Utils\ArrayHelper;
 use RuntimeException;
@@ -24,6 +26,161 @@ class Users extends DataController
 		$this->aclCheck($task);
 
 		return parent::execute($task);
+	}
+
+	/**
+	 * Password reset request
+	 *
+	 * @return  void
+	 * @throws  \Exception
+	 * @since   1.3.0
+	 */
+	public function pwreset(): void
+	{
+		$username = $this->input->getUsername('username', '');
+		$email    = $this->input->get('email', '', 'raw');
+
+		if (empty($username) || empty($email))
+		{
+			$this->getView()->setLayout('pwreset');
+			$this->display();
+
+			return;
+		}
+
+		/** @var \Akeeba\Panopticon\Model\Users $model */
+		$model = $this->getModel();
+		$logger = Factory::getContainer()->loggerFactory->get('login');
+
+		try
+		{
+			$model->createPasswordResetRequest($username, $email);
+
+			$logger->info(
+				sprintf(
+					'Created a password reset request for username ‘%s’, email ‘%s’',
+					$username,
+					$email
+				)
+			);
+
+			$message = Factory::getContainer()->language->text('PANOPTICON_USERS_LBL_PWRESET_SENT');
+			$type    = 'info';
+		}
+		catch (\Throwable $e)
+		{
+			$logger->warning(
+				sprintf(
+					'Could not create a password reset request for username ‘%s’, email ‘%s’. Reason: %s',
+					$username,
+					$email,
+					$e->getMessage()
+				)
+			);
+
+			$message = $e->getMessage();
+			$type    = 'error';
+		}
+
+		$this->setRedirect(
+			Factory::getContainer()->router->route('index.php'),
+			$message,
+			$type
+		);
+	}
+
+	/**
+	 * Password reset confirmation
+	 *
+	 * @return  void
+	 * @throws  \Exception
+	 * @since   1.3.0
+	 */
+	public function confirmreset(): void
+	{
+		$container = Factory::getContainer();
+		$router    = $container->router;
+		$lang      = $container->language;
+
+		$id       = $this->input->getInt('id', 0);
+		$token    = $this->input->getString('token', '');
+		$password = $this->input->get('password', '', 'raw');
+
+		// We need a user ID
+		if ($id == 0)
+		{
+			$this->setRedirect($router->route('index.php'));
+
+			return;
+		}
+
+		// We need a valid user which can be password-reset and is in the process of having their password reset.
+		$user = $container->userManager->getUser($id);
+
+		if (!$user || !$this->getModel()->canResetPassword($user) || empty($user->getParameters()->get('pwreset.secret', null)))
+		{
+			$this->setRedirect($router->route('index.php'));
+
+			return;
+		}
+
+		// If no token or password was provided, ask the user for the token.
+		if (empty($token) || empty($password))
+		{
+			/** @var Html $view */
+			$view        = $this->getView();
+			$view->user  = $user;
+			$view->token = $token;
+
+			$view->setLayout('confirmreset');
+			$this->display();
+
+			return;
+		}
+
+		$logger = Factory::getContainer()->loggerFactory->get('login');
+
+		try
+		{
+			$logger->debug(
+				sprintf(
+					'Evaluating password reset for username ‘%s’.',
+					$user->getUsername()
+				)
+			);
+			$this->getModel()->passwordReset($user, $token, $password);
+
+			$logger->info(
+				sprintf(
+					'Successful password reset for username ‘%s’.',
+					$user->getUsername()
+				)
+			);
+
+			$message = $lang->text('PANOPTICON_USERS_LBL_PWRESET_RESET');
+			$type    = 'success';
+		}
+		catch (\Throwable $e)
+		{
+			$logger->error(
+				sprintf(
+					'Failed password reset for username ‘%s’. Reason: %s',
+					$user->getUsername(),
+					$e->getMessage()
+				)
+			);
+
+			// Advance the failed password reset counter
+			$count = ($user->getParameters()->get('pwreset.count', null) ?: 0) + 1;
+			$user->getParameters()->get('pwreset.count', $count);
+			Factory::getContainer()->userManager->saveUser($user);
+
+			// Redirect with error
+			$message = $lang->text('PANOPTICON_USERS_LBL_PWRESET_NOT_RESET');
+			$type    = 'error';
+		}
+
+		$this->setRedirect($router->route('index.php'), $message, $type);
 	}
 
 	protected function onBeforeEdit()
@@ -266,6 +423,11 @@ class Users extends DataController
 			{
 				$savedUser->getParameters()->set($k, $v);
 			}
+
+			// Remove the password reset information
+			$savedUser->getParameters()->set('pwreset.timestamp', 0);
+			$savedUser->getParameters()->set('pwreset.count', 0);
+			$savedUser->getParameters()->set('pwreset.secret', '');
 
 			$this->container->userManager->saveUser($savedUser);
 

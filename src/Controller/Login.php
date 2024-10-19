@@ -89,6 +89,7 @@ class Login extends Controller
 			$this->setRedirect($url);
 
 			$loginFailureModel->cleanupOldFailures();
+			$this->getModel()->resetPasswordResetRequests();
 		}
 		catch (Exception $e)
 		{

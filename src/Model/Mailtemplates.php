@@ -99,6 +99,7 @@ class Mailtemplates extends DataModel
 			'site_down'                 => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_DOWN',
 			'site_up'                   => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_UP',
 			'domain_expiring'           => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_DOMAIN_EXPIRING',
+			'pwreset'                   => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_PWRESET',
 		];
 	}
 }

@@ -10,7 +10,6 @@ namespace Akeeba\Panopticon\Model;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Passkey\CredentialRepository;
-use Akeeba\Panopticon\Library\User\User;
 use Awf\Mvc\Model;
 
 /**
@@ -59,4 +58,26 @@ class Login extends Model
 		};
 	}
 
+	/**
+	 * Reset the password reset information
+	 *
+	 * @return  void
+	 * @since   1.3.0
+	 */
+	public function resetPasswordResetRequests(): void
+	{
+		$userManager = $this->getContainer()->userManager;
+		$user        = $userManager->getUser();
+
+		if (!$user->getId())
+		{
+			return;
+		}
+
+		$user->getParameters()->set('pwreset.timestamp', 0);
+		$user->getParameters()->set('pwreset.count', 0);
+		$user->getParameters()->set('pwreset.secret', '');
+
+		$userManager->saveUser($user);
+	}
 }

@@ -10,9 +10,52 @@ namespace Akeeba\Panopticon\Library\Passkey;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
+use Awf\User\UserInterface;
 
 trait PasskeyTrait
 {
+	private function isForcedPasskeyLoginEnabled(UserInterface $user = null): bool
+	{
+		$user ??= Factory::getContainer()->userManager->getUser();
+
+		if (empty($user) || empty($user->getId()))
+		{
+			return false;
+		}
+
+		// Get the application configuration
+		$appConfig  = Factory::getContainer()->appConfig;
+
+		// Is the user a Superuser and passkey_login_force_superuser enabled?
+		if ($appConfig->get('passkey_login_force_superuser', false)
+		    && $user->getPrivilege('panopticon.super'))
+		{
+			return true;
+		}
+
+		// Is the user an Administrator and passkey_login_force_admin enabled?
+		if ($appConfig->get('passkey_login_force_admin', false)
+		    && $user->getPrivilege('panopticon.admin'))
+		{
+			return true;
+		}
+
+		// Is the user in one of the forced MFA groups?
+		$forcedGroups = $appConfig->get('passkey_login_force_groups', []);
+		$forcedGroups = is_array($forcedGroups) ? array_values($forcedGroups) : [];
+		$userGroups   = $user->getParameters()->get('usergroups', []);
+		$userGroups   = is_array($userGroups) ? array_values($userGroups) : [];
+		$intersection = array_intersect($forcedGroups, $userGroups);
+
+		if (!empty($forcedGroups) && !empty($userGroups) && !empty($intersection))
+		{
+			return true;
+		}
+
+		// No criterion matched. The user does not have a passkey-only login
+		return false;
+	}
+
 	private function needsPasskeyForcedSetup(): bool
 	{
 		// If the user is not logged in they cannot set up passkeys.
@@ -23,25 +66,7 @@ trait PasskeyTrait
 			return false;
 		}
 
-		// Is the user a Superuser and passkey_login_force_superuser enabled?
-		$appConfig  = Factory::getContainer()->appConfig;
-		$criterion1 = $appConfig->get('passkey_login_force_superuser', false)
-		              && $user->getPrivilege('panopticon.super');
-
-		// Is the user an Administrator and passkey_login_force_admin enabled?
-		$criterion2 = $appConfig->get('passkey_login_force_admin', false)
-		              && $user->getPrivilege('panopticon.admin');
-
-		// Is the user in one of the forced MFA groups?
-		$forcedGroups = $appConfig->get('passkey_login_force_groups', []);
-		$forcedGroups = is_array($forcedGroups) ? array_values($forcedGroups) : [];
-		$userGroups   = $user->getParameters()->get('usergroups', []);
-		$userGroups   = is_array($userGroups) ? array_values($userGroups) : [];
-		$intersection = array_intersect($forcedGroups, $userGroups);
-		$criterion3   = !empty($forcedGroups) && !empty($userGroups) && !empty($intersection);
-
-		// If none of the above criteria is met we don't need to redirect the user
-		if (!$criterion1 && !$criterion2 && !$criterion3)
+		if (!$this->isForcedPasskeyLoginEnabled($user))
 		{
 			return false;
 		}

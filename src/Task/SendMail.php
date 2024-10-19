@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Task;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
@@ -44,6 +45,7 @@ class SendMail extends AbstractCallback
 			$variablesByLang  = (array) $sendingParams->get('email_variables_by_lang', []);
 			$permissions      = $sendingParams->get('permissions', []) ?? [];
 			$permissions      = is_array($permissions) ? $permissions : [];
+			$recipientId      = $sendingParams->get('recipient_id', null);
 			$cc               = $sendingParams->get('email_cc');
 			$cc               = is_array($cc) ? $cc : array_filter(array_map('trim', explode(',', $cc)));
 			$mailGroups       = $sendingParams->get('email_groups', null);
@@ -82,20 +84,36 @@ class SendMail extends AbstractCallback
 				$site = null;
 			}
 
-			$recipients =
-				$onlyMailGroups
-					? $this->getRecipientsByPermissions([], null, $mailGroups)
-					: $this->getRecipientsByPermissions($permissions, $site, $mailGroups);
-
-			if (empty($recipients))
+			if ($recipientId)
 			{
-				$this->logger->debug(
-					sprintf(
-						'Not sending email template %s for site %d; no recipients',
-						$template, $queueItem->getSiteId()
-					)
-				);
-				continue;
+				$user = Factory::getContainer()->userManager->getUser($recipientId);
+
+				if ($user?->getId() != $recipientId)
+				{
+					continue;
+				}
+
+				$recipients = [
+					[$user->getEmail(), $user->getName(), $user->getParameters()->toString()]
+				];
+			}
+			else
+			{
+				$recipients =
+					$onlyMailGroups
+						? $this->getRecipientsByPermissions([], null, $mailGroups)
+						: $this->getRecipientsByPermissions($permissions, $site, $mailGroups);
+
+				if (empty($recipients))
+				{
+					$this->logger->debug(
+						sprintf(
+							'Not sending email template %s for site %d; no recipients',
+							$template, $queueItem->getSiteId()
+						)
+					);
+					continue;
+				}
 			}
 
 			// Distribute recipients by language

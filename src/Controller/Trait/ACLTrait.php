@@ -21,6 +21,7 @@ trait ACLTrait
 	 * The possible privileges are:
 	 * - ø      : Forbidden (even to superusers)
 	 * - #      : Public access (even when logged out)
+	 * - ~      : Guest-only access (ONLY when logged out)
 	 * - *      : Any logged-in access, even without any other explicit privileges
 	 * - super  : Superusers
 	 * - admin  : Administrator access
@@ -159,20 +160,22 @@ trait ACLTrait
 			'unpublish' => ['super'],
 			'remove'    => ['super'],
 		],
-		'users'         => [
+		'users' => [
 			// Explicitly allowed tasks. Using * because they have their own access control (I can view / edit myself).
 			// Not adding other tasks means they are implicitly disallowed, even to superusers.
-			'*'       => ['ø'],
-			'browse'  => ['super'],
-			'default' => ['super'],
-			'add'     => ['super'],
-			'remove'  => ['super'],
-			'copy'	  => ['ø'],
-			'edit'    => ['*'],
-			'read'    => ['*'],
-			'save'    => ['*'],
-			'apply'   => ['*'],
-			'cancel'  => ['*'],
+			'*'            => ['ø'],
+			'pwreset'      => ['~'],
+			'confirmreset' => ['~'],
+			'browse'       => ['super'],
+			'default'      => ['super'],
+			'add'          => ['super'],
+			'remove'       => ['super'],
+			'copy'         => ['ø'],
+			'edit'         => ['*'],
+			'read'         => ['*'],
+			'save'         => ['*'],
+			'apply'        => ['*'],
+			'cancel'       => ['*'],
 		],
 		'usagestats'    => [
 			'*' => ['super'],
@@ -236,6 +239,18 @@ trait ACLTrait
 		if ($isExplicitlyForbidden)
 		{
 			return false;
+		}
+
+		// Special case: guest-only access.
+		$guestOnly = array_reduce(
+			$requiredPrivileges,
+			fn(bool $carry, ?string $privilege) => $carry || $privilege === '~',
+			false
+		);
+
+		if ($guestOnly)
+		{
+			return !$user->getId();
 		}
 
 		// Special case: public access. Requires the '#' privilege.

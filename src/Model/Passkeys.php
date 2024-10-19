@@ -479,6 +479,8 @@ final class Passkeys extends Model
 
 		$loginFailureModel->cleanupOldFailures();
 
+		$this->getContainer()->mvcFactory->makeTempModel('Login')->resetPasswordResetRequests();
+
 		// Disable MFA if we're told to do so for passkey logins
 		if ($this->getContainer()->appConfig->get('passkey_login_no_mfa', true))
 		{

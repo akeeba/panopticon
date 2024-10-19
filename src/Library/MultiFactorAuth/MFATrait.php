@@ -11,11 +11,69 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
 use Awf\User\User;
+use Awf\User\UserInterface;
 use Exception;
 
 trait MFATrait
 {
 	private $mfaAllowedViews = ['cron', 'captive', 'mfamethods', 'passkeys', 'login', 'logout'];
+
+	/**
+	 * Does the user need to add any new MFA records to have at least one valid record?
+	 *
+	 * @param   null|User  $user  The user object
+	 *
+	 * @return  bool
+	 * @throws  Exception
+	 */
+	public function userNeedsMFARecords(?User $user = null): bool
+	{
+		static $records = null, $lastUserId = null;
+
+		$user ??= Factory::getContainer()->userManager->getUser();
+
+		if (empty($user) || empty($user->getId()))
+		{
+			// Guest cannot have MFA
+			return false;
+		}
+
+		if ($lastUserId != $user->getId())
+		{
+			$lastUserId = $user->getId();
+			$records    = Helper::getUserMfaRecords($this->getContainer(), $user->getId());
+		}
+
+		// No MFA Methods?
+		if (count($records) < 1)
+		{
+			return true;
+		}
+
+		// Let's get a list of all currently active MFA Methods
+		$mfaMethods = Helper::getMfaMethods();
+
+		// If no MFA Method is active we can't really display a Captive login page.
+		if (empty($mfaMethods))
+		{
+			return false;
+		}
+
+		// Get a list of just the Method names
+		$methodNames = [];
+
+		foreach ($mfaMethods as $mfaMethod)
+		{
+			$methodNames[] = $mfaMethod->name;
+		}
+
+		// The user will need a new MFA record if no existing record uses a valid MFA method.
+		return !array_reduce(
+			$records,
+			fn(bool $carry, object $record) => $carry || in_array($record->method, $methodNames),
+			false
+		);
+	}
 
 	/**
 	 * Does the user need to complete MFA authentication before being allowed to access the site?
@@ -111,18 +169,8 @@ trait MFATrait
 		return true;
 	}
 
-	/**
-	 * Does the user need to add any new MFA records to have at least one valid record?
-	 *
-	 * @param   null|User  $user  The user object
-	 *
-	 * @return  bool
-	 * @throws  Exception
-	 */
-	public function userNeedsMFARecords(?User $user = null): bool
+	private function isForcedMFAEnabled(UserInterface $user = null): bool
 	{
-		static $records = null, $lastUserId = null;
-
 		$user ??= Factory::getContainer()->userManager->getUser();
 
 		if (empty($user) || empty($user->getId()))
@@ -131,41 +179,35 @@ trait MFATrait
 			return false;
 		}
 
-		if ($lastUserId != $user->getId())
-		{
-			$lastUserId = $user->getId();
-			$records    = Helper::getUserMfaRecords($this->getContainer(), $user->getId());
-		}
+		$appConfig = $this->getContainer()->appConfig;
 
-		// No MFA Methods?
-		if (count($records) < 1)
+		// Is the user a Superuser and mfa_superuser enabled?
+		if ($appConfig->get('mfa_superuser', false)
+		    && $user->getPrivilege('panopticon.super'))
 		{
 			return true;
 		}
 
-		// Let's get a list of all currently active MFA Methods
-		$mfaMethods = Helper::getMfaMethods();
-
-		// If no MFA Method is active we can't really display a Captive login page.
-		if (empty($mfaMethods))
+		// Is the user an Administrator and mfa_admin enabled?
+		if ($appConfig->get('mfa_admin', false)
+		    && $user->getPrivilege('panopticon.admin'))
 		{
-			return false;
+			return true;
 		}
 
-		// Get a list of just the Method names
-		$methodNames = [];
+		// Is the user in one of the forced MFA groups?
+		$forcedMFAGroups = $appConfig->get('mfa_force_groups', []);
+		$forcedMFAGroups = is_array($forcedMFAGroups) ? array_values($forcedMFAGroups) : [];
+		$userGroups      = $user->getParameters()->get('usergroups', []);
+		$userGroups      = is_array($userGroups) ? array_values($userGroups) : [];
+		$intersection    = array_intersect($forcedMFAGroups, $userGroups);
 
-		foreach ($mfaMethods as $mfaMethod)
+		if (!empty($forcedMFAGroups) && !empty($userGroups) && !empty($intersection))
 		{
-			$methodNames[] = $mfaMethod->name;
+			return true;
 		}
 
-		// The user will need a new MFA record if no existing record uses a valid MFA method.
-		return !array_reduce(
-			$records,
-			fn(bool $carry, object $record) => $carry || in_array($record->method, $methodNames),
-			false
-		);
+		return false;
 	}
 
 	private function needsMFAForcedSetup(): bool
@@ -184,25 +226,7 @@ trait MFATrait
 			return false;
 		}
 
-		// Is the user a Superuser and mfa_superuser enabled?
-		$appConfig   = $this->getContainer()->appConfig;
-		$criterion1      = $appConfig->get('mfa_superuser', false) &&
-			$user->getPrivilege('panopticon.super');
-
-		// Is the user an Administrator and mfa_admin enabled?
-		$criterion2      = $appConfig->get('mfa_admin', false) &&
-			$user->getPrivilege('panopticon.admin');
-
-		// Is the user in one of the forced MFA groups?
-		$forcedMFAGroups = $appConfig->get('mfa_force_groups', []);
-		$forcedMFAGroups = is_array($forcedMFAGroups) ? array_values($forcedMFAGroups) : [];
-		$userGroups      = $user->getParameters()->get('usergroups', []);
-		$userGroups      = is_array($userGroups) ? array_values($userGroups) : [];
-		$intersection    = array_intersect($forcedMFAGroups, $userGroups);
-		$criterion3 = !empty($forcedMFAGroups) && !empty($userGroups) && !empty($intersection);
-
-		// If none of the above criteria is met we don't need to redirect the user
-		if (!$criterion1 && !$criterion2 && !$criterion3)
+		if (!$this->isForcedMFAEnabled($user))
 		{
 			return false;
 		}

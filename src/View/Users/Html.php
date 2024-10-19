@@ -9,13 +9,12 @@ namespace Akeeba\Panopticon\View\Users;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Library\User\User;
-use Akeeba\Panopticon\Model\Passkeys;
 use Akeeba\Panopticon\Model\Users;
 use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
 use Akeeba\Panopticon\View\Trait\ShowOnTrait;
 use Awf\Inflector\Inflector;
 use Awf\Mvc\DataView\Html as BaseHtmlView;
+use Awf\User\UserInterface;
 use Awf\Utils\Template;
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -44,6 +43,22 @@ class Html extends BaseHtmlView
 	 * @since 1.0.0
 	 */
 	public string $defaultMethod = '';
+
+	/**
+	 * The user whose password reset we are confirming
+	 *
+	 * @var   UserInterface
+	 * @since 1.3.0
+	 */
+	public UserInterface $user;
+
+	/**
+	 * The password reset token
+	 *
+	 * @var   string
+	 * @since 1.3.0
+	 */
+	public string $token;
 
 	protected bool $canEditMFA = false;
 
@@ -93,6 +108,16 @@ class Html extends BaseHtmlView
 	{
 		onBeforeAdd as onBeforeAddCrud;
 		onBeforeEdit as onBeforeEditCrud;
+	}
+
+	public function onBeforePwreset(): bool
+	{
+		return true;
+	}
+
+	public function onBeforeConfirmreset(): bool
+	{
+		return true;
 	}
 
 	public function onBeforeBrowse(): bool

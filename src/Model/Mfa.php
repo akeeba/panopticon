@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Library\MultiFactorAuth\Helper as MfaHelper;
 use Awf\Mvc\DataModel;
-use Joomla\Database\ParameterType;
 use RuntimeException;
 
 /**
