@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.3\n"
-"POT-Creation-Date: 2024-10-08 08:26:19\n"
+"POT-Creation-Date: 2024-10-22 06:42:40\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -6073,6 +6073,11 @@ msgid "Passkey login"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_PWRESET"
+msgid "Self-service Password Reset"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_HEAD"
 msgid "No extensions found"
 msgstr ""
@@ -6630,6 +6635,56 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_FORCE_ADMIN"
 msgid "Force passkey login for Administrators"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET"
+msgid "Allow self-service password reset"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MINTIME"
+msgid "Minimum time between password reset requests (seconds)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MAXFAILS"
+msgid "Maximum failed password reset attempts"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MFA"
+msgid "Password reset removes MFA"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_COMMON_SECURITY_NOTE"
+msgid "<em>Caution</em>: Enabling this option will reduce the security of your installation."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_PASSKEYS"
+msgid "Password reset removes passkeys"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_SUPERUSER"
+msgid "Password reset allowed for Superusers"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_ADMIN"
+msgid "Password reset allowed for Administrators"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS"
+msgid "Password reset allowed for these groups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS_HELP"
+msgid "Leaving empty will allow users in any user group to reset their password. Superuser and administrator restrictions take precedence over this option."
 msgstr ""
 
 #, phpformat
@@ -7298,6 +7353,11 @@ msgid "SSL/TLS Certificate Expires Soon"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PWRESET"
+msgid "Password Reset"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_LBL_CSS_HEAD"
 msgid "This CSS will be added to all HTML emails sent by Panopticon."
 msgstr ""
@@ -7745,6 +7805,66 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_COMPLETE"
 msgid "You can now click on the Cancel button in the toolbar to return to the application."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_PROMPT"
+msgid "Forgot your password?"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_HEAD"
+msgid "Request Password Reset"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_INFO"
+msgid "Enter your username and email address in the form below. An email will be sent to you with instructions to reset your password."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_SUBMIT_BUTTON"
+msgid "Request password reset"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_SENT"
+msgid "Your password reset request has been submitted."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_RESET"
+msgid "Your password has been reset. You can now log in."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_NOT_RESET"
+msgid "Your password has not been reset."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PWRESET_DISABLED"
+msgid "Password reset requests are not allowed."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_HEAD"
+msgid "Confirm Password Reset"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_TOKEN"
+msgid "Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_PASSWORD"
+msgid "New Password"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_SUBMIT_BUTTON"
+msgid "Reset Password"
 msgstr ""
 
 #, phpformat
