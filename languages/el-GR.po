@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-10-08 08:26:19\n"
+"POT-Creation-Date: 2024-10-22 06:42:40\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicholas K. Dionysopoulos <nicholas-NOSPAM@akeeba.com>\n"
 "Language-Team: \n"
@@ -6771,6 +6771,10 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSKEY"
 msgid "Passkey login"
 msgstr "Σύνδεση με passkey"
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_PWRESET"
+msgid "Self-service Password Reset"
+msgstr "Αυτοεξυπηρετούμενη Επαναφορά Κωδικού Πρόσβασης"
+
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_HEAD"
 msgid "No extensions found"
 msgstr "Δεν βρέθηκαν επεκτάσεις"
@@ -7405,6 +7409,57 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_FORCE_ADMIN"
 msgid "Force passkey login for Administrators"
 msgstr "Αναγκαστική σύνδεση με passkey για διαχειριστές"
 
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET"
+msgid "Allow self-service password reset"
+msgstr "Επιτρέψτε την αυτοεξυπηρετούμενη επαναφορά κωδικού πρόσβασης"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MINTIME"
+msgid "Minimum time between password reset requests (seconds)"
+msgstr ""
+"Ελάχιστος χρόνος μεταξύ των αιτήσεων επαναφοράς κωδικού πρόσβασης "
+"(δευτερόλεπτα)"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MAXFAILS"
+msgid "Maximum failed password reset attempts"
+msgstr "Μέγιστες αποτυχημένες προσπάθειες επαναφοράς κωδικού πρόσβασης"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MFA"
+msgid "Password reset removes MFA"
+msgstr "Η επαναφορά κωδικού πρόσβασης καταργεί την MFA"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_COMMON_SECURITY_NOTE"
+msgid ""
+"<em>Caution</em>: Enabling this option will reduce the security of your "
+"installation."
+msgstr ""
+"<em>Προσοχή</em>: Η ενεργοποίηση αυτής της επιλογής θα μειώσει την ασφάλεια "
+"της εγκατάστασής σας."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_PASSKEYS"
+msgid "Password reset removes passkeys"
+msgstr "Η επαναφορά κωδικού πρόσβασης αφαιρεί τα passkeys"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_SUPERUSER"
+msgid "Password reset allowed for Superusers"
+msgstr "Επιτρέπεται η επαναφορά κωδικού πρόσβασης για Superusers"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_ADMIN"
+msgid "Password reset allowed for Administrators"
+msgstr "Επιτρέπεται η επαναφορά κωδικού πρόσβασης για τους διαχειριστές"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS"
+msgid "Password reset allowed for these groups"
+msgstr "Επιτρέπεται η επαναφορά κωδικού πρόσβασης για αυτές τις ομάδες"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS_HELP"
+msgid ""
+"Leaving empty will allow users in any user group to reset their password. "
+"Superuser and administrator restrictions take precedence over this option."
+msgstr ""
+"Αν το αφήσετε κενό, θα επιτρέψετε στους χρήστες οποιασδήποτε ομάδας χρηστών "
+"να επαναφέρουν τον κωδικό πρόσβασής τους. Οι περιορισμοί των υπερχρηστών και "
+"των διαχειριστών υπερισχύουν αυτής της επιλογής."
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
 msgid "Table of known extensions and their automatic update preferences"
 msgstr ""
@@ -7992,6 +8047,10 @@ msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SSL_TLS_EXPIRING"
 msgid "SSL/TLS Certificate Expires Soon"
 msgstr "Το Πιστοποιητικό SSL/TLS Λήγει Σύντομα"
 
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PWRESET"
+msgid "Password Reset"
+msgstr "Επαναφορά Κωδικού Πρόσβασης"
+
 msgctxt "PANOPTICON_MAILTEMPLATES_LBL_CSS_HEAD"
 msgid "This CSS will be added to all HTML emails sent by Panopticon."
 msgstr ""
@@ -8423,6 +8482,59 @@ msgid ""
 msgstr ""
 "Μπορείτε τώρα να κάνετε κλικ στο κουμπί Ακύρωση στη γραμμή εργαλείων για να "
 "επιστρέψετε στην εφαρμογή."
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_PROMPT"
+msgid "Forgot your password?"
+msgstr "Ξεχάσατε τον κωδικό σας;"
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_HEAD"
+msgid "Request Password Reset"
+msgstr "Αιτηθείτε Επαναφορά του Κωδικού Πρόσβασης"
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_INFO"
+msgid ""
+"Enter your username and email address in the form below. An email will be "
+"sent to you with instructions to reset your password."
+msgstr ""
+"Εισάγετε το όνομα χρήστη και τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας στην "
+"παρακάτω φόρμα. Θα σας αποσταλεί email με οδηγίες για να επαναφέρετε τον "
+"κωδικό πρόσβασής σας."
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_SUBMIT_BUTTON"
+msgid "Request password reset"
+msgstr "Αιτηθείτε επαναφορά του κωδικού πρόσβασης"
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_SENT"
+msgid "Your password reset request has been submitted."
+msgstr "Το αίτημα επαναφοράς του κωδικού πρόσβασής σας έχει υποβληθεί."
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_RESET"
+msgid "Your password has been reset. You can now log in."
+msgstr "Ο κωδικός πρόσβασής σας έχει επαναφερθεί. Μπορείτε να συνδεθείτε τώρα."
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_NOT_RESET"
+msgid "Your password has not been reset."
+msgstr "Ο κωδικός πρόσβασής σας δεν έχει επαναφερθεί."
+
+msgctxt "PANOPTICON_USERS_ERR_PWRESET_DISABLED"
+msgid "Password reset requests are not allowed."
+msgstr "Τα αιτήματα επαναφοράς κωδικού πρόσβασης δεν επιτρέπονται."
+
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_HEAD"
+msgid "Confirm Password Reset"
+msgstr "Επιβεβαίωση Επαναφοράς Κωδικού Πρόσβασης"
+
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_TOKEN"
+msgid "Token"
+msgstr "Κωδικός Επαναφοράς"
+
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_PASSWORD"
+msgid "New Password"
+msgstr "Νέος Κωδικός Πρόσβασης"
+
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_SUBMIT_BUTTON"
+msgid "Reset Password"
+msgstr "Επαναφορά Κωδικού Πρόσβασης"
 
 msgctxt "PANOPTICON_ABOUT_TITLE"
 msgid "About"
@@ -10769,12 +10881,9 @@ msgstr ""
 "οποίο διαχειρίζεται το πρόγραμμα περιήγησής σας ή/και η συσκευή σας αντί του "
 "κωδικού πρόσβασής σας. Τα passkeys είναι πιο ασφαλή."
 
-#, fuzzy
-#| msgctxt "PANOPTICON_MFA_PASSKEYS_LBL_DISPLAYEDAS"
-#| msgid "Passkey"
 msgctxt "PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR"
 msgid "Passkey"
-msgstr "Passkey"
+msgstr "Κλειδί πρόσβασης"
 
 msgctxt "PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR_LABEL"
 msgid "%s added on %s"
