@@ -93,6 +93,8 @@ class SelfUpdateRun extends AbstractCommand
 			$this->ioStyle->info('Extracting the update');
 
 			$model->extract($tempFile);
+			$model->invalidatePHPFiles($tempFile);
+			$model->clearCompiledTemplates();
 
 			$this->ioStyle->info('Finalising the update');
 

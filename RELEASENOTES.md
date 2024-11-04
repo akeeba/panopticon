@@ -10,6 +10,8 @@ This version is a maintenance release. We implemented some new features to make 
 
 **Accurate PHP CLI path in the CRON job setup page**. In the past we were using the generic placeholder `/path/to/php` to indicate that you needed to replace this with the path to PHP CLI given to you by your host. Unfortunately, many hosts have under-trained first level support staff which can't provide this information, and does not understand the difference between PHP CLI and PHP CGI. We have now added code which tries to identify the PHP CLI binary automatically using our experience of where these files are usually to be found on a very large sample of live and local server environments across all major operating systems (Windows, Linux, macOS, FreeBSD etc.). In most cases, the command line you are given will be one you can just copy and paste into your host's CRON management page without having to do any thinking, or contacting your host. Simplicity, yay!
 
+**Improve update installation [gh-803]**. Installing updates will now run `opcache_invalidate()` against the installed `.php` files to let servers with very conservative OPcache settings to “see” the newly installed files. The `tmp/compiled_templates` folder is removed at the end of the update so that any updated Blade templates will be forcibly recompiled. _These changes will only apply for the NEXT update, after this version is installed_. Remember: it's always the _previous_ version's update code which installs an update.
+
 ## 🖥️ System Requirements
 
 * PHP 8.1, 8.2, or 8.3. PHP 8.3 recommended. Experimental support for the upcoming PHP 8.4 release.

@@ -405,6 +405,55 @@ class Selfupdate extends Model
 	}
 
 	/**
+	 * Invalidate OPcache for the .php files installed by extracting an update ZIP file.
+	 *
+	 * @param   string  $zipFilePath  The absolute filesystem path to the ZIP file.
+	 * @param   string  $targetPath   The absolute filesystem path of the extraction root.
+	 *
+	 * @return  void
+	 * @since   1.3.0
+	 */
+	public function invalidatePHPFiles(string $zipFilePath, string $targetPath = APATH_ROOT): void
+	{
+		if (!function_exists('opcache_invalidate'))
+		{
+			return;
+		}
+
+		$zip = new ZipArchive();
+		$zip->open($zipFilePath, ZipArchive::RDONLY);
+
+		$targetPath = rtrim($targetPath, '/\\');
+
+		for ($i = 0; $i < $zip->numFiles; $i++)
+		{
+			$fileName = $zip->getNameIndex($i);
+
+			if (!str_ends_with($fileName, '.php'))
+			{
+				continue;
+			}
+
+			opcache_invalidate($targetPath . '/' . ltrim($fileName, '/\\'), true);
+		}
+
+		$zip->close();
+
+		unset($zip);
+	}
+
+	/**
+	 * Clear the precompiled Blade templates after installing an update
+	 *
+	 * @return  void
+	 * @since   1.3.0
+	 */
+	public function clearCompiledTemplates(): void
+	{
+		$this->container->fileSystem->rmdir(APATH_TMP . '/compiled_templates');
+	}
+
+	/**
 	 * Executes after an update package has been extracted
 	 *
 	 * @return  void
