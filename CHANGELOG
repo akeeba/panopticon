@@ -10,6 +10,7 @@ Akeeba Panopticon 1.3.0
 # [HIGH] Cannot connect to really old WordPress installations (WordPress 5.5 and earlier)
 # [HIGH] Cannot connect to old Akeeba Backup for WordPress (version 7)
 # [HIGH] PHP error when WordPress fails to provide version information
+# [LOW] Connection Doctor causes misleading reports on WordPress [gh-807]
 
 Akeeba Panopticon 1.2.2
 ================================================================================

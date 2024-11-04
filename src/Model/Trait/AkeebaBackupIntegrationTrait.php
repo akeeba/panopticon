@@ -188,7 +188,7 @@ trait AkeebaBackupIntegrationTrait
 		}
 
 		// If `installed` is not true we cannot proceed with auto-detection.
-		if ($info?->installed !== true)
+		if (($info?->installed ?? false) !== true)
 		{
 			$config->set('akeebabackup.endpoint', null);
 

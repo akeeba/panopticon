@@ -34,6 +34,7 @@ $maybeJ3NeedsIndex  = $isJoomla3 && !str_contains($site->url, '/index.php/panopt
 $possibleJ3Endpoint = $maybeJ3NeedsIndex
 	? str_replace('/panopticon_api', '/index.php/panopticon_api', $site->url)
 	: $site->url;
+$isWordPress        = str_ends_with(rtrim($site->url, '/'), '/wp-json');
 ?>
 <div class="card my-3 {{ $border }}">
     @if($showHeader)
@@ -43,7 +44,28 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
         </h3>
     @endif
     <div class="card-body {{ $background }}">
-        @if($connectionError instanceof APIApplicationIsBlocked)
+        @if($isWordPress && $connectionError instanceof APIApplicationIsBlocked)
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_HEAD')
+            </p>
+            <p>
+                @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS', htmlentities($site->url))
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_TOCHECK')
+            </p>
+            <ul>
+                <li>
+                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK1', htmlentities($site->url))
+                </li>
+                <li>
+                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2', htmlentities($site->url), htmlentities($config->get('config.apiKey')), htmlentities(AKEEBA_PANOPTICON_VERSION))
+                </li>
+                <li>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK3')
+                </li>
+            </ul>
+        @elseif($connectionError instanceof APIApplicationIsBlocked)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_HEAD')
             </p>
@@ -64,6 +86,19 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK3')
                 </li>
             </ul>
+        @elseif($isWordPress && $connectionError instanceof APIApplicationHasPHPMessages)
+            <p class="fw-semibold">
+                @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_HEAD', htmlentities($this->httpCode))
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH1')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH3')
+            </p>
         @elseif($connectionError instanceof APIApplicationHasPHPMessages)
             <p class="fw-semibold">
                 @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_HEAD' . ($isJoomla3 ? '_J3' : ''), htmlentities($this->httpCode))
@@ -77,6 +112,49 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH3')
             </p>
+        @elseif($isWordPress && $this->httpCode < 300 && $connectionError instanceof APIApplicationIsBroken)
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_HEAD')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH1')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2')
+            </p>
+        @elseif($isWordPress && $connectionError instanceof APIApplicationIsBroken)
+            <p class="fw-semibold">
+                @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_HEAD', htmlentities($this->httpCode))
+            </p>
+            @if ($this->httpCode > 500)
+                <p>
+                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_5XX', htmlentities($this->httpCode))
+                </p>
+            @elseif($this->httpCode === 400)
+                <p>
+                    @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400', htmlentities((new Uri($site->url))->getHost()))
+                </p>
+            @elseif($this->httpCode === 401)
+                <p>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_HEAD')
+                </p>
+                <p>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH1')
+                </p>
+                <p>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH2')
+                </p>
+                <p>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH3')
+                </p>
+                <p>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH4')
+                </p>
+            @else
+                <p>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_HUH_WPGENERIC')
+                </p>
+            @endif
         @elseif($connectionError instanceof APIApplicationIsBroken)
             <p class="fw-semibold">
                 @sprintf('PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_HEAD' . ($isJoomla3 ? '_J3' : ''), htmlentities($this->httpCode))
@@ -132,6 +210,22 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_HUH_GENERIC')
                 </p>
             @endif
+        @elseif($isWordpress && $connectionError instanceof APIInvalidCredentials)
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_HEAD')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH1')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH2')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH3')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH4')
+            </p>
         @elseif($connectionError instanceof APIInvalidCredentials)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_HEAD')
@@ -167,6 +261,9 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2')
             </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH3')
+            </p>
         @elseif($connectionError instanceof GuzzleException)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_HEAD')
@@ -179,6 +276,9 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
             </p>
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH3')
             </p>
         @elseif($connectionError instanceof InvalidHostName)
             <p class="fw-semibold">
@@ -198,6 +298,31 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3')
                 </li>
             </ul>
+        @elseif($isWordPress && $connectionError instanceof PanopticonConnectorNotEnabled && !$isJoomla3)
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_HEAD')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_BLAH')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK')
+            </p>
+            <ul>
+                <li>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK1')
+                </li>
+                <li>
+                    @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK2')
+                </li>
+            </ul>
+        @elseif($connectionError instanceof PanopticonConnectorNotEnabled && $isJoomla3)
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_HEAD')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_BLAH')
+            </p>
         @elseif($connectionError instanceof PanopticonConnectorNotEnabled && !$isJoomla3)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_HEAD')
@@ -222,13 +347,6 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK4')
                 </li>
             </ul>
-        @elseif($connectionError instanceof PanopticonConnectorNotEnabled && $isJoomla3)
-            <p class="fw-semibold">
-                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_HEAD')
-            </p>
-            <p>
-                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_BLAH')
-            </p>
         @elseif($connectionError instanceof SelfSignedSSL)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_HEAD')
@@ -274,6 +392,16 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4')
                 </li>
             </ul>
+        @elseif($connectionError instanceof WebServicesInstallerNotEnabled && $isWordPress)
+            <p class="fw-semibold">
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_HEAD')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1')
+            </p>
+            <p>
+                @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2')
+            </p>
         @elseif($connectionError instanceof WebServicesInstallerNotEnabled && !$isJoomla3)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_HEAD')
@@ -309,7 +437,7 @@ $possibleJ3Endpoint = $maybeJ3NeedsIndex
             <p>
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH2')
             </p>
-            @if (!$isJoomla3)
+            @if (!$isJoomla3 && !$isWordPress)
                 <p>
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3')
                 </p>

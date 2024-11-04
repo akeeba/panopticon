@@ -146,6 +146,23 @@ trait SiteTestConnectionWPTrait
 			}
 		}
 
+		// Make sure the valid response *is* a JSON document.
+		try
+		{
+			$decoded = @json_decode($bodyContent, true);
+		}
+		catch (Exception $e)
+		{
+			$decoded = null;
+		}
+
+		if ($decoded === null)
+		{
+			throw new APIApplicationIsBroken(
+				'The API application does not work property (not a JSON response)'
+			);
+		}
+
 		// Try to access wp/v2/plugins **authenticated**
 		[$url, $options] = $this->getRequestOptions($this, '/wp/v2/posts?per_page=100');
 		$options[RequestOptions::HTTP_ERRORS] = false;
@@ -218,6 +235,13 @@ trait SiteTestConnectionWPTrait
 		try
 		{
 			$results = @json_decode($this->sanitizeJson($bodyContent ?? '{}'));
+
+			if (empty($results))
+			{
+				throw new WebServicesInstallerNotEnabled(
+					'Cannot list installed plugins.'
+				);
+			}
 		}
 		catch (Throwable $e)
 		{
