@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.2.3\n"
-"POT-Creation-Date: 2024-10-22 06:42:40\n"
+"Project-Id-Version: 1.3.0\n"
+"POT-Creation-Date: 2024-11-05 12:30:06\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.2.3\n"
+"X-Generator: Panopticon ini_to_po 1.3.0\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -5488,6 +5488,26 @@ msgid "Do you have a security, SEO, or other similar plugin which may be blockin
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_HEAD"
+msgid "The WordPress JSON API application is blocked (HTTP error 403)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK1"
+msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK3"
+msgid "Do you have a security, SEO, or other similar plugin which may be blocking the above?"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_HEAD"
 msgid "The Joomla! API Application response includes non-API output"
 msgstr ""
@@ -5510,6 +5530,41 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH3"
 msgid "If this is not enough, it is possible that a third party plugin is causing an error in the API application. Check if there are any third party plugins, especially system plugins, which may be accidentally breaking the API plugin and contact their author."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_HEAD"
+msgid "The WordPress JSON API Application response includes non-API output"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH1"
+msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party plugins. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2"
+msgid "Make sure PHP on your server is configured with <code>display_errors</code> disabled, and that you have not enabled <code>WP_DEBUG</code> in your site\'s <code>wp-config.php</code> file. This prevents PHP from printing messages which pollute the API response."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH3"
+msgid "If this is not enough, it is possible that a third party plugin is causing an error in the API application. Check if there are any third party plugins, including any must-use plugins (<code>mu-plugins</code>), which may be accidentally breaking the API plugin and contact their author."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_HEAD"
+msgid "The WordPress JSON API application responded with non-JSON data"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH1"
+msgid "The WordPress JSON API application is supposed to respond with JSON data. Your server returned non-JSON data. This means that something is broken on your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2"
+msgid "Please make sure that there is no .htaccess code, third party plugins, or custom code (including in your theme\'s <code>functions.php</code> file) which block or otherwise limit WordPress\' JSON API – either at all, or for unauthenticated (guest) access."
 msgstr ""
 
 #, phpformat
@@ -5598,6 +5653,51 @@ msgid "Most likely a <code>system</code> or <code>webservices</code> plugin on y
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_HEAD"
+msgid "The WordPress JSON API Application responded with an unexpected HTTP status code (%s)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_5XX"
+msgid "The HTTP status code %s means there has been a server error. Check if there are any third party plugins which may be accidentally breaking the WordPress JSON API application and contact their author."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400"
+msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them. Please contact your host if you are unsure why you are receiving this message."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_HEAD"
+msgid "WordPress believes that your API Token is incorrect, corrupt, or otherwise cannot log you in."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH1"
+msgid "Make sure that the API Token you are using is up-to-date, and that you have not accidentally truncated it, or copied any whitespace around it."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH2"
+msgid "Make sure that the plugin “Akeeba Panopticon Connector for WordPress” is enabled on your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH3"
+msgid "It is also possible that something on your server, or a plugin on your site, is corrupting the API Token as it is transmitted to your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH4"
+msgid "Please check your installed plugins. Kindly note that no, Admin Tools Professional for WordPress <em>does not</em> interfere with the Panopticon API Token. If this does not help please contact your host."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HUH_WPGENERIC"
+msgid "Most likely a plugin on your server modified the request we sent, resulting in an error. Please check your installed plugins."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_HEAD"
 msgid "Joomla! believes that your API Token is incorrect, corrupt, or otherwise cannot log you in."
 msgstr ""
@@ -5628,6 +5728,31 @@ msgid "Please check your installed Joomla! plugins. Kindly note that no, Admin T
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_HEAD"
+msgid "Your site believes that your API Token is incorrect, corrupt, or otherwise cannot log you in."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH1"
+msgid "Make sure that the API Token you are using is up-to-date, and that you have not accidentally truncated it, or copied any whitespace around it."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH2"
+msgid "Make sure that the plugin “Akeeba Panopticon Connector for WordPress” is enabled on your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH3"
+msgid "It is also possible that something on your server, or a plugin on your site, is corrupting the API Token as it is transmitted to your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH4"
+msgid "Please check your installed plugins. Kindly note that no, Admin Tools Professional for WordPress <em>does not</em> interfere with the Panopticon API Token. If this does not help please contact your host."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_HEAD"
 msgid "There was a communication error with your site."
 msgstr ""
@@ -5639,7 +5764,12 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"
-msgid "Please consult the <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your Joomla! site is on - which requires contacting the respective host to help you address."
+msgid "Please consult the <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your site is on - which requires contacting the respective host to help you address."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH3"
+msgid "In rare circumstances the problem may be caused by a third party plugin –especially security, cache, and SEO plugins– or an external CDN, proxy, or firewall which may modify or redirect the API request, even if they are not supposed to do so."
 msgstr ""
 
 #, phpformat
@@ -5728,6 +5858,31 @@ msgid "Your Joomla! site needs to have the “System - Panopticon Connector for 
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_HEAD"
+msgid "The Akeeba Panopticon Connector for WordPress plugin is not enabled on your site"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_BLAH"
+msgid "Your WordPress site needs to have the Akeeba Panopticon Connector for WordPress plugin installed and enabled for Akeeba Panopticon to work with it."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK"
+msgid "Please check the following:"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK1"
+msgid "Have you installed the Akeeba Panopticon Connector for WordPress plugin on your site?"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK2"
+msgid "Go to wp-admin, Plugins. Is the “Akeeba Panopticon Connector for WordPress” plugin installed <em>and</em> activated?"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_HEAD"
 msgid "You are using a self-signed SSL/TLS certificate"
 msgstr ""
@@ -5809,7 +5964,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
-msgid "Cannot communicate to the “System - Panopticon Connector for Joomla 3” plugin on your site"
+msgid "Cannot communicate with the “System - Panopticon Connector for Joomla 3” plugin on your site"
 msgstr ""
 
 #, phpformat
@@ -5850,6 +6005,21 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3_J3"
 msgid "Kindly note that the password protection has been applied to the root folder of your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_HEAD"
+msgid "Cannot communicate with the “Akeeba Panopticon Connector for WordPress” plugin on your site"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
+msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
+msgid "Please go to your site\'s wp-admin backend and click on Plugins. Search for the “Akeeba Panopticon Connector for WordPress” plugin and enable it."
 msgstr ""
 
 #, phpformat
@@ -7329,12 +7499,12 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGIN_UPDATE_FOUND"
-msgid "Wordpress Plugin/Theme Update: Update Found"
+msgid "WordPress Plugin/Theme Update: Update Found"
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGINS_UPDATE_DONE"
-msgid "Wordpress Plugin/Theme Update: Autoupdate Results"
+msgid "WordPress Plugin/Theme Update: Autoupdate Results"
 msgstr ""
 
 #, phpformat
