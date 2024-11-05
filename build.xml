@@ -89,6 +89,7 @@
         <exclude name="cache/favicon/**" />
         <exclude name="cache/http/**" />
         <exclude name="cache/system/**" />
+        <exclude name="cache/whois/**" />
 
         <exclude name="log/*.log" />
         <exclude name="log/*.php" />

@@ -4,6 +4,6 @@
     <buildFilePaths>
       <buildFile path="file://$PROJECT_DIR$/build.xml" />
     </buildFilePaths>
-    <phingPath>$USER_HOME$/.composer/vendor/bin/phing</phingPath>
+    <phingPath>$USER_HOME$/.config/composer/vendor/bin/phing</phingPath>
   </component>
 </project>
