@@ -126,6 +126,8 @@
         <exclude name="vendor/akeeba/json-backup-api/.idea/**" />
         <exclude name="vendor/akeeba/json-backup-api/composer.lock" />
 
+        <exclude name="vendor/akeeba/phpfinder/composer.lock" />
+
         <exclude name="vendor/akeeba/stats_collector/.idea/**" />
         <exclude name="vendor/akeeba/stats_collector/.gitignore" />
         <exclude name="vendor/akeeba/stats_collector/composer.lock" />
@@ -183,6 +185,16 @@
         <exclude name="vendor/guzzlehttp/promises/CHANGELOG.md" />
 
         <exclude name="vendor/guzzlehttp/psr-7/CHANGELOG.md" />
+
+        <exclude name="vendor/io-developer/php-whois/.devcontainer/**" />
+        <exclude name="vendor/io-developer/php-whois/.github/**" />
+        <exclude name="vendor/io-developer/php-whois/bin/**" />
+        <exclude name="vendor/io-developer/php-whois/tests/**" />
+        <exclude name="vendor/io-developer/php-whois/CODE_OF_CONDUCT.md" />
+        <exclude name="vendor/io-developer/php-whois/docker-compose.yml" />
+        <exclude name="vendor/io-developer/php-whois/Dockerfile" />
+        <exclude name="vendor/io-developer/php-whois/run-tests.sh" />
+        <exclude name="vendor/io-developer/php-whois/TESTS.md" />
 
         <exclude name="vendor/jfcherng/php-color-output/.php-cs-fixer.dist.php" />
         <exclude name="vendor/jfcherng/php-color-output/demo.php" />
@@ -276,6 +288,7 @@
 
         <!-- symfony/polyfill-ctype: nothing to remove -->
         <!-- symfony/polyfill-intl-grapheme: nothing to remove -->
+        <!-- symfony/polyfill-intl-idn: nothing to remove -->
         <!-- symfony/polyfill-intl-normalizer: nothing to remove -->
         <!-- symfony/polyfill-mbstring: nothing to remove -->
         <!-- symfony/polyfill-php80: nothing to remove -->
