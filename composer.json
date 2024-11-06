@@ -39,7 +39,7 @@
 		"ext-simplexml": "*",
 		"ext-zip": "*",
 		"akeeba/awf": "dev-development",
-		"akeeba/json-backup-api": "^1.0.0",
+		"akeeba/json-backup-api": "dev-main",
 		"akeeba/phpfinder": "@dev",
 		"akeeba/stats_collector": "dev-main",
 		"cesargb/php-log-rotation": "^2.7.1",
