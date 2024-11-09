@@ -34,7 +34,7 @@ class Login extends Model
 		$user = $this->getContainer()->userManager->getUserByUsername($username);
 
 		// If the user was not found we return a fake "true" so that the regular login process records a fail.
-		if (!$user->getId())
+		if (empty($user) || !$user->getId())
 		{
 			return true;
 		}
@@ -69,7 +69,7 @@ class Login extends Model
 		$userManager = $this->getContainer()->userManager;
 		$user        = $userManager->getUser();
 
-		if (!$user->getId())
+		if (empty($user) || !$user->getId())
 		{
 			return;
 		}
