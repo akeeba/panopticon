@@ -11,9 +11,18 @@ defined('AKEEBA') || die;
 
 /** @var \Akeeba\Panopticon\View\Setup\Html $this */
 
-$whatsNextClass = ($hideWhatsNext ?? false) ? 'd-none' : '';
-$phpPath        = \Akeeba\PHPFinder\PHPFinder::make()->getBestPath(PHP_VERSION);
-$displayPhpPath = $phpPath ?? (PHP_OS_FAMILY === 'Windows' ? 'C:\\path\\to\\php.exe' : '/path/to/php');
+$whatsNextClass     = ($hideWhatsNext ?? false) ? 'd-none' : '';
+$ctaLangString      ??= 'PANOPTICON_SETUP_LBL_CRON_SUBHEAD_CTA';
+$disablePhpAccurate ??= true;
+$phpPath            = null;
+
+if (!$disablePhpAccurate)
+{
+	$tryAccurate = $this->container->appConfig->get('accurate_php_cli', 1) == 1;
+	$phpPath     = $tryAccurate ? \Akeeba\PHPFinder\PHPFinder::make()->getBestPath(PHP_VERSION) : null;
+}
+
+$displayPhpPath     = $phpPath ?? (PHP_OS_FAMILY === 'Windows' ? 'C:\\path\\to\\php.exe' : '/path/to/php');
 ?>
 
 <!-- Instructions -->
@@ -25,7 +34,7 @@ $displayPhpPath = $phpPath ?? (PHP_OS_FAMILY === 'Windows' ? 'C:\\path\\to\\php.
 		<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_SUBHEAD') ?>
 	</p>
 	<p class="lead text-center fw-medium alert alert-info">
-		<?= $this->getLanguage()->text( $ctaLangString ?? 'PANOPTICON_SETUP_LBL_CRON_SUBHEAD_CTA') ?>
+		<?= $this->getLanguage()->text($ctaLangString) ?>
 	</p>
 	<p class="small text-muted text-center <?= $whatsNextClass ?>">
 		<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CRON_SUBHEAD_BREATHE') ?>

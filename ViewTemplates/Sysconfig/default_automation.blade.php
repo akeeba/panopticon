@@ -89,5 +89,22 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--accurate_php_cli--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[accurate_php_cli]" id="accurate_php_cli" value="1"
+                            {{ $config->get('accurate_php_cli', 1) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="accurate_php_cli">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI')
+                    </label>
+                </div>
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI_HELP')
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
