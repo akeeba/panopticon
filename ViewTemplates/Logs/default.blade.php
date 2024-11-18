@@ -185,7 +185,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                     @else
                         <span class="fa fa-globe text-body-tertiary" aria-hidden="true"></span>
                         <span class="text-secondary">#{{ (int) $siteId }}.</span>
-                        <span class="fw-medium">{{{ $this->siteNames[$siteId] }}}</span>
+                        <span class="fw-medium">{{{ $this->siteNames[$siteId] ?? '???' }}}</span>
                     @endif
                 </td>
             </tr>

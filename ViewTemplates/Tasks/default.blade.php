@@ -127,7 +127,7 @@ $i     = 1;
                         <span class="fw-medium">@lang('PANOPTICON_TASKS_LBL_SYSTEM')</span>
                     @else
                         <span class="fa fa-globe text-body-tertiary" aria-hidden="true"></span>
-                        <span class="fw-medium">{{{ $this->siteNames[$task->site_id] }}}</span>
+                        <span class="fw-medium">{{{ $this->siteNames[$task->site_id] ?? '???' }}}</span>
                         <br>
                         <span class="text-secondary">#{{ (int) $task->site_id }}</span>
                     @endif
