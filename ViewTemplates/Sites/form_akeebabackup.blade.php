@@ -14,7 +14,7 @@ defined('AKEEBA') || die;
 $config          = $this->item->getConfig();
 $extensionsList  = $config->get('extensions.list');
 $noExtensions    = empty($extensionsList);
-$hasAkeebaBackup = !$noExtensions && $this->item->hasAkeebaBackup();
+$hasAkeebaBackup = !$noExtensions && $this->item->hasAkeebaBackup(true);
 $info            = $config->get('akeebabackup.info');
 $endpointOptions = $config->get('akeebabackup.endpoint');
 $disable         = $noExtensions || !$hasAkeebaBackup || empty($info)

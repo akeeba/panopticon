@@ -308,36 +308,53 @@ trait AkeebaBackupIntegrationTrait
 	 * @return  bool
 	 * @since   1.0.0
 	 */
-	public function hasAkeebaBackup(): bool
+	public function hasAkeebaBackup(bool $onlyProfessional = false): bool
 	{
-		$config     = $this->getConfig();
-		$extensions = (array) $config->get('extensions.list');
-
-		switch ($this->cmsType())
+		if ($this->cmsType() === CMSType::JOOMLA)
 		{
-			case CMSType::JOOMLA:
-				$extensions = array_filter(
-					$extensions,
-					fn(object $ext) => in_array(
-						$ext->element, ['pkg_akeebabackup', 'pkg_akeeba', 'com_akeebabackup', 'com_akeeba']
-					)
+			// Joomla 3 doesn't support Download Keys, so we test the package name instead.
+			if (version_compare($this->getConfig()->get('core.current.version', '4.0.0'), '3.99999.99999', 'le'))
+			{
+				return array_reduce(
+					(array) $this->getConfig()->get('extensions.list'),
+					fn(bool $carry, object $item) => $carry ||
+					                                 (
+						                                 $item->type === 'package'
+						                                 && in_array($item->element, ['pkg_akeebabackup', 'pkg_akeeba', 'com_akeebabackup', 'com_akeeba'])
+						                                 && (!$onlyProfessional || str_contains(strtolower($item->description), 'professional'))
+					                                 ),
+					false
 				);
-				break;
+			}
 
-			case CMSType::WORDPRESS:
-				$extensions = array_filter(
-					$extensions,
-					fn(object $ext) => in_array($ext->element, ['akeebabackupwp.php'])
-				);
-				break;
-
-			default:
-				$extensions = [];
-				break;
+			// Joomla 4 and later, we just check if the package supports download keys.
+			return array_reduce(
+				(array) $this->getConfig()->get('extensions.list'),
+				fn(bool $carry, object $item) => $carry ||
+				                                 (
+					                                 $item->type === 'package'
+					                                 && in_array($item->element, ['pkg_akeebabackup', 'pkg_akeeba'])
+					                                 && (!$onlyProfessional || $item->downloadkey?->supported)
+				                                 ),
+				false
+			);
 		}
 
+		if ($this->cmsType() === CMSType::WORDPRESS)
+		{
+			return array_reduce(
+				(array) $this->getConfig()->get('extensions.list'),
+				fn(bool $carry, object $item) => $carry ||
+				                                 (
+					                                 $item->type === 'plugin'
+					                                 && $item->element === 'akeebabackupwp.php'
+					                                 && (!$onlyProfessional || str_contains(strtolower($item->name), 'professional'))
+				                                 ),
+				false
+			);
+		}
 
-		return count($extensions) > 0;
+		return false;
 	}
 
 	/**

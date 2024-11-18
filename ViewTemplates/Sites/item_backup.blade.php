@@ -45,12 +45,12 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
 
 @section('abErrorNoInfo')
     <div class="alert alert-info">
-        @if($this->item->hasAkeebaBackup())
-            <h4 class="alert-heading fs-5">
-                <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_HEAD')
-            </h4>
+        @if($this->item->hasAkeebaBackup(false))
             @if(($lastRefreshResponse?->statusCode ?? null) != 200)
+                <h4 class="alert-heading fs-5">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_HEAD')
+                </h4>
                 <p>
                     @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_COMSERROR_HEAD')
                 </p>
@@ -79,12 +79,32 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                         @endforeach
                     </ul>
                 @endif
+            @elseif(!$this->item->hasAkeebaBackup(true))
+                <h4 class="alert-heading fs-5">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CORE_HEAD')
+                </h4>
+                <p>
+                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CORE_BODY')
+                </p>
+                <p>
+                    <a href="https://www.akeeba.com/products/akeeba-backup.html"
+                       target="_blank"
+                       class="btn btn-info btn-sm">
+                        <span class="fa fa-fw fa-info-circle" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITES_LBL_BOU_BTN_LEARN_MORE')
+                    </a>
+                </p>
             @else
+                <h4 class="alert-heading fs-5">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_HEAD')
+                </h4>
                 <p>
                     @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_BODY')
                 </p>
             @endif
-            @if ($this->canEdit)
+            @if ($this->canEdit && $this->item->hasAkeebaBackup(true))
                 <p>
                     @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_SOLUTION_ADMIN')
                 </p>
@@ -95,7 +115,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                         @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_RELINK')
                     </a>
                 </p>
-            @else
+            @elseif ($this->item->hasAkeebaBackup(true))
                 <p>
                     @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_SOLUTION_NONADMIN')
                 </p>

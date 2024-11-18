@@ -25,8 +25,8 @@ $token               = $this->container->session->getCsrfToken()->getValue();
 @stop
 
 @section('atErrorNotPro')
-    <div class="alert alert-info fs-5">
-        <h4 class="alert-heading">
+    <div class="alert alert-info">
+        <h4 class="alert-heading fs-5">
             <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
             @lang('PANOPTICON_SITE_LBL_ADMINTOOLS_CORE')
         </h4>

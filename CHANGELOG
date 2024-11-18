@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 1.3.1
 ================================================================================
++ Better worded messages when you have Akeeba Backup Core instead of Professional
 ~ Make accurate PHP CLI path detection optional
 # [MEDIUM] PHP error trying to log in with a username that doesn't exist
 # [LOW] Logs and Tasks views: warning if there's a log/task belonging to a deleted site
