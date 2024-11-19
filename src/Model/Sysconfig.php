@@ -250,12 +250,20 @@ class Sysconfig extends Model
 			fn($v) => is_string($v) && in_array($v, ['', 'email', 'none', 'major', 'minor', 'patch'])
 		);
 
-		// Filter the data keys
-		$data = array_filter(
-			$data,
-			[$this, 'isvalidShortname'],
-			ARRAY_FILTER_USE_KEY
-		);
+		/**
+		 * Filter the data keys
+		 *
+		 * REMOVED – Because some developers suck.
+		 *
+		 * The Astroid Framework, for example, installs as a library BUT its extension name is `astroid`, not
+		 * `lib_astroid`. Unfortunately, Joomla! sucks at enforcing its own naming rules, so we have to accept whatever
+		 * the user throws at us and hope for the best :(
+		 */
+//		$data = array_filter(
+//			$data,
+//			[$this, 'isvalidShortname'],
+//			ARRAY_FILTER_USE_KEY
+//		);
 
 		if (empty($data))
 		{
