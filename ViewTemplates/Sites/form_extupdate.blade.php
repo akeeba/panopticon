@@ -74,7 +74,7 @@ defined('AKEEBA') || die;
                 @endif
             </span>
             {{{ strip_tags($item->name) }}}
-            <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
+            <div class="small text-muted font-monospace">{{{ str_starts_with($key, 'atpl_') || str_starts_with($key, 'amod_') ? ltrim($key, 'a') : $key }}}</div>
         </td>
         <td class="d-none d-lg-table-cell">
             <div class="small">

@@ -450,7 +450,7 @@ $hasError            = !empty($lastError);
                                 <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_NOT_AUTOUPDATE')</span>
                             @endif
                         </div>
-                        <div class="small text-muted font-monospace extensions-filterable-key">{{{ ltrim($key, 'a') }}}</div>
+                        <div class="small text-muted font-monospace extensions-filterable-key">{{{ str_starts_with($key, 'atpl_') || str_starts_with($key, 'amod_') ? ltrim($key, 'a') : $key }}}</div>
                         @if ($this->item->cmsType() === CMSType::WORDPRESS)
                             @if ($error)
                                 <div>

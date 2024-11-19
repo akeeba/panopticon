@@ -140,7 +140,7 @@ $config = $this->container->appConfig;
                      <span class="extensions-filterable-name">
                          {{{ strip_tags($item->name) }}}
                      </span>
-                    <div class="small text-muted font-monospace extensions-filterable-key">{{{ ltrim($key, 'a') }}}</div>
+                    <div class="small text-muted font-monospace extensions-filterable-key">{{{ str_starts_with($key, 'atpl_') || str_starts_with($key, 'amod_') ? ltrim($key, 'a') : $key }}}</div>
                 </td>
                 <td class="d-none d-lg-table-cell">
                     <div class="small extensions-filterable-author">

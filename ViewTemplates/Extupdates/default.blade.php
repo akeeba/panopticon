@@ -381,7 +381,7 @@ JS;
                             <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_EXTENSIONS_WILL_NOT_AUTOUPDATE')</span>
                         @endif
                     </div>
-                    <div class="small text-muted font-monospace">{{{ ltrim($key, 'a') }}}</div>
+                    <div class="small text-muted font-monospace">{{{ str_starts_with($key, 'atpl_') || str_starts_with($key, 'amod_') ? ltrim($key, 'a') : $key }}}</div>
                     @if ($missingDownloadID)
                         <div>
                             <span class="badge bg-danger">
