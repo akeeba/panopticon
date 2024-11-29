@@ -1,5 +1,8 @@
 #!/usr/bin/bash
 
+echo "Stashing Docker environment variables"
+printenv | grep -E "PANOPTICON_|MYSQL_|TZ=|ADMIN_|FRANKENPHP_|CADDY_|SERVER_NAME=" >> /etc/environment
+
 echo "Initialising the Panopticon container runtime environment."
 
 # Check whether I am running under FrankenPHP
