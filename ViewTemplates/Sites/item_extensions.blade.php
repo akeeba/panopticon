@@ -451,7 +451,7 @@ $hasError            = !empty($lastError);
                             @endif
                         </div>
                         <div class="small text-muted font-monospace extensions-filterable-key">{{{ str_starts_with($key, 'atpl_') || str_starts_with($key, 'amod_') ? ltrim($key, 'a') : $key }}}</div>
-                        @if ($this->item->cmsType() === CMSType::WORDPRESS)
+                        @if ($this->item->cmsType() === CMSType::JOOMLA)
                             @if ($error)
                                 <div>
                                     @if ($naughtyUpdates)
