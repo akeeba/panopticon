@@ -456,192 +456,192 @@ msgstr "– Sélectionner un utilisateur –"
 #, phpformat
 msgctxt "SUN"
 msgid "Sun"
-msgstr ""
+msgstr "Dim"
 
 #, phpformat
 msgctxt "MON"
 msgid "Mon"
-msgstr ""
+msgstr "Lun"
 
 #, phpformat
 msgctxt "TUE"
 msgid "Tue"
-msgstr ""
+msgstr "Mar"
 
 #, phpformat
 msgctxt "WED"
 msgid "Wed"
-msgstr ""
+msgstr "Mer"
 
 #, phpformat
 msgctxt "THU"
 msgid "Thu"
-msgstr ""
+msgstr "Jeu"
 
 #, phpformat
 msgctxt "FRI"
 msgid "Fri"
-msgstr ""
+msgstr "Ven"
 
 #, phpformat
 msgctxt "SAT"
 msgid "Sat"
-msgstr ""
+msgstr "Sam"
 
 #, phpformat
 msgctxt "SUNDAY"
 msgid "Sunday"
-msgstr ""
+msgstr "Dimanche"
 
 #, phpformat
 msgctxt "MONDAY"
 msgid "Monday"
-msgstr ""
+msgstr "Lundi"
 
 #, phpformat
 msgctxt "TUESDAY"
 msgid "Tuesday"
-msgstr ""
+msgstr "Mardi"
 
 #, phpformat
 msgctxt "WEDNESDAY"
 msgid "Wednesday"
-msgstr ""
+msgstr "Mercredi"
 
 #, phpformat
 msgctxt "THURSDAY"
 msgid "Thursday"
-msgstr ""
+msgstr "Jeudi"
 
 #, phpformat
 msgctxt "FRIDAY"
 msgid "Friday"
-msgstr ""
+msgstr "Vendredi"
 
 #, phpformat
 msgctxt "SATURDAY"
 msgid "Saturday"
-msgstr ""
+msgstr "Samedi"
 
 #, phpformat
 msgctxt "JAN_SHORT"
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #, phpformat
 msgctxt "FEB_SHORT"
 msgid "Feb"
-msgstr ""
+msgstr "Fév"
 
 #, phpformat
 msgctxt "MAR_SHORT"
 msgid "Mar"
-msgstr ""
+msgstr "Mar"
 
 #, phpformat
 msgctxt "APR_SHORT"
 msgid "Apr"
-msgstr ""
+msgstr "Avr"
 
 #, phpformat
 msgctxt "MAY_SHORT"
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #, phpformat
 msgctxt "JUN_SHORT"
 msgid "Jun"
-msgstr ""
+msgstr "Jun"
 
 #, phpformat
 msgctxt "JUL_SHORT"
 msgid "Jul"
-msgstr ""
+msgstr "Jul"
 
 #, phpformat
 msgctxt "AUG_SHORT"
 msgid "Aug"
-msgstr ""
+msgstr "Aou"
 
 #, phpformat
 msgctxt "SEP_SHORT"
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #, phpformat
 msgctxt "OCT_SHORT"
 msgid "Oct"
-msgstr ""
+msgstr "Oct"
 
 #, phpformat
 msgctxt "NOV_SHORT"
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #, phpformat
 msgctxt "DEC_SHORT"
 msgid "Dec"
-msgstr ""
+msgstr "Déc"
 
 #, phpformat
 msgctxt "JANUARY_GENITIVE"
 msgid "January"
-msgstr ""
+msgstr "Janvier"
 
 #, phpformat
 msgctxt "FEBRUARY_GENITIVE"
 msgid "February"
-msgstr ""
+msgstr "Février"
 
 #, phpformat
 msgctxt "MARCH_GENITIVE"
 msgid "March"
-msgstr ""
+msgstr "Mars"
 
 #, phpformat
 msgctxt "APRIL_GENITIVE"
 msgid "April"
-msgstr ""
+msgstr "Avril"
 
 #, phpformat
 msgctxt "MAY_GENITIVE"
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #, phpformat
 msgctxt "JUNE_GENITIVE"
 msgid "June"
-msgstr ""
+msgstr "Juin"
 
 #, phpformat
 msgctxt "JULY_GENITIVE"
 msgid "July"
-msgstr ""
+msgstr "Juillet"
 
 #, phpformat
 msgctxt "AUGUST_GENITIVE"
 msgid "August"
-msgstr ""
+msgstr "Août"
 
 #, phpformat
 msgctxt "SEPTEMBER_GENITIVE"
 msgid "September"
-msgstr ""
+msgstr "Septembre"
 
 #, phpformat
 msgctxt "OCTOBER_GENITIVE"
 msgid "October"
-msgstr ""
+msgstr "Octobre"
 
 #, phpformat
 msgctxt "NOVEMBER_GENITIVE"
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 #, phpformat
 msgctxt "DECEMBER_GENITIVE"
 msgid "December"
-msgstr ""
+msgstr "Décembre"
 
 #, phpformat
 msgctxt "PANOPTICON_APP_TITLE"
@@ -881,7 +881,7 @@ msgstr "Désactiver"
 #, phpformat
 msgctxt "PANOPTICON_BTN_BATCH"
 msgid "Batch"
-msgstr ""
+msgstr "Traitement par lots"
 
 #, phpformat
 msgctxt "PANOPTICON_APP_MENU_TITLE_ADMINISTRATION"
@@ -901,7 +901,7 @@ msgstr "Langue"
 #, phpformat
 msgctxt "PANOPTICON_APP_ERR_MFA_LOGOUT"
 msgid "Too many failed Multi-factor Authentication attempts. Please retry logging in."
-msgstr ""
+msgstr "Trop de tentatives d’authentification multifactorielle ont échoué. Veuillez essayer à nouveau de vous connecter."
 
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_AKEEBABACKUP"
@@ -996,7 +996,7 @@ msgstr "Envoi d\'un résumé des actions de sites par courriel"
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_WORDPRESSUPDATE"
 msgid "Update WordPress core"
-msgstr ""
+msgstr "Mise à jour du noyau WordPress"
 
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_WORDPRESSUPDATEDIRECTOR"
@@ -1016,7 +1016,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_DOMAINEXPIRATION"
 msgid "Send emails about domain expiration"
-msgstr ""
+msgstr "Envoyer des courriels concernant l’expiration du domaine"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED"
@@ -3286,7 +3286,7 @@ msgstr "Autres caractéristiques"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_TAB_UPDATE_GENERIC"
 msgid "CMS Update"
-msgstr ""
+msgstr "Mise à jour du CMS"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_TAB_EXTUPDATE"
@@ -3296,7 +3296,7 @@ msgstr "Mise à jour des extensions"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_TAB_PLUGINS_AND_THEMES"
 msgid "Plugins &amp; Themes"
-msgstr ""
+msgstr "Plugins &amp; Thèmes"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_NAME"
@@ -3331,12 +3331,12 @@ msgstr "Tout d\'abord, installez le connecteur Akeeba Panopticon sur votre site 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA4ORLATER"
 msgid "<strong>Joomla! 4 or later</strong>: Go to your site\'s backend and click on Components, Akeeba Panopticon Connector to find your connection information."
-msgstr ""
+msgstr "<strong>Joomla! 4 ou ultérieur</strong> : Allez dans le backend de votre site et cliquez sur Composants, Akeeba Panopticon Connector pour trouver vos informations de connexion."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA3"
 msgid "<strong>Joomla! 3</strong>: Go to your site\'s backend and click on Extensions, Plugins. Click on System - Panopticon Connector for Joomla 3."
-msgstr ""
+msgstr "<strong>Joomla! 3</strong> : Allez dans l'administration de votre site et cliquez sur Extensions, Plugins. Cliquez sur Système - Panopticon Connector for Joomla 3."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_WORDPRESS"
@@ -3566,12 +3566,12 @@ msgstr "Panopticon vous avertira lorsque le certificat SSL/TLS de votre site exp
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING"
 msgid "Domain Expiration First Warning"
-msgstr ""
+msgstr "Avertissement relatif à l’expiration du domaine"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING_HELP"
 msgid "Panopticon will warn you that your site\'s domain name is expiring this many days before it expires. 0 disables the warning."
-msgstr ""
+msgstr "Panopticon vous avertira de l'expiration du nom de domaine de votre site plusieurs jours avant l'échéance. 0 désactive l’avertissement."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE"
@@ -3686,92 +3686,92 @@ msgstr "La signature de votre certificat SSL/TLS ne peut pas être vérifiée au
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO"
 msgid "Domain Information"
-msgstr ""
+msgstr "Informations du domaine"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID_HEAD"
 msgid "Unknown Validity"
-msgstr ""
+msgstr "Validité inconnue"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID"
 msgid "We could not retrieve the domain\'s expiration date. Either the domain name does not appear in the WHOIS database, or you are using a domain name which only resolves locally."
-msgstr ""
+msgstr "Nous n’avons pas pu récupérer la date d’expiration du domaine. Soit le nom de domaine n’apparaît pas dans la base WHOIS, soit vous utilisez un nom de domaine qui ne se résout que localement."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TOOSOON_HEAD"
 msgid "Invalid (Too Soon)"
-msgstr ""
+msgstr "Invalide (trop tôt)"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TOOSOON"
 msgid "The domain registrar claims the domain name was registered in a future date. This does not seem right."
-msgstr ""
+msgstr "Le registraire de domaines prétend que le nom de domaine a été enregistré à une date ultérieure. Cela ne semble pas correct."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRING_HEAD"
 msgid "Imminent Expiration"
-msgstr ""
+msgstr "Expiration imminente"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRING"
 msgid "The domain name will expire soon. You need to renew it with your registrar to avoid losing it."
-msgstr ""
+msgstr "Le nom de domaine expirera bientôt. Vous devez le renouveler auprès de votre bureau d’enregistrement pour éviter de le perdre."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED_HEAD"
 msgid "Expired"
-msgstr ""
+msgstr "Expiré"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
 msgid "The domain name has expired. You might still be able to access the domain due to your registrar\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
-msgstr ""
+msgstr "Le nom de domaine a expiré. Vous pouvez toujours accéder au domaine en raison de la période de grâce de votre registraire, mais <strong>vous devez renouveler ce nom de domaine immédiatement avec votre registraire</strong> afin d'éviter de le perdre."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS_HEAD"
 msgid "Missing nameservers"
-msgstr ""
+msgstr "Serveurs de noms manquants"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS"
 msgid "There are no nameservers reported in the WHOIS database. A site without valid nameservers will not be accessible on the Internet. If you recently assigned nameservers to the domain don\'t panic; it may take up to 5 days for this information to propagate."
-msgstr ""
+msgstr "Il n’y a pas de serveur de noms dans la base de données WHOIS. Un site sans serveur de noms valide ne sera pas accessible sur Internet. Si vous avez récemment assigné des serveurs de noms au domaine, ne paniquez pas, cette information peut prendre jusqu’à 5 jours pour se propager."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TABLE_CAPTION"
 msgid "Table of domain information"
-msgstr ""
+msgstr "Tableau d'informations sur les domaines"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_DOMAIN"
 msgid "Domain"
-msgstr ""
+msgstr "Domaine"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_REGISTERED"
 msgid "Registered On"
-msgstr ""
+msgstr "Enregistré sur"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRES"
 msgid "Expires On"
-msgstr ""
+msgstr "Expire le"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_REGISTRAR"
 msgid "Registrar"
-msgstr ""
+msgstr "Registraire"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NAMESERVERS"
 msgid "Nameservers"
-msgstr ""
+msgstr "Serveurs de noms"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_CACHING_NOTICE"
 msgid "Domain registration information may be cached in the WHOIS servers for a period ranging from a few hours to a few days. As a result, the information above may be out of date."
-msgstr ""
+msgstr "Les informations d’enregistrement de domaine peuvent être mises en cache sur les serveurs WHOIS pour une période allant de quelques heures à quelques jours. Par conséquent, les renseignements ci-dessus peuvent être périmés."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_TITLE"
@@ -3811,32 +3811,32 @@ msgstr "Le site sera considéré si la page contient cette chaîne. Ne <em>PAS</
 #, phpformat
 msgctxt "PANOPTICON_SITES_BATCH_TITLE"
 msgid "Batch process the selected sites"
-msgstr ""
+msgstr "Traitement par lots des sites sélectionnés"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_BATCH_PROCESS"
 msgid "Process"
-msgstr ""
+msgstr "Processus"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_BATCH_LBL_ADD_TO_GROUP"
 msgid "Add to group"
-msgstr ""
+msgstr "Ajouter au groupe"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_BATCH_LBL_REMOVE_FROM_GROUP"
 msgid "Remove from group"
-msgstr ""
+msgstr "Retirer du groupe"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_BATCH_COMPLETED"
 msgid "The group membership of sites you selected has been processed."
-msgstr ""
+msgstr "L’appartenance au groupe de sites que vous avez sélectionnés a été traitée."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_BATCH_ERR_NO_IDS"
 msgid "You have not selected any sites to process the group membership of."
-msgstr ""
+msgstr "Vous n’avez sélectionné aucun site traiter l’assigner au groupe"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_TITLE_READ"
@@ -3896,12 +3896,12 @@ msgstr "L\'erreur de planification n\'a pas pu être effacée : %s"
 #, phpformat
 msgctxt "PANOPTICON_SITE_BTN_CMSUPDATE_RELOAD"
 msgid "Reload Update information"
-msgstr ""
+msgstr "Actualiser les informations de mise à jour"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_BTN_CMSUPDATE_RELOAD_SR"
 msgid "Reload Update information for site “%s”"
-msgstr ""
+msgstr "Recharger les informations de mise à jour pour le site “%s”"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_OK"
@@ -3931,12 +3931,12 @@ msgstr "Mise à jour Joomla!™"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NO_VERSION_HEAD"
 msgid "Version information missing"
-msgstr ""
+msgstr "Information de version manquante"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NO_VERSION_BODY"
 msgid "Your site has not reported the version of Joomla!&reg; it is running on."
-msgstr ""
+msgstr "Votre site n’a pas indiqué la version de Joomla!&reg; actuellement en cours."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_BTN_JUPDATE_RELOAD"
@@ -4401,12 +4401,12 @@ msgstr "Recharger les informations sur les extensions pour le site “%s”"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_MISSING"
 msgid "PHP version information missing"
-msgstr ""
+msgstr "Information de version PHP manquante"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_MISSING_INFO"
 msgid "Your site has not reported the version of PHP it is running on."
-msgstr ""
+msgstr "Votre site n’a pas indiqué la version de PHP actuellement en cours."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_UNKNOWN"
@@ -4671,12 +4671,12 @@ msgstr "La capacité de stockage de votre serveur est presque atteinte. Si vous 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_LABEL"
 msgid "CMS Type"
-msgstr ""
+msgstr "Type de CMS"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_DESCRIPTION"
 msgid "Which CMS does this site run on?"
-msgstr ""
+msgstr "Avec quel CMS ce site fonctionne-t-il ?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_OPT_JOOMLA"
@@ -4691,7 +4691,7 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CMSTYPE_OPT_OTHER"
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_EXTENSIONS_HEAD"
@@ -5101,12 +5101,12 @@ msgstr "Il n\'y a aucun scan à examiner."
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS"
 msgid "Possible Threats"
-msgstr ""
+msgstr "Menaces potentielles"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_BACKEND"
 msgid "Backend"
-msgstr "Back-end"
+msgstr "Administration"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_SOURCE_CLI"
@@ -5946,12 +5946,12 @@ msgstr "Vous ne pouvez pas afficher ou modifier la configuration système dans P
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_ERR_USING_ENVIRONMENT"
 msgid "You cannot view or modify the System Configuration in Panopticon when it runs containerized and you have set the <code>PANOPTICON_USING_ENV</code> environment variable to 1. Please configure Panopticon by setting environment variables instead."
-msgstr ""
+msgstr "Vous ne pouvez pas afficher ou modifier la configuration du système dans Panopticon lorsque celui-ci est exécuté en conteneur et que vous avez défini la variable d’environnement <code>PANOPTICON_USING_ENV</code> sur 1. Veuillez configurer Panopticon en définissant les variables d’environnement."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_BTN_PHPINFO"
 msgid "PHP Information"
-msgstr "PHP Information"
+msgstr "Informations PHP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_SYSTEM"
@@ -5961,7 +5961,7 @@ msgstr "Système"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_SECURITY"
 msgid "Security"
-msgstr ""
+msgstr "Sécurité"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_TAB_DISPLAY"
@@ -6056,17 +6056,17 @@ msgstr "Préférences système"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_LOGINFAIL"
 msgid "Automatic IP blocking"
-msgstr ""
+msgstr "Blocage automatique de l’IP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSWORD_SECURITY"
 msgid "Password Security"
-msgstr ""
+msgstr "Sécurité du mot de passe"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SESSION"
 msgid "Session Storage"
-msgstr ""
+msgstr "Stockage de session"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_NO_EXTENSIONS_HEAD"
@@ -6096,12 +6096,12 @@ msgstr "Expiration de la session"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH"
 msgid "Use Default PHP Session Save Path"
-msgstr ""
+msgstr "Utiliser le chemin d’enregistrement de session PHP par défaut"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH_HELP"
 msgid "When enabled, Panopticon uses the <code>session.save_path</code> in your PHP configuration for saving PHP session data files. When disabled, Panopticon uses the <code>tmp/session</code> folder under your web root."
-msgstr ""
+msgstr "Si activé, Panopticon utilise le <code>session.save_path</code> de votre configuration PHP pour enregistrer les fichiers de données de session PHP. Si désactivé, Panopticon utilise le dossier <code>tmp/session</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE"
@@ -6116,42 +6116,42 @@ msgstr "Débogage système"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_FAILURE_ENABLE"
 msgid "Automatic IP block on failed login attempts"
-msgstr ""
+msgstr "Blocage d'\IP automatique en cas de tentative de connexion échouée"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_MAX_FAILURES"
 msgid "Maximum login failures"
-msgstr ""
+msgstr "Nombre maximal de connexions échouées"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_FAILURE_WINDOW"
 msgid "Login failure window"
-msgstr ""
+msgstr "Fenêtre d'échec de connexion"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT"
 msgid "IP block time"
-msgstr ""
+msgstr "Heure blocage IP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT_EXTEND"
 msgid "Extend IP lockout time"
-msgstr ""
+msgstr "Prolonger le temps de verrouillage IP"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOGIN_LOCKOUT_EXTEND_HELP"
 msgid "When enabled, every time a blocked IP address tries to access Akeeba Panopticon it will have its lockout time reset, i.e. the lockout will be extended for another “IP lockout time” seconds. This penalises some bots, but it comes at the expense of slowing down legitimate access to Akeeba Panopticon."
-msgstr ""
+msgstr "Si activé, chaque fois qu'une adresse IP bloquée essaie d'accéder à Akeeba Panopticon, son temps de verrouillage sera réinitialisé, c'est-à-dire que le verrouillage sera prolongé pour une nouvelle durée de verrouillage de l'IP. Cela pénalise certains robots, mais ralenti également tout accès légitime à Akeeba Panopticon."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP"
 msgid "Forbid using leaked passwords"
-msgstr ""
+msgstr "Interdire l’utilisation de mots de passe divulgués"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
 msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr ""
+msgstr "Empêcher les utilisateurs d’utiliser des mots de passe qui sont trouvés dans les fuites de mot de passe en ligne. Propulsé par le service tiers <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
@@ -6231,12 +6231,12 @@ msgstr "Messages de version PHP dans la page principale"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS"
 msgid "Show avatars for users"
-msgstr ""
+msgstr "Afficher les avatars pour les utilisateurs"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
 msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr ""
+msgstr "Afficher les avatars pour les utilisateurs. Cette fonctionnalité est fournie par le service tiers <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
@@ -6566,32 +6566,32 @@ msgstr "Vous pouvez continuer l\'installation de Panopticon."
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER"
 msgid "Behind load balancer / reverse proxy"
-msgstr ""
+msgstr "Derrière répartiteur de charge / proxy inverse"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER_HELP"
 msgid "Only enable if your installation is behind a non-transparent proxy (e.g. Varnish), load balancer (e.g. HAProxy), CDN (e.g. CloudFlare), or security service (e.g. Sucuri) which conveys the real IP address of the visitor through the HTTP header <code>X-Forwarded-For</code>."
-msgstr ""
+msgstr "Activez uniquement si votre installation est derrière un proxy non transparent (p.ex. Varnish), un équilibreur de charge (p.ex. HAProxy), un CDN (p.ex. CloudFlare) ou un service de sécurité (p.ex. Sucuri) qui transmet l'adresse IP réelle du visiteur via l'en-tête HTTP <code>X-Forwarded-For</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT"
 msgid "Encrypt session data"
-msgstr ""
+msgstr "Chiffrer les données de session"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT_HELP"
 msgid "Session data will be stored on disk encrypted with a secret key unique to your Panopticon installation."
-msgstr ""
+msgstr "Les données de session seront stockées sur le disque, crypté avec une clé secrète unique à votre installation Panopticon"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_SAVE_LEVELS"
 msgid "Session Path Levels"
-msgstr ""
+msgstr "Niveaux de chemin de session"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_SAVE_LEVELS_HELP"
 msgid "Session save data files will be saved this many folders deep. 0 means all files in a single folder. Best keep it 0 unless you have thousands of concurrent sessions. Only applies when Use Default PHP Session Save Path is disabled."
-msgstr ""
+msgstr "Les fichiers de sauvegarde de session seront enregistrés dans de nombreux sous-dossiers. 0 signifie tous les fichiers dans un seul dossier. Mieux vaut garder 0 à moins que vous ayez des milliers de sessions simultanées. Cela s’applique uniquement lorsque l’option Utiliser le chemin d’enregistrement de session PHP par défaut est désactivée."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
@@ -6601,7 +6601,7 @@ msgstr "Tableau des extensions connues et leurs préférences de mise à jour au
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_CMS"
 msgid "CMS Type"
-msgstr ""
+msgstr "Type de CMS"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_NAME"
@@ -6966,27 +6966,27 @@ msgstr "Vous avez désactivé l’envoi de courrier; aucun courriel ne sera envo
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_SUPERUSER"
 msgid "Force MFA for Superusers"
-msgstr ""
+msgstr "Forcer l\'authentification multifacteur pour les super-utilisateurs"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_ADMIN"
 msgid "Force MFA for Administrators"
-msgstr ""
+msgstr "Forcer l\'authentification multifacteur pour les administrateurs"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_FORCE_GROUPS"
 msgid "Force MFA for these Groups"
-msgstr ""
+msgstr "Forcer l\'authentification multifacteur pour ces groupes"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_COUNTS_AS_LOGIN_FAILURE"
 msgid "MFA failure counts as login failure"
-msgstr ""
+msgstr "Les erreurs d\'authentification multifacteur comptent comme erreurs de connexion"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_MAX_TRIES"
 msgid "Maximum MFA tries"
-msgstr ""
+msgstr "Essais max. d\'authentification multifacteur"
 
 #, phpformat
 msgctxt "PANOPTICON_TASKS_TITLE"
@@ -7281,7 +7281,7 @@ msgstr "Résumé des mesures prises"
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_DOMAIN_EXPIRING"
 msgid "Domain Expires Soon"
-msgstr ""
+msgstr "Le domaine expire bientôt"
 
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_TITLE"
@@ -7416,17 +7416,17 @@ msgstr "Exécuter le code post-mise à niveau"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_ERR_UNDERDOCKER"
 msgid "You cannot take this action when running Panopticon under Docker. Please refer to our documentation for the correct update instructions for this use case."
-msgstr ""
+msgstr "Vous ne pouvez pas exécuter cette action lorsque Panopticon s'exécute dans Docker. Veuillez consulter notre documentation pour les instructions de mise à jour dans ce cas de figure."
 
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_HEAD"
 msgid "You are running Panopticon under Docker"
-msgstr ""
+msgstr "Vous exécutez Panopticon dans Docker"
 
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
 msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
-msgstr ""
+msgstr "Panopticon ne peut pas être mis à jour directement depuis son interface lorsqu'il fonctionne dans Docker. Au lieu de cela, vous devez suivre les <a href=\'%s\'>instructions de la documentation</a> pour mettre à jour le conteneur et la base de données."
 
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_TITLE"
@@ -7696,13 +7696,61 @@ msgstr "La mise en page du tableau de bord est plus simple à comprendre, mais u
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_NEEDED"
 msgid "You must set up Multi-factor Authentication to be allowed further access to this application."
-msgstr ""
+msgstr "Vous devez configurer l'authentification multi-facteurs pour pouvoir accéder à cette application."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_COMPLETE"
 msgid "You can now click on the Cancel button in the toolbar to return to the application."
-msgstr ""
+msgstr "Vous pouvez maintenant cliquer sur le bouton Annuler dans la barre d'outils pour revenir à l'application."
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_PROMPT"
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_HEAD"
+msgid "Request Password Reset"
+msgstr "Demande de réinitialisation du mot de passe"
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_INFO"
+msgid "Enter your username and email address in the form below. An email will be sent to you with instructions to reset your password."
+msgstr "Saisir votre nom d’utilisateur et votre adresse électronique dans le formulaire ci-dessous. Un courriel vous sera envoyé avec des instructions pour réinitialiser votre mot de passe."
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_SUBMIT_BUTTON"
+msgid "Request password reset"
+msgstr "Envoyer la demande"
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_SENT"
+msgid "Your password reset request has been submitted."
+msgstr "Votre demande de réinitialisation du mot de passe a été soumise."
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_RESET"
+msgid "Your password has been reset. You can now log in."
+msgstr "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter."
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_NOT_RESET"
+msgid "Your password has not been reset."
+msgstr "Votre mot de passe n'a pas été réinitialisé."
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PWRESET_DISABLED"
+msgid "Password reset requests are not allowed."
+msgstr "Les demandes de réinitialisation du mot de passe ne sont pas autorisées."
 
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_HEAD"
+msgid "Confirm Password Reset"
+msgstr "Confirmer la réinitialisation du mot de passe"
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_TOKEN"
+msgid "Token"
+msgstr "Jeton"
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_PASSWORD"
+msgid "New Password"
+msgstr "Nouveau mot de passe"
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_SUBMIT_BUTTON"
+msgid "Reset Password"
+msgstr "Réinitialiser le mot de passe"
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_TITLE"
 msgid "About"
@@ -8026,12 +8074,12 @@ msgstr "Liste des sauvegardes manuelles"
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_EMAIL_SUCCESS"
 msgid "Send email on success"
-msgstr ""
+msgstr "Envoyer un courriel en cas de succès"
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_EMAIL_FAIL"
 msgid "Send email on failure"
-msgstr ""
+msgstr "Envoyer un courriel en cas d\'échec"
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_TITLE"
@@ -8571,7 +8619,7 @@ msgstr "Utiliser ce <a href=\'%s\'>lien</a>."
 #, phpformat
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT3"
 msgid "Enter the Secret"
-msgstr ""
+msgstr "Saisir le code"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_ENTER_CODE"
@@ -9601,7 +9649,7 @@ msgstr "La tâche de résumé de mises à jour programmées a été sauvegardée
 #, phpformat
 msgctxt "PANOPTICON_LBL_UPDATESUMMARYTASK_DELETED"
 msgid "The Scheduled Update Summary task has been deleted"
-msgstr ""
+msgstr "La tâche de résumé de mises à jour programmées a été supprimée"
 
 #, phpformat
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_RECIPIENTS"
@@ -9636,12 +9684,12 @@ msgstr "Modifier le résumé des actions programmées"
 #, phpformat
 msgctxt "PANOPTICON_LBL_ACTIONSUMMARYTASK_SAVED"
 msgid "The Scheduled Action Summary has been saved"
-msgstr "Le résumé des actions programmées a été enregistré."
+msgstr "Le résumé des actions programmées a été enregistré"
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_ACTIONSUMMARYTASK_DELETED"
 msgid "The Scheduled Action Summary has been deleted"
-msgstr ""
+msgstr "Le résumé des actions programmées a été supprimé"
 
 #, phpformat
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
@@ -9681,27 +9729,27 @@ msgstr "Mensuel"
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_AR"
 msgid "Arabic"
-msgstr ""
+msgstr "Arabe"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_AR_SA"
 msgid "Arabic, Saudi Arabia"
-msgstr ""
+msgstr "Arabe, Arabie saoudite"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_AZ"
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Azerbaïdjanais"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_BE"
 msgid "Belarusian"
-msgstr ""
+msgstr "Biélorusse"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_BG_BG"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgare"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_BN_BD"
@@ -9711,172 +9759,172 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_CA"
 msgid "Catalan"
-msgstr ""
+msgstr "Catalan"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_CS"
 msgid "Czech"
-msgstr ""
+msgstr "Tchèque"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_CY"
 msgid "Welsh"
-msgstr ""
+msgstr "Gallois"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_DA"
 msgid "Danish"
-msgstr ""
+msgstr "Danois"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_DE"
 msgid "German"
-msgstr ""
+msgstr "Allemand"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_EL"
 msgid "Greek"
-msgstr ""
+msgstr "Grec"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_EO"
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ES"
 msgid "Spanish (Spain)"
-msgstr ""
+msgstr "Espagnol (Espagne)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ES_MX"
 msgid "Spanish (Mexico)"
-msgstr ""
+msgstr "Espagnol (Mexique)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ET"
 msgid "Estonian"
-msgstr ""
+msgstr "Estonien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_EU"
 msgid "Basque"
-msgstr ""
+msgstr "Basque"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_FA"
 msgid "Persian"
-msgstr ""
+msgstr "Persan"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_FI"
 msgid "Finnish"
-msgstr ""
+msgstr "Finnois"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_FR_FR"
 msgid "French (France)"
-msgstr ""
+msgstr "Français (France)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_GA"
 msgid "Irish"
-msgstr ""
+msgstr "Irlandais"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_GL"
 msgid "Galician"
-msgstr ""
+msgstr "Galicien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_HE_IL"
 msgid "Hebrew (Israel)"
-msgstr ""
+msgstr "Hébreu (Israël)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_HR"
 msgid "Croatian"
-msgstr ""
+msgstr "Croate"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_HU_HU"
 msgid "Hungarian (Hungary)"
-msgstr ""
+msgstr "Hongrois (Hongrie)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_HY"
 msgid "Armenian"
-msgstr ""
+msgstr "Arménien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ID"
 msgid "Indonesian"
-msgstr ""
+msgstr "Indonésien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_IS_IS"
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandais"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_IT"
 msgid "Italian"
-msgstr ""
+msgstr "Italien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_JA"
 msgid "Japanese"
-msgstr ""
+msgstr "Japonais"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KA_GE"
 msgid "Georgian"
-msgstr ""
+msgstr "Géorgien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KAB"
 msgid "Kabyle"
-msgstr ""
+msgstr "Kabyle"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KK"
 msgid "Kazakh"
-msgstr ""
+msgstr "Kazakh"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KO_KR"
 msgid "Korean (Korea)"
-msgstr ""
+msgstr "Corée (Corée)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_KU"
 msgid "Kurdish"
-msgstr ""
+msgstr "Kurde"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_LT"
 msgid "Lithuanina"
-msgstr ""
+msgstr "Lituanien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_LV"
 msgid "Latvian"
-msgstr ""
+msgstr "Lettonien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_NB_NO"
 msgid "Norwegian Bokmål (Norway)"
-msgstr ""
+msgstr "Bokmål norvégien (Norvège)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_NE"
 msgid "Nepali"
-msgstr ""
+msgstr "Nepalais"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_NL"
 msgid "Dutch"
-msgstr ""
+msgstr "Néerlandais"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_NL_BE"
@@ -9886,145 +9934,145 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_OC"
 msgid "Occitan"
-msgstr ""
+msgstr "Occitan"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_PL"
 msgid "Polish"
-msgstr ""
+msgstr "Polonais"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_PT_BR"
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Portugais (Brésil)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_PT_PT"
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "Portugais (Portugal)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_RO"
 msgid "Romanian"
-msgstr ""
+msgstr "Roumain"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_RU"
 msgid "Russian"
-msgstr ""
+msgstr "Russe"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SK"
 msgid "Slovak"
-msgstr ""
+msgstr "Slovaque"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SL_SI"
 msgid "Slovenian (Slovenia)"
-msgstr ""
+msgstr "Slovène (Slovénie)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SQ"
 msgid "Albanina"
-msgstr ""
+msgstr "Albanais"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SR"
 msgid "Serbian (Cyrillic)"
-msgstr ""
+msgstr "Serbe (Cyrillique)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_SV_SE"
 msgid "Swedish (Sweden)"
-msgstr ""
+msgstr "Suédois"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_TA"
 msgid "Tamil"
-msgstr ""
+msgstr "Tamoul"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_TG"
 msgid "Tajik"
-msgstr ""
+msgstr "Tadjik"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_TH_TH"
 msgid "Thai (Thailand)"
-msgstr ""
+msgstr "Thaï"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_TR"
 msgid "Turkish"
-msgstr ""
+msgstr "Turc"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_UG"
 msgid "Uyghur"
-msgstr ""
+msgstr "Ouïghour"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_UK"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_UZ"
 msgid "Uzbek"
-msgstr ""
+msgstr "Ouzbek"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_VI"
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamien"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_CN"
 msgid "Chinese Simplified (China)"
-msgstr ""
+msgstr "Chinois simplifié (Chine)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_HK"
 msgid "Chinese Traditional (Hong Kong)"
-msgstr ""
+msgstr "Chinois traditionnel (Hong Kong)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_MO"
 msgid "Chinese Traditional (Macau)"
-msgstr ""
+msgstr "Chinois simplifié (Macao)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_SG"
 msgid "Chinese Traditional (Singapore)"
-msgstr ""
+msgstr "Chinois traditionnel (Singapour)"
 
 #, phpformat
 msgctxt "PANOPTICON_TINYMCE_LANG_ZH_TW"
 msgid "Chinese Traditional (Taiwan)"
-msgstr ""
+msgstr "Chinois traditionnel (Taiwan)"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_TITLE"
 msgid "Access Denied"
-msgstr ""
+msgstr "Accès refusé"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_HEAD"
 msgid "Access Denied"
-msgstr ""
+msgstr "Accès refusé"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_INFO"
 msgid "Your IP address, <code>%s</code>, has been temporarily blocked due to suspicious behaviour."
-msgstr ""
+msgstr "Votre adresse IP, <code>%s</code>, a été temporairement bloqué en raison d'un comportement suspect."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_EXTENDING"
 msgid "Trying to accessing this site before the ban expires will extend the length of the ban."
-msgstr ""
+msgstr "Essayez d'accéder à ce site avant l'expiration du blocage va prolonger la durée de l'interdiction"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
 msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
-msgstr ""
+msgstr "Le mot de passe que vous essayez d'utiliser est présent dans les fuites de mot de passe en ligne, ce qui rend très facile pour les pirates de deviner que c'est ce que vous utilisez. Veuillez utiliser un autre mot de passe."
 
