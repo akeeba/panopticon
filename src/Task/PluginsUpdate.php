@@ -542,6 +542,8 @@ class PluginsUpdate extends AbstractCallback
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
 
+		$this->logger->debug("Sending email plugins_update_done (results of plugin updates)", $data->toArray());
+
 		$this->enqueueEmail($data, $site->id, 'now');
 	}
 
@@ -581,6 +583,8 @@ class PluginsUpdate extends AbstractCallback
 		$data->set('email_variables', $variables);
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $this->getSiteNotificationEmails($config));
+
+		$this->logger->debug("Sending email plugin_update_found (plugin updates found)", $data->toArray());
 
 		$this->enqueueEmail($data, $site->id, 'now');
 	}

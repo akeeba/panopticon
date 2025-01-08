@@ -471,6 +471,8 @@ class UpdateSummaryEmail extends AbstractCallback
 			$data->set('only_email_groups', true);
 		}
 
+		$this->logger->debug("Sending email scheduled_update_summary (scheduled update summary)", $data->toArray());
+
 		// Enqueue the email
 		$this->enqueueEmail($data, $this->site->id, 'now');
 	}

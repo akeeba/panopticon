@@ -172,6 +172,9 @@ class Users extends DataModel
 		);
 		$data->set('recipient_id', $user->getId());
 
+		$logger = Factory::getContainer()->loggerFactory->get('login');
+		$logger->debug('Sending email pwreset: password reset', $data->toArray());
+
 		$this->enqueueEmail($data, null);
 	}
 

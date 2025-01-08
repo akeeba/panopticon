@@ -298,6 +298,8 @@ class SSLTLSExpiration extends AbstractCallback
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $this->getSiteNotificationEmails($siteConfig->toObject()));
 
+		$this->logger->debug("Sending email ssl_tls_expiring (SSL/TLS certificate expiration warning)", $data->toArray());
+
 		$this->enqueueEmail($data, $site->id, 'now');
 	}
 

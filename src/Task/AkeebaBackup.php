@@ -319,8 +319,15 @@ class AkeebaBackup extends AbstractCallback
 			default => 'email_default',
 		};
 
+		$whichType = match($type) {
+			'akeebabackup_success' => 'Successful backup',
+			default => 'Failed backup'
+		};
+
 		if (!$params->get($checkKey, 1))
 		{
+			$this->logger->debug("Will NOT send email $type ($whichType) -- This email type has been disabled in the site's options in Panopticon");
+
 			return;
 		}
 
@@ -338,6 +345,8 @@ class AkeebaBackup extends AbstractCallback
 		$data->set('template', $type);
 		$data->set('email_variables', $vars);
 		$data->set('permissions', ['panopticon.admin', 'panopticon.editown']);
+
+		$this->logger->debug("Sending email $type ($whichType)", $data->toArray());
 
 		$this->enqueueEmail($data, $site->getId(), 'now');
 	}

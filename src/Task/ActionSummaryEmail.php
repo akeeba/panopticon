@@ -176,6 +176,8 @@ class ActionSummaryEmail extends AbstractCallback
 			$data->set('only_email_groups', true);
 		}
 
+		$this->logger->debug('Sending email action_summary (action summary)', $data->toArray());
+
 		$this->enqueueEmail($data, $this->site->id, 'now');
 
 		return Status::OK->value;

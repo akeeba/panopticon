@@ -323,6 +323,8 @@ class DomainExpiration extends AbstractCallback
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $this->getSiteNotificationEmails($siteConfig->toObject()));
 
+		$this->logger->debug("Sending email domain_expiring (domain expiration warning)", $data->toArray());
+
 		$this->enqueueEmail($data, $site->id, 'now');
 	}
 

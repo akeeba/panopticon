@@ -556,6 +556,8 @@ class ExtensionsUpdate extends AbstractCallback
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
 
+		$this->logger->debug("Sending email extensions_update_done (results of extension updates)", $data->toArray());
+
 		$this->enqueueEmail($data, $site->id, 'now');
 	}
 
@@ -591,6 +593,8 @@ class ExtensionsUpdate extends AbstractCallback
 		$data->set('email_variables', $variables);
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $this->getSiteNotificationEmails($config));
+
+		$this->logger->debug("Sending email extensions_update_found (extension updates found)", $data->toArray());
 
 		$this->enqueueEmail($data, $site->id, 'now');
 	}
