@@ -74,6 +74,23 @@ $isJoomla3       = str_ends_with(rtrim($this->item->url, '/'), '/panopticon_api'
     <p>
         @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY')
     </p>
+    <details class="text-info mb-3">
+        <summary class="mb-1">
+            <span class="fa fa-question-circle" aria-hidden="true"></span>
+            <span>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIPS')</span>
+        </summary>
+        <ul class="text-body">
+            @if($this->item->cmsType() === CMSType::JOOMLA)
+                <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1')</li>
+                <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2')</li>
+                <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3')</li>
+            @else
+                <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1_WP')</li>
+                <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP')</li>
+                <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP')</li>
+            @endif
+        </ul>
+    </details>
 @else
     {{-- Akeeba Backup JSON API error --}}
     <p class="fw-semibold">

@@ -7,6 +7,7 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupCannotConnectException;
 use Akeeba\Panopticon\Model\Exception\AkeebaBackupIsNotPro;
@@ -64,8 +65,8 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                         {{{ $lastRefreshResponse?->reasonPhrase ?? ''  }}}
                     </span>
                 </p>
-                    <?php
-                    $body = @json_decode($lastRefreshResponse?->body ?? '{}') ?>
+					<?php
+					$body = @json_decode($lastRefreshResponse?->body ?? '{}') ?>
                 @if (is_array($body?->errors ?? '') && !empty($body?->errors ?? ''))
                     <ul class="text-body-secondary list-unstyled ms-4">
                         @foreach($body?->errors as $errorInfo)
@@ -165,6 +166,23 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
         <p>
             @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY')
         </p>
+        <details class="text-info mb-3">
+            <summary class="mb-1">
+                <span class="fa fa-question-circle" aria-hidden="true"></span>
+                <span>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIPS')</span>
+            </summary>
+            <ul class="text-body">
+                @if($this->item->cmsType() === CMSType::JOOMLA)
+                    <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1')</li>
+                    <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2')</li>
+                    <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3')</li>
+                @else
+                    <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1_WP')</li>
+                    <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP')</li>
+                    <li>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP')</li>
+                @endif
+            </ul>
+        </details>
         @if ($this->canEdit)
             <p>
                 <a href="@route(sprintf('index.php?view=site&task=akeebaBackupRelink&id=%d&%s=1', $this->item->getId(), $token))"
@@ -178,65 +196,65 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
 @stop
 
 @repeatable('abErrorException')
-    <?php
-    $token               = $this->container->session->getCsrfToken()->getValue();
-    ?>
-    <div class="alert alert-danger">
-        <h4 class="alert-heading fs-5">
-            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-            @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_HEAD')
-        </h4>
+	<?php
+	$token = $this->container->session->getCsrfToken()->getValue();
+	?>
+<div class="alert alert-danger">
+    <h4 class="alert-heading fs-5">
+        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_HEAD')
+    </h4>
+    <p>
+        @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_BODY')
+    </p>
+    @if ($this->canEdit)
         <p>
-            @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_BODY')
+            <a href="@route(sprintf('index.php?view=site&task=akeebaBackupRelink&id=%d&%s=1', $this->item->getId(), $token))"
+               role="button" class="btn btn-primary">
+                <span class="fa fa-refresh" aria-hidden="true"></span>
+                @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_RELINK')
+            </a>
         </p>
-        @if ($this->canEdit)
-            <p>
-                <a href="@route(sprintf('index.php?view=site&task=akeebaBackupRelink&id=%d&%s=1', $this->item->getId(), $token))"
-                   role="button" class="btn btn-primary">
-                    <span class="fa fa-refresh" aria-hidden="true"></span>
-                    @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_RELINK')
-                </a>
-            </p>
-        @endif
+    @endif
+    <p>
+        <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TYPE')</strong>: {{ get_class($this->backupRecords) }}
+    </p>
+    <p>
+        <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_CODE')</strong>: {{ $this->backupRecords->getCode() }}
+    </p>
+    <p>
+        <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_MESSAGE')</strong>: {{ $this->backupRecords->getMessage() }}
+    </p>
+    @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
         <p>
-            <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TYPE')</strong>: {{ get_class($this->backupRecords) }}
+            <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TROUBLESHOOTING')</strong>:
         </p>
-        <p>
-            <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_CODE')</strong>: {{ $this->backupRecords->getCode() }}
-        </p>
-        <p>
-            <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_MESSAGE')</strong>: {{ $this->backupRecords->getMessage() }}
-        </p>
-        @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
-            <p>
-                <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TROUBLESHOOTING')</strong>:
-            </p>
-            <pre>{{ $this->backupRecords->getTraceAsString() }}</pre>
-        @endif
-    </div>
+        <pre>{{ $this->backupRecords->getTraceAsString() }}</pre>
+    @endif
+</div>
 @endrepeatable
 
 @section('abRunStatus')
-	<?php
-	$allSchedules    = $this->item->akeebaBackupGetAllScheduledTasks();
-	$allPending      = $allSchedules->filter(
-		fn(Task $task) => in_array(
-			$task->last_exit_code,
-			[Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
-		)
-	)->count();
-	$manualSchedules = $this->item->akeebaBackupGetEnqueuedTasks();
-	$manualPending   = $manualSchedules->filter(
-		fn(Task $task) => in_array(
-			$task->last_exit_code,
-			[Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
-		)
-	)->count();
-	$manualDone      = $manualSchedules->filter(
-		fn(Task $task) => $task->last_exit_code == Status::OK->value
-	)->count();
-	$manualError     = $manualSchedules->count() - $manualDone - $manualPending;
-	?>
+		<?php
+		$allSchedules    = $this->item->akeebaBackupGetAllScheduledTasks();
+		$allPending      = $allSchedules->filter(
+			fn(Task $task) => in_array(
+				$task->last_exit_code,
+				[Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
+			)
+		)->count();
+		$manualSchedules = $this->item->akeebaBackupGetEnqueuedTasks();
+		$manualPending   = $manualSchedules->filter(
+			fn(Task $task) => in_array(
+				$task->last_exit_code,
+				[Status::RUNNING->value, Status::WILL_RESUME->value, Status::INITIAL_SCHEDULE->value]
+			)
+		)->count();
+		$manualDone      = $manualSchedules->filter(
+			fn(Task $task) => $task->last_exit_code == Status::OK->value
+		)->count();
+		$manualError     = $manualSchedules->count() - $manualDone - $manualPending;
+		?>
     @if($allPending)
         <div class="alert alert-info">
             <span class="fa fa-play" aria-hidden="true"></span>
