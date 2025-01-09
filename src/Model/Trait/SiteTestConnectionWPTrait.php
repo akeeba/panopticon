@@ -31,10 +31,6 @@ trait SiteTestConnectionWPTrait
 {
 	public function testConnectionWordPress(bool $getWarnings = true): array
 	{
-		/** @var \Akeeba\Panopticon\Container $container */
-		$container = $this->container;
-		$client    = $container->httpFactory->makeClient(cache: false, singleton: false);
-
 		$session = $this->getContainer()->segment;
 		$session->set('testconnection.step', null);
 		$session->set('testconnection.http_status', null);
@@ -47,12 +43,48 @@ trait SiteTestConnectionWPTrait
 		$session->set('testconnection.exception.trace', null);
 
 		// Try to get wp/v2/media unauthenticated
+		$this->tryAccessWordPressJsonApiUnauthenticated();
+
+		// Try to access wp/v2/posts **authenticated**
+		$results = $this->tryAccessWordPressJsonApiAuthenticated();
+
+		// Check if Panopticon is enabled
+		$this->ensurePanopticonConnectorInstalled($results);
+
+		$warnings = [];
+
+		if ($getWarnings)
+		{
+			// Check if Akeeba Backup and its API plugin are enabled
+			if (!$this->isAkeebaBackupProfessionalDetected($results))
+			{
+				$warnings[] = 'akeebabackup';
+			}
+
+			// Check for Admin Tools plugin
+			if (!$this->isAdminToolsProfessionalDetected($results))
+			{
+				$warnings[] = 'admintools';
+			}
+		}
+
+		$session->set('testconnection.step', null);
+		$this->updateDebugInfoInSession(null, null, null);
+
+		return $warnings;
+	}
+
+	private function tryAccessWordPressJsonApiUnauthenticated(string $path = '/wp/v2/media'): void
+	{
+		// Try to get wp/v2/media unauthenticated
+		$session = $this->getContainer()->segment;
+
 		try
 		{
 			$totalTimeout   = max(30, $this->container->appConfig->get('max_execution', 60) / 2);
 			$connectTimeout = max(5, $totalTimeout / 5);
 
-			$options                                  = $container->httpFactory->getDefaultRequestOptions();
+			$options                                  = $this->container->httpFactory->getDefaultRequestOptions();
 			$options[RequestOptions::HEADERS]         = [
 				'Accept'     => 'application/vnd.api+json',
 				'User-Agent' => 'panopticon/' . AKEEBA_PANOPTICON_VERSION,
@@ -63,9 +95,9 @@ trait SiteTestConnectionWPTrait
 
 			$session->set('testconnection.step', 'Unauthenticated access (can I even access the API at all?)');
 
-			[$url,] = $this->getRequestOptions($this, '/wp/v2/media');
+			[$url,] = $this->getRequestOptions($this, $path);
 
-			$response = $client->get($url, $options);
+			$response = $this->container->httpFactory->makeClient(cache: false, singleton: false)->get($url, $options);
 		}
 		catch (GuzzleException $e)
 		{
@@ -162,21 +194,25 @@ trait SiteTestConnectionWPTrait
 				'The API application does not work property (not a JSON response)'
 			);
 		}
+	}
 
-		// Try to access wp/v2/plugins **authenticated**
-		[$url, $options] = $this->getRequestOptions($this, '/wp/v2/posts?per_page=100');
+	private function tryAccessWordPressJsonApiAuthenticated(string $path = '/wp/v2/plugins?per_page=10000'): array
+	{
+		$session = $this->getContainer()->segment;
+
+		[$url, $options] = $this->getRequestOptions($this, $path);
 		$options[RequestOptions::HTTP_ERRORS] = false;
 
 		$session->set('testconnection.step', 'Authenticated access (can I get information out of the API?)');
 
 		try
 		{
-			$response    = $client->get($url, $options);
+			$response    = $this->container->httpFactory->makeClient(cache: false, singleton: false)->get($url, $options);
 			$bodyContent = $response?->getBody()?->getContents();
 		}
 		catch (GuzzleException $e)
 		{
-			$this->updateDebugInfoInSession($response ?? null, $bodyContent, $e);
+			$this->updateDebugInfoInSession($response ?? null, null, $e);
 
 			throw $e;
 		}
@@ -250,7 +286,11 @@ trait SiteTestConnectionWPTrait
 			);
 		}
 
-		// Check if Panopticon is enabled
+		return $results;
+	}
+
+	private function ensurePanopticonConnectorInstalled(array $results): void
+	{
 		$allEnabled = array_reduce(
 			array_filter(
 				$results,
@@ -264,47 +304,29 @@ trait SiteTestConnectionWPTrait
 		{
 			throw new PanopticonConnectorNotEnabled('The Panopticon Connector plugin is not enabled');
 		}
-
-		if (!$getWarnings)
-		{
-			return [];
-		}
-
-		$warnings = [];
-
-		// Check if Akeeba Backup and its API plugin are enabled
-		$allEnabled = count(
-			array_filter(
-				$results,
-				fn(object $data) => str_contains($data->name ?? '', 'Akeeba Backup')
-				                    && ($data->status ?? null) === 'active'
-			)
-		);
-
-		if (!$allEnabled)
-		{
-			$warnings[] = 'akeebabackup';
-		}
-
-		// Check for Admin Tools plugin
-		$allEnabled = count(
-			array_filter(
-				$results,
-				fn(object $data) => str_contains($data->name ?? '', 'Admin Tools')
-				                    && ($data->status ?? null) === 'active'
-			)
-		);
-
-		if (!$allEnabled)
-		{
-			$warnings[] = 'admintools';
-		}
-
-
-		$session->set('testconnection.step', null);
-		$this->updateDebugInfoInSession(null, null, null);
-
-		return $warnings;
 	}
 
+	private function isAkeebaBackupProfessionalDetected(array $results): bool
+	{
+		// Check if Akeeba Backup and its API plugin are enabled
+		return count(
+			array_filter(
+				$results,
+				fn(object $data) => str_contains($data->name ?? '', 'Akeeba Backup Professional')
+				                    && ($data->status ?? null) === 'active'
+			)
+		);
+	}
+
+	private function isAdminToolsProfessionalDetected(array $results): bool
+	{
+		// Check if Akeeba Backup and its API plugin are enabled
+		return count(
+			array_filter(
+				$results,
+				fn(object $data) => str_contains($data->name ?? '', 'Admin Tools Professional')
+				                    && ($data->status ?? null) === 'active'
+			)
+		);
+	}
 }

@@ -130,7 +130,7 @@ class SiteAdd extends AbstractCommand
 			->check();
 
 		$this->ioStyle->info('Testing API connection…');
-		$warnings = $model->testConnection(false);
+		$warnings = $model->testConnection(true);
 
 		// Update the Akeeba Backup information if necessary
 		if (!in_array('akeebabackup', $warnings ?? []))
