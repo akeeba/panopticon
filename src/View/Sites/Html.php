@@ -193,6 +193,8 @@ class Html extends DataViewHtml
 		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
 		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
 
+		$this->addWikiHelpButton();
+
 		return true;
 	}
 
@@ -308,7 +310,11 @@ class Html extends DataViewHtml
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 		Template::addJs('media://js/site-edit.js', $this->getContainer()->application);
 
-		return $this->onBeforeAddCrud();
+		$ret = $this->onBeforeAddCrud();
+
+		$this->addWikiHelpButton();
+
+		return $ret;
 	}
 
 	public function onBeforeEdit()
@@ -355,7 +361,11 @@ class Html extends DataViewHtml
 		Template::addJs('media://js/remember-tab.js', $this->getContainer()->application);
 		Template::addJs('media://js/site-edit.js', $this->getContainer()->application);
 
-		return $this->onBeforeEditCrud();
+		$ret = $this->onBeforeEditCrud();
+
+		$this->addWikiHelpButton();
+
+		return $ret;
 	}
 
 	public function onBeforeRead(): bool
@@ -933,5 +943,22 @@ JS;
 		$now = new DateTime();
 
 		return $now->sub($interval);
+	}
+
+	/**
+	 * Adds a "Help on the wiki" button, linking to the connection troubleshooting information.
+	 *
+	 * @return void
+	 * @since  1.3.3
+	 */
+	private function addWikiHelpButton(): void
+	{
+		$this->container->application->getDocument()->getToolbar()->addButtonFromDefinition([
+			'id'    => 'help',
+			'title' => $this->getLanguage()->text('PANOPTICON_MFA_LBL_HELP'),
+			'class' => 'btn btn-info target-blank',
+			'url'   => 'https://github.com/akeeba/panopticon/wiki/Connection-Troubleshooting',
+			'icon'  => 'fa fa-life-ring',
+		]);
 	}
 }

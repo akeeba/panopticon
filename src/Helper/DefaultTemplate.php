@@ -216,9 +216,14 @@ abstract class DefaultTemplate
 
 			if (!empty($button->getUrl()))
 			{
+				$classes = array_filter(explode(' ', $button->getClass()));
+				$target = in_array('target-blank', $classes) ? 'target="_blank"' : '';
 				$html .= sprintf(
-					'<a class="btn btn-sm %s" href="%s" id="%s">', $button->getClass(), $button->getUrl(),
+					'<a class="btn btn-sm %s" href="%s" id="%s" %s>',
+					$button->getClass(),
+					$button->getUrl(),
 					$button->getId(),
+					$target
 				);
 				$html .= $icon . $button->getTitle();
 				$html .= '</a>';
