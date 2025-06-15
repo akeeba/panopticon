@@ -1108,7 +1108,7 @@ class Sites extends DataController
 			if ($this->enqueuePluginUpdate($site, $id, user: $this->container->userManager->getUser()))
 			{
 				/** @noinspection PhpParamsInspection */
-				$this->scheduleExtensionsUpdateForSite($site, $this->container);
+				$this->schedulePluginsUpdateForSite($site, $this->container);
 			}
 
 			$type    = 'info';
