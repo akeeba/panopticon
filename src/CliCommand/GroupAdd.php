@@ -12,7 +12,6 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Groups;
-use Complexify\Complexify;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -65,7 +64,7 @@ class GroupAdd extends AbstractCommand
 		if (count($items))
 		{
 			$this->ioStyle->error(
-				sprintf('User %s already exists.', $title)
+				sprintf('Group %s already exists.', $title)
 			);
 
 			return Command::FAILURE;
@@ -100,13 +99,5 @@ class GroupAdd extends AbstractCommand
 			->addOption('title', null, InputOption::VALUE_REQUIRED, 'Title')
 			->addOption('permission', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'Which permission(s) to add to the group')
 		;
-	}
-
-	private function getComplexify(): Complexify
-	{
-		return new Complexify([
-			'minimumChars' => 12,
-			'encoding'     => 'UTF-8',
-		]);
 	}
 }
