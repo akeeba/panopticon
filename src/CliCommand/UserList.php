@@ -74,5 +74,4 @@ class UserList extends AbstractCommand
 				'Search among user full names, usernames, and email addresses'
 			);
 	}
-
 }
