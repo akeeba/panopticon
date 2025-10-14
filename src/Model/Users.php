@@ -40,7 +40,7 @@ class Users extends DataModel
 	use PasskeyTrait;
 	use MFATrait;
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->tableName   = '#__users';
 		$this->idFieldName = 'id';

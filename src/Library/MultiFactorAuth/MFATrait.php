@@ -169,7 +169,7 @@ trait MFATrait
 		return true;
 	}
 
-	private function isForcedMFAEnabled(UserInterface $user = null): bool
+	private function isForcedMFAEnabled(?UserInterface $user = null): bool
 	{
 		$user ??= Factory::getContainer()->userManager->getUser();
 

@@ -100,7 +100,7 @@ class Selfupdate extends Model
 	 */
 	private string $updateStreamUrl;
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		parent::__construct($container);
 

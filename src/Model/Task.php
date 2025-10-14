@@ -56,7 +56,7 @@ class Task extends DataModel
 
 	private const DB_LOCK_TIMEOUT = 5;
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->tableName   = '#__tasks';
 		$this->idFieldName = 'id';

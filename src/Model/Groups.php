@@ -22,7 +22,7 @@ use Awf\Utils\ArrayHelper;
  */
 class Groups extends DataModel
 {
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->tableName   = '#__groups';
 		$this->idFieldName = 'id';

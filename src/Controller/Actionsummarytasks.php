@@ -28,7 +28,7 @@ class Actionsummarytasks extends DataController
 
 	private Site $site;
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->modelName = 'Task';
 

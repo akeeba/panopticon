@@ -38,7 +38,7 @@ class Mfa extends DataModel
 	 */
 	private array $deleteFlags = [];
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->tableName   = '#__mfa';
 		$this->idFieldName = 'id';

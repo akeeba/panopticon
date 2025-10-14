@@ -93,7 +93,7 @@ class Site extends DataModel
 	 */
 	private ?array $groupMaps = null;
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->tableName   = '#__sites';
 		$this->idFieldName = 'id';

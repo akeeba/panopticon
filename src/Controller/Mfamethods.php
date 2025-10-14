@@ -22,7 +22,7 @@ class Mfamethods extends Controller
 {
 	use ACLTrait;
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->default_view = 'mfamethods';
 
@@ -423,7 +423,7 @@ class Mfamethods extends Controller
 	 *
 	 * @param   User|null  $user  User record. Null to use current user.
 	 */
-	private function _assertCanEdit(User $user = null): void
+	private function _assertCanEdit(?User $user = null): void
 	{
 		$user ??= $this->container->userManager->getUser();
 

@@ -27,7 +27,7 @@ class Mailtemplates extends DataModel
 {
 	private const CSS_KEY = 'mail.common_css';
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->tableName   = '#__mailtemplates';
 		$this->idFieldName = 'id';

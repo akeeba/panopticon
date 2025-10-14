@@ -22,7 +22,7 @@ class Main extends Controller
 	use ACLTrait;
 	use TasksPausedTrait;
 
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->modelName = 'site';
 

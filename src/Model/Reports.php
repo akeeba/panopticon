@@ -60,7 +60,7 @@ class Reports extends DataModel
 	];
 
 	/** @inheritdoc */
-	public function __construct(Container $container = null)
+	public function __construct(?Container $container = null)
 	{
 		$this->tableName   = '#__reports';
 		$this->idFieldName = 'id';

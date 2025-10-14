@@ -29,7 +29,7 @@ class Backupcodes extends Model
 	 * @return  Mfa|null  Record object or null if none is found
 	 * @throws  \Exception
 	 */
-	public function getBackupCodesRecord(User $user = null): ?Mfa
+	public function getBackupCodesRecord(?User $user = null): ?Mfa
 	{
 		// Make sure I have a user
 		$user ??= $this->container->userManager->getUser();
@@ -58,7 +58,7 @@ class Backupcodes extends Model
 	 *
 	 * @throws \Exception
 	 */
-	public function regenerateBackupCodes(User $user = null): void
+	public function regenerateBackupCodes(?User $user = null): void
 	{
 		// Make sure I have a user
 		$user ??= $this->container->userManager->getUser();
@@ -144,7 +144,7 @@ class Backupcodes extends Model
 	 * @return  array|null  The backup codes, or null if they do not exist
 	 * @throws  \Exception
 	 */
-	public function getBackupCodes(User $user = null): ?array
+	public function getBackupCodes(?User $user = null): ?array
 	{
 		// Make sure I have a user
 		$user ??= $this->container->userManager->getUser();

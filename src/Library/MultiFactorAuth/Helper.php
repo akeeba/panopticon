@@ -63,7 +63,7 @@ abstract class Helper
 	 *
 	 * @since   1.0.0
 	 */
-	public static function getUserMfaRecords(Container $container = null, ?int $user_id): array
+	public static function getUserMfaRecords(?Container $container = null, ?int $user_id = null): array
 	{
 		if (empty($user_id))
 		{

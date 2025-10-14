@@ -14,7 +14,7 @@ use Awf\User\UserInterface;
 
 trait PasskeyTrait
 {
-	private function isForcedPasskeyLoginEnabled(UserInterface $user = null): bool
+	private function isForcedPasskeyLoginEnabled(?UserInterface $user = null): bool
 	{
 		$user ??= Factory::getContainer()->userManager->getUser();
 

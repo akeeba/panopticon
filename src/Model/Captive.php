@@ -91,7 +91,7 @@ class Captive extends Model
 	 *
 	 * @since   1.0.0
 	 */
-	public function getRecords(User $user = null, bool $includeBackupCodes = false): array
+	public function getRecords(?User $user = null, bool $includeBackupCodes = false): array
 	{
 		$user ??= $this->container->userManager->getUser();
 

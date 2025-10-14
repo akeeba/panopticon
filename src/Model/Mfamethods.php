@@ -179,7 +179,7 @@ class Mfamethods extends Model
 	 *
 	 * @since   1.0.0
 	 */
-	public function getRecord(User $user = null): Mfa
+	public function getRecord(?User $user = null): Mfa
 	{
 		$user ??= $this->container->userManager->getUser();
 
@@ -289,7 +289,7 @@ class Mfamethods extends Model
 	 *
 	 * @since   1.0.0
 	 */
-	protected function getDefaultRecord(User $user = null): Mfa
+	protected function getDefaultRecord(?User $user = null): Mfa
 	{
 		$user ??= $this->container->userManager->getUser();
 
