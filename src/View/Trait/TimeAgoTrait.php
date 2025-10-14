@@ -26,8 +26,8 @@ trait TimeAgoTrait
 	 * @return  string  For example, "10 seconds ago"
 	 */
 	protected function timeAgo(
-		int|Date|DateTime $referenceTimestamp = 0, int|Date|DateTime $currentTimestamp = null, string $timeUnit = '',
-		bool $autoSuffix = true, ?Language $languageObject = null
+		int|Date|DateTime $referenceTimestamp = 0, int|Date|DateTime|null $currentTimestamp = null,
+		string $timeUnit = '', bool $autoSuffix = true, ?Language $languageObject = null
 	): string
 	{
 		$languageObject ??= $this->getLanguage();

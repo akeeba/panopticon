@@ -82,7 +82,7 @@ $hasError                = !empty(trim($this->siteConfig->get('core.lastErrorMes
                     @sprintf('PANOPTICON_SITE_LBL_PHP_EOL', $this->escape($php))
                 </h3>
 
-                @sprintf('PANOPTICON_SITE_LBL_PHP_EOL_INFO', $this->escape($php), $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RFC7231)), $this->escape($minimumSupportedBranch))
+                @sprintf('PANOPTICON_SITE_LBL_PHP_EOL_INFO', $this->escape($php), $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RSS)), $this->escape($minimumSupportedBranch))
             </div>
             <details class="small">
                 <summary class="fw-bold text-body-secondary">
@@ -118,7 +118,7 @@ $hasError                = !empty(trim($this->siteConfig->get('core.lastErrorMes
             </div>
 
             <p class="text-muted">
-                @sprintf('PANOPTICON_SITE_LBL_PHP_SECURITY_ONLY', $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RFC7231)))
+                @sprintf('PANOPTICON_SITE_LBL_PHP_SECURITY_ONLY', $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RSS)))
             </p>
 
             <hr>
@@ -141,13 +141,13 @@ $hasError                = !empty(trim($this->siteConfig->get('core.lastErrorMes
             </div>
 
             <p class="text-muted">
-                @sprintf('PANOPTICON_SITE_LBL_PHP_VERSION_INFO', $this->getContainer()->html->basic->date($versionInfo?->dates?->activeSupport?->format(DATE_RFC7231)), $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RFC7231)))
+                @sprintf('PANOPTICON_SITE_LBL_PHP_VERSION_INFO', $this->getContainer()->html->basic->date($versionInfo?->dates?->activeSupport?->format(DATE_RSS)), $this->getContainer()->html->basic->date($versionInfo?->dates?->eol?->format(DATE_RSS)))
             </p>
 
             @if (!$isLatestBranch)
                 <hr>
                 <p class="text-warning-emphasis">
-                    @sprintf('PANOPTICON_SITE_LBL_PHP_NEWER_BRANCH_AVAILABLE', $this->escape($phpVersion->getLatestBranch()), $this->getContainer()->html->basic->date($versionInfo?->dates?->activeSupport?->format(DATE_RFC7231)))
+                    @sprintf('PANOPTICON_SITE_LBL_PHP_NEWER_BRANCH_AVAILABLE', $this->escape($phpVersion->getLatestBranch()), $this->getContainer()->html->basic->date($versionInfo?->dates?->activeSupport?->format(DATE_RSS)))
                 </p>
             @endif
         @endif
