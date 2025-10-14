@@ -50,7 +50,6 @@ class LogRotate extends AbstractCallback
 
 		$refObj = new \ReflectionObject($rotator);
 		$refProp = $refObj->getProperty('processor');
-		$refProp->setAccessible(true);
 		$refProp->setValue($rotator, new CustomRotativeProcessor());
 
 		$rotator

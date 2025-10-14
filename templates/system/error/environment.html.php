@@ -142,7 +142,6 @@ if ($segment !== null)
 {
 	$refObj  = new ReflectionObject($segment);
 	$refProp = $refObj->getProperty('data');
-	$refProp->setAccessible(true);
 	errorHandlerPrettyPrintArray($refProp->getValue($segment));
 }
 else

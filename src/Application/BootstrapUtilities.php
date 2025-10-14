@@ -343,8 +343,6 @@ final class BootstrapUtilities
 
 		$refBlade = new ReflectionObject(Factory::getContainer()->blade);
 		$refProp  = $refBlade->getProperty('isCacheable');
-		/** @noinspection PhpExpressionResultUnusedInspection */
-		$refProp->setAccessible(true);
 		$refProp->setValue(Factory::getContainer()->blade, false);
 	}
 
