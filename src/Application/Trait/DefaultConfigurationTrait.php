@@ -55,6 +55,7 @@ trait DefaultConfigurationTrait
 			'cron_stuck_threshold'     => 3,
 			'max_execution'            => 60,
 			'execution_bias'           => 75,
+			'accurate_php_cli'         => '1',
 			'siteinfo_freq'            => 60,
 			'tasks_coreupdate_install' => 'patch',
 			'tasks_extupdate_install'  => 'none',
@@ -109,9 +110,9 @@ trait DefaultConfigurationTrait
 		$values = match ($key)
 		{
 			'finished_setup', 'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings',
-			'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto', 'dbbackup_compress',
-			'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt', 'login_lockout_extend',
-			'login_failure_enable', 'session_use_default_path' => [
+			'accurate_php_cli', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto',
+			'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt',
+			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path' => [
 				'true',
 				'yes',
 				'1',
@@ -153,9 +154,9 @@ trait DefaultConfigurationTrait
 		return match ($key)
 		{
 			'finished_setup', 'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings',
-			'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto', 'dbbackup_compress',
-			'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt', 'login_lockout_extend',
-			'login_failure_enable', 'session_use_default_path'
+			'accurate_php_cli', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto',
+			'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt',
+			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path'
 			=> [$this, 'validateBool'],
 			'session_timeout' => fn($x) => $this->validateInteger($x, 1440, 3, 535600),
 			'session_save_levels' => fn($x) => $this->validateInteger($x, 0, 0, 5),

@@ -3,6 +3,7 @@ Akeeba Panopticon 1.3.3
 ================================================================================
 + Links to the Connection Troubleshooting wiki page
 ~ PHP 8.5 compatibility
+# [LOW] Cannot save the "Accurate PHP-CLI path" setting.
 # [HIGH] Manually enqueueing a WordPress plugin update in the UI does not schedule the plugins update task for the site.
 
 Akeeba Panopticon 1.3.2
