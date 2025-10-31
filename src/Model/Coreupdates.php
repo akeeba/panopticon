@@ -22,7 +22,7 @@ class Coreupdates extends Site
 	public function buildQuery($overrideLimits = false)
 	{
 		// Get a "select all" query
-		$db    = $this->getDbo();
+		$db = $this->getDbo();
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($this->getTableName());
@@ -54,7 +54,7 @@ class Coreupdates extends Site
 				$order = $this->getIdFieldName();
 			}
 
-			$order = $db->qn($order);
+			$order = $db->quoteName($order);
 
 			$dir = strtoupper($this->getState('filter_order_Dir', 'ASC', 'cmd'));
 
@@ -116,7 +116,8 @@ class Coreupdates extends Site
 		{
 			$query->where(
 				'(' .
-				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote(CMSType::JOOMLA->value) .
+				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote(CMSType::JOOMLA->value)
+				.
 				' OR ' .
 				$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' IS NULL' .
 				')'
@@ -138,7 +139,9 @@ class Coreupdates extends Site
 		}
 
 		// Filters: latest CMS family
-		[$fltLatestType, $fltLatestFamily] = $this->separateCmsFamilyFilter($this->getState('latestFamily', null, 'cmd'));
+		[$fltLatestType, $fltLatestFamily] = $this->separateCmsFamilyFilter(
+			$this->getState('latestFamily', null, 'cmd')
+		);
 
 		if ($fltLatestType !== null && $fltCmsType !== null && $fltLatestType != $fltCmsType)
 		{

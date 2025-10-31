@@ -34,9 +34,9 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		$db           = $this->getDatabase();
 		$credentialId = base64_encode($publicKeyCredentialId);
 		$query        = $db->getQuery(true)
-			->select($db->qn('credential'))
-			->from($db->qn('#__passkeys'))
-			->where($db->qn('id') . ' = ' . $db->quote($credentialId));
+			->select($db->quoteName('credential'))
+			->from($db->quoteName('#__passkeys'))
+			->where($db->quoteName('id') . ' = ' . $db->quote($credentialId));
 
 		$json = $db->setQuery($query)->loadResult();
 
@@ -72,8 +72,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		$userHandle = $publicKeyCredentialUserEntity->getId();
 		$query      = $db->getQuery(true)
 			->select('*')
-			->from($db->qn('#__passkeys'))
-			->where($db->qn('user_id') . ' = ' . $db->quote($userHandle));
+			->from($db->quoteName('#__passkeys'))
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($userHandle));
 
 		try
 		{
@@ -178,8 +178,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		{
 			$query     = $db->getQuery(true)
 				->select('*')
-				->from($db->qn('#__passkeys'))
-				->where($db->qn('id') . ' = ' . $db->quote($credentialId));
+				->from($db->quoteName('#__passkeys'))
+				->where($db->quoteName('id') . ' = ' . $db->quote($credentialId));
 			$oldRecord = $db->setQuery($query)->loadObject();
 
 			if (\is_null($oldRecord))
@@ -242,8 +242,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		$userHandle = $this->getHandleFromUserId($userId);
 		$query      = $db->getQuery(true)
 			->select('*')
-			->from($db->qn('#__passkeys'))
-			->where($db->qn('user_id') . ' = ' . $db->quote($userHandle));
+			->from($db->quoteName('#__passkeys'))
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($userHandle));
 
 		try
 		{
@@ -317,8 +317,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		$credentialId = base64_encode($credentialId);
 		$query        = $db->getQuery(true)
 			->select('COUNT(*)')
-			->from($db->qn('#__passkeys'))
-			->where($db->qn('id') . ' = ' . $db->quote($credentialId));
+			->from($db->quoteName('#__passkeys'))
+			->where($db->quoteName('id') . ' = ' . $db->quote($credentialId));
 
 		try
 		{
@@ -373,8 +373,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		$db           = $this->getDatabase();
 		$credentialId = base64_encode($credentialId);
 		$query        = $db->getQuery(true)
-			->delete($db->qn('#__passkeys'))
-			->where($db->qn('id') . ' = ' . $db->quote($credentialId));
+			->delete($db->quoteName('#__passkeys'))
+			->where($db->quoteName('id') . ' = ' . $db->quote($credentialId));
 
 		$db->setQuery($query)->execute();
 	}
@@ -456,8 +456,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		// Check that the userHandle does exist in the database
 		$query = $db->getQuery(true)
 			->select('COUNT(*)')
-			->from($db->qn('#__passkeys'))
-			->where($db->qn('user_id') . ' = ' . $db->q($userHandle));
+			->from($db->quoteName('#__passkeys'))
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($userHandle));
 
 		try
 		{
@@ -475,8 +475,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 
 		// Prepare the query
 		$query = $db->getQuery(true)
-			->select([$db->qn('id')])
-			->from($db->qn('#__users'));
+			->select([$db->quoteName('id')])
+			->from($db->quoteName('#__users'));
 
 		$key   = $this->getEncryptionKey();
 		$start = 0;

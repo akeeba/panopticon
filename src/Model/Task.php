@@ -144,9 +144,10 @@ class Task extends DataModel
 
 		// We need to have valid execution start/stop timestamps.
 		if (
-			empty($this->last_execution) || empty($this->last_run_end) ||
-			$this->last_execution == '0000-00-00 00:00:00' || $this->last_run_end == '0000-00-00 00:00:00' ||
-			$this->last_execution == '2000-01-01 00:00:00' || $this->last_run_end == '2000-01-01 00:00:00'
+			empty($this->last_execution) || empty($this->last_run_end) || $this->last_execution == '0000-00-00 00:00:00'
+			|| $this->last_run_end == '0000-00-00 00:00:00'
+			|| $this->last_execution == '2000-01-01 00:00:00'
+			|| $this->last_run_end == '2000-01-01 00:00:00'
 		)
 		{
 			return null;
@@ -167,8 +168,8 @@ class Task extends DataModel
 		$hours = $duration / 3600;
 
 		return sprintf('%02d', $hours) . ':' .
-			sprintf('%02d', $minutes) . ':' .
-			sprintf('%02d', $seconds);
+		       sprintf('%02d', $minutes) . ':' .
+		       sprintf('%02d', $seconds);
 
 	}
 
@@ -197,13 +198,15 @@ class Task extends DataModel
 				$tz = 'UTC';
 			}
 
-			$cron_expression      = $this->cron_expression instanceof CronExpression
+			$cron_expression = $this->cron_expression instanceof CronExpression
 				? $this->cron_expression
 				: new CronExpression($this->cron_expression);
 			// Warning! The last execution time is ALWAYS stored in UTC
-			$relativeTime         = ($this->container->dateFactory($this->last_execution ?: 'now', 'UTC'))->format('Y-m-d\TH:i:sP', false, false);
+			$relativeTime = ($this->container->dateFactory($this->last_execution ?: 'now', 'UTC'))->format(
+				'Y-m-d\TH:i:sP', false, false
+			);
 			// The call to getNextRunDate must use our local timezone because the CRON expression is in local time
-			$nextRun              = $cron_expression->getNextRunDate($relativeTime, timeZone: $tz)->format(DATE_W3C);
+			$nextRun = $cron_expression->getNextRunDate($relativeTime, timeZone: $tz)->format(DATE_W3C);
 
 			/**
 			 * If the disable_next_execution_recalculation state is set to true we'll NOT override next_execution.
@@ -374,10 +377,12 @@ class Task extends DataModel
 			// Failure to save the task means that the task execution has ultimately failed.
 			try
 			{
-				$pendingTask->save([
-					'last_exit_code' => Status::NO_LOCK->value,
-					'last_execution' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
-				]);
+				$pendingTask->save(
+					[
+						'last_exit_code' => Status::NO_LOCK->value,
+						'last_execution' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
+					]
+				);
 			}
 			catch (Exception)
 			{
@@ -486,7 +491,11 @@ class Task extends DataModel
 			}
 			else
 			{
-				$logger->info(sprintf('Task finished with status “%s”', Status::tryFrom($pendingTask->last_exit_code)->forHumans()));
+				$logger->info(
+					sprintf(
+						'Task finished with status “%s”', Status::tryFrom($pendingTask->last_exit_code)->forHumans()
+					)
+				);
 			}
 
 			$pendingTask->storage = $pendingTask->last_exit_code !== Status::WILL_RESUME->value
@@ -498,29 +507,37 @@ class Task extends DataModel
 			$logger->error(sprintf('Unknown Task type ‘%s’', $pendingTask->type));
 
 			$pendingTask->last_exit_code = Status::NO_ROUTINE->value;
-			$pendingTask->storage = '{}';
+			$pendingTask->storage        = '{}';
 			$pendingTask->times_failed++;
 		}
 		catch (Throwable $e)
 		{
-			$logger->error(sprintf(
-				'Task failed with exception type %s [%s:%d]: %s',
-				get_class($e),
-				$e->getFile(),
-				$e->getLine(),
-				$e->getMessage()
-			));
+			$logger->error(
+				sprintf(
+					'Task failed with exception type %s [%s:%d]: %s',
+					get_class($e),
+					$e->getFile(),
+					$e->getLine(),
+					$e->getMessage()
+				)
+			);
 
 			$pendingTask->last_exit_code = Status::EXCEPTION->value;
-			$pendingTask->storage        = json_encode([
-				'error' => $e->getMessage(),
-				'trace' => $e->getFile() . '::' . $e->getLine() . "\n" . $e->getTraceAsString(),
-			]);
+			$pendingTask->storage        = json_encode(
+				[
+					'error' => $e->getMessage(),
+					'trace' => $e->getFile() . '::' . $e->getLine() . "\n" . $e->getTraceAsString(),
+				]
+			);
 			$pendingTask->times_failed++;
 		}
 		finally
 		{
-			$params        = is_object($pendingTask->params) ? $pendingTask->params : new Registry($pendingTask->params);
+			$params        = is_object($pendingTask->params)
+				? $pendingTask->params
+				: new Registry(
+					$pendingTask->params
+				);
 			$isInvalidTask = $pendingTask->last_exit_code === Status::NO_ROUTINE->value;
 			$isError       = $pendingTask->last_exit_code === Status::EXCEPTION->value;
 			$isResumable   = $pendingTask->last_exit_code === Status::WILL_RESUME->value;
@@ -552,19 +569,23 @@ class Task extends DataModel
 			try
 			{
 				$this->lockTables();
-				$pendingTask->save([
-					'last_run_end' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
-				]);
+				$pendingTask->save(
+					[
+						'last_run_end' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
+					]
+				);
 				$this->unlockTables();
 			}
 			catch (Exception)
 			{
 				$logger->error('Failed to update the task\'s last execution information');
 
-				$pendingTask->save([
-					'last_run_end'   => ($this->container->dateFactory('now', 'UTC'))->toSql(),
-					'last_exit_code' => Status::NO_RELEASE->value,
-				]);
+				$pendingTask->save(
+					[
+						'last_run_end'   => ($this->container->dateFactory('now', 'UTC'))->toSql(),
+						'last_exit_code' => Status::NO_RELEASE->value,
+					]
+				);
 			}
 
 			if (($runOnceAction === 'delete') && !$isError && !$isInvalidTask && !$isResumable)
@@ -595,16 +616,20 @@ class Task extends DataModel
 			->sub(new DateInterval('PT' . $threshold . 'M'));
 
 		$query = $db->getQuery(true)
-			->update($db->qn($this->tableName))
-			->set([
-				$db->qn('last_exit_code') . ' = ' . Status::TIMEOUT->value,
-				$db->qn('last_run_end') . ' = NOW()',
-				$db->qn('storage') . ' = NULL',
-			])
-			->where([
-				$db->qn('last_exit_code') . ' = ' . Status::RUNNING->value,
-				$db->qn('last_execution') . ' <= ' . $db->quote($cutoffTime->toSql()),
-			]);
+			->update($db->quoteName($this->tableName))
+			->set(
+				[
+					$db->quoteName('last_exit_code') . ' = ' . Status::TIMEOUT->value,
+					$db->quoteName('last_run_end') . ' = NOW()',
+					$db->quoteName('storage') . ' = NULL',
+				]
+			)
+			->where(
+				[
+					$db->quoteName('last_exit_code') . ' = ' . Status::RUNNING->value,
+					$db->quoteName('last_execution') . ' <= ' . $db->quote($cutoffTime->toSql()),
+				]
+			);
 
 		$db->setQuery($query)->execute();
 	}
@@ -614,10 +639,12 @@ class Task extends DataModel
 		// The request has timed out. Whomp, whomp.
 		if (in_array(connection_status(), [2, 3]))
 		{
-			$pendingTask->save([
-				'last_exit_code' => Status::TIMEOUT->value,
-				'storage'        => null,
-			]);
+			$pendingTask->save(
+				[
+					'last_exit_code' => Status::TIMEOUT->value,
+					'storage'        => null,
+				]
+			);
 
 			exit(127);
 		}
@@ -628,10 +655,12 @@ class Task extends DataModel
 		$db    = $this->getDbo();
 		$query = $db
 			->getQuery(true)
-			->select([
-				$db->quoteName('id'),
-				$db->quoteName('title'),
-			])
+			->select(
+				[
+					$db->quoteName('id'),
+					$db->quoteName('title'),
+				]
+			)
 			->from($db->quoteName('#__groups'));
 
 		return array_map(fn($x) => $x->title, $db->setQuery($query)->loadObjectList('id') ?: []);
@@ -639,29 +668,31 @@ class Task extends DataModel
 
 	private function getNextTask(): ?self
 	{
-		$db    = $this->getDbo();
+		$db = $this->getDbo();
 
 		$query = $db->getQuery(true)
 			->select('*')
-			->from($db->qn($this->tableName))
+			->from($db->quoteName($this->tableName))
 			->where($db->quoteName('enabled') . ' = 1')
-			->andWhere([
-				$db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value,
-				// -OR-
-				'(' .
-				$db->qn('last_exit_code') . ' != ' . Status::WILL_RESUME->value .
-				' AND ' .
-				$db->qn('last_exit_code') . ' != ' . Status::RUNNING->value .
-				' AND ' .
-				$db->qn('next_execution') . ' <= ' . $db->quote(
-					$this->container->dateFactory('now', 'UTC')->toSql()
-				) .
-				')'
-			])
+			->andWhere(
+				[
+					$db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value,
+					// -OR-
+					'(' .
+					$db->quoteName('last_exit_code') . ' != ' . Status::WILL_RESUME->value .
+					' AND ' .
+					$db->quoteName('last_exit_code') . ' != ' . Status::RUNNING->value .
+					' AND ' .
+					$db->quoteName('next_execution') . ' <= ' . $db->quote(
+						$this->container->dateFactory('now', 'UTC')->toSql()
+					) .
+					')',
+				]
+			)
 			->order(
-				$db->qn('priority') . ' ASC, ' .
-				$db->qn('last_exit_code') . ' DESC, ' .
-				$db->qn('next_execution') . ' ASC'
+				$db->quoteName('priority') . ' ASC, ' .
+				$db->quoteName('last_exit_code') . ' DESC, ' .
+				$db->quoteName('next_execution') . ' ASC'
 			);
 
 		$task = $db->setQuery($query, 0, 1)->loadObject();
@@ -692,9 +723,11 @@ class Task extends DataModel
 		{
 			$connId = $db->setQuery('SELECT CONNECTION_ID()')->loadResult();
 
-			$logger->debug(sprintf(
-				'Got tasks lock [%d]', $connId
-			));
+			$logger->debug(
+				sprintf(
+					'Got tasks lock [%d]', $connId
+				)
+			);
 
 			return true;
 		}
@@ -711,7 +744,7 @@ class Task extends DataModel
 		while (true)
 		{
 			$result = $db->setQuery(
-				'SELECT RELEASE_LOCK('.$db->quote(self::DB_LOCK_NAME).')'
+				'SELECT RELEASE_LOCK(' . $db->quote(self::DB_LOCK_NAME) . ')'
 			)->loadResult();
 
 			if ($result !== 1)

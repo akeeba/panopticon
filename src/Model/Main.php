@@ -195,17 +195,17 @@ class Main extends Model
 				$query = $db->getQuery(true);
 				$query
 					->select(
-							[
-								'DISTINCT SUBSTR(SUBSTRING_INDEX(' .
-								$query->jsonExtract($db->quoteName('config'), '$.core.current.version') .
-								', ' . $db->quote('.') . ', 2) FROM 2) AS ' .
-								$db->quoteName('version'),
-								'IFNULL(' .
-								$query->jsonExtract($db->qn('config'), '$.cmsType') .
-								',' .
-								$db->quote(CMSType::JOOMLA->value) .
-								') AS ' . $db->quoteName('cmsType')
-							]
+						[
+							'DISTINCT SUBSTR(SUBSTRING_INDEX(' .
+							$query->jsonExtract($db->quoteName('config'), '$.core.current.version') .
+							', ' . $db->quote('.') . ', 2) FROM 2) AS ' .
+							$db->quoteName('version'),
+							'IFNULL(' .
+							$query->jsonExtract($db->quoteName('config'), '$.cmsType') .
+							',' .
+							$db->quote(CMSType::JOOMLA->value) .
+							') AS ' . $db->quoteName('cmsType'),
+						]
 					)
 					->from($db->quoteName('#__sites'))
 					->where($db->quoteName('enabled') . ' = 1')
@@ -215,7 +215,9 @@ class Main extends Model
 				{
 					$query->where(
 						'(' .
-						$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote(CMSType::JOOMLA->value) .
+						$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' = ' . $db->quote(
+							CMSType::JOOMLA->value
+						) .
 						' OR ' .
 						$query->jsonExtract($db->quoteName('config'), '$.cmsType') . ' IS NULL' .
 						')'
@@ -241,9 +243,10 @@ class Main extends Model
 				// Separate per CMS
 				$temp = [];
 
-				foreach ($versions as $versionObject) {
-					$type = trim($versionObject->cmsType, '"');
-					$temp[$type] ??= [];
+				foreach ($versions as $versionObject)
+				{
+					$type          = trim($versionObject->cmsType, '"');
+					$temp[$type]   ??= [];
 					$temp[$type][] = $versionObject->version;
 				}
 
@@ -251,9 +254,11 @@ class Main extends Model
 
 				foreach ($types as $type)
 				{
-					uasort($temp[$type], function ($a, $b) {
+					uasort(
+						$temp[$type], function ($a, $b) {
 						version_compare($a ?? '0.0.0', $b ?? '0.0.0');
-					});
+					}
+					);
 				}
 
 				asort($types);
@@ -264,7 +269,8 @@ class Main extends Model
 				{
 					foreach ($temp[$type] as $item)
 					{
-						$versions[$type . '.' . $item] = (CMSType::tryFrom($type)?->forHumans() ?? '(???)') . ' ' . $item;
+						$versions[$type . '.' . $item] = (CMSType::tryFrom($type)?->forHumans() ?? '(???)') . ' '
+						                                 . $item;
 					}
 				}
 

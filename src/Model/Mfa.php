@@ -207,7 +207,7 @@ class Mfa extends DataModel
 				->from($db->quoteName('#__mfa'))
 				->where($db->quoteName('user_id') . ' = ' . $db->quote($this->deleteFlags[$pk]['user_id']));
 
-			$ids   = $db->setQuery($query)->loadColumn();
+			$ids = $db->setQuery($query)->loadColumn();
 
 			if (empty($ids))
 			{
@@ -217,7 +217,7 @@ class Mfa extends DataModel
 			$id    = array_shift($ids);
 			$query = $db->getQuery(true)
 				->update($db->quoteName('#__mfa'))
-				->set($db->qn('default') . ' = 1')
+				->set($db->quoteName('default') . ' = 1')
 				->where($db->quoteName('id') . ' = ' . $db->quote($id));
 
 			$db->setQuery($query)->execute();

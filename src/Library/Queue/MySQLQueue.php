@@ -21,7 +21,9 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 {
 	use ContainerAwareTrait;
 
-	public function __construct(private string $queueIdentifier, private Driver $db, private string $tableName = '#__queue')
+	public function __construct(
+		private string $queueIdentifier, private Driver $db, private string $tableName = '#__queue'
+	)
 	{
 		$this->setContainer(Factory::getContainer());
 	}
@@ -32,13 +34,15 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 		$time  = $this->normaliseTime($time);
 		$query = $db->getQuery(true)
 			->insert($db->quoteName($this->tableName))
-			->columns([
-				$db->quoteName('item'),
-				$db->quoteName('time'),
-			])
+			->columns(
+				[
+					$db->quoteName('item'),
+					$db->quoteName('time'),
+				]
+			)
 			->values(
 				$db->quote(json_encode($item)) . ',' .
-				$db->q($time->toSql())
+				$db->quote($time->toSql())
 			);
 
 		$db->transactionStart();
@@ -60,15 +64,21 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 	{
 		$db    = $this->db;
 		$query = $db->getQuery(true)
-			->select([
-				$db->quoteName('id'),
-				$db->quoteName('item'),
-			])
+			->select(
+				[
+					$db->quoteName('id'),
+					$db->quoteName('item'),
+				]
+			)
 			->from($db->quoteName($this->tableName))
-			->where([
-				$db->quoteName('time') . ' <= NOW()',
-				'JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote(strtolower($this->queueIdentifier)),
-			])
+			->where(
+				[
+					$db->quoteName('time') . ' <= NOW()',
+					'JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote(
+						strtolower($this->queueIdentifier)
+					),
+				]
+			)
 			->order($db->quoteName('time') . 'ASC');
 		// Append this because we can't do this with the query interface
 		$query = (string) $query . ' LIMIT 0, 1 FOR UPDATE';
@@ -120,7 +130,9 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 		$db    = $this->db;
 		$query = $db->getQuery(true)
 			->delete('IGNORE ' . $db->quoteName($this->tableName))
-			->where('JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote($this->queueIdentifier));
+			->where(
+				'JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote($this->queueIdentifier)
+			);
 
 		if (isset($conditions['queueType']))
 		{
@@ -161,7 +173,9 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 		$query = $db->getQuery(true)
 			->select('COUNT(*)')
 			->from($db->quoteName($this->tableName))
-			->where('JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote($this->queueIdentifier));
+			->where(
+				'JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote($this->queueIdentifier)
+			);
 
 		return $db->setQuery($query)->loadResult() ?: 0;
 	}
@@ -182,7 +196,9 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 		$query = $db->getQuery(true)
 			->select('COUNT(*)')
 			->from($db->quoteName($this->tableName))
-			->where('JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote($this->queueIdentifier));
+			->where(
+				'JSON_EXTRACT(' . $db->quoteName('item') . ', \'$.queueType\') = ' . $db->quote($this->queueIdentifier)
+			);
 
 		foreach ($conditions as $key => $value)
 		{

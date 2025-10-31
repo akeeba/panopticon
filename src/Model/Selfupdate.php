@@ -568,11 +568,15 @@ class Selfupdate extends Model
 				->update($db->quoteName('#__mailtemplates'))
 				->set(
 					[
-						$db->qn('subject') . ' = REPLACE(' . $db->qn('subject') . ', ' . $db->quote($from) . ', '
+						$db->quoteName('subject') . ' = REPLACE(' . $db->quoteName('subject') . ', ' . $db->quote($from)
+						. ', '
 						. $db->quote($to) . ')',
-						$db->qn('html') . ' = REPLACE(' . $db->qn('html') . ', ' . $db->quote($from) . ', '
+						$db->quoteName('html') . ' = REPLACE(' . $db->quoteName('html') . ', ' . $db->quote($from)
+						. ', '
 						. $db->quote($to) . ')',
-						$db->qn('plaintext') . ' = REPLACE(' . $db->qn('plaintext') . ', ' . $db->quote($from) . ', '
+						$db->quoteName('plaintext') . ' = REPLACE(' . $db->quoteName('plaintext') . ', ' . $db->quote(
+							$from
+						) . ', '
 						. $db->quote($to) . ')',
 					]
 				)
