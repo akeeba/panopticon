@@ -211,7 +211,7 @@ SVG
 		{
 			$totp = \OTPHP\TOTP::createFromSecret($secret);
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			$totp = \OTPHP\TOTP::generate();
 		}
@@ -284,7 +284,7 @@ SVG
 		{
 			$totp = \OTPHP\TOTP::createFromSecret($options->totp_secret);
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			$totp = \OTPHP\TOTP::generate();
 		}

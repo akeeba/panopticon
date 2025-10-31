@@ -154,7 +154,7 @@ class AkeebaBackup extends AbstractCallback
 
 				$report->save();
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				// Whatever
 			}
@@ -230,7 +230,7 @@ class AkeebaBackup extends AbstractCallback
 
 				$report->save();
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				// Whatever
 			}
@@ -274,7 +274,7 @@ class AkeebaBackup extends AbstractCallback
 
 				$report->save();
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				// Whatever
 			}
@@ -378,7 +378,7 @@ class AkeebaBackup extends AbstractCallback
 	{
 		$this->saveSite(
 			$site,
-			function (Site $site) {
+			function (Site $site): void {
 				$config = $site->getConfig();
 				$config->set('akeebabackup.latest', $this->getLatestBackup($site));
 				$site->config = $config;

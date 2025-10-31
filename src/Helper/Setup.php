@@ -121,7 +121,7 @@ class Setup extends AbstractHelper
 		foreach ($zones as $zone)
 		{
 			// Time zones not in a group we will ignore.
-			if (strpos($zone, '/') === false)
+			if (!str_contains($zone, '/'))
 			{
 				continue;
 			}
@@ -391,7 +391,7 @@ class Setup extends AbstractHelper
 		}
 
 		$templates = array_map(
-			fn($template) => $this->getTemplateName($template), array_combine($templates, $templates)
+			$this->getTemplateName(...), array_combine($templates, $templates)
 		);
 
 		return $this->getContainer()->html->select->genericList(
@@ -404,9 +404,7 @@ class Setup extends AbstractHelper
 	)
 	{
 		return array_map(
-			function (string $description): array {
-				return explode('&nbsp;', $description);
-			},
+			fn(string $description): array => explode('&nbsp;', $description),
 			$this->getLanguageOptions($namesAlsoInEnglish, $addAllLanguages, $addUseDefault)
 		);
 	}
@@ -849,7 +847,7 @@ class Setup extends AbstractHelper
 		$defaultName = Factory::getContainer()->language->text(
 			sprintf(
 				'PANOPTICON_APP_TEMPLATE_%s', strtoupper(
-					preg_replace('#^[a-z0-9_]]#i', '', $template)
+					(string) preg_replace('#^[a-z0-9_]]#i', '', $template)
 				)
 			)
 		);
@@ -873,14 +871,14 @@ class Setup extends AbstractHelper
 		{
 			$templateInfo = json_decode($json, flags: JSON_THROW_ON_ERROR);
 		}
-		catch (JsonException $e)
+		catch (JsonException)
 		{
 			return $defaultName;
 		}
 
 		$templateName = $templateInfo->name ?? null;
 
-		if (preg_match('#^[A-Z0-9_]*$#', $templateName))
+		if (preg_match('#^[A-Z0-9_]*$#', (string) $templateName))
 		{
 			return Factory::getContainer()->language->text($templateName);
 		}

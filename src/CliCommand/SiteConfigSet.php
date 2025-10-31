@@ -58,21 +58,21 @@ class SiteConfigSet extends AbstractCommand
 			return Command::FAILURE;
 		}
 
-		if (substr_count($key, '.') > 2 || (str_contains($key, '.') && !str_starts_with($key, 'config.')))
+		if (substr_count((string) $key, '.') > 2 || (str_contains((string) $key, '.') && !str_starts_with((string) $key, 'config.')))
 		{
 			$this->ioStyle->error('Invalid key');
 
 			return Command::FAILURE;
 		}
 
-		if (!str_contains($key, '.') && !$site->hasField($key))
+		if (!str_contains((string) $key, '.') && !$site->hasField($key))
 		{
 			$this->ioStyle->error('Invalid key');
 
 			return Command::FAILURE;
 		}
 
-		if (str_contains($key, '.'))
+		if (str_contains((string) $key, '.'))
 		{
 			$config = $site->getConfig();
 			$config->set($key, $value);

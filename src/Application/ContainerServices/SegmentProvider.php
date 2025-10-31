@@ -18,7 +18,7 @@ class SegmentProvider
 {
 	public function __invoke(Container $c): Segment
 	{
-		$segmentName = hash_hmac('md5', $c->application_name, $c->appConfig->get('secret', ''));
+		$segmentName = hash_hmac('md5', $c->application_name, (string) $c->appConfig->get('secret', ''));
 
 		$newSegment = $c->session->newSegment($segmentName);
 

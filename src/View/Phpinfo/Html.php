@@ -15,7 +15,7 @@ class Html extends \Awf\Mvc\DataView\Html
 {
 	use CrudTasksTrait;
 
-	public ?string $phpInfo;
+	public ?string $phpInfo = null;
 
 	public function onBeforeMain(): bool
 	{

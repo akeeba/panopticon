@@ -66,7 +66,7 @@ class User extends \Awf\User\User implements ContainerAwareInterface
 				$site = $this->getContainer()->mvcFactory->makeTempModel('Site')
 					->findOrFail($site);
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				return false;
 			}
@@ -128,7 +128,7 @@ class User extends \Awf\User\User implements ContainerAwareInterface
 		$groupIDs = implode(
 			',',
 			array_map(
-				[$db, 'quote'],
+				$db->quote(...),
 				$this->getParameters()->get('usergroups', [])
 			)
 		);

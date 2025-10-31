@@ -58,7 +58,7 @@ class Coreupdates extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -90,7 +90,7 @@ class Coreupdates extends DataController
 			{
 				$site->findOrFail($siteId);
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				continue;
 			}
@@ -146,7 +146,7 @@ class Coreupdates extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -178,7 +178,7 @@ class Coreupdates extends DataController
 			{
 				$site->findOrFail($siteId);
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				continue;
 			}

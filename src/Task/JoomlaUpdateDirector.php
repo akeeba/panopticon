@@ -190,7 +190,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 			{
 				$site->findOrFail($id);
 			}
-			catch (\RuntimeException $e)
+			catch (\RuntimeException)
 			{
 				$this->logger->notice(
 					sprintf('Site %d not found; skipping.', $id)
@@ -402,7 +402,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 		{
 			$config = @json_decode($siteConfig->toString());
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}
@@ -451,7 +451,7 @@ class JoomlaUpdateDirector extends AbstractCallback
 
 		$this->saveSite(
 			$site,
-			function (Site $site) use ($latestVersion) {
+			function (Site $site) use ($latestVersion): void {
 				$siteConfig = $site->getConfig() ?? new Registry();
 				$siteConfig->set('director.joomlaupdate.lastLatestVersion', $latestVersion);
 				$site->setFieldValue('config', $siteConfig->toString());

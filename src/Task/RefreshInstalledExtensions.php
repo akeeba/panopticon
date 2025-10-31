@@ -189,7 +189,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 				{
 					$site->findOrFail($id);
 				}
-				catch (\RuntimeException $e)
+				catch (\RuntimeException)
 				{
 					return null;
 				}
@@ -260,13 +260,13 @@ class RefreshInstalledExtensions extends AbstractCallback
 	{
 		return $promise
 			->then(
-				function (ResponseInterface $response) use ($site) {
+				function (ResponseInterface $response) use ($site): void {
 					try
 					{
 						$rawData  = $this->sanitizeJson($response->getBody()->getContents());
 						$document = @json_decode($rawData);
 					}
-					catch (\Exception $e)
+					catch (\Exception)
 					{
 						$document = null;
 					}
@@ -275,7 +275,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 
 					$this->saveSite(
 						$site,
-						function (Site $site) use ($data, $rawData) {
+						function (Site $site) use ($data, $rawData): void {
 							$config = $site->getConfig();
 							$config->set('extensions.lastErrorMessage', null);
 
@@ -351,10 +351,10 @@ class RefreshInstalledExtensions extends AbstractCallback
 					);
 					$this->container->cacheFactory->pool('extensions')->delete($cacheKey);
 				},
-				function (\Throwable $e) use ($site) {
+				function (\Throwable $e) use ($site): void {
 					$this->saveSite(
 						$site,
-						function (Site $site) use ($e) {
+						function (Site $site) use ($e): void {
 							$this->logger->error(
 								sprintf(
 									'Could not retrieve extensions information for Joomla! site #%d (%s). The server replied with the following error: %s',
@@ -375,20 +375,20 @@ class RefreshInstalledExtensions extends AbstractCallback
 	{
 		return $promise
 			->then(
-				function (ResponseInterface $response) use ($site) {
+				function (ResponseInterface $response) use ($site): void {
 					try
 					{
 						$rawData  = $this->sanitizeJson($response->getBody()->getContents());
 						$document = @json_decode($rawData);
 					}
-					catch (\Exception $e)
+					catch (\Exception)
 					{
 						$document = null;
 					}
 
 					$this->saveSite(
 						$site,
-						function (Site $site) use ($document, $rawData) {
+						function (Site $site) use ($document, $rawData): void {
 							$config = $site->getConfig();
 							$config->set('extensions.lastErrorMessage', null);
 
@@ -468,10 +468,10 @@ class RefreshInstalledExtensions extends AbstractCallback
 					);
 					$this->container->cacheFactory->pool('extensions')->delete($cacheKey);
 				},
-				function (\Throwable $e) use ($site) {
+				function (\Throwable $e) use ($site): void {
 					$this->saveSite(
 						$site,
-						function (Site $site) use ($e) {
+						function (Site $site) use ($e): void {
 							$this->logger->error(
 								sprintf(
 									'Could not retrieve extensions information for WordPress site #%d (%s). The server replied with the following error: %s',
@@ -608,8 +608,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 		}
 
 		return array_map(
-			function ($item): object {
-				return (object) [
+			fn($item): object => (object) [
 					'extension_id'   => $item?->id ?? null,
 					'name'           => $item?->name ?? null,
 					'description'    => $item?->description ?? null,
@@ -637,8 +636,7 @@ class RefreshInstalledExtensions extends AbstractCallback
 						'downloadurl' => $item->update->package ?? null,
 						'version'     => $item->update->new_version ?? null,
 					] : null,
-				];
-			},
+				],
 			$items
 		);
 	}

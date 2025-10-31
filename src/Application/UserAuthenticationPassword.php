@@ -24,24 +24,14 @@ class UserAuthenticationPassword extends Authentication
 		}
 
 		$parts = explode(':', $hashedPassword, 3);
-
-		switch ($parts[0])
-		{
-			case 'SHA512':
-				return $this->timingSafeEquals($parts[1], hash('sha512', $password . $parts[2], false));
-
-			case 'SHA256':
-				return $this->timingSafeEquals($parts[1], hash('sha256', $password . $parts[2], false));
-
-			case 'SHA1':
-				return $this->timingSafeEquals($parts[1], hash('sha1', $password . $parts[2]));
-
-			case 'MD5':
-				return $this->timingSafeEquals($parts[1], hash('md5', $password . $parts[2]));
-		}
-
-		// If all else fails, we assume we can't verify this password
-		return false;
+        return match ($parts[0]) {
+            'SHA512' => $this->timingSafeEquals($parts[1], hash('sha512', $password . $parts[2], false)),
+            'SHA256' => $this->timingSafeEquals($parts[1], hash('sha256', $password . $parts[2], false)),
+            'SHA1' => $this->timingSafeEquals($parts[1], hash('sha1', $password . $parts[2])),
+            'MD5' => $this->timingSafeEquals($parts[1], hash('md5', $password . $parts[2])),
+            // If all else fails, we assume we can't verify this password
+            default => false,
+        };
 	}
 
 	public function onTfaSave(array $tfaParams): bool

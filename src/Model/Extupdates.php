@@ -107,7 +107,7 @@ class Extupdates extends Model
 		if (!empty($fltGroup))
 		{
 			$fltGroup = is_string($fltGroup) && str_contains($fltGroup, ',') ? explode(',', $fltGroup) : $fltGroup;
-			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim($fltGroup)];
+			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim((string) $fltGroup)];
 			$fltGroup = ArrayHelper::toInteger($fltGroup);
 			$fltGroup = array_filter($fltGroup);
 			$clauses  = [];
@@ -304,11 +304,11 @@ class Extupdates extends Model
 		{
 			$extensions = array_filter(
 				$extensions,
-				fn($extension) => stripos($extension->name ?? '', $fltSearch) !== false
-				                  || stripos($extension->description ?? '', $fltSearch) !== false
-				                  || stripos($extension->author ?? '', $fltSearch) !== false
-				                  || stripos($extension->authorUrl ?? '', $fltSearch) !== false
-				                  || stripos($extension->authorEmail ?? '', $fltSearch) !== false
+				fn($extension) => stripos($extension->name ?? '', (string) $fltSearch) !== false
+				                  || stripos($extension->description ?? '', (string) $fltSearch) !== false
+				                  || stripos($extension->author ?? '', (string) $fltSearch) !== false
+				                  || stripos($extension->authorUrl ?? '', (string) $fltSearch) !== false
+				                  || stripos($extension->authorEmail ?? '', (string) $fltSearch) !== false
 			);
 		}
 
@@ -363,7 +363,7 @@ class Extupdates extends Model
 		{
 			$extensions = array_filter(
 				$extensions,
-				fn($extension) => str_contains($extension->version?->current, $fltInstalledVersion)
+				fn($extension) => str_contains((string) $extension->version?->current, (string) $fltInstalledVersion)
 			);
 		}
 
@@ -374,7 +374,7 @@ class Extupdates extends Model
 		{
 			$extensions = array_filter(
 				$extensions,
-				fn($extension) => str_contains($extension->version?->new, $fltNewVersion)
+				fn($extension) => str_contains((string) $extension->version?->new, (string) $fltNewVersion)
 			);
 		}
 

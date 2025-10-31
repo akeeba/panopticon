@@ -15,15 +15,15 @@ use Awf\Utils\Template;
 
 class Html extends View
 {
-	public ?string $username;
+	public ?string $username = null;
 
-	public ?string $password;
+	public ?string $password = null;
 
-	public ?string $secret;
+	public ?string $secret = null;
 
-	public ?string $autologin;
+	public ?string $autologin = null;
 
-	public ?string $returnUrl;
+	public ?string $returnUrl = null;
 
 	public bool $hasPasskeys = false;
 

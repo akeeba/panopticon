@@ -73,7 +73,7 @@ class Html extends BaseHtml
 			'url' => $this->container->router->route(
 				sprintf(
 					'index.php?view=log&task=read&logfile=%s&format=raw&%s=1',
-					urlencode(basename($this->filePath)),
+					urlencode(basename((string) $this->filePath)),
 					$this->container->session->getCsrfToken()->getValue()
 				)
 			),
@@ -92,7 +92,7 @@ class Html extends BaseHtml
 
 	protected function getSiteIdFromFilename($logFilename): ?int
 	{
-		[$prefix,] = explode('.log', $logFilename);
+		[$prefix,] = explode('.log', (string) $logFilename);
 
 		if (empty($prefix) || !str_contains($prefix, '.'))
 		{

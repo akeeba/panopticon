@@ -42,7 +42,7 @@ trait EnqueueJoomlaUpdateTrait
 				'type'    => 'joomlaupdate',
 			]);
 		}
-		catch (\RuntimeException $e)
+		catch (\RuntimeException)
 		{
 			$task->reset();
 			$task->site_id = $site->id;

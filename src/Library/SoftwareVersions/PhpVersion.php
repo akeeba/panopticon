@@ -126,7 +126,7 @@ class PhpVersion
 				{
 					$rawData = @json_decode($json);
 				}
-				catch (\Throwable $e)
+				catch (\Throwable)
 				{
 					$rawData = [];
 				}

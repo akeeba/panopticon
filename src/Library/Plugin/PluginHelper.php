@@ -65,7 +65,7 @@ final class PluginHelper
 			{
 				$di = new \DirectoryIterator($path);
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				continue;
 			}

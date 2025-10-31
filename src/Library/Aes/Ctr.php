@@ -438,11 +438,11 @@ abstract class Ctr
 		if ($a & 0x80000000 && $b > 0)
 		{   // if left-most bit set
 			$a = ($a >> 1) & 0x7fffffff;   //   right-shift one bit & clear left-most bit
-			$a = $a >> ($b - 1);           //   remaining right-shifts
+			$a >>= $b - 1;           //   remaining right-shifts
 		}
 		else
 		{                       // otherwise
-			$a = ($a >> $b);               //   use normal right-shift
+			$a >>= $b;               //   use normal right-shift
 		}
 
 		return $a;

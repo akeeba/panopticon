@@ -49,7 +49,7 @@ class SiteSecurityUnblock extends AbstractCommand
 		{
 			$site->findOrFail($siteId);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			$this->ioStyle->error('No such site');
 
@@ -98,7 +98,7 @@ class SiteSecurityUnblock extends AbstractCommand
 
 		$ips = explode(',', trim($body));
 		$ip  = end($ips) ?: '';
-		$ip = strtolower(preg_replace('[^0-9a-f.:]', '', $ip));
+		$ip = strtolower((string) preg_replace('[^0-9a-f.:]', '', $ip));
 
 		if (empty($ip))
 		{

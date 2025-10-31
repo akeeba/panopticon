@@ -151,9 +151,9 @@ class ActionSummaryEmail extends AbstractCallback
 
 		try
 		{
-			$config = @json_decode($config);
+			$config = @json_decode((string) $config);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}
@@ -219,7 +219,7 @@ class ActionSummaryEmail extends AbstractCallback
 		{
 			$tz = new DateTimeZone($timeZone);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$tz = new DateTimeZone('UTC');
 		}
@@ -331,7 +331,7 @@ class ActionSummaryEmail extends AbstractCallback
 				]
 			);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			// Expected, as the language override may not be in place.
 			return ['', ''];
@@ -354,7 +354,7 @@ class ActionSummaryEmail extends AbstractCallback
 				]
 			);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			// Expected, as the language override may not be in place.
 			$renderedText = (new Html2Text($rendered))->getText();

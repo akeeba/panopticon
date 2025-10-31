@@ -24,7 +24,7 @@ class CacheFactory
 {
 	private static $instances = [];
 
-	public function __construct(private Container $container)
+	public function __construct(private readonly Container $container)
 	{
 	}
 
@@ -120,19 +120,19 @@ class CacheFactory
 	private function isValid(mixed $poolName)
 	{
 		// Anything starting with a dot; catches ., .., and *nix hidden files/folders including .htaccess and .gitignore
-		if (str_starts_with($poolName, '.'))
+		if (str_starts_with((string) $poolName, '.'))
 		{
 			return false;
 		}
 
 		// Anything outside the cross-platform safe filename characters. Note that **only** latin-1 alphas are allowed.
-		if (!preg_match('/[a-zA-Z0-9\-_!@#$%^&()\[\]{};\',.]/', $poolName))
+		if (!preg_match('/[a-zA-Z0-9\-_!@#$%^&()\[\]{};\',.]/', (string) $poolName))
 		{
 			return false;
 		}
 
 		// Windows does not allow filenames ending with a space or dot, so let's prevent their use
-		if (str_ends_with($poolName, " ") || str_ends_with($poolName, "."))
+		if (str_ends_with((string) $poolName, " ") || str_ends_with((string) $poolName, "."))
 		{
 			return false;
 		}
@@ -145,7 +145,7 @@ class CacheFactory
 					'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9', 'STDIN', 'STDOUT',
 					'WEB.CONFIG',
 				],
-				fn(bool $carry, string $item) => $carry || str_starts_with(strtoupper($poolName), $item),
+				fn(bool $carry, string $item) => $carry || str_starts_with(strtoupper((string) $poolName), $item),
 				false
 			)
 		)

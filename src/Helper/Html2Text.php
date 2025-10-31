@@ -45,13 +45,6 @@ class Html2Text
 	protected $htmlFuncFlags;
 
 	/**
-	 * Contains the HTML content to convert.
-	 *
-	 * @var  string
-	 */
-	protected $html;
-
-	/**
 	 * Contains the converted, formatted text.
 	 *
 	 * @var  string
@@ -242,9 +235,11 @@ class Html2Text
 	 * @param   string  $html     Source HTML
 	 * @param   array   $options  Set configuration options
 	 */
-	public function __construct($html = '', $options = [])
+	public function __construct(/**
+     * Contains the HTML content to convert.
+     */
+    protected $html = '', $options = [])
 	{
-		$this->html          = $html;
 		$this->options       = array_merge($this->options, $options);
 		$this->htmlFuncFlags = (PHP_VERSION_ID < 50400)
 			? ENT_COMPAT
@@ -312,11 +307,11 @@ class Html2Text
 	{
 		$this->convertBlockquotes($text);
 		$this->convertPre($text);
-		$text = preg_replace($this->search, $this->replace, $text);
-		$text = preg_replace_callback($this->callbackSearch, [$this, 'pregCallback'], $text);
-		$text = strip_tags($text);
+		$text = preg_replace($this->search, $this->replace, (string) $text);
+		$text = preg_replace_callback($this->callbackSearch, [$this, 'pregCallback'], (string) $text);
+		$text = strip_tags((string) $text);
 		$text = preg_replace($this->entSearch, $this->entReplace, $text);
-		$text = html_entity_decode($text, $this->htmlFuncFlags, self::ENCODING);
+		$text = html_entity_decode((string) $text, $this->htmlFuncFlags, self::ENCODING);
 
 		// Remove unknown/unhandled entities (this cannot be done in search-and-replace block)
 		$text = preg_replace('/&([a-zA-Z0-9]{2,6}|#[0-9]{2,4});/', '', $text);
@@ -327,10 +322,10 @@ class Html2Text
 
 		// Normalise empty lines
 		$text = preg_replace("/\n\s+\n/", "\n\n", $text);
-		$text = preg_replace("/[\n]{3,}/", "\n\n", $text);
+		$text = preg_replace("/[\n]{3,}/", "\n\n", (string) $text);
 
 		// remove leading empty lines (can be produced by eg. P tag on the beginning)
-		$text = ltrim($text, "\n");
+		$text = ltrim((string) $text, "\n");
 
 		if ($this->options['width'] > 0)
 		{
@@ -354,7 +349,7 @@ class Html2Text
 	 */
 	protected function buildlinkList($link, $display, $linkOverride = null)
 	{
-		$linkMethod = ($linkOverride) ? $linkOverride : $this->options['do_links'];
+		$linkMethod = $linkOverride ?: $this->options['do_links'];
 		if ($linkMethod == 'none')
 		{
 			return $display;
@@ -417,7 +412,7 @@ class Html2Text
 	protected function convertPre(&$text)
 	{
 		// get the content of PRE element
-		while (preg_match('/<pre[^>]*>(.*)<\/pre>/ismU', $text, $matches))
+		while (preg_match('/<pre[^>]*>(.*)<\/pre>/ismU', (string) $text, $matches))
 		{
 			// Replace br tags with newlines to prevent the search-and-replace callback from killing whitespace
 			$this->preContent = preg_replace('/(<br\b[^>]*>)/i', "\n", $matches[1]);
@@ -426,20 +421,20 @@ class Html2Text
 			$this->preContent = preg_replace_callback(
 				$this->callbackSearch,
 				[$this, 'pregCallback'],
-				$this->preContent
+				(string) $this->preContent
 			);
 
 			// convert the content
 			$this->preContent = sprintf(
 				'<div><br>%s<br></div>',
-				preg_replace($this->preSearch, $this->preReplace, $this->preContent)
+				preg_replace($this->preSearch, $this->preReplace, (string) $this->preContent)
 			);
 
 			// replace the content (use callback because content can contain $0 variable)
 			$text = preg_replace_callback(
 				'/<pre[^>]*>.*<\/pre>/ismU',
 				[$this, 'pregPreCallback'],
-				$text,
+				(string) $text,
 				1
 			);
 
@@ -507,8 +502,8 @@ class Html2Text
 				$this->converter($body);
 
 				// Add citation markers and create PRE block
-				$body = preg_replace('/((^|\n)>*)/', '\\1> ', trim($body));
-				$body = '<pre>' . htmlspecialchars($body, $this->htmlFuncFlags, self::ENCODING) . '</pre>';
+				$body = preg_replace('/((^|\n)>*)/', '\\1> ', trim((string) $body));
+				$body = '<pre>' . htmlspecialchars((string) $body, $this->htmlFuncFlags, self::ENCODING) . '</pre>';
 
 				// Re-set text width
 				$this->options['width'] = $pWidth;
@@ -543,7 +538,7 @@ class Html2Text
 	 */
 	protected function pregCallback($matches)
 	{
-		switch (mb_strtolower($matches[1]))
+		switch (mb_strtolower((string) $matches[1]))
 		{
 			case 'p':
 				// Replace newlines with spaces.
@@ -576,7 +571,7 @@ class Html2Text
 			case 'a':
 				// override the link method
 				$linkOverride = null;
-				if (preg_match('/_html2text_link_(\w+)/', $matches[4], $linkOverrideMatch))
+				if (preg_match('/_html2text_link_(\w+)/', (string) $matches[4], $linkOverrideMatch))
 				{
 					$linkOverride = $linkOverrideMatch[1];
 				}
@@ -625,7 +620,7 @@ class Html2Text
 			}
 		}
 
-		return implode($chunks);
+		return implode('', $chunks);
 	}
 
 	/**

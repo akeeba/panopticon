@@ -309,7 +309,7 @@ class PassKeys
 				throw new RuntimeException('Expected exception (good): we do not have a pending key request');
 			}
 
-			$serializedOptions = base64_decode($pkOptionsEncoded);
+			$serializedOptions = base64_decode((string) $pkOptionsEncoded);
 			$pkOptions         = unserialize($serializedOptions);
 
 			if (!is_object($pkOptions) || empty($pkOptions) ||
@@ -320,7 +320,7 @@ class PassKeys
 
 			$pkRequest = json_encode($pkOptions, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$user        = $this->getContainer()->userManager->getUser();
 			$repository  = new PasskeyRepositoryMFA($user->getId());
@@ -342,7 +342,7 @@ class PassKeys
 			$html       = $fakeView->loadAnyTemplate('Passkeysmfa/validate');
 			$htmlButton = $fakeView->loadAnyTemplate('Passkeysmfa/validate_button');
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return [];
 		}
@@ -414,7 +414,7 @@ class PassKeys
 			{
 				$this->getContainer()->application->enqueueMessage($e->getMessage(), 'error');
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 			}
 

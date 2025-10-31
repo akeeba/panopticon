@@ -447,7 +447,7 @@ PHP;
 				{
 					$appConfig->saveConfiguration();
 				}
-				catch (\Exception $e)
+				catch (\Exception)
 				{
 					$deleteOld = false;
 				}
@@ -506,7 +506,7 @@ PHP;
 				->setQuery("SET @@session.time_zone = '+0:00'")
 				->execute();
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			// Ignore it if this fails.
 		}
@@ -553,7 +553,7 @@ PHP;
 				->setQuery('SET sort_buffer_size = 256000000')
 				->execute();
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			// Ignore it if this fails.
 		}

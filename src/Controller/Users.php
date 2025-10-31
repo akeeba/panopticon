@@ -272,9 +272,9 @@ class Users extends DataController
 		// Get the applicable data
 		$data = [
 			'id'          => $id,
-			'username'    => trim($this->input->post->getUsername('username', '')),
-			'name'        => trim($this->input->post->getString('name', '')),
-			'email'       => trim($this->input->post->get('email', '', 'raw')),
+			'username'    => trim((string) $this->input->post->getUsername('username', '')),
+			'name'        => trim((string) $this->input->post->getString('name', '')),
+			'email'       => trim((string) $this->input->post->get('email', '', 'raw')),
 			'password'    => $this->input->post->get('password', '', 'raw'),
 			'password2'   => $this->input->post->get('password2', '', 'raw'),
 			'groups'      => array_filter(ArrayHelper::toInteger($this->input->post->get('groups', [], 'raw'))),

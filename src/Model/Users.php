@@ -297,9 +297,9 @@ class Users extends DataModel
 
 		try
 		{
-			$pwResetSecret = @base64_decode($pwResetSecretEncoded);
+			$pwResetSecret = @base64_decode((string) $pwResetSecretEncoded);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			$pwResetSecret = '';
 		}

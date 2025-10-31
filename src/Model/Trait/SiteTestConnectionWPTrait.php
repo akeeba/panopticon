@@ -138,7 +138,7 @@ trait SiteTestConnectionWPTrait
 			}
 		}
 
-		$bodyContent = $bodyContent ?? $response?->getBody()?->getContents();
+		$bodyContent ??= $response?->getBody()?->getContents();
 		$this->updateDebugInfoInSession($response ?? null, $bodyContent, $e ?? null);
 
 		if (!isset($response))
@@ -160,7 +160,7 @@ trait SiteTestConnectionWPTrait
 		{
 			$this->container->segment->setFlash('site_connection_http_code', $response->getStatusCode());
 
-			if (!str_contains($bodyContent, '"_links": {'))
+			if (!str_contains((string) $bodyContent, '"_links": {'))
 			{
 				throw new APIApplicationIsBroken(
 					sprintf(
@@ -181,9 +181,9 @@ trait SiteTestConnectionWPTrait
 		// Make sure the valid response *is* a JSON document.
 		try
 		{
-			$decoded = @json_decode($bodyContent, true);
+			$decoded = @json_decode((string) $bodyContent, true);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$decoded = null;
 		}
@@ -240,7 +240,7 @@ trait SiteTestConnectionWPTrait
 			{
 				$temp = @json_decode($this->sanitizeJson($bodyContent), true);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				$temp = null;
 			}
@@ -279,7 +279,7 @@ trait SiteTestConnectionWPTrait
 				);
 			}
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			throw new WebServicesInstallerNotEnabled(
 				'Cannot list installed plugins.'

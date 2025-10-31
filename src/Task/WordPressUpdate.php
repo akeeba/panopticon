@@ -193,7 +193,7 @@ class WordPressUpdate extends AbstractCallback
 			);
 
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			// Ignore this
 		}
@@ -382,9 +382,9 @@ class WordPressUpdate extends AbstractCallback
 		$config = ($config instanceof Registry) ? $config->toString() : $config;
 		try
 		{
-			$config = @json_decode($config);
+			$config = @json_decode((string) $config);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}

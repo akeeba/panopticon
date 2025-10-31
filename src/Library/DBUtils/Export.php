@@ -309,7 +309,7 @@ class Export implements \JsonSerializable
 
 
 MySQL;
-		@fputs($this->fp, $header);
+		@fwrite($this->fp, $header);
 
 		$this->advanceState();
 	}
@@ -350,7 +350,7 @@ MySQL;
 		}
 		$preamble .= "\n\n";
 
-		fputs($this->fp, $preamble);
+		fwrite($this->fp, $preamble);
 
 		$this->advanceState();
 	}
@@ -400,7 +400,7 @@ MySQL;
 -- Contents of the $tableReal table
 
 MYSQL;
-			fputs($this->fp, $miniPreamble);
+			fwrite($this->fp, $miniPreamble);
 
 		}
 
@@ -438,7 +438,7 @@ MYSQL;
 			$rows++;
 			$line         = sprintf("\t(%s)", implode(',', array_map([$this->db, 'quote'], (array) $row)));
 			$lineLength   = mb_strlen($line, 'ASCII');
-			$bufferLength = mb_strlen($this->buffer, 'ASCII');
+			$bufferLength = mb_strlen((string) $this->buffer, 'ASCII');
 
 			if ($lineLength + $bufferLength > self::MAX_PACKET)
 			{
@@ -446,7 +446,7 @@ MYSQL;
 				$this->populateBufferWithInsertInto();
 			}
 
-			if (str_ends_with($this->buffer, ")"))
+			if (str_ends_with((string) $this->buffer, ")"))
 			{
 				$this->buffer .= ",\n";
 			}
@@ -467,7 +467,7 @@ MYSQL;
 -- (empty table)
 
 MYSQL;
-				fputs($this->fp, $miniPreamble);
+				fwrite($this->fp, $miniPreamble);
 
 			}
 			else
@@ -511,7 +511,7 @@ MYSQL;
 		$epilogue .= 'UNLOCK TABLES;';
 		$epilogue .= "\n\n";
 
-		fputs($this->fp, $epilogue);
+		fwrite($this->fp, $epilogue);
 
 		$this->advanceState();
 	}
@@ -723,7 +723,7 @@ MYSQL;
 
 		while (!feof($this->fp))
 		{
-			gzputs($gzfp, fread($this->fp, 20971520));
+			gzwrite($gzfp, fread($this->fp, 20971520));
 		}
 
 		fclose($gzfp);
@@ -752,7 +752,7 @@ MYSQL;
 			$this->buffer .= ";\n";
 		}
 
-		fputs($this->fp, $this->buffer);
+		fwrite($this->fp, $this->buffer);
 
 		$this->buffer = null;
 	}

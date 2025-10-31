@@ -65,7 +65,7 @@ class About extends Model
 		{
 			$users = @json_decode($this->sanitizeJson($response->getBody()->getContents()), flags: JSON_THROW_ON_ERROR);
 		}
-		catch (JsonException $e)
+		catch (JsonException)
 		{
 			return null;
 		}

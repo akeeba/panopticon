@@ -108,7 +108,7 @@ class Html extends DataViewHtml
 	 * @var   string|null
 	 * @since 1.0.6
 	 */
-	protected ?string $connectorVersion;
+	protected ?string $connectorVersion = null;
 
 	/**
 	 * The API level of the Panopticon connector.
@@ -116,7 +116,7 @@ class Html extends DataViewHtml
 	 * @var   string|null
 	 * @since 1.0.6
 	 */
-	protected ?string $connectorAPI;
+	protected ?string $connectorAPI = null;
 
 	/**
 	 * The base URI of the site.
@@ -167,7 +167,7 @@ class Html extends DataViewHtml
 
 	protected ?string $guzzleError = null;
 
-	protected ?int $httpCode;
+	protected ?int $httpCode = null;
 
 	protected array $backupProfiles = [];
 
@@ -187,11 +187,11 @@ class Html extends DataViewHtml
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item            = $this->getModel();
 		$this->canEdit         = $this->item->canEdit();
-		$this->connectionError = $this->container->segment->getFlash('site_connection_error', $this->connectionError) ??
+		$this->connectionError = $this->container->segment->getFlash('site_connection_error') ??
 		                         $this->connectionError;
-		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
-		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
-		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
+		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code');
+		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error');
+		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error');
 
 		$this->addWikiHelpButton();
 
@@ -255,7 +255,7 @@ class Html extends DataViewHtml
 		{
 			$profiles ??= $this->getModel()->akeebaBackupGetProfiles($useCache);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$profiles = [];
 		}
@@ -280,10 +280,10 @@ class Html extends DataViewHtml
 		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 		$this->item = $this->getModel();
 
-		$this->connectionError = $this->container->segment->getFlash('site_connection_error', null);
-		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
-		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
-		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
+		$this->connectionError = $this->container->segment->getFlash('site_connection_error');
+		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code');
+		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error');
+		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error');
 
 		$document = $this->container->application->getDocument();
 		$document->addScriptOptions(
@@ -331,10 +331,10 @@ class Html extends DataViewHtml
 		$this->globalExtUpdatePreferences = $sysConfigModel->getExtensionPreferencesAndMeta(null);
 		$this->defaultExtUpdatePreference = $this->container->appConfig->get('tasks_extupdate_install', 'none');
 
-		$this->connectionError = $this->container->segment->getFlash('site_connection_error', null);
-		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code', null);
-		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error', null);
-		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error', null);
+		$this->connectionError = $this->container->segment->getFlash('site_connection_error');
+		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code');
+		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error');
+		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error');
 
 		$document = $this->container->application->getDocument();
 		$document->addScriptOptions(
@@ -671,45 +671,17 @@ class Html extends DataViewHtml
 		$originLanguageKey = 'PANOPTICON_SITES_LBL_AKEEBABACKUP_ORIGIN_' . ($record?->origin ?? '');
 		$originDescription = $this->getLanguage()->text($originLanguageKey);
 
-		switch (strtolower($record?->origin ?? ''))
-		{
-			case 'backend':
-				$originIcon = 'fa fa-desktop';
-				break;
-
-			case 'frontend':
-				$originIcon = 'fa fa-globe';
-				break;
-
-			case 'json':
-				$originIcon = 'fa fa-cloud';
-				break;
-
-			case 'joomlacli':
-			case 'joomla':
-				$originIcon = 'fa fab fa-joomla';
-				break;
-
-			case 'cli':
-				$originIcon = 'fa fa-terminal';
-				break;
-
-			case 'wpcron':
-				$originIcon = 'fab fa-wordpress';
-				break;
-
-			case 'xmlrpc':
-				$originIcon = 'fa fa-code';
-				break;
-
-			case 'lazy':
-				$originIcon = 'fa fa-cubes';
-				break;
-
-			default:
-				$originIcon = 'fa fa-question';
-				break;
-		}
+		$originIcon = match (strtolower($record?->origin ?? '')) {
+            'backend' => 'fa fa-desktop',
+            'frontend' => 'fa fa-globe',
+            'json' => 'fa fa-cloud',
+            'joomlacli', 'joomla' => 'fa fab fa-joomla',
+            'cli' => 'fa fa-terminal',
+            'wpcron' => 'fab fa-wordpress',
+            'xmlrpc' => 'fa fa-code',
+            'lazy' => 'fa fa-cubes',
+            default => 'fa fa-question',
+        };
 
 		if (empty($originLanguageKey) || ($originDescription == $originLanguageKey))
 		{
@@ -739,7 +711,7 @@ class Html extends DataViewHtml
 		{
 			$startTime = clone $this->container->dateFactory($record->backupstart, $utcTimeZone);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$startTime = null;
 		}
@@ -748,7 +720,7 @@ class Html extends DataViewHtml
 		{
 			$endTime = clone $this->container->dateFactory($record->backupend, $utcTimeZone);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$endTime = null;
 		}
@@ -758,10 +730,10 @@ class Html extends DataViewHtml
 		if ($duration > 0)
 		{
 			$seconds  = $duration % 60;
-			$duration = $duration - $seconds;
+			$duration -= $seconds;
 
 			$minutes  = ($duration % 3600) / 60;
-			$duration = $duration - $minutes * 60;
+			$duration -= $minutes * 60;
 
 			$hours    = $duration / 3600;
 			$duration = sprintf('%02d', $hours) . ':' . sprintf('%02d', $minutes) . ':' . sprintf('%02d', $seconds);
@@ -935,7 +907,7 @@ JS;
 		{
 			$interval = new DateInterval(sprintf('PT%uM', $threshold));
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return null;
 		}

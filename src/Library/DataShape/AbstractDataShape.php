@@ -18,7 +18,7 @@ class AbstractDataShape implements ArrayAccess
 	{
 		if (!is_array($array) && !($array instanceof self))
 		{
-			throw new InvalidArgumentException(sprintf('%s needs an array or a %s object', __METHOD__, __CLASS__));
+			throw new InvalidArgumentException(sprintf('%s needs an array or a %s object', __METHOD__, self::class));
 		}
 
 		foreach (($array instanceof self) ? $array->asArray() : $array as $k => $v)
@@ -31,7 +31,7 @@ class AbstractDataShape implements ArrayAccess
 	{
 		if (!is_array($newValues) && !($newValues instanceof self))
 		{
-			throw new InvalidArgumentException(sprintf('%s needs an array or a %s object', __METHOD__, __CLASS__));
+			throw new InvalidArgumentException(sprintf('%s needs an array or a %s object', __METHOD__, self::class));
 		}
 
 		foreach (($newValues instanceof self) ? $newValues->asArray() : $newValues as $k => $v)
@@ -54,7 +54,7 @@ class AbstractDataShape implements ArrayAccess
 
 	public function __get($name)
 	{
-		$methodName = 'get' . ucfirst($name);
+		$methodName = 'get' . ucfirst((string) $name);
 
 		if (method_exists($this, $methodName))
 		{
@@ -66,12 +66,12 @@ class AbstractDataShape implements ArrayAccess
 			return $this->{$name};
 		}
 
-		throw new InvalidArgumentException(sprintf('Property %s not found in %s', $name, __CLASS__));
+		throw new InvalidArgumentException(sprintf('Property %s not found in %s', $name, self::class));
 	}
 
 	public function __set($name, $value)
 	{
-		$methodName = 'set' . ucfirst($name);
+		$methodName = 'set' . ucfirst((string) $name);
 
 		if (method_exists($this, $methodName))
 		{
@@ -87,13 +87,13 @@ class AbstractDataShape implements ArrayAccess
 			return null;
 		}
 
-		throw new InvalidArgumentException(sprintf('Property %s not found in %s', $name, __CLASS__));
+		throw new InvalidArgumentException(sprintf('Property %s not found in %s', $name, self::class));
 	}
 
 	#[\ReturnTypeWillChange]
 	public function __isset($name)
 	{
-		$methodName = 'get' . ucfirst($name);
+		$methodName = 'get' . ucfirst((string) $name);
 
 		return method_exists($this, $methodName) || property_exists($this, $name);
 	}
@@ -119,6 +119,6 @@ class AbstractDataShape implements ArrayAccess
 	#[\ReturnTypeWillChange]
 	public function offsetUnset($offset)
 	{
-		throw new \LogicException(sprintf('You cannot unset members of %s', __CLASS__));
+		throw new \LogicException(sprintf('You cannot unset members of %s', self::class));
 	}
 }

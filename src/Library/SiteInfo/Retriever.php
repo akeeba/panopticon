@@ -145,7 +145,7 @@ class Retriever
 				/** @var \Akeeba\Panopticon\Container $container */
 				$container = $this->getContainer();
 
-				if (str_starts_with($def->url, 'data:'))
+				if (str_starts_with((string) $def->url, 'data:'))
 				{
 					return $def->url;
 				}
@@ -281,7 +281,7 @@ class Retriever
 
 		if (!empty($baseHref))
 		{
-			$baseHref = rtrim($baseHref, '/') . '/';
+			$baseHref = rtrim((string) $baseHref, '/') . '/';
 			$scheme   = (new Uri($baseHref))->getScheme();
 		}
 		else
@@ -322,7 +322,7 @@ class Retriever
 					break;
 
 				case UrlType::ABSOLUTE_PATH:
-					$iconUrl = rtrim($this->url, '/') . '/' . ltrim($href, '/');
+					$iconUrl = rtrim($this->url, '/') . '/' . ltrim((string) $href, '/');
 
 					if (!empty($baseHref))
 					{
@@ -330,7 +330,7 @@ class Retriever
 							$this->urlType($baseHref) === UrlType::ABSOLUTE ? $baseHref : $this->url
 						);
 						$iconUrl = rtrim($uri->toString(['scheme', 'user', 'pass', 'host', 'port']), '/') . '/' . ltrim(
-								$href, '/'
+								(string) $href, '/'
 							);
 					}
 
@@ -342,12 +342,12 @@ class Retriever
 					$path = preg_replace('#/[^/]+?$#i', '/', $uri->getPath());
 
 					$iconUrl = rtrim($uri->toString(['scheme', 'user', 'pass', 'host', 'port']), '/') . '/' . trim(
-							$path, '/'
-						) . '/' . ltrim($href, '/');
+							(string) $path, '/'
+						) . '/' . ltrim((string) $href, '/');
 
 					if (!empty($baseHref))
 					{
-						$iconUrl = rtrim($baseHref, '/') . '/' . ltrim($href, '/');
+						$iconUrl = rtrim($baseHref, '/') . '/' . ltrim((string) $href, '/');
 					}
 
 					$iconType = $this->getExtension($iconUrl);
@@ -355,7 +355,7 @@ class Retriever
 				case UrlType::EMBED_BASE64:
 					// Format is data:mediatype;base64,data or data:mediatype,data
 					$iconUrl = $href;
-					[$descriptor,] = explode(',', $iconUrl, 2);
+					[$descriptor,] = explode(',', (string) $iconUrl, 2);
 					[, $descriptor] = explode(':', $descriptor, 2);
 					// At this point I have either the bare media type or mediatype;base64.
 					[$mediatype,] = explode(';', $descriptor, 2);
@@ -462,7 +462,7 @@ class Retriever
 		}
 
 		$sizes = explode(' ', $sizes);
-		$sizes = array_map('trim', $sizes);
+		$sizes = array_map(trim(...), $sizes);
 		$sizes = array_filter($sizes);
 
 		$values = [];

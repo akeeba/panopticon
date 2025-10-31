@@ -44,7 +44,7 @@ class Backupcodes extends Model
 				'method'  => 'backupcodes',
 			]);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			return null;
 		}
@@ -170,7 +170,7 @@ class Backupcodes extends Model
 
 			$this->cache[$user->getId()] = json_decode($record->options);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			// We leave it as NULL
 		}

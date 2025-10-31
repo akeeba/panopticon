@@ -212,7 +212,7 @@ class JoomlaUpdate extends AbstractCallback
 			);
 
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			// Ignore this
 		}
@@ -375,9 +375,9 @@ class JoomlaUpdate extends AbstractCallback
 		$config = ($config instanceof Registry) ? $config->toString() : $config;
 		try
 		{
-			$config = @json_decode($config);
+			$config = @json_decode((string) $config);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}
@@ -614,7 +614,7 @@ class JoomlaUpdate extends AbstractCallback
 				{
 					$raw = @json_decode($json);
 				}
-				catch (Exception $e)
+				catch (Exception)
 				{
 					$raw = null;
 				}
@@ -876,7 +876,7 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			$raw = @json_decode($json);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$raw = null;
 		}
@@ -892,7 +892,7 @@ class JoomlaUpdate extends AbstractCallback
 		$password = $raw->data?->attributes?->password;
 		$filesize = $raw->data?->attributes?->filesize ?: 0;
 
-		if (basename($baseName) != $storage->get('update.basename') || $filesize <= 0)
+		if (basename((string) $baseName) != $storage->get('update.basename') || $filesize <= 0)
 		{
 			$this->logger->debug(json_encode($raw));
 
@@ -1161,7 +1161,7 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			$raw = @json_decode($json);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$raw = null;
 		}
@@ -1174,7 +1174,7 @@ class JoomlaUpdate extends AbstractCallback
 			{
 				$raw = @json_decode($json);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				$raw = null;
 			}
@@ -1358,7 +1358,7 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			$raw = @json_decode($json);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$raw = null;
 		}
@@ -1779,7 +1779,7 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			$raw = @json_decode($json);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$raw = null;
 		}

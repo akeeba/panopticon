@@ -108,7 +108,7 @@ class FileScanner extends AbstractCallback
 
 				$report->save();
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				// Whatever
 			}
@@ -167,7 +167,7 @@ class FileScanner extends AbstractCallback
 
 				$report->save();
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				// Whatever
 			}
@@ -202,7 +202,7 @@ class FileScanner extends AbstractCallback
 
 				$report->save();
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				// Whatever
 			}

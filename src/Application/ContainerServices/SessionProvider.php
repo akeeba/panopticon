@@ -24,7 +24,7 @@ class SessionProvider
 		{
 			$isHTTPS = isset($_SERVER['HTTP_HOST']) && Uri::getInstance()->getScheme() === 'https';
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			$isHTTPS = false;
 		}
@@ -86,7 +86,7 @@ class SessionProvider
 			$fs->mkdir($path, 0700);
 		}
 
-		if (!is_writeable($path))
+		if (!is_writable($path))
 		{
 			$fs->chmod($path, 0777);
 		}

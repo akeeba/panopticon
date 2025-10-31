@@ -86,7 +86,7 @@ class Loginfailures extends Model
 		{
 			$db->setQuery($query)->execute();
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			return;
 		}
@@ -163,7 +163,7 @@ class Loginfailures extends Model
 		{
 			$db->setQuery($query)->execute();
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			return;
 		}
@@ -268,7 +268,7 @@ class Loginfailures extends Model
 
 			return true;
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$until = null;
 
@@ -363,7 +363,7 @@ class Loginfailures extends Model
 				$db->setQuery($insertQuery)->execute();
 			}
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return;
 		}
@@ -465,7 +465,7 @@ class Loginfailures extends Model
 
 			self::$isAvailable = !empty($tables);
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			self::$isAvailable = false;
 		}

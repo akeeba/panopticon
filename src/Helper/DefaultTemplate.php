@@ -57,7 +57,7 @@ abstract class DefaultTemplate
 		{
 			$userDarkMode = DarkModeEnum::from($user->getParameters()->get('display.darkmode', 0) ?: 0);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$userDarkMode = DarkModeEnum::APPLICATION;
 		}
@@ -66,7 +66,7 @@ abstract class DefaultTemplate
 		{
 			$appDarkMode = DarkModeEnum::from($container->appConfig->get('darkmode', 1) ?: 1);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$appDarkMode = DarkModeEnum::BROWSER;
 		}
@@ -236,7 +236,7 @@ abstract class DefaultTemplate
 				{
 					$decoded = @json_decode($button->getOnClick(), true);
 				}
-				catch (Exception $e)
+				catch (Exception)
 				{
 					$decoded = null;
 				}
@@ -472,7 +472,7 @@ abstract class DefaultTemplate
 				{
 					$decoded = @json_decode($button->getOnClick(), true);
 				}
-				catch (Exception $e)
+				catch (Exception)
 				{
 					$decoded = null;
 				}

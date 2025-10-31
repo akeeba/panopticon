@@ -201,7 +201,7 @@ class PluginsUpdate extends AbstractCallback
 			$extensions[$softwareId]->element,
 		]);
 
-		$url = rtrim($url, '/') . '/' . implode('/', $urlSlugs);
+		$url = rtrim((string) $url, '/') . '/' . implode('/', $urlSlugs);
 
 		try
 		{
@@ -372,7 +372,7 @@ class PluginsUpdate extends AbstractCallback
 		// Update extensions.list and extensions.hasUpdates in the site's config storage
 		$this->saveSite(
 			$site,
-			function (Site $site) use ($softwareId) {
+			function (Site $site) use ($softwareId): void {
 				// Reload the site information, in case it changed while we were installing updates
 				$site->findOrFail($site->id);
 
@@ -475,7 +475,7 @@ class PluginsUpdate extends AbstractCallback
 		{
 			$report->save();
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			// Whatever...
 		}
@@ -526,9 +526,9 @@ class PluginsUpdate extends AbstractCallback
 
 		try
 		{
-			$config = @json_decode($config);
+			$config = @json_decode((string) $config);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}
@@ -571,9 +571,9 @@ class PluginsUpdate extends AbstractCallback
 
 		try
 		{
-			$config = @json_decode($config);
+			$config = @json_decode((string) $config);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}
@@ -624,7 +624,7 @@ class PluginsUpdate extends AbstractCallback
 	{
 		$this->saveSite(
 			$site,
-			function (Site $site) use ($softwareId) {
+			function (Site $site) use ($softwareId): void {
 				$siteConfig                    = $site->getConfig() ?? new Registry();
 				$lastSeenVersions              = $siteConfig->get('director.pluginupdates.lastSeen', []) ?: [];
 				$lastSeenVersions              = is_object($lastSeenVersions)
@@ -693,7 +693,7 @@ class PluginsUpdate extends AbstractCallback
 					]
 				);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				// Expected, as the language override may not be in place.
 			}
@@ -718,7 +718,7 @@ class PluginsUpdate extends AbstractCallback
 					]
 				);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				// Expected, as the language override may not be in place.
 			}

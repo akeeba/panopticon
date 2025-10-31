@@ -79,9 +79,7 @@ JS;
 			return;
 		}
 
-		$siteIDs = $this->items->map(function (Task $task) {
-			return $task->site_id;
-		})->toArray();
+		$siteIDs = $this->items->map(fn(Task $task) => $task->site_id)->toArray();
 		$siteIDs = array_unique(array_filter($siteIDs));
 		$siteIDs = ArrayHelper::toInteger($siteIDs);
 

@@ -47,7 +47,7 @@ class SendMail extends AbstractCallback
 			$permissions      = is_array($permissions) ? $permissions : [];
 			$recipientId      = $sendingParams->get('recipient_id', null);
 			$cc               = $sendingParams->get('email_cc');
-			$cc               = is_array($cc) ? $cc : array_filter(array_map('trim', explode(',', $cc)));
+			$cc               = is_array($cc) ? $cc : array_filter(array_map(trim(...), explode(',', (string) $cc)));
 			$mailGroups       = $sendingParams->get('email_groups', null);
 			$mailGroups       = empty($mailGroups) ? null : array_filter(ArrayHelper::toInteger($mailGroups));
 			$onlyMailGroups   = (bool) $sendingParams->get('only_email_groups', false);
@@ -133,7 +133,7 @@ class SendMail extends AbstractCallback
 				{
 					$params = json_decode($paramsJson ?? '{}', flags: JSON_THROW_ON_ERROR);
 				}
-				catch (\JsonException $e)
+				catch (\JsonException)
 				{
 					continue;
 				}

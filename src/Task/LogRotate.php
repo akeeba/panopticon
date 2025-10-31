@@ -56,7 +56,7 @@ class LogRotate extends AbstractCallback
 			->files($rotateFiles)
 			->minSize(1048576)
 			->truncate()
-			->then(function (?string $filenameTarget, ?string $filenameRotated) {
+			->then(function (?string $filenameTarget, ?string $filenameRotated): void {
 				$this->logger->info(
 					sprintf(
 						'Rotated and compressed log file %s',
@@ -64,7 +64,7 @@ class LogRotate extends AbstractCallback
 					)
 				);
 			})
-			->catch(function (RotationFailed $exception) {
+			->catch(function (RotationFailed $exception): void {
 				$this->logger->notice(
 					sprintf(
 						'Failed to rotate log file %s',

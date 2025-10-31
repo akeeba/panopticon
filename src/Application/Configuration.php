@@ -212,7 +212,7 @@ class Configuration extends AWFConfiguration
 		// Import all other PANOPTICON_* environment variables
 		foreach ($_ENV as $key => $value)
 		{
-			$key = strtolower($key);
+			$key = strtolower((string) $key);
 
 			if (!str_starts_with($key, 'panopticon_'))
 			{
@@ -220,9 +220,9 @@ class Configuration extends AWFConfiguration
 			}
 
 			// Values `true`/`false` are always cast to bool
-			if (in_array(strtolower($value ?: ''), ['true', 'false']))
+			if (in_array(strtolower((string) $value ?: ''), ['true', 'false']))
 			{
-				$value = strtolower($value ?: '') === 'true';
+				$value = strtolower((string) $value ?: '') === 'true';
 			}
 
 			$this->set(substr($key, 11), $value);

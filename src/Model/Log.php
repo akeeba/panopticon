@@ -113,7 +113,7 @@ class Log extends Model
 		{
 			$fileSize = @fileSize($filePath) ?? 0;
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$fileSize = 0;
 		}
@@ -139,9 +139,9 @@ class Log extends Model
 	{
 		$logFile ??= $this->getState('logfile', '');
 
-		if (!str_ends_with($logFile, '.log') && !str_ends_with($logFile, '.gz')
+		if (!str_ends_with((string) $logFile, '.log') && !str_ends_with((string) $logFile, '.gz')
 		    && !preg_match(
-				'/\.log\.\d+\.gz$/', $logFile
+				'/\.log\.\d+\.gz$/', (string) $logFile
 			))
 		{
 			return null;
@@ -184,7 +184,7 @@ class Log extends Model
 		if (!empty($search))
 		{
 			$this->logs = array_filter(
-				$this->logs, fn($x) => str_contains($x, $search)
+				$this->logs, fn($x) => str_contains((string) $x, (string) $search)
 			);
 		}
 
@@ -193,7 +193,7 @@ class Log extends Model
 		if ($siteId > 0)
 		{
 			$this->logs = array_filter(
-				$this->logs, fn($x) => str_ends_with($x, '.' . $siteId . '.log') || str_contains($x, '.' . $siteId . '.log.')
+				$this->logs, fn($x) => str_ends_with((string) $x, '.' . $siteId . '.log') || str_contains((string) $x, '.' . $siteId . '.log.')
 			);
 		}
 
@@ -299,12 +299,12 @@ class Log extends Model
 	 */
 	private function parseLogLine(?string $logLine): ?object
 	{
-		if (!str_contains($logLine, '|'))
+		if (!str_contains((string) $logLine, '|'))
 		{
 			return null;
 		}
 
-		$parts = explode('|', $logLine);
+		$parts = explode('|', (string) $logLine);
 
 		if (count($parts) < 4)
 		{
@@ -358,7 +358,7 @@ class Log extends Model
 			{
 				$context = json_decode($parts[$short ? 3 : 4], flags: JSON_THROW_ON_ERROR);
 			}
-			catch (JsonException $e)
+			catch (JsonException)
 			{
 				$context = null;
 			}
@@ -370,7 +370,7 @@ class Log extends Model
 			{
 				$extra = json_decode($parts[$short ? 4 : 5], flags: JSON_THROW_ON_ERROR);
 			}
-			catch (JsonException $e)
+			catch (JsonException)
 			{
 				$extra = null;
 			}

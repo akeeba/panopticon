@@ -74,7 +74,7 @@ final class Usagestats extends Model
 			// Conditional collection: perform collection
 			$statsCollector->conditionalSendStatistics($useForbiddenDomains);
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			return;
 		}
@@ -100,7 +100,7 @@ final class Usagestats extends Model
 		{
 			return $statsCollector->getQueryParameters();
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			return null;
 		}

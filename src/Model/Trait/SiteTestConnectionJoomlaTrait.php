@@ -107,7 +107,7 @@ trait SiteTestConnectionJoomlaTrait
 			}
 		}
 
-		$bodyContent = $bodyContent ?? $response?->getBody()?->getContents();
+		$bodyContent ??= $response?->getBody()?->getContents();
 		$this->updateDebugInfoInSession($response ?? null, $bodyContent, $e ?? null);
 
 		if (!isset($response))
@@ -185,7 +185,7 @@ trait SiteTestConnectionJoomlaTrait
 			{
 				$temp = @json_decode($this->sanitizeJson($bodyContent), true);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				$temp = null;
 			}
@@ -216,7 +216,7 @@ trait SiteTestConnectionJoomlaTrait
 		{
 			$results = @json_decode($this->sanitizeJson($bodyContent ?? '{}'));
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			$results = new stdClass();
 		}

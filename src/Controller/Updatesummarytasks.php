@@ -62,7 +62,7 @@ class Updatesummarytasks extends DataController
 		{
 			$this->site->findOrFail($siteId);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			throw new AccessDenied();
 		}
@@ -109,10 +109,10 @@ class Updatesummarytasks extends DataController
 
 	protected function onBeforeApplySave(array &$data): void
 	{
-		$data['core_updates']       = $data['core_updates'] ?? 0;
-		$data['extension_updates']  = $data['extension_updates'] ?? 0;
-		$data['prevent_duplicates'] = $data['prevent_duplicates'] ?? 0;
-		$data['enabled']            = $data['enabled'] ?? 0;
+		$data['core_updates'] ??= 0;
+		$data['extension_updates'] ??= 0;
+		$data['prevent_duplicates'] ??= 0;
+		$data['enabled'] ??= 0;
 
 		// Construct the JSON params from $data['params']
 		$params                       = $data['params'] ?: [];

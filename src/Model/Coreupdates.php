@@ -56,7 +56,7 @@ class Coreupdates extends Site
 
 			$order = $db->quoteName($order);
 
-			$dir = strtoupper($this->getState('filter_order_Dir', 'ASC', 'cmd'));
+			$dir = strtoupper((string) $this->getState('filter_order_Dir', 'ASC', 'cmd'));
 
 			if (!in_array($dir, ['ASC', 'DESC']))
 			{
@@ -175,7 +175,7 @@ class Coreupdates extends Site
 		if (!empty($fltGroup))
 		{
 			$fltGroup = is_string($fltGroup) && str_contains($fltGroup, ',') ? explode(',', $fltGroup) : $fltGroup;
-			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim($fltGroup)];
+			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim((string) $fltGroup)];
 			$fltGroup = ArrayHelper::toInteger($fltGroup);
 			$fltGroup = array_filter($fltGroup);
 			$clauses  = [];

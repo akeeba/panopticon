@@ -385,7 +385,7 @@ class ExtensionsUpdate extends AbstractCallback
 		// Update extensions.list and extensions.hasUpdates in the site's config storage
 		$this->saveSite(
 			$site,
-			function (Site $site) use ($extensionId)
+			function (Site $site) use ($extensionId): void
 			{
 				// Reload the site information, in case it changed while we were installing updates
 				$site->findOrFail($site->id);
@@ -489,7 +489,7 @@ class ExtensionsUpdate extends AbstractCallback
 		{
 			$report->save();
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			// Whatever...
 		}
@@ -540,9 +540,9 @@ class ExtensionsUpdate extends AbstractCallback
 
 		try
 		{
-			$config = @json_decode($config);
+			$config = @json_decode((string) $config);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}
@@ -581,9 +581,9 @@ class ExtensionsUpdate extends AbstractCallback
 
 		try
 		{
-			$config = @json_decode($config);
+			$config = @json_decode((string) $config);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}
@@ -634,7 +634,7 @@ class ExtensionsUpdate extends AbstractCallback
 	{
 		$this->saveSite(
 			$site,
-			function (Site $site) use ($extensionId)
+			function (Site $site) use ($extensionId): void
 			{
 				$siteConfig                     = $site->getConfig() ?? new Registry();
 				$lastSeenVersions               = $siteConfig->get('director.extensionupdates.lastSeen', []) ?: [];
@@ -688,7 +688,7 @@ class ExtensionsUpdate extends AbstractCallback
 					]
 				);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				// Expected, as the language override may not be in place.
 			}
@@ -713,7 +713,7 @@ class ExtensionsUpdate extends AbstractCallback
 					]
 				);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				// Expected, as the language override may not be in place.
 			}

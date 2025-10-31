@@ -35,7 +35,7 @@ trait CmsFamilyFilterSeparatorTrait
 		}
 
 		// If there is no dot, we only have a version, not a CMS type.
-		if (strpos($filter, '.') === false)
+		if (!str_contains($filter, '.'))
 		{
 			return [null, $filter];
 		}

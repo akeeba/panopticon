@@ -79,7 +79,7 @@ class ConfigCreate extends AbstractCommand
 		{
 			$appConfig->saveConfiguration();
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$this->ioStyle->error(
 				sprintf(

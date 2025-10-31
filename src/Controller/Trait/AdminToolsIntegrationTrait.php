@@ -40,7 +40,7 @@ trait AdminToolsIntegrationTrait
 			{
 				$this->saveSite(
 					$model,
-					function (Site $site) use ($result)
+					function (Site $site) use ($result): void
 					{
 						$config = $site->getConfig();
 						$config->set('core.admintools.renamed', $result->renamed);
@@ -97,7 +97,7 @@ trait AdminToolsIntegrationTrait
 			{
 				$this->saveSite(
 					$model,
-					function (Site $model) use ($result) {
+					function (Site $model) use ($result): void {
 						$config = $model->getConfig();
 						$config->set('core.admintools.renamed', $result->renamed);
 						$model->setFieldValue('config', $config->toString());

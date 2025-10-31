@@ -14,13 +14,13 @@ defined('AKEEBA') || die;
 
 class QueueItem implements JsonSerializable
 {
-	public function __construct(private mixed $data, private string $queueType = 'system', private ?int $siteId = null)
+	public function __construct(private readonly mixed $data, private readonly string $queueType = 'system', private readonly ?int $siteId = null)
 	{
 		if (!is_scalar($this->data) && !is_object($this->data))
 		{
 			throw new \InvalidArgumentException(
 				sprintf(
-					'%s can only store scalars or objects', __CLASS__
+					'%s can only store scalars or objects', self::class
 				)
 			);
 		}
@@ -29,7 +29,7 @@ class QueueItem implements JsonSerializable
 		{
 			throw new \InvalidArgumentException(
 				sprintf(
-					'%s cannot store recursive queues or queue items', __CLASS__
+					'%s cannot store recursive queues or queue items', self::class
 				)
 			);
 		}
@@ -80,7 +80,7 @@ class QueueItem implements JsonSerializable
 
 	public function jsonSerialize(): array
 	{
-		$dataType = is_scalar($this->data) ? null : get_class($this->data);
+		$dataType = is_scalar($this->data) ? null : $this->data::class;
 
 		return [
 			'data' => $this->data,

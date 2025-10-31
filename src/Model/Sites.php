@@ -45,7 +45,7 @@ class Sites extends Site
 				/** @var Site $site */
 				$site = $this->container->mvcFactory->makeModel('Site')->findOrFail($id);
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				continue;
 			}

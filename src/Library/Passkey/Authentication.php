@@ -60,7 +60,7 @@ final class Authentication implements AuthenticationInterface
 	 */
 	protected PublicKeyCredentialSourceRepository $credentialsRepository;
 
-	private LoggerInterface $logger;
+	private readonly LoggerInterface $logger;
 
 	public function __construct(?PublicKeyCredentialSourceRepository $credRepo = null, ?LoggerInterface $logger = null)
 	{

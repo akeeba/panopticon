@@ -67,7 +67,7 @@ class HIBPCheck implements ContainerAwareInterface
 		{
 			$response = $this->httpClient->get($url, $options);
 		}
-		catch (GuzzleException $e)
+		catch (GuzzleException)
 		{
 			return false;
 		}
@@ -86,7 +86,7 @@ class HIBPCheck implements ContainerAwareInterface
 
 		$knownSums = array_map(
 			fn($x) => strtoupper($key . explode(':', $x)[0]),
-			explode("\n", $text)
+			explode("\n", (string) $text)
 		);
 
 		return in_array($sum, $knownSums);

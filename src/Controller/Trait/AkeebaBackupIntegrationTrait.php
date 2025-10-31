@@ -211,7 +211,7 @@ trait AkeebaBackupIntegrationTrait
 			{
 				$this->doRefreshExtensionsInformation($model, forceUpdates: false);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 			}
 		}
@@ -222,7 +222,7 @@ trait AkeebaBackupIntegrationTrait
 			{
 				$this->akeebaBackupRelinkInternal($id);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 			}
 		}
@@ -344,7 +344,7 @@ trait AkeebaBackupIntegrationTrait
 
 			$this->saveSite(
 				$model,
-				function (Site $model)
+				function (Site $model): void
 				{
 					$dirty = $model->testAkeebaBackupConnection(true);
 
@@ -368,7 +368,7 @@ trait AkeebaBackupIntegrationTrait
 						throw new \RuntimeException('Nothing to save');
 					}
 				},
-				function (Throwable $e)
+				function (Throwable $e): void
 				{
 					if (!$e instanceof \RuntimeException || $e->getMessage() !== 'Nothing to save')
 					{
@@ -391,7 +391,7 @@ trait AkeebaBackupIntegrationTrait
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{

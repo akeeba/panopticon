@@ -16,7 +16,7 @@ class QueueFactory
 {
 	private $queues = [];
 
-	public function __construct(private Container $container)
+	public function __construct(private readonly Container $container)
 	{
 	}
 

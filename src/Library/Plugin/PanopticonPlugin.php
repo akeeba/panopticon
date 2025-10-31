@@ -197,7 +197,7 @@ abstract class PanopticonPlugin extends Observer implements ContainerAwareInterf
 		return (new FakeView(
 			$container,
 			[
-				'name' => 'Plugin' . ucfirst($pluginName),
+				'name' => 'Plugin' . ucfirst((string) $pluginName),
 			]
 		))->loadAnyTemplate($layout, $extraData);
 	}

@@ -202,7 +202,7 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 
 		foreach ($conditions as $key => $value)
 		{
-			if (is_integer($value))
+			if (is_int($value))
 			{
 				$value = intval($value);
 			}
@@ -235,7 +235,7 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 			$time = $this->container->dateFactory();
 		}
 
-		if (is_integer($time))
+		if (is_int($time))
 		{
 			$time = Date('@' . $time);
 		}

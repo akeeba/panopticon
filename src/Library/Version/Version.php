@@ -55,7 +55,7 @@ class Version
 
 	private static ?self $instance = null;
 
-	private string $version;
+	private readonly string $version;
 
 	private string $tag = '';
 
@@ -218,7 +218,7 @@ class Version
 	private function parse(): void
 	{
 		$parts = explode('.', $this->extractTag());
-		$parts = array_map('trim', $parts);
+		$parts = array_map(trim(...), $parts);
 
 		while (count($parts) < 3)
 		{
@@ -328,7 +328,7 @@ class Version
 
 		foreach ($types as $tagType)
 		{
-			if (strstr($lower, $tagType))
+			if (strstr($lower, (string) $tagType))
 			{
 				$type = $tagType;
 				$part = str_replace($tagType, '', $lower);

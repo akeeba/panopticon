@@ -186,7 +186,7 @@ class UptimeMonitor extends AbstractCallback
 
 				$config = $site->getConfig();
 				$url    = $site->getBaseUrl();
-				$path   = trim($config->get('uptime.path', ''));
+				$path   = trim((string) $config->get('uptime.path', ''));
 
 				if (!empty($path))
 				{
@@ -206,7 +206,7 @@ class UptimeMonitor extends AbstractCallback
 								throw new \RuntimeException(sprintf('HTTP %d', $statusCode));
 							}
 
-							$checkFor = trim($site->getConfig()->get('uptime.string', ''));
+							$checkFor = trim((string) $site->getConfig()->get('uptime.string', ''));
 
 							if (empty($checkFor))
 							{
@@ -234,13 +234,13 @@ class UptimeMonitor extends AbstractCallback
 
 							return $response;
 						},
-						function (Throwable $e) use ($site) {
+						function (Throwable $e) use ($site): void {
 							// Rethrow the exception to trigger otherwise() below
 							throw $e;
 						}
 					)
 					->then(
-						function (ResponseInterface $response) use ($site) {
+						function (ResponseInterface $response) use ($site): void {
 							// Log the result
 							$this->logger->debug(
 								sprintf(
@@ -256,7 +256,7 @@ class UptimeMonitor extends AbstractCallback
 							// Ensure the site appears as "up"
 							$this->saveSite(
 								$site,
-								function (Site $tempSite) {
+								function (Site $tempSite): void {
 									$config = $tempSite->getConfig();
 
 									$config->set('uptime.downtime_start', null);
@@ -282,7 +282,7 @@ class UptimeMonitor extends AbstractCallback
 						}
 					)
 					->otherwise(
-						function (Throwable $e) use ($site) {
+						function (Throwable $e) use ($site): void {
 							// Log the result
 							$this->logger->debug(
 								sprintf(
@@ -299,7 +299,7 @@ class UptimeMonitor extends AbstractCallback
 							// Ensure the site appears as "down"
 							$this->saveSite(
 								$site,
-								function (Site $tempSite) {
+								function (Site $tempSite): void {
 									$config = $tempSite->getConfig();
 
 									$config->set('uptime.downtime_start', time());
@@ -393,7 +393,7 @@ class UptimeMonitor extends AbstractCallback
 		{
 			$config = @json_decode($siteConfig->toString());
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$config = null;
 		}

@@ -68,7 +68,7 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 	{
 		$this->setContainer($container ?? Factory::getContainer());
 		$this->setLanguage($language ?? $this->getContainer()->language);
-		$this->logger = $this->logger ?? $this->getContainer()->loggerFactory->get('mfa_webauthn');
+		$this->logger ??= $this->getContainer()->loggerFactory->get('mfa_webauthn');
 	}
 
 	/**
@@ -90,7 +90,7 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 			);
 			$credentials = $this->repository->findAllForUserEntity($userEntity);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return json_encode(false);
 		}
@@ -110,7 +110,7 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 			{
 				$registeredPublicKeyCredentialDescriptors[] = $record->getPublicKeyCredentialDescriptor();
 			}
-			catch (Throwable $e)
+			catch (Throwable)
 			{
 				continue;
 			}
@@ -403,7 +403,7 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		{
 			$publicKeyCredentialCreationOptions = unserialize(base64_decode($encodedOptions));
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$publicKeyCredentialCreationOptions = null;
 		}
@@ -613,7 +613,7 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 					Base64::decode($decodedData->response->{$key})
 				);
 			}
-			catch (Throwable $e)
+			catch (Throwable)
 			{
 				$decodedData->response->{$key} = null;
 			}

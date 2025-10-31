@@ -65,7 +65,7 @@ class Setup extends Controller
 		// If the session save path is not writable,
 		$path = $this->container->session->getSavePath();
 
-		if (!@is_dir($path) || !@is_writeable($path))
+		if (!@is_dir($path) || !@is_writable($path))
 		{
 			$router = $this->container->router;
 			$this->setRedirect($router->route('index.php?view=setup&task=session&layout=session'));
@@ -175,7 +175,7 @@ class Setup extends Controller
 			// Redirect to the CRON setup page – we're done here
 			$this->setRedirect($this->container->router->route('index.php?view=setup&task=cron'));
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			// We could not save the configuration. Show the page informing the user of the next steps to follow.
 			$this->getView()->setLayout('saveconfig');

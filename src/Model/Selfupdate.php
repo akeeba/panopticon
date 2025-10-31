@@ -169,7 +169,7 @@ class Selfupdate extends Model
 				{
 					$rawData = @json_decode($json);
 				}
-				catch (Exception $e)
+				catch (Exception)
 				{
 					$rawData = null;
 				}
@@ -309,7 +309,7 @@ class Selfupdate extends Model
 				@unlink($targetLocation);
 			}
 		}
-		catch (GuzzleException $e)
+		catch (GuzzleException)
 		{
 			// No worries if it failed.
 			@unlink($targetLocation);

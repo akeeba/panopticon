@@ -47,7 +47,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 
 		try
 		{
-			return PublicKeyCredentialSource::createFromArray(json_decode($json, true));
+			return PublicKeyCredentialSource::createFromArray(json_decode((string) $json, true));
 		}
 		catch (Throwable)
 		{
@@ -98,9 +98,9 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		$recordsMapperClosure = function ($record) {
 			try
 			{
-				$data = json_decode($record['credential'], true);
+				$data = json_decode((string) $record['credential'], true);
 			}
-			catch (JsonException $e)
+			catch (JsonException)
 			{
 				return null;
 			}
@@ -114,7 +114,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 			{
 				return PublicKeyCredentialSource::createFromArray($data);
 			}
-			catch (InvalidArgumentException $e)
+			catch (InvalidArgumentException)
 			{
 				return null;
 			}
@@ -134,9 +134,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		 *
 		 * @return boolean
 		 */
-		$filterClosure = function ($record) {
-			return !\is_null($record) && \is_object($record) && ($record instanceof PublicKeyCredentialSource);
-		};
+		$filterClosure = (fn($record) => !\is_null($record) && \is_object($record) && ($record instanceof PublicKeyCredentialSource));
 
 		return array_filter($records, $filterClosure);
 	}
@@ -202,7 +200,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 			$o->label   = $oldRecord->label;
 			$update     = true;
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 		}
 
@@ -249,7 +247,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		{
 			$results = $db->setQuery($query)->loadAssocList();
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return [];
 		}
@@ -269,9 +267,9 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		$recordsMapperClosure = function ($record) {
 			try
 			{
-				$data = json_decode($record['credential'], true);
+				$data = json_decode((string) $record['credential'], true);
 			}
-			catch (JsonException $e)
+			catch (JsonException)
 			{
 				$record['credential'] = null;
 
@@ -291,7 +289,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 
 				return $record;
 			}
-			catch (InvalidArgumentException $e)
+			catch (InvalidArgumentException)
 			{
 				$record['credential'] = null;
 
@@ -326,7 +324,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 
 			return $count > 0;
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return false;
 		}
@@ -463,7 +461,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		{
 			$numRecords = $db->setQuery($query)->loadResult();
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return null;
 		}
@@ -488,7 +486,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 			{
 				$ids = $db->setQuery($query, $start, $limit)->loadColumn();
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				return null;
 			}
@@ -526,7 +524,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		{
 			return Factory::getContainer()->appConfig->get('secret', '');
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return '';
 		}

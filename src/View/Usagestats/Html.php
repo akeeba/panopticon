@@ -19,11 +19,11 @@ class Html extends BaseHtmlView
 {
 	protected bool $isCollectionEnabled = false;
 
-	protected ?array $data;
+	protected ?array $data = null;
 
 	protected string $serverUrl;
 
-	protected ?Date $lastCollectionDate;
+	protected ?Date $lastCollectionDate = null;
 
 	public function onBeforeMain(): bool
 	{

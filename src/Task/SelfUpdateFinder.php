@@ -120,7 +120,7 @@ class SelfUpdateFinder extends AbstractCallback
 		{
 			return $db->setQuery($query)->loadResult() ?: null;
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			return null;
 		}
@@ -138,7 +138,7 @@ class SelfUpdateFinder extends AbstractCallback
 		{
 			$db->setQuery($query)->execute();
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			return;
 		}
@@ -163,14 +163,14 @@ class SelfUpdateFinder extends AbstractCallback
 		{
 			$ids = $db->setQuery($query)->loadColumn();
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			$ids = [];
 		}
 
 		return array_filter(
 			array_map(
-				fn($id) => $this->container->userManager->getUser($id),
+				$this->container->userManager->getUser(...),
 				$ids
 			),
 			fn(?User $user) => ($user instanceof User) && $user->getId() > 0

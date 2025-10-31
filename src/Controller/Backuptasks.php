@@ -61,7 +61,7 @@ class Backuptasks extends DataController
 		{
 			$this->site->findOrFail($siteId);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			throw new AccessDenied();
 		}

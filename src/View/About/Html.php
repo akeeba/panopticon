@@ -17,7 +17,7 @@ class Html extends BaseHtmlView
 {
 	use CrudTasksTrait;
 
-	protected ?array $contributors;
+	protected ?array $contributors = null;
 
 	protected array $npmInfo;
 

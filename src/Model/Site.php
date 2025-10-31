@@ -136,7 +136,7 @@ class Site extends DataModel
 		{
 			return $db->setQuery($query)->loadAssocList('id', 'name') ?: [];
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return [];
 		}
@@ -270,7 +270,7 @@ class Site extends DataModel
 		if (!empty($fltGroup))
 		{
 			$fltGroup = is_string($fltGroup) && str_contains($fltGroup, ',') ? explode(',', $fltGroup) : $fltGroup;
-			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim($fltGroup)];
+			$fltGroup = is_array($fltGroup) ? $fltGroup : [trim((string) $fltGroup)];
 			$fltGroup = ArrayHelper::toInteger($fltGroup);
 			$fltGroup = array_filter($fltGroup);
 			$clauses  = [];
@@ -323,7 +323,7 @@ class Site extends DataModel
 		$this->setFieldValue('modified_on', $modifiedOn);
 		$this->setFieldValue('modified_by', $modifiedBy);
 
-		$this->setFieldValue('name', trim($this->getFieldValue('name', '') ?: ''));
+		$this->setFieldValue('name', trim((string) $this->getFieldValue('name', '') ?: ''));
 
 		if (empty($this->getFieldValue('name', '')))
 		{
@@ -435,10 +435,10 @@ class Site extends DataModel
 
 		if (!empty($adminDir) && $adminDir !== $standardAdmin)
 		{
-			$url = $this->getBaseUrl() . '/' . trim($adminDir, '/');
+			$url = $this->getBaseUrl() . '/' . trim((string) $adminDir, '/');
 		}
 
-		$secretWord = trim($config->get('core.admintools.secret_word', '') ?: '');
+		$secretWord = trim((string) $config->get('core.admintools.secret_word', '') ?: '');
 
 		if (!empty($secretWord))
 		{
@@ -513,7 +513,7 @@ class Site extends DataModel
 
 		if (!empty($groupFilter))
 		{
-			$query->where($db->quoteName('id') . ' IN(' . implode(',', array_map([$db, 'quote'], $groupFilter)) . ')');
+			$query->where($db->quoteName('id') . ' IN(' . implode(',', array_map($db->quote(...), $groupFilter)) . ')');
 		}
 
 		$ret = array_map(fn($x) => $x->title, $db->setQuery($query)->loadObjectList('id') ?: []);
@@ -747,7 +747,7 @@ class Site extends DataModel
 				$db->setQuery($query)->loadColumn() ?: []
 			);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return [];
 		}
@@ -823,7 +823,7 @@ class Site extends DataModel
 							{
 								$document = @json_decode($this->sanitizeJson($response->getBody()->getContents()));
 							}
-							catch (\Exception $e)
+							catch (\Exception)
 							{
 								$document = null;
 							}
@@ -856,7 +856,7 @@ class Site extends DataModel
 
 							return true;
 						},
-						function (RequestException $e) {
+						function (RequestException $e): void {
 							throw new RuntimeException(
 								sprintf(
 									'Could not save the Download Key for site #%d (%s). The server replied with the following error: %s',
@@ -866,9 +866,7 @@ class Site extends DataModel
 						}
 					)
 					->otherwise(
-						function (Throwable $e) {
-							return $e;
-						}
+						fn(Throwable $e) => $e
 					);
 			}, $updateSites
 		);
@@ -1550,8 +1548,8 @@ class Site extends DataModel
 				fn($x) => trim(substr($x, 4)),
 				array_filter(
 					array_map(
-						'trim',
-						explode(',', $altName)
+						trim(...),
+						explode(',', (string) $altName)
 					),
 					fn($x) => str_starts_with($x, 'DNS:')
 				)
@@ -1803,7 +1801,7 @@ class Site extends DataModel
 			{
 				$task->next_execution = $this->container->dateFactory($task->next_execution);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				return false;
 			}
@@ -1839,7 +1837,7 @@ class Site extends DataModel
 			{
 				$task->next_execution = $this->container->dateFactory($task->next_execution);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				return false;
 			}
@@ -1958,7 +1956,7 @@ class Site extends DataModel
 
 		if ($e instanceof Throwable)
 		{
-			$session->set($prefix . 'exception.type', get_class($e));
+			$session->set($prefix . 'exception.type', $e::class);
 			$session->set($prefix . 'exception.message', $e->getMessage());
 			$session->set($prefix . 'exception.file', $e->getFile());
 			$session->set($prefix . 'exception.line', $e->getLine());
@@ -1971,7 +1969,7 @@ class Site extends DataModel
 			{
 				$session->set($prefix . 'http_status', $response->getStatusCode());
 			}
-			catch (Throwable $e)
+			catch (Throwable)
 			{
 				$session->set($prefix . 'http_status', null);
 			}
@@ -1980,7 +1978,7 @@ class Site extends DataModel
 			{
 				$session->set($prefix . 'body', $responseBody);
 			}
-			catch (Throwable $e)
+			catch (Throwable)
 			{
 				$session->set($prefix . 'body', null);
 			}
@@ -1989,7 +1987,7 @@ class Site extends DataModel
 			{
 				$session->set($prefix . 'headers', $response->getHeaders());
 			}
-			catch (Throwable $e)
+			catch (Throwable)
 			{
 				$session->set('headers', null);
 			}

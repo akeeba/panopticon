@@ -234,7 +234,7 @@ trait AkeebaBackupIntegrationTrait
 					$apiClient->information();
 					$foundConfig = true;
 				}
-				catch (Exception $e)
+				catch (Exception)
 				{
 					// Nothing
 				}
@@ -693,7 +693,7 @@ trait AkeebaBackupIntegrationTrait
 			{
 				$this->saveSite(
 					$this,
-					function (Site $model)
+					function (Site $model): void
 					{
 						$dirty = $model->testAkeebaBackupConnection(true);
 
@@ -703,7 +703,7 @@ trait AkeebaBackupIntegrationTrait
 							throw new \RuntimeException('Nothing to save');
 						}
 					},
-					function (Throwable $e)
+					function (Throwable $e): void
 					{
 						if (!$e instanceof \RuntimeException || $e->getMessage() !== 'Nothing to save')
 						{

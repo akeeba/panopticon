@@ -80,7 +80,7 @@ class Sysconfig extends Model
 			'dbuser'                => true,
 			'dbpass'                => true,
 			'dbname'                => true,
-			'dbprefix'              => !empty($value) && preg_match('#^[a-zA-Z0-9_]{1,6}_$#', $value),
+			'dbprefix'              => !empty($value) && preg_match('#^[a-zA-Z0-9_]{1,6}_$#', (string) $value),
 			'dbencryption'          => filter_var($value, FILTER_VALIDATE_BOOL),
 			'dbsslca'               => empty($value) || (is_file($value) && is_readable($value)),
 			'dbsslkey'              => empty($value) || (is_file($value) && is_readable($value)),
@@ -93,7 +93,7 @@ class Sysconfig extends Model
 			'mailfrom'              => empty($value) || filter_var($value, FILTER_VALIDATE_EMAIL),
 			'fromname'              => true,
 			'smtphost'              => true,
-			'smtpport'              => is_integer($value) && ($value >= 1) && ($value <= 65535),
+			'smtpport'              => is_int($value) && ($value >= 1) && ($value <= 65535),
 			'smtpsecure'            => in_array($value, ['none', 'ssl', 'tls']),
 			'smtpauth'              => filter_var($value, FILTER_VALIDATE_BOOL),
 			'smtpuser'              => true,
@@ -150,9 +150,9 @@ class Sysconfig extends Model
 			{
 				try
 				{
-					$config = @json_decode($item->config);
+					$config = @json_decode((string) $item->config);
 				}
-				catch (Exception $e)
+				catch (Exception)
 				{
 					continue;
 				}
@@ -362,24 +362,11 @@ class Sysconfig extends Model
 			fn(bool $carry, $item) => $carry && (is_string($item) && !empty($item)),
 			true
 		);
-
-		switch ($parts[0])
-		{
-			case 'pkg':
-			case 'com':
-			case 'file':
-			case 'lib':
-			case 'mod':
-			case 'amod':
-			case 'tpl':
-			case 'atpl':
-				return count($parts) >= 2 && $noEmptyparts;
-
-			case 'plg':
-				return count($parts) >= 3 && $noEmptyparts;
-		}
-
-		return false;
+        return match ($parts[0]) {
+            'pkg', 'com', 'file', 'lib', 'mod', 'amod', 'tpl', 'atpl' => count($parts) >= 2 && $noEmptyparts,
+            'plg' => count($parts) >= 3 && $noEmptyparts,
+            default => false,
+        };
 	}
 
 	public function getUptimeOptions()
@@ -389,7 +376,7 @@ class Sysconfig extends Model
 
 		return array_reduce(
 			$results,
-			fn(array $carry, array $item) => array_merge($carry, $item),
+			array_merge(...),
 			[
 				'none' => 'PANOPTICON_SYSCONFIG_OPT_UPTIME_NONE',
 			]
@@ -447,7 +434,7 @@ class Sysconfig extends Model
 		{
 			$decoded = @json_decode($json, true);
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			$decoded = null;
 		}

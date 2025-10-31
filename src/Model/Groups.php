@@ -87,7 +87,7 @@ class Groups extends DataModel
 				{
 					$ret = json_decode($json, flags: JSON_THROW_ON_ERROR);
 				}
-				catch (\JsonException $e)
+				catch (\JsonException)
 				{
 					return null;
 				}
@@ -101,7 +101,7 @@ class Groups extends DataModel
 				{
 					$ret = ArrayHelper::toInteger($ret);
 				}
-				catch (\Throwable $e)
+				catch (\Throwable)
 				{
 					return null;
 				}
@@ -145,7 +145,7 @@ class Groups extends DataModel
 		{
 			return $db->setQuery($query)->loadAssocList('id', 'title') ?: [];
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			return [];
 		}

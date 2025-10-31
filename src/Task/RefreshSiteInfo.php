@@ -196,7 +196,7 @@ class RefreshSiteInfo extends AbstractCallback
 				{
 					$site->findOrFail($id);
 				}
-				catch (\RuntimeException $e)
+				catch (\RuntimeException)
 				{
 					return null;
 				}
@@ -280,7 +280,7 @@ class RefreshSiteInfo extends AbstractCallback
 						$rawData = $this->sanitizeJson($response->getBody()->getContents());
 						$document = @json_decode($rawData);
 					}
-					catch (\Exception $e)
+					catch (\Exception)
 					{
 						$document = null;
 					}
@@ -307,7 +307,7 @@ class RefreshSiteInfo extends AbstractCallback
 
 					$this->saveSite(
 						$site,
-						function (Site $site) use ($rawData, $document, $attributes)
+						function (Site $site) use ($rawData, $document, $attributes): void
 						{
 							$config = $site?->getConfig() ?? new Registry();
 
@@ -395,7 +395,7 @@ class RefreshSiteInfo extends AbstractCallback
 
 					return $response;
 				},
-				function (Throwable $e) use ($site) {
+				function (Throwable $e) use ($site): void {
 					$this->logger->error(sprintf(
 						'Could not retrieve information for Joomla! site #%d (%s). The server replied with the following error: %s',
 						$site->id, $site->name, $e->getMessage()
@@ -404,7 +404,7 @@ class RefreshSiteInfo extends AbstractCallback
 					// Save the last error message
 					$this->saveSite(
 						$site,
-						function (Site $site) use ($e)
+						function (Site $site) use ($e): void
 						{
 							$config = $site?->getConfig() ?? new Registry();
 
@@ -437,7 +437,7 @@ class RefreshSiteInfo extends AbstractCallback
 						$rawData = $this->sanitizeJson($response->getBody()->getContents());
 						$document = @json_decode($rawData);
 					}
-					catch (\Exception $e)
+					catch (\Exception)
 					{
 						$document = null;
 					}
@@ -462,7 +462,7 @@ class RefreshSiteInfo extends AbstractCallback
 
 					$this->saveSite(
 						$site,
-						function (Site $site) use ($rawData, $document)
+						function (Site $site) use ($rawData, $document): void
 						{
 							$config = $site?->getConfig() ?? new Registry();
 
@@ -553,7 +553,7 @@ class RefreshSiteInfo extends AbstractCallback
 
 					return $response;
 				},
-				function (Throwable $e) use ($site) {
+				function (Throwable $e) use ($site): void {
 					$this->logger->error(sprintf(
 						'Could not retrieve information for WordPress site #%d (%s). The server replied with the following error: %s',
 						$site->id, $site->name, $e->getMessage()
@@ -562,7 +562,7 @@ class RefreshSiteInfo extends AbstractCallback
 					// Save the last error message
 					$this->saveSite(
 						$site,
-						function (Site $site) use ($e)
+						function (Site $site) use ($e): void
 						{
 							$config = $site?->getConfig() ?? new Registry();
 

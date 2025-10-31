@@ -95,7 +95,7 @@ class Overrides extends Model
 		{
 			$rawData = @json_decode($this->sanitizeJson($response->getBody()->getContents()));
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			$rawData = null;
 		}
@@ -162,7 +162,7 @@ class Overrides extends Model
 		{
 			$rawData = @json_decode($this->sanitizeJson($response->getBody()->getContents()));
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			return null;
 		}

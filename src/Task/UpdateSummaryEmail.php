@@ -387,7 +387,7 @@ class UpdateSummaryEmail extends AbstractCallback
 					]
 				);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				// Expected, as the language override may not be in place.
 			}
@@ -415,7 +415,7 @@ class UpdateSummaryEmail extends AbstractCallback
 					]
 				);
 			}
-			catch (Exception $e)
+			catch (Exception)
 			{
 				// Expected, as the language override may not be in place.
 			}

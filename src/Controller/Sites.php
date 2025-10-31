@@ -79,12 +79,12 @@ class Sites extends DataController
 	    $model = $this->getModel();
 
 	    $addGroups = $this->input->get('groups', [], 'raw');
-	    $addGroups = array_map('intval', $addGroups);
+	    $addGroups = array_map(intval(...), $addGroups);
 
 	    $data['groups'] = $addGroups;
 
 	    $removeGroups = $this->input->get('groups_remove', [], 'raw');
-	    $removeGroups = array_map('intval', $removeGroups);
+	    $removeGroups = array_map(intval(...), $removeGroups);
 
 	    $data['groups_remove'] = $removeGroups;
 
@@ -240,7 +240,7 @@ class Sites extends DataController
 				$e ?? null
 			)->save();
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			// Whatever
 		}
@@ -249,7 +249,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -300,7 +300,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -353,7 +353,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -402,7 +402,7 @@ class Sites extends DataController
 			// Update the core.lastAutoUpdateVersion after enqueueing
 			$this->saveSite(
 				$site,
-				function (Site $site)
+				function (Site $site): void
 				{
 					$config = $site->getConfig();
 					$config->set('core.lastAutoUpdateVersion', $config->get('core.latest.version'));
@@ -423,7 +423,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -498,7 +498,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -566,7 +566,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -645,7 +645,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -724,7 +724,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -789,7 +789,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -965,7 +965,7 @@ class Sites extends DataController
 			// Update the core.lastAutoUpdateVersion after enqueueing
 			$this->saveSite(
 				$site,
-				function (Site $site)
+				function (Site $site): void
 				{
 					$config = $site->getConfig();
 					$config->set('core.lastAutoUpdateVersion', $config->get('core.latest.version'));
@@ -986,7 +986,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -1061,7 +1061,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -1126,7 +1126,7 @@ class Sites extends DataController
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -1635,10 +1635,10 @@ class Sites extends DataController
 		catch (SiteConnectionException $e)
 		{
 			$status = false;
-			$this->container->segment->setFlash('site_connection_error', get_class($e));
+			$this->container->segment->setFlash('site_connection_error', $e::class);
 			$error = $this->getLanguage()->text('PANOPTICON_SITES_ERR_CONNECTION_ERROR');
 		}
-		catch (GuzzleException $e)
+		catch (GuzzleException)
 		{
 			$status = false;
 			$this->container->segment->setFlash('site_connection_error', GuzzleException::class);

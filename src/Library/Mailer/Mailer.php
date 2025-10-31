@@ -243,14 +243,14 @@ class Mailer extends AWFMailer implements ContainerAwareInterface
 		{
 			if (($this->Mailer == 'mail') && !function_exists('mail'))
 			{
-				throw new \RuntimeException(sprintf('%s::Send mail not enabled.', get_class($this)));
+				throw new \RuntimeException(sprintf('%s::Send mail not enabled.', $this::class));
 			}
 
 			@$result = parent::Send();
 
 			if (!$result)
 			{
-				throw new \RuntimeException(sprintf('%s::Send failed: "%s".', get_class($this), $this->ErrorInfo));
+				throw new \RuntimeException(sprintf('%s::Send failed: "%s".', $this::class, $this->ErrorInfo));
 			}
 
 			return $result;

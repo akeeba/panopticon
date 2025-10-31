@@ -60,9 +60,7 @@ class Mfa extends DataModel
 		{
 			$records = array_filter(
 				$records,
-				function ($rec) {
-					return $rec->id != $this->id;
-				}
+				fn($rec) => $rec->id != $this->id
 			);
 		}
 
@@ -78,9 +76,7 @@ class Mfa extends DataModel
 		{
 			$hasDefaultRecord = array_reduce(
 				$records,
-				function (bool $carry, Mfa $record): bool {
-					return $carry || ($record->default == 1);
-				},
+				fn(bool $carry, Mfa $record): bool => $carry || ($record->default == 1),
 				false
 			);
 
@@ -95,9 +91,7 @@ class Mfa extends DataModel
 			// Do I have any backup records?
 			$hasBackupCodes = array_reduce(
 				$records,
-				function (bool $carry, $record) {
-					return $carry || $record->method === 'backupcodes';
-				},
+				fn(bool $carry, $record) => $carry || $record->method === 'backupcodes',
 				false
 			);
 
@@ -130,7 +124,7 @@ class Mfa extends DataModel
 		{
 			return is_array($this->options) ? $this->options : (@json_decode($this->options, true) ?: []);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			return [];
 		}

@@ -31,7 +31,7 @@ trait PrintFormattedArrayTrait
 		$data = $data ?: [];
 
 		$keys          = array_keys($data);
-		$isNumericKeys = array_reduce($keys, fn(bool $carry, mixed $item) => $carry && is_integer($item), true);
+		$isNumericKeys = array_reduce($keys, fn(bool $carry, mixed $item) => $carry && is_int($item), true);
 
 		switch ($format)
 		{

@@ -58,21 +58,21 @@ class SiteConfigGet extends AbstractCommand
 			return Command::FAILURE;
 		}
 
-		if (substr_count($key, '.') > 2 || (str_contains($key, '.') && !str_starts_with($key, 'config.')))
+		if (substr_count((string) $key, '.') > 2 || (str_contains((string) $key, '.') && !str_starts_with((string) $key, 'config.')))
 		{
 			$this->ioStyle->error('Invalid key');
 
 			return Command::FAILURE;
 		}
 
-		if (!str_contains($key, '.') && !$site->hasField($key))
+		if (!str_contains((string) $key, '.') && !$site->hasField($key))
 		{
 			$this->ioStyle->error('Invalid key');
 
 			return Command::FAILURE;
 		}
 
-		$value = str_contains($key, '.')
+		$value = str_contains((string) $key, '.')
 			? $site->getConfig()->get($key)
 			: $site->getFieldValue($key);
 		$format = $input->getOption('format') ?: 'table';

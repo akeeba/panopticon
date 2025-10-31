@@ -129,7 +129,7 @@ trait JsonSanitizerTrait
 		{
 			$dummy = json_decode($json, false, $depth, $flags);
 		}
-		catch (\JsonException $e)
+		catch (\JsonException)
 		{
 			return false;
 		}

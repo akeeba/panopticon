@@ -313,10 +313,7 @@ class Setup extends Model
 		 * stored in it.
 		 */
 		$this->container->offsetUnset('db');
-		$this->container->offsetSet('db', function (Container $c)
-		{
-			return Driver::fromContainer($c);
-		});
+		$this->container->offsetSet('db', Driver::fromContainer(...));
 	}
 
 	public function installDatabase(): void
@@ -364,7 +361,7 @@ class Setup extends Model
 			$session->set('setup_' . $altKey, $v);
 
 			// Do not store user parameters in the application configuration
-			if (str_starts_with($k, 'user.'))
+			if (str_starts_with((string) $k, 'user.'))
 			{
 				continue;
 			}
@@ -595,9 +592,7 @@ class Setup extends Model
 					->where(
 						[
 							$db->quoteName('site_id') . ' IS NULL',
-							$db->quoteName('type') . 'IN(' . implode(',', array_map([
-								$db, 'quote',
-							], array_keys(self::DEFAULT_TASKS))) . ')',
+							$db->quoteName('type') . 'IN(' . implode(',', array_map($db->quote(...), array_keys(self::DEFAULT_TASKS))) . ')',
 						]
 					);
 

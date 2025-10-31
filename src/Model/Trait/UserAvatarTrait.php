@@ -37,7 +37,7 @@ trait UserAvatarTrait
 
 		$avatarFromPlugin = array_reduce(
 			$results,
-			fn($carry, $x) => $carry ?? ((!empty(trim($x)) && is_string($x)) ? trim($x) : null),
+			fn($carry, $x) => $carry ?? ((!empty(trim((string) $x)) && is_string($x)) ? trim($x) : null),
 			null
 		);
 

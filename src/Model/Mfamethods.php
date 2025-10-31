@@ -203,7 +203,7 @@ class Mfamethods extends Model
 				]
 			);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			return $defaultRecord;
 		}

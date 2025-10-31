@@ -68,7 +68,7 @@ class SiteAdd extends AbstractCommand
 		$emailUpdateSuccess = ($input->getOption('email-update-success') ?? true) ? 1 : 0;
 
 		$groups = is_array($groups) ? $groups : (empty($groups) ? [] : [$groups]);
-		$groups = array_filter(array_map('intval', $groups));
+		$groups = array_filter(array_map(intval(...), $groups));
 
 		if (!in_array($updateAction, ['', 'none', 'email', 'patch', 'minor', 'major']))
 		{
@@ -256,12 +256,12 @@ class SiteAdd extends AbstractCommand
 	{
 		$updateTime = preg_replace('/[^0-9:]/', '', $updateTime);
 
-		if (!str_contains($updateTime, ':'))
+		if (!str_contains((string) $updateTime, ':'))
 		{
 			return [null, null];
 		}
 
-		[$hour, $minute,] = explode(':', $updateTime, 3);
+		[$hour, $minute,] = explode(':', (string) $updateTime, 3);
 
 		$hour   = (int) $hour;
 		$minute = (int) $minute;

@@ -44,35 +44,21 @@ class Container extends AWFContainer
 		$values['session']              = new SessionProvider();
 		$values['segment']              = new SegmentProvider();
 
-		$values['appConfig'] ??= function (Container $c) {
-			return new Configuration($c);
-		};
+		$values['appConfig'] ??= (fn(Container $c) => new Configuration($c));
 
-		$values['cacheFactory'] ??= function (Container $c) {
-			return new CacheFactory($c);
-		};
+		$values['cacheFactory'] ??= (fn(Container $c) => new CacheFactory($c));
 
-		$values['httpFactory'] ??= function (Container $c) {
-			return new HttpFactory($c);
-		};
+		$values['httpFactory'] ??= (fn(Container $c) => new HttpFactory($c));
 
-		$values['mailer'] ??= function (Container $c) {
-			return new Mailer($c);
-		};
+		$values['mailer'] ??= (fn(Container $c) => new Mailer($c));
 
-		$values['taskRegistry'] ??= function (Container $c) {
-			return new TaskRegistry(container: $c);
-		};
+		$values['taskRegistry'] ??= (fn(Container $c) => new TaskRegistry(container: $c));
 
-		$values['loggerFactory'] ??= function (Container $c) {
-			return new LoggerFactoryService($c);
-		};
+		$values['loggerFactory'] ??= (fn(Container $c) => new LoggerFactoryService($c));
 
 		$values['logger'] ??= fn(Container $c) => $c->loggerFactory->get('panopticon');
 
-		$values['queueFactory'] ??= function (Container $c) {
-			return new QueueFactory($c);
-		};
+		$values['queueFactory'] ??= (fn(Container $c) => new QueueFactory($c));
 
 		parent::__construct($values);
 	}

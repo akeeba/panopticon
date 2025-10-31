@@ -57,7 +57,7 @@ trait AkeebaBackupTooOldTrait
 		{
 			$backupStart = new \DateTime($backupStart);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			return false;
 		}

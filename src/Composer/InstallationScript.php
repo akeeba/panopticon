@@ -146,7 +146,7 @@ abstract class InstallationScript
 		{
 			$data = $download->getFromURL('https://download.tiny.cloud/tinymce/community/languagepacks/7/langs.zip');
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			return;
 		}
@@ -190,8 +190,8 @@ abstract class InstallationScript
 
 		foreach ($extras['babel'] ?? [] as $definition)
 		{
-			$folder  = trim($definition['folder'], '/');
-			$outdir  = trim($definition['outdir'], '/');
+			$folder  = trim((string) $definition['folder'], '/');
+			$outdir  = trim((string) $definition['outdir'], '/');
 			$names   = $definition['names'] ?? ['*.js'];
 			$exclude = $definition['exclude'] ?? null;
 
@@ -234,7 +234,7 @@ abstract class InstallationScript
 				$cwd = getcwd();
 				chdir($container->basePath);
 
-				$command = 'npx babel ' . escapeshellarg($inFile) . ' --out-dir ' . escapeshellarg($outdir)
+				$command = 'npx babel ' . escapeshellarg((string) $inFile) . ' --out-dir ' . escapeshellarg($outdir)
 				           . ' --out-file-extension ' . escapeshellarg('.min.js') . ' --source-maps';
 
 				passthru($command);
@@ -264,8 +264,8 @@ abstract class InstallationScript
 
 		foreach ($extras['sass'] ?? [] as $definition)
 		{
-			$folder  = trim($definition['folder'], '/');
-			$outdir  = trim($definition['outdir'], '/');
+			$folder  = trim((string) $definition['folder'], '/');
+			$outdir  = trim((string) $definition['outdir'], '/');
 			$names   = $definition['names'] ?? ['*.js'];
 			$exclude = $definition['exclude'] ?? null;
 
@@ -518,23 +518,21 @@ abstract class InstallationScript
 		}
 
 		// Remove a leading die() statement
-		$lines = array_map('trim', explode("\n", $content));
+		$lines = array_map(trim(...), explode("\n", $content));
 
-		if (strpos($lines[0], '<?') !== false)
+		if (str_contains($lines[0], '<?'))
 		{
 			array_shift($lines);
 		}
 
 		// Remove empty lines
 		$lines = array_filter(
-			$lines, function ($x) {
-			return !empty($x);
-		}
+			$lines, fn($x) => !empty($x)
 		);
 
 		// The first line should be "Something something something VERSION" or just "VERSION"
 		$firstLine = array_shift($lines);
-		$parts     = explode(' ', $firstLine);
+		$parts     = explode(' ', (string) $firstLine);
 		$firstLine = array_pop($parts);
 
 		// The first line should be "Something something something VERSION" or just "VERSION"

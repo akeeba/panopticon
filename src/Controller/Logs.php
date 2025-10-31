@@ -147,9 +147,9 @@ class Logs extends Controller
 
 		$range = $this->input->server->get('HTTP_RANGE', null, 'raw');
 
-		if (!is_null($range) || (trim($range) === ''))
+		if (!is_null($range) || (trim((string) $range) === ''))
 		{
-			[$size_unit, $range_orig] = explode('=', $range, 2);
+			[$size_unit, $range_orig] = explode('=', (string) $range, 2);
 
 			if ($size_unit == 'bytes')
 			{

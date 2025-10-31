@@ -62,7 +62,7 @@ class LanguageTools
 			if (empty($line))
 			{
 				// Commit value if key valid and translation not empty
-				if (!empty($key) && $key === strtoupper($key) && !empty(trim($translation)))
+				if (!empty($key) && $key === strtoupper($key) && !empty(trim((string) $translation)))
 				{
 					$strings[trim($key)] = $translation;
 				}
@@ -200,7 +200,7 @@ TEXT;
 		{
 			$translation = $asPot ? '' : $langTranslation[$orKey] ?? '';
 			$content     .= "#, phpformat\n" . sprintf("msgctxt \"%s\"\n", $orKey) . sprintf(
-					"msgid \"%s\"\n", addslashes($orValue)
+					"msgid \"%s\"\n", addslashes((string) $orValue)
 				) . sprintf("msgstr \"%s\"\n", addslashes($translation)) . "\n";
 		}
 

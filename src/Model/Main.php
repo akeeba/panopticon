@@ -102,7 +102,7 @@ class Main extends Model
 		{
 			return $this->container->dateFactory($lastExecution);
 		}
-		catch (\Throwable $e)
+		catch (\Throwable)
 		{
 			return null;
 		}
@@ -245,7 +245,7 @@ class Main extends Model
 
 				foreach ($versions as $versionObject)
 				{
-					$type          = trim($versionObject->cmsType, '"');
+					$type          = trim((string) $versionObject->cmsType, '"');
 					$temp[$type]   ??= [];
 					$temp[$type][] = $versionObject->version;
 				}
@@ -255,7 +255,7 @@ class Main extends Model
 				foreach ($types as $type)
 				{
 					uasort(
-						$temp[$type], function ($a, $b) {
+						$temp[$type], function ($a, $b): void {
 						version_compare($a ?? '0.0.0', $b ?? '0.0.0');
 					}
 					);

@@ -61,7 +61,7 @@ class ConfigSet extends AbstractCommand
 		{
 			$appConfig->saveConfiguration();
 		}
-		catch (Throwable $e)
+		catch (Throwable)
 		{
 			$this->ioStyle->error(
 				sprintf(

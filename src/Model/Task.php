@@ -515,7 +515,7 @@ class Task extends DataModel
 			$logger->error(
 				sprintf(
 					'Task failed with exception type %s [%s:%d]: %s',
-					get_class($e),
+					$e::class,
 					$e->getFile(),
 					$e->getLine(),
 					$e->getMessage()
@@ -596,7 +596,7 @@ class Task extends DataModel
 				{
 					$pendingTask->delete();
 				}
-				catch (Exception $e)
+				catch (Exception)
 				{
 					// Don't worry about it.
 				}

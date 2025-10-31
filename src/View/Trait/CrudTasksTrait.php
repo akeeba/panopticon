@@ -64,7 +64,7 @@ trait CrudTasksTrait
 	{
 		array_walk(
 			$buttons,
-			function (array|string|null $button) {
+			function (array|string|null $button): void {
 				is_array($button) ? $this->addButtonFromDefinition($button) : $this->addButton($button);
 			}
 		);

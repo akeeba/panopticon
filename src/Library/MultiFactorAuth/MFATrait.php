@@ -126,9 +126,7 @@ trait MFATrait
 		// Filter the records based on currently available MFA methods
 		return array_reduce(
 			$records,
-			function (bool $carry, $record) use ($methodNames) {
-				return $carry || in_array($record->method, $methodNames);
-			},
+			fn(bool $carry, $record) => $carry || in_array($record->method, $methodNames),
 			false
 		);
 	}

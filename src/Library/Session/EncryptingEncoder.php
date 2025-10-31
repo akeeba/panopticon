@@ -93,7 +93,7 @@ class EncryptingEncoder implements EncoderInterface, ContainerAwareInterface
 		{
 			$ret = @unserialize($decoded) ?? [];
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
 			$ret = [];
 		}

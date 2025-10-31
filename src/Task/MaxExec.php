@@ -145,7 +145,7 @@ class MaxExec extends AbstractCallback implements SymfonyStyleAwareInterface
 				{
 					$appConfig->saveConfiguration();
 				}
-				catch (\Exception $e)
+				catch (\Exception)
 				{
 					$this->ioStyle?->error('Could not write application configuration.');
 

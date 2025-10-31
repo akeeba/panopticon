@@ -109,7 +109,7 @@ class Sysconfig extends Controller
 		// Handle checkbox keys
 		array_walk(
 			$data,
-			function (&$value, string $key) {
+			function (&$value, string $key): void {
 				if (in_array($key, self::CHECKBOX_KEYS))
 				{
 					$value = in_array(strtolower($value), ['on', 'checked', 1, 'true']);
@@ -152,7 +152,7 @@ class Sysconfig extends Controller
 
 		$this->getModel()->saveExtensionPreferences($data);
 
-		$url = $urlRedirect ? base64_decode($urlRedirect) : $this->container->router->route('index.php');
+		$url = $urlRedirect ? base64_decode((string) $urlRedirect) : $this->container->router->route('index.php');
 
 		$this->setRedirect($url, $this->getLanguage()->text('PANOPTICON_SYSCONFIG_MSG_SAVED'));
 	}

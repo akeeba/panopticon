@@ -96,7 +96,7 @@ class Html extends \Awf\Mvc\DataView\Html
 	 * @var   string $latestPanopticonVersion
 	 * @since 1.0.6
 	 */
-	public ?VersionInformation $latestPanopticonVersion;
+	public ?VersionInformation $latestPanopticonVersion = null;
 
 	/**
 	 * The PHP version information on Panopticon's server.
@@ -104,7 +104,7 @@ class Html extends \Awf\Mvc\DataView\Html
 	 * @var    object|null
 	 * @since  1.0.6
 	 */
-	public ?object $phpVersionInfo;
+	public ?object $phpVersionInfo = null;
 
 	protected function onBeforeMain()
 	{

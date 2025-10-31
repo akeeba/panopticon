@@ -141,7 +141,7 @@ trait DefaultConfigurationTrait
 			return $values;
 		}
 
-		return array_filter($values, fn($x) => stripos($x, $currentValue) === 0);
+		return array_filter($values, fn($x) => stripos((string) $x, (string) $currentValue) === 0);
 	}
 
 	public function isValidConfigurationKey(string $key)
@@ -273,7 +273,7 @@ trait DefaultConfigurationTrait
 		{
 			$tz = new DateTimeZone($x);
 		}
-		catch (Exception $e)
+		catch (Exception)
 		{
 			$tz = false;
 		}

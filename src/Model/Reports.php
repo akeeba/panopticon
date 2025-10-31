@@ -337,7 +337,7 @@ class Reports extends DataModel
 				// If it's JSON-encded data, convert to an array
 				$furtherContext = json_decode(trim($furtherContext), true, flags: JSON_THROW_ON_ERROR);
 			}
-			catch (JsonException $e)
+			catch (JsonException)
 			{
 				// Nah, plain old arbitrary string. Cast to array with a single item.
 				$furtherContext = [

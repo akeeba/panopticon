@@ -177,7 +177,7 @@ class UserAdd extends AbstractCommand
 
 		$privileges = $input->getOption('permission');
 		$privileges = $privileges ?: [];
-		$privileges = is_array($privileges) ? $privileges : array($privileges);
+		$privileges = is_array($privileges) ? $privileges : [$privileges];
 
 		foreach ($privileges as $privilege)
 		{

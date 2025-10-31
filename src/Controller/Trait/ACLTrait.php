@@ -206,13 +206,13 @@ trait ACLTrait
 		$view ??= $this->input->getCmd('view', 'main');
 		$task ??= $this->input->getCmd('task', 'default');
 
-		if (str_contains($task, '.'))
+		if (str_contains((string) $task, '.'))
 		{
-			[$view, $task] = explode('.', $task, 2);
+			[$view, $task] = explode('.', (string) $task, 2);
 		}
 
-		$view = strtolower($view);
-		$task = strtolower($task);
+		$view = strtolower((string) $view);
+		$task = strtolower((string) $task);
 
 		// Determine the configured privileges
 		$requiredPrivileges = $this->aclChecks[$view][$task]

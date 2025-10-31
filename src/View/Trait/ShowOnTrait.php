@@ -39,7 +39,7 @@ trait ShowOnTrait
 				continue;
 			}
 
-			$compareEqual     = strpos($showOnPart, '!:') === false;
+			$compareEqual     = !str_contains($showOnPart, '!:');
 			$showOnPartBlocks = explode(($compareEqual ? ':' : '!:'), $showOnPart, 2);
 
 			$field = $arrayName

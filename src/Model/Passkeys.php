@@ -29,9 +29,9 @@ use Webauthn\PublicKeyCredentialSource;
  */
 final class Passkeys extends Model
 {
-	private Authentication $authenticationHelper;
+	private readonly Authentication $authenticationHelper;
 
-	private LoggerInterface $logger;
+	private readonly LoggerInterface $logger;
 
 	/** @inheritDoc */
 	final public function __construct(?Container $container = null)
@@ -210,7 +210,7 @@ final class Passkeys extends Model
 	final public function saveLabel(?string $credentialId, ?string $newLabel): bool
 	{
 		$repository   = $this->authenticationHelper->getCredentialsRepository();
-		$credentialId = @base64_decode($credentialId);
+		$credentialId = @base64_decode((string) $credentialId);
 
 		if (empty($credentialId))
 		{
@@ -337,7 +337,7 @@ final class Passkeys extends Model
 		$session = $this->getContainer()->segment;
 
 		// Retrieve data from the request
-		$returnUrl ??= base64_encode($session->get('passkey.returnUrl', Uri::current()));
+		$returnUrl ??= base64_encode((string) $session->get('passkey.returnUrl', Uri::current()));
 		$returnUrl = base64_decode($returnUrl);
 
 		// For security reasons the post-login redirection URL must be internal to the site.

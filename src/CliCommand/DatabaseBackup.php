@@ -110,7 +110,7 @@ class DatabaseBackup extends AbstractCommand
 		$backupLogger->debug(
 			sprintf(
 				"%s -- %d -- %s",
-				get_class($e),
+				$e::class,
 				$e->getCode(),
 				$e->getMessage(),
 			)
@@ -123,7 +123,7 @@ class DatabaseBackup extends AbstractCommand
 				'Backup failed',
 				sprintf(
 					"%s -- %d -- %s",
-					get_class($e),
+					$e::class,
 					$e->getCode(),
 					$e->getMessage(),
 				),

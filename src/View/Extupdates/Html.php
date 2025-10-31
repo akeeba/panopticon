@@ -68,7 +68,7 @@ class Html extends \Awf\Mvc\DataView\Html
 					$site                             = $site->findOrFail($site_id);
 					$this->scheduledPerSite[$site_id] = $site->getExtensionsScheduledForUpdate();
 				}
-				catch (\Exception $e)
+				catch (\Exception)
 				{
 					return null;
 				}
@@ -94,7 +94,7 @@ class Html extends \Awf\Mvc\DataView\Html
 				$this->sites[$site_id]            = $site->findOrFail($site_id);
 				$this->scheduledPerSite[$site_id] = $this->sites[$site_id]->getExtensionsScheduledForUpdate();
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				continue;
 			}

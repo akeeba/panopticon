@@ -92,7 +92,7 @@ class Extupdates extends Controller
 
 		if (!empty($returnUri))
 		{
-			$returnUri = @base64_decode($returnUri);
+			$returnUri = @base64_decode((string) $returnUri);
 
 			if (!Uri::isInternal($returnUri))
 			{
@@ -125,7 +125,7 @@ class Extupdates extends Controller
 			{
 				$site->findOrFail($siteId);
 			}
-			catch (\Exception $e)
+			catch (\Exception)
 			{
 				continue;
 			}
