@@ -7,7 +7,6 @@
 
 namespace Akeeba\Panopticon\Library\SelfUpdate;
 
-use Awf\Date\Date;
 use DateTime;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
 

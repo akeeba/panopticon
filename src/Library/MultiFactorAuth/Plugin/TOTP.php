@@ -22,7 +22,6 @@ use Awf\Input\Input;
 use Awf\Text\Language;
 use Awf\Text\LanguageAwareInterface;
 use Awf\Text\LanguageAwareTrait;
-use Awf\Text\Text;
 use Awf\Uri\Uri;
 use chillerlan\QRCode\Common\EccLevel;
 use chillerlan\QRCode\Common\Version;

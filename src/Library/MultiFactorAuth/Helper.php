@@ -13,7 +13,6 @@ use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\MultiFactorAuth\DataShape\MethodDescriptor;
 use Akeeba\Panopticon\Model\Mfa;
 use Awf\Container\Container;
-use Awf\Mvc\Model;
 use Awf\User\User;
 use Exception;
 

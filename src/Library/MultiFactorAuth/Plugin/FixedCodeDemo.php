@@ -21,7 +21,6 @@ use Awf\Input\Input;
 use Awf\Text\Language;
 use Awf\Text\LanguageAwareInterface;
 use Awf\Text\LanguageAwareTrait;
-use Awf\Text\Text;
 use RuntimeException;
 use stdClass;
 
