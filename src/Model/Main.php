@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Library\SoftwareVersions\PhpVersion;
 use Awf\Date\Date;
 use Awf\Input\Input;
 use Awf\Mvc\Model;
+use Throwable;
 
 /**
  * Main Page Model. Used to get the sites overview information.
@@ -102,7 +103,7 @@ class Main extends Model
 		{
 			return $this->container->dateFactory($lastExecution);
 		}
-		catch (\Throwable)
+		catch (Throwable)
 		{
 			return null;
 		}

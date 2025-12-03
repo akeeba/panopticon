@@ -1801,7 +1801,7 @@ class Site extends DataModel
 			{
 				$task->next_execution = $this->container->dateFactory($task->next_execution);
 			}
-			catch (Exception)
+			catch (Throwable)
 			{
 				return false;
 			}
@@ -1837,7 +1837,7 @@ class Site extends DataModel
 			{
 				$task->next_execution = $this->container->dateFactory($task->next_execution);
 			}
-			catch (Exception)
+			catch (Throwable)
 			{
 				return false;
 			}

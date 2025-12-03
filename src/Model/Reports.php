@@ -784,7 +784,14 @@ class Reports extends DataModel
 			$created_on = 'now';
 		}
 
-		$this->recordData['created_on'] = $this->getContainer()->dateFactory($created_on)->toSql();
+		try
+		{
+			$this->recordData['created_on'] = $this->getContainer()->dateFactory($created_on)->toSql();
+		}
+		catch (Throwable)
+		{
+			$this->recordData['created_on'] = $this->getContainer()->dateFactory()->toSql();
+		}
 	}
 
 	/**

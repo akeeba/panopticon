@@ -27,6 +27,7 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use RuntimeException;
+use Throwable;
 
 #[AsTask(
 	name: 'actionsummaryemail',
@@ -99,8 +100,25 @@ class ActionSummaryEmail extends AbstractCallback
 		/** @var Reports $model */
 		$model = $this->getContainer()->mvcFactory->makeTempModel('Reports');
 		$model->setState('site_id', $this->site->id);
-		$model->setState('from_date', $this->getContainer()->dateFactory($start->format(DATE_RFC3339), 'GMT'));
-		$model->setState('to_date', $this->getContainer()->dateFactory($end->format(DATE_RFC3339), 'GMT'));
+
+		try
+		{
+			$model->setState('from_date', $this->getContainer()->dateFactory($start->format(DATE_RFC3339), 'GMT'));
+		}
+		catch (Throwable)
+		{
+			$model->setState('from_date', null);
+		}
+
+		try
+		{
+			$model->setState('to_date', $this->getContainer()->dateFactory($end->format(DATE_RFC3339), 'GMT'));
+		}
+		catch (Throwable)
+		{
+			$model->setState('to_date', null);
+		}
+
 		$records = $model->get(true);
 
 		if ($records->count() === 0)

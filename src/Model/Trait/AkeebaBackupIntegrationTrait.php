@@ -597,7 +597,15 @@ trait AkeebaBackupIntegrationTrait
 						return true;
 					}
 
-					$date = $this->container->dateFactory($task->last_execution, 'UTC');
+					try
+					{
+						$date = $this->container->dateFactory($task->last_execution, 'UTC');
+					}
+					catch (Throwable)
+					{
+						return true;
+					}
+
 					$now  = $this->container->dateFactory();
 
 					return ($date < $now);

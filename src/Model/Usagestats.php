@@ -14,6 +14,7 @@ use Akeeba\UsageStats\Collector\Constants\SoftwareType;
 use Akeeba\UsageStats\Collector\StatsCollector;
 use Awf\Date\Date;
 use Awf\Mvc\Model;
+use Throwable;
 
 /**
  * Anonymous Usage Statistics Collection
@@ -74,7 +75,7 @@ final class Usagestats extends Model
 			// Conditional collection: perform collection
 			$statsCollector->conditionalSendStatistics($useForbiddenDomains);
 		}
-		catch (\Throwable)
+		catch (Throwable)
 		{
 			return;
 		}
@@ -150,7 +151,14 @@ final class Usagestats extends Model
 			return null;
 		}
 
-		return $this->getContainer()->dateFactory('@' . $item);
+		try
+		{
+			return $this->getContainer()->dateFactory('@' . $item);
+		}
+		catch (Throwable)
+		{
+			return $this->getContainer()->dateFactory();
+		}
 	}
 
 	/**

@@ -16,6 +16,7 @@ use Awf\Database\Driver;
 use Awf\Date\Date;
 use DateTime;
 use Exception;
+use Throwable;
 
 class MySQLQueue implements QueueInterface, ContainerAwareInterface
 {
@@ -251,7 +252,7 @@ class MySQLQueue implements QueueInterface, ContainerAwareInterface
 			{
 				$time = $this->container->dateFactory($time);
 			}
-			catch (Exception)
+			catch (Throwable)
 			{
 				$time = $this->container->dateFactory();
 			}

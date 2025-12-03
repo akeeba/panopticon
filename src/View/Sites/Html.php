@@ -711,7 +711,7 @@ class Html extends DataViewHtml
 		{
 			$startTime = clone $this->container->dateFactory($record->backupstart, $utcTimeZone);
 		}
-		catch (Exception)
+		catch (Throwable)
 		{
 			$startTime = null;
 		}
@@ -720,7 +720,7 @@ class Html extends DataViewHtml
 		{
 			$endTime = clone $this->container->dateFactory($record->backupend, $utcTimeZone);
 		}
-		catch (Exception)
+		catch (Throwable)
 		{
 			$endTime = null;
 		}

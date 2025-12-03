@@ -153,11 +153,17 @@ class Task extends DataModel
 			return null;
 		}
 
-		$utcTimeZone = new DateTimeZone('UTC');
-		$startTime   = clone $this->container->dateFactory($this->last_execution, $utcTimeZone);
-		$endTime     = clone $this->container->dateFactory($this->last_run_end, $utcTimeZone);
-
-		$duration = abs($endTime->toUnix() - $startTime->toUnix());
+		try
+		{
+			$utcTimeZone = new DateTimeZone('UTC');
+			$startTime = clone $this->container->dateFactory($this->last_execution, $utcTimeZone);
+			$endTime   = clone $this->container->dateFactory($this->last_run_end, $utcTimeZone);
+			$duration  = abs($endTime->toUnix() - $startTime->toUnix());
+		}
+		catch (Throwable)
+		{
+			$duration = 0;
+		}
 
 		$seconds  = $duration % 60;
 		$duration -= $seconds;
@@ -201,10 +207,19 @@ class Task extends DataModel
 			$cron_expression = $this->cron_expression instanceof CronExpression
 				? $this->cron_expression
 				: new CronExpression($this->cron_expression);
+
 			// Warning! The last execution time is ALWAYS stored in UTC
-			$relativeTime = ($this->container->dateFactory($this->last_execution ?: 'now', 'UTC'))->format(
-				'Y-m-d\TH:i:sP', false, false
-			);
+			try
+			{
+				$realTimeAsDateObject = $this->container->dateFactory($this->last_execution ?: 'now', 'UTC');
+			}
+			catch (Throwable)
+			{
+				$realTimeAsDateObject = $this->container->dateFactory('now', 'UTC');
+			}
+
+			$relativeTime = $realTimeAsDateObject->format('Y-m-d\TH:i:sP', false, false);
+
 			// The call to getNextRunDate must use our local timezone because the CRON expression is in local time
 			$nextRun = $cron_expression->getNextRunDate($relativeTime, timeZone: $tz)->format(DATE_W3C);
 
@@ -215,7 +230,16 @@ class Task extends DataModel
 			 */
 			if (!$this->getState('disable_next_execution_recalculation', false, 'bool'))
 			{
-				$this->next_execution = ($this->container->dateFactory($nextRun, 'UTC'))->toSql();
+				try
+				{
+					$nextExecDatetime = $this->container->dateFactory($nextRun, 'UTC');
+				}
+				catch (Throwable)
+				{
+					$nextExecDatetime = $this->container->dateFactory('now', 'UTC');
+				}
+
+				$this->next_execution = $nextExecDatetime->toSql();
 			}
 		}
 		catch (Exception)
@@ -365,7 +389,7 @@ class Task extends DataModel
 			 */
 			if (!$willResume)
 			{
-				$updates['last_execution'] = ($this->container->dateFactory('now', 'UTC'))->toSql();
+				$updates['last_execution'] = $this->container->dateFactory('now', 'UTC')->toSql();
 			}
 
 			$pendingTask->save($updates);
@@ -380,7 +404,7 @@ class Task extends DataModel
 				$pendingTask->save(
 					[
 						'last_exit_code' => Status::NO_LOCK->value,
-						'last_execution' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
+						'last_execution' => $this->container->dateFactory('now', 'UTC')->toSql(),
 					]
 				);
 			}
@@ -571,7 +595,7 @@ class Task extends DataModel
 				$this->lockTables();
 				$pendingTask->save(
 					[
-						'last_run_end' => ($this->container->dateFactory('now', 'UTC'))->toSql(),
+						'last_run_end' => $this->container->dateFactory('now', 'UTC')->toSql(),
 					]
 				);
 				$this->unlockTables();
@@ -582,7 +606,7 @@ class Task extends DataModel
 
 				$pendingTask->save(
 					[
-						'last_run_end'   => ($this->container->dateFactory('now', 'UTC'))->toSql(),
+						'last_run_end'   => $this->container->dateFactory('now', 'UTC')->toSql(),
 						'last_exit_code' => Status::NO_RELEASE->value,
 					]
 				);

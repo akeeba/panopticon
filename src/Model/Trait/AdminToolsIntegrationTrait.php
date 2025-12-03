@@ -24,6 +24,7 @@ use DateTimeZone;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Throwable;
 
 /**
  * Model Trait for the integration with Admin Tools Professional for Joomla!
@@ -322,7 +323,7 @@ trait AdminToolsIntegrationTrait
 			},
 			args: [$scanAlertId],
 			id: sprintf('scanalert-%d', $scanAlertId),
-			expiration: ($this->container->dateFactory())->add(new \DateInterval('P1Y'))
+			expiration: $this->container->dateFactory()->add(new \DateInterval('P1Y'))
 		);
 	}
 
@@ -374,7 +375,15 @@ trait AdminToolsIntegrationTrait
 						return true;
 					}
 
-					$date = $this->container->dateFactory($task->last_execution, 'UTC');
+					try
+					{
+						$date = $this->container->dateFactory($task->last_execution, 'UTC');
+					}
+					catch (Throwable)
+					{
+						return true;
+					}
+
 					$now  = $this->container->dateFactory();
 
 					return ($date < $now);

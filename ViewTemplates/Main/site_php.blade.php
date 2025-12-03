@@ -58,10 +58,17 @@ $isLatest      = version_compare($php, $latestVersion, 'ge');
     <span class="badge bg-secondary-subtle">Unknown</span>
 @elseif ($phpVersion->isEOL($php))
 		<?php
-		$eolDate = ($this->container->dateFactory(
-			$phpVersion->getVersionInformation($php)?->dates?->eol?->format(DATE_RFC3339) ?? '2000-01-01 00:00:00'
-		))
-			->format($this->getLanguage()->text('DATE_FORMAT_LC3')) ?>
+		try
+		{
+			$eolDate = $this->container->dateFactory(
+				$phpVersion->getVersionInformation($php)?->dates?->eol?->format(DATE_RFC3339) ?? '2000-01-01 00:00:00'
+			)->format($this->getLanguage()->text('DATE_FORMAT_LC3'));
+		}
+		catch (Throwable)
+		{
+			$eolDate = '(???)';
+		}
+		?>
     <div class="text-danger text-truncate"
          data-bs-toggle="tooltip" data-bs-placement="bottom"
          data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_EOL_SINCE', $eolDate)"
@@ -72,10 +79,17 @@ $isLatest      = version_compare($php, $latestVersion, 'ge');
     </div>
 @elseif ($phpVersion->isSecurity($php))
 		<?php
-		$eolDate = ($this->container->dateFactory(
-			$phpVersion->getVersionInformation($php)?->dates?->eol?->format(DATE_RFC3339) ?? '2000-01-01 00:00:00'
-		))
-			->format($this->getLanguage()->text('DATE_FORMAT_LC3')) ?>
+		try
+		{
+			$eolDate = $this->container->dateFactory(
+				$phpVersion->getVersionInformation($php)?->dates?->eol?->format(DATE_RFC3339) ?? '2000-01-01 00:00:00'
+			)->format($this->getLanguage()->text('DATE_FORMAT_LC3'));
+		}
+		catch (Throwable)
+		{
+			$eolDate = '(???)';
+		}
+		?>
     <div class="text-body-tertiary text-truncate"
          data-bs-toggle="tooltip" data-bs-placement="bottom"
          data-bs-title="@sprintf('PANOPTICON_MAIN_SITES_LBL_PHP_SECURITY_MAINTENANCE', $eolDate)"
