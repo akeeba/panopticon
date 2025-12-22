@@ -40,7 +40,7 @@
 		"ext-zip": "*",
 		"akeeba/awf": "dev-development",
 		"akeeba/json-backup-api": "dev-main",
-		"akeeba/phpfinder": "1.0.0",
+		"akeeba/phpfinder": "^1.0.0",
 		"akeeba/stats_collector": "dev-main",
 		"cesargb/php-log-rotation": "^2.7.1",
 		"chillerlan/php-qrcode": "^5.0.0",
