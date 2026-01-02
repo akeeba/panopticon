@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "460b4a6ffaa7af0fd92ffad925b5e637254ddc3d"
+                "reference": "7851de0f213792967a2e750133904e1fb19b1415"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/460b4a6ffaa7af0fd92ffad925b5e637254ddc3d",
-                "reference": "460b4a6ffaa7af0fd92ffad925b5e637254ddc3d",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/7851de0f213792967a2e750133904e1fb19b1415",
+                "reference": "7851de0f213792967a2e750133904e1fb19b1415",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "issues": "https://github.com/akeeba/awf/issues",
                 "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2025-10-14T06:58:51+00:00"
+            "time": "2025-12-22T07:41:59+00:00"
         },
         {
             "name": "akeeba/json-backup-api",
@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/json-backup-api.git",
-                "reference": "72066d46494aa889851a92a028d0833a469ad0fb"
+                "reference": "33816a32ff073cae73a038c948133f3cc0b6b9ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/json-backup-api/zipball/72066d46494aa889851a92a028d0833a469ad0fb",
-                "reference": "72066d46494aa889851a92a028d0833a469ad0fb",
+                "url": "https://api.github.com/repos/akeeba/json-backup-api/zipball/33816a32ff073cae73a038c948133f3cc0b6b9ee",
+                "reference": "33816a32ff073cae73a038c948133f3cc0b6b9ee",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,7 @@
                 "issues": "https://github.com/akeeba/json-backup-api/issues",
                 "source": "https://github.com/akeeba/json-backup-api/tree/main"
             },
-            "time": "2025-05-31T16:09:34+00:00"
+            "time": "2025-12-22T07:43:19+00:00"
         },
         {
             "name": "akeeba/phpfinder",
