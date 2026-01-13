@@ -32,6 +32,22 @@ class Groups extends DataModel
 		$this->addBehaviour('filters');
 	}
 
+	public function buildQuery($overrideLimits = false)
+	{
+		$query = parent::buildQuery($overrideLimits);
+
+		$search = trim($this->getState('search', null) ?? '');
+
+		if (!empty($search))
+		{
+			$query->where(
+				$query->quoteName('title') . ' LIKE ' . $query->quote('%' . $search . '%')
+			);
+		}
+
+		return $query;
+	}
+
 	public function getPrivileges(): array
 	{
 		return is_array($this->privileges)

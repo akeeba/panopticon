@@ -1,3 +1,6 @@
+### phpStorm
+/.idea/laravel-idea.xml
+
 ### Application stuff
 /config.php
 /config.php.*
