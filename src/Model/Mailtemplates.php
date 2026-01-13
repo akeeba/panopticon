@@ -16,12 +16,12 @@ use Awf\Mvc\DataModel;
 /**
  * Mail Templates
  *
- * @property-read int    $id
- * @property-read string $type
- * @property-read string $language
- * @property-read string $subject
- * @property-read string $html
- * @property-read string $plaintext
+ * @property int    $id
+ * @property string $type
+ * @property string $language
+ * @property string $subject
+ * @property string $html
+ * @property string $plaintext
  */
 class Mailtemplates extends DataModel
 {
@@ -35,6 +35,25 @@ class Mailtemplates extends DataModel
 		parent::__construct($container);
 
 		$this->addBehaviour('filters');
+	}
+
+	public function buildQuery($overrideLimits = false)
+	{
+		$query = parent::buildQuery($overrideLimits);
+
+		$search = trim($this->getState('search', null) ?? '');
+
+		if (!empty($search))
+		{
+			$query->extendWhere(
+				'AND', [
+				$query->quoteName('type') . ' LIKE ' . $query->quote('%' . $search . '%'),
+				$query->quoteName('subject') . ' LIKE ' . $query->quote('%' . $search . '%'),
+			], 'OR'
+			);
+		}
+
+		return $query;
 	}
 
 	public function getCommonCSS(): ?string
