@@ -16,5 +16,22 @@ defined('AKEEBA') || die;
  */
 class Tasks extends Task
 {
+	public function buildQuery($overrideLimits = false)
+	{
+		$query = parent::buildQuery($overrideLimits);
+
+		$search = trim($this->getState('search', null) ?? '');
+
+		if (!empty($search))
+		{
+			$query->extendWhere(
+				'AND', [
+				$query->quoteName('type') . ' LIKE ' . $query->quote('%' . $search . '%'),
+			], 'OR'
+			);
+		}
+
+		return $query;
+	}
 
 }
