@@ -49,3 +49,6 @@
 /docker-compose.override.yml
 /docker-compose-frankenphp.override.yml
 /docker-testing
+
+## AI agents
+.claude/settings.local.json
