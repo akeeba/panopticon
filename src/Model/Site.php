@@ -1851,6 +1851,68 @@ class Site extends DataModel
 		);
 	}
 
+	protected function onAfterUnpublish(): void
+	{
+		// Find all enabled tasks for this site
+		/** @var Tasks $taskModel */
+		$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Tasks');
+		$tasks     = $taskModel
+			->where('site_id', '=', $this->getId())
+			->where('enabled', '=', 1)
+			->get(0, 0);
+
+		$taskIds = [];
+
+		/** @var Task $task */
+		foreach ($tasks as $task)
+		{
+			$taskIds[] = $task->getId();
+			$task->unpublish();
+		}
+
+		// Remember which tasks we disabled
+		$config = $this->getConfig();
+		$config->set('config.tasksDisabledOnUnpublish', $taskIds ?: null);
+		$this->save(['config' => $config->toString()]);
+	}
+
+	protected function onAfterPublish(): void
+	{
+		$config  = $this->getConfig();
+		$taskIds = $config->get('config.tasksDisabledOnUnpublish', []);
+
+		if (!empty($taskIds) && is_array($taskIds))
+		{
+			/** @var Tasks $taskModel */
+			$taskModel = $this->getContainer()->mvcFactory->makeTempModel('Tasks');
+
+			foreach ($taskIds as $taskId)
+			{
+				/** @var Task $task */
+				$task = $taskModel->getClone()->reset(true, true);
+
+				try
+				{
+					$task->findOrFail($taskId);
+				}
+				catch (\RuntimeException)
+				{
+					continue;
+				}
+
+				// Only re-enable tasks that are still disabled
+				if (!$task->enabled)
+				{
+					$task->publish();
+				}
+			}
+		}
+
+		// Clear the stored list
+		$config->set('config.tasksDisabledOnUnpublish', null);
+		$this->save(['config' => $config->toString()]);
+	}
+
 	protected function onBeforeDelete($id)
 	{
 		if (empty($id))

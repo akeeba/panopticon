@@ -7,6 +7,7 @@ Akeeba Panopticon 1.3.3
 # [MEDIUM] Missing PHP expiration dates can cause a fatal error displaying a site.
 # [MEDIUM] Invalid dates (e.g. in backups) can cause a fatal error.
 # [HIGH] Manually enqueueing a WordPress plugin update in the UI does not schedule the plugins update task for the site.
+# [HIGH] Unpublishing a site does not disable its scheduled tasks; re-publishing restores them.
 
 Akeeba Panopticon 1.3.2
 ================================================================================
