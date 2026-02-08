@@ -20,7 +20,7 @@ services:
       context: '.'
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 8.2
+        PHP_VERSION: 8.4
     # If you want to use the pre-made images, uncomment this line and remove the `build` section.
     #image: ghcr.io/akeeba/panopticon:latest
     depends_on:
