@@ -468,6 +468,15 @@ class Application extends AWFApplication
 				$allowed = false;
 			}
 
+			// Do not show Legal Policies when user registration is disabled
+			if (
+				($params['view'] ?? null) === 'policies'
+				&& $this->container->appConfig->get('user_registration', 'disabled') === 'disabled'
+			)
+			{
+				$allowed = false;
+			}
+
 			if (!$allowed)
 			{
 				continue;

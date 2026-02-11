@@ -218,6 +218,7 @@ $view          = $this->getContainer()->input->getCmd('view', 'main') ?: 'main';
 							<?= $text->text('PANOPTICON_ABOUT_TITLE') ?>
 						</a>
 					</div>
+					<?php if ($this->container->appConfig->get('user_registration', 'disabled') !== 'disabled'): ?>
 					<div>
 						<span class="fa fa-file-contract" aria-hidden="true"></span>
 						<a href="<?= $this->container->router->route('index.php?view=policies&task=tos') ?>">
@@ -230,6 +231,7 @@ $view          = $this->getContainer()->input->getCmd('view', 'main') ?: 'main';
 							<?= $text->text('PANOPTICON_POLICIES_TITLE_PRIVACY') ?>
 						</a>
 					</div>
+					<?php endif; ?>
 					<?php if ($isDebug): ?>
 					<div>
 						<span class="fa fa-clock" title="<?= $text->text('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?>"

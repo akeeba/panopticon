@@ -99,6 +99,7 @@ $canPWReset = Factory::getContainer()->appConfig->get('pwreset', true);
             </div>
         </div>
 
+        @if ($this->registrationEnabled)
         <div class="mt-3 text-center small">
             <a href="@route('index.php?view=policies&task=tos')" class="text-decoration-none" target="_blank">
                 @lang('PANOPTICON_POLICIES_TITLE_TOS')
@@ -108,6 +109,7 @@ $canPWReset = Factory::getContainer()->appConfig->get('pwreset', true);
                 @lang('PANOPTICON_POLICIES_TITLE_PRIVACY')
             </a>
         </div>
+        @endif
 
         <input type="hidden" name="token" value="@token()">
         <input type="hidden" name="return"

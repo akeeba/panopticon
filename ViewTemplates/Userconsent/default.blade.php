@@ -39,7 +39,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             <div id="collapseTos" class="accordion-collapse collapse" aria-labelledby="headingTos"
                  data-bs-parent="#policyAccordion">
                 <div class="accordion-body" style="max-height: 400px; overflow-y: auto;">
-                    {!! $this->tosContent !!}
+                    {{ $this->tosContent }}
                 </div>
                 <div class="accordion-footer p-2 text-end border-top">
                     <a href="@route('index.php?view=policies&task=tos')" target="_blank" class="btn btn-sm btn-outline-secondary">
@@ -62,7 +62,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             <div id="collapsePrivacy" class="accordion-collapse collapse" aria-labelledby="headingPrivacy"
                  data-bs-parent="#policyAccordion">
                 <div class="accordion-body" style="max-height: 400px; overflow-y: auto;">
-                    {!! $this->privacyContent !!}
+                    {{ $this->privacyContent }}
                 </div>
                 <div class="accordion-footer p-2 text-end border-top">
                     <a href="@route('index.php?view=policies&task=privacy')" target="_blank" class="btn btn-sm btn-outline-secondary">

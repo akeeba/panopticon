@@ -20,7 +20,7 @@ defined('AKEEBA') || die;
             </h3>
         </div>
         <div class="card-body">
-            {!! $this->policyContent !!}
+            {{ $this->policyContent }}
         </div>
     </div>
 
