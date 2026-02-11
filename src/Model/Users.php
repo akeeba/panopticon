@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Helper\ForbiddenUsernames;
+use Complexify\Complexify;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
 use Akeeba\Panopticon\Library\Passkey\PasskeyTrait;
 use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
@@ -452,6 +453,28 @@ class Users extends DataModel
 		if (empty($password))
 		{
 			throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_NEEDS_PASSWORD'));
+		}
+
+		// Validate password complexity
+		$complexify = new Complexify([
+			'minimumChars' => 12,
+			'encoding'     => 'UTF-8',
+		]);
+
+		$result = $complexify->evaluateSecurity($password);
+
+		if (!$result->valid)
+		{
+			if (in_array('banned', $result->errors))
+			{
+				throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_PASSWORD_BANNED'));
+			}
+			elseif (in_array('tooshort', $result->errors))
+			{
+				throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_PASSWORD_TOOSHORT'));
+			}
+
+			throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_PASSWORD_WEAK'));
 		}
 
 		// Create the user (blocked by default)
