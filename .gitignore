@@ -26,6 +26,7 @@
 /media/choices/**
 /media/css/fontawesome.*
 /media/js/bootstrap.bundle.*
+/media/altcha/**
 /media/petite-vue/*.js
 /media/tinymce
 !/media/tinymce/skins/content/akeeba
