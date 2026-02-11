@@ -30,7 +30,7 @@ class RegistrationCleanup extends AbstractCallback
 	{
 		$registrationType = $this->container->appConfig->get('user_registration', 'disabled');
 
-		if ($registrationType === 'disabled')
+		if (!in_array($registrationType, ['admin', 'self'], true))
 		{
 			$this->logger->info('User registration is disabled. Nothing to clean up.');
 

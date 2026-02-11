@@ -200,7 +200,7 @@ class Users extends DataController
 		$registrationType = $appConfig->get('user_registration', 'disabled');
 
 		// If registration is disabled, redirect with an error
-		if ($registrationType === 'disabled')
+		if (!in_array($registrationType, ['admin', 'self'], true))
 		{
 			$this->setRedirect(
 				$router->route('index.php'),

@@ -388,7 +388,7 @@ class Users extends DataModel
 
 		$registrationType = $appConfig->get('user_registration', 'disabled');
 
-		if ($registrationType === 'disabled')
+		if (!in_array($registrationType, ['admin', 'self'], true))
 		{
 			throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_REGISTRATION_DISABLED'));
 		}

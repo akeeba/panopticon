@@ -42,7 +42,7 @@ class Html extends View
 
 		$this->container->input->set('tmpl', 'component');
 
-		$this->registrationEnabled = $this->container->appConfig->get('user_registration', 'disabled') !== 'disabled';
+		$this->registrationEnabled = in_array($this->container->appConfig->get('user_registration', 'disabled'), ['admin', 'self'], true);
 
 		$this->username  = $this->container->segment->getFlash('auth_username');
 		$this->password  = $this->container->segment->getFlash('auth_password');
