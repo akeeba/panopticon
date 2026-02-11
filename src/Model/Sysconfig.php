@@ -108,7 +108,11 @@ class Sysconfig extends Model
 			'user_registration_custom_blocked_usernames' => true,
 			'user_registration_activation_days' => filter_var($value, FILTER_VALIDATE_INT) && $value >= 1 && $value <= 90,
 			'user_registration_activation_tries' => filter_var($value, FILTER_VALIDATE_INT) && $value >= 1 && $value <= 100,
-			'captcha_provider'      => in_array($value, ['altcha', 'none']),
+			'captcha_provider'      => in_array($value, ['altcha', 'none', 'recaptcha_invisible', 'hcaptcha']),
+			'captcha_recaptcha_site_key' => true,
+			'captcha_recaptcha_secret_key' => true,
+			'captcha_hcaptcha_site_key' => true,
+			'captcha_hcaptcha_secret_key' => true,
 
 			// Anything else, we don't know what it is.
 			default                 => false,

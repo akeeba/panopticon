@@ -7,9 +7,7 @@
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Library\Captcha\AltchaCaptcha;
-use Awf\Utils\Template;
+use Akeeba\Panopticon\Library\Captcha\CaptchaFactory;
 
 /** @var \Akeeba\Panopticon\View\Users\Html $this */
 
@@ -17,14 +15,8 @@ $container       = $this->getContainer();
 $captchaProvider = $container->appConfig->get('captcha_provider', 'altcha');
 
 // Generate CAPTCHA challenge
-$captchaHtml = '';
-
-if ($captchaProvider === 'altcha')
-{
-    $captcha     = new AltchaCaptcha($container);
-    $captchaHtml = $captcha->renderChallenge();
-    Template::addJs('media://altcha/altcha.js', $container->application, defer: true);
-}
+$captcha     = CaptchaFactory::make($captchaProvider, $container);
+$captchaHtml = $captcha?->renderChallenge() ?? '';
 
 ?>
 

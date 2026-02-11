@@ -111,6 +111,10 @@ trait DefaultConfigurationTrait
 			'user_registration_activation_days'          => 7,
 			'user_registration_activation_tries'         => 3,
 			'captcha_provider'                           => 'altcha',
+			'captcha_recaptcha_site_key'                 => '',
+			'captcha_recaptcha_secret_key'               => '',
+			'captcha_hcaptcha_site_key'                  => '',
+			'captcha_hcaptcha_secret_key'                => '',
 		];
 	}
 
@@ -144,7 +148,7 @@ trait DefaultConfigurationTrait
 			'dbdriver' => ['mysqli', 'pdomysql'],
 			'dbhost' => array_filter(['localhost', '127.0.0.1', $this->get('dbhost')]),
 			'user_registration' => ['disabled', 'admin', 'self'],
-			'captcha_provider' => ['altcha', 'none'],
+			'captcha_provider' => ['altcha', 'none', 'recaptcha_invisible', 'hcaptcha'],
 			'user_registration_activation_days' => [1, 3, 5, 7, 14, 30],
 			'user_registration_activation_tries' => [1, 3, 5, 10],
 			'default' => [],
@@ -225,7 +229,7 @@ trait DefaultConfigurationTrait
 			'user_registration_activation_days' => fn($x) => $this->validateInteger($x, 7, 1, 90),
 			'user_registration_activation_tries' => fn($x) => $this->validateInteger($x, 3, 1, 100),
 			'captcha_provider' => fn($x) => $this->validatePresetValues(
-				$x, 'altcha', ['altcha', 'none']
+				$x, 'altcha', ['altcha', 'none', 'recaptcha_invisible', 'hcaptcha']
 			),
 			default => fn($x) => $x,
 		};

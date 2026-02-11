@@ -168,8 +168,10 @@ $config = $this->container->appConfig;
             <div class="col-sm-9">
                 {{ $this->container->html->select->genericList(
                     data: [
-                        'altcha' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_CAPTCHA_ALTCHA'),
-                        'none'   => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_CAPTCHA_NONE'),
+                        'altcha'              => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_CAPTCHA_ALTCHA'),
+                        'recaptcha_invisible' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_CAPTCHA_RECAPTCHA_INVISIBLE'),
+                        'hcaptcha'            => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_CAPTCHA_HCAPTCHA'),
+                        'none'                => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_OPT_CAPTCHA_NONE'),
                     ],
                     name: 'options[captcha_provider]',
                     attribs: [
@@ -180,6 +182,70 @@ $config = $this->container->appConfig;
                 ) }}
                 <div class="form-text">
                     @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER_HELP')
+                </div>
+            </div>
+        </div>
+
+        {{-- captcha_recaptcha_site_key --}}
+        <div class="row mb-3" data-showon='[{"field":"options[user_registration]","values":["admin","self"],"sign":"=","op":""},{"field":"options[captcha_provider]","values":["recaptcha_invisible"],"sign":"=","op":"AND"}]'>
+            <label for="captcha_recaptcha_site_key" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY')
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="captcha_recaptcha_site_key"
+                       name="options[captcha_recaptcha_site_key]"
+                       value="{{{ $config->get('captcha_recaptcha_site_key', '') }}}"
+                >
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY_HELP')
+                </div>
+            </div>
+        </div>
+
+        {{-- captcha_recaptcha_secret_key --}}
+        <div class="row mb-3" data-showon='[{"field":"options[user_registration]","values":["admin","self"],"sign":"=","op":""},{"field":"options[captcha_provider]","values":["recaptcha_invisible"],"sign":"=","op":"AND"}]'>
+            <label for="captcha_recaptcha_secret_key" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY')
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="captcha_recaptcha_secret_key"
+                       name="options[captcha_recaptcha_secret_key]"
+                       value="{{{ $config->get('captcha_recaptcha_secret_key', '') }}}"
+                >
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY_HELP')
+                </div>
+            </div>
+        </div>
+
+        {{-- captcha_hcaptcha_site_key --}}
+        <div class="row mb-3" data-showon='[{"field":"options[user_registration]","values":["admin","self"],"sign":"=","op":""},{"field":"options[captcha_provider]","values":["hcaptcha"],"sign":"=","op":"AND"}]'>
+            <label for="captcha_hcaptcha_site_key" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY')
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="captcha_hcaptcha_site_key"
+                       name="options[captcha_hcaptcha_site_key]"
+                       value="{{{ $config->get('captcha_hcaptcha_site_key', '') }}}"
+                >
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY_HELP')
+                </div>
+            </div>
+        </div>
+
+        {{-- captcha_hcaptcha_secret_key --}}
+        <div class="row mb-3" data-showon='[{"field":"options[user_registration]","values":["admin","self"],"sign":"=","op":""},{"field":"options[captcha_provider]","values":["hcaptcha"],"sign":"=","op":"AND"}]'>
+            <label for="captcha_hcaptcha_secret_key" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY')
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="captcha_hcaptcha_secret_key"
+                       name="options[captcha_hcaptcha_secret_key]"
+                       value="{{{ $config->get('captcha_hcaptcha_secret_key', '') }}}"
+                >
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY_HELP')
                 </div>
             </div>
         </div>

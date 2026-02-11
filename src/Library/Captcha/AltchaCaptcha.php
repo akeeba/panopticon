@@ -54,6 +54,7 @@ class AltchaCaptcha implements CaptchaInterface
 		$challengeJson = htmlspecialchars(json_encode($challenge), ENT_QUOTES, 'UTF-8');
 
 		return <<<HTML
+<script src="media/altcha/altcha.js" defer></script>
 <altcha-widget challengejson="{$challengeJson}" auto="onsubmit"></altcha-widget>
 HTML;
 	}

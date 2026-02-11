@@ -11,7 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Library\Captcha\AltchaCaptcha;
+use Akeeba\Panopticon\Library\Captcha\CaptchaFactory;
 use Akeeba\Panopticon\Library\Passkey\Authentication;
 use Akeeba\Panopticon\View\Users\Html;
 use Awf\Mvc\DataController;
@@ -233,15 +233,11 @@ class Users extends DataController
 		{
 			// Validate CAPTCHA
 			$captchaProvider = $appConfig->get('captcha_provider', 'altcha');
+			$captcha         = CaptchaFactory::make($captchaProvider, $container);
 
-			if ($captchaProvider === 'altcha')
+			if ($captcha !== null && !$captcha->validateResponse())
 			{
-				$captcha = new AltchaCaptcha($container);
-
-				if (!$captcha->validateResponse())
-				{
-					throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_CAPTCHA_FAILED'));
-				}
+				throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_CAPTCHA_FAILED'));
 			}
 
 			// Validate passwords match
