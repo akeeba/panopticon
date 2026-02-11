@@ -426,6 +426,9 @@ class Setup extends Model
 		$user->setPrivilege('panopticon.run', true);
 		$user->setPrivilege('panopticon.view', true);
 
+		$user->getParameters()->set('consent.tos', true);
+		$user->getParameters()->set('consent.timestamp', time());
+
 		$manager->saveUser($user);
 		$manager->loginUser($params['user.username'], $params['user.password']);
 	}

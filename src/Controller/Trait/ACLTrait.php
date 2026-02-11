@@ -106,6 +106,15 @@ trait ACLTrait
 			'challenge' => ['#'],
 			'login'     => ['#'],
 		],
+		'policies' => [
+			'default' => ['#'],
+			'tos'     => ['#'],
+			'privacy' => ['#'],
+			'edit'    => ['super'],
+			'save'    => ['super'],
+			'cancel'  => ['super'],
+			'*'       => ['ø'],
+		],
 		'setup'         => [
 			'cron' => ['super'],
 			'*'    => ['#'],
@@ -159,6 +168,9 @@ trait ACLTrait
 			'publish'   => ['super'],
 			'unpublish' => ['super'],
 			'remove'    => ['super'],
+		],
+		'userconsent' => [
+			'*' => ['*'],
 		],
 		'users' => [
 			// Explicitly allowed tasks. Using * because they have their own access control (I can view / edit myself).

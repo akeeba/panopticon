@@ -31,7 +31,7 @@ class Application extends AWFApplication
 	/**
 	 * List of view names we're allowed to access directly, without a login, and without redirection to the setup view
 	 */
-	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup', 'passkeys'];
+	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup', 'passkeys', 'policies'];
 
 	/**
 	 * Main menu structure
@@ -101,6 +101,12 @@ class Application extends AWFApplication
 					'view'        => 'mailtemplates',
 					'permissions' => ['panopticon.super'],
 					'icon'        => 'fa fa-fw fa-envelope',
+				],
+				[
+					'view'        => 'policies',
+					'task'        => 'edit',
+					'permissions' => ['panopticon.super'],
+					'icon'        => 'fa fa-fw fa-file-contract',
 				],
 				[
 					'url'         => null,
@@ -404,6 +410,7 @@ class Application extends AWFApplication
 
 			if (!$this->needsMFA())
 			{
+				$this->conditionalRedirectToConsent();
 				$this->conditionalRedirectToCaptiveSetup();
 				$this->conditionalRedirectToPasskeySetup();
 				$this->conditionalRedirectToCronSetup();
@@ -837,6 +844,55 @@ class Application extends AWFApplication
 
 		// Let the user finish the installation at their own time
 		$this->redirect(Uri::rebase('index.php?view=setup&task=cron', $this->container));
+	}
+
+	private function conditionalRedirectToConsent(): void
+	{
+		// Only enforce consent when user registration is enabled
+		$registrationType = $this->container->appConfig->get('user_registration', 'disabled');
+
+		if ($registrationType === 'disabled')
+		{
+			return;
+		}
+
+		// User must be logged in
+		$user = $this->getContainer()->userManager->getUser();
+
+		if (!$user->getId())
+		{
+			return;
+		}
+
+		// Already consented
+		if ($user->getParameters()->get('consent.tos', false))
+		{
+			return;
+		}
+
+		// Allow access to certain views without consent
+		$view = strtolower($this->getContainer()->input->getCmd('view', ''));
+		$task = strtolower($this->getContainer()->input->getCmd('task', ''));
+
+		$allowedViews = [
+			'userconsent', 'policies', 'login', 'logout', 'cron', 'check',
+			'setup', 'passkeys', 'captive', 'mfamethods',
+		];
+
+		if (in_array($view, $allowedViews))
+		{
+			return;
+		}
+
+		// Allow password reset, registration, and activation
+		if ($view === 'users' && in_array($task, ['pwreset', 'confirmreset', 'register', 'activate']))
+		{
+			return;
+		}
+
+		$this->redirect(
+			$this->container->router->route('index.php?view=userconsent')
+		);
 	}
 
 	private function conditionalRedirectToCaptive(): void

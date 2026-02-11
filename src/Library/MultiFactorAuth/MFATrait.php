@@ -16,7 +16,7 @@ use Exception;
 
 trait MFATrait
 {
-	private $mfaAllowedViews = ['cron', 'captive', 'mfamethods', 'passkeys', 'login', 'logout'];
+	private $mfaAllowedViews = ['cron', 'captive', 'mfamethods', 'passkeys', 'login', 'logout', 'policies', 'userconsent'];
 
 	/**
 	 * Does the user need to add any new MFA records to have at least one valid record?

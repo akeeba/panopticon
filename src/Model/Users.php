@@ -947,11 +947,192 @@ class Users extends DataModel
 		$this->enqueueEmail($data, null);
 	}
 
+	/**
+	 * Check if a user has given consent to the Terms of Service.
+	 *
+	 * @param   int  $userId  The user ID
+	 *
+	 * @return  bool
+	 * @since   1.3.0
+	 */
+	public function hasConsent(int $userId): bool
+	{
+		$user = $this->container->userManager->getUser($userId);
+
+		if (!$user->getId())
+		{
+			return false;
+		}
+
+		return (bool) $user->getParameters()->get('consent.tos', false);
+	}
+
+	/**
+	 * Record that a user has given consent to the Terms of Service.
+	 *
+	 * @param   int  $userId  The user ID
+	 *
+	 * @return  void
+	 * @since   1.3.0
+	 */
+	public function setConsent(int $userId): void
+	{
+		$user = $this->container->userManager->getUser($userId);
+
+		if (!$user->getId())
+		{
+			return;
+		}
+
+		$user->getParameters()->set('consent.tos', true);
+		$user->getParameters()->set('consent.timestamp', time());
+
+		$this->container->userManager->saveUser($user);
+	}
+
+	/**
+	 * Can a user self-delete their account?
+	 *
+	 * Only allowed when the user is not the last superuser account.
+	 *
+	 * @param   int  $userId  The user ID
+	 *
+	 * @return  bool
+	 * @since   1.3.0
+	 */
+	public function canSelfDelete(int $userId): bool
+	{
+		return !$this->isLastSuperUserAccount($userId);
+	}
+
+	/**
+	 * Export a user's personal data as XML.
+	 *
+	 * @param   int  $userId  The user ID
+	 *
+	 * @return  string  The XML export
+	 * @since   1.3.0
+	 */
+	public function exportUserDataXml(int $userId): string
+	{
+		$user = $this->container->userManager->getUser($userId);
+
+		if (!$user->getId())
+		{
+			throw new RuntimeException('User not found.', 404);
+		}
+
+		$db = $this->getDbo();
+
+		// Get owned sites
+		$query = $db->getQuery(true)
+			->select([
+				$db->quoteName('id'),
+				$db->quoteName('name'),
+				$db->quoteName('url'),
+				$db->quoteName('created_on'),
+			])
+			->from($db->quoteName('#__sites'))
+			->where($db->quoteName('created_by') . ' = ' . $db->quote($userId));
+
+		$sites = $db->setQuery($query)->loadObjectList() ?: [];
+
+		// Get MFA method titles
+		$query = $db->getQuery(true)
+			->select([
+				$db->quoteName('title'),
+				$db->quoteName('method'),
+			])
+			->from($db->quoteName('#__mfa'))
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($userId));
+
+		$mfaMethods = $db->setQuery($query)->loadObjectList() ?: [];
+
+		// Get passkey labels
+		$query = $db->getQuery(true)
+			->select([
+				$db->quoteName('label'),
+			])
+			->from($db->quoteName('#__passkeys'))
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($userId));
+
+		$passkeys = $db->setQuery($query)->loadObjectList() ?: [];
+
+		// Build XML
+		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><userdata/>');
+		$xml->addAttribute('exported', date('c'));
+		$xml->addAttribute('version', '1.0');
+
+		// Profile
+		$profile = $xml->addChild('profile');
+		$profile->addChild('id', (string) $user->getId());
+		$profile->addChild('username', htmlspecialchars($user->getUsername(), ENT_XML1));
+		$profile->addChild('name', htmlspecialchars($user->getName(), ENT_XML1));
+		$profile->addChild('email', htmlspecialchars($user->getEmail(), ENT_XML1));
+
+		$consentNode = $profile->addChild('consent');
+		$consentNode->addChild('tos', $user->getParameters()->get('consent.tos', false) ? 'true' : 'false');
+		$consentTimestamp = $user->getParameters()->get('consent.timestamp', null);
+		$consentNode->addChild(
+			'timestamp',
+			$consentTimestamp ? date('c', (int) $consentTimestamp) : ''
+		);
+
+		// Sites
+		$sitesNode = $xml->addChild('sites');
+
+		foreach ($sites as $site)
+		{
+			$siteNode = $sitesNode->addChild('site');
+			$siteNode->addChild('id', (string) $site->id);
+			$siteNode->addChild('name', htmlspecialchars($site->name, ENT_XML1));
+			$siteNode->addChild('url', htmlspecialchars($site->url, ENT_XML1));
+			$siteNode->addChild('created_on', $site->created_on ?? '');
+		}
+
+		// MFA Methods
+		$mfaNode = $xml->addChild('mfa_methods');
+
+		foreach ($mfaMethods as $method)
+		{
+			$methodNode = $mfaNode->addChild('method');
+			$methodNode->addChild('title', htmlspecialchars($method->title, ENT_XML1));
+			$methodNode->addChild('type', htmlspecialchars($method->method, ENT_XML1));
+		}
+
+		// Passkeys
+		$passkeysNode = $xml->addChild('passkeys');
+
+		foreach ($passkeys as $passkey)
+		{
+			$passkeyNode = $passkeysNode->addChild('passkey');
+			$passkeyNode->addChild('label', htmlspecialchars($passkey->label, ENT_XML1));
+		}
+
+		return $xml->asXML();
+	}
+
 	protected function onBeforeDelete($id): void
 	{
 		$mySelf = $this->container->userManager->getUser();
 
-		// Cannot delete myself
+		// Allow self-deletion when the self_delete state flag is set
+		$selfDelete = (bool) $this->getState('self_delete', false);
+
+		if ($selfDelete && $id == $mySelf->getId())
+		{
+			// Still cannot delete the last Superuser
+			if ($this->isLastSuperUserAccount($id))
+			{
+				throw new RuntimeException(
+					$this->getLanguage()->text('PANOPTICON_USERS_ERR_CANT_DELETE_LAST_SUPER'), 403
+				);
+			}
+
+			return;
+		}
+
+		// Cannot delete myself (normal admin deletion)
 		if ($id == $mySelf->getId())
 		{
 			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_USERS_ERR_CANT_DELETE_YOURSELF'), 403);

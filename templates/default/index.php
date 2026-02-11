@@ -218,6 +218,18 @@ $view          = $this->getContainer()->input->getCmd('view', 'main') ?: 'main';
 							<?= $text->text('PANOPTICON_ABOUT_TITLE') ?>
 						</a>
 					</div>
+					<div>
+						<span class="fa fa-file-contract" aria-hidden="true"></span>
+						<a href="<?= $this->container->router->route('index.php?view=policies&task=tos') ?>">
+							<?= $text->text('PANOPTICON_POLICIES_TITLE_TOS') ?>
+						</a>
+					</div>
+					<div>
+						<span class="fa fa-shield-halved" aria-hidden="true"></span>
+						<a href="<?= $this->container->router->route('index.php?view=policies&task=privacy') ?>">
+							<?= $text->text('PANOPTICON_POLICIES_TITLE_PRIVACY') ?>
+						</a>
+					</div>
 					<?php if ($isDebug): ?>
 					<div>
 						<span class="fa fa-clock" title="<?= $text->text('PANOPTICON_APP_LBL_DEBUG_PAGE_CREATION_TIME') ?>"
