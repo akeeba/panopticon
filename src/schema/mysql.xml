@@ -823,5 +823,90 @@ This is an automated email. Please do not reply to it.');
 ]]></query>
         </action>
 
+        <!-- Install default "Users" group -->
+        <action table="#__groups" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__groups` WHERE `title` = 'Users') x;
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__groups` (`title`, `privileges`) VALUES ('Users', '{}');
+]]></query>
+        </action>
+
+        <!-- Install mail template: registration_pending_admin -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'registration_pending_admin') x;
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
+VALUES
+    ('registration_pending_admin', '*', '[SITENAME] Your registration is pending approval', '<p>Hello [NAME],</p><p>Your account on <strong>[SITENAME]</strong> has been created and is pending administrator approval.</p><p>Username: <strong>[USERNAME]</strong></p><p>You will receive another email once your account has been approved.</p>', 'Hello [NAME],
+
+Your account on [SITENAME] has been created and is pending administrator approval.
+
+Username: [USERNAME]
+
+You will receive another email once your account has been approved.');
+]]></query>
+        </action>
+
+        <!-- Install mail template: registration_activate -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'registration_activate') x;
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
+VALUES
+    ('registration_activate', '*', '[SITENAME] Activate your account', '<p>Hello [NAME],</p><p>Your account on <strong>[SITENAME]</strong> has been created. Please activate your account by clicking the link below:</p><p><a href="[ACTIVATION_URL]">[ACTIVATION_URL]</a></p><p>Username: <strong>[USERNAME]</strong></p><p>You have <strong>[EXPIRY_DAYS] days</strong> to activate your account before it is automatically deleted.</p><p>If the link does not work, visit the activation page manually and enter:<br>Token: <strong>[TOKEN]</strong></p>', 'Hello [NAME],
+
+Your account on [SITENAME] has been created. Please activate your account by visiting the following URL:
+
+[ACTIVATION_URL]
+
+Username: [USERNAME]
+
+You have [EXPIRY_DAYS] days to activate your account before it is automatically deleted.
+
+If the link does not work, visit the activation page manually and enter:
+Token: [TOKEN]');
+]]></query>
+        </action>
+
+        <!-- Install mail template: registration_approved -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'registration_approved') x;
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
+VALUES
+    ('registration_approved', '*', '[SITENAME] Your account has been approved', '<p>Hello [NAME],</p><p>Your account on <strong>[SITENAME]</strong> has been approved. You can now log in at:</p><p><a href="[LOGIN_URL]">[LOGIN_URL]</a></p><p>Username: <strong>[USERNAME]</strong></p>', 'Hello [NAME],
+
+Your account on [SITENAME] has been approved. You can now log in at:
+
+[LOGIN_URL]
+
+Username: [USERNAME]');
+]]></query>
+        </action>
+
+        <!-- Install mail template: registration_expired -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'registration_expired') x;
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
+VALUES
+    ('registration_expired', '*', '[SITENAME] Your registration has expired', '<p>Hello [NAME],</p><p>Your registration on <strong>[SITENAME]</strong> has expired because it was not activated in time, or too many failed activation attempts were made.</p><p>You are welcome to register again.</p>', 'Hello [NAME],
+
+Your registration on [SITENAME] has expired because it was not activated in time, or too many failed activation attempts were made.
+
+You are welcome to register again.');
+]]></query>
+        </action>
+
     </sql>
 </schema>

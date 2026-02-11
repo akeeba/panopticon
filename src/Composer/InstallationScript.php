@@ -334,10 +334,6 @@ abstract class InstallationScript
 		$model = $container->mvcFactory->makeTempModel('Setup');
 		// Check the installed default tasks
 		$model->checkDefaultTasks();
-		// Install default groups (e.g. "Users")
-		$model->installDefaultGroups();
-		// Install default mail templates for registration
-		$model->installDefaultMailTemplates();
 		// Make sure the DB tables are installed correctly
 		$model->installDatabase();
 	}
