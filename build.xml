@@ -59,6 +59,7 @@
         <exclude name=".htaccess" />
         <exclude name="build.xml" />
         <exclude name="CHANGELOG" />
+        <exclude name="CLAUDE.md" />
         <exclude name="composer.json" />
         <exclude name="composer.lock" />
         <exclude name="config.php" />
