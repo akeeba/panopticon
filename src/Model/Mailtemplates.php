@@ -119,6 +119,10 @@ class Mailtemplates extends DataModel
 			'site_up'                   => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SITE_UP',
 			'domain_expiring'           => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_DOMAIN_EXPIRING',
 			'pwreset'                   => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_PWRESET',
+			'registration_pending_admin' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_PENDING_ADMIN',
+			'registration_activate'     => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_ACTIVATE',
+			'registration_approved'     => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_APPROVED',
+			'registration_expired'      => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_EXPIRED',
 		];
 	}
 }

@@ -40,6 +40,8 @@ class ConfigTasksInstall extends AbstractCommand
 		$model = $container->mvcFactory->makeTempModel('Setup');
 
 		$model->installDefaultTasks();
+		$model->installDefaultGroups();
+		$model->installDefaultMailTemplates();
 
 		return Command::SUCCESS;
 	}

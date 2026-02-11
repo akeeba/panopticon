@@ -733,7 +733,7 @@ class Application extends AWFApplication
 		/**
 		 * Special case: password reset
 		 */
-		if ($view === 'users' && in_array($task, ['pwreset', 'confirmreset']))
+		if ($view === 'users' && in_array($task, ['pwreset', 'confirmreset', 'register', 'activate']))
 		{
 			return;
 		}
@@ -824,7 +824,7 @@ class Application extends AWFApplication
 		/**
 		 * Special case: password reset
 		 */
-		if ($view === 'users' && in_array($task, ['pwreset', 'confirmreset']))
+		if ($view === 'users' && in_array($task, ['pwreset', 'confirmreset', 'register', 'activate']))
 		{
 			return;
 		}

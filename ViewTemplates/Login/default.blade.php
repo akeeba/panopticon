@@ -68,12 +68,19 @@ $canPWReset = Factory::getContainer()->appConfig->get('pwreset', true);
             @endif
         </div>
 
-        <div class="mt-4 mb-1 d-flex flex-row {{ $canPWReset ? '' : 'justify-content-end' }}">
-            @if ($canPWReset)
-            <div class="flex-grow-1">
+        <div class="mt-4 mb-1 d-flex flex-row {{ ($canPWReset || $this->registrationEnabled) ? '' : 'justify-content-end' }}">
+            @if ($canPWReset || $this->registrationEnabled)
+            <div class="flex-grow-1 d-flex flex-column">
+                @if ($canPWReset)
                 <a href="@route('index.php?view=users&task=pwreset')"
-                   class="btn btn-link text-decoration-none"
+                   class="btn btn-link text-decoration-none p-0 mb-1 text-start"
                 >@lang('PANOPTICON_USERS_LBL_PWRESET_PROMPT')</a>
+                @endif
+                @if ($this->registrationEnabled)
+                <a href="@route('index.php?view=users&task=register')"
+                   class="btn btn-link text-decoration-none p-0 text-start"
+                >@lang('PANOPTICON_USERS_LBL_REGISTER_PROMPT')</a>
+                @endif
             </div>
             @endif
 

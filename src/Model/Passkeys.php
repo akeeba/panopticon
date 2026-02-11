@@ -469,6 +469,14 @@ final class Passkeys extends Model
 		$userManager       = $this->getContainer()->userManager;
 		$user              = $userManager->getUser($userId);
 
+		// Check if the user is blocked (e.g. pending registration approval)
+		if ($user->getParameters()->get('block', false))
+		{
+			$logger->warning('Blocked user attempted passkey login', ['username' => $user->getUsername()]);
+
+			throw new RuntimeException($this->getContainer()->language->text('AWF_USER_ERROR_AUTHERROR'));
+		}
+
 		$logger->info('Successful passkey login', ['username' => $user->getUsername()]);
 
 		// This clears the internal variables in the user manager object

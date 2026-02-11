@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Model;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Helper\ForbiddenUsernames;
 use Akeeba\Panopticon\Library\MultiFactorAuth\MFATrait;
 use Akeeba\Panopticon\Library\Passkey\PasskeyTrait;
 use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
@@ -17,6 +18,7 @@ use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Awf\Container\Container;
 use Awf\Mvc\DataModel;
 use Awf\Registry\Registry;
+use Awf\Uri\Uri;
 use Awf\User\User;
 use Awf\User\UserInterface;
 use RuntimeException;
@@ -365,6 +367,532 @@ class Users extends DataModel
 		{
 			$logger->notice('Will not reset MFA: the user is forced to use MFA.');
 		}
+	}
+
+	/**
+	 * Create a new user registration.
+	 *
+	 * @param   string  $username  The desired username
+	 * @param   string  $email     The email address
+	 * @param   string  $password  The password
+	 * @param   string  $name      The full name
+	 *
+	 * @return  User  The created user object
+	 */
+	public function createRegistration(string $username, string $email, string $password, string $name): User
+	{
+		$container   = Factory::getContainer();
+		$appConfig   = $container->appConfig;
+		$userManager = $container->userManager;
+		$lang        = $container->language;
+
+		$registrationType = $appConfig->get('user_registration', 'disabled');
+
+		if ($registrationType === 'disabled')
+		{
+			throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_REGISTRATION_DISABLED'));
+		}
+
+		// Validate username
+		$username = trim($username);
+
+		if (empty($username))
+		{
+			throw new RuntimeException($lang->text('PANOPTICON_SETUP_ERR_USER_EMPTYUSERNAME'));
+		}
+
+		// Check forbidden usernames
+		if (ForbiddenUsernames::isForbidden($username, $container))
+		{
+			throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_FORBIDDEN_USERNAME'));
+		}
+
+		// Check username uniqueness
+		if ($userManager->getUserByUsername($username) !== null)
+		{
+			throw new RuntimeException(
+				$lang->sprintf('PANOPTICON_USERS_ERR_USERNAME_EXISTS', htmlentities($username))
+			);
+		}
+
+		// Validate email
+		$email = strtolower(trim($email));
+
+		if (filter_var($email, FILTER_VALIDATE_EMAIL) === false)
+		{
+			throw new RuntimeException(
+				$lang->sprintf('PANOPTICON_USERS_ERR_INVALID_EMAIL', htmlentities($email))
+			);
+		}
+
+		// Check email domain
+		$this->validateEmailDomain($email);
+
+		// Check email uniqueness
+		$db    = $this->getDbo();
+		$query = $db->getQuery(true)
+			->select('COUNT(*)')
+			->from($db->quoteName('#__users'))
+			->where($db->quoteName('email') . ' = ' . $db->quote($email));
+
+		if ((int) $db->setQuery($query)->loadResult() > 0)
+		{
+			throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_EMAIL_EXISTS'));
+		}
+
+		// Validate name
+		$name = trim($name);
+
+		if (empty($name))
+		{
+			throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_EMPTY_NAME'));
+		}
+
+		// Validate password
+		if (empty($password))
+		{
+			throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_NEEDS_PASSWORD'));
+		}
+
+		// Create the user (blocked by default)
+		$user = new User();
+		$user->setUsername($username);
+		$user->setName($name);
+		$user->setEmail($email);
+		$user->setPassword($password);
+
+		// Set registration parameters
+		$user->getParameters()->set('registration.created', time());
+		$user->getParameters()->set('registration.type', $registrationType);
+		$user->getParameters()->set('registration.activation_tries', 0);
+
+		// Assign to default group
+		$defaultGroup = (int) $appConfig->get('user_registration_default_group', 0);
+
+		if ($defaultGroup > 0)
+		{
+			$user->getParameters()->set('usergroups', [$defaultGroup]);
+		}
+
+		// Block the user (pending activation or admin approval)
+		$user->getParameters()->set('block', true);
+
+		$userManager->saveUser($user);
+
+		// Send appropriate email
+		if ($registrationType === 'admin')
+		{
+			$this->sendRegistrationPendingAdminEmail($user);
+		}
+		elseif ($registrationType === 'self')
+		{
+			$this->sendRegistrationActivateEmail($user);
+		}
+
+		return $user;
+	}
+
+	/**
+	 * Validate the activation token for a self-registration.
+	 *
+	 * @param   User    $user      The user to activate
+	 * @param   string  $username  The submitted username
+	 * @param   string  $password  The submitted password
+	 * @param   string  $token     The submitted activation token
+	 *
+	 * @return  bool  True if the token is valid
+	 */
+	public function validateActivationToken(User $user, string $username, string $password, string $token): bool
+	{
+		$container = Factory::getContainer();
+		$appConfig = $container->appConfig;
+
+		// Check registration type
+		$regType = $user->getParameters()->get('registration.type', null);
+
+		if ($regType !== 'self')
+		{
+			return false;
+		}
+
+		// Check if there's a stored secret
+		$secretEncoded = $user->getParameters()->get('registration.secret', '');
+
+		if (empty($secretEncoded))
+		{
+			return false;
+		}
+
+		// Check activation tries
+		$maxTries    = (int) $appConfig->get('user_registration_activation_tries', 3);
+		$currentTries = (int) $user->getParameters()->get('registration.activation_tries', 0);
+
+		if ($currentTries >= $maxTries)
+		{
+			return false;
+		}
+
+		// Check activation time
+		$maxDays     = (int) $appConfig->get('user_registration_activation_days', 7);
+		$createdTime = (int) $user->getParameters()->get('registration.created', 0);
+		$maxTime     = $createdTime + ($maxDays * 86400);
+
+		if (time() > $maxTime)
+		{
+			return false;
+		}
+
+		// Verify username matches
+		if ($user->getUsername() !== $username)
+		{
+			return false;
+		}
+
+		// Verify password
+		if (!password_verify($password, $user->getPassword()))
+		{
+			return false;
+		}
+
+		// Verify the HMAC token
+		try
+		{
+			$secret = base64_decode($secretEncoded);
+		}
+		catch (\Throwable)
+		{
+			return false;
+		}
+
+		$expectedToken = hash_hmac(
+			'sha1',
+			implode(':', [$user->getUsername(), $user->getEmail(), $user->getPassword()]),
+			$secret
+		);
+
+		return hash_equals($expectedToken, $token);
+	}
+
+	/**
+	 * Activate a registered user account.
+	 *
+	 * @param   User  $user  The user to activate
+	 *
+	 * @return  void
+	 */
+	public function activateRegistration(User $user): void
+	{
+		$container = Factory::getContainer();
+
+		// Unblock user
+		$user->getParameters()->set('block', false);
+
+		// Clear registration parameters
+		$user->getParameters()->set('registration.created', null);
+		$user->getParameters()->set('registration.type', null);
+		$user->getParameters()->set('registration.activation_tries', null);
+		$user->getParameters()->set('registration.secret', null);
+
+		$container->userManager->saveUser($user);
+
+		// Send approval email
+		$this->sendRegistrationApprovedEmail($user);
+	}
+
+	/**
+	 * Clean up stale registrations that have exceeded their activation period.
+	 *
+	 * @return  int  The number of deleted stale registrations
+	 */
+	public function cleanupStaleRegistrations(): int
+	{
+		$container = Factory::getContainer();
+		$appConfig = $container->appConfig;
+		$maxDays   = (int) $appConfig->get('user_registration_activation_days', 7);
+		$maxTime   = time() - ($maxDays * 86400);
+		$deleted   = 0;
+
+		$db    = $this->getDbo();
+		$query = $db->getQuery(true)
+			->select([
+				$db->quoteName('id'),
+				$db->quoteName('parameters'),
+			])
+			->from($db->quoteName('#__users'));
+
+		// Find users with registration.created parameter
+		$query->where(
+			$query->jsonExtract($db->quoteName('parameters'), '$.registration.created') . ' IS NOT NULL'
+		);
+		$query->where(
+			$query->jsonExtract($db->quoteName('parameters'), '$.registration.created') . ' > 0'
+		);
+
+		$users = $db->setQuery($query)->loadObjectList() ?: [];
+
+		foreach ($users as $userRecord)
+		{
+			try
+			{
+				$params = new Registry($userRecord->parameters);
+				$created = (int) $params->get('registration.created', 0);
+
+				if ($created > 0 && $created < $maxTime)
+				{
+					$user = $container->userManager->getUser($userRecord->id);
+
+					// Send expired notification
+					$this->sendRegistrationExpiredEmail($user);
+
+					// Delete the user
+					$deleteQuery = $db->getQuery(true)
+						->delete($db->quoteName('#__users'))
+						->where($db->quoteName('id') . ' = ' . (int) $userRecord->id);
+
+					$db->setQuery($deleteQuery)->execute();
+
+					$deleted++;
+				}
+			}
+			catch (\Throwable)
+			{
+				// Silently continue
+			}
+		}
+
+		return $deleted;
+	}
+
+	/**
+	 * Check if a user was just unblocked by an admin (for registration approval flow).
+	 *
+	 * Should be called after saving a user who was previously blocked.
+	 *
+	 * @param   User   $user            The user being saved
+	 * @param   bool   $wasBlocked      Whether the user was previously blocked
+	 * @param   bool   $isNowBlocked    Whether the user is now blocked
+	 *
+	 * @return  void
+	 */
+	public function handleAdminApproval(User $user, bool $wasBlocked, bool $isNowBlocked): void
+	{
+		if (!$wasBlocked || $isNowBlocked)
+		{
+			return;
+		}
+
+		$regType = $user->getParameters()->get('registration.type', null);
+
+		if ($regType !== 'admin')
+		{
+			return;
+		}
+
+		// Clear registration parameters
+		$user->getParameters()->set('registration.created', null);
+		$user->getParameters()->set('registration.type', null);
+		$user->getParameters()->set('registration.activation_tries', null);
+
+		Factory::getContainer()->userManager->saveUser($user);
+
+		// Send approval email
+		$this->sendRegistrationApprovedEmail($user);
+	}
+
+	/**
+	 * Send an expiration email and delete the user.
+	 *
+	 * @param   User  $user  The user to expire
+	 *
+	 * @return  void
+	 */
+	public function sendExpiredAndDelete(User $user): void
+	{
+		$this->sendRegistrationExpiredEmail($user);
+
+		$db = $this->getDbo();
+		$query = $db->getQuery(true)
+			->delete($db->quoteName('#__users'))
+			->where($db->quoteName('id') . ' = ' . (int) $user->getId());
+
+		$db->setQuery($query)->execute();
+	}
+
+	/**
+	 * Validate an email address domain against allowed/disallowed lists.
+	 *
+	 * @param   string  $email  The email to validate
+	 *
+	 * @return  void
+	 * @throws  RuntimeException  If the domain is not allowed
+	 */
+	private function validateEmailDomain(string $email): void
+	{
+		$container = Factory::getContainer();
+		$appConfig = $container->appConfig;
+		$lang      = $container->language;
+
+		$domain = strtolower(substr($email, strrpos($email, '@') + 1));
+
+		// Check allowed domains (if configured)
+		$allowedDomains = trim((string) $appConfig->get('user_registration_allowed_domains', ''));
+
+		if (!empty($allowedDomains))
+		{
+			$allowed = array_map(
+				fn($line) => strtolower(trim($line)),
+				preg_split('/[\s,]+/', $allowedDomains, -1, PREG_SPLIT_NO_EMPTY)
+			);
+
+			if (!empty($allowed) && !in_array($domain, $allowed, true))
+			{
+				throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_EMAIL_DOMAIN_NOT_ALLOWED'));
+			}
+		}
+
+		// Check disallowed domains
+		$disallowedDomains = trim((string) $appConfig->get('user_registration_disallowed_domains', ''));
+
+		if (!empty($disallowedDomains))
+		{
+			$disallowed = array_map(
+				fn($line) => strtolower(trim($line)),
+				preg_split('/[\s,]+/', $disallowedDomains, -1, PREG_SPLIT_NO_EMPTY)
+			);
+
+			if (in_array($domain, $disallowed, true))
+			{
+				throw new RuntimeException($lang->text('PANOPTICON_USERS_ERR_EMAIL_DOMAIN_NOT_ALLOWED'));
+			}
+		}
+	}
+
+	/**
+	 * Send the "registration pending admin approval" email to the user.
+	 *
+	 * @param   User  $user  The registered user
+	 *
+	 * @return  void
+	 */
+	private function sendRegistrationPendingAdminEmail(User $user): void
+	{
+		$container = Factory::getContainer();
+		$data      = new Registry();
+
+		$data->set('template', 'registration_pending_admin');
+		$data->set('email_variables', [
+			'NAME'     => $user->getName(),
+			'USERNAME' => $user->getUsername(),
+			'EMAIL'    => $user->getEmail(),
+			'SITENAME' => $container->appConfig->get('fromname', 'Panopticon'),
+			'SITEURL'  => Uri::base(),
+		]);
+		$data->set('recipient_id', $user->getId());
+
+		$this->enqueueEmail($data, null);
+	}
+
+	/**
+	 * Send the "activate your account" email to the user (self-approval mode).
+	 *
+	 * @param   User  $user  The registered user
+	 *
+	 * @return  void
+	 */
+	private function sendRegistrationActivateEmail(User $user): void
+	{
+		$container = Factory::getContainer();
+		$appConfig = $container->appConfig;
+
+		// Generate activation secret and token
+		$secret = random_bytes(64);
+		$token  = hash_hmac(
+			'sha1',
+			implode(':', [$user->getUsername(), $user->getEmail(), $user->getPassword()]),
+			$secret
+		);
+
+		// Store the secret on the user
+		$user->getParameters()->set('registration.secret', base64_encode($secret));
+		$container->userManager->saveUser($user);
+
+		// Build the activation URL
+		$activationUrl = Uri::base() . $container->router->route(
+			sprintf(
+				'index.php?view=users&task=activate&id=%d&token=%s',
+				$user->getId(),
+				$token
+			)
+		);
+
+		$data = new Registry();
+		$data->set('template', 'registration_activate');
+		$data->set('email_variables', [
+			'NAME'           => $user->getName(),
+			'USERNAME'       => $user->getUsername(),
+			'EMAIL'          => $user->getEmail(),
+			'ACTIVATION_URL' => $activationUrl,
+			'TOKEN'          => $token,
+			'SITENAME'       => $appConfig->get('fromname', 'Panopticon'),
+			'SITEURL'        => Uri::base(),
+			'EXPIRY_DAYS'    => (string) (int) $appConfig->get('user_registration_activation_days', 7),
+		]);
+		$data->set('recipient_id', $user->getId());
+
+		$this->enqueueEmail($data, null);
+	}
+
+	/**
+	 * Send the "account approved/activated" email to the user.
+	 *
+	 * @param   User  $user  The user
+	 *
+	 * @return  void
+	 */
+	private function sendRegistrationApprovedEmail(User $user): void
+	{
+		$container = Factory::getContainer();
+		$data      = new Registry();
+
+		$loginUrl = Uri::base() . $container->router->route('index.php?view=login');
+
+		$data->set('template', 'registration_approved');
+		$data->set('email_variables', [
+			'NAME'      => $user->getName(),
+			'USERNAME'  => $user->getUsername(),
+			'EMAIL'     => $user->getEmail(),
+			'SITENAME'  => $container->appConfig->get('fromname', 'Panopticon'),
+			'SITEURL'   => Uri::base(),
+			'LOGIN_URL' => $loginUrl,
+		]);
+		$data->set('recipient_id', $user->getId());
+
+		$this->enqueueEmail($data, null);
+	}
+
+	/**
+	 * Send the "registration expired" email to the user.
+	 *
+	 * @param   User  $user  The user
+	 *
+	 * @return  void
+	 */
+	private function sendRegistrationExpiredEmail(User $user): void
+	{
+		$container = Factory::getContainer();
+		$data      = new Registry();
+
+		$data->set('template', 'registration_expired');
+		$data->set('email_variables', [
+			'NAME'     => $user->getName(),
+			'USERNAME' => $user->getUsername(),
+			'EMAIL'    => $user->getEmail(),
+			'SITENAME' => $container->appConfig->get('fromname', 'Panopticon'),
+			'SITEURL'  => Uri::base(),
+		]);
+		$data->set('recipient_id', $user->getId());
+
+		$this->enqueueEmail($data, null);
 	}
 
 	protected function onBeforeDelete($id): void

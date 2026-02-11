@@ -99,6 +99,17 @@ class Sysconfig extends Model
 			'smtpuser'              => true,
 			'smtppass'              => true,
 
+			// User Registration
+			'user_registration'     => in_array($value, ['disabled', 'admin', 'self']),
+			'user_registration_allowed_domains' => true,
+			'user_registration_disallowed_domains' => true,
+			'user_registration_default_group' => filter_var($value, FILTER_VALIDATE_INT) && $value >= 0,
+			'user_registration_block_usernames' => filter_var($value, FILTER_VALIDATE_BOOL),
+			'user_registration_custom_blocked_usernames' => true,
+			'user_registration_activation_days' => filter_var($value, FILTER_VALIDATE_INT) && $value >= 1 && $value <= 90,
+			'user_registration_activation_tries' => filter_var($value, FILTER_VALIDATE_INT) && $value >= 1 && $value <= 100,
+			'captcha_provider'      => in_array($value, ['altcha', 'none']),
+
 			// Anything else, we don't know what it is.
 			default                 => false,
 		};

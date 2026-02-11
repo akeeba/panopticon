@@ -27,6 +27,8 @@ class Html extends View
 
 	public bool $hasPasskeys = false;
 
+	public bool $registrationEnabled = false;
+
 	public function onBeforeMain()
 	{
 		Template::addJs('media://js/login.min.js', $this->getContainer()->application, defer: true);
@@ -39,6 +41,8 @@ class Html extends View
 		);
 
 		$this->container->input->set('tmpl', 'component');
+
+		$this->registrationEnabled = $this->container->appConfig->get('user_registration', 'disabled') !== 'disabled';
 
 		$this->username  = $this->container->segment->getFlash('auth_username');
 		$this->password  = $this->container->segment->getFlash('auth_password');

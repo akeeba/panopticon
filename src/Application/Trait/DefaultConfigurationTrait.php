@@ -102,6 +102,15 @@ trait DefaultConfigurationTrait
 			'login_failure_window'     => 60,
 			'login_lockout'            => 900,
 			'login_lockout_extend'     => false,
+			'user_registration'                          => 'disabled',
+			'user_registration_allowed_domains'          => '',
+			'user_registration_disallowed_domains'       => '',
+			'user_registration_default_group'            => 0,
+			'user_registration_block_usernames'          => true,
+			'user_registration_custom_blocked_usernames' => '',
+			'user_registration_activation_days'          => 7,
+			'user_registration_activation_tries'         => 3,
+			'captcha_provider'                           => 'altcha',
 		];
 	}
 
@@ -112,7 +121,8 @@ trait DefaultConfigurationTrait
 			'finished_setup', 'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings',
 			'accurate_php_cli', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto',
 			'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt',
-			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path' => [
+			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path',
+			'user_registration_block_usernames' => [
 				'true',
 				'yes',
 				'1',
@@ -133,6 +143,10 @@ trait DefaultConfigurationTrait
 			'dbbackup_maxfiles' => [7, 15, 30, 90, 180, 365],
 			'dbdriver' => ['mysqli', 'pdomysql'],
 			'dbhost' => array_filter(['localhost', '127.0.0.1', $this->get('dbhost')]),
+			'user_registration' => ['disabled', 'admin', 'self'],
+			'captcha_provider' => ['altcha', 'none'],
+			'user_registration_activation_days' => [1, 3, 5, 7, 14, 30],
+			'user_registration_activation_tries' => [1, 3, 5, 10],
 			'default' => [],
 		};
 
@@ -156,7 +170,8 @@ trait DefaultConfigurationTrait
 			'finished_setup', 'debug', 'behind_load_balancer', 'stats_collection', 'proxy_enabled', 'phpwarnings',
 			'accurate_php_cli', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto',
 			'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt',
-			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path'
+			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path',
+			'user_registration_block_usernames'
 			=> [$this, 'validateBool'],
 			'session_timeout' => fn($x) => $this->validateInteger($x, 1440, 3, 535600),
 			'session_save_levels' => fn($x) => $this->validateInteger($x, 0, 0, 5),
@@ -203,6 +218,15 @@ trait DefaultConfigurationTrait
 			'mailer' => fn($x) => $this->validatePresetValues($x, 'mail', ['mail', 'sendmail', 'smtp']),
 			'smtpport' => fn($x) => $this->validateInteger($x, 25, 1, 65535),
 			'dbbackup_maxfiles' => fn($x) => $this->validateInteger($x, 15, 1, 730),
+			'user_registration' => fn($x) => $this->validatePresetValues(
+				$x, 'disabled', ['disabled', 'admin', 'self']
+			),
+			'user_registration_default_group' => fn($x) => $this->validateInteger($x, 0, 0, PHP_INT_MAX),
+			'user_registration_activation_days' => fn($x) => $this->validateInteger($x, 7, 1, 90),
+			'user_registration_activation_tries' => fn($x) => $this->validateInteger($x, 3, 1, 100),
+			'captcha_provider' => fn($x) => $this->validatePresetValues(
+				$x, 'altcha', ['altcha', 'none']
+			),
 			default => fn($x) => $x,
 		};
 	}

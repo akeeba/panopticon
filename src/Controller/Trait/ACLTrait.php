@@ -166,6 +166,8 @@ trait ACLTrait
 			'*'            => ['ø'],
 			'pwreset'      => ['~'],
 			'confirmreset' => ['~'],
+			'register'     => ['~'],
+			'activate'     => ['~'],
 			'browse'       => ['super'],
 			'default'      => ['super'],
 			'add'          => ['super'],

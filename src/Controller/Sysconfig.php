@@ -26,7 +26,7 @@ class Sysconfig extends Controller
 		'session_encrypt', 'session_use_default_path', 'mfa_superuser', 'mfa_admin', 'passkey_login',
 		'passkey_login_no_mfa', 'passkey_login_force_superuser', 'passkey_login_force_admin',
 		'pwreset', 'pwreset_mfa', 'pwreset_passkeys', 'pwreset_superuser', 'pwreset_admin',
-		'accurate_php_cli'
+		'accurate_php_cli', 'user_registration_block_usernames'
 	];
 
 	public function execute($task)
