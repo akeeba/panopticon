@@ -263,6 +263,10 @@
 			{
 				"from": "node_modules/petite-vue/dist/petite-vue.es.js",
 				"to": "media/petite-vue/petite-vue.min.js"
+			},
+			{
+				"from": "node_modules/altcha/dist/altcha.umd.cjs",
+				"to": "media/altcha/altcha.js"
 			}
 		],
 		"babel": [

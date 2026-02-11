@@ -23,7 +23,7 @@ if ($captchaProvider === 'altcha')
 {
     $captcha     = new AltchaCaptcha($container);
     $captchaHtml = $captcha->renderChallenge();
-    Template::addJs('media://js/altcha.js', $container->application, defer: true);
+    Template::addJs('media://altcha/altcha.js', $container->application, defer: true);
 }
 
 ?>

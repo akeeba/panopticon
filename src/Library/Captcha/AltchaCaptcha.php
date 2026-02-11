@@ -54,29 +54,7 @@ class AltchaCaptcha implements CaptchaInterface
 		$challengeJson = htmlspecialchars(json_encode($challenge), ENT_QUOTES, 'UTF-8');
 
 		return <<<HTML
-<div id="altcha-widget" data-challenge="{$challengeJson}">
-	<div class="altcha-solving d-none">
-		<div class="d-flex align-items-center gap-2">
-			<div class="spinner-border spinner-border-sm text-primary" role="status">
-				<span class="visually-hidden">Solving...</span>
-			</div>
-			<span class="text-muted small">Verifying you are human...</span>
-		</div>
-	</div>
-	<div class="altcha-solved d-none">
-		<div class="d-flex align-items-center gap-2 text-success">
-			<span class="fa fa-check-circle"></span>
-			<span class="small">Verification complete</span>
-		</div>
-	</div>
-	<div class="altcha-error d-none">
-		<div class="d-flex align-items-center gap-2 text-danger">
-			<span class="fa fa-exclamation-triangle"></span>
-			<span class="small">Verification failed. Please reload the page.</span>
-		</div>
-	</div>
-	<input type="hidden" name="altcha_payload" id="altcha_payload" value="">
-</div>
+<altcha-widget challengejson="{$challengeJson}" auto="onsubmit"></altcha-widget>
 HTML;
 	}
 
@@ -85,7 +63,7 @@ HTML;
 		$input = $this->container->input;
 
 		// Get the submitted payload
-		$payloadEncoded = $input->get('altcha_payload', '', 'raw');
+		$payloadEncoded = $input->get('altcha', '', 'raw');
 
 		if (empty($payloadEncoded))
 		{
