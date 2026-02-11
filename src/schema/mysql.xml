@@ -851,6 +851,27 @@ You will receive another email once your account has been approved.');
 ]]></query>
         </action>
 
+        <!-- Install mail template: registration_notify_admin -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'registration_notify_admin') x;
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates` (`type`, `language`, `subject`, `html`, `plaintext`)
+VALUES
+    ('registration_notify_admin', '*', '[SITENAME] New user registration awaiting approval', '<p>Hello,</p><p>A new user has registered on <strong>[SITENAME]</strong> and is awaiting your approval.</p><p>Name: <strong>[NAME]</strong><br>Username: <strong>[USERNAME]</strong><br>Email: <strong>[EMAIL]</strong></p><p>Please visit the <a href="[ADMIN_URL]">user management area</a> to review and approve or reject this registration.</p>', 'Hello,
+
+A new user has registered on [SITENAME] and is awaiting your approval.
+
+Name: [NAME]
+Username: [USERNAME]
+Email: [EMAIL]
+
+Please visit the user management area to review and approve or reject this registration:
+[ADMIN_URL]');
+]]></query>
+        </action>
+
         <!-- Install mail template: registration_activate -->
         <action table="#__mailtemplates" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[

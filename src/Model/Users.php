@@ -506,6 +506,7 @@ class Users extends DataModel
 		if ($registrationType === 'admin')
 		{
 			$this->sendRegistrationPendingAdminEmail($user);
+			$this->sendRegistrationNotifyAdminEmail($user);
 		}
 		elseif ($registrationType === 'self')
 		{
@@ -811,6 +812,34 @@ class Users extends DataModel
 			'SITEURL'  => Uri::base(),
 		]);
 		$data->set('recipient_id', $user->getId());
+
+		$this->enqueueEmail($data, null);
+	}
+
+	/**
+	 * Notify administrators that a new user is awaiting approval.
+	 *
+	 * @param   User  $user  The registered user
+	 *
+	 * @return  void
+	 */
+	private function sendRegistrationNotifyAdminEmail(User $user): void
+	{
+		$container = Factory::getContainer();
+		$data      = new Registry();
+
+		$adminUrl = Uri::base() . $container->router->route('index.php?view=users');
+
+		$data->set('template', 'registration_notify_admin');
+		$data->set('email_variables', [
+			'NAME'      => $user->getName(),
+			'USERNAME'  => $user->getUsername(),
+			'EMAIL'     => $user->getEmail(),
+			'SITENAME'  => $container->appConfig->get('fromname', 'Panopticon'),
+			'SITEURL'   => Uri::base(),
+			'ADMIN_URL' => $adminUrl,
+		]);
+		$data->set('permissions', ['panopticon.super', 'panopticon.admin']);
 
 		$this->enqueueEmail($data, null);
 	}
