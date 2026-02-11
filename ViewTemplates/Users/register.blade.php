@@ -88,7 +88,7 @@ $captchaHtml = $captcha?->renderChallenge() ?? '';
         @if (!empty($captchaHtml))
         <div class="row my-2">
             <div class="col-sm-9 offset-sm-3">
-                {!! $captchaHtml !!}
+                {{ $captchaHtml }}
             </div>
         </div>
         @endif
