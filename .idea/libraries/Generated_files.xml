@@ -4,6 +4,7 @@
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/darkmode.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/extensioninstall.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/filter-extensions.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/log.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/login.min.js" />
@@ -16,7 +17,6 @@
         <item url="file://$PROJECT_DIR$/media/js/site-browse.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-edit.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
-        <item url="file://$PROJECT_DIR$/media/js/sw.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/system.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/webauthn-mfa.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/webpush.min.js" />
@@ -26,6 +26,7 @@
       <root url="file://$PROJECT_DIR$/media/js/ajax.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/bootstrap.bundle.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/darkmode.min.js" />
+      <root url="file://$PROJECT_DIR$/media/js/extensioninstall.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/filter-extensions.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/log.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/login.min.js" />
@@ -38,7 +39,6 @@
       <root url="file://$PROJECT_DIR$/media/js/site-browse.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/site-edit.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/site-read.min.js" />
-      <root url="file://$PROJECT_DIR$/media/js/sw.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/system.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/webauthn-mfa.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/webpush.min.js" />
