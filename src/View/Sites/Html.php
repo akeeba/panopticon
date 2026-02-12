@@ -370,7 +370,35 @@ class Html extends DataViewHtml
 
 	public function onBeforeRead(): bool
 	{
-		Template::addJs('media://js/site-read.js', $this->getContainer()->application, defer: true);
+		$app    = $this->getContainer()->application;
+		$doc    = $app->getDocument();
+		$router = $this->container->router;
+
+		Template::addJs('media://js/site-read.js', $app, defer: true);
+
+		// WebPush script options and JS
+		$token = $this->getContainer()->session->getCsrfToken()->getValue();
+
+		$doc->addScriptOptions(
+			'panopticon.webpush', [
+				'vapidPublicKey' => $this->getContainer()->vapidHelper->getPublicKey(),
+				'swUrl'          => Template::parsePath('js/sw.js', false, $app),
+				'subscribeUrl'   => $router->route(
+					sprintf("index.php?view=Pushsubscriptions&task=subscribe&format=json&%s=1", $token)
+				),
+				'unsubscribeUrl' => $router->route(
+					sprintf("index.php?view=Pushsubscriptions&task=unsubscribe&format=json&%s=1", $token)
+				),
+				'dismissUrl'     => $router->route(
+					sprintf("index.php?view=Pushsubscriptions&task=dismissPrompt&format=json&%s=1", $token)
+				),
+			]
+		);
+		$doc->lang('PANOPTICON_WEBPUSH_ERR_SUBSCRIBE_FAILED');
+		$doc->lang('PANOPTICON_WEBPUSH_ERR_PERMISSION_DENIED');
+		$doc->lang('PANOPTICON_WEBPUSH_LBL_STATUS_ACTIVE');
+		$doc->lang('PANOPTICON_WEBPUSH_LBL_STATUS_INACTIVE');
+		Template::addJs('media://js/webpush.js', $app, defer: true);
 
 		$this->setStrictLayout(true);
 		$this->setStrictTpl(true);

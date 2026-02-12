@@ -24,6 +24,9 @@ $mainModel = $this->getModel('main');
 {{-- Super User information panes --}}
 @include('Main/default_super')
 
+{{-- WebPush notification prompt --}}
+@include('Main/webpush_prompt')
+
 @section('main-default-sites')
     {{-- The noTable param is passed by the dashboard layout to speed up the rendering by skipping this default section --}}
     @unless(isset($noTable) && $noTable)

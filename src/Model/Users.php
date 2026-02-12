@@ -1109,6 +1109,28 @@ class Users extends DataModel
 			$passkeyNode->addChild('label', htmlspecialchars($passkey->label, ENT_XML1));
 		}
 
+		// Push subscriptions
+		$query = $db->getQuery(true)
+			->select([
+				$db->quoteName('endpoint'),
+				$db->quoteName('created_on'),
+				$db->quoteName('user_agent'),
+			])
+			->from($db->quoteName('#__push_subscriptions'))
+			->where($db->quoteName('user_id') . ' = ' . $db->quote($userId));
+
+		$pushSubscriptions = $db->setQuery($query)->loadObjectList() ?: [];
+
+		$pushNode = $xml->addChild('push_subscriptions');
+
+		foreach ($pushSubscriptions as $sub)
+		{
+			$subNode = $pushNode->addChild('subscription');
+			$subNode->addChild('endpoint', htmlspecialchars($sub->endpoint, ENT_XML1));
+			$subNode->addChild('created_on', $sub->created_on ?? '');
+			$subNode->addChild('user_agent', htmlspecialchars($sub->user_agent ?? '', ENT_XML1));
+		}
+
 		return $xml->asXML();
 	}
 

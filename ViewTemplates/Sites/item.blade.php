@@ -15,6 +15,8 @@ use Awf\Uri\Uri;
 $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
 ?>
 
+@include('Main/webpush_prompt')
+
 <h3 class="mt-2 pb-1 border-bottom border-3 border-primary-subtle d-flex flex-row align-items-center gap-2">
     <span class="text-muted fw-light fs-4">#{{ $this->item->id }}</span>
     @if($favIcon)

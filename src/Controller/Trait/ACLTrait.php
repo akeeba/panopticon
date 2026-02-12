@@ -101,6 +101,9 @@ trait ACLTrait
 			'challenge' => ['#'],
 			'login'     => ['#'],
 		],
+		'pushsubscriptions' => [
+			'*' => ['*'],
+		],
 		'passkey' => [
 			'*'         => ['*'],
 			'challenge' => ['#'],

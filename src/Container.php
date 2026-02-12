@@ -18,6 +18,7 @@ use Akeeba\Panopticon\Library\Logger\LoggerFactoryService;
 use Akeeba\Panopticon\Library\Mailer\Mailer;
 use Akeeba\Panopticon\Library\Queue\QueueFactory;
 use Akeeba\Panopticon\Library\Task\Registry as TaskRegistry;
+use Akeeba\Panopticon\Library\WebPush\VapidHelper;
 use Awf\Container\Container as AWFContainer;
 use Psr\Log\LoggerInterface;
 
@@ -29,6 +30,7 @@ use Psr\Log\LoggerInterface;
  * @property-read LoggerInterface      $logger        The main application logger
  * @property-read QueueFactory         $queueFactory  The queue factory service
  * @property-read TaskRegistry         $taskRegistry  The task callback registry
+ * @property-read VapidHelper          $vapidHelper   The VAPID key helper for Web Push notifications
  */
 class Container extends AWFContainer
 {
@@ -59,6 +61,8 @@ class Container extends AWFContainer
 		$values['logger'] ??= fn(Container $c) => $c->loggerFactory->get('panopticon');
 
 		$values['queueFactory'] ??= (fn(Container $c) => new QueueFactory($c));
+
+		$values['vapidHelper'] ??= (fn(Container $c) => new VapidHelper($c));
 
 		parent::__construct($values);
 	}

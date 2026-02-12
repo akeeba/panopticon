@@ -274,6 +274,13 @@ JS;
     </div>
     @endif
 
+    {{-- Web Push notification subscription management --}}
+    <div class="row g-2 {{ $this->collapseForPasskey ? 'collapse' : '' }}">
+        <div class="col-12">
+            @include('Users/form_webpush')
+        </div>
+    </div>
+
     {{-- Multi-factor Authentication administration --}}
     @if ($this->canEditMFA)
     <div class="row g-2 {{ $this->collapseForPasskey ? 'collapse' : '' }}">

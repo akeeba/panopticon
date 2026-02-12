@@ -217,6 +217,30 @@ class Html extends \Awf\Mvc\DataView\Html
 			]
 		);
 
+		// WebPush script options and JS
+		$token = $this->getContainer()->session->getCsrfToken()->getValue();
+
+		$doc->addScriptOptions(
+			'panopticon.webpush', [
+				'vapidPublicKey' => $this->getContainer()->vapidHelper->getPublicKey(),
+				'swUrl'          => \Awf\Utils\Template::parsePath('js/sw.js', false, $app),
+				'subscribeUrl'   => $router->route(
+					sprintf("index.php?view=Pushsubscriptions&task=subscribe&format=json&%s=1", $token)
+				),
+				'unsubscribeUrl' => $router->route(
+					sprintf("index.php?view=Pushsubscriptions&task=unsubscribe&format=json&%s=1", $token)
+				),
+				'dismissUrl'     => $router->route(
+					sprintf("index.php?view=Pushsubscriptions&task=dismissPrompt&format=json&%s=1", $token)
+				),
+			]
+		);
+		$doc->lang('PANOPTICON_WEBPUSH_ERR_SUBSCRIBE_FAILED');
+		$doc->lang('PANOPTICON_WEBPUSH_ERR_PERMISSION_DENIED');
+		$doc->lang('PANOPTICON_WEBPUSH_LBL_STATUS_ACTIVE');
+		$doc->lang('PANOPTICON_WEBPUSH_LBL_STATUS_INACTIVE');
+		Template::addJs('media://js/webpush.js', $app, defer: true);
+
 		// DO NOT TRANSPOSE THESE LINES. Choices.js needs to be loaded before our main.js.
 		Template::addJs('media://choices/choices.min.js', $app, defer: true);
 		Template::addJs('media://js/main.js', $app, defer: true);

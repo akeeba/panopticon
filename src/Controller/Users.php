@@ -59,7 +59,7 @@ class Users extends DataController
 
 			$logger->info(
 				sprintf(
-					'Created a password reset request for username ‘%s’, email ‘%s’',
+					'Created a password reset request for username \'%s\', email \'%s\'',
 					$username,
 					$email
 				)
@@ -72,7 +72,7 @@ class Users extends DataController
 		{
 			$logger->warning(
 				sprintf(
-					'Could not create a password reset request for username ‘%s’, email ‘%s’. Reason: %s',
+					'Could not create a password reset request for username \'%s\', email \'%s\'. Reason: %s',
 					$username,
 					$email,
 					$e->getMessage()
@@ -145,7 +145,7 @@ class Users extends DataController
 		{
 			$logger->debug(
 				sprintf(
-					'Evaluating password reset for username ‘%s’.',
+					'Evaluating password reset for username \'%s\'.',
 					$user->getUsername()
 				)
 			);
@@ -153,7 +153,7 @@ class Users extends DataController
 
 			$logger->info(
 				sprintf(
-					'Successful password reset for username ‘%s’.',
+					'Successful password reset for username \'%s\'.',
 					$user->getUsername()
 				)
 			);
@@ -165,7 +165,7 @@ class Users extends DataController
 		{
 			$logger->error(
 				sprintf(
-					'Failed password reset for username ‘%s’. Reason: %s',
+					'Failed password reset for username \'%s\'. Reason: %s',
 					$user->getUsername(),
 					$e->getMessage()
 				)
@@ -252,7 +252,7 @@ class Users extends DataController
 
 			$logger->info(
 				sprintf(
-					'New user registration: username '%s', email '%s', type '%s'',
+					'New user registration: username \'%s\', email \'%s\', type \'%s\'',
 					$username,
 					$email,
 					$registrationType
@@ -273,7 +273,7 @@ class Users extends DataController
 		{
 			$logger->warning(
 				sprintf(
-					'Failed registration attempt: username '%s', email '%s'. Reason: %s',
+					'Failed registration attempt: username \'%s\', email \'%s\'. Reason: %s',
 					$username,
 					$email,
 					$e->getMessage()
@@ -369,7 +369,7 @@ class Users extends DataController
 
 		if (time() > $maxTime)
 		{
-			$logger->info(sprintf('Activation expired for user '%s' (time limit)', $user->getUsername()));
+			$logger->info(sprintf('Activation expired for user \'%s\' (time limit)', $user->getUsername()));
 
 			$model->sendExpiredAndDelete($user);
 
@@ -388,7 +388,7 @@ class Users extends DataController
 
 		if ($currentTries >= $maxTries)
 		{
-			$logger->info(sprintf('Activation expired for user '%s' (too many tries)', $user->getUsername()));
+			$logger->info(sprintf('Activation expired for user \'%s\' (too many tries)', $user->getUsername()));
 
 			$model->sendExpiredAndDelete($user);
 
@@ -408,7 +408,7 @@ class Users extends DataController
 			$user->getParameters()->set('registration.activation_tries', $currentTries + 1);
 			$container->userManager->saveUser($user);
 
-			$logger->warning(sprintf('Failed activation attempt for user '%s'', $user->getUsername()));
+			$logger->warning(sprintf('Failed activation attempt for user \'%s\'', $user->getUsername()));
 
 			$this->setRedirect(
 				$router->route(sprintf('index.php?view=users&task=activate&id=%d', $id)),
@@ -422,7 +422,7 @@ class Users extends DataController
 		// Activation successful
 		$model->activateRegistration($user);
 
-		$logger->info(sprintf('User '%s' successfully activated their account', $user->getUsername()));
+		$logger->info(sprintf('User \'%s\' successfully activated their account', $user->getUsername()));
 
 		$this->setRedirect(
 			$router->route('index.php'),

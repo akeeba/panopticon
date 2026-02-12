@@ -16,4 +16,6 @@ enum QueueTypeEnum: string
 	case EXTENSIONS = 'extensions.%d';
 
 	case PLUGINS = 'plugins.%d';
+
+	case WEBPUSH = 'webpush';
 }

@@ -88,6 +88,13 @@ class Login extends Controller
 
 			$logger->info('Successful login', ['username' => $username]);
 
+			// Reset WebPush prompt "remind" timer so the prompt shows immediately after login
+			if ($loggedInUser->getParameters()->get('webpush.prompt_state') === 'remind')
+			{
+				$loggedInUser->getParameters()->set('webpush.prompt_until', 0);
+				$this->getContainer()->userManager->saveUser($loggedInUser);
+			}
+
 			// Redirect to the saved return_url or, if none specified, to the application's main page
 			$url    = $this->getReturnUrl();
 			$router = $this->container->router;

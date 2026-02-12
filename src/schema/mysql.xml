@@ -949,5 +949,40 @@ You are welcome to register again.');
 ]]></query>
         </action>
 
+        <!-- Create table: push_subscriptions -->
+        <action table="#__push_subscriptions" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__push_subscriptions`
+(
+    `id`         SERIAL,
+    `user_id`    BIGINT(20) UNSIGNED NOT NULL,
+    `endpoint`   VARCHAR(2048)       NOT NULL,
+    `key_p256dh` VARCHAR(255)        NOT NULL,
+    `key_auth`   VARCHAR(255)        NOT NULL,
+    `encoding`   VARCHAR(50)         NOT NULL DEFAULT 'aesgcm',
+    `user_agent` VARCHAR(512)        NULL,
+    `created_on` DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    INDEX `idx_user_id` (`user_id`),
+    UNIQUE INDEX `idx_endpoint` (`endpoint`(255)),
+    CONSTRAINT `fk_push_subscriptions_user` FOREIGN KEY (`user_id`) REFERENCES `#__users` (`id`) ON DELETE CASCADE
+)
+    DEFAULT COLLATE utf8mb4_unicode_ci
+    ENGINE = InnoDB;
+            ]]></query>
+        </action>
+
+        <!-- Install task: sendwebpush -->
+        <action table="#__tasks" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__tasks` WHERE `type` = 'sendwebpush') x;
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__tasks` (`type`, `cron_expression`, `enabled`, `last_exit_code`, `params`, `storage`)
+VALUES ('sendwebpush', '* * * * *', 1, 0, '{}', '{}');
+            ]]></query>
+        </action>
+
     </sql>
 </schema>

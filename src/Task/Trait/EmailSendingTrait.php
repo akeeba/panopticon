@@ -22,6 +22,7 @@ defined('AKEEBA') || die;
  */
 trait EmailSendingTrait
 {
+	use WebPushSendingTrait;
 	/**
 	 * Enqueue an email message, and possibly send it immediately if the application is so configured.
 	 *
@@ -48,6 +49,9 @@ trait EmailSendingTrait
 			->queueFactory
 			->makeQueue(QueueTypeEnum::MAIL->value)
 			->push($queueItem, $whence);
+
+		// Enqueue Web Push notifications for the same recipients
+		$this->enqueueWebPush($data, $siteId);
 
 		// Do I need to send emails right away?
 		if (!$container->appConfig->get('immediate_email', 1))
