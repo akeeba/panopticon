@@ -67,6 +67,8 @@ JS;
 			$return[$cb->getTaskType()] = $cb->getDescription();
 		}
 
+		asort($return, SORT_LOCALE_STRING);
+
 		return $return;
 	}
 
