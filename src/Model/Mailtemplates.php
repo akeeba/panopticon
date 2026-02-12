@@ -125,6 +125,7 @@ class Mailtemplates extends DataModel
 			'registration_activate'     => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_ACTIVATE',
 			'registration_approved'     => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_APPROVED',
 			'registration_expired'      => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_EXPIRED',
+			'extension_install_summary' => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSION_INSTALL_SUMMARY',
 		];
 	}
 }

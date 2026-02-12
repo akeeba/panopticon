@@ -1,6 +1,6 @@
 This is a major feature release.
 
-This release introduces user self-registration, Web Push notifications, core file integrity checks for Joomla sites, PII self-management, and a wealth of new CLI commands. It also includes important security, compatibility, and bug fixes.
+This release introduces user self-registration, Web Push notifications, core file integrity checks for Joomla sites, remote mass extension installation, PII self-management, and a wealth of new CLI commands. It also includes important security, compatibility, and bug fixes.
 
 ## 🖥️ System Requirements
 
@@ -20,6 +20,8 @@ Development of Akeeba Panopticon takes place _in public_. You can see what we're
 
 **Core File Integrity Check.** Verify that your Joomla site's core files haven't been tampered with by comparing SHA-256 checksums against known-good values. Detects core hacks, failed updates, and potentially compromised files. Schedulable for automatic periodic checks.
 
+**Remote Extension Installation.** Install extensions across multiple sites at once. Select sites, provide an extension download URL or upload a package file, and Panopticon installs it on all selected sites in the background. Receive a summary email and push notification when complete, with per-site success/failure details.
+
 **PII Self-Management.** Users can now manage their personal data directly: view legal policies, manage consent, export their data, and delete their own account. Helps you comply with GDPR and similar privacy regulations.
 
 **CLI Commands for Administration.** New command-line tools for managing groups, mail templates, tasks, and backup/scanner schedules, making it easier to automate and script your Panopticon administration.
@@ -30,6 +32,7 @@ Development of Akeeba Panopticon takes place _in public_. You can see what we're
 * ✨ PII self-management: legal policies, user consent, data export, and account self-deletion
 * ✨ Web Push notifications as a complementary channel alongside email
 * ✨ Check integrity of Joomla core files against known-good checksums [gh-20]
+* ✨ Remote / mass extension installation across multiple sites [gh-346]
 * ✨ reCAPTCHA Invisible and hCaptcha CAPTCHA providers for user registration
 * ✨ Administrator email notification when a new user registration awaits approval
 * ✨ Password complexity validation for user registration

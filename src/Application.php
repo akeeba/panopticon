@@ -63,6 +63,11 @@ class Application extends AWFApplication
 					'icon'        => 'fa fa-fw fa-atom',
 				],
 				[
+					'view'        => 'extensioninstall',
+					'permissions' => [],
+					'icon'        => 'fa fa-fw fa-download',
+				],
+				[
 					'url'   => null,
 					'name'  => 'separator05',
 					'title' => '---',

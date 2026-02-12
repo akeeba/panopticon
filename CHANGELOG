@@ -5,6 +5,7 @@ Akeeba Panopticon 2.0.0
 + PII self-management: legal policies, user consent, data export, and account self-deletion
 + Web Push notifications as a complementary channel alongside email
 + Check integrity of Joomla core files against known-good checksums [gh-20]
++ Remote / mass extension installation across multiple sites [gh-346]
 + reCAPTCHA Invisible and hCaptcha CAPTCHA providers for user registration
 + Administrator email notification when a new user registration awaits approval
 + Password complexity validation for user registration

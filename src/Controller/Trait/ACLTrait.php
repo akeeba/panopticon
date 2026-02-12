@@ -72,6 +72,13 @@ trait ACLTrait
 		'emails'        => [
 			'*' => ['super'],
 		],
+		'extensioninstall' => [
+			'default' => ['*'],
+			'main'    => ['*'],
+			'review'  => ['*'],
+			'install' => ['*'],
+			'*'       => ['ø'],
+		],
 		'extupdates'    => [
 			'default' => ['*'],
 			'main'    => ['*'],

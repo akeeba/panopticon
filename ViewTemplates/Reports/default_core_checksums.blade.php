@@ -1,0 +1,36 @@
+<?php
+/**
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2026 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+defined('AKEEBA') || die;
+
+/**
+ * @var \Akeeba\Panopticon\View\Reports\Html $this
+ * @var \Akeeba\Panopticon\Model\Reports     $item
+ */
+
+$status       = $item->context->get('status');
+$errorContext = $item->context->get('context');
+?>
+
+<div>
+    @if($status)
+        <span class="fa fa-fw fa-check-circle text-success" aria-hidden="true"></span>
+        @lang('PANOPTICON_REPORTS_LBL_CORECHECKSUMS_SUCCESS')
+    @elseif($status === false)
+        <span class="fa fa-fw fa-xmark-circle text-danger" aria-hidden="true"></span>
+        @lang('PANOPTICON_REPORTS_LBL_CORECHECKSUMS_FAILED')
+    @else
+        <span class="fa fa-fw fa-triangle-exclamation text-warning" aria-hidden="true"></span>
+        @lang('PANOPTICON_REPORTS_LBL_CORECHECKSUMS_FAILED')
+    @endif
+</div>
+
+@if(!boolval($status) && !empty($errorContext))
+    <div>
+        @include('Reports/error_cell', ['context' => $errorContext])
+    </div>
+@endif
