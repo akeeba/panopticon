@@ -6,6 +6,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Akeeba Panopticon is a self-hosted PHP application for remotely monitoring and managing Joomla and WordPress sites. It tracks updates, extensions, backups, SSL certificates, domain expiration, uptime, and security issues across multiple CMS installations.
 
+## Related Connector Extensions
+
+Panopticon requires a connector extension on each monitored site:
+
+- **[panopticon_connector_j3](https://github.com/akeeba/panopticon_connector_j3)** — Joomla 3.9 and 3.10 only
+- **[panopticon-connector](https://github.com/akeeba/panopticon-connector)** — Joomla 4.x, 5.x, and 6.x
+- **[panopticon-connector-wordpress](https://github.com/akeeba/panopticon-connector-wordpress)** — WordPress 5.x and 6.x
+
+## Documentation Wikis
+
+GitHub Wiki working copies are checked out under `~/Projects/wiki/`:
+
+- `~/Projects/wiki/panopticon` — [Panopticon wiki](https://github.com/akeeba/panopticon/wiki)
+
+The same convention applies to connector extension wikis (e.g. `~/Projects/wiki/panopticon-connector`).
+
 ## Build & Development Commands
 
 ```bash
