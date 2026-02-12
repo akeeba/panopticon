@@ -1,8 +1,19 @@
 <?php die(); ?>
-Akeeba Panopticon 1.3.3
+Akeeba Panopticon 2.0.0
 ================================================================================
++ User self-registration [gh-726]
++ PII self-management: legal policies, user consent, data export, and account self-deletion
++ Web Push notifications as a complementary channel alongside email
++ Check integrity of Joomla core files against known-good checksums [gh-20]
++ reCAPTCHA Invisible and hCaptcha CAPTCHA providers for user registration
++ Administrator email notification when a new user registration awaits approval
++ Password complexity validation for user registration
++ CLI commands for managing groups, mail templates, tasks, and backup/scanner schedules
 + Links to the Connection Troubleshooting wiki page
 ~ PHP 8.5 compatibility
+~ Sort task type filter options alphabetically by translated name
+~ Docker image updated to PHP 8.4 [gh-957]
+! npm update — fix lodash prototype pollution (CVE-2025-13465)
 # [LOW] Cannot save the "Accurate PHP-CLI path" setting.
 # [MEDIUM] Missing PHP expiration dates can cause a fatal error displaying a site.
 # [MEDIUM] Invalid dates (e.g. in backups) can cause a fatal error.

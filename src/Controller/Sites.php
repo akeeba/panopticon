@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Controller\Trait\AdminToolsIntegrationTrait;
+use Akeeba\Panopticon\Controller\Trait\CoreChecksumsIntegrationTrait;
 use Akeeba\Panopticon\Controller\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Exception\AkeebaBackup\AkeebaBackupNotInstalled;
 use Akeeba\Panopticon\Exception\SiteConnectionException;
@@ -50,6 +51,7 @@ class Sites extends DataController
 	use EnqueuePluginUpdateTrait;
 	use AkeebaBackupIntegrationTrait;
 	use AdminToolsIntegrationTrait;
+	use CoreChecksumsIntegrationTrait;
 	use SaveSiteTrait;
 
 	private const CHECKBOX_KEYS = [

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8329caca3590f1eb50c51b6c88b4f30",
+    "content-hash": "81b7f2ce38e5990b18181ae0bff8bbb4",
     "packages": [
         {
             "name": "akeeba/awf",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "7851de0f213792967a2e750133904e1fb19b1415"
+                "reference": "8fb7c1945cdf3ce854e42d611e9f13b66587f3d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/7851de0f213792967a2e750133904e1fb19b1415",
-                "reference": "7851de0f213792967a2e750133904e1fb19b1415",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/8fb7c1945cdf3ce854e42d611e9f13b66587f3d6",
+                "reference": "8fb7c1945cdf3ce854e42d611e9f13b66587f3d6",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
                 "issues": "https://github.com/akeeba/awf/issues",
                 "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2025-12-22T07:41:59+00:00"
+            "time": "2026-02-12T15:09:38+00:00"
         },
         {
             "name": "akeeba/json-backup-api",

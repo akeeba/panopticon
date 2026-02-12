@@ -25,5 +25,6 @@ enum ReportAction: string
 	case SITE_ACTION           = 'site_action';
 	case UPTIME_UP             = 'site_up';
 	case UPTIME_DOWN           = 'site_down';
+	case CORE_CHECKSUMS        = 'core_checksums';
 	case MISC_ACTION           = 'misc_action';
 }

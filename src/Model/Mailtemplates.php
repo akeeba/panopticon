@@ -111,6 +111,7 @@ class Mailtemplates extends DataModel
 			'plugins_update_done'       => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGINS_UPDATE_DONE',
 			'akeebabackup_success'      => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_SUCCESS',
 			'akeebabackup_fail'         => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_AKEEBABACKUP_FAIL',
+			'core_checksums_found'      => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_CORE_CHECKSUMS_FOUND',
 			'selfupdate_found'          => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SELFUPDATE_FOUND',
 			'scheduled_update_summary'  => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_SCHEDULED_UPDATE_SUMMARY',
 			'action_summary'            => 'PANOPTICON_MAILTEMPLATES_OPT_TYPE_ACTION_SUMMARY',

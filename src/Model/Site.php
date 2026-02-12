@@ -17,6 +17,7 @@ use Akeeba\Panopticon\Library\SiteInfo\Retriever;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Trait\AdminToolsIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\AkeebaBackupIntegrationTrait;
+use Akeeba\Panopticon\Model\Trait\CoreChecksumsIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
 use Akeeba\Panopticon\Model\Trait\CmsFamilyFilterSeparatorTrait;
 use Akeeba\Panopticon\Model\Trait\SiteTestConnectionJoomlaTrait;
@@ -69,6 +70,7 @@ class Site extends DataModel
 	use ApiRequestTrait;
 	use AkeebaBackupIntegrationTrait;
 	use AdminToolsIntegrationTrait;
+	use CoreChecksumsIntegrationTrait;
 	use ApplyUserGroupsToSiteQueryTrait;
 	use JsonSanitizerTrait;
 	use CmsFamilyFilterSeparatorTrait;

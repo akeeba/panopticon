@@ -132,6 +132,14 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
         </div>
     </div>
 
+    @if ($this->item->cmsType() === CMSType::JOOMLA)
+    <div class="row g-3 mb-3">
+        <div class="col-12">
+            @include('Sites/item_corechecksums')
+        </div>
+    </div>
+    @endif
+
     @if($this->canEdit)
         <div class="row g-3 mb-3">
             <div class="col-12">

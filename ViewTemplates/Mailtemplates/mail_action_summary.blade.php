@@ -248,6 +248,30 @@
         </div>
     @endif
 @endrepeatable
+@repeatable('renderCoreChecksums', $item)
+    <?php
+    $status  = $item->context->get('status');
+    $modifiedCount = $item->context->get('context.modifiedCount', 0);
+    $this->errorContext = $item->context->get('context');
+    ?>
+    <div>
+        @if($status)
+            ✅ @lang('PANOPTICON_REPORTS_LBL_CORECHECKSUMS_SUCCESS')
+        @else
+            ❌ @lang('PANOPTICON_REPORTS_LBL_CORECHECKSUMS_FAILED')
+        @endif
+    </div>
+
+    @if($status && $modifiedCount > 0)
+        <div style="color: orange">
+            @sprintf('PANOPTICON_REPORTS_LBL_CORECHECKSUMS_MODIFIED_COUNT', $modifiedCount)
+        </div>
+    @elseif(!boolval($status) && !empty($this->errorContext))
+        <div style="border-top: thin dotted mediumvioletred; color: orangered">
+            @yield('renderErrorCell')
+        </div>
+    @endif
+@endrepeatable
 @repeatable('renderSiteUp', $item)
     @lang('PANOPTICON_MAIN_SITES_LBL_UPTIME_UP')
 @endrepeatable
@@ -314,6 +338,8 @@
                     @yieldRepeatable('renderBackup', $item)
                 @elseif ($item->action->value === 'filescanner')
                     @yieldRepeatable('renderFileScanner', $item)
+                @elseif ($item->action->value === 'core_checksums')
+                    @yieldRepeatable('renderCoreChecksums', $item)
                 @elseif ($item->action->value === 'site_action')
                     @yieldRepeatable('renderSiteAction', $item)
                 @elseif ($item->action->value === 'site_up')

@@ -973,6 +973,30 @@ CREATE TABLE IF NOT EXISTS `#__push_subscriptions`
             ]]></query>
         </action>
 
+        <!-- Update the #__reports table to add core_checksums action -->
+        <action table="#__reports" canfail="1">
+            <condition type="equals" value="0"><![CDATA[
+SELECT COUNT(*) FROM `INFORMATION_SCHEMA`.`COLUMNS`
+WHERE (`COLUMN_NAME` = 'action') AND (`TABLE_NAME` = '#__reports') AND (`TABLE_SCHEMA` = DATABASE())
+  AND `COLUMN_TYPE` LIKE '%\'core_checksums\'%'
+            ]]></condition>
+            <query><![CDATA[
+ALTER TABLE `#__reports` CHANGE `action` `action` ENUM('core_update_found','core_update_installed','ext_update_found','ext_update_installed','backup','filescanner','core_checksums','site_action','misc_action','site_up','site_down') NOT NULL DEFAULT 'misc_action';
+            ]]></query>
+        </action>
+
+        <!-- Install mail template: core_checksums_found -->
+        <action table="#__mailtemplates" canfail="1">
+            <condition type="equals" operator="not" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__mailtemplates` WHERE `type` = 'core_checksums_found') x;
+            ]]></condition>
+            <query><![CDATA[
+INSERT INTO `#__mailtemplates`
+(`type`,`language`,`subject`,`html`,`plaintext`) VALUES
+('core_checksums_found','*','⚠️ Core file integrity issue on "[SITE_NAME]"','<div class=\"akemail-outer-wrapper\">\r\n<table>\r\n<tbody>\r\n<tr>\r\n<td width=\"10%\">&nbsp;</td>\r\n<td>\r\n<div class=\"akemail-wrapper\">\r\n<div class=\"akemail-container\"><!-- Logo Header -->\r\n<div class=\"akemail-logo\"><a href=\"[URL]\">&nbsp;<img src=\"[URL]/media/images/logo_bw_64.png\" alt=\"Panopticon &mdash; Site Monitoring\">&nbsp;</a></div>\r\n<!-- Hello -->\r\n<div class=\"akemail-hello\">\r\n<p>Hello,</p>\r\n</div>\r\n<!-- Main-Topic -->\r\n<div class=\"akemail-main-topic\">\r\n<p>Core file integrity issue detected on &ldquo;[SITE_NAME]&rdquo;</p>\r\n</div>\r\n<!-- Message -->\r\n<div class=\"akemail-message\">\r\n<p>A core file integrity check on your site &ldquo;<a href=\"[SITE_URL]\">[SITE_NAME]</a>&rdquo; has detected <strong>[MODIFIED_COUNT] modified core file(s)</strong>.</p>\r\n<p>This may indicate that core files have been modified, either intentionally (core hacks) or by a third party (potentially malicious activity).</p>\r\n<h4>Modified files</h4>\r\n<pre>[MODIFIED_FILES]</pre>\r\n</div>\r\n<!-- Area Offer/Announcement -->\r\n<div class=\"akemail-announcement\">\r\n<div class=\"akemail-announcement-box\">\r\n<h3>Action required</h3>\r\n<p>Please review the modified files listed above and take appropriate action. If these modifications are unexpected, your site may have been compromised.</p>\r\n</div>\r\n<p class=\"akemail-announcement-visitlink\">You can view the full list of modified files in <a href=\"[URL]\">your Akeeba Panopticon installation</a>.</p>\r\n</div>\r\n<!-- Bye, Bye -->\r\n<div class=\"akemail-outro\">\r\n<p>Have a great day!</p>\r\n</div>\r\n<!-- Footer -->\r\n<div class=\"akemail-footer\">\r\n<p class=\"akemail-footer-sitelink\">&nbsp;<a href=\"[URL]\">Panopticon &mdash; Site Monitoring</a></p>\r\n</div>\r\n</div>\r\n<!-- Legal info -->\r\n<div class=\"akemail-legalinfo\">\r\n<p>This is an automated email. Please do not reply to it.</p>\r\n</div>\r\n</div>\r\n</td>\r\n<td width=\"10%\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n</div>','Hello,\r\n\r\n\r\nCore file integrity issue detected on \"[SITE_NAME]\"\r\n\r\n\r\nA core file integrity check on your site \"[SITE_NAME]\" ([SITE_URL])\r\nhas detected [MODIFIED_COUNT] modified core file(s).\r\n\r\nThis may indicate that core files have been modified, either\r\nintentionally (core hacks) or by a third party (potentially\r\nmalicious activity).\r\n\r\n\r\nModified files:\r\n\r\n[MODIFIED_FILES]\r\n\r\n\r\n==============================================================================\r\n! ! ! ! !  ACTION REQUIRED  ! ! ! ! !\r\n==============================================================================\r\n\r\nPlease review the modified files listed above and take appropriate\r\naction. If these modifications are unexpected, your site may have\r\nbeen compromised.\r\n\r\n==============================================================================\r\n\r\n\r\nYou can view the full list of modified files in your Akeeba\r\nPanopticon installation ([URL]).\r\n\r\nHave a great day!\r\n\r\n------------------------------------------------------------------------------\r\n\r\nThis email was sent by the Panopticon installation on [URL].\r\nThis is an automated email. Please do not reply to it.');
+            ]]></query>
+        </action>
+
         <!-- Install task: sendwebpush -->
         <action table="#__tasks" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[

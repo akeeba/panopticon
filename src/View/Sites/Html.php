@@ -76,6 +76,12 @@ class Html extends DataViewHtml
 
 	protected array|Throwable $scans = [];
 
+	protected int $coreChecksumsModifiedCount = 0;
+
+	protected ?int $coreChecksumsLastCheck = null;
+
+	protected ?bool $coreChecksumsLastStatus = null;
+
 	protected array $extensionFilters = [
 		'filter-updatesite'  => 'fa-globe',
 		'filter-dlid'        => 'fa-key',
@@ -468,6 +474,15 @@ class Html extends DataViewHtml
 			}
 		}
 
+		// Core File Integrity Checksums
+		if ($this->item->cmsType() === CMSType::JOOMLA)
+		{
+			$this->coreChecksumsModifiedCount = (int) $this->siteConfig->get('core.coreChecksums.modifiedCount', 0);
+			$this->coreChecksumsLastCheck     = $this->siteConfig->get('core.coreChecksums.lastCheck', null);
+			$lastStatus                       = $this->siteConfig->get('core.coreChecksums.lastStatus', null);
+			$this->coreChecksumsLastStatus    = $lastStatus === null ? null : (bool) $lastStatus;
+		}
+
 		$hasAkeebaBackupPro = $this->item->hasAkeebaBackup() && $this->siteConfig->get('akeebabackup.info.api') > 1;
 		$hasAkeebaSoftware  = $hasAkeebaBackupPro || $this->hasAdminToolsPro;
 
@@ -548,6 +563,22 @@ class Html extends DataViewHtml
 						'title' => $this->getContainer()->language->text('PANOPTICON_SITES_MENU_ADMINTOOLS_SCHEDULE'),
 						'url'   => $router->route(
 							sprintf("index.php?view=scannertasks&site_id=%s&manual=0", $this->item->getId())
+						),
+					]
+				)
+			);
+		}
+
+		if ($this->item->cmsType() === CMSType::JOOMLA)
+		{
+			$dropdown->addButton(
+				new Button(
+					[
+						'id'    => 'checksumtasks',
+						'icon'  => 'fa fa-fw fa-fingerprint',
+						'title' => $this->getContainer()->language->text('PANOPTICON_CHECKSUMTASKS_TITLE'),
+						'url'   => $router->route(
+							sprintf("index.php?view=checksumtasks&site_id=%s&manual=0", $this->item->getId())
 						),
 					]
 				)

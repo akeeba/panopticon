@@ -242,6 +242,33 @@ class Reports extends DataModel
 	}
 
 	/**
+	 * Returns a new object for a Core File Integrity Check event
+	 *
+	 * @param   int        $site_id         The Site ID
+	 * @param   bool|null  $status          Did the check complete okay?
+	 * @param   mixed      $furtherContext  Any further context info
+	 *
+	 * @since   1.3.0
+	 */
+	public static function fromCoreChecksums(
+		int $site_id, ?bool $status = null, mixed $furtherContext = null
+	): static
+	{
+		/** @var static $item */
+		$item             = Factory::getContainer()->mvcFactory->makeTempModel('reports');
+		$item->site_id    = $site_id;
+		$item->created_on = 'now';
+		$item->created_by = 0;
+		$item->action     = ReportAction::CORE_CHECKSUMS;
+		$item->context    = [
+			'status'  => $status,
+			'context' => self::furtherContextAsArrayOrNull($furtherContext),
+		];
+
+		return $item;
+	}
+
+	/**
 	 * Returns a new object for a generic site action (e.g. a third party code action)
 	 *
 	 * @param   int        $site_id         The Site ID
