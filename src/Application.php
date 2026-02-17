@@ -31,7 +31,7 @@ class Application extends AWFApplication
 	/**
 	 * List of view names we're allowed to access directly, without a login, and without redirection to the setup view
 	 */
-	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup', 'passkeys', 'policies'];
+	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup', 'passkeys', 'policies', 'api'];
 
 	/**
 	 * Main menu structure
@@ -202,6 +202,12 @@ class Application extends AWFApplication
 					'icon'        => 'fa fa-fw fa-user-gear',
 				],
 				[
+					'view'        => 'apitokens',
+					'title'       => 'PANOPTICON_APITOKENS_TITLE',
+					'permissions' => [],
+					'icon'        => 'fa fa-fw fa-key',
+				],
+				[
 					'view'        => 'login',
 					'task'        => 'logout',
 					'title'       => 'PANOPTICON_APP_LBL_LOGOUT',
@@ -368,11 +374,20 @@ class Application extends AWFApplication
 		// Set up the media query key
 		$this->setupMediaVersioning();
 
-		// HTTP 103 early hints
-		$this->preloadHints();
-
 		// Set up the session
 		$this->container->session->start();
+
+		// Load routing information
+		$this->loadRoutes();
+
+		// Detect API requests early: skip all UI setup (MFA, consent, template, preload hints)
+		if ($this->isApiRequest())
+		{
+			return;
+		}
+
+		// HTTP 103 early hints
+		$this->preloadHints();
 
 		// Apply a forced language – but only if there is no logged-in user, or they have no language preference.
 		$forcedLanguage = $this->getContainer()->segment->get('panopticon.forced_language', null);
@@ -433,9 +448,6 @@ class Application extends AWFApplication
 				$this->conditionalRedirectToCaptive();
 			}
 		}
-
-		// Load routing information (reserved for future use)
-		$this->loadRoutes();
 
 		// Show the login page when necessary
 		$this->redirectToLogin();
@@ -794,6 +806,23 @@ class Application extends AWFApplication
 				'view' => 'login',
 			]
 		);
+	}
+
+	/**
+	 * Detect if the current request is an API request.
+	 *
+	 * Parses the URL through the router, checking if the view resolves to 'api'.
+	 *
+	 * @return  bool
+	 * @since   1.4.0
+	 */
+	private function isApiRequest(): bool
+	{
+		$this->container->router->parse();
+
+		$view = $this->container->input->getCmd('view', '');
+
+		return $view === 'api';
 	}
 
 	private function setupMediaVersioning(): void

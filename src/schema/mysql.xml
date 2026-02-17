@@ -1063,5 +1063,29 @@ This is an automated email. Please do not reply to it.');
 ]]></query>
         </action>
 
+        <!-- Create table: api_tokens -->
+        <action table="#__api_tokens" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__api_tokens`
+(
+    `id`          SERIAL,
+    `user_id`     BIGINT(20) UNSIGNED NOT NULL,
+    `description` VARCHAR(255)        NULL,
+    `seed`        VARCHAR(128)        NOT NULL,
+    `enabled`     TINYINT(1) UNSIGNED NOT NULL DEFAULT 1,
+    `created_by`  BIGINT(20) UNSIGNED NOT NULL,
+    `created_on`  DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_by` BIGINT(20) UNSIGNED NULL,
+    `modified_on` DATETIME            NULL,
+    PRIMARY KEY (`id`),
+    INDEX `idx_enabled_user` (`enabled`, `user_id`),
+    CONSTRAINT `fk_api_tokens_user` FOREIGN KEY (`user_id`) REFERENCES `#__users` (`id`) ON DELETE CASCADE
+)
+    DEFAULT COLLATE utf8mb4_unicode_ci
+    ENGINE = InnoDB;
+            ]]></query>
+        </action>
+
     </sql>
 </schema>

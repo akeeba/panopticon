@@ -32,6 +32,12 @@ trait ACLTrait
 		'about'         => [
 			'*' => ['*'],
 		],
+		'api'           => [
+			'*' => ['#'],
+		],
+		'apitokens'     => [
+			'*' => ['*'],
+		],
 		'actionsummarytasks' => [
 			'*' => ['*']
 		],

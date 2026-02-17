@@ -20,6 +20,9 @@
 
     ## Uncomment and set to the path of your installation if necessary
     # RewriteBase /
+
+    ## API clean URLs
+    RewriteRule ^api(/.*)?$ index.php/api$1 [L,QSA]
 </IfModule>
 
 ### ============================================================================
