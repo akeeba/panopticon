@@ -38,11 +38,12 @@ class EncryptingEncoder implements EncoderInterface, ContainerAwareInterface
 	{
 		$this->setContainer($container ?? Factory::getContainer());
 
-		$this->aes = new Aes(
-			$this->getContainer()->appConfig->get('secret')
-		);
+		$secret = $this->getContainer()->appConfig->get('secret') ?? '';
+
+		$this->aes = new Aes($secret);
 
 		$this->allowEncryption = Aes::isSupported()
+			&& $secret !== ''
 			&& $this->getContainer()->appConfig->get('session_encrypt', true);
 	}
 
