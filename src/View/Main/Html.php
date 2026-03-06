@@ -162,6 +162,16 @@ class Html extends \Awf\Mvc\DataView\Html
 			$this->pagination = new Pagination(
 				$this->itemsCount, $this->lists->limitStart, $this->lists->limit, $displayedLinks, $this->container
 			);
+
+			// Table body auto-refresh URL
+			$token = $this->getContainer()->session->getCsrfToken()->getValue();
+			$doc->addScriptOptions(
+				'panopticon.tableRefresh', [
+					'url' => $router->route(
+						'index.php?view=main&task=tableBody&format=raw&' . $token . '=1'
+					),
+				]
+			);
 		}
 
 		// Assign other information to the view

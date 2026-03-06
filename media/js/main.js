@@ -67,12 +67,84 @@
         );
     };
 
+    let tableBodyRefreshInFlight = false;
+
+    const tableBodyRefresh = () =>
+    {
+        const options = akeeba.System.getOptions("panopticon.tableRefresh", {});
+
+        if (!options?.url || tableBodyRefreshInFlight)
+        {
+            return;
+        }
+
+        // Skip refresh if a Bootstrap modal is currently open
+        if (document.querySelector(".modal.show"))
+        {
+            return;
+        }
+
+        const elTbody = document.getElementById("sitesTableBody");
+
+        if (!elTbody)
+        {
+            return;
+        }
+
+        tableBodyRefreshInFlight = true;
+
+        akeeba.Ajax.ajax(
+            options.url,
+            {
+                type:    "GET",
+                cache:   false,
+                success: (responseText, statusText, xhr) =>
+                         {
+                             tableBodyRefreshInFlight = false;
+
+                             const newHtml = responseText.trim();
+
+                             if (!newHtml || newHtml === elTbody.innerHTML.trim())
+                             {
+                                 return;
+                             }
+
+                             // Dispose existing tooltips before replacing content
+                             elTbody.querySelectorAll("[data-bs-toggle=\"tooltip\"]")
+                                 .forEach((el) =>
+                                 {
+                                     const tooltip = bootstrap.Tooltip.getInstance(el);
+
+                                     if (tooltip)
+                                     {
+                                         tooltip.dispose();
+                                     }
+                                 });
+
+                             // Replace with server-rendered content (same-origin, CSRF-protected)
+                             elTbody.innerHTML = newHtml;
+
+                             // Re-initialize tooltips on the new content
+                             elTbody.querySelectorAll("[data-bs-toggle=\"tooltip\"]")
+                                 .forEach((el) => new bootstrap.Tooltip(el));
+                         },
+                error:   () =>
+                         {
+                             tableBodyRefreshInFlight = false;
+                         }
+            }
+        );
+    };
+
     const onDOMContentLoaded = () =>
     {
         // Set up the CRON heartbeat check
         window.setInterval(heartBeatCheck, 30000);
 
         heartBeatCheck();
+
+        // Set up the sites table auto-refresh
+        window.setInterval(tableBodyRefresh, 30000);
 
         window.setTimeout(usageStats, 500);
 

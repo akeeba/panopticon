@@ -141,4 +141,17 @@ class Main extends Controller
 
 		$this->display();
 	}
+
+	public function tableBody()
+	{
+		$this->csrfProtection();
+
+		// Use the saved model state
+		if ($this->input->get('savestate', -999, 'int') == -999)
+		{
+			$this->input->set('savestate', true);
+		}
+
+		$this->display();
+	}
 }
