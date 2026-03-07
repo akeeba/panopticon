@@ -6,6 +6,10 @@
 
 (() =>
 {
+    // =========================================================================
+    // Extension Filters
+    // =========================================================================
+
     /**
      * Apply the extensions filters
      */
@@ -142,7 +146,32 @@
 
     };
 
-    const rememberCollapsibles = () =>
+    /**
+     * Attach click handlers to extension filter buttons and search button.
+     */
+    const attachExtensionFilterHandlers = () =>
+    {
+        [].slice.call(document.querySelectorAll(".extensionFilter")).forEach((el) =>
+        {
+            el.addEventListener("click", applyExtensionFilters)
+        });
+
+        document.getElementById("extensions-filter-search-button")?.
+            addEventListener("click", applyExtensionFilters);
+    };
+
+    // =========================================================================
+    // Collapsible State
+    // =========================================================================
+
+    /**
+     * Attach hide/show event listeners to collapsible elements for state
+     * persistence. Reads the collapsed array from localStorage on each event
+     * so it works correctly after section replacement.
+     *
+     * @param {Element|Document} root  The root element to search within.
+     */
+    const rememberCollapsibles = (root) =>
     {
         const options = akeeba.System.getOptions("panopticon.siteRemember", {});
 
@@ -152,56 +181,71 @@
         }
 
         const localStorageKey = options.collapsible;
-        const json            = window.localStorage.getItem(localStorageKey) ?? "";
-        let collapsed         = [];
 
-        try
-        {
-            collapsed = JSON.parse(json);
-        }
-        catch (e)
-        {
-            collapsed = [];
-        }
-
-        if (typeof collapsed !== "object")
-        {
-            collapsed = [];
-        }
-
-        [].slice.call(document.querySelectorAll(".collapse")).forEach((elCollapsible) =>
+        [].slice.call(root.querySelectorAll(".collapse")).forEach((elCollapsible) =>
         {
             const id = elCollapsible.id;
 
             elCollapsible.addEventListener("hide.bs.collapse", () =>
             {
-                if (collapsed.includes(id))
+                let collapsed = [];
+
+                try
                 {
-                    return;
+                    collapsed = JSON.parse(window.localStorage.getItem(localStorageKey) ?? "[]");
+                }
+                catch (e)
+                {
+                    collapsed = [];
                 }
 
-                collapsed.push(id);
+                if (typeof collapsed !== "object")
+                {
+                    collapsed = [];
+                }
 
-                window.localStorage.setItem(localStorageKey, JSON.stringify(collapsed));
+                if (!collapsed.includes(id))
+                {
+                    collapsed.push(id);
+                    window.localStorage.setItem(localStorageKey, JSON.stringify(collapsed));
+                }
             });
 
             elCollapsible.addEventListener("show.bs.collapse", () =>
             {
-                const idx = collapsed.indexOf(id);
+                let collapsed = [];
 
-                if (idx < 0)
+                try
                 {
-                    return;
+                    collapsed = JSON.parse(window.localStorage.getItem(localStorageKey) ?? "[]");
+                }
+                catch (e)
+                {
+                    collapsed = [];
                 }
 
-                collapsed.splice(idx, 1);
+                if (typeof collapsed !== "object")
+                {
+                    collapsed = [];
+                }
 
-                window.localStorage.setItem(localStorageKey, JSON.stringify(collapsed));
+                const idx = collapsed.indexOf(id);
+
+                if (idx >= 0)
+                {
+                    collapsed.splice(idx, 1);
+                    window.localStorage.setItem(localStorageKey, JSON.stringify(collapsed));
+                }
             })
         });
     };
 
-    const restoreCollapsibles = () =>
+    /**
+     * Restore collapsed state from localStorage, scoped to a root element.
+     *
+     * @param {Element|Document} root  The root element to search within.
+     */
+    const restoreCollapsibles = (root) =>
     {
         const options = akeeba.System.getOptions("panopticon.siteRemember", {});
 
@@ -230,7 +274,9 @@
 
         [].slice.call(collapsed).forEach((id) =>
         {
-            const elCollapsible = document.getElementById(id);
+            const elCollapsible = root.querySelector
+                ? root.querySelector("#" + CSS.escape(id))
+                : document.getElementById(id);
 
             if (!elCollapsible)
             {
@@ -241,12 +287,15 @@
         });
     };
 
+    // =========================================================================
+    // Backup Button
+    // =========================================================================
+
     /**
-     * Runs when the DOM is ready (page has loaded)
+     * Attach the "Take Backup" button click handler.
      */
-    const onDOMContentLoaded = () =>
+    const attachBackupButtonHandler = () =>
     {
-        // Akeeba Backup buttons
         document.getElementById("akeebaBackupTakeButton")?.addEventListener("click", (event) =>
         {
             const profileId = document.getElementById("akeebaBackupTakeProfile")?.value;
@@ -259,47 +308,249 @@
 
             window.location = url;
         });
+    };
+
+    // =========================================================================
+    // UI Component Helpers (scoped to a root element)
+    // =========================================================================
+
+    const TOOLTIP_SELECTOR = "[data-toggle-tooltip=\"tooltip\"],[data-bs-toggle=\"tooltip\"],[data-bs-tooltip=\"tooltip\"]";
+
+    /**
+     * Dispose all Bootstrap Tooltip instances within a root element.
+     */
+    const disposeTooltipsIn = (root) =>
+    {
+        root.querySelectorAll(TOOLTIP_SELECTOR)
+            .forEach((el) =>
+            {
+                const tooltip = bootstrap.Tooltip.getInstance(el);
+
+                if (tooltip)
+                {
+                    tooltip.dispose();
+                }
+            });
+    };
+
+    /**
+     * Initialize Bootstrap Tooltips within a root element.
+     */
+    const initTooltipsIn = (root) =>
+    {
+        root.querySelectorAll(TOOLTIP_SELECTOR)
+            .forEach((el) => new bootstrap.Tooltip(el));
+    };
+
+    /**
+     * Dispose all Bootstrap Collapse instances within a root element.
+     */
+    const disposeCollapsiblesIn = (root) =>
+    {
+        root.querySelectorAll(".collapse")
+            .forEach((el) =>
+            {
+                const instance = bootstrap.Collapse.getInstance(el);
+
+                if (instance)
+                {
+                    instance.dispose();
+                }
+            });
+    };
+
+    /**
+     * Initialize Choices.js on select elements within a root element.
+     */
+    const initChoicesIn = (root) =>
+    {
+        if (typeof Choices === "undefined")
+        {
+            return;
+        }
+
+        root.querySelectorAll(".js-choice")
+            .forEach((element) =>
+            {
+                new Choices(
+                    element,
+                    {
+                        allowHTML:        false,
+                        placeholder:      true,
+                        placeholderValue: "",
+                        removeItemButton: true
+                    }
+                );
+            });
+    };
+
+    // =========================================================================
+    // Auto-Refresh
+    // =========================================================================
+
+    let siteRefreshInFlight = false;
+    let siteRefreshTimer    = null;
+    let sectionHashes       = {};
+
+    /**
+     * Reinitialize JS-powered UI components within a replaced section.
+     *
+     * @param {string}  sectionKey  The section key (e.g., "extensions", "backup").
+     * @param {Element} wrapper     The section wrapper div.
+     */
+    const reinitializeSection = (sectionKey, wrapper) =>
+    {
+        // Restore collapsible state (must happen before any Bootstrap Collapse init)
+        restoreCollapsibles(wrapper);
+
+        // Tooltips
+        initTooltipsIn(wrapper);
+
+        // Collapsible memory listeners
+        rememberCollapsibles(wrapper);
+
+        // Section-specific reinitialization
+        if (sectionKey === "extensions")
+        {
+            attachExtensionFilterHandlers();
+            restoreExtensionFilters();
+            applyExtensionFilters();
+        }
+
+        if (sectionKey === "backup")
+        {
+            initChoicesIn(wrapper);
+            attachBackupButtonHandler();
+        }
+    };
+
+    /**
+     * Fetch refreshed section HTML and update changed sections.
+     *
+     * Content comes from the same-origin CSRF-protected Panopticon server.
+     * This is the same trust model as the sites overview table auto-refresh
+     * in main.js.
+     */
+    const siteRefresh = () =>
+    {
+        const options = akeeba.System.getOptions("panopticon.siteRefresh", {});
+
+        if (!options?.url || siteRefreshInFlight)
+        {
+            return;
+        }
+
+        // Skip refresh if a Bootstrap modal is currently open
+        if (document.querySelector(".modal.show"))
+        {
+            return;
+        }
+
+        siteRefreshInFlight = true;
+
+        akeeba.Ajax.ajax(
+            options.url,
+            {
+                type:    "GET",
+                cache:   false,
+                success: (responseText, statusText, xhr) =>
+                         {
+                             siteRefreshInFlight = false;
+
+                             let data = null;
+
+                             try
+                             {
+                                 data = JSON.parse(responseText);
+                             }
+                             catch (e)
+                             {
+                                 return;
+                             }
+
+                             if (!data || typeof data !== "object")
+                             {
+                                 return;
+                             }
+
+                             for (const [key, section] of Object.entries(data))
+                             {
+                                 if (!section?.html || !section?.hash)
+                                 {
+                                     continue;
+                                 }
+
+                                 // Skip if content hasn't changed
+                                 if (sectionHashes[key] === section.hash)
+                                 {
+                                     continue;
+                                 }
+
+                                 const wrapper = document.getElementById("siteSection-" + key);
+
+                                 if (!wrapper)
+                                 {
+                                     continue;
+                                 }
+
+                                 // Dispose existing UI component instances
+                                 disposeTooltipsIn(wrapper);
+                                 disposeCollapsiblesIn(wrapper);
+
+                                 // Replace with same-origin server-rendered content (CSRF-protected)
+                                 wrapper.innerHTML = section.html;
+
+                                 // Reinitialize UI components (synchronous — no visual flash)
+                                 reinitializeSection(key, wrapper);
+
+                                 // Store new hash
+                                 sectionHashes[key] = section.hash;
+                             }
+                         },
+                error:   () =>
+                         {
+                             siteRefreshInFlight = false;
+
+                             // Stop polling on error (session expired, network issue, etc.)
+                             if (siteRefreshTimer)
+                             {
+                                 window.clearInterval(siteRefreshTimer);
+                                 siteRefreshTimer = null;
+                             }
+                         }
+            }
+        );
+    };
+
+    // =========================================================================
+    // DOM Ready
+    // =========================================================================
+
+    /**
+     * Runs when the DOM is ready (page has loaded)
+     */
+    const onDOMContentLoaded = () =>
+    {
+        // Akeeba Backup buttons
+        attachBackupButtonHandler();
 
         // Extension filter tooltips
-        const tooltipTriggerList = document.querySelectorAll("[data-toggle-tooltip=\"tooltip\"]")
-        const tooltipList        = [...tooltipTriggerList].map(
-            tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        initTooltipsIn(document);
 
         // Extension filters
         restoreExtensionFilters();
-
-        [].slice.call(document.querySelectorAll(".extensionFilter")).forEach((el) =>
-        {
-            el.addEventListener("click", applyExtensionFilters)
-        });
-
-        document.getElementById('extensions-filter-search-button')?.
-            addEventListener("click", applyExtensionFilters);
-
+        attachExtensionFilterHandlers();
         applyExtensionFilters();
 
         // Remember collapsible status
-        restoreCollapsibles();
-        rememberCollapsibles();
+        restoreCollapsibles(document);
+        rememberCollapsibles(document);
 
         // Enable Choices.js
-        if (typeof Choices !== "undefined")
-        {
-            document.querySelectorAll(".js-choice")
-                    .forEach((element) =>
-                    {
-                        new Choices(
-                            element,
-                            {
-                                allowHTML:        false,
-                                placeholder:      true,
-                                placeholderValue: "",
-                                removeItemButton: true
-                            }
-                        );
-                    });
-        }
+        initChoicesIn(document);
 
+        // Auto-refresh every 60 seconds
+        siteRefreshTimer = window.setInterval(siteRefresh, 60000);
     };
 
     // Workaround for this file loading before the DOM has been loaded on fast servers.

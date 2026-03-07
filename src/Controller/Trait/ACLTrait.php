@@ -165,6 +165,7 @@ trait ACLTrait
 			// Reloading a site's information requires the read privilege on it
 			'refreshSiteInformation'             => ['read'],
 			'refreshExtensionsInformation'       => ['read'],
+			'refreshSections'                    => ['read'],
 			// Actions which modify the site need the run privilege
 			'fixJoomlaCoreUpdateSite'            => ['run'],
 			'scheduleJoomlaUpdate'               => ['run'],

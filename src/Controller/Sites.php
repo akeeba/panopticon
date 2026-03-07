@@ -1146,6 +1146,92 @@ class Sites extends DataController
 		$this->setRedirect($returnUri, $message, $type);
 	}
 
+	/**
+	 * Returns a JSON object with server-rendered HTML for each site read section.
+	 *
+	 * Used by the periodic auto-refresh in the site read view.
+	 *
+	 * @return  void
+	 * @since   1.3.4
+	 */
+	public function refreshSections(): void
+	{
+		$this->csrfProtection();
+
+		$id = $this->input->getInt('id', 0);
+
+		/** @var \Akeeba\Panopticon\Model\Site $model */
+		$model = $this->getModel();
+		$model->find($id);
+
+		// Create an Html view instance to render section templates
+		$htmlView = new Html($this->container);
+		$htmlView->setDefaultModel($model);
+		$htmlView->prepareSiteReadData();
+
+		$cmsType    = $model->cmsType();
+		$siteConfig = $model->getConfig();
+		$sections   = [];
+
+		// CMS Update
+		if ($cmsType === CMSType::JOOMLA)
+		{
+			$html = $htmlView->loadAnyTemplate('Sites/item_joomlaupdate');
+			$sections['cmsUpdate'] = ['html' => $html, 'hash' => md5($html)];
+		}
+		elseif ($cmsType === CMSType::WORDPRESS)
+		{
+			$html = $htmlView->loadAnyTemplate('Sites/item_wpupdate');
+			$sections['cmsUpdate'] = ['html' => $html, 'hash' => md5($html)];
+		}
+
+		// PHP
+		$html = $htmlView->loadAnyTemplate('Sites/item_php');
+		$sections['php'] = ['html' => $html, 'hash' => md5($html)];
+
+		// Server (conditional — only if server info has been collected)
+		if (
+			$siteConfig->get('core.panopticon.api') >= 101
+			&& $siteConfig->get('core.serverInfo')
+			&& $siteConfig->get('core.serverInfo.collected')
+		)
+		{
+			$html = $htmlView->loadAnyTemplate('Sites/item_server');
+			$sections['server'] = ['html' => $html, 'hash' => md5($html)];
+		}
+
+		// Extensions
+		if ($cmsType === CMSType::JOOMLA)
+		{
+			$html = $htmlView->loadAnyTemplate('Sites/item_extensions');
+			$sections['extensions'] = ['html' => $html, 'hash' => md5($html)];
+		}
+		elseif ($cmsType === CMSType::WORDPRESS)
+		{
+			$html = $htmlView->loadAnyTemplate('Sites/item_wpplugins');
+			$sections['extensions'] = ['html' => $html, 'hash' => md5($html)];
+		}
+
+		// Backup
+		$html = $htmlView->loadAnyTemplate('Sites/item_backup');
+		$sections['backup'] = ['html' => $html, 'hash' => md5($html)];
+
+		// Admin Tools
+		$html = $htmlView->loadAnyTemplate('Sites/item_admintools');
+		$sections['admintools'] = ['html' => $html, 'hash' => md5($html)];
+
+		// Core Checksums (Joomla only)
+		if ($cmsType === CMSType::JOOMLA)
+		{
+			$html = $htmlView->loadAnyTemplate('Sites/item_corechecksums');
+			$sections['corechecksums'] = ['html' => $html, 'hash' => md5($html)];
+		}
+
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($sections, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+		$this->container->application->close();
+	}
+
 	protected function onBeforeBrowse(): bool
 	{
 		if ($this->input->get('savestate', -999, 'int') == -999)
