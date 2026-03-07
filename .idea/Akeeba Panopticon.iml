@@ -86,14 +86,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/io-developer/php-whois" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-idn" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/akeeba/phpfinder" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/fgrosse/phpasn1" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/minishlink/web-push" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/spomky-labs/base64url" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/web-token/jwt-core" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/web-token/jwt-key-mgmt" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/web-token/jwt-signature" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/web-token/jwt-signature-algorithm-ecdsa" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/web-token/jwt-util-ecc" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/web-token/jwt-library" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

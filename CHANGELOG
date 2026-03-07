@@ -11,10 +11,13 @@ Akeeba Panopticon 2.0.0
 + Password complexity validation for user registration
 + CLI commands for managing groups, mail templates, tasks, and backup/scanner schedules
 + Links to the Connection Troubleshooting wiki page
++ Periodic auto-refresh of the sites overview table
++ Periodic auto-refresh of the site infomration page
 ~ PHP 8.5 compatibility
 ~ Sort task type filter options alphabetically by translated name
 ~ Docker image updated to PHP 8.4 [gh-957]
-! npm update — fix lodash prototype pollution (CVE-2025-13465)
+# [LOW] Missing ACL entry for the site sections auto-refresh task
+# [LOW] PHP deprecation notice in session encryption when no secret is configured
 # [LOW] Cannot save the "Accurate PHP-CLI path" setting.
 # [MEDIUM] Missing PHP expiration dates can cause a fatal error displaying a site.
 # [MEDIUM] Invalid dates (e.g. in backups) can cause a fatal error.
