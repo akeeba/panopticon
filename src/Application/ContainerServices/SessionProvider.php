@@ -75,7 +75,10 @@ class SessionProvider
 			$this->createOrUpdateFolder($c, $sessionPath);
 		}
 
-		$manager->setSavePath($sessionPath, $levels);
+		if (!headers_sent())
+		{
+			$manager->setSavePath($sessionPath, $levels);
+		}
 
 		return $manager;
 	}
