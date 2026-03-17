@@ -11474,3 +11474,1343 @@ msgstr ""
 "διαδικτυακές διαρροές κωδικών πρόσβασης, γεγονός που καθιστά πολύ εύκολο για "
 "τους κακόβουλους χρήστες να μαντέψουν ότι τον χρησιμοποιείτε. Παρακαλούμε "
 "χρησιμοποιήστε έναν διαφορετικό κωδικό πρόσβασης."
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_CORECHECKSUMS"
+msgid "Core File Integrity Check"
+msgstr "Έλεγχος Ακεραιότητας Αρχείων Πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_REGISTRATIONCLEANUP"
+msgid "Clean up expired user registrations"
+msgstr "Εκκαθάριση ληγμένων εγγραφών χρηστών"
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_EXTENSIONINSTALL"
+msgid "Remote Extension Installation"
+msgstr "Απομακρυσμένη Εγκατάσταση Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIPS"
+msgid "Tips to connect Akeeba Panopticon to Akeeba Backup Professional"
+msgstr "Συμβουλές για τη σύνδεση του Akeeba Panopticon με το Akeeba Backup Professional"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1"
+msgid "Make sure that you have installed and enabled the Akeeba Backup Professional component, and the Web Services - Akeeba Backup plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
+msgstr "Βεβαιωθείτε ότι έχετε εγκαταστήσει και ενεργοποιήσει το Akeeba Backup Professional component και το πρόσθετο Web Services - Akeeba Backup στον ιστότοπό σας. Το Akeeba Backup Core <em>δεν</em> είναι συμβατό με το Akeeba Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1_WP"
+msgid "Make sure that you have installed and enabled the Akeeba Backup Professional plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
+msgstr "Βεβαιωθείτε ότι έχετε εγκαταστήσει και ενεργοποιήσει το πρόσθετο Akeeba Backup Professional στον ιστότοπό σας. Το Akeeba Backup Core <em>δεν</em> είναι συμβατό με το Akeeba Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
+msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set \u201cEnable JSON API (remote backup)\u201d to Yes. Enter a new \u201cSecret Word\u201d; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp; Close in the toolbar."
+msgstr "Συνδεθείτε στο backend του ιστοτόπου σας. Πηγαίνετε στα Components, Akeeba Backup, Πίνακας Ελέγχου. Πατήστε Επιλογές, Front-end Backup και ορίστε το \u201cEnable JSON API (remote backup)\u201d σε Yes. Εισάγετε ένα νέο \u201cSecret Word\u201d· μπορείτε να δημιουργήσετε ένα νέο, τυχαίο, ασφαλές μυστικό στο <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Στη συνέχεια, πατήστε Αποθήκευση &amp; Κλείσιμο στη γραμμή εργαλείων."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
+msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set \u201cEnable JSON API (remote backup)\u201d to Yes. Enter a new \u201cSecret Key\u201d; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp; Close in the toolbar."
+msgstr "Συνδεθείτε στο backend του ιστοτόπου σας. Πηγαίνετε στο Akeeba Backup, System Configuration, Public API και ορίστε το \u201cEnable JSON API (remote backup)\u201d σε Yes. Εισάγετε ένα νέο \u201cSecret Key\u201d· μπορείτε να δημιουργήσετε ένα νέο, τυχαίο, ασφαλές κλειδί στο <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Στη συνέχεια, πατήστε Αποθήκευση &amp; Κλείσιμο στη γραμμή εργαλείων."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
+msgid "Make sure that no third party extensions (especially security extensions) and/or server configuration settings prevent access to your site\'s <code>api</code> folder. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
+msgstr "Βεβαιωθείτε ότι καμία επέκταση τρίτου (ειδικά επεκτάσεις ασφαλείας) ή/και ρυθμίσεις διακομιστή δεν εμποδίζουν την πρόσβαση στον φάκελο <code>api</code> του ιστοτόπου σας. Επίσης, ελέγξτε ότι οι απαντήσεις από αυτόν τον φάκελο <em>δεν</em> αποθηκεύονται στην κρυφή μνήμη από πρόσθετα τρίτων στον ιστότοπό σας, τον διακομιστή ιστού σας ή οποιοδήποτε CDN / caching proxy που μπορεί να βρίσκεται μπροστά από τον ιστότοπό σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP"
+msgid "Make sure that no third party plugins (especially security plugins) and/or server configuration settings prevent access to your site\'s <code>wp-admin/admin-ajax.php</code> file. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
+msgstr "Βεβαιωθείτε ότι κανένα πρόσθετο τρίτου (ειδικά πρόσθετα ασφαλείας) ή/και ρυθμίσεις διακομιστή δεν εμποδίζουν την πρόσβαση στο αρχείο <code>wp-admin/admin-ajax.php</code> του ιστοτόπου σας. Επίσης, ελέγξτε ότι οι απαντήσεις από αυτό το αρχείο <em>δεν</em> αποθηκεύονται στην κρυφή μνήμη από πρόσθετα τρίτων στον ιστότοπό σας, τον διακομιστή ιστού σας ή οποιοδήποτε CDN / caching proxy που μπορεί να βρίσκεται μπροστά από τον ιστότοπό σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_HEAD"
+msgid "Core File Integrity"
+msgstr "Ακεραιότητα Αρχείων Πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_NEVER_RUN"
+msgid "No core file integrity check has been run yet."
+msgstr "Δεν έχει εκτελεστεί ακόμη έλεγχος ακεραιότητας αρχείων πυρήνα."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_CLEAN"
+msgid "All core files are intact. Last checked: %s"
+msgstr "Όλα τα αρχεία πυρήνα είναι ακέραια. Τελευταίος έλεγχος: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
+msgid "%d modified core file(s) detected. Last checked: %s"
+msgstr "Εντοπίστηκαν %d τροποποιημένα αρχεία πυρήνα. Τελευταίος έλεγχος: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"
+msgid "View Modified Files"
+msgstr "Προβολή Τροποποιημένων Αρχείων"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_RUN"
+msgid "Run Check"
+msgstr "Εκτέλεση Ελέγχου"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_SCHEDULE"
+msgid "Schedule"
+msgstr "Χρονοδιάγραμμα"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_REGISTRATION"
+msgid "User Registration"
+msgstr "Εγγραφή Χρηστών"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI"
+msgid "Accurate PHP-CLI path"
+msgstr "Ακριβής διαδρομή PHP-CLI"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI_HELP"
+msgid "Enable to have Akeeba Panopticon try to detect the accurate PHP-CLI path on your server. Disable if your server does not allow you to do that, locking your IP address out of your site for several minutes to hours when this happens (for example IONOS)."
+msgstr "Ενεργοποιήστε για να προσπαθήσει το Akeeba Panopticon να εντοπίσει την ακριβή διαδρομή PHP-CLI στον διακομιστή σας. Απενεργοποιήστε αν ο διακομιστής σας δεν σας επιτρέπει να το κάνετε αυτό, κλειδώνοντας τη διεύθυνση IP σας έξω από τον ιστότοπό σας για αρκετά λεπτά έως ώρες (για παράδειγμα IONOS)."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION"
+msgid "User registration"
+msgstr "Εγγραφή χρηστών"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION_HELP"
+msgid "Controls whether new users can create their own accounts. In 'Admin approval' mode, an administrator must approve new accounts. In 'Self-approval' mode, users activate their account via an email link."
+msgstr "Ελέγχει αν οι νέοι χρήστες μπορούν να δημιουργήσουν τους δικούς τους λογαριασμούς. Στη λειτουργία «Έγκριση από διαχειριστή», ένας διαχειριστής πρέπει να εγκρίνει τους νέους λογαριασμούς. Στη λειτουργία «Αυτο-έγκριση», οι χρήστες ενεργοποιούν τον λογαριασμό τους μέσω ενός συνδέσμου στο ηλεκτρονικό ταχυδρομείο."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_DISABLED"
+msgid "Disabled"
+msgstr "Απενεργοποιημένο"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_ADMIN"
+msgid "Admin approval"
+msgstr "Έγκριση από διαχειριστή"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_SELF"
+msgid "Self-approval (email activation)"
+msgstr "Αυτο-έγκριση (ενεργοποίηση μέσω email)"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ALLOWED_DOMAINS"
+msgid "Allowed email domains"
+msgstr "Επιτρεπόμενοι τομείς email"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ALLOWED_DOMAINS_HELP"
+msgid "Only email addresses from these domains will be allowed to register. Separate with commas or newlines. Leave empty to allow all domains."
+msgstr "Μόνο διευθύνσεις email από αυτούς τους τομείς θα επιτρέπεται να εγγραφούν. Διαχωρίστε τις με κόμματα ή νέες γραμμές. Αφήστε κενό για να επιτρέψετε όλους τους τομείς."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DISALLOWED_DOMAINS"
+msgid "Disallowed email domains"
+msgstr "Μη επιτρεπόμενοι τομείς email"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DISALLOWED_DOMAINS_HELP"
+msgid "Email addresses from these domains will be blocked from registering. Separate with commas or newlines. Useful for blocking disposable email services."
+msgstr "Οι διευθύνσεις email από αυτούς τους τομείς θα αποκλειστούν από την εγγραφή. Διαχωρίστε τις με κόμματα ή νέες γραμμές. Χρήσιμο για τον αποκλεισμό υπηρεσιών email μίας χρήσης."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DEFAULT_GROUP"
+msgid "Default group"
+msgstr "Προεπιλεγμένη ομάδα"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DEFAULT_GROUP_HELP"
+msgid "New registered users will be automatically added to this group."
+msgstr "Οι νεοεγγραφέντες χρήστες θα προστεθούν αυτόματα σε αυτή την ομάδα."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_NO_GROUP"
+msgid "— None —"
+msgstr "— Κανένα —"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_BLOCK_USERNAMES"
+msgid "Block common usernames"
+msgstr "Αποκλεισμός κοινών ονομάτων χρήστη"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_BLOCK_USERNAMES_HELP"
+msgid "When enabled, a hardcoded list of commonly abused usernames (admin, root, test, etc.) will be blocked during registration."
+msgstr "Όταν είναι ενεργοποιημένο, μια προκαθορισμένη λίστα κοινώς κακοποιημένων ονομάτων χρήστη (admin, root, test, κ.λπ.) θα αποκλείεται κατά την εγγραφή."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_CUSTOM_BLOCKED_USERNAMES"
+msgid "Custom blocked usernames"
+msgstr "Προσαρμοσμένα αποκλεισμένα ονόματα χρήστη"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_CUSTOM_BLOCKED_USERNAMES_HELP"
+msgid "Additional usernames to block during registration. Separate with commas or newlines."
+msgstr "Πρόσθετα ονόματα χρήστη για αποκλεισμό κατά την εγγραφή. Διαχωρίστε τα με κόμματα ή νέες γραμμές."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ACTIVATION_DAYS"
+msgid "Activation period"
+msgstr "Περίοδος ενεργοποίησης"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ACTIVATION_TRIES"
+msgid "Maximum activation attempts"
+msgstr "Μέγιστες προσπάθειες ενεργοποίησης"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER"
+msgid "CAPTCHA provider"
+msgstr "Πάροχος CAPTCHA"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER_HELP"
+msgid "The CAPTCHA provider to use on the registration form to prevent automated registrations."
+msgstr "Ο πάροχος CAPTCHA που θα χρησιμοποιηθεί στη φόρμα εγγραφής για την αποτροπή αυτοματοποιημένων εγγραφών."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_ALTCHA"
+msgid "ALTCHA (self-hosted proof-of-work)"
+msgstr "ALTCHA (αυτο-φιλοξενούμενο proof-of-work)"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_RECAPTCHA_INVISIBLE"
+msgid "reCAPTCHA Invisible (Google)"
+msgstr "reCAPTCHA Invisible (Google)"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_HCAPTCHA"
+msgid "hCaptcha"
+msgstr "hCaptcha"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_NONE"
+msgid "None"
+msgstr "Κανένα"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY"
+msgid "reCAPTCHA Site Key"
+msgstr "Κλειδί ιστοτόπου reCAPTCHA"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY_HELP"
+msgid "Enter the site key from your Google reCAPTCHA admin console. You need an Invisible reCAPTCHA v2 key."
+msgstr "Εισάγετε το κλειδί ιστοτόπου από την κονσόλα διαχείρισης Google reCAPTCHA. Χρειάζεστε ένα κλειδί Invisible reCAPTCHA v2."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY"
+msgid "reCAPTCHA Secret Key"
+msgstr "Μυστικό κλειδί reCAPTCHA"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY_HELP"
+msgid "Enter the secret key from your Google reCAPTCHA admin console."
+msgstr "Εισάγετε το μυστικό κλειδί από την κονσόλα διαχείρισης Google reCAPTCHA."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY"
+msgid "hCaptcha Site Key"
+msgstr "Κλειδί ιστοτόπου hCaptcha"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY_HELP"
+msgid "Enter the site key from your hCaptcha dashboard."
+msgstr "Εισάγετε το κλειδί ιστοτόπου από τον πίνακα ελέγχου hCaptcha."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY"
+msgid "hCaptcha Secret Key"
+msgstr "Μυστικό κλειδί hCaptcha"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY_HELP"
+msgid "Enter the secret key from your hCaptcha dashboard."
+msgstr "Εισάγετε το μυστικό κλειδί από τον πίνακα ελέγχου hCaptcha."
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_CORE_CHECKSUMS_FOUND"
+msgid "Core File Integrity: Modified Files Found"
+msgstr "Ακεραιότητα Αρχείων Πυρήνα: Βρέθηκαν Τροποποιημένα Αρχεία"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_PENDING_ADMIN"
+msgid "Registration: Pending Admin Approval"
+msgstr "Εγγραφή: Εκκρεμεί Έγκριση Διαχειριστή"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_NOTIFY_ADMIN"
+msgid "Registration: Admin Notification"
+msgstr "Εγγραφή: Ειδοποίηση Διαχειριστή"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_ACTIVATE"
+msgid "Registration: Activation Required"
+msgstr "Εγγραφή: Απαιτείται Ενεργοποίηση"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_APPROVED"
+msgid "Registration: Account Approved"
+msgstr "Εγγραφή: Ο Λογαριασμός Εγκρίθηκε"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_EXPIRED"
+msgid "Registration: Account Expired"
+msgstr "Εγγραφή: Ο Λογαριασμός Έληξε"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSION_INSTALL_SUMMARY"
+msgid "Remote Extension Installation: Summary"
+msgstr "Απομακρυσμένη Εγκατάσταση Επέκτασης: Σύνοψη"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_BANNED"
+msgid "The password you entered is in a list of commonly used passwords. Please choose a different password."
+msgstr "Ο κωδικός πρόσβασης που εισαγάγατε βρίσκεται σε λίστα κοινώς χρησιμοποιούμενων κωδικών. Παρακαλούμε επιλέξτε έναν διαφορετικό κωδικό πρόσβασης."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_TOOSHORT"
+msgid "The password is too short. Please use at least 12 characters."
+msgstr "Ο κωδικός πρόσβασης είναι πολύ μικρός. Παρακαλούμε χρησιμοποιήστε τουλάχιστον 12 χαρακτήρες."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_WEAK"
+msgid "The password is too easy to guess. Please use a more complex password with a mix of letters, numbers, and symbols."
+msgstr "Ο κωδικός πρόσβασης είναι πολύ εύκολος στην εικασία. Παρακαλούμε χρησιμοποιήστε έναν πιο σύνθετο κωδικό με συνδυασμό γραμμάτων, αριθμών και συμβόλων."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_PROMPT"
+msgid "Create an account"
+msgstr "Δημιουργία λογαριασμού"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_HEAD"
+msgid "Register New Account"
+msgstr "Εγγραφή Νέου Λογαριασμού"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_INFO"
+msgid "Fill in the form below to create a new account."
+msgstr "Συμπληρώστε την παρακάτω φόρμα για να δημιουργήσετε ένα νέο λογαριασμό."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUBMIT_BUTTON"
+msgid "Register"
+msgstr "Εγγραφή"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUCCESS_ADMIN"
+msgid "Your account has been created and is pending administrator approval. You will receive an email when your account is approved."
+msgstr "Ο λογαριασμός σας δημιουργήθηκε και αναμένει έγκριση διαχειριστή. Θα λάβετε email όταν ο λογαριασμός σας εγκριθεί."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUCCESS_SELF"
+msgid "Your account has been created. Please check your email for the activation link."
+msgstr "Ο λογαριασμός σας δημιουργήθηκε. Παρακαλούμε ελέγξτε το email σας για τον σύνδεσμο ενεργοποίησης."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_BACK_TO_LOGIN"
+msgid "Back to login"
+msgstr "Επιστροφή στη σύνδεση"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_REGISTRATION_DISABLED"
+msgid "User registration is currently disabled."
+msgstr "Η εγγραφή χρηστών είναι προς το παρόν απενεργοποιημένη."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_FORBIDDEN_USERNAME"
+msgid "This username is not allowed. Please choose a different username."
+msgstr "Αυτό το όνομα χρήστη δεν επιτρέπεται. Παρακαλούμε επιλέξτε ένα διαφορετικό όνομα χρήστη."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_EMAIL_EXISTS"
+msgid "An account with this email address already exists."
+msgstr "Υπάρχει ήδη λογαριασμός με αυτήν τη διεύθυνση email."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_EMAIL_DOMAIN_NOT_ALLOWED"
+msgid "Registration is not allowed for this email domain."
+msgstr "Η εγγραφή δεν επιτρέπεται για αυτόν τον τομέα email."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_CAPTCHA_FAILED"
+msgid "CAPTCHA verification failed. Please try again."
+msgstr "Η επαλήθευση CAPTCHA απέτυχε. Παρακαλούμε δοκιμάστε ξανά."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_HEAD"
+msgid "Activate Your Account"
+msgstr "Ενεργοποίηση Λογαριασμού"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_INFO"
+msgid "Enter your username, password, and the activation token from your email to activate your account."
+msgstr "Εισάγετε το όνομα χρήστη, τον κωδικό πρόσβασης και το διακριτικό ενεργοποίησης από το email σας για να ενεργοποιήσετε τον λογαριασμό σας."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_TOKEN"
+msgid "Activation Token"
+msgstr "Διακριτικό Ενεργοποίησης"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_SUBMIT_BUTTON"
+msgid "Activate Account"
+msgstr "Ενεργοποίηση Λογαριασμού"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_SUCCESS"
+msgid "Your account has been activated. You can now log in."
+msgstr "Ο λογαριασμός σας ενεργοποιήθηκε. Μπορείτε τώρα να συνδεθείτε."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_FAILED"
+msgid "Activation failed. Please check your username, password, and token."
+msgstr "Η ενεργοποίηση απέτυχε. Παρακαλούμε ελέγξτε το όνομα χρήστη, τον κωδικό πρόσβασης και το διακριτικό σας."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_EXPIRED"
+msgid "Your registration has expired. Please register again."
+msgstr "Η εγγραφή σας έχει λήξει. Παρακαλούμε εγγραφείτε ξανά."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE"
+msgid "Core File Integrity Check Schedules"
+msgstr "Χρονοδιαγράμματα Ελέγχου Ακεραιότητας Αρχείων Πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE_NEW"
+msgid "New Checksum Check Schedule"
+msgstr "Νέο Χρονοδιάγραμμα Ελέγχου Αθροίσματος"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE_EDIT"
+msgid "Edit a Checksum Check Schedule"
+msgstr "Επεξεργασία Χρονοδιαγράμματος Ελέγχου Αθροίσματος"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TABLE_COMMENT"
+msgid "List of core file integrity check task schedules"
+msgstr "Λίστα χρονοδιαγραμμάτων εργασιών ελέγχου ακεραιότητας αρχείων πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES"
+msgid "Minutes"
+msgstr "Λεπτά"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES_HELP"
+msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
+msgstr "Αριθμός <code>0</code> έως <code>59</code>, συνεχόμενο εύρος π.χ. <code>5-15</code>, λίστα τιμών διαχωρισμένων με κόμμα π.χ. <code>1,15,30,45</code>, κάθε λεπτό ως <code>*</code>, κάθε X λεπτά χρησιμοποιώντας κάθετο π.χ. <code>*/5</code> (κάθε 5 λεπτά)."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS"
+msgid "Hours"
+msgstr "Ώρες"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS_HELP"
+msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
+msgstr "Αριθμός <code>0</code> έως <code>23</code> (0–11 είναι π.μ., 12–23 είναι μ.μ.), συνεχόμενο εύρος π.χ. <code>5-15</code>, λίστα τιμών διαχωρισμένων με κόμματα π.χ. <code>0,6,12,18</code>, κάθε ώρα ως <code>*</code>, κάθε X ώρες χρησιμοποιώντας κάθετο π.χ. <code>*/2</code> (κάθε 2 ώρες)."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM"
+msgid "Day of the Month"
+msgstr "Ημέρα του Μήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15</code>, every day as <code>*</code>, every X days using slash e.g. <code>*/2</code> (every 2 days)."
+msgstr "Αριθμός <code>1</code> έως <code>31</code>, συνεχόμενο εύρος π.χ. <code>5-15</code>, λίστα τιμών διαχωρισμένων με κόμμα π.χ. <code>1,15</code>, κάθε ημέρα ως <code>*</code>, κάθε X ημέρες χρησιμοποιώντας κάθετο π.χ. <code>*/2</code> (κάθε 2 ημέρες)."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH"
+msgid "Month"
+msgstr "Μήνας"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH_HELP"
+msgid "Number <code>1</code> to <code>12</code>, contiguous range e.g. <code>1-6</code>, comma–separated list of values e.g. <code>1,4,7,10</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/3</code> (every 3 months)."
+msgstr "Αριθμός <code>1</code> έως <code>12</code>, συνεχόμενο εύρος π.χ. <code>1-6</code>, λίστα τιμών διαχωρισμένων με κόμμα π.χ. <code>1,4,7,10</code>, κάθε μήνα ως <code>*</code>, κάθε X μήνες χρησιμοποιώντας κάθετο π.χ. <code>*/3</code> (κάθε 3 μήνες)."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW"
+msgid "Day of the Week"
+msgstr "Ημέρα της Εβδομάδας"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW_HELP"
+msgid "Number <code>0</code> to <code>7</code> (0 or 7 is Sunday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>."
+msgstr "Αριθμός <code>0</code> έως <code>7</code> (0 ή 7 είναι Κυριακή), συνεχόμενο εύρος π.χ. <code>1-5</code>, λίστα τιμών διαχωρισμένων με κόμμα π.χ. <code>1,3,5</code>, κάθε ημέρα ως <code>*</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE"
+msgid "Repetition"
+msgstr "Επανάληψη"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_NONE"
+msgid "Repeat according to schedule"
+msgstr "Επανάληψη σύμφωνα με το χρονοδιάγραμμα"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
+msgid "Run once, then disable this check schedule"
+msgstr "Εκτέλεση μία φορά, μετά απενεργοποίηση αυτού του χρονοδιαγράμματος ελέγχου"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_DELETE"
+msgid "⚠️ Run once, then DELETE this check schedule"
+msgstr "⚠️ Εκτέλεση μία φορά, μετά ΔΙΑΓΡΑΦΗ αυτού του χρονοδιαγράμματος ελέγχου"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The check schedule is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
+msgstr "Το χρονοδιάγραμμα ελέγχου είναι μια έκφραση <a href='%s' target='_blank'>CRON</a>. Χρησιμοποιεί τη ζώνη ώρας %s."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_ERR_CANNOT_EDIT_MANUAL"
+msgid "You cannot edit manual check schedules."
+msgstr "Δεν μπορείτε να επεξεργαστείτε χειρωνακτικά χρονοδιαγράμματα ελέγχου."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_SCAN"
+msgid "Manual Check"
+msgstr "Χειροκίνητος Έλεγχος"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_SELECT_MANUAL"
+msgid "– Manual –"
+msgstr "– Χειροκίνητο –"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_NO"
+msgid "Scheduled"
+msgstr "Προγραμματισμένο"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_YES"
+msgid "Manual"
+msgstr "Χειροκίνητο"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_VIEW_MANUAL"
+msgid "List Manual Checks"
+msgstr "Προβολή Χειροκίνητων Ελέγχων"
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_TITLE"
+msgid "Core File Integrity Check Results"
+msgstr "Αποτελέσματα Ελέγχου Ακεραιότητας Αρχείων Πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_LAST_CHECK"
+msgid "Last check: %s"
+msgstr "Τελευταίος έλεγχος: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_ALL_CLEAN"
+msgid "All core files are intact. No modifications detected."
+msgstr "Όλα τα αρχεία πυρήνα είναι ακέραια. Δεν εντοπίστηκαν τροποποιήσεις."
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_FOUND_MODIFIED"
+msgid "%d modified core file(s) detected"
+msgstr "Εντοπίστηκαν %d τροποποιημένα αρχεία πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_FILE_PATH"
+msgid "File Path"
+msgstr "Διαδρομή Αρχείου"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_TITLE"
+msgid "Install Extension"
+msgstr "Εγκατάσταση Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARNING_HEAD"
+msgid "Danger Zone"
+msgstr "Επικίνδυνη Ζώνη"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARNING_BODY"
+msgid "Installing extensions remotely is a powerful and potentially dangerous operation. Installing an incompatible or malicious extension can break your site, cause data loss, or introduce security vulnerabilities. Only install extensions you trust, and always have a recent backup before proceeding."
+msgstr "Η απομακρυσμένη εγκατάσταση επεκτάσεων είναι μια ισχυρή και δυνητικά επικίνδυνη ενέργεια. Η εγκατάσταση μιας ασύμβατης ή κακόβουλης επέκτασης μπορεί να προκαλέσει βλάβη στον ιστότοπό σας, απώλεια δεδομένων ή ευπάθειες ασφαλείας. Εγκαταστήστε μόνο επεκτάσεις που εμπιστεύεστε και να έχετε πάντα ένα πρόσφατο αντίγραφο ασφαλείας πριν συνεχίσετε."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_STEP_SELECT"
+msgid "Step 1: Select Sites"
+msgstr "Βήμα 1: Επιλογή Ιστοτόπων"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_STEP_REVIEW"
+msgid "Step 2: Review & Install"
+msgstr "Βήμα 2: Ανασκόπηση & Εγκατάσταση"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECT_SITE"
+msgid "Select site \"%s\""
+msgstr "Επιλογή ιστοτόπου «%s»"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CONTINUE"
+msgid "Continue to Review"
+msgstr "Συνέχεια στην Ανασκόπηση"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_GOBACK"
+msgid "Go back to site selection"
+msgstr "Επιστροφή στην επιλογή ιστοτόπων"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_INSTALL"
+msgid "Install Extension"
+msgstr "Εγκατάσταση Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SITE_NAME"
+msgid "Site Name"
+msgstr "Όνομα Ιστοτόπου"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMS_TYPE"
+msgid "CMS"
+msgstr "CMS"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMS_VERSION"
+msgid "CMS Version"
+msgstr "Έκδοση CMS"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_PHP_VERSION"
+msgid "PHP Version"
+msgstr "Έκδοση PHP"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SITE_SELECT"
+msgid "– Site –"
+msgstr "– Ιστότοπος –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMSTYPE_SELECT"
+msgid "– CMS Type –"
+msgstr "– Τύπος CMS –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL"
+msgid "Extension Download URL"
+msgstr "URL Λήψης Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_HELP"
+msgid "The direct download URL for the extension package (ZIP file). The remote site will download it directly from this URL."
+msgstr "Η άμεση διεύθυνση URL λήψης για το πακέτο επέκτασης (αρχείο ZIP). Ο απομακρυσμένος ιστότοπος θα το κατεβάσει απευθείας από αυτό το URL."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE"
+msgid "Extension Package File"
+msgstr "Αρχείο Πακέτου Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE_HELP"
+msgid "Upload an extension package file (ZIP). It will be sent to each selected site for installation."
+msgstr "Μεταφορτώστε ένα αρχείο πακέτου επέκτασης (ZIP). Θα σταλεί σε κάθε επιλεγμένο ιστότοπο για εγκατάσταση."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_OR_FILE"
+msgid "Provide a download URL or upload a file"
+msgstr "Δώστε ένα URL λήψης ή μεταφορτώστε ένα αρχείο"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_CMS"
+msgid "You have selected both Joomla!\u00ae and WordPress sites. An extension package is typically only compatible with one CMS. Please remove one type."
+msgstr "Έχετε επιλέξει τόσο ιστοτόπους Joomla!\u00ae όσο και WordPress. Ένα πακέτο επέκτασης είναι τυπικά συμβατό μόνο με ένα CMS. Παρακαλούμε αφαιρέστε τον ένα τύπο."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_VERSIONS"
+msgid "The selected sites use different CMS and/or PHP versions. This could lead to failed installations on some sites."
+msgstr "Οι επιλεγμένοι ιστότοποι χρησιμοποιούν διαφορετικές εκδόσεις CMS ή/και PHP. Αυτό μπορεί να οδηγήσει σε αποτυχημένες εγκαταστάσεις σε ορισμένους ιστοτόπους."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_JOOMLA"
+msgid "Remove Joomla!\u00ae sites"
+msgstr "Αφαίρεση ιστοτόπων Joomla!\u00ae"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_WORDPRESS"
+msgid "Remove WordPress sites"
+msgstr "Αφαίρεση ιστοτόπων WordPress"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_TASK_CREATED"
+msgid "Extension installation has been scheduled. You will receive a summary email and push notification when it completes."
+msgstr "Η εγκατάσταση επέκτασης έχει προγραμματιστεί. Θα λάβετε συνοπτικό email και ειδοποίηση push όταν ολοκληρωθεί."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECTED_SITES"
+msgid "Selected Sites"
+msgstr "Επιλεγμένοι Ιστότοποι"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_NO_SITES"
+msgid "No sites selected. Please go back and select at least one site."
+msgstr "Δεν επιλέχθηκαν ιστότοποι. Παρακαλούμε επιστρέψτε και επιλέξτε τουλάχιστον έναν ιστότοπο."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_NO_URL_OR_FILE"
+msgid "Please provide an extension download URL or upload a file."
+msgstr "Παρακαλούμε δώστε ένα URL λήψης επέκτασης ή μεταφορτώστε ένα αρχείο."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_SITES"
+msgid "You must select at least one site."
+msgstr "Πρέπει να επιλέξετε τουλάχιστον έναν ιστότοπο."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_PERMISSION"
+msgid "You do not have permission to install extensions on one or more selected sites."
+msgstr "Δεν έχετε δικαίωμα εγκατάστασης επεκτάσεων σε έναν ή περισσότερους επιλεγμένους ιστοτόπους."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_URL_OR_FILE"
+msgid "You must provide an extension download URL or upload a package file."
+msgstr "Πρέπει να δώσετε ένα URL λήψης επέκτασης ή να μεταφορτώσετε ένα αρχείο πακέτου."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
+msgid "Table of selected sites for extension installation"
+msgstr "Πίνακας επιλεγμένων ιστοτόπων για εγκατάσταση επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_SUCCESS"
+msgid "Core file integrity check ran"
+msgstr "Εκτελέστηκε ο έλεγχος ακεραιότητας αρχείων πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_FAILED"
+msgid "Core file integrity check failed"
+msgstr "Ο έλεγχος ακεραιότητας αρχείων πυρήνα απέτυχε"
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_MODIFIED_COUNT"
+msgid "%d modified core file(s) detected"
+msgstr "Εντοπίστηκαν %d τροποποιημένα αρχεία πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE"
+msgid "Legal Policies"
+msgstr "Νομικές Πολιτικές"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_TOS"
+msgid "Terms of Service"
+msgstr "Όροι Χρήσης"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_PRIVACY"
+msgid "Privacy Policy"
+msgstr "Πολιτική Απορρήτου"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_EDIT"
+msgid "Edit Legal Policies"
+msgstr "Επεξεργασία Νομικών Πολιτικών"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_TYPE"
+msgid "Policy Type"
+msgstr "Τύπος Πολιτικής"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_LANGUAGE"
+msgid "Language"
+msgstr "Γλώσσα"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_CONTENT"
+msgid "Content"
+msgstr "Περιεχόμενο"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_PREVIEW_TOS"
+msgid "Preview Terms of Service"
+msgstr "Προεπισκόπηση Όρων Χρήσης"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_PREVIEW_PRIVACY"
+msgid "Preview Privacy Policy"
+msgstr "Προεπισκόπηση Πολιτικής Απορρήτου"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_MSG_SAVED"
+msgid "The policy has been saved."
+msgstr "Η πολιτική αποθηκεύτηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_TITLE"
+msgid "Terms and Conditions"
+msgstr "Όροι και Προϋποθέσεις"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_REQUIRED"
+msgid "Your Consent is Required"
+msgstr "Απαιτείται η Συγκατάθεσή σας"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_EXPLANATION"
+msgid "Before you can use this service, you must review and agree to our Terms of Service and Privacy Policy. You can also export your personal data or delete your account from this page."
+msgstr "Πριν μπορέσετε να χρησιμοποιήσετε αυτήν την υπηρεσία, πρέπει να διαβάσετε και να αποδεχτείτε τους Όρους Χρήσης και την Πολιτική Απορρήτου μας. Μπορείτε επίσης να εξάγετε τα προσωπικά σας δεδομένα ή να διαγράψετε τον λογαριασμό σας από αυτήν τη σελίδα."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_VIEW_FULL"
+msgid "View full page"
+msgstr "Προβολή πλήρους σελίδας"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_AGREE_PROMPT"
+msgid "By clicking &ldquo;I Agree&rdquo;, you confirm that you have read and agree to the Terms of Service and Privacy Policy."
+msgstr "Κάνοντας κλικ στο &ldquo;Αποδέχομαι&rdquo;, επιβεβαιώνετε ότι έχετε διαβάσει και αποδέχεστε τους Όρους Χρήσης και την Πολιτική Απορρήτου."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_AGREE"
+msgid "I Agree"
+msgstr "Αποδέχομαι"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_DECLINE"
+msgid "I Decline (Log Out)"
+msgstr "Δεν Αποδέχομαι (Αποσύνδεση)"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_AGREED"
+msgid "Thank you for accepting the Terms of Service. You can now use the application."
+msgstr "Ευχαριστούμε που αποδεχτήκατε τους Όρους Χρήσης. Μπορείτε τώρα να χρησιμοποιήσετε την εφαρμογή."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_DECLINED"
+msgid "You have declined the Terms of Service and have been logged out."
+msgstr "Απορρίψατε τους Όρους Χρήσης και αποσυνδεθήκατε."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_EXPORT"
+msgid "Export Your Data"
+msgstr "Εξαγωγή των Δεδομένων σας"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_EXPORT_DESC"
+msgid "Download a copy of all personal data we hold about you, in XML format. This includes your profile information, owned sites, MFA methods, and passkey labels."
+msgstr "Κατεβάστε ένα αντίγραφο όλων των προσωπικών δεδομένων που διατηρούμε για εσάς, σε μορφή XML. Αυτό περιλαμβάνει τις πληροφορίες προφίλ σας, τους ιστοτόπους σας, τις μεθόδους MFA και τις ετικέτες passkey."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_EXPORT"
+msgid "Download My Data"
+msgstr "Λήψη των Δεδομένων μου"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_DELETE"
+msgid "Permanently Delete My Account"
+msgstr "Μόνιμη Διαγραφή του Λογαριασμού μου"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_WARNING"
+msgid "Deleting your account is permanent and cannot be undone. All your data, including sites you own, will be permanently removed."
+msgstr "Η διαγραφή του λογαριασμού σας είναι μόνιμη και δεν μπορεί να αναιρεθεί. Όλα τα δεδομένα σας, συμπεριλαμβανομένων των ιστοτόπων που κατέχετε, θα αφαιρεθούν μόνιμα."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_SOLE_ADMIN"
+msgid "You are the only administrator account. You cannot delete your own account as this would leave the system without an administrator."
+msgstr "Είστε ο μοναδικός λογαριασμός διαχειριστή. Δεν μπορείτε να διαγράψετε τον λογαριασμό σας καθώς αυτό θα αφήσει το σύστημα χωρίς διαχειριστή."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_TYPE_USERNAME"
+msgid "To confirm, type your username below:"
+msgstr "Για επιβεβαίωση, πληκτρολογήστε το όνομα χρήστη σας παρακάτω:"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_CONFIRM"
+msgid "Are you absolutely sure you want to permanently delete your account? This action CANNOT be undone."
+msgstr "Είστε απολύτως σίγουροι ότι θέλετε να διαγράψετε μόνιμα τον λογαριασμό σας; Αυτή η ενέργεια ΔΕΝ μπορεί να αναιρεθεί."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_DELETE"
+msgid "Permanently Delete My Account"
+msgstr "Μόνιμη Διαγραφή του Λογαριασμού μου"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_ERR_USERNAME_MISMATCH"
+msgid "The username you entered does not match your account username. Account deletion was cancelled."
+msgstr "Το όνομα χρήστη που εισαγάγατε δεν ταιριάζει με το όνομα χρήστη του λογαριασμού σας. Η διαγραφή λογαριασμού ακυρώθηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_ERR_CANNOT_SELF_DELETE"
+msgid "You cannot delete your account. You may be the only administrator."
+msgstr "Δεν μπορείτε να διαγράψετε τον λογαριασμό σας. Ενδέχεται να είστε ο μοναδικός διαχειριστής."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_ACCOUNT_DELETED"
+msgid "Your account has been permanently deleted."
+msgstr "Ο λογαριασμός σας διαγράφηκε μόνιμα."
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_SENDWEBPUSH"
+msgid "Send Enqueued Web Push Notifications"
+msgstr "Αποστολή ειδοποιήσεων Web Push που βρίσκονται στην ουρά"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_MESSAGE"
+msgid "Would you like to receive browser push notifications for important events like updates, backups, and site status changes?"
+msgstr "Θέλετε να λαμβάνετε ειδοποιήσεις push του προγράμματος περιήγησης για σημαντικά συμβάντα όπως ενημερώσεις, αντίγραφα ασφαλείας και αλλαγές κατάστασης ιστοτόπων;"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_ENABLE"
+msgid "Enable Notifications"
+msgstr "Ενεργοποίηση Ειδοποιήσεων"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_REMIND"
+msgid "Remind Me Later"
+msgstr "Υπενθύμιση Αργότερα"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_DECLINE"
+msgid "I Am Not Interested"
+msgstr "Δεν Ενδιαφέρομαι"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROFILE_TITLE"
+msgid "Push Notifications"
+msgstr "Ειδοποιήσεις Push"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROFILE_DESC"
+msgid "Manage browser push notifications for this device. When enabled, you will receive real-time notifications about important events such as CMS updates, backup results, and site status changes."
+msgstr "Διαχείριση ειδοποιήσεων push προγράμματος περιήγησης για αυτήν τη συσκευή. Όταν είναι ενεργοποιημένες, θα λαμβάνετε ειδοποιήσεις σε πραγματικό χρόνο σχετικά με σημαντικά συμβάντα, όπως ενημερώσεις CMS, αποτελέσματα αντιγράφων ασφαλείας και αλλαγές κατάστασης ιστοτόπων."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS"
+msgid "Status"
+msgstr "Κατάσταση"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS_ACTIVE"
+msgid "Active"
+msgstr "Ενεργό"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS_INACTIVE"
+msgid "Inactive"
+msgstr "Ανενεργό"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BTN_SUBSCRIBE"
+msgid "Enable Push Notifications"
+msgstr "Ενεργοποίηση Ειδοποιήσεων Push"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BTN_UNSUBSCRIBE"
+msgid "Disable Push Notifications"
+msgstr "Απενεργοποίηση Ειδοποιήσεων Push"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_ERR_SUBSCRIBE_FAILED"
+msgid "Failed to subscribe to push notifications. Please try again."
+msgstr "Η εγγραφή στις ειδοποιήσεις push απέτυχε. Παρακαλούμε δοκιμάστε ξανά."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_ERR_PERMISSION_DENIED"
+msgid "Push notification permission was denied. Please allow notifications in your browser settings."
+msgstr "Η άδεια ειδοποιήσεων push απορρίφθηκε. Παρακαλούμε επιτρέψτε τις ειδοποιήσεις στις ρυθμίσεις του προγράμματος περιήγησής σας."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_GENERIC"
+msgid "Panopticon Notification"
+msgstr "Ειδοποίηση Panopticon"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_GENERIC"
+msgid "You have a new notification from Panopticon."
+msgstr "Έχετε μια νέα ειδοποίηση από το Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_FOUND"
+msgid "Joomla Update Available"
+msgstr "Διαθέσιμη Ενημέρωση Joomla"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_WILL_INSTALL"
+msgid "Joomla Update Scheduled"
+msgstr "Προγραμματίστηκε Ενημέρωση Joomla"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_INSTALLED"
+msgid "Joomla Update Installed"
+msgstr "Εγκαταστάθηκε Ενημέρωση Joomla"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_FAILED"
+msgid "Joomla Update Failed"
+msgstr "Αποτυχία Ενημέρωσης Joomla"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_FOUND"
+msgid "WordPress Update Available"
+msgstr "Διαθέσιμη Ενημέρωση WordPress"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "WordPress Update Scheduled"
+msgstr "Προγραμματίστηκε Ενημέρωση WordPress"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress Update Installed"
+msgstr "Εγκαταστάθηκε Ενημέρωση WordPress"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_FAILED"
+msgid "WordPress Update Failed"
+msgstr "Αποτυχία Ενημέρωσης WordPress"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSION_UPDATE_FOUND"
+msgid "Extension Update Available"
+msgstr "Διαθέσιμη Ενημέρωση Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSIONS_UPDATE_DONE"
+msgid "Extensions Updated"
+msgstr "Επεκτάσεις Ενημερώθηκαν"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_PLUGIN_UPDATE_FOUND"
+msgid "Plugin Update Available"
+msgstr "Διαθέσιμη Ενημέρωση Πρόσθετου"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_PLUGINS_UPDATE_DONE"
+msgid "Plugins Updated"
+msgstr "Πρόσθετα Ενημερώθηκαν"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_AKEEBABACKUP_SUCCESS"
+msgid "Backup Completed"
+msgstr "Αντίγραφο Ασφαλείας Ολοκληρώθηκε"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_AKEEBABACKUP_FAIL"
+msgid "Backup Failed"
+msgstr "Αποτυχία Αντιγράφου Ασφαλείας"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SSL_TLS_EXPIRING"
+msgid "SSL/TLS Certificate Expiring"
+msgstr "Πιστοποιητικό SSL/TLS Λήγει"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_DOMAIN_EXPIRING"
+msgid "Domain Expiring"
+msgstr "Λήξη Ονόματος Τομέα"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SELFUPDATE_FOUND"
+msgid "Panopticon Update Available"
+msgstr "Διαθέσιμη Ενημέρωση Panopticon"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_CORE_CHECKSUMS_FOUND"
+msgid "Core Files Modified"
+msgstr "Τροποποιημένα Αρχεία Πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SITE_DOWN"
+msgid "Site Down"
+msgstr "Ιστότοπος Εκτός Λειτουργίας"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SITE_UP"
+msgid "Site Back Up"
+msgstr "Ιστότοπος Πάλι Διαθέσιμος"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_FOUND"
+msgid "A new Joomla version is available for [SITE_NAME]."
+msgstr "Μια νέα έκδοση Joomla είναι διαθέσιμη για τον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_WILL_INSTALL"
+msgid "A Joomla update has been scheduled for [SITE_NAME]."
+msgstr "Μια ενημέρωση Joomla έχει προγραμματιστεί για τον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_INSTALLED"
+msgid "Joomla has been successfully updated on [SITE_NAME]."
+msgstr "Το Joomla ενημερώθηκε επιτυχώς στον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_FAILED"
+msgid "The Joomla update has failed on [SITE_NAME]."
+msgstr "Η ενημέρωση του Joomla απέτυχε στον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_FOUND"
+msgid "A new WordPress version is available for [SITE_NAME]."
+msgstr "Μια νέα έκδοση WordPress είναι διαθέσιμη για τον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "A WordPress update has been scheduled for [SITE_NAME]."
+msgstr "Μια ενημέρωση WordPress έχει προγραμματιστεί για τον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress has been successfully updated on [SITE_NAME]."
+msgstr "Το WordPress ενημερώθηκε επιτυχώς στον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_FAILED"
+msgid "The WordPress update has failed on [SITE_NAME]."
+msgstr "Η ενημέρωση του WordPress απέτυχε στον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSION_UPDATE_FOUND"
+msgid "An extension update is available for [SITE_NAME]."
+msgstr "Μια ενημέρωση επέκτασης είναι διαθέσιμη για τον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSIONS_UPDATE_DONE"
+msgid "Extensions have been updated on [SITE_NAME]."
+msgstr "Οι επεκτάσεις ενημερώθηκαν στον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_PLUGIN_UPDATE_FOUND"
+msgid "A plugin update is available for [SITE_NAME]."
+msgstr "Μια ενημέρωση πρόσθετου είναι διαθέσιμη για τον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_PLUGINS_UPDATE_DONE"
+msgid "Plugins have been updated on [SITE_NAME]."
+msgstr "Τα πρόσθετα ενημερώθηκαν στον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_AKEEBABACKUP_SUCCESS"
+msgid "The backup has been completed successfully for [SITE_NAME]."
+msgstr "Το αντίγραφο ασφαλείας ολοκληρώθηκε επιτυχώς για τον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_AKEEBABACKUP_FAIL"
+msgid "The backup has failed for [SITE_NAME]."
+msgstr "Το αντίγραφο ασφαλείας απέτυχε για τον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SSL_TLS_EXPIRING"
+msgid "The SSL/TLS certificate for [SITE_NAME] is expiring soon."
+msgstr "Το πιστοποιητικό SSL/TLS για τον [SITE_NAME] λήγει σύντομα."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_DOMAIN_EXPIRING"
+msgid "The domain for [SITE_NAME] is expiring soon."
+msgstr "Το όνομα τομέα για τον [SITE_NAME] λήγει σύντομα."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SELFUPDATE_FOUND"
+msgid "A new version of Panopticon is available."
+msgstr "Μια νέα έκδοση του Panopticon είναι διαθέσιμη."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_CORE_CHECKSUMS_FOUND"
+msgid "Modified core files detected on [SITE_NAME]."
+msgstr "Εντοπίστηκαν τροποποιημένα αρχεία πυρήνα στον [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SITE_DOWN"
+msgid "[SITE_NAME] appears to be down."
+msgstr "Ο [SITE_NAME] φαίνεται να είναι εκτός λειτουργίας."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SITE_UP"
+msgid "[SITE_NAME] is back up and running."
+msgstr "Ο [SITE_NAME] είναι πάλι σε λειτουργία."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSION_INSTALL_SUMMARY"
+msgid "Extension Installation Complete"
+msgstr "Ολοκλήρωση Εγκατάστασης Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSION_INSTALL_SUMMARY"
+msgid "Mass extension installation finished. Check the summary email for per-site results."
+msgstr "Η μαζική εγκατάσταση επεκτάσεων ολοκληρώθηκε. Ελέγξτε το συνοπτικό email για τα αποτελέσματα ανά ιστότοπο."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE"
+msgid "API Tokens"
+msgstr "Διακριτικά API"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_DESCRIPTION"
+msgid "Description"
+msgstr "Περιγραφή"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENABLED"
+msgid "Enabled"
+msgstr "Ενεργό"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_ON"
+msgid "Created On"
+msgstr "Δημιουργήθηκε Την"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ACTIONS"
+msgid "Actions"
+msgstr "Ενέργειες"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NO_TOKENS"
+msgid "You have no API tokens yet. Create one to get started."
+msgstr "Δεν έχετε ακόμη διακριτικά API. Δημιουργήστε ένα για να ξεκινήσετε."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_URL"
+msgid "API Endpoint URL"
+msgstr "URL Τελικού Σημείου API"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_URL_NOTE"
+msgid "Use this base URL for all API requests. Append the API path (e.g. <code>/v1/sites</code>) to this URL."
+msgstr "Χρησιμοποιήστε αυτό το βασικό URL για όλα τα αιτήματα API. Προσθέστε τη διαδρομή API (π.χ. <code>/v1/sites</code>) σε αυτό το URL."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SECURITY_WARNING"
+msgid "API tokens grant access to your Panopticon installation. Treat them like passwords: do not share them, do not commit them to version control, and revoke any tokens you no longer need."
+msgstr "Τα διακριτικά API παρέχουν πρόσβαση στην εγκατάσταση του Panopticon σας. Αντιμετωπίστε τα σαν κωδικούς πρόσβασης: μην τα μοιράζεστε, μην τα δεσμεύετε σε σύστημα ελέγχου εκδόσεων και ανακαλέστε όσα δεν χρειάζεστε πλέον."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NEW_TOKEN_DESCRIPTION"
+msgid "New token description"
+msgstr "Περιγραφή νέου διακριτικού"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_TOKEN_VALUE"
+msgid "Token Value"
+msgstr "Τιμή Διακριτικού"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_TOKEN_COPIED"
+msgid "Token copied to clipboard."
+msgstr "Το διακριτικό αντιγράφηκε στο πρόχειρο."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_USER"
+msgid "User"
+msgstr "Χρήστης"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_CREATE"
+msgid "Create Token"
+msgstr "Δημιουργία Διακριτικού"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_SHOW_TOKEN"
+msgid "Show Token"
+msgstr "Εμφάνιση Διακριτικού"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_COPY_TOKEN"
+msgid "Copy Token"
+msgstr "Αντιγραφή Διακριτικού"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_ENABLE"
+msgid "Enable"
+msgstr "Ενεργοποίηση"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_DISABLE"
+msgid "Disable"
+msgstr "Απενεργοποίηση"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_DELETE"
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_CONFIRM_DELETE"
+msgid "Are you sure you want to delete this API token? This action cannot be undone."
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το διακριτικό API; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_CREATED"
+msgid "API token created successfully."
+msgstr "Το διακριτικό API δημιουργήθηκε επιτυχώς."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_TOGGLED"
+msgid "API token status updated."
+msgstr "Η κατάσταση του διακριτικού API ενημερώθηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_DELETED"
+msgid "API token deleted."
+msgstr "Το διακριτικό API διαγράφηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_NOT_FOUND"
+msgid "API token not found."
+msgstr "Το διακριτικό API δεν βρέθηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_FORBIDDEN"
+msgid "You do not have permission to manage this token."
+msgstr "Δεν έχετε δικαίωμα διαχείρισης αυτού του διακριτικού."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_CREATE_FAILED"
+msgid "Failed to create API token."
+msgstr "Αποτυχία δημιουργίας διακριτικού API."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_INVALID_TOKEN"
+msgid "Invalid or missing API token."
+msgstr "Μη έγκυρο ή ελλιπές διακριτικό API."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_UNKNOWN_ENDPOINT"
+msgid "Unknown API endpoint."
+msgstr "Άγνωστο τελικό σημείο API."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_SUPER_REQUIRED"
+msgid "This endpoint requires super user privileges."
+msgstr "Αυτό το τελικό σημείο απαιτεί δικαιώματα υπερχρήστη."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_SITE_NOT_FOUND"
+msgid "Site not found."
+msgstr "Ο ιστότοπος δεν βρέθηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_TASK_NOT_FOUND"
+msgid "Task not found."
+msgstr "Η εργασία δεν βρέθηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_FORBIDDEN"
+msgid "You do not have permission to perform this action."
+msgstr "Δεν έχετε δικαίωμα εκτέλεσης αυτής της ενέργειας."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
+msgid "Invalid JSON in request body."
+msgstr "Μη έγκυρο JSON στο σώμα του αιτήματος."
