@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.3.0\n"
-"POT-Creation-Date: 2024-11-05 12:30:06\n"
+"Project-Id-Version: 2.0.0\n"
+"POT-Creation-Date: 2026-03-17 12:16:58\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 1.3.0\n"
+"X-Generator: Panopticon ini_to_po 2.0.0\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -923,6 +923,11 @@ msgid "PHP File Change Scanner"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_TASKTYPE_CORECHECKSUMS"
+msgid "Core File Integrity Check"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_TASKTYPE_LOGROTATE"
 msgid "Log Rotation"
 msgstr ""
@@ -1015,6 +1020,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_DOMAINEXPIRATION"
 msgid "Send emails about domain expiration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_REGISTRATIONCLEANUP"
+msgid "Clean up expired user registrations"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_EXTENSIONINSTALL"
+msgid "Remote Extension Installation"
 msgstr ""
 
 #, phpformat
@@ -4868,6 +4883,41 @@ msgid "Panopticon cannot find a way to connect to your site\'s Akeeba Backup JSO
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIPS"
+msgid "Tips to connect Akeeba Panopticon to Akeeba Backup Professional"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1"
+msgid "Make sure that you have installed and enabled the Akeeba Backup Professional component, and the Web Services - Akeeba Backup plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1_WP"
+msgid "Make sure that you have installed and enabled the Akeeba Backup Professional plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
+msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
+msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
+msgid "Make sure that no third party extensions (especially security extensions) and/or server configuration settings prevent access to your site\'s <code>api</code> folder. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP"
+msgid "Make sure that no third party plugins (especially security plugins) and/or server configuration settings prevent access to your site\'s <code>wp-admin/admin-ajax.php</code> file. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_HEAD"
 msgid "Akeeba Backup is not linked."
 msgstr ""
@@ -5150,6 +5200,41 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SCAN_ACTIONS"
 msgid "Actions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_HEAD"
+msgid "Core File Integrity"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_NEVER_RUN"
+msgid "No core file integrity check has been run yet."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_CLEAN"
+msgid "All core files are intact. Last checked: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
+msgid "%d modified core file(s) detected. Last checked: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"
+msgid "View Modified Files"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_RUN"
+msgid "Run Check"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_SCHEDULE"
+msgid "Schedule"
 msgstr ""
 
 #, phpformat
@@ -6233,6 +6318,11 @@ msgid "Password Security"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_REGISTRATION"
+msgid "User Registration"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SESSION"
 msgid "Session Storage"
 msgstr ""
@@ -6435,6 +6525,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_EXECUTION_BIAS"
 msgid "Execution Time Bias"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI"
+msgid "Accurate PHP-CLI path"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI_HELP"
+msgid "Enable to have Akeeba Panopticon try to detect the accurate PHP-CLI path on your server. Disable if your server does not allow you to do that, locking your IP address out of your site for several minutes to hours when this happens (for example IONOS)."
 msgstr ""
 
 #, phpformat
@@ -6855,6 +6955,166 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS_HELP"
 msgid "Leaving empty will allow users in any user group to reset their password. Superuser and administrator restrictions take precedence over this option."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION"
+msgid "User registration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION_HELP"
+msgid "Controls whether new users can create their own accounts. In \'Admin approval\' mode, an administrator must approve new accounts. In \'Self-approval\' mode, users activate their account via an email link."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_DISABLED"
+msgid "Disabled"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_ADMIN"
+msgid "Admin approval"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_SELF"
+msgid "Self-approval (email activation)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ALLOWED_DOMAINS"
+msgid "Allowed email domains"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ALLOWED_DOMAINS_HELP"
+msgid "Only email addresses from these domains will be allowed to register. Separate with commas or newlines. Leave empty to allow all domains."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DISALLOWED_DOMAINS"
+msgid "Disallowed email domains"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DISALLOWED_DOMAINS_HELP"
+msgid "Email addresses from these domains will be blocked from registering. Separate with commas or newlines. Useful for blocking disposable email services."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DEFAULT_GROUP"
+msgid "Default group"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DEFAULT_GROUP_HELP"
+msgid "New registered users will be automatically added to this group."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_NO_GROUP"
+msgid "— None —"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_BLOCK_USERNAMES"
+msgid "Block common usernames"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_BLOCK_USERNAMES_HELP"
+msgid "When enabled, a hardcoded list of commonly abused usernames (admin, root, test, etc.) will be blocked during registration."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_CUSTOM_BLOCKED_USERNAMES"
+msgid "Custom blocked usernames"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_CUSTOM_BLOCKED_USERNAMES_HELP"
+msgid "Additional usernames to block during registration. Separate with commas or newlines."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ACTIVATION_DAYS"
+msgid "Activation period"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ACTIVATION_TRIES"
+msgid "Maximum activation attempts"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER"
+msgid "CAPTCHA provider"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER_HELP"
+msgid "The CAPTCHA provider to use on the registration form to prevent automated registrations."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_ALTCHA"
+msgid "ALTCHA (self-hosted proof-of-work)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_RECAPTCHA_INVISIBLE"
+msgid "reCAPTCHA Invisible (Google)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_HCAPTCHA"
+msgid "hCaptcha"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_NONE"
+msgid "None"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY"
+msgid "reCAPTCHA Site Key"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY_HELP"
+msgid "Enter the site key from your Google reCAPTCHA admin console. You need an Invisible reCAPTCHA v2 key."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY"
+msgid "reCAPTCHA Secret Key"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY_HELP"
+msgid "Enter the secret key from your Google reCAPTCHA admin console."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY"
+msgid "hCaptcha Site Key"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY_HELP"
+msgid "Enter the site key from your hCaptcha dashboard."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY"
+msgid "hCaptcha Secret Key"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY_HELP"
+msgid "Enter the secret key from your hCaptcha dashboard."
 msgstr ""
 
 #, phpformat
@@ -7508,6 +7768,11 @@ msgid "WordPress Plugin/Theme Update: Autoupdate Results"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_CORE_CHECKSUMS_FOUND"
+msgid "Core File Integrity: Modified Files Found"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SELFUPDATE_FOUND"
 msgid "Panopticon: Update found"
 msgstr ""
@@ -7525,6 +7790,31 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PWRESET"
 msgid "Password Reset"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_PENDING_ADMIN"
+msgid "Registration: Pending Admin Approval"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_NOTIFY_ADMIN"
+msgid "Registration: Admin Notification"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_ACTIVATE"
+msgid "Registration: Activation Required"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_APPROVED"
+msgid "Registration: Account Approved"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_EXPIRED"
+msgid "Registration: Account Expired"
 msgstr ""
 
 #, phpformat
@@ -7550,6 +7840,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_DOMAIN_EXPIRING"
 msgid "Domain Expires Soon"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSION_INSTALL_SUMMARY"
+msgid "Remote Extension Installation: Summary"
 msgstr ""
 
 #, phpformat
@@ -7833,6 +8128,21 @@ msgid "The passwords do not match."
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_BANNED"
+msgid "The password you entered is in a list of commonly used passwords. Please choose a different password."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_TOOSHORT"
+msgid "The password is too short. Please use at least 12 characters."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_WEAK"
+msgid "The password is too easy to guess. Please use a more complex password with a mix of letters, numbers, and symbols."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_USERS_ERR_CANT_REMOVE_SELF_SUPER"
 msgid "You cannot remove the Superuser privilege from your own user account."
 msgstr ""
@@ -7869,7 +8179,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_NAME"
-msgid "Full name"
+msgid "Full Name"
 msgstr ""
 
 #, phpformat
@@ -7889,7 +8199,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
-msgid "Password (repeat)"
+msgid "Confirm Password"
 msgstr ""
 
 #, phpformat
@@ -8035,6 +8345,101 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_SUBMIT_BUTTON"
 msgid "Reset Password"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_PROMPT"
+msgid "Create an account"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_HEAD"
+msgid "Register New Account"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_INFO"
+msgid "Fill in the form below to create a new account."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUBMIT_BUTTON"
+msgid "Register"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUCCESS_ADMIN"
+msgid "Your account has been created and is pending administrator approval. You will receive an email when your account is approved."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUCCESS_SELF"
+msgid "Your account has been created. Please check your email for the activation link."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_BACK_TO_LOGIN"
+msgid "Back to login"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_REGISTRATION_DISABLED"
+msgid "User registration is currently disabled."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_FORBIDDEN_USERNAME"
+msgid "This username is not allowed. Please choose a different username."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_EMAIL_EXISTS"
+msgid "An account with this email address already exists."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_EMAIL_DOMAIN_NOT_ALLOWED"
+msgid "Registration is not allowed for this email domain."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_CAPTCHA_FAILED"
+msgid "CAPTCHA verification failed. Please try again."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_HEAD"
+msgid "Activate Your Account"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_INFO"
+msgid "Enter your username, password, and the activation token from your email to activate your account."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_TOKEN"
+msgid "Activation Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_SUBMIT_BUTTON"
+msgid "Activate Account"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_SUCCESS"
+msgid "Your account has been activated. You can now log in."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_FAILED"
+msgid "Activation failed. Please check your username, password, and token."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_EXPIRED"
+msgid "Your registration has expired. Please register again."
 msgstr ""
 
 #, phpformat
@@ -8555,6 +8960,156 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_VIEW_MANUAL"
 msgid "List Manual Scans"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE"
+msgid "Core File Integrity Check Schedules"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE_NEW"
+msgid "New Checksum Check Schedule"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE_EDIT"
+msgid "Edit a Checksum Check Schedule"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TABLE_COMMENT"
+msgid "List of core file integrity check task schedules"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES"
+msgid "Minutes"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES_HELP"
+msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS"
+msgid "Hours"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS_HELP"
+msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM"
+msgid "Day of the Month"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15</code>, every day as <code>*</code>, every X days using slash e.g. <code>*/2</code> (every 2 days)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH"
+msgid "Month"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH_HELP"
+msgid "Number <code>1</code> to <code>12</code>, contiguous range e.g. <code>1-6</code>, comma–separated list of values e.g. <code>1,4,7,10</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/3</code> (every 3 months)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW"
+msgid "Day of the Week"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW_HELP"
+msgid "Number <code>0</code> to <code>7</code> (0 or 7 is Sunday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE"
+msgid "Repetition"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_NONE"
+msgid "Repeat according to schedule"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
+msgid "Run once, then disable this check schedule"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_DELETE"
+msgid "⚠️ Run once, then DELETE this check schedule"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The check schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_ERR_CANNOT_EDIT_MANUAL"
+msgid "You cannot edit manual check schedules."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_SCAN"
+msgid "Manual Check"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_SELECT_MANUAL"
+msgid "– Manual –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_NO"
+msgid "Scheduled"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_YES"
+msgid "Manual"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_VIEW_MANUAL"
+msgid "List Manual Checks"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_TITLE"
+msgid "Core File Integrity Check Results"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_LAST_CHECK"
+msgid "Last check: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_ALL_CLEAN"
+msgid "All core files are intact. No modifications detected."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_FOUND_MODIFIED"
+msgid "%d modified core file(s) detected"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_FILE_PATH"
+msgid "File Path"
 msgstr ""
 
 #, phpformat
@@ -9323,6 +9878,166 @@ msgid "Invalid extensions selection."
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_TITLE"
+msgid "Install Extension"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARNING_HEAD"
+msgid "Danger Zone"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARNING_BODY"
+msgid "Installing extensions remotely is a powerful and potentially dangerous operation. Installing an incompatible or malicious extension can break your site, cause data loss, or introduce security vulnerabilities. Only install extensions you trust, and always have a recent backup before proceeding."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_STEP_SELECT"
+msgid "Step 1: Select Sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_STEP_REVIEW"
+msgid "Step 2: Review & Install"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECT_SITE"
+msgid "Select site \"%s\""
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CONTINUE"
+msgid "Continue to Review"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_GOBACK"
+msgid "Go back to site selection"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_INSTALL"
+msgid "Install Extension"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SITE_NAME"
+msgid "Site Name"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMS_TYPE"
+msgid "CMS"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMS_VERSION"
+msgid "CMS Version"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_PHP_VERSION"
+msgid "PHP Version"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SITE_SELECT"
+msgid "– Site –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMSTYPE_SELECT"
+msgid "– CMS Type –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL"
+msgid "Extension Download URL"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_HELP"
+msgid "The direct download URL for the extension package (ZIP file). The remote site will download it directly from this URL."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE"
+msgid "Extension Package File"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE_HELP"
+msgid "Upload an extension package file (ZIP). It will be sent to each selected site for installation."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_OR_FILE"
+msgid "Provide a download URL or upload a file"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_CMS"
+msgid "You have selected both Joomla!® and WordPress sites. An extension package is typically only compatible with one CMS. Please remove one type."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_VERSIONS"
+msgid "The selected sites use different CMS and/or PHP versions. This could lead to failed installations on some sites."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_JOOMLA"
+msgid "Remove Joomla!® sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_WORDPRESS"
+msgid "Remove WordPress sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_TASK_CREATED"
+msgid "Extension installation has been scheduled. You will receive a summary email and push notification when it completes."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECTED_SITES"
+msgid "Selected Sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_NO_SITES"
+msgid "No sites selected. Please go back and select at least one site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_NO_URL_OR_FILE"
+msgid "Please provide an extension download URL or upload a file."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_SITES"
+msgid "You must select at least one site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_PERMISSION"
+msgid "You do not have permission to install extensions on one or more selected sites."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_URL_OR_FILE"
+msgid "You must provide an extension download URL or upload a package file."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
+msgid "Table of selected sites for extension installation"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_COREUPDATES_TITLE"
 msgid "Core Updates"
 msgstr ""
@@ -9870,6 +10585,21 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_REPORTS_LBL_FILESCANNER_FAILED"
 msgid "PHP File Change Scanner failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_SUCCESS"
+msgid "Core file integrity check ran"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_FAILED"
+msgid "Core file integrity check failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_MODIFIED_COUNT"
+msgid "%d modified core file(s) detected"
 msgstr ""
 
 #, phpformat
@@ -10563,6 +11293,161 @@ msgid "Passkey login"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE"
+msgid "Legal Policies"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_TOS"
+msgid "Terms of Service"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_PRIVACY"
+msgid "Privacy Policy"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_EDIT"
+msgid "Edit Legal Policies"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_TYPE"
+msgid "Policy Type"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_LANGUAGE"
+msgid "Language"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_CONTENT"
+msgid "Content"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_PREVIEW_TOS"
+msgid "Preview Terms of Service"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_PREVIEW_PRIVACY"
+msgid "Preview Privacy Policy"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_MSG_SAVED"
+msgid "The policy has been saved."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_TITLE"
+msgid "Terms and Conditions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_REQUIRED"
+msgid "Your Consent is Required"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_EXPLANATION"
+msgid "Before you can use this service, you must review and agree to our Terms of Service and Privacy Policy. You can also export your personal data or delete your account from this page."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_VIEW_FULL"
+msgid "View full page"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_AGREE_PROMPT"
+msgid "By clicking &ldquo;I Agree&rdquo;, you confirm that you have read and agree to the Terms of Service and Privacy Policy."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_AGREE"
+msgid "I Agree"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_DECLINE"
+msgid "I Decline (Log Out)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_AGREED"
+msgid "Thank you for accepting the Terms of Service. You can now use the application."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_DECLINED"
+msgid "You have declined the Terms of Service and have been logged out."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_EXPORT"
+msgid "Export Your Data"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_EXPORT_DESC"
+msgid "Download a copy of all personal data we hold about you, in XML format. This includes your profile information, owned sites, MFA methods, and passkey labels."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_EXPORT"
+msgid "Download My Data"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_DELETE"
+msgid "Permanently Delete My Account"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_WARNING"
+msgid "Deleting your account is permanent and cannot be undone. All your data, including sites you own, will be permanently removed."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_SOLE_ADMIN"
+msgid "You are the only administrator account. You cannot delete your own account as this would leave the system without an administrator."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_TYPE_USERNAME"
+msgid "To confirm, type your username below:"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_CONFIRM"
+msgid "Are you absolutely sure you want to permanently delete your account? This action CANNOT be undone."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_DELETE"
+msgid "Permanently Delete My Account"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_ERR_USERNAME_MISMATCH"
+msgid "The username you entered does not match your account username. Account deletion was cancelled."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_ERR_CANNOT_SELF_DELETE"
+msgid "You cannot delete your account. You may be the only administrator."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_ACCOUNT_DELETED"
+msgid "Your account has been permanently deleted."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSERROR_FORBIDDEN_TITLE"
 msgid "Access Denied"
 msgstr ""
@@ -10585,5 +11470,460 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
 msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_SENDWEBPUSH"
+msgid "Send Enqueued Web Push Notifications"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_MESSAGE"
+msgid "Would you like to receive browser push notifications for important events like updates, backups, and site status changes?"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_ENABLE"
+msgid "Enable Notifications"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_REMIND"
+msgid "Remind Me Later"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_DECLINE"
+msgid "I Am Not Interested"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROFILE_TITLE"
+msgid "Push Notifications"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROFILE_DESC"
+msgid "Manage browser push notifications for this device. When enabled, you will receive real-time notifications about important events such as CMS updates, backup results, and site status changes."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS"
+msgid "Status"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS_ACTIVE"
+msgid "Active"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS_INACTIVE"
+msgid "Inactive"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BTN_SUBSCRIBE"
+msgid "Enable Push Notifications"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BTN_UNSUBSCRIBE"
+msgid "Disable Push Notifications"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_ERR_SUBSCRIBE_FAILED"
+msgid "Failed to subscribe to push notifications. Please try again."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_ERR_PERMISSION_DENIED"
+msgid "Push notification permission was denied. Please allow notifications in your browser settings."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_GENERIC"
+msgid "Panopticon Notification"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_GENERIC"
+msgid "You have a new notification from Panopticon."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_FOUND"
+msgid "Joomla Update Available"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_WILL_INSTALL"
+msgid "Joomla Update Scheduled"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_INSTALLED"
+msgid "Joomla Update Installed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_FAILED"
+msgid "Joomla Update Failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_FOUND"
+msgid "WordPress Update Available"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "WordPress Update Scheduled"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress Update Installed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_FAILED"
+msgid "WordPress Update Failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSION_UPDATE_FOUND"
+msgid "Extension Update Available"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSIONS_UPDATE_DONE"
+msgid "Extensions Updated"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_PLUGIN_UPDATE_FOUND"
+msgid "Plugin Update Available"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_PLUGINS_UPDATE_DONE"
+msgid "Plugins Updated"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_AKEEBABACKUP_SUCCESS"
+msgid "Backup Completed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_AKEEBABACKUP_FAIL"
+msgid "Backup Failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SSL_TLS_EXPIRING"
+msgid "SSL/TLS Certificate Expiring"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_DOMAIN_EXPIRING"
+msgid "Domain Expiring"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SELFUPDATE_FOUND"
+msgid "Panopticon Update Available"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_CORE_CHECKSUMS_FOUND"
+msgid "Core Files Modified"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SITE_DOWN"
+msgid "Site Down"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SITE_UP"
+msgid "Site Back Up"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_FOUND"
+msgid "A new Joomla version is available for [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_WILL_INSTALL"
+msgid "A Joomla update has been scheduled for [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_INSTALLED"
+msgid "Joomla has been successfully updated on [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_FAILED"
+msgid "The Joomla update has failed on [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_FOUND"
+msgid "A new WordPress version is available for [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "A WordPress update has been scheduled for [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress has been successfully updated on [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_FAILED"
+msgid "The WordPress update has failed on [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSION_UPDATE_FOUND"
+msgid "An extension update is available for [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSIONS_UPDATE_DONE"
+msgid "Extensions have been updated on [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_PLUGIN_UPDATE_FOUND"
+msgid "A plugin update is available for [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_PLUGINS_UPDATE_DONE"
+msgid "Plugins have been updated on [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_AKEEBABACKUP_SUCCESS"
+msgid "The backup has been completed successfully for [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_AKEEBABACKUP_FAIL"
+msgid "The backup has failed for [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SSL_TLS_EXPIRING"
+msgid "The SSL/TLS certificate for [SITE_NAME] is expiring soon."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_DOMAIN_EXPIRING"
+msgid "The domain for [SITE_NAME] is expiring soon."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SELFUPDATE_FOUND"
+msgid "A new version of Panopticon is available."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_CORE_CHECKSUMS_FOUND"
+msgid "Modified core files detected on [SITE_NAME]."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SITE_DOWN"
+msgid "[SITE_NAME] appears to be down."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SITE_UP"
+msgid "[SITE_NAME] is back up and running."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSION_INSTALL_SUMMARY"
+msgid "Extension Installation Complete"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSION_INSTALL_SUMMARY"
+msgid "Mass extension installation finished. Check the summary email for per-site results."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE"
+msgid "API Tokens"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_DESCRIPTION"
+msgid "Description"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENABLED"
+msgid "Enabled"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_ON"
+msgid "Created On"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ACTIONS"
+msgid "Actions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NO_TOKENS"
+msgid "You have no API tokens yet. Create one to get started."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_URL"
+msgid "API Endpoint URL"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_URL_NOTE"
+msgid "Use this base URL for all API requests. Append the API path (e.g. <code>/v1/sites</code>) to this URL."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SECURITY_WARNING"
+msgid "API tokens grant access to your Panopticon installation. Treat them like passwords: do not share them, do not commit them to version control, and revoke any tokens you no longer need."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NEW_TOKEN_DESCRIPTION"
+msgid "New token description"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_TOKEN_VALUE"
+msgid "Token Value"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_TOKEN_COPIED"
+msgid "Token copied to clipboard."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_USER"
+msgid "User"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_CREATE"
+msgid "Create Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_SHOW_TOKEN"
+msgid "Show Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_COPY_TOKEN"
+msgid "Copy Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_ENABLE"
+msgid "Enable"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_DISABLE"
+msgid "Disable"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_DELETE"
+msgid "Delete"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_CONFIRM_DELETE"
+msgid "Are you sure you want to delete this API token? This action cannot be undone."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_CREATED"
+msgid "API token created successfully."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_TOGGLED"
+msgid "API token status updated."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_DELETED"
+msgid "API token deleted."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_NOT_FOUND"
+msgid "API token not found."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_FORBIDDEN"
+msgid "You do not have permission to manage this token."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_CREATE_FAILED"
+msgid "Failed to create API token."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_INVALID_TOKEN"
+msgid "Invalid or missing API token."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_UNKNOWN_ENDPOINT"
+msgid "Unknown API endpoint."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_SUPER_REQUIRED"
+msgid "This endpoint requires super user privileges."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_SITE_NOT_FOUND"
+msgid "Site not found."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_TASK_NOT_FOUND"
+msgid "Task not found."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_FORBIDDEN"
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
+msgid "Invalid JSON in request body."
 msgstr ""
 
