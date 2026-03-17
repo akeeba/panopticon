@@ -55,7 +55,10 @@ class SessionProvider
 		);
 
 		// Use a custom cookie name instead of the generic PHPSESSID
-		$manager->setName('panopticon_session');
+		if (!headers_sent())
+		{
+			$manager->setName('panopticon_session');
+		}
 
 		// Set the session save path
 		$sessionPath = $manager->getSavePath();
