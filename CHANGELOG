@@ -12,7 +12,7 @@ Akeeba Panopticon 2.0.0
 + CLI commands for managing groups, mail templates, tasks, and backup/scanner schedules
 + Links to the Connection Troubleshooting wiki page
 + Periodic auto-refresh of the sites overview table
-+ Periodic auto-refresh of the site infomration page
++ Periodic auto-refresh of the site information page
 ~ PHP 8.5 compatibility
 ~ Sort task type filter options alphabetically by translated name
 ~ Docker image updated to PHP 8.4 [gh-957]
