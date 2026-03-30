@@ -4,7 +4,7 @@ Halo [RCs]
 Morn [1.0]
 Dawn [1.1]
 Twilight [1.2]
-Aurora
+Aurora [2.0]
 Daybreak
 Sunrise
 Cockcrow
