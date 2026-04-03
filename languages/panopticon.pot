@@ -9953,6 +9953,66 @@ msgid "– CMS Type –"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMSVERSION_SELECT"
+msgid "– CMS Version –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_PHPVERSION_SELECT"
+msgid "– PHP Version –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES"
+msgid "Extension Updates"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_SELECT"
+msgid "– Update Status –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_YES"
+msgid "Out of Date"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_NO"
+msgid "Up to Date"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME"
+msgid "Extension Name"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME_SELECT"
+msgid "– Extension Name –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR"
+msgid "Extension Author"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_SELECT"
+msgid "– Author –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL"
+msgid "Author URL"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL_SELECT"
+msgid "– Author URL –"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL"
 msgid "Extension Download URL"
 msgstr ""

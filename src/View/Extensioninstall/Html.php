@@ -35,6 +35,16 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public array $versionInfo = [];
 
+	public array $knownCmsVersions    = [];
+
+	public array $knownPhpVersions    = [];
+
+	public array $extensionNames      = [];
+
+	public array $extensionAuthors    = [];
+
+	public array $extensionAuthorUrls = [];
+
 	public function onBeforeMain()
 	{
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_TITLE'));
@@ -51,6 +61,18 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		// Groups map
 		$this->groupMap = $this->getModel('groups')->getGroupMap();
+
+		// Filter option data
+		/** @var \Akeeba\Panopticon\Model\Main $mainModel */
+		$mainModel = $this->getModel('main');
+		$this->knownCmsVersions = $mainModel->getKnownCMSVersions();
+		$this->knownPhpVersions = $mainModel->getKnownPHPVersions();
+
+		/** @var Extensioninstall $extInstallModel */
+		$extInstallModel = $this->getModel();
+		$this->extensionNames      = $extInstallModel->getExtensionNames(true);
+		$this->extensionAuthors    = $extInstallModel->getExtensionAuthors(true);
+		$this->extensionAuthorUrls = $extInstallModel->getExtensionAuthorURLs(true);
 
 		// Create the lists object
 		$this->lists = new \stdClass();

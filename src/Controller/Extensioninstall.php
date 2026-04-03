@@ -29,7 +29,10 @@ class Extensioninstall extends Controller
 
 	public function main()
 	{
-		$siteModel   = $this->getModel('site');
+		// Create the Site model directly so it retains full input access (needed for filter state).
+		// Using $this->getModel('site') would call clearInput() on the model, preventing filter states
+		// from being read from the current request and saved to the session.
+		$siteModel   = $this->container->mvcFactory->makeModel('site', $this->getLanguage());
 		$mainModel   = $this->getModel('main');
 		$groupsModel = $this->getModel('groups');
 

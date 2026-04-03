@@ -65,6 +65,13 @@ CMS Version | Έκδοση CMS |
 PHP Version | Έκδοση PHP |
 Extension | Επέκταση | Singular (Joomla)
 Extensions | Επεκτάσεις | Plural (Joomla)
+Extension Name | Όνομα Επέκτασης |
+Extension Author | Συγγραφέας Επέκτασης |
+Extension Updates | Ενημερώσεις Επεκτάσεων |
+Author URL | URL Συγγραφέα |
+Out of Date | Μη Ενημερωμένο | Extension update status: has available updates
+Up to Date | Ενημερωμένο | Extension update status: no updates needed
+Update Status | Κατάσταση Ενημέρωσης |
 Plugin | Πρόσθετο | WordPress plugin
 Plugins | Πρόσθετα | WordPress plugins
 Theme | Θέμα | WordPress theme

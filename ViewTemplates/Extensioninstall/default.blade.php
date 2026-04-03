@@ -32,7 +32,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
 <h4>@lang('PANOPTICON_EXTENSIONINSTALL_LBL_STEP_SELECT')</h4>
 
 {{-- Site selection form --}}
-<form action="@route('index.php?view=extensioninstall&task=review')" method="post"
+<form action="@route('index.php?view=extensioninstall')" method="post"
       name="adminForm" id="adminForm">
 
     {{-- Filters --}}
@@ -48,6 +48,82 @@ $token = $this->container->session->getCsrfToken()->getValue();
                     <span class="fa fa-search" aria-hidden="true"></span>
                     <span class="visually-hidden">@lang('PANOPTICON_LBL_FORM_SEARCH')</span>
                 </button>
+            </div>
+        </div>
+        {{-- Site-level filters: CMS Version, PHP Version, Update Status --}}
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
+            <div>
+                <label class="visually-hidden" for="cmsFamily">@lang('PANOPTICON_EXTENSIONINSTALL_LBL_CMS_VERSION')</label>
+                {{ $this->container->html->select->genericList(
+                    array_merge(['' => $this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_LBL_CMSVERSION_SELECT')], $this->knownCmsVersions),
+                    'cmsFamily',
+                    ['class' => 'form-select akeebaGridViewAutoSubmitOnChange'],
+                    selected: $this->getModel('site')->getState('cmsFamily'),
+                    idTag: 'cmsFamily',
+                    translate: false
+                ) }}
+            </div>
+            <div>
+                <label class="visually-hidden" for="phpFamily">@lang('PANOPTICON_EXTENSIONINSTALL_LBL_PHP_VERSION')</label>
+                {{ $this->container->html->select->genericList(
+                    array_merge(['' => $this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_LBL_PHPVERSION_SELECT')], $this->knownPhpVersions),
+                    'phpFamily',
+                    ['class' => 'form-select akeebaGridViewAutoSubmitOnChange'],
+                    selected: $this->getModel('site')->getState('phpFamily'),
+                    idTag: 'phpFamily',
+                    translate: false
+                ) }}
+            </div>
+            <div>
+                <label class="visually-hidden" for="extUpdates">@lang('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES')</label>
+                {{ $this->container->html->select->genericList(
+                    [
+                        ''  => $this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_SELECT'),
+                        '1' => $this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_YES'),
+                        '0' => $this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_NO'),
+                    ],
+                    'extUpdates',
+                    ['class' => 'form-select akeebaGridViewAutoSubmitOnChange'],
+                    selected: $this->getModel('site')->getState('extUpdates'),
+                    idTag: 'extUpdates',
+                    translate: false
+                ) }}
+            </div>
+        </div>
+        {{-- Extension-level filters: Name, Author, Author URL --}}
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
+            <div>
+                <label class="visually-hidden" for="ext_name">@lang('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME')</label>
+                {{ $this->container->html->select->genericList(
+                    $this->extensionNames,
+                    'ext_name',
+                    ['class' => 'form-select akeebaGridViewAutoSubmitOnChange'],
+                    selected: $this->getModel('site')->getState('ext_name'),
+                    idTag: 'ext_name',
+                    translate: false
+                ) }}
+            </div>
+            <div>
+                <label class="visually-hidden" for="ext_author">@lang('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR')</label>
+                {{ $this->container->html->select->genericList(
+                    $this->extensionAuthors,
+                    'ext_author',
+                    ['class' => 'form-select akeebaGridViewAutoSubmitOnChange'],
+                    selected: $this->getModel('site')->getState('ext_author'),
+                    idTag: 'ext_author',
+                    translate: false
+                ) }}
+            </div>
+            <div>
+                <label class="visually-hidden" for="ext_author_url">@lang('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL')</label>
+                {{ $this->container->html->select->genericList(
+                    $this->extensionAuthorUrls,
+                    'ext_author_url',
+                    ['class' => 'form-select akeebaGridViewAutoSubmitOnChange'],
+                    selected: $this->getModel('site')->getState('ext_author_url'),
+                    idTag: 'ext_author_url',
+                    translate: false
+                ) }}
             </div>
         </div>
     </div>
@@ -161,6 +237,6 @@ $token = $this->container->session->getCsrfToken()->getValue();
     </table>
 
     <input type="hidden" name="site_ids" id="site_ids" value="">
-    <input type="hidden" name="task" id="task" value="review">
+    <input type="hidden" name="task" id="task" value="main">
     <input type="hidden" name="token" value="@token()">
 </form>

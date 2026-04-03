@@ -8,12 +8,15 @@
 namespace Akeeba\Panopticon\Model;
 
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
 use Awf\Mvc\Model;
 
 defined('AKEEBA') || die;
 
 class Extensioninstall extends Model
 {
+	use ApplyUserGroupsToSiteQueryTrait;
+
 	/**
 	 * Load Site objects for given IDs, filtered by user permissions.
 	 *
@@ -116,5 +119,95 @@ class Extensioninstall extends Model
 			'mixed_cms' => count(array_unique($cmsVersions)) > 1,
 			'mixed_php' => count(array_unique($phpVersions)) > 1,
 		];
+	}
+
+	public function getExtensionNames(bool $forSelect = false): array
+	{
+		$values = $this->getExtensionFieldValues('name');
+
+		if (!$forSelect)
+		{
+			return $values;
+		}
+
+		$ret     = array_combine($values, $values);
+		$ret[''] = $this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME_SELECT');
+
+		return $ret;
+	}
+
+	public function getExtensionAuthors(bool $forSelect = false): array
+	{
+		$values = $this->getExtensionFieldValues('author');
+
+		if (!$forSelect)
+		{
+			return $values;
+		}
+
+		$ret     = array_combine($values, $values);
+		$ret[''] = $this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_SELECT');
+
+		return $ret;
+	}
+
+	public function getExtensionAuthorURLs(bool $forSelect = false): array
+	{
+		$values = $this->getExtensionFieldValues('authorUrl');
+
+		if (!$forSelect)
+		{
+			return $values;
+		}
+
+		$ret     = array_combine($values, $values);
+		$ret[''] = $this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL_SELECT');
+
+		return $ret;
+	}
+
+	private function getExtensionFieldValues(string $field): array
+	{
+		$db    = $this->getContainer()->db;
+		$query = $db->getQuery(true);
+		$query
+			->select(
+				$query->jsonExtract($db->quoteName('config'), '$.extensions.list')
+				. ' AS ' . $db->quoteName('ext_list')
+			)
+			->from($db->quoteName('#__sites'))
+			->where($db->quoteName('enabled') . ' = 1')
+			->where(
+				$query->jsonExtract($db->quoteName('config'), '$.extensions.list') . ' IS NOT NULL'
+			);
+
+		$this->applyUserGroupsToQuery($query);
+
+		$rows   = $db->setQuery($query)->loadColumn();
+		$values = [];
+
+		foreach ($rows as $json)
+		{
+			$list = (array) @json_decode($json, false);
+
+			if (empty($list))
+			{
+				continue;
+			}
+
+			foreach ($list as $ext)
+			{
+				$v = $ext->{$field} ?? null;
+
+				if (!empty($v) && !in_array($v, $values))
+				{
+					$values[] = $v;
+				}
+			}
+		}
+
+		sort($values);
+
+		return $values;
 	}
 }

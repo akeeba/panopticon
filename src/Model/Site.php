@@ -266,6 +266,48 @@ class Site extends DataModel
 			);
 		}
 
+		// Filter: extension name (exact match in site's extension list)
+		$fltExtName = $this->getState('ext_name', null, 'raw');
+
+		if (!empty($fltExtName))
+		{
+			$query->where(
+				$query->jsonContains(
+					$query->jsonExtract($db->quoteName('config'), '$.extensions.list.*.name'),
+					'JSON_QUOTE(' . $db->quote((string) $fltExtName) . ')',
+					null
+				)
+			);
+		}
+
+		// Filter: extension author
+		$fltExtAuthor = $this->getState('ext_author', null, 'raw');
+
+		if (!empty($fltExtAuthor))
+		{
+			$query->where(
+				$query->jsonContains(
+					$query->jsonExtract($db->quoteName('config'), '$.extensions.list.*.author'),
+					'JSON_QUOTE(' . $db->quote((string) $fltExtAuthor) . ')',
+					null
+				)
+			);
+		}
+
+		// Filter: extension author URL
+		$fltExtAuthorUrl = $this->getState('ext_author_url', null, 'raw');
+
+		if (!empty($fltExtAuthorUrl))
+		{
+			$query->where(
+				$query->jsonContains(
+					$query->jsonExtract($db->quoteName('config'), '$.extensions.list.*.authorUrl'),
+					'JSON_QUOTE(' . $db->quote((string) $fltExtAuthorUrl) . ')',
+					null
+				)
+			);
+		}
+
 		// Filter: group
 		$fltGroup = $this->getState('group', null) ?: [];
 

@@ -164,6 +164,14 @@
         // Clear the stored selection after submitting
         localStorage.removeItem(STORAGE_KEY);
 
+        // Set task to review before submitting (form default is 'main' for filter submissions)
+        const taskField = document.getElementById("task");
+
+        if (taskField)
+        {
+            taskField.value = "review";
+        }
+
         document.getElementById("adminForm").submit();
     };
 
