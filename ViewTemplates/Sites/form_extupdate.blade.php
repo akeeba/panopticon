@@ -10,8 +10,57 @@ defined('AKEEBA') || die;
 /**
  * @var \Akeeba\Panopticon\View\Sites\Html $this
  */
+$config     = $this->item?->getConfig() ?? new Awf\Registry\Registry();
+$updateTime = sprintf(
+	'%02u:%02u',
+	$config->get('config.extensions_update.time.hour', '0'),
+	$config->get('config.extensions_update.time.minute', '0')
+);
 
 ?>
+<div class="row mb-3">
+    <label for="config_extensions_update_when" class="col-sm-3 col-form-label">
+        @lang('PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_WHEN')
+    </label>
+    <div class="col-sm-9">
+        {{ $this->container->html->select->genericList(
+                    data: [
+                        'immediately' => 'PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_IMMEDIATELY',
+                        'time' => 'PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_TIME',
+                    ],
+                    name: 'config[config.extensions_update.when]',
+                    attribs: [
+                        'class' => 'form-select',
+                        'required' => 'required',
+                    ],
+                    selected: $config->get('config.extensions_update.when', 'immediately'),
+                    idTag: 'config_extensions_update_when',
+                    translate: true
+                ) }}
+    </div>
+</div>
+
+<div class="row mb-3" {{ $this->showOn('config[config.extensions_update.when]:time') }}>
+    <fieldset class="d-flex">
+        <label class="col-sm-3 col-form-label" for="extensions_update_time">
+            @lang('PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME')
+        </label>
+        <div class="col-sm-9 d-flex flex-row gap-2 align-items-center ps-2">
+            <input type="time" name="extensions_update_time" id="extensions_update_time"
+                   class="form-control"
+                   pattern="[0-9]{2}:[0-9]{2}"
+                   value="{{ $updateTime }}"
+            >
+        </div>
+    </fieldset>
+    <div class="form-text offset-sm-3 col-sm-9">
+        @sprintf(
+	        'PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP',
+	        (new DateTimeZone($this->container->appConfig->get('timezone', 'UTC') ?: 'UTC'))->getName()
+	    )
+    </div>
+</div>
+
 @if (empty($this->extUpdatePreferences))
 <div class="alert alert-info">
     <h3 class="h5 alert-heading">

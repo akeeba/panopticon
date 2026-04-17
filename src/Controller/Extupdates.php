@@ -144,7 +144,7 @@ class Extupdates extends Controller
 			{
 				if ($this->enqueueExtensionUpdate($site, $extensionId, 'major', $user))
 				{
-					$this->scheduleExtensionsUpdateForSite($site, $this->getContainer());
+					$this->scheduleExtensionsUpdateForSite($site, $this->getContainer(), runNow: true);
 
 					$numScheduled++;
 				}
@@ -153,7 +153,7 @@ class Extupdates extends Controller
 			{
 				if ($this->enqueuePluginUpdate($site, $extensionId, 'major', $user))
 				{
-					$this->schedulePluginsUpdateForSite($site, $this->getContainer());
+					$this->schedulePluginsUpdateForSite($site, $this->getContainer(), runNow: true);
 
 					$numScheduled++;
 				}

@@ -773,7 +773,7 @@ class Sites extends DataController
 			if ($this->enqueueExtensionUpdate($site, $id, user: $this->container->userManager->getUser()))
 			{
 				/** @noinspection PhpParamsInspection */
-				$this->scheduleExtensionsUpdateForSite($site, $this->container);
+				$this->scheduleExtensionsUpdateForSite($site, $this->container, runNow: true);
 			}
 
 			$type    = 'info';
@@ -1110,7 +1110,7 @@ class Sites extends DataController
 			if ($this->enqueuePluginUpdate($site, $id, user: $this->container->userManager->getUser()))
 			{
 				/** @noinspection PhpParamsInspection */
-				$this->schedulePluginsUpdateForSite($site, $this->container);
+				$this->schedulePluginsUpdateForSite($site, $this->container, runNow: true);
 			}
 
 			$type    = 'info';
@@ -1330,6 +1330,24 @@ class Sites extends DataController
 
 				$config->set('config.core_update.time.hour', $hour);
 				$config->set('config.core_update.time.minute', $minute);
+
+				$data['config'] = $config->toString();
+			}
+		}
+
+		// Handle the single `extensions_update_time` for both the hour and the minute returned by the `type="time"` field.
+		if (isset($data['extensions_update_time']))
+		{
+			$parts = explode(':', $data['extensions_update_time']);
+
+			if (count($parts) >= 2)
+			{
+				[$hour, $minute] = array_slice($parts, 0, 2);
+				$hour   = max(0, min(23, (int) $hour));
+				$minute = max(0, min(59, (int) $minute));
+
+				$config->set('config.extensions_update.time.hour', $hour);
+				$config->set('config.extensions_update.time.minute', $minute);
 
 				$data['config'] = $config->toString();
 			}

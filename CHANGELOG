@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 2.0.1
 ================================================================================
++ Schedule automatic extension, plugin, and theme updates for a specific time of day, mirroring the CMS Update option
 + Filter sites by CMS version, PHP version, extension name, author, author URL, and update status in the Install Extension page [gh-962]
 
 Akeeba Panopticon 2.0.0

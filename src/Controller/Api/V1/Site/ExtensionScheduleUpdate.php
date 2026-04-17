@@ -16,6 +16,8 @@ use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Task as TaskModel;
 use Awf\Registry\Registry;
+use DateTimeZone;
+use Exception;
 
 /**
  * API handler for POST /v1/site/:id/extensions/scheduleupdate/:extId — enqueue an extension for update.
@@ -138,6 +140,18 @@ class ExtensionScheduleUpdate extends AbstractApiHandler
 		$task->last_exit_code = Status::INITIAL_SCHEDULE->value;
 		$task->locked         = null;
 
+		try
+		{
+			$tz = $this->container->appConfig->get('timezone', 'UTC') ?: 'UTC';
+
+			// Do not remove. This tests the validity of the configured timezone.
+			new DateTimeZone($tz);
+		}
+		catch (Exception)
+		{
+			$tz = 'UTC';
+		}
+
 		$siteConfig = $site->getConfig() ?? new Registry();
 
 		switch ($siteConfig->get('config.extensions_update.when', 'immediately'))
@@ -145,13 +159,13 @@ class ExtensionScheduleUpdate extends AbstractApiHandler
 			default:
 			case 'immediately':
 				$task->cron_expression = '* * * * *';
-				$then                  = $this->container->dateFactory('now', 'UTC');
+				$then                  = $this->container->dateFactory('now', $tz);
 				break;
 
 			case 'time':
 				$hour   = max(0, min((int) $siteConfig->get('config.extensions_update.time.hour', 0), 23));
 				$minute = max(0, min((int) $siteConfig->get('config.extensions_update.time.minute', 0), 59));
-				$now    = $this->container->dateFactory('now', 'UTC');
+				$now    = $this->container->dateFactory('now', $tz);
 				$then   = (clone $now)->setTime($hour, $minute, 0);
 
 				// If the selected time of day is in the past, go forward one day
