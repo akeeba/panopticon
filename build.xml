@@ -47,6 +47,7 @@
         <exclude name="docker-testing/**" />
         <exclude name="node_modules/**" />
         <exclude name="release/**" />
+        <exclude name="tests/**" />
 
         <exclude name=".dockerignore" />
         <exclude name=".env" />
