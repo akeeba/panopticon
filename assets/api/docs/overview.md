@@ -205,7 +205,7 @@ compute next/previous pages.
 ## Secrets and the `config` field
 
 Site responses include the **complete** site configuration Registry — download keys, basic-auth
-credentials, custom HTTP headers and every other secret the UI lets you set against a site. The
+credentials, custom HTTP headers, and every other secret the UI lets you set against a site. The
 chosen trust model is:
 
 > Token confidentiality is sufficient. There is no in-API redaction layer.
@@ -215,8 +215,8 @@ Consequences:
 - Mint tokens **only** for automations you trust at the same level as the user account that
   owns the token.
 - Treat a leaked token as a leak of every site's full configuration for that user, immediately.
-- The web UI shows a token's plain-text value **once** at creation. Store it in a secret manager,
-  not in shell history or chat tools.
+- The web UI shows a token's plain-text value every time you edit a token. We recommend that you
+  store it in a secret manager / password manager, not in shell history or chat tools.
 
 ## HTTP status codes
 
