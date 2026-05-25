@@ -1,6 +1,12 @@
-This is a minor feature release.
+This is a feature release.
 
-This release introduces a self-served read+write JSON API at `/api/*`, alongside time-of-day scheduling for extension, plugin, and theme updates — mirroring the existing CMS Update option — and filtering capabilities on the Install Extension page.
+The major and only change in this version is the introduction of a JSON API at `/api/*`. You can use it to automate site management and Panopticon configuration without having to resort to the CLI application. This may be desirable in many use cases where using infrastructure-as-code tools (such as Ansible) is either not possible, or quite simply a complete overkill for the requirements.
+
+The JSON API is documented in detail in the documentation wiki, as well as the `assets/api` directory in our repository. We ship an OpenAPI 3.1 specification file at `assets/api/openapi.yaml`. The specification can be imported into Postman, or used with tools such as `openapi-generator` to generate client libraries.
+
+Having a JSON API opens up a world of possibilities. For example, right now, it is possible to create a Home Assistant `rest` sensor showing you the number of pending tasks in Panopticon's queue. Wire it to a Home Assistant automation controlling a cheap, smart LED strip, and you can have blinklights in your office showing you how your task queue is being processed. Practical? Probably not. Looks cool? You betcha!
+
+The coolest uses for the JSON API are those we haven't even thought of yet. What are _you_ going to build?
 
 ## 🖥️ System Requirements
 
@@ -14,7 +20,7 @@ Development of Akeeba Panopticon takes place _in public_. You can see what we're
 
 ## ✨ Highlights
 
-**JSON API (issue [#344](https://github.com/akeeba/panopticon/issues/344)).** Panopticon now ships a self-served read+write JSON API at `/api/*`, authenticated by API tokens you mint from the user menu under **API Tokens**. The API covers the same operations as the web UI for automation, with a stable response envelope and machine-readable error codes. Endpoint groups:
+**JSON API (issue [#344](https://github.com/akeeba/panopticon/issues/344)).** Panopticon now ships a JSON API at `/api/*`, authenticated by API tokens you mint from the user menu under **API Tokens**. The API covers the same operations as the web UI for automation, with a stable response envelope and machine-readable error codes. Endpoint groups:
 
 * **Sites** — list, create, read, modify, refresh, fix-Joomla-core-update, CMS update lifecycle (schedule / cancel / clear), extensions list / refresh / clear / reset, per-extension schedule/cancel updates, and download key get/set.
 * **Sysconfig** — read and write application configuration parameters (super-user only; sensitive keys are hidden).
@@ -23,15 +29,9 @@ Development of Akeeba Panopticon takes place _in public_. You can see what we're
 
 The full specification ships as OpenAPI 3.1 (`assets/api/openapi.yaml`); per-group reference docs live under `assets/api/docs/` and on the [GitHub wiki](https://github.com/akeeba/panopticon/wiki/API-Overview).
 
-**Time-of-Day Extension Updates.** Automatic extension, plugin, and theme updates can now be deferred to a specific time of day, just like CMS updates. Choose *Immediately* (the default, matching previous behaviour) or *Time of Day* in each site's Extensions Update / Plugins and Themes settings, and updates will be queued to run at (or after) your chosen time — in the application timezone. Manually-triggered updates from the UI always run immediately, regardless of this setting.
-
-**Extension Install Filters.** The Install Extension page now supports filtering the list of target sites by CMS version, PHP version, extension name, author, author URL, and update status. Makes it much easier to target mass installs at a specific subset of sites.
-
 ## 📋 CHANGELOG
 
-* ✨ Self-served read+write JSON API at `/api/*` authenticated by API tokens; token management UI under user menu → API Tokens [gh-344]
-* ✨ Schedule automatic extension, plugin, and theme updates for a specific time of day, mirroring the CMS Update option.
-* ✨ Filter sites by CMS version, PHP version, extension name, author, author URL, and update status in the Install Extension page [gh-962]
+* ✨ Add JSON API [gh-344]
 
 Legend:
 
