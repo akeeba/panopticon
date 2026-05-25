@@ -10,11 +10,15 @@ namespace Akeeba\Panopticon\Controller\Api\V1\Sysconfig;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
+use Akeeba\Panopticon\Model\Sysconfig as SysconfigModel;
 
 /**
  * API handler: GET /v1/sysconfig/:paramName
  *
- * Returns the value of a single system configuration parameter.
+ * Returns the value of a single non-sensitive system configuration parameter.
+ *
+ * Sensitive keys yield 404 / `sysconfig.unknown_param` — the same response as an
+ * unknown key — so that callers cannot probe for their existence.
  *
  * @since  1.4.0
  */
@@ -28,14 +32,26 @@ class Get extends AbstractApiHandler
 
 		if ($paramName === '')
 		{
-			$this->sendJsonError(400, 'Missing required parameter: paramName');
+			$this->sendJsonError(400, 'Missing required parameter: paramName', 'validation.bad_request');
+		}
+
+		/** @var SysconfigModel $model */
+		$model = $this->container->mvcFactory->makeTempModel('Sysconfig');
+
+		// Treat sensitive keys as if they didn't exist (no information leak).
+		if ($model->isSensitiveKey($paramName) || !$model->isKnownKey($paramName))
+		{
+			$this->sendJsonError(
+				404,
+				sprintf('Unknown configuration parameter "%s".', $paramName),
+				'sysconfig.unknown_param'
+			);
 		}
 
 		$value = $this->container->appConfig->get($paramName);
 
 		$this->sendJsonResponse([
-			'paramName' => $paramName,
-			'value'     => $value,
+			$paramName => $value,
 		]);
 	}
 }

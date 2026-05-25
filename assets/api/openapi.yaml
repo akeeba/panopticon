@@ -61,7 +61,32 @@ components:
         code:
           type: string
           description: Stable machine-readable error code in dotted form.
-          examples: [auth.invalid_token, auth.forbidden, site.not_found, validation.bad_request]
+          examples:
+            - auth.invalid_token
+            - auth.forbidden
+            - route.not_found
+            - request.invalid_json
+            - token.limit_exceeded
+            - validation.bad_request
+            - validation.unprocessable
+            - site.not_found
+            - site.wrong_cms
+            - extension.not_found
+            - extension.invalid_download_key
+            - task.not_found
+            - task.not_scheduled
+            - task.running
+            - task.already_scheduled
+            - task.unknown_type
+            - task.invalid_cron
+            - sysconfig.unknown_param
+            - sysconfig.invalid_value
+            - selfupdate.no_update_available
+            - selfupdate.not_downloaded
+            - selfupdate.download_failed
+            - selfupdate.install_failed
+            - selfupdate.postinstall_failed
+            - selfupdate.info_failed
         message:
           type: string
           description: Human-readable message. Do NOT switch on this; switch on `code`.
@@ -138,6 +163,214 @@ components:
       description: |
         Full site configuration Registry, returned verbatim. Contains secrets (download keys,
         basic-auth credentials, custom headers). See overview.md § Secrets.
+
+    SiteCreateRequest:
+      type: object
+      required: [name, url]
+      properties:
+        name:
+          type: string
+          description: User-visible site name (required).
+        url:
+          type: string
+          format: uri
+          description: API endpoint URL of the site (required).
+        enabled:
+          type: boolean
+          default: true
+        notes:
+          type: [string, 'null']
+        groups:
+          type: array
+          items: { type: integer, minimum: 1 }
+          description: User-group ids; mapped to `config.groups`.
+        config:
+          type: object
+          additionalProperties: true
+          description: |
+            Nested Registry payload. Keys may be dot-paths (e.g. `config.apiKey`) and are
+            applied as `Registry::set()` calls.
+
+    CmsUpdateRequest:
+      type: object
+      description: Body for POST /v1/site/{id}/cmsupdate.
+      properties:
+        force:
+          type: boolean
+          default: false
+          description: Schedule the update even if the site appears to already be on the latest version.
+
+    ExtensionRecord:
+      type: object
+      description: |
+        Extension/plugin descriptor as stored in the site config (`extensions.list[*]`). Shape is
+        a subset of the connector response; fields not relevant to a given extension may be absent.
+        Returned verbatim — see overview.md § Secrets.
+      additionalProperties: true
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        enabled:
+          type: boolean
+        downloadkey:
+          $ref: '#/components/schemas/DownloadKey'
+
+    DownloadKey:
+      type: object
+      properties:
+        supported:
+          type: boolean
+        valid:
+          type: boolean
+        prefix:
+          type: string
+        suffix:
+          type: string
+        updatesites:
+          type: array
+          items: { type: integer }
+        value:
+          type: string
+
+    DownloadKeySetRequest:
+      type: object
+      required: [key]
+      properties:
+        key:
+          type: [string, 'null']
+          description: New download-key value, or null to clear.
+
+    ExtensionsResetRequest:
+      type: object
+      properties:
+        resetqueue:
+          type: boolean
+          default: false
+          description: If true, also empty the per-site update queue before rescheduling.
+
+    SiteUpdateRequest:
+      type: object
+      description: Partial update; send only the fields you wish to change.
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        notes:
+          type: [string, 'null']
+        groups:
+          type: array
+          items: { type: integer, minimum: 1 }
+        config:
+          type: object
+          additionalProperties: true
+
+    SysconfigParamSetRequest:
+      type: object
+      required: [value]
+      properties:
+        value:
+          description: The new value for the configuration parameter. The accepted type depends on the parameter — see `assets/api/docs/sysconfig.md`.
+
+    TaskRecord:
+      type: object
+      required: [id, type, cron_expression, enabled]
+      properties:
+        id: { type: integer, minimum: 1 }
+        site_id: { type: [integer, 'null'] }
+        type: { type: string, description: 'Task type identifier registered in the task registry.' }
+        params: { type: object, additionalProperties: true }
+        storage: { type: object, additionalProperties: true }
+        cron_expression: { type: string, description: 'Standard 5- or 6-field cron expression, or a `@`-shortcut such as `@daily`.' }
+        enabled: { type: boolean }
+        last_exit_code: { type: [integer, 'null'] }
+        last_execution: { type: [string, 'null'], format: date-time }
+        last_run_end: { type: [string, 'null'], format: date-time }
+        next_execution: { type: [string, 'null'], format: date-time }
+        times_executed: { type: integer, minimum: 0 }
+        times_failed: { type: integer, minimum: 0 }
+        locked: { type: [string, 'null'], format: date-time }
+        priority: { type: integer }
+
+    TaskCreateRequest:
+      type: object
+      required: [type, cron_expression]
+      properties:
+        site_id:
+          type: [integer, 'null']
+          description: 'Owning site ID. Null/omitted for system tasks (requires super-user).'
+        type:
+          type: string
+          description: 'Task type identifier; must be registered with the task registry.'
+        cron_expression:
+          type: string
+        params:
+          type: object
+          additionalProperties: true
+        enabled:
+          type: boolean
+          default: true
+
+    SelfupdateInfo:
+      type: object
+      required: [installed_version, has_update]
+      properties:
+        installed_version:
+          type: string
+          description: The version of Panopticon currently installed.
+        latest_version:
+          type: [string, 'null']
+          description: The latest version reported by the update channel, or null on error.
+        has_update:
+          type: boolean
+        release_date:
+          type: [string, 'null']
+        release_notes_url:
+          type: [string, 'null']
+        release_notes:
+          type: [string, 'null']
+        download_url:
+          type: [string, 'null']
+        loaded_update:
+          type: boolean
+        stuck:
+          type: boolean
+        error:
+          type: [string, 'null']
+
+    SelfupdateDownloadResult:
+      type: object
+      required: [path]
+      properties:
+        path:
+          type: string
+          description: Basename of the staged update package (server paths are not leaked).
+        size:
+          type: [integer, 'null']
+          minimum: 0
+        sha256:
+          type: [string, 'null']
+          description: Lowercase hex SHA-256 of the staged package, when computable.
+
+    TaskUpdateRequest:
+      type: object
+      description: 'All fields are optional. At least one MUST be present.'
+      properties:
+        type: { type: string }
+        cron_expression: { type: string }
+        params:
+          type: object
+          additionalProperties: true
+        enabled: { type: boolean }
 
   responses:
     Unauthorized:
@@ -226,6 +459,40 @@ paths:
         '401': { $ref: '#/components/responses/Unauthorized' }
         '403': { $ref: '#/components/responses/Forbidden' }
 
+  /v1/site:
+    put:
+      operationId: addSite
+      summary: Create a new monitored site.
+      tags: [Sites]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteCreateRequest'
+      responses:
+        '201':
+          description: Site created.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success:
+                    type: boolean
+                    enum: [true]
+                  data:
+                    $ref: '#/components/schemas/Site'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422':
+          description: The payload was syntactically valid but rejected by the model.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
   /v1/site/{id}:
     get:
       operationId: getSite
@@ -253,3 +520,799 @@ paths:
         '401': { $ref: '#/components/responses/Unauthorized' }
         '403': { $ref: '#/components/responses/Forbidden' }
         '404': { $ref: '#/components/responses/NotFound' }
+    post:
+      operationId: modifySite
+      summary: Modify an existing site (partial update).
+      tags: [Sites]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteUpdateRequest'
+      responses:
+        '200':
+          description: Site updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success:
+                    type: boolean
+                    enum: [true]
+                  data:
+                    $ref: '#/components/schemas/Site'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422':
+          description: Payload rejected by the model.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/site/{id}/refresh:
+    post:
+      operationId: refreshSite
+      summary: Synchronously refresh a site's information.
+      tags: [Sites]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Refresh completed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success:
+                    type: boolean
+                    enum: [true]
+                  data:
+                    type: 'null'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v1/site/{id}/fixjoomlacoreupdate:
+    post:
+      operationId: fixJoomlaCoreUpdateSite
+      summary: Clear the stuck Joomla core-update flag on a Joomla site.
+      tags: [Sites]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Operation completed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success:
+                    type: boolean
+                    enum: [true]
+                  data:
+                    type: 'null'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422':
+          description: The site is not a Joomla site.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+              example:
+                success: false
+                code: site.wrong_cms
+                message: This operation is only available for Joomla sites.
+
+  /v1/site/{id}/cmsupdate:
+    post:
+      operationId: scheduleCmsUpdate
+      summary: Schedule a CMS update (Joomla or WordPress) for the site.
+      tags: [Sites, CmsUpdate]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CmsUpdateRequest' }
+      responses:
+        '202':
+          description: Update task scheduled.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { type: 'null' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422':
+          description: The site's CMS type does not support core updates via this endpoint.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/site/{id}/cmsupdate/cancel:
+    post:
+      operationId: cancelCmsUpdate
+      summary: Cancel a scheduled (but not yet running) CMS update.
+      tags: [Sites, CmsUpdate]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Update cancelled.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { type: 'null' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: No scheduled CMS update task for this site (`task.not_scheduled`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: The update is running and cannot be cancelled, or wrong CMS type.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/site/{id}/cmsupdate/clear:
+    post:
+      operationId: clearCmsUpdate
+      summary: Clear (delete) a failed CMS update task.
+      tags: [Sites, CmsUpdate]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Failed update task removed.
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: No CMS update task exists for this site.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Wrong CMS type.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/site/{id}/extensions:
+    get:
+      operationId: listSiteExtensions
+      summary: List all extensions/plugins reported by the site.
+      tags: [Sites, Extensions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Verbatim extension list plus a quickInfo summary object.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data:
+                    type: object
+                    properties:
+                      extensions:
+                        type: array
+                        items: { $ref: '#/components/schemas/ExtensionRecord' }
+                      quickInfo:
+                        type: object
+                        additionalProperties: true
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    post:
+      operationId: refreshSiteExtensions
+      summary: Synchronously refresh installed-extensions information.
+      tags: [Sites, Extensions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Extensions information refreshed.
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v1/site/{id}/extensions/clear:
+    post:
+      operationId: clearExtensionsUpdateTask
+      summary: Clear (delete) a failed extensions-update task and reschedule if items remain.
+      tags: [Sites, Extensions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200': { description: Failed extensions task removed. }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: No extensions update task found (`task.not_scheduled`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Wrong CMS type.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/site/{id}/extensions/reset:
+    post:
+      operationId: resetExtensionsUpdate
+      summary: Reschedule the extensions update task; optionally empty the queue.
+      tags: [Sites, Extensions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ExtensionsResetRequest' }
+      responses:
+        '200': { description: Extensions update reset. }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422':
+          description: Wrong CMS type.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/site/{id}/extensions/scheduleupdate/{extId}:
+    post:
+      operationId: scheduleExtensionUpdate
+      summary: Enqueue a single extension/plugin for update.
+      tags: [Sites, Extensions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+        - name: extId
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '202': { description: Extension queued for update. }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: Site or extension not found.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '409':
+          description: Extension is already queued for update (`task.already_scheduled`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Wrong CMS type.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/site/{id}/extensions/cancel/{extId}:
+    post:
+      operationId: cancelExtensionUpdate
+      summary: Remove a queued extension/plugin from the update queue.
+      tags: [Sites, Extensions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+        - name: extId
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200': { description: Extension removed from the queue. }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: Extension is not in the queue (`task.not_scheduled`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Wrong CMS type.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/site/{id}/extension/{extId}/downloadkey:
+    get:
+      operationId: getExtensionDownloadKey
+      summary: Read download-key info for a Joomla extension.
+      tags: [Sites, Extensions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+        - name: extId
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Download-key info for the extension.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data:
+                    type: object
+                    properties:
+                      extensionId: { type: integer }
+                      name: { type: string }
+                      downloadkey: { $ref: '#/components/schemas/DownloadKey' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: Site or extension not found.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Site is not a Joomla site.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+    post:
+      operationId: setExtensionDownloadKey
+      summary: Save a new download-key value for a Joomla extension.
+      tags: [Sites, Extensions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+        - name: extId
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DownloadKeySetRequest' }
+      responses:
+        '200': { description: Download key saved. }
+        '400':
+          description: Missing or wrong-typed `key`.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: Site or extension not found.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Extension does not support download keys, or wrong CMS, or remote rejected (`extension.invalid_download_key`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/sysconfig:
+    get:
+      operationId: listSysconfig
+      summary: List all non-sensitive system configuration parameters.
+      tags: [Sysconfig]
+      description: |
+        Returns a flat key/value object of every recognised, **non-sensitive** sysconfig
+        parameter. Sensitive keys (DB password, secret, SMTP credentials, etc.) are
+        completely omitted from the response — their existence is not signalled.
+      responses:
+        '200':
+          description: Flat map of parameter name to current value.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data:
+                    type: object
+                    additionalProperties: true
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  /v1/sysconfig/{paramName}:
+    parameters:
+      - name: paramName
+        in: path
+        required: true
+        schema: { type: string }
+    get:
+      operationId: getSysconfigParam
+      summary: Read a single non-sensitive sysconfig parameter.
+      tags: [Sysconfig]
+      responses:
+        '200':
+          description: Single parameter value, keyed by parameter name.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data:
+                    type: object
+                    additionalProperties: true
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: Unknown OR sensitive parameter (`sysconfig.unknown_param`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+    post:
+      operationId: setSysconfigParam
+      summary: Write a single sysconfig parameter (super-user only).
+      tags: [Sysconfig]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SysconfigParamSetRequest' }
+      responses:
+        '200':
+          description: Stored value.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data:
+                    type: object
+                    additionalProperties: true
+        '400':
+          description: Missing/invalid request (`validation.bad_request`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403':
+          description: Not a super-user, or the parameter is sensitive and write-blocked (`auth.forbidden`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '404':
+          description: Unknown parameter (`sysconfig.unknown_param`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Value failed validation (`sysconfig.invalid_value`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/tasks:
+    get:
+      operationId: listTasks
+      summary: List tasks visible to the authenticated user.
+      tags: [Tasks]
+      parameters:
+        - { name: site_id, in: query, schema: { type: integer, minimum: 0 } }
+        - { name: type,    in: query, schema: { type: string } }
+        - { name: enabled, in: query, schema: { type: boolean } }
+        - { name: limit,   in: query, schema: { type: integer, minimum: 0, maximum: 200, default: 50 } }
+        - { name: offset,  in: query, schema: { type: integer, minimum: 0, default: 0 } }
+      responses:
+        '200':
+          description: Paginated list of tasks.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data, pagination]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/TaskRecord' }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  /v1/task:
+    put:
+      operationId: createTask
+      summary: Create a new task.
+      tags: [Tasks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TaskCreateRequest' }
+      responses:
+        '201':
+          description: Task created.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { $ref: '#/components/schemas/TaskRecord' }
+        '400':
+          description: Missing required field (`validation.bad_request`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422':
+          description: Unknown task type (`task.unknown_type`) or invalid cron expression (`task.invalid_cron`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/task/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: { type: integer, minimum: 1 }
+    get:
+      operationId: getTask
+      summary: Read a single task by id.
+      tags: [Tasks]
+      responses:
+        '200':
+          description: Task record.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { $ref: '#/components/schemas/TaskRecord' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: Task not found (`task.not_found`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+    post:
+      operationId: modifyTask
+      summary: Update an existing task.
+      tags: [Tasks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TaskUpdateRequest' }
+      responses:
+        '200':
+          description: Updated task record.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { $ref: '#/components/schemas/TaskRecord' }
+        '400':
+          description: No updatable fields provided (`validation.bad_request`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: Task not found (`task.not_found`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: Unknown task type or invalid cron expression.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/selfupdate:
+    get:
+      operationId: getSelfupdateInfo
+      summary: Return self-update status for the running Panopticon instance.
+      tags: [Selfupdate]
+      description: |
+        Super-user only. Non-super tokens receive `403 auth.forbidden`. The OpenAPI
+        security scheme cannot represent the super-user requirement; it is enforced in
+        the handler.
+      parameters:
+        - name: force
+          in: query
+          required: false
+          schema: { type: integer, enum: [0, 1], default: 0 }
+          description: When `1`, bust the on-disk update-info cache before reading.
+      responses:
+        '200':
+          description: Update status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { $ref: '#/components/schemas/SelfupdateInfo' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '500':
+          description: Unhandled error (`selfupdate.info_failed`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/selfupdate/download:
+    get:
+      operationId: downloadSelfupdatePackage
+      summary: Download the latest update package into the local staging area.
+      tags: [Selfupdate]
+      description: |
+        Super-user only. Fetches the release archive from the update channel and stores
+        it as `<APATH_TMP>/update.zip`. The response carries the basename, size, and
+        SHA-256 of the staged file (server paths are not leaked).
+      responses:
+        '200':
+          description: Package downloaded.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { $ref: '#/components/schemas/SelfupdateDownloadResult' }
+                  message: { type: string }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409':
+          description: No update is available (`selfupdate.no_update_available`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '502':
+          description: Network failure while contacting the update channel (`selfupdate.download_failed`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/selfupdate/install:
+    get:
+      operationId: installSelfupdatePackage
+      summary: Extract the staged update package and invalidate OPcache.
+      tags: [Selfupdate]
+      description: |
+        Super-user only. Requires `/v1/selfupdate/download` to have run first. Extracts
+        the staged package over `APATH_ROOT`, invalidates OPcache for the replaced PHP
+        files, and clears compiled Blade templates.
+      responses:
+        '200':
+          description: Package installed.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { type: 'null' }
+                  message: { type: string }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409':
+          description: No package has been downloaded yet (`selfupdate.not_downloaded`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '500':
+          description: Extraction failed (`selfupdate.install_failed`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /v1/selfupdate/postinstall:
+    get:
+      operationId: postinstallSelfupdate
+      summary: Run post-install bookkeeping (DB schema, default tasks, cleanup).
+      tags: [Selfupdate]
+      description: |
+        Super-user only. Safe to call repeatedly.
+      responses:
+        '200':
+          description: Post-install completed.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success]
+                properties:
+                  success: { type: boolean, enum: [true] }
+                  data: { type: 'null' }
+                  message: { type: string }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '500':
+          description: Post-install failed (`selfupdate.postinstall_failed`).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }

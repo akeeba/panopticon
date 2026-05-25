@@ -323,6 +323,63 @@ class Selfupdate extends Model
 	}
 
 	/**
+	 * Resolve the absolute filesystem path of the staged update package, if any.
+	 *
+	 * Mirrors the location selection logic of {@see download()}. Returns NULL when no
+	 * package has been staged yet (i.e. neither candidate path holds a regular file).
+	 *
+	 * @return  string|null
+	 * @since   1.4.0
+	 */
+	public function resolveUpdatePackagePath(): ?string
+	{
+		if (defined('APATH_TMP') && is_dir(APATH_TMP) && is_writable(APATH_TMP))
+		{
+			$candidate = APATH_TMP . '/update.zip';
+		}
+		else
+		{
+			$candidate = sys_get_temp_dir() . '/update.zip';
+		}
+
+		return is_file($candidate) ? $candidate : null;
+	}
+
+	/**
+	 * Perform the full install step on a staged update package: extract, invalidate OPcache,
+	 * and clear compiled Blade templates.
+	 *
+	 * If `$sourceFile` is NULL, the staged package path is resolved via
+	 * {@see resolveUpdatePackagePath()}. A {@see RuntimeException} is thrown when no package
+	 * has been staged.
+	 *
+	 * @param   string|null  $sourceFile  Optional explicit package path.
+	 *
+	 * @return  void
+	 * @throws  RuntimeException  No staged package, or extraction failed.
+	 * @since   1.4.0
+	 */
+	public function performInstall(?string $sourceFile = null): void
+	{
+		$sourceFile = $sourceFile ?? $this->resolveUpdatePackagePath();
+
+		if (empty($sourceFile) || !is_file($sourceFile))
+		{
+			throw new RuntimeException('No update package has been downloaded.');
+		}
+
+		$result = $this->extract($sourceFile);
+
+		if ($result === false)
+		{
+			throw new RuntimeException('The update package could not be extracted.');
+		}
+
+		$this->invalidatePHPFiles($sourceFile);
+		$this->clearCompiledTemplates();
+	}
+
+	/**
 	 * Extracts an update package
 	 *
 	 * @param   string|null  $sourceFile  The update package. Default: <temp_folder>/update.zip

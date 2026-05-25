@@ -167,6 +167,26 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 	}
 
 	/**
+	 * Return the current client's IP as a packed (inet_pton) binary string, or NULL.
+	 *
+	 * @return  string|null
+	 * @since   1.4.0
+	 */
+	protected function getClientIpBinary(): ?string
+	{
+		$ip = $_SERVER['REMOTE_ADDR'] ?? null;
+
+		if (empty($ip))
+		{
+			return null;
+		}
+
+		$packed = @inet_pton((string) $ip);
+
+		return $packed === false ? null : $packed;
+	}
+
+	/**
 	 * Load a site by ID, checking per-site ACL privileges.
 	 *
 	 * @param   int     $id         The site ID.

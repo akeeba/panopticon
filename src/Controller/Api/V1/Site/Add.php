@@ -10,8 +10,9 @@ namespace Akeeba\Panopticon\Controller\Api\V1\Site;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
+use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Site;
-use Awf\Registry\Registry;
+use RuntimeException;
 
 /**
  * API handler for PUT /v1/site — create a new site.
@@ -22,65 +23,71 @@ class Add extends AbstractApiHandler
 {
 	public function handle(): void
 	{
-		// Require super user or addown privilege
 		$user = $this->container->userManager->getUser();
 
-		if (!$user->getPrivilege('panopticon.super') && !$user->getPrivilege('panopticon.addown'))
+		// Mirror legacy `Controller\Sites::onBeforeAdd()` ACL: super (implied) OR admin OR addown.
+		if (
+			!$user->getPrivilege('panopticon.super')
+			&& !$user->getPrivilege('panopticon.admin')
+			&& !$user->getPrivilege('panopticon.addown')
+		)
 		{
-			$this->sendJsonError(403, 'You do not have permission to add sites.');
+			$this->sendJsonError(403, 'You do not have permission to add sites.', 'auth.forbidden');
 		}
 
 		$body = $this->getJsonBody();
 
-		if (empty($body['name']) || empty($body['url']))
-		{
-			$this->sendJsonError(400, 'The name and url fields are required.');
-		}
-
 		/** @var Site $site */
 		$site = $this->container->mvcFactory->makeTempModel('Site');
 
-		$site->name    = $body['name'];
-		$site->url     = $body['url'];
-		$site->enabled = isset($body['enabled']) ? (int) (bool) $body['enabled'] : 1;
-		$site->notes   = $body['notes'] ?? null;
-
-		// Build the site configuration
-		$config = new Registry();
-
-		if (isset($body['config']) && is_array($body['config']))
-		{
-			$config->loadArray($body['config']);
-		}
-
-		// Set groups if provided
-		if (isset($body['groups']) && is_array($body['groups']))
-		{
-			$config->set('config.groups', array_map('intval', $body['groups']));
-		}
-
-		$site->config = $config->toString();
-
 		try
 		{
-			$site->save();
+			$site->applyApiPayload($body, true);
+		}
+		catch (RuntimeException $e)
+		{
+			if ($e->getCode() === 400)
+			{
+				$this->sendJsonError(400, $e->getMessage(), 'validation.bad_request');
+			}
+
+			$this->sendJsonError(422, $e->getMessage(), 'validation.unprocessable');
 		}
 		catch (\Throwable $e)
 		{
 			$this->sendJsonError(500, 'Failed to create site: ' . $e->getMessage());
 		}
 
-		$this->sendJsonResponse(
+		AuditLog::record(
+			'site.create',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'site',
+			(int) $site->getId(),
 			[
-				'id'      => $site->getId(),
-				'name'    => $site->name,
-				'url'     => $site->url,
-				'enabled' => (bool) $site->enabled,
-				'cmsType' => $site->cmsType()->value,
-				'config'  => $site->getConfig()->toObject(),
-			],
+				'name' => $site->name,
+				'url'  => $site->url,
+			]
+		);
+
+		$this->sendJsonResponse(
+			$this->serialiseSite($site),
 			201,
 			'Site created successfully.'
 		);
 	}
+
+	private function serialiseSite(Site $site): array
+	{
+		return [
+			'id'      => (int) $site->getId(),
+			'name'    => $site->name,
+			'url'     => $site->url,
+			'enabled' => (bool) $site->enabled,
+			'cmsType' => $site->cmsType()->value,
+			'notes'   => $site->notes,
+			'config'  => $site->getConfig()->toObject(),
+		];
+	}
+
 }

@@ -61,7 +61,22 @@ abstract class AbstractApiIntegrationTestCase extends AbstractIntegrationTestCas
 			$_GET['_panopticon_token']
 		);
 
+		// Restore the `php://` stream wrapper in case a test used PhpInputMock and forgot to.
+		PhpInputMock::restore();
+
 		parent::tearDown();
+	}
+
+	/**
+	 * Set a JSON body that handlers will see when calling `file_get_contents('php://input')`.
+	 *
+	 * @param   array|string  $body  Either an array (json-encoded for you) or a raw string.
+	 */
+	protected function setJsonRequestBody(array|string $body): void
+	{
+		$raw = is_array($body) ? json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) : $body;
+
+		PhpInputMock::set((string) $raw);
 	}
 
 	/**

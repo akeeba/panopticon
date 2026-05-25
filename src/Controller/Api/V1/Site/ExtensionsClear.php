@@ -11,31 +11,53 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Library\Queue\QueueInterface;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
+use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Task as TaskModel;
+use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueuePluginUpdateTrait;
 
 /**
  * API handler for POST /v1/site/:id/extensions/clear — clear a failed extensions update task.
+ *
+ * Mirrors `Controller\Sites::clearExtensionUpdatesScheduleError()`: deletes the failed task,
+ * then re-schedules if the per-site update queue still has pending items. Reuses the same
+ * `scheduleExtensionsUpdateForSite()` / `schedulePluginsUpdateForSite()` traits the legacy
+ * controller uses.
  *
  * @since  1.4.0
  */
 class ExtensionsClear extends AbstractApiHandler
 {
+	use EnqueueExtensionUpdateTrait;
+	use EnqueuePluginUpdateTrait;
+
 	public function handle(): void
 	{
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
+		$user = $this->container->userManager->getUser();
 
-		$taskType = match ($site->cmsType())
+		$cmsType = $site->cmsType();
+
+		$taskType = match ($cmsType)
 		{
 			CMSType::JOOMLA    => 'extensionsupdate',
 			CMSType::WORDPRESS => 'pluginsupdate',
 			default            => null,
 		};
 
-		if ($taskType === null)
+		$queuePattern = match ($cmsType)
 		{
-			$this->sendJsonError(400, 'Unsupported CMS type.');
+			CMSType::JOOMLA    => QueueTypeEnum::EXTENSIONS->value,
+			CMSType::WORDPRESS => QueueTypeEnum::PLUGINS->value,
+			default            => null,
+		};
+
+		if ($taskType === null || $queuePattern === null)
+		{
+			$this->sendJsonError(422, 'Unsupported CMS type.', 'site.wrong_cms');
 		}
 
 		try
@@ -50,17 +72,40 @@ class ExtensionsClear extends AbstractApiHandler
 
 			$task->delete();
 
-			// If there are still items in the queue, the task needs to be rescheduled.
-			// We leave that to the caller or the next scheduled run.
+			// If there are still pending items, reschedule (matches legacy controller).
+			$queueKey = sprintf($queuePattern, $site->getId());
+			/** @var QueueInterface $queue */
+			$queue = $this->container->queueFactory->makeQueue($queueKey);
+
+			if ($queue->count())
+			{
+				if ($cmsType === CMSType::JOOMLA)
+				{
+					$this->scheduleExtensionsUpdateForSite($site, $this->container);
+				}
+				else
+				{
+					$this->schedulePluginsUpdateForSite($site, $this->container);
+				}
+			}
 		}
 		catch (\RuntimeException)
 		{
-			$this->sendJsonError(404, 'No extensions update task found for this site.');
+			$this->sendJsonError(404, 'No extensions update task found for this site.', 'task.not_scheduled');
 		}
 		catch (\Throwable $e)
 		{
 			$this->sendJsonError(500, 'Failed to clear extensions update error: ' . $e->getMessage());
 		}
+
+		AuditLog::record(
+			'site.extensions.clear',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'site',
+			(int) $site->getId(),
+			['cmsType' => $cmsType->value]
+		);
 
 		$this->sendJsonResponse(null, 200, 'Extensions update error cleared successfully.');
 	}

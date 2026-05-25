@@ -10,12 +10,18 @@ namespace Akeeba\Panopticon\Controller\Api\V1\Selfupdate;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
+use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Selfupdate as SelfupdateModel;
+use RuntimeException;
 
 /**
  * API handler: GET /v1/selfupdate/install
  *
- * Extracts the previously downloaded update package into the application root.
+ * Installs the previously-staged update package: extracts the ZIP over the application
+ * root, invalidates OPcache for the new PHP files, and clears precompiled Blade
+ * templates. Requires {@see Download} to have run first.
+ *
+ * Super-user only.
  *
  * @since  1.4.0
  */
@@ -28,24 +34,69 @@ class Install extends AbstractApiHandler
 		/** @var SelfupdateModel $model */
 		$model = $this->container->mvcFactory->makeTempModel('Selfupdate');
 
+		$stagedPath = $model->resolveUpdatePackagePath();
+
+		if ($stagedPath === null)
+		{
+			$this->sendJsonError(
+				409,
+				'No update package has been downloaded. Call /v1/selfupdate/download first.',
+				'selfupdate.not_downloaded'
+			);
+
+			return;
+		}
+
+		$installed = defined('AKEEBA_PANOPTICON_VERSION') ? AKEEBA_PANOPTICON_VERSION : 'dev';
+		$latest    = null;
+
 		try
 		{
-			$result = $model->extract();
+			$latest = $model->getLatestVersion(false);
 		}
-		catch (\Exception $e)
+		catch (\Throwable)
 		{
-			$this->sendJsonError(500, 'Installation failed: ' . $e->getMessage());
+			// Best-effort: we can still try to install. Audit `to_version` will be NULL.
+		}
+
+		try
+		{
+			$model->performInstall($stagedPath);
+		}
+		catch (RuntimeException $e)
+		{
+			$this->sendJsonError(
+				500,
+				'Installation failed: ' . $e->getMessage(),
+				'selfupdate.install_failed'
+			);
+
+			return;
+		}
+		catch (\Throwable $e)
+		{
+			$this->sendJsonError(
+				500,
+				'Installation failed.',
+				'selfupdate.install_failed'
+			);
 
 			return;
 		}
 
-		if (!$result)
-		{
-			$this->sendJsonError(500, 'Installation failed: the update package could not be extracted.');
+		$user = $this->container->userManager->getUser();
+		AuditLog::record(
+			'selfupdate.install',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'selfupdate',
+			null,
+			[
+				'from_version' => $installed,
+				'to_version'   => $latest?->version,
+			]
+		);
 
-			return;
-		}
-
-		$this->sendJsonResponse(null, message: 'Update package extracted successfully.');
+		$this->sendJsonResponse(null, message: 'Update package installed successfully.');
 	}
 }

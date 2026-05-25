@@ -10,11 +10,14 @@ namespace Akeeba\Panopticon\Controller\Api\V1\Sysconfig;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
+use Akeeba\Panopticon\Model\Sysconfig as SysconfigModel;
 
 /**
  * API handler: GET /v1/sysconfig
  *
- * Returns all system configuration key-value pairs.
+ * Returns all NON-SENSITIVE system configuration key-value pairs as a flat object.
+ * Sensitive keys (DB password, secret, SMTP credentials, …) are completely omitted —
+ * not stubbed — so their existence is not signalled.
  *
  * @since  1.4.0
  */
@@ -24,8 +27,9 @@ class GetList extends AbstractApiHandler
 	{
 		$this->requireSuperUser();
 
-		$this->sendJsonResponse(
-			$this->container->appConfig->flatten('.')
-		);
+		/** @var SysconfigModel $model */
+		$model = $this->container->mvcFactory->makeTempModel('Sysconfig');
+
+		$this->sendJsonResponse($model->getNonSensitiveConfig());
 	}
 }

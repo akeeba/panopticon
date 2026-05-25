@@ -11,10 +11,13 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Task as TaskModel;
 
 /**
  * API handler for POST /v1/site/:id/cmsupdate/clear — clear a failed CMS update task.
+ *
+ * Mirrors the legacy `Controller\Sites::clearUpdateScheduleError()`.
  *
  * @since  1.4.0
  */
@@ -24,8 +27,11 @@ class CmsUpdateClear extends AbstractApiHandler
 	{
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
+		$user = $this->container->userManager->getUser();
 
-		$taskType = match ($site->cmsType())
+		$cmsType = $site->cmsType();
+
+		$taskType = match ($cmsType)
 		{
 			CMSType::JOOMLA    => 'joomlaupdate',
 			CMSType::WORDPRESS => 'wordpressupdate',
@@ -34,7 +40,7 @@ class CmsUpdateClear extends AbstractApiHandler
 
 		if ($taskType === null)
 		{
-			$this->sendJsonError(400, 'Unsupported CMS type.');
+			$this->sendJsonError(422, 'Unsupported CMS type.', 'site.wrong_cms');
 		}
 
 		try
@@ -51,12 +57,21 @@ class CmsUpdateClear extends AbstractApiHandler
 		}
 		catch (\RuntimeException)
 		{
-			$this->sendJsonError(404, 'No CMS update task found for this site.');
+			$this->sendJsonError(404, 'No CMS update task found for this site.', 'task.not_scheduled');
 		}
 		catch (\Throwable $e)
 		{
 			$this->sendJsonError(500, 'Failed to clear CMS update error: ' . $e->getMessage());
 		}
+
+		AuditLog::record(
+			'site.cmsupdate.clear',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'site',
+			(int) $site->getId(),
+			['cmsType' => $cmsType->value]
+		);
 
 		$this->sendJsonResponse(null, 200, 'CMS update error cleared successfully.');
 	}

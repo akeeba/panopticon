@@ -8,6 +8,15 @@ This document is the authoritative reference for cross-cutting concerns (authent
 response envelope, error codes, pagination, security policy). Per-endpoint documentation lives
 under `assets/api/docs/<group>.md` and is mirrored to the GitHub wiki.
 
+## Endpoint groups
+
+- [`sites.md`](sites.md) — Sites: list, create, read, modify, refresh, fix-Joomla-core-update,
+  CMS-update lifecycle, extensions list/refresh/clear/reset, per-extension schedule/cancel
+  updates, download-key get/set.
+- [`sysconfig.md`](sysconfig.md) — Application configuration parameters.
+- [`tasks.md`](tasks.md) — Background task CRUD.
+- [`selfupdate.md`](selfupdate.md) — Integrated self-update: info, download, install, postinstall.
+
 ## Endpoint URLs
 
 With `mod_rewrite` (recommended) or an nginx equivalent:
@@ -111,19 +120,80 @@ strictly additive within a major API version. Clients SHOULD switch on `code`, n
 
 ## Error codes
 
-The codes below are emitted by the Phase 1 (read-only Sites) surface and the token management
-endpoints. Phase 2 sub-plans extend this table.
+The codes are grouped by domain and sorted alphabetically within each group. Clients SHOULD
+switch on `code` (the wire-stable identifier), never on `message`. New codes are strictly
+additive within a major API version.
+
+### Authentication & authorisation
 
 | Code                    | HTTP | Meaning                                                                       |
 |-------------------------|------|-------------------------------------------------------------------------------|
-| `auth.required`         | 401  | Authentication required (helper alias).                                       |
-| `auth.invalid_token`    | 401  | Token missing, malformed, expired, disabled, or unknown.                      |
 | `auth.forbidden`        | 403  | Authenticated, but lacks the required privilege (per-site ACL or super-user). |
-| `route.not_found`       | 404  | The URL did not map to a known handler.                                       |
-| `site.not_found`        | 404  | A site was addressed by id and does not exist.                                |
-| `validation.bad_request`| 400  | A query/body parameter failed validation (e.g. unknown `cmsType`).            |
+| `auth.invalid_token`    | 401  | Token missing, malformed, expired, disabled, or unknown.                      |
+| `auth.required`         | 401  | Authentication required (helper alias).                                       |
+
+### Routing & request parsing
+
+| Code                    | HTTP | Meaning                                                                       |
+|-------------------------|------|-------------------------------------------------------------------------------|
 | `request.invalid_json`  | 400  | The JSON body could not be parsed.                                            |
+| `route.not_found`       | 404  | The URL did not map to a known handler.                                       |
+
+### Token management
+
+| Code                    | HTTP | Meaning                                                                       |
+|-------------------------|------|-------------------------------------------------------------------------------|
 | `token.limit_exceeded`  | 409  | Per-user enabled-token cap (currently 50) reached.                            |
+
+### Validation
+
+| Code                    | HTTP | Meaning                                                                       |
+|-------------------------|------|-------------------------------------------------------------------------------|
+| `validation.bad_request`   | 400 | A query/body parameter failed validation (e.g. unknown `cmsType`).         |
+| `validation.unprocessable` | 422 | The request is well-formed but the model rejected it (e.g. trimmed name empty). |
+
+### Sites
+
+| Code                    | HTTP | Meaning                                                                       |
+|-------------------------|------|-------------------------------------------------------------------------------|
+| `site.not_found`        | 404  | A site was addressed by id and does not exist.                                |
+| `site.wrong_cms`        | 422  | The operation is not applicable to this site's CMS (e.g. Joomla-only on WP).  |
+
+### Extensions
+
+| Code                             | HTTP | Meaning                                                                |
+|----------------------------------|------|------------------------------------------------------------------------|
+| `extension.invalid_download_key` | 422  | The extension does not support download keys or the remote rejected the key. |
+| `extension.not_found`            | 404  | The given extension/plugin id is not in the site's `extensions.list`.  |
+
+### Tasks
+
+| Code                    | HTTP | Meaning                                                                       |
+|-------------------------|------|-------------------------------------------------------------------------------|
+| `task.already_scheduled`| 409  | An identical task/queue item is already scheduled (idempotency conflict).     |
+| `task.invalid_cron`     | 422  | The `cron_expression` failed parsing/validation.                              |
+| `task.not_found`        | 404  | The targeted task id does not exist.                                          |
+| `task.not_scheduled`    | 404  | The targeted task or queue item does not exist.                               |
+| `task.running`          | 422  | The task is currently running and the requested state change is disallowed.   |
+| `task.unknown_type`     | 422  | The task `type` is not registered with the task registry.                     |
+
+### Sysconfig
+
+| Code                      | HTTP | Meaning                                                                     |
+|---------------------------|------|-----------------------------------------------------------------------------|
+| `sysconfig.invalid_value` | 422  | The supplied value failed `Model\Sysconfig::validateValue()` for that key.  |
+| `sysconfig.unknown_param` | 404  | The sysconfig key is unknown OR sensitive (treated identically to avoid enumeration). |
+
+### Self-update
+
+| Code                              | HTTP | Meaning                                                              |
+|-----------------------------------|------|----------------------------------------------------------------------|
+| `selfupdate.download_failed`      | 502  | The update channel/network call failed while fetching the package.   |
+| `selfupdate.info_failed`          | 500  | Unhandled error while retrieving update information.                 |
+| `selfupdate.install_failed`       | 500  | Extraction of the staged update package failed.                      |
+| `selfupdate.no_update_available`  | 409  | Self-update download was requested but no newer version is available. |
+| `selfupdate.not_downloaded`       | 409  | Self-update install was requested before download succeeded.         |
+| `selfupdate.postinstall_failed`   | 500  | The post-install bookkeeping (schema/cleanup) failed.                |
 
 ## Pagination
 
@@ -179,3 +249,9 @@ Consequences:
 `v1` is the current major version. Within `v1` we only make additive changes (new fields, new
 endpoints, new optional parameters). Breaking changes require a new `v2` namespace and overlap
 with `v1` for a deprecation window.
+
+## See also
+
+- [`sites.md`](./sites.md), [`sysconfig.md`](./sysconfig.md), [`tasks.md`](./tasks.md),
+  [`selfupdate.md`](./selfupdate.md) — per-group endpoint documentation.
+- [`../openapi.yaml`](../openapi.yaml) — machine-readable OpenAPI 3.1 specification.

@@ -404,6 +404,200 @@ class Site extends DataModel
 	}
 
 	/**
+	 * Validate an API payload destined for an add/edit site operation.
+	 *
+	 * Returns a list of human-readable error messages. Empty array means the payload looks usable
+	 * (deeper validation is done in `check()` at save time).
+	 *
+	 * @param   array  $payload  The decoded JSON body.
+	 * @param   bool   $isAdd    TRUE when creating a new site (name and url are required).
+	 *
+	 * @return  string[]
+	 * @since   1.4.0
+	 */
+	public static function validateApiPayload(array $payload, bool $isAdd): array
+	{
+		$errors = [];
+
+		if ($isAdd)
+		{
+			if (empty($payload['name']) || !is_string($payload['name']))
+			{
+				$errors[] = 'name is required and must be a string';
+			}
+
+			if (empty($payload['url']) || !is_string($payload['url']))
+			{
+				$errors[] = 'url is required and must be a string';
+			}
+		}
+		else
+		{
+			if (array_key_exists('name', $payload) && (!is_string($payload['name']) || trim($payload['name']) === ''))
+			{
+				$errors[] = 'name must be a non-empty string when provided';
+			}
+
+			if (array_key_exists('url', $payload) && (!is_string($payload['url']) || trim($payload['url']) === ''))
+			{
+				$errors[] = 'url must be a non-empty string when provided';
+			}
+		}
+
+		if (array_key_exists('config', $payload) && !is_array($payload['config']))
+		{
+			$errors[] = 'config must be an object';
+		}
+
+		if (array_key_exists('groups', $payload) && !is_array($payload['groups']))
+		{
+			$errors[] = 'groups must be an array of integers';
+		}
+
+		if (array_key_exists('notes', $payload) && $payload['notes'] !== null && !is_string($payload['notes']))
+		{
+			$errors[] = 'notes must be a string or null';
+		}
+
+		return $errors;
+	}
+
+	/**
+	 * Apply an API payload to this model and save it.
+	 *
+	 * This is the DRY-equivalent of `Controller\Sites::applySave()` minus all HTTP coupling
+	 * (no session flashing, no redirects, no `apiToken` POST field handling). It accepts only
+	 * the public, documented fields:
+	 *
+	 *   name, url, enabled, notes, config (object), groups (array of int).
+	 *
+	 * The caller is responsible for permission checks. This method throws on validation or save
+	 * errors so API handlers can translate them to JSON envelopes.
+	 *
+	 * @param   array  $payload  The decoded JSON body.
+	 * @param   bool   $isAdd    TRUE when creating, FALSE when modifying.
+	 *
+	 * @return  void
+	 * @since   1.4.0
+	 */
+	public function applyApiPayload(array $payload, bool $isAdd): void
+	{
+		$errors = self::validateApiPayload($payload, $isAdd);
+
+		if (!empty($errors))
+		{
+			throw new RuntimeException(implode('; ', $errors), 400);
+		}
+
+		// Merge incoming config into the existing one (or an empty Registry on add).
+		$config = $isAdd ? new Registry() : $this->getConfig();
+
+		if (isset($payload['config']) && is_array($payload['config']))
+		{
+			foreach ($payload['config'] as $key => $value)
+			{
+				$config->set($key, $value);
+			}
+		}
+
+		if (isset($payload['groups']) && is_array($payload['groups']))
+		{
+			$config->set('config.groups', array_map('intval', $payload['groups']));
+		}
+
+		$data = [];
+
+		if (array_key_exists('name', $payload))
+		{
+			$data['name'] = (string) $payload['name'];
+		}
+
+		if (array_key_exists('url', $payload))
+		{
+			$data['url'] = (string) $payload['url'];
+		}
+
+		if (array_key_exists('enabled', $payload))
+		{
+			$data['enabled'] = (int) (bool) $payload['enabled'];
+		}
+		elseif ($isAdd)
+		{
+			$data['enabled'] = 1;
+		}
+
+		if (array_key_exists('notes', $payload))
+		{
+			$data['notes'] = $payload['notes'] === null ? null : (string) $payload['notes'];
+		}
+
+		$data['config'] = $config->toString('JSON');
+
+		$this->bind($data);
+		$this->check();
+		$this->save();
+	}
+
+	/**
+	 * Run a synchronous site-information refresh via the RefreshSiteInfo task callback.
+	 *
+	 * Lifted from `Controller\Sites::doRefreshSiteInformation()` so both the legacy controller
+	 * and the API `Refresh` handler share a single implementation.
+	 *
+	 * @return  void
+	 * @since   1.4.0
+	 */
+	public function doRefreshSiteInformation(): void
+	{
+		/** @var RefreshSiteInfo $callback */
+		$callback = $this->getContainer()->taskRegistry->get('refreshsiteinfo');
+		$dummy    = new \stdClass();
+		$registry = new Registry();
+
+		$registry->set('limitStart', 0);
+		$registry->set('limit', 1);
+		$registry->set('force', true);
+		$registry->set('filter.ids', [$this->getId()]);
+
+		do
+		{
+			$return = $callback($dummy, $registry);
+		}
+		while ($return === Status::WILL_RESUME->value);
+	}
+
+	/**
+	 * Run a synchronous installed-extensions refresh via the RefreshInstalledExtensions task callback.
+	 *
+	 * Lifted from `Controller\Sites::doRefreshExtensionsInformation()` so both the legacy controller
+	 * and the API `ExtensionsRefresh` handler share a single implementation.
+	 *
+	 * @param   bool  $force         Force refresh even if cached.
+	 * @param   bool  $forceUpdates  Force update information refresh.
+	 *
+	 * @return  void
+	 * @since   1.4.0
+	 */
+	public function doRefreshExtensionsInformation(bool $force = true, bool $forceUpdates = true): void
+	{
+		$callback = $this->getContainer()->taskRegistry->get('refreshinstalledextensions');
+		$dummy    = new \stdClass();
+		$registry = new Registry();
+
+		$registry->set('limitStart', 0);
+		$registry->set('limit', 1);
+		$registry->set('force', $force);
+		$registry->set('forceUpdates', $forceUpdates);
+		$registry->set('filter.ids', [$this->getId()]);
+
+		do
+		{
+			$return = $callback($dummy, $registry);
+		}
+		while ($return === Status::WILL_RESUME->value);
+	}
+
+	/**
 	 * Get the base URL of the site (instead of the API endpoint).
 	 *
 	 * @return  string

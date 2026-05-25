@@ -1,0 +1,33 @@
+### Akeeba Panopticon API — Self-update
+###
+### Super-user only. Calls touch the local filesystem under APATH_ROOT and may replace
+### running PHP files. DO NOT run against production without a fresh backup. The
+### intended call order is: info -> download -> install -> postinstall.
+
+@hostname = https://panopticon.local
+@token    = REPLACE-ME-WITH-A-REAL-TOKEN
+
+### 1. Get the current self-update status (no side effects unless ?force=1)
+GET {{hostname}}/api/v1/selfupdate
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 1b. Force-bust the update cache and re-check
+GET {{hostname}}/api/v1/selfupdate?force=1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 2. Download the latest update package into the local staging area
+GET {{hostname}}/api/v1/selfupdate/download
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 3. Install the staged package (extract + OPcache invalidate + clear templates)
+GET {{hostname}}/api/v1/selfupdate/install
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 4. Run the post-install bookkeeping (DB schema, default tasks, cleanup)
+GET {{hostname}}/api/v1/selfupdate/postinstall
+Authorization: Bearer {{token}}
+Accept: application/json

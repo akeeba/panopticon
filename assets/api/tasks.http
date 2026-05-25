@@ -1,0 +1,45 @@
+### Akeeba Panopticon API — Tasks
+###
+### Super-user OR `panopticon.admin` on the relevant site for site-scoped tasks.
+### System tasks (`site_id` null/0) are super-user only.
+
+@hostname = https://panopticon.local
+@token    = REPLACE-ME-WITH-A-REAL-TOKEN
+
+### List all tasks (super-user only)
+GET {{hostname}}/api/v1/tasks?limit=20&offset=0
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### List tasks for a specific site (site admins may use this scoped form)
+GET {{hostname}}/api/v1/tasks?site_id=1&enabled=1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Read a single task
+GET {{hostname}}/api/v1/task/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Create a task (PUT)
+PUT {{hostname}}/api/v1/task
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "site_id":         1,
+  "type":            "joomlaupdate",
+  "cron_expression": "0 3 * * *",
+  "enabled":         true,
+  "params":          {}
+}
+
+### Modify an existing task
+POST {{hostname}}/api/v1/task/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "cron_expression": "30 4 * * *",
+  "enabled":         false
+}

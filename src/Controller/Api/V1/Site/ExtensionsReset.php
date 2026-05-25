@@ -11,64 +11,67 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Library\Queue\QueueInterface;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
-use Akeeba\Panopticon\Model\Task as TaskModel;
+use Akeeba\Panopticon\Model\AuditLog;
+use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueuePluginUpdateTrait;
 
 /**
- * API handler for POST /v1/site/:id/extensions/reset — purge the extensions update queue and delete the task.
+ * API handler for POST /v1/site/:id/extensions/reset — purge the extensions queue and reschedule.
+ *
+ * Mirrors `Controller\Sites::resetExtensionUpdate()`. Reuses the same trait helpers
+ * (`scheduleExtensionsUpdateForSite`, `schedulePluginsUpdateForSite`) the legacy controller calls.
+ *
+ * Request body (optional):
+ *   { "resetqueue": true }   // also empty the per-site update queue
  *
  * @since  1.4.0
  */
 class ExtensionsReset extends AbstractApiHandler
 {
+	use EnqueueExtensionUpdateTrait;
+	use EnqueuePluginUpdateTrait;
+
 	public function handle(): void
 	{
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
+		$user = $this->container->userManager->getUser();
+
+		$body       = $this->getJsonBody();
+		$resetQueue = (bool) ($body['resetqueue'] ?? false);
+
+		$cmsType = $site->cmsType();
+
+		if ($cmsType !== CMSType::JOOMLA && $cmsType !== CMSType::WORDPRESS)
+		{
+			$this->sendJsonError(422, 'Unsupported CMS type.', 'site.wrong_cms');
+		}
 
 		try
 		{
-			// Purge the extensions update queue
-			$queuePattern = match ($site->cmsType())
+			if ($resetQueue)
 			{
-				CMSType::JOOMLA    => QueueTypeEnum::EXTENSIONS->value,
-				CMSType::WORDPRESS => QueueTypeEnum::PLUGINS->value,
-				default            => null,
-			};
+				$queuePattern = match ($cmsType)
+				{
+					CMSType::JOOMLA    => QueueTypeEnum::EXTENSIONS->value,
+					CMSType::WORDPRESS => QueueTypeEnum::PLUGINS->value,
+				};
 
-			if ($queuePattern !== null)
-			{
 				$queueKey = sprintf($queuePattern, $site->getId());
-				$queue    = $this->container->queueFactory->makeQueue($queueKey);
+				/** @var QueueInterface $queue */
+				$queue = $this->container->queueFactory->makeQueue($queueKey);
 				$queue->clear();
 			}
 
-			// Delete the extensions update task
-			$taskType = match ($site->cmsType())
+			if ($cmsType === CMSType::JOOMLA)
 			{
-				CMSType::JOOMLA    => 'extensionsupdate',
-				CMSType::WORDPRESS => 'pluginsupdate',
-				default            => null,
-			};
-
-			if ($taskType !== null)
+				$this->scheduleExtensionsUpdateForSite($site, $this->container);
+			}
+			else
 			{
-				/** @var TaskModel $task */
-				$task = $this->container->mvcFactory->makeTempModel('Task');
-
-				try
-				{
-					$task->findOrFail([
-						'site_id' => $site->getId(),
-						'type'    => $taskType,
-					]);
-
-					$task->delete();
-				}
-				catch (\RuntimeException)
-				{
-					// No task found — that is fine, nothing to delete
-				}
+				$this->schedulePluginsUpdateForSite($site, $this->container);
 			}
 		}
 		catch (\Throwable $e)
@@ -76,6 +79,15 @@ class ExtensionsReset extends AbstractApiHandler
 			$this->sendJsonError(500, 'Failed to reset extensions update: ' . $e->getMessage());
 		}
 
-		$this->sendJsonResponse(null, 200, 'Extensions update queue and task reset successfully.');
+		AuditLog::record(
+			'site.extensions.reset',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'site',
+			(int) $site->getId(),
+			['cmsType' => $cmsType->value, 'resetQueue' => $resetQueue]
+		);
+
+		$this->sendJsonResponse(null, 200, 'Extensions update reset successfully.');
 	}
 }

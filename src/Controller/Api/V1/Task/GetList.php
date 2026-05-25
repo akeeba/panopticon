@@ -17,67 +17,88 @@ use Akeeba\Panopticon\Model\Task as TaskModel;
  *
  * Returns a paginated list of tasks, optionally filtered by site_id, type, and enabled status.
  *
+ * ACL: super-user (mirrors the legacy `view=tasks` ACL). When a non-super-user has
+ * `panopticon.admin` on a specific site, they may filter by that `site_id` to retrieve the
+ * tasks scoped to that site.
+ *
  * @since  1.4.0
  */
 class GetList extends AbstractApiHandler
 {
 	public function handle(): void
 	{
-		$this->requireSuperUser();
+		$user      = $this->container->userManager->getUser();
+		$isSuper   = (bool) $user->getPrivilege('panopticon.super');
+		$siteParam = $this->input->getString('site_id', '');
+		$siteId    = ($siteParam === '' || $siteParam === null) ? null : (int) $siteParam;
+
+		if (!$isSuper)
+		{
+			// Non-super users MUST scope the query to a single site they administer.
+			if ($siteId === null || $siteId <= 0)
+			{
+				$this->sendJsonError(
+					403,
+					'Listing tasks requires super-user privileges; non-super users must filter by an administered site_id.',
+					'auth.forbidden'
+				);
+			}
+
+			if (!$user->authorise('panopticon.admin', $siteId))
+			{
+				$this->sendJsonError(
+					403,
+					'You do not have admin permission on this site.',
+					'auth.forbidden'
+				);
+			}
+		}
 
 		/** @var TaskModel $model */
 		$model = $this->container->mvcFactory->makeTempModel('Task');
 
-		// Apply filters from query parameters
-		$siteId  = $this->input->getString('site_id', '');
-		$type    = $this->input->getString('type', '');
-		$enabled = $this->input->getString('enabled', '');
-
-		if ($siteId !== '')
+		if ($siteParam !== '')
 		{
-			$model->setState('site_id', $siteId);
+			$model->setState('site_id', $siteParam);
 		}
+
+		$type = $this->input->getString('type', '');
 
 		if ($type !== '')
 		{
 			$model->setState('type', $type);
 		}
 
-		if ($enabled !== '')
+		$enabled = $this->input->get('enabled', null);
+
+		if ($enabled !== null && $enabled !== '')
 		{
-			$model->setState('enabled', $enabled);
+			$model->setState('enabled', (int) (bool) $enabled);
 		}
 
-		// Pagination
-		$limit  = $this->input->getInt('limit', 50);
-		$offset = $this->input->getInt('offset', 0);
+		$limit  = max(0, min(200, $this->input->getInt('limit', 50)));
+		$offset = max(0, $this->input->getInt('offset', 0));
 
-		$model->setState('limit', $limit);
 		$model->setState('limitstart', $offset);
+		$model->setState('limit', $limit);
 
-		$items = $model->get();
+		$items = $model->get(true);
+		$total = $model->count();
+
 		$tasks = [];
 
+		/** @var TaskModel $task */
 		foreach ($items as $task)
 		{
-			/** @var TaskModel $task */
-			$tasks[] = [
-				'id'              => $task->id,
-				'site_id'         => $task->site_id,
-				'type'            => $task->type,
-				'enabled'         => (bool) $task->enabled,
-				'last_exit_code'  => $task->last_exit_code,
-				'next_execution'  => $task->next_execution,
-				'cron_expression' => (string) $task->cron_expression,
-			];
+			$tasks[] = $task->toApiArray();
 		}
 
 		$this->sendJsonResponse(
 			$tasks,
 			pagination: [
-				'offset' => $offset,
+				'total'  => $total,
 				'limit'  => $limit,
-				'count'  => count($tasks),
+				'offset' => $offset,
 			]
 		);
 	}

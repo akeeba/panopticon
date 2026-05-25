@@ -11,9 +11,12 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Model\AuditLog;
 
 /**
- * API handler for POST /v1/site/:id/fixjoomlacoreupdate — fix the Joomla core update site.
+ * API handler for POST /v1/site/:id/fixjoomlacoreupdate — clear a stuck Joomla core-update flag.
+ *
+ * Delegates to `Model\Site::fixCoreUpdateSite()` which the legacy controller already calls.
  *
  * @since  1.4.0
  */
@@ -22,11 +25,16 @@ class FixJoomlaCoreUpdate extends AbstractApiHandler
 	public function handle(): void
 	{
 		$id   = $this->input->getInt('id', 0);
-		$site = $this->getSiteWithPermission($id, 'run');
+		$site = $this->getSiteWithPermission($id, 'admin');
+		$user = $this->container->userManager->getUser();
 
 		if ($site->cmsType() !== CMSType::JOOMLA)
 		{
-			$this->sendJsonError(400, 'This operation is only available for Joomla sites.');
+			$this->sendJsonError(
+				422,
+				'This operation is only available for Joomla sites.',
+				'site.wrong_cms'
+			);
 		}
 
 		try
@@ -35,9 +43,17 @@ class FixJoomlaCoreUpdate extends AbstractApiHandler
 		}
 		catch (\Throwable $e)
 		{
-			$this->sendJsonError(500, 'Failed to fix core update site: ' . $e->getMessage());
+			$this->sendJsonError(500, 'Failed to fix the Joomla core update site: ' . $e->getMessage());
 		}
 
-		$this->sendJsonResponse(null, 200, 'Core update site fixed successfully.');
+		AuditLog::record(
+			'site.fix_joomla_core_update',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'site',
+			(int) $site->getId()
+		);
+
+		$this->sendJsonResponse(null, 200, 'Joomla core update site fixed successfully.');
 	}
 }

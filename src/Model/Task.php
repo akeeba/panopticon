@@ -106,6 +106,117 @@ class Task extends DataModel
 		return $query;
 	}
 
+	/**
+	 * Return a stable serialised representation of this task for API consumption.
+	 *
+	 * @return  array
+	 * @since   1.4.0
+	 */
+	public function toApiArray(): array
+	{
+		return [
+			'id'              => (int) $this->id,
+			'site_id'         => $this->site_id === null ? null : (int) $this->site_id,
+			'type'            => $this->type,
+			'params'          => $this->getParams()->toArray(),
+			'storage'         => $this->getStorage()->toArray(),
+			'cron_expression' => (string) $this->cron_expression,
+			'enabled'         => (bool) $this->enabled,
+			'last_exit_code'  => $this->last_exit_code === null ? null : (int) $this->last_exit_code,
+			'last_execution'  => $this->last_execution,
+			'last_run_end'    => $this->last_run_end,
+			'next_execution'  => $this->next_execution,
+			'times_executed'  => (int) $this->times_executed,
+			'times_failed'    => (int) $this->times_failed,
+			'locked'          => $this->locked,
+			'priority'        => (int) $this->priority,
+		];
+	}
+
+	/**
+	 * Validate and save task data, sharing the same path between API and legacy UI.
+	 *
+	 * Throws RuntimeException with HTTP-style codes:
+	 *  - 422 / `task.unknown_type` for unknown task types
+	 *  - 422 / `task.invalid_cron` for invalid cron expressions
+	 *  - 400 for missing required fields
+	 *
+	 * @param   array  $data  Input data — at minimum `type` and `cron_expression` when creating.
+	 *
+	 * @return  void
+	 * @throws  \RuntimeException
+	 * @since   1.4.0
+	 */
+	public function validateAndSave(array $data): void
+	{
+		// Validate task type against the registry, if present in the payload.
+		if (array_key_exists('type', $data))
+		{
+			$type = (string) $data['type'];
+
+			if ($type === '')
+			{
+				throw new \RuntimeException('Missing required field: type', 400);
+			}
+
+			$known = false;
+
+			try
+			{
+				$known = $this->container->taskRegistry->has($type);
+			}
+			catch (Throwable)
+			{
+				$known = false;
+			}
+
+			if (!$known)
+			{
+				throw new \RuntimeException(
+					sprintf('Unknown task type "%s".', $type),
+					422
+				);
+			}
+		}
+
+		// Validate cron expression, if present.
+		if (array_key_exists('cron_expression', $data))
+		{
+			$cron = (string) $data['cron_expression'];
+
+			if ($cron === '')
+			{
+				throw new \RuntimeException('Missing required field: cron_expression', 400);
+			}
+
+			if (!CronExpression::isValidExpression($cron))
+			{
+				throw new \RuntimeException(
+					sprintf('Invalid cron expression "%s".', $cron),
+					422
+				);
+			}
+		}
+
+		// Coerce params / storage to Registry as the model expects.
+		if (array_key_exists('params', $data) && !$data['params'] instanceof Registry)
+		{
+			$data['params'] = new Registry($data['params'] ?? []);
+		}
+
+		if (array_key_exists('storage', $data) && !$data['storage'] instanceof Registry)
+		{
+			$data['storage'] = new Registry($data['storage'] ?? []);
+		}
+
+		if (array_key_exists('enabled', $data))
+		{
+			$data['enabled'] = (int) (bool) $data['enabled'];
+		}
+
+		$this->save($data);
+	}
+
 	public function getParams(): Registry
 	{
 		return $this->params instanceof Registry ? $this->params : new Registry($this->params);

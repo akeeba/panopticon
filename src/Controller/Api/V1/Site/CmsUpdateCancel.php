@@ -11,10 +11,15 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
-use Akeeba\Panopticon\Model\Task as TaskModel;
+use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Model\AuditLog;
 
 /**
- * API handler for POST /v1/site/:id/cmsupdate/cancel — cancel a scheduled CMS update.
+ * API handler for POST /v1/site/:id/cmsupdate/cancel — cancel (unpublish) a scheduled CMS update.
+ *
+ * Mirrors the legacy `Controller\Sites::unscheduleJoomlaUpdate()` /
+ * `unscheduleWordPressUpdate()` flow: lookup the task via `Model\Site::getJoomlaUpdateTask()` /
+ * `getWordPressUpdateTask()` (both already in `Model\Site`), validate state, unpublish.
  *
  * @since  1.4.0
  */
@@ -24,39 +29,51 @@ class CmsUpdateCancel extends AbstractApiHandler
 	{
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
+		$user = $this->container->userManager->getUser();
 
-		$taskType = match ($site->cmsType())
-		{
-			CMSType::JOOMLA    => 'joomlaupdate',
-			CMSType::WORDPRESS => 'wordpressupdate',
-			default            => null,
-		};
+		$cmsType = $site->cmsType();
 
-		if ($taskType === null)
+		if ($cmsType !== CMSType::JOOMLA && $cmsType !== CMSType::WORDPRESS)
 		{
-			$this->sendJsonError(400, 'Unsupported CMS type.');
+			$this->sendJsonError(422, 'Unsupported CMS type.', 'site.wrong_cms');
+		}
+
+		$task = $cmsType === CMSType::JOOMLA
+			? $site->getJoomlaUpdateTask()
+			: $site->getWordPressUpdateTask();
+
+		if ($task === null)
+		{
+			$this->sendJsonError(404, 'No scheduled CMS update task found for this site.', 'task.not_scheduled');
+		}
+
+		if (in_array(
+			(int) $task->last_exit_code,
+			[Status::WILL_RESUME->value, Status::RUNNING->value],
+			true
+		))
+		{
+			$this->sendJsonError(422, 'The CMS update is currently running and cannot be cancelled.', 'task.running');
 		}
 
 		try
 		{
-			/** @var TaskModel $task */
-			$task = $this->container->mvcFactory->makeTempModel('Task');
-
-			$task->findOrFail([
-				'site_id' => $site->getId(),
-				'type'    => $taskType,
-			]);
-
-			$task->delete();
-		}
-		catch (\RuntimeException)
-		{
-			$this->sendJsonError(404, 'No scheduled CMS update task found for this site.');
+			$task->last_exit_code = Status::OK->value;
+			$task->unpublish();
 		}
 		catch (\Throwable $e)
 		{
 			$this->sendJsonError(500, 'Failed to cancel CMS update: ' . $e->getMessage());
 		}
+
+		AuditLog::record(
+			'site.cmsupdate.cancel',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'site',
+			(int) $site->getId(),
+			['cmsType' => $cmsType->value]
+		);
 
 		$this->sendJsonResponse(null, 200, 'CMS update cancelled successfully.');
 	}
