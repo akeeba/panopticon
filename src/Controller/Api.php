@@ -25,6 +25,14 @@ class Api extends Controller
 {
 	use ACLTrait;
 
+	public function __construct($container = null)
+	{
+		parent::__construct($container);
+
+		// All API requests dispatch through the same method, regardless of the requested task.
+		$this->registerDefaultTask('dispatch');
+	}
+
 	/**
 	 * Runs before executing any task.
 	 *
@@ -49,7 +57,7 @@ class Api extends Controller
 
 		if ($userId === null)
 		{
-			$this->sendJsonError(403, 'Invalid or missing API token.');
+			$this->sendJsonError(401, 'Invalid or missing API token.', 'auth.invalid_token');
 
 			return false;
 		}
@@ -69,7 +77,7 @@ class Api extends Controller
 
 		if (empty($handlerSuffix))
 		{
-			$this->sendJsonError(404, 'Unknown API endpoint.');
+			$this->sendJsonError(404, 'Unknown API endpoint.', 'route.not_found');
 
 			return;
 		}
@@ -78,7 +86,7 @@ class Api extends Controller
 
 		if (!class_exists($handlerClass) || !is_subclass_of($handlerClass, ApiHandlerInterface::class))
 		{
-			$this->sendJsonError(404, 'Unknown API endpoint.');
+			$this->sendJsonError(404, 'Unknown API endpoint.', 'route.not_found');
 
 			return;
 		}
@@ -90,24 +98,38 @@ class Api extends Controller
 	/**
 	 * Send a JSON error response and terminate.
 	 *
-	 * @param   int     $httpCode  HTTP status code.
-	 * @param   string  $message   Error message.
+	 * @param   int          $httpCode  HTTP status code.
+	 * @param   string       $message   Human-readable error message.
+	 * @param   string|null  $code      Stable machine-readable error code (e.g. "auth.invalid_token").
 	 *
 	 * @return  void
 	 * @since   1.4.0
 	 */
-	private function sendJsonError(int $httpCode, string $message): void
+	private function sendJsonError(int $httpCode, string $message, ?string $code = null): void
 	{
 		@ob_end_clean();
 		http_response_code($httpCode);
+
+		// On 401, advertise the supported authentication scheme per RFC 7235.
+		if ($httpCode === 401)
+		{
+			header('WWW-Authenticate: Bearer realm="Panopticon API"');
+		}
+
 		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode(
-			[
-				'success' => false,
-				'message' => $message,
-			],
-			JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-		);
+
+		$payload = [
+			'success' => false,
+		];
+
+		if ($code !== null)
+		{
+			$payload['code'] = $code;
+		}
+
+		$payload['message'] = $message;
+
+		echo json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		$this->getContainer()->application->close();
 	}
 }

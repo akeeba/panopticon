@@ -42,6 +42,18 @@ class GetList extends AbstractApiHandler
 
 		if ($cmsType !== null)
 		{
+			// Validate cmsType against the CMSType enum.
+			if (CMSType::tryFrom($cmsType) === null)
+			{
+				$this->sendJsonError(
+					400,
+					sprintf('Invalid cmsType: %s', $cmsType),
+					'validation.bad_request'
+				);
+
+				return;
+			}
+
 			$model->setState('cmsType', $cmsType);
 		}
 

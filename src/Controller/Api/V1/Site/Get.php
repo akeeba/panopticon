@@ -14,6 +14,12 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 /**
  * API handler for GET /v1/site/:id — get full site details.
  *
+ * NOTE on the `config` field: by deliberate design (master plan decision #8) the full site
+ * configuration Registry is exposed verbatim — including download keys, basic-auth credentials
+ * and any other secrets stored against the site. The trust model is that API token confidentiality
+ * is sufficient; do NOT mint tokens for less-trusted automations. Do NOT redact here without
+ * revisiting the master plan and the public API contract documented in assets/api/docs/sites.md.
+ *
  * @since  1.4.0
  */
 class Get extends AbstractApiHandler

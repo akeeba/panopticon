@@ -9,6 +9,8 @@
 /.env.local
 /.env.dev
 /.env.docker
+/.env.test
+/.phpunit.cache
 /cache/**
 !/cache/.htaccess
 !/cache/web.config

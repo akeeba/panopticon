@@ -21,7 +21,18 @@
     ## Uncomment and set to the path of your installation if necessary
     # RewriteBase /
 
+    ## Pass the Authorization header through to PHP-FPM (CGI/FastCGI).
+    ##
+    ## Without this directive, Apache strips the Authorization header before it reaches PHP
+    ## when PHP runs as CGI/FPM, which breaks the JSON API's Bearer-token authentication.
+    ## The alternative is `CGIPassAuth On`, but `SetEnvIf` works on every Apache 2.x build.
+    <IfModule mod_setenvif.c>
+        SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+    </IfModule>
+
     ## API clean URLs
+    ## This rule is REQUIRED for clean URLs to the API endpoints (`/api/v1/...`).
+    ## Users without .htaccess support can fall back to `/index.php/api/v1/...`.
     RewriteRule ^api(/.*)?$ index.php/api$1 [L,QSA]
 </IfModule>
 

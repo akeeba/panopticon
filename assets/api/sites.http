@@ -1,0 +1,38 @@
+### Akeeba Panopticon API — Sites (read-only)
+###
+### PhpStorm HTTP Client request file. Use the run gutter icon next to each block
+### or right-click → Run All Requests in File.
+###
+### Replace the env vars below or define them in a sibling `http-client.env.json`.
+
+@hostname = https://panopticon.local
+@token    = REPLACE-ME-WITH-A-REAL-TOKEN
+
+### List sites (recommended: Bearer auth)
+GET {{hostname}}/api/v1/sites
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### List sites with filters and pagination
+GET {{hostname}}/api/v1/sites?search=example&cmsType=joomla&limit=10&offset=0
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Get a single site by id
+GET {{hostname}}/api/v1/site/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### --- Alternative authentication surfaces -------------------------------------
+
+### Custom header (X-Panopticon-Token)
+GET {{hostname}}/api/v1/sites
+X-Panopticon-Token: {{token}}
+Accept: application/json
+
+### GET parameter — NOT recommended for production.
+# WARNING: query-string tokens are leaked through web-server access logs and the
+# Referer header. Documented as a footgun in assets/api/docs/overview.md.
+# Use Bearer auth in real automations.
+GET {{hostname}}/api/v1/sites?_panopticon_token={{token}}
+Accept: application/json

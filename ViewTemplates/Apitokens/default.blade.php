@@ -7,125 +7,186 @@
 
 defined('AKEEBA') || die;
 
-/** @var \Akeeba\Panopticon\View\Apitokens\Html $this */
-
+/**
+ * @var \Akeeba\Panopticon\View\Apitokens\Html $this
+ * @var \Akeeba\Panopticon\Model\Apitoken      $model
+ */
+$model = $this->getModel();
+$token = $this->container->session->getCsrfToken()->getValue();
+$i     = 1;
 ?>
 
-{{-- API Endpoint URL --}}
-<div class="card mb-3">
-    <div class="card-body">
-        <h5 class="card-title">
-            <span class="fa fa-link" aria-hidden="true"></span>
-            @lang('PANOPTICON_APITOKENS_LBL_API_URL')
-        </h5>
-        <div class="input-group mb-2">
-            <input type="text" class="form-control font-monospace" value="{{ $this->apiUrl }}" readonly id="apiUrl">
-            <button class="btn btn-outline-secondary" type="button"
-                    onclick="navigator.clipboard.writeText(document.getElementById('apiUrl').value)">
-                <span class="fa fa-copy" aria-hidden="true"></span>
-            </button>
-        </div>
-        <p class="card-text text-muted small">
-            @lang('PANOPTICON_APITOKENS_LBL_API_URL_NOTE')
-        </p>
-    </div>
-</div>
-
-{{-- Security Warning --}}
-<div class="alert alert-warning">
-    <span class="fa fa-triangle-exclamation" aria-hidden="true"></span>
-    @lang('PANOPTICON_APITOKENS_LBL_SECURITY_WARNING')
-</div>
-
-{{-- Create Token Form --}}
-<div class="card mb-3">
-    <div class="card-body">
-        <div class="row g-2 align-items-end">
-            <div class="col-12 col-md">
-                <label for="newTokenDescription" class="form-label">
-                    @lang('PANOPTICON_APITOKENS_LBL_NEW_TOKEN_DESCRIPTION')
-                </label>
-                <input type="text" class="form-control" id="newTokenDescription"
-                       placeholder="@lang('PANOPTICON_APITOKENS_LBL_DESCRIPTION')">
-            </div>
-            <div class="col-12 col-md-auto">
-                <button type="button" class="btn btn-primary" id="btnCreateToken">
-                    <span class="fa fa-plus" aria-hidden="true"></span>
-                    @lang('PANOPTICON_APITOKENS_BTN_CREATE')
+<form action="@route('index.php?view=apitokens')" method="post" name="adminForm" id="adminForm">
+    <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
+        <div class="d-flex flex-row justify-content-center">
+            <div class="input-group pnp-mw-50">
+                <input type="search" class="form-control form-control-lg" id="search"
+                       placeholder="@lang('PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION')"
+                       name="search" value="{{{ $model->getState('search', '') }}}">
+                <label for="search" class="visually-hidden">@lang('PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION')</label>
+                <button type="submit" class="btn btn-primary">
+                    <span class="fa fa-search" aria-hidden="true"></span>
+                    <span class="visually-hidden">@lang('PANOPTICON_LBL_FORM_SEARCH')</span>
                 </button>
             </div>
         </div>
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
+            <div>
+                <label class="visually-hidden" for="enabled">@lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')</label>
+                {{ $this->container->html->select->genericList([
+                    ''  => 'PANOPTICON_APITOKENS_LBL_SELECT_ENABLED',
+                    '0' => 'PANOPTICON_LBL_UNPUBLISHED',
+                    '1' => 'PANOPTICON_LBL_PUBLISHED',
+                ], 'enabled', [
+                    'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+                ], selected: $model->getState('enabled'),
+                idTag: 'enabled',
+                translate: true) }}
+            </div>
+            <div>
+                <label class="visually-hidden" for="created_after">@lang('PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER')</label>
+                <input type="date" class="form-control akeebaGridViewAutoSubmitOnChange"
+                       name="created_after" id="created_after"
+                       value="{{{ $model->getState('created_after', '') }}}"
+                       placeholder="@lang('PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER')"
+                       aria-label="@lang('PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER')">
+            </div>
+            <div>
+                <label class="visually-hidden" for="expires_before">@lang('PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE')</label>
+                <input type="date" class="form-control akeebaGridViewAutoSubmitOnChange"
+                       name="expires_before" id="expires_before"
+                       value="{{{ $model->getState('expires_before', '') }}}"
+                       placeholder="@lang('PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE')"
+                       aria-label="@lang('PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE')">
+            </div>
+            <div>
+                <label class="visually-hidden" for="last_used_before">@lang('PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE')</label>
+                <input type="date" class="form-control akeebaGridViewAutoSubmitOnChange"
+                       name="last_used_before" id="last_used_before"
+                       value="{{{ $model->getState('last_used_before', '') }}}"
+                       placeholder="@lang('PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE')"
+                       aria-label="@lang('PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE')">
+            </div>
+        </div>
     </div>
-</div>
 
-{{-- New Token Display (hidden by default) --}}
-<div class="alert alert-success d-none" id="newTokenAlert">
-    <p class="fw-bold">@lang('PANOPTICON_APITOKENS_MSG_CREATED')</p>
-    <div class="input-group">
-        <input type="text" class="form-control font-monospace" id="newTokenValue" readonly>
-        <button class="btn btn-outline-success" type="button" id="btnCopyNewToken">
-            <span class="fa fa-copy" aria-hidden="true"></span>
-            @lang('PANOPTICON_APITOKENS_BTN_COPY_TOKEN')
-        </button>
-    </div>
-</div>
-
-{{-- Token Table --}}
-<div class="card">
-    <div class="card-body p-0">
-        <table class="table table-striped table-hover mb-0" id="tokenTable">
-            <thead>
+    <table class="table table-striped align-middle" id="adminList" role="table">
+        <caption class="visually-hidden">
+            @lang('PANOPTICON_APITOKENS_TITLE')
+        </caption>
+        <thead>
+        <tr>
+            <th class="pnp-w-1">
+                <span class="visually-hidden">
+                    @lang('PANOPTICON_LBL_TABLE_HEAD_GRID_SELECT')
+                </span>
+            </th>
+            <th>
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION', 'description', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+            </th>
+            <th class="pnp-w-5">
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_ENABLED', 'enabled', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+            </th>
+            <th>
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED', 'last_used_at', $this->lists->order_Dir, $this->lists->order, 'browse') }}
+            </th>
+            <th class="pnp-w-5">
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
+                    'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')
+                ]) }}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($this->items as $row)
             <tr>
-                <th>@lang('PANOPTICON_APITOKENS_LBL_DESCRIPTION')</th>
-                <th class="text-center">@lang('PANOPTICON_APITOKENS_LBL_ENABLED')</th>
-                <th>@lang('PANOPTICON_APITOKENS_LBL_CREATED_ON')</th>
-                <th class="text-center">@lang('PANOPTICON_APITOKENS_LBL_ACTIONS')</th>
+                {{-- Checkbox --}}
+                <td>
+                    {{ $this->getContainer()->html->grid->id(++$i, $row->id) }}
+                </td>
+                {{-- Description + expiry sub-line --}}
+                <td>
+                    <a href="@route(sprintf('index.php?view=apitoken&task=edit&id=%d', $row->id))" class="fw-medium">
+                        {{{ $row->description ?: '—' }}}
+                    </a>
+                    @if (!empty($row->expires_at) && $row->expires_at !== '0000-00-00 00:00:00')
+                        <?php
+                            $expiresFormatted = $this->getContainer()->html->basic->date(
+                                $row->expires_at,
+                                $this->getLanguage()->text('DATE_FORMAT_LC2')
+                            );
+                        ?>
+                        <div class="small text-muted">
+                            @sprintf('PANOPTICON_APITOKENS_LBL_EXPIRES_ON', $expiresFormatted)
+                        </div>
+                    @endif
+                </td>
+                {{-- Enabled (clickable icon) --}}
+                <td>
+                    @if ($row->enabled)
+                        <a class="text-decoration-none text-success"
+                           href="@route(sprintf('index.php?view=apitokens&task=unpublish&id=%d&%s=1', $row->id, $token))"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-title="@lang('PANOPTICON_LBL_PUBLISHED')"
+                        >
+                            <span class="fa fa-circle-check" aria-hidden="true"></span>
+                            <span class="visually-hidden">@sprintf('PANOPTICON_LBL_PUBLISHED_SR', $row->id)</span>
+                        </a>
+                    @else
+                        <a class="text-decoration-none text-danger"
+                           href="@route(sprintf('index.php?view=apitokens&task=publish&id=%d&%s=1', $row->id, $token))"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-title="@lang('PANOPTICON_LBL_UNPUBLISHED')"
+                        >
+                            <span class="fa fa-circle-xmark" aria-hidden="true"></span>
+                            <span class="visually-hidden">@sprintf('PANOPTICON_LBL_UNPUBLISHED_SR', $row->id)</span>
+                        </a>
+                    @endif
+                </td>
+                {{-- Last Used + IP sub-line --}}
+                <td>
+                    @if (!empty($row->last_used_at) && $row->last_used_at !== '0000-00-00 00:00:00')
+                        {{ $this->getContainer()->html->basic->date($row->last_used_at, $this->getLanguage()->text('DATE_FORMAT_LC2')) }}
+                        @if (!empty($row->last_used_ip))
+                            <?php
+                                $printableIp = @inet_ntop($row->last_used_ip);
+                            ?>
+                            @if ($printableIp !== false && $printableIp !== null)
+                                <div class="small text-muted font-monospace">
+                                    {{{ $printableIp }}}
+                                </div>
+                            @endif
+                        @endif
+                    @else
+                        <span class="text-body-tertiary">—</span>
+                    @endif
+                </td>
+                {{-- ID --}}
+                <td class="font-monospace text-end">
+                    {{ (int) $row->id }}
+                </td>
             </tr>
-            </thead>
-            <tbody id="tokenTableBody">
-            @if (empty($this->tokens))
-                <tr id="noTokensRow">
-                    <td colspan="4" class="text-center text-muted py-4">
-                        @lang('PANOPTICON_APITOKENS_LBL_NO_TOKENS')
-                    </td>
-                </tr>
-            @else
-                @foreach ($this->tokens as $token)
-                    <tr data-token-id="{{ $token->id }}">
-                        <td>{{ $token->description ?: '—' }}</td>
-                        <td class="text-center">
-                            <button class="btn btn-sm {{ $token->enabled ? 'btn-success' : 'btn-secondary' }} btn-toggle-token"
-                                    data-id="{{ $token->id }}">
-                                <span class="fa {{ $token->enabled ? 'fa-circle-check' : 'fa-circle-xmark' }}"
-                                      aria-hidden="true"></span>
-                                {{ $token->enabled
-                                    ? $this->getLanguage()->text('PANOPTICON_APITOKENS_BTN_DISABLE')
-                                    : $this->getLanguage()->text('PANOPTICON_APITOKENS_BTN_ENABLE') }}
-                            </button>
-                        </td>
-                        <td>{{ \Awf\Html\Html::date($token->created_on, $this->getLanguage()->text('DATE_FORMAT_LC2')) }}</td>
-                        <td class="text-center">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button class="btn btn-outline-info btn-show-token" data-id="{{ $token->id }}"
-                                        title="@lang('PANOPTICON_APITOKENS_BTN_SHOW_TOKEN')">
-                                    <span class="fa fa-eye" aria-hidden="true"></span>
-                                </button>
-                                <button class="btn btn-outline-danger btn-delete-token" data-id="{{ $token->id }}"
-                                        title="@lang('PANOPTICON_APITOKENS_BTN_DELETE')">
-                                    <span class="fa fa-trash-can" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                            <div class="input-group input-group-sm mt-1 d-none token-value-group" data-id="{{ $token->id }}">
-                                <input type="text" class="form-control font-monospace token-value-input" readonly>
-                                <button class="btn btn-outline-secondary btn-copy-token" type="button">
-                                    <span class="fa fa-copy" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            @endif
-            </tbody>
-        </table>
-    </div>
-</div>
+        @endforeach
+        @if (!$this->items?->count())
+            <tr>
+                <td colspan="20" class="text-center text-body-tertiary">
+                    @lang('AWF_PAGINATION_LBL_NO_RESULTS')
+                </td>
+            </tr>
+        @endif
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="20" class="center">
+                {{ $this->pagination->getListFooter(['class' => 'form-select akeebaGridViewAutoSubmitOnChange']) }}
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <input type="hidden" name="boxchecked" id="boxchecked" value="0">
+    <input type="hidden" name="task" id="task" value="browse">
+    <input type="hidden" name="filter_order" id="filter_order" value="{{{ $this->lists->order }}}">
+    <input type="hidden" name="filter_order_Dir" id="filter_order_Dir" value="{{{ $this->lists->order_Dir }}}">
+    <input type="hidden" name="token" value="@token()">
+</form>

@@ -1087,5 +1087,96 @@ CREATE TABLE IF NOT EXISTS `#__api_tokens`
             ]]></query>
         </action>
 
+        <!-- API tokens: forward-compat columns (expires_at, last_used_at, last_used_ip, scopes) -->
+        <action table="#__api_tokens" canfail="1">
+            <condition type="missing" value="expires_at"/>
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens` ADD COLUMN `expires_at` DATETIME NULL DEFAULT NULL AFTER `enabled`;
+]]></query>
+        </action>
+
+        <action table="#__api_tokens" canfail="1">
+            <condition type="missing" value="last_used_at"/>
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens` ADD COLUMN `last_used_at` DATETIME NULL DEFAULT NULL AFTER `expires_at`;
+]]></query>
+        </action>
+
+        <action table="#__api_tokens" canfail="1">
+            <condition type="missing" value="last_used_ip"/>
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens` ADD COLUMN `last_used_ip` VARBINARY(16) NULL DEFAULT NULL AFTER `last_used_at`;
+]]></query>
+        </action>
+
+        <action table="#__api_tokens" canfail="1">
+            <condition type="missing" value="scopes"/>
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens` ADD COLUMN `scopes` JSON NULL DEFAULT NULL AFTER `last_used_ip`;
+]]></query>
+        </action>
+
+        <!-- API tokens: fix the composite index ordering. The leading column should be the higher-cardinality one. -->
+        <action table="#__api_tokens" canfail="1">
+            <condition type="index" value="idx_enabled_user"/>
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens` DROP INDEX `idx_enabled_user`;
+]]></query>
+        </action>
+
+        <action table="#__api_tokens" canfail="1">
+            <condition type="index" operator="not" value="idx_user_enabled"/>
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens` ADD INDEX `idx_user_enabled` (`user_id`, `enabled`);
+]]></query>
+        </action>
+
+        <!-- API tokens: add FKs for created_by / modified_by. canfail=1 because there is no FK-existence condition type. -->
+        <action table="#__api_tokens" canfail="1">
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens`
+    ADD CONSTRAINT `fk_api_tokens_created_by` FOREIGN KEY (`created_by`) REFERENCES `#__users` (`id`) ON DELETE CASCADE;
+]]></query>
+        </action>
+
+        <action table="#__api_tokens" canfail="1">
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens`
+    ADD CONSTRAINT `fk_api_tokens_modified_by` FOREIGN KEY (`modified_by`) REFERENCES `#__users` (`id`) ON DELETE SET NULL;
+]]></query>
+        </action>
+
+        <!-- API tokens: ensure modified_on auto-updates on row change. ALTER MODIFY is naturally idempotent. -->
+        <action table="#__api_tokens" canfail="1">
+            <query><![CDATA[
+ALTER TABLE `#__api_tokens`
+    MODIFY COLUMN `modified_on` DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP;
+]]></query>
+        </action>
+
+        <!-- Create table: audit_log -->
+        <action table="#__audit_log" canfail="0">
+            <condition type="missing" value=""/>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS `#__audit_log`
+(
+    `id`          SERIAL,
+    `occurred_on` DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `user_id`     BIGINT UNSIGNED     NULL     DEFAULT NULL,
+    `ip`          VARBINARY(16)       NULL     DEFAULT NULL,
+    `action`      VARCHAR(64)         NOT NULL,
+    `target_type` VARCHAR(64)         NULL     DEFAULT NULL,
+    `target_id`   BIGINT UNSIGNED     NULL     DEFAULT NULL,
+    `details`     JSON                NULL     DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `idx_audit_user_time` (`user_id`, `occurred_on`),
+    KEY `idx_audit_action_time` (`action`, `occurred_on`),
+    CONSTRAINT `fk_audit_user` FOREIGN KEY (`user_id`) REFERENCES `#__users` (`id`) ON DELETE SET NULL
+)
+    DEFAULT COLLATE utf8mb4_unicode_ci
+    ENGINE = InnoDB;
+            ]]></query>
+        </action>
+
     </sql>
 </schema>

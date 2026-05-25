@@ -1,0 +1,255 @@
+openapi: 3.1.0
+info:
+  title: Akeeba Panopticon API
+  version: 1.4.0-dev
+  summary: Self-served JSON API for managing and monitoring Joomla and WordPress sites.
+  description: |
+    The Panopticon API exposes the operations that the web UI performs over a stable JSON contract.
+
+    Authentication uses per-user API tokens minted from the web UI. Three transports are supported:
+    Bearer header (recommended), `X-Panopticon-Token` header, and `_panopticon_token` query
+    parameter. See `assets/api/docs/overview.md` for the full security policy.
+
+    This document is hand-written and tracks the source of truth in `assets/api/docs/`.
+  license:
+    name: GNU AGPL-3.0-or-later
+    url: https://www.gnu.org/licenses/agpl-3.0.txt
+  contact:
+    name: Akeeba Ltd
+    url: https://www.akeeba.com/
+
+servers:
+  - url: '{baseUrl}/api'
+    description: Panopticon installation root.
+    variables:
+      baseUrl:
+        default: https://panopticon.example.com
+        description: Public base URL of the Panopticon installation, without a trailing slash.
+
+security:
+  - bearerAuth: []
+  - apiKeyHeader: []
+  - apiKeyQuery: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: panopticon-token
+      description: Recommended. `Authorization: Bearer <token>`.
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Panopticon-Token
+      description: Equivalent to Bearer; use where you cannot set the Authorization header.
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: _panopticon_token
+      description: |
+        NOT for production. Query-string tokens leak through access logs and Referer headers.
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [success, code, message]
+      properties:
+        success:
+          type: boolean
+          enum: [false]
+        code:
+          type: string
+          description: Stable machine-readable error code in dotted form.
+          examples: [auth.invalid_token, auth.forbidden, site.not_found, validation.bad_request]
+        message:
+          type: string
+          description: Human-readable message. Do NOT switch on this; switch on `code`.
+
+    Pagination:
+      type: object
+      required: [total, limit, offset]
+      properties:
+        total:
+          type: integer
+          minimum: 0
+        limit:
+          type: integer
+          minimum: 0
+        offset:
+          type: integer
+          minimum: 0
+
+    SiteSummary:
+      type: object
+      required: [id, name, url, enabled, cmsType]
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        cmsType:
+          type: string
+          description: Member of the CMSType enum (e.g. `joomla`, `wordpress`).
+
+    Site:
+      type: object
+      required: [id, name, url, baseUrl, enabled, cmsType, config]
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        baseUrl:
+          type: string
+          format: uri
+        enabled:
+          type: boolean
+        cmsType:
+          type: string
+        created_on:
+          type: [string, 'null']
+          format: date-time
+        created_by:
+          type: [integer, 'null']
+        modified_on:
+          type: [string, 'null']
+          format: date-time
+        modified_by:
+          type: [integer, 'null']
+        notes:
+          type: [string, 'null']
+        config:
+          $ref: '#/components/schemas/SiteConfig'
+
+    SiteConfig:
+      type: object
+      additionalProperties: true
+      description: |
+        Full site configuration Registry, returned verbatim. Contains secrets (download keys,
+        basic-auth credentials, custom headers). See overview.md § Secrets.
+
+  responses:
+    Unauthorized:
+      description: Missing or invalid token.
+      headers:
+        WWW-Authenticate:
+          schema:
+            type: string
+          example: 'Bearer realm="Panopticon API"'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            code: auth.invalid_token
+            message: Invalid or missing API token.
+    Forbidden:
+      description: Authenticated, but the user lacks the required privilege.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            code: auth.forbidden
+            message: You do not have permission to access this site.
+    NotFound:
+      description: The resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            code: site.not_found
+            message: Site not found.
+    BadRequest:
+      description: Validation failure.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+paths:
+  /v1/sites:
+    get:
+      operationId: listSites
+      summary: List sites visible to the authenticated user.
+      tags: [Sites]
+      parameters:
+        - name: search
+          in: query
+          schema: { type: string }
+        - name: enabled
+          in: query
+          schema: { type: integer, enum: [0, 1] }
+        - name: cmsType
+          in: query
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 0, default: 50 }
+        - name: offset
+          in: query
+          schema: { type: integer, minimum: 0, default: 0 }
+      responses:
+        '200':
+          description: Paginated list of sites.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data, pagination]
+                properties:
+                  success:
+                    type: boolean
+                    enum: [true]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SiteSummary'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  /v1/site/{id}:
+    get:
+      operationId: getSite
+      summary: Get a single site with its full configuration Registry.
+      tags: [Sites]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        '200':
+          description: Full site record including the unredacted `config` Registry.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success:
+                    type: boolean
+                    enum: [true]
+                  data:
+                    $ref: '#/components/schemas/Site'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
