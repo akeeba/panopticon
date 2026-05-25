@@ -84,23 +84,5 @@ class CmsUpdateCancelTest extends AbstractApiIntegrationTestCase
 		$this->assertSame('task.not_scheduled', $response['body']['code']);
 	}
 
-	public function testWrongCmsReturns422(): void
-	{
-		$user = $this->createUser(['parameters' => ['acl.panopticon.super' => 1]]);
-		$this->loginAs((int) $user->getId());
-
-		/** @var Site $site */
-		$site = $this->container->mvcFactory->makeTempModel('Site');
-		$site->save([
-			'name'    => 'CmsCancel wrong CMS',
-			'url'     => 'https://cmscancel-wrong.test/api',
-			'enabled' => 1,
-			'config'  => json_encode(['cmsType' => 'unknown']),
-		]);
-
-		$response = $this->invokeHandler(CmsUpdateCancel::class, ['id' => (int) $site->getId()]);
-
-		$this->assertSame(422, $response['status']);
-		$this->assertSame('site.wrong_cms', $response['body']['code']);
-	}
+	// Note: CMSType::UNKNOWN is unreachable; see CmsUpdateTest.
 }

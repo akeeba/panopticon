@@ -106,21 +106,41 @@ abstract class AbstractApiIntegrationTestCase extends AbstractIntegrationTestCas
 
 		http_response_code(200);
 
+		// Two stacked output buffers: the handler's internal @ob_end_clean() closes the
+		// innermost (sacrificial) one; the outer captures the JSON echo. Track the baseline
+		// ob level so we can normalise it precisely on the way out and keep PHPUnit's
+		// risky-test detector happy.
+		$baselineObLevel = ob_get_level();
+		ob_start();
 		ob_start();
 
 		try
 		{
 			$handler->handle();
-			$raw = (string) ob_get_clean();
 		}
 		catch (ApiResponseException)
 		{
-			$raw = (string) ob_get_clean();
+			// Expected: the StubApiApplication::close() throws this to unwind the handler.
 		}
 		catch (\Throwable $e)
 		{
-			ob_end_clean();
+			while (ob_get_level() > $baselineObLevel)
+			{
+				ob_end_clean();
+			}
 			throw $e;
+		}
+
+		// Capture the outermost of our two buffers as the response body; close everything
+		// we opened so the ob level returns to the test's baseline exactly.
+		$raw = '';
+		while (ob_get_level() > $baselineObLevel + 1)
+		{
+			ob_end_clean();
+		}
+		if (ob_get_level() > $baselineObLevel)
+		{
+			$raw = (string) ob_get_clean();
 		}
 
 		$decoded = json_decode($raw, true);
@@ -144,33 +164,52 @@ abstract class AbstractApiIntegrationTestCase extends AbstractIntegrationTestCas
 	 */
 	protected function dispatchApi(string $handlerSuffix, array $inputData = []): array
 	{
-		$input = $this->makeInput(array_merge(['handler' => $handlerSuffix], $inputData));
+		// AWF's Controller reads its Input from $container->input; replace it for this dispatch.
+		$originalInput = $this->container->input;
+		$newInput      = $this->makeInput(array_merge(['handler' => $handlerSuffix], $inputData));
 
-		$controller = new \Akeeba\Panopticon\Controller\Api('Api', $this->container, $input);
+		unset($this->container['input']);
+		$this->container['input'] = fn() => $newInput;
+
+		$controller = new \Akeeba\Panopticon\Controller\Api($this->container);
 
 		http_response_code(200);
+
+		$baselineObLevel = ob_get_level();
+		ob_start();
 		ob_start();
 
 		try
 		{
-			if ($controller->execute('dispatch') === false)
-			{
-				$raw = (string) ob_get_clean();
-			}
-			else
-			{
-				$raw = (string) ob_get_clean();
-			}
+			$controller->execute('dispatch');
 		}
 		catch (ApiResponseException)
 		{
-			$raw = (string) ob_get_clean();
+			// Expected: StubApiApplication::close() throws this.
 		}
 		catch (\Throwable $e)
 		{
-			ob_end_clean();
+			while (ob_get_level() > $baselineObLevel)
+			{
+				ob_end_clean();
+			}
+			unset($this->container['input']);
+			$this->container['input'] = fn() => $originalInput;
 			throw $e;
 		}
+
+		$raw = '';
+		while (ob_get_level() > $baselineObLevel + 1)
+		{
+			ob_end_clean();
+		}
+		if (ob_get_level() > $baselineObLevel)
+		{
+			$raw = (string) ob_get_clean();
+		}
+
+		unset($this->container['input']);
+		$this->container['input'] = fn() => $originalInput;
 
 		$decoded = json_decode($raw, true);
 
@@ -179,6 +218,22 @@ abstract class AbstractApiIntegrationTestCase extends AbstractIntegrationTestCas
 			'body'   => is_array($decoded) ? $decoded : null,
 			'raw'    => $raw,
 		];
+	}
+
+	/**
+	 * Update a site row's `config` JSON directly so its cmsType is the empty (UNKNOWN) backing
+	 * value. {@see \Akeeba\Panopticon\Model\Site::check()} normalises empty/invalid cmsType to
+	 * 'joomla', so tests that need the UNKNOWN state must bypass it via direct SQL.
+	 */
+	protected function forceUnknownCmsType(int $siteId): void
+	{
+		$db    = $this->container->db;
+		$query = $db->getQuery(true)
+			->update($db->qn('#__sites'))
+			->set($db->qn('config') . ' = ' . $db->q(json_encode(['cmsType' => ''])))
+			->where($db->qn('id') . ' = ' . (int) $siteId);
+
+		$db->setQuery($query)->execute();
 	}
 
 	/**

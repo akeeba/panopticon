@@ -37,6 +37,16 @@ class RefreshTest extends AbstractApiIntegrationTestCase
 			{
 				return Status::OK->value;
 			}
+
+			public function getTaskType(): string
+			{
+				return 'refreshsiteinfo';
+			}
+
+			public function getDescription(): string
+			{
+				return 'Test stub';
+			}
 		};
 
 		$this->container->taskRegistry->add('refreshsiteinfo', $stub);

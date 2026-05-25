@@ -22,6 +22,12 @@ declare(strict_types=1);
 define('AKEEBA', 1);
 define('AKEEBA_PANOPTICON_TEST', 1);
 
+// AWF still calls mysqli_ping() which is E_DEPRECATED on PHP 8.4+. Suppressing here keeps
+// stray output out of stdout so http_response_code() works inside the integration tests.
+// Errors and warnings (E_WARNING / E_ERROR / etc.) are still reported — we silence only
+// deprecations from third-party libraries.
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 // Path constants
 require __DIR__ . '/../defines.php';
 
@@ -175,6 +181,10 @@ $container = \Akeeba\Panopticon\Factory::getContainer();
 
 // Force the configuration to load now so we surface any .env.test issues at bootstrap time.
 $container->appConfig->loadConfiguration();
+
+// Wire up the Panopticon User subclass + privilege plugin. The live Application does this in
+// its bootstrap path; tests must do it explicitly so $user->authorise(...) works.
+\Akeeba\Panopticon\Application\BootstrapUtilities::setUpUserManager();
 
 // Sanity: the loaded dbname must equal the .env.test value (defence against config.php winning
 // over .env.test due to some path issue).

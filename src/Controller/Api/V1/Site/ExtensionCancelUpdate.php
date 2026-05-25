@@ -48,28 +48,39 @@ class ExtensionCancelUpdate extends AbstractApiHandler
 			$this->sendJsonError(422, 'Unsupported CMS type for extension updates.', 'site.wrong_cms');
 		}
 
+		$queueKey = sprintf($queuePattern, $site->getId());
+
 		try
 		{
-			$queueKey = sprintf($queuePattern, $site->getId());
 			/** @var QueueInterface $queue */
-			$queue = $this->container->queueFactory->makeQueue($queueKey);
-
+			$queue    = $this->container->queueFactory->makeQueue($queueKey);
 			$existing = $queue->countByCondition(['data.id' => $extId, 'siteId' => $site->getId()]);
+		}
+		catch (\Throwable $e)
+		{
+			$this->sendJsonError(500, 'Failed to inspect update queue: ' . $e->getMessage());
 
-			if ($existing === 0)
-			{
-				$this->sendJsonError(
-					404,
-					'Extension is not in the update queue.',
-					'task.not_scheduled'
-				);
-			}
+			return;
+		}
 
+		if ($existing === 0)
+		{
+			$this->sendJsonError(
+				404,
+				'Extension is not in the update queue.',
+				'task.not_scheduled'
+			);
+		}
+
+		try
+		{
 			$queue->clear(['data.id' => $extId, 'siteId' => $site->getId()]);
 		}
 		catch (\Throwable $e)
 		{
 			$this->sendJsonError(500, 'Failed to cancel extension update: ' . $e->getMessage());
+
+			return;
 		}
 
 		AuditLog::record(

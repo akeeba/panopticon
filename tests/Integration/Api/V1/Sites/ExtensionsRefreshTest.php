@@ -36,6 +36,16 @@ class ExtensionsRefreshTest extends AbstractApiIntegrationTestCase
 			{
 				return Status::OK->value;
 			}
+
+			public function getTaskType(): string
+			{
+				return 'refreshinstalledextensions';
+			}
+
+			public function getDescription(): string
+			{
+				return 'Test stub';
+			}
 		};
 
 		$this->container->taskRegistry->add('refreshinstalledextensions', $stub);

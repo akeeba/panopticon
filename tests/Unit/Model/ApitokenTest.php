@@ -11,6 +11,7 @@ namespace Akeeba\Panopticon\Tests\Unit\Model;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Model\Apitoken;
 use Akeeba\Panopticon\Tests\AbstractUnitTestCase;
 
@@ -98,7 +99,7 @@ class ApitokenTest extends AbstractUnitTestCase
 
 	public function testIsExpiredReturnsFalseWhenNull(): void
 	{
-		$token             = new Apitoken();
+		$token             = new Apitoken(Factory::getContainer());
 		$token->expires_at = null;
 
 		$this->assertFalse($token->isExpired());
@@ -106,7 +107,7 @@ class ApitokenTest extends AbstractUnitTestCase
 
 	public function testIsExpiredReturnsFalseWhenEmptyString(): void
 	{
-		$token             = new Apitoken();
+		$token             = new Apitoken(Factory::getContainer());
 		$token->expires_at = '';
 
 		$this->assertFalse($token->isExpired());
@@ -114,7 +115,7 @@ class ApitokenTest extends AbstractUnitTestCase
 
 	public function testIsExpiredReturnsFalseWhenZeroDate(): void
 	{
-		$token             = new Apitoken();
+		$token             = new Apitoken(Factory::getContainer());
 		$token->expires_at = '0000-00-00 00:00:00';
 
 		$this->assertFalse($token->isExpired());
@@ -124,7 +125,7 @@ class ApitokenTest extends AbstractUnitTestCase
 	{
 		// isExpired() takes the strtotime() fallback path via the container's dateFactory
 		// when expires_at is a string. Use the catch-block-safe Date-string format.
-		$token             = new Apitoken();
+		$token             = new Apitoken(Factory::getContainer());
 		$token->expires_at = gmdate('Y-m-d H:i:s', time() - 86400);
 
 		// The Date construction goes through the container; if not available the catch
@@ -138,7 +139,7 @@ class ApitokenTest extends AbstractUnitTestCase
 
 	public function testIsExpiredReturnsFalseWhenFuture(): void
 	{
-		$token             = new Apitoken();
+		$token             = new Apitoken(Factory::getContainer());
 		$token->expires_at = gmdate('Y-m-d H:i:s', time() + 86400);
 
 		$ts = strtotime((string) $token->expires_at);

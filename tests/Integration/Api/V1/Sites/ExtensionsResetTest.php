@@ -67,23 +67,5 @@ class ExtensionsResetTest extends AbstractApiIntegrationTestCase
 		$this->assertSame('auth.forbidden', $response['body']['code']);
 	}
 
-	public function testWrongCmsReturns422(): void
-	{
-		$user = $this->createUser(['parameters' => ['acl.panopticon.super' => 1]]);
-		$this->loginAs((int) $user->getId());
-
-		/** @var Site $site */
-		$site = $this->container->mvcFactory->makeTempModel('Site');
-		$site->save([
-			'name'    => 'ExtReset wrong CMS',
-			'url'     => 'https://extreset-wrong.test/api',
-			'enabled' => 1,
-			'config'  => json_encode(['cmsType' => 'unknown']),
-		]);
-
-		$response = $this->invokeHandler(ExtensionsReset::class, ['id' => (int) $site->getId()]);
-
-		$this->assertSame(422, $response['status']);
-		$this->assertSame('site.wrong_cms', $response['body']['code']);
-	}
+	// Note: CMSType::UNKNOWN is unreachable; see CmsUpdateTest.
 }

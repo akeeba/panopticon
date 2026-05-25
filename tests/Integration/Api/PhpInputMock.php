@@ -30,7 +30,8 @@ final class PhpInputMock
 
 	private static bool $registered = false;
 
-	public ?array $context = null;
+	/** @var resource|null Stream context, set by PHP when the wrapper is opened. */
+	public $context;
 
 	private int $position = 0;
 

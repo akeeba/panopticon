@@ -917,7 +917,10 @@ class Site extends DataModel
 		foreach ($extensions as $item)
 		{
 			$extensionkey = $sysConfigModel->getExtensionShortname(
-				$item->type, $item->element, $item->folder, $item->client_id
+				$item->type ?? null,
+				$item->element ?? null,
+				$item->folder ?? null,
+				$item->client_id ?? null
 			);
 
 			if (empty($extensionkey) || $sysConfigModel->isExcludedShortname($extensionkey))

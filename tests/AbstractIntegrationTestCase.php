@@ -67,11 +67,16 @@ abstract class AbstractIntegrationTestCase extends TestCase
 	{
 		$suffix = bin2hex(random_bytes(4));
 
+		// Disable the HIBP leaked-password check for tests; the live HTTP call to haveibeenpwned
+		// is slow, flaky against the test password space, and unrelated to what these tests are
+		// asserting.
+		$this->container->appConfig->set('password_hibp', 0);
+
 		$defaults = [
 			'username'   => 'testuser_' . $suffix,
 			'name'       => 'Test User ' . $suffix,
 			'email'      => 'testuser_' . $suffix . '@example.test',
-			'password'   => 'P@ssw0rd!' . $suffix,
+			'password'   => 'Tst_' . base64_encode(random_bytes(18)),
 			'parameters' => [],
 		];
 
@@ -90,11 +95,35 @@ abstract class AbstractIntegrationTestCase extends TestCase
 
 			foreach ($data['parameters'] as $key => $value)
 			{
+				// Keys of the shape `acl.<plugin>.<privilege>` must be set via the privilege
+				// plugin so that Privilege::onBeforeSave doesn't overwrite them with its own
+				// defaults at save time.
+				if (preg_match('/^acl\.([^.]+)\.([^.]+)$/', (string) $key, $m) === 1)
+				{
+					$user->setPrivilege($m[1] . '.' . $m[2], (bool) $value);
+					continue;
+				}
+
 				$parameters->set($key, $value);
 			}
 		}
 
 		$userManager->saveUser($user);
+
+		// AWF's UserManager::saveUser() does not set the auto-increment id back on the User
+		// instance. Reload the row by id (looking up via the unique username) so we get a fully
+		// hydrated user — id, parameters, and privilege plugins all populated via onAfterLoad.
+		$db    = $this->container->db;
+		$query = $db->getQuery(true)
+			->select($db->qn('id'))
+			->from($db->qn('#__users'))
+			->where($db->qn('username') . ' = ' . $db->q((string) $data['username']));
+		$newId = (int) $db->setQuery($query)->loadResult();
+
+		if ($newId > 0)
+		{
+			$user = $userManager->getUser($newId);
+		}
 
 		return $user;
 	}
@@ -126,6 +155,8 @@ abstract class AbstractIntegrationTestCase extends TestCase
 				'expires_at' => null,
 				'scopes'     => null,
 				'name'       => 'Test token',
+				'created_by' => $userId,
+				'created_on' => $this->container->dateFactory()->toSql(),
 			],
 			$overrides
 		);
