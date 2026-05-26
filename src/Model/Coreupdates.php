@@ -49,7 +49,7 @@ class Coreupdates extends Site
 		{
 			$order = $this->getState('filter_order', null, 'cmd');
 
-			if (!array_key_exists($order, $this->knownFields))
+			if (!array_key_exists($order ?? '', $this->knownFields))
 			{
 				$order = $this->getIdFieldName();
 			}
