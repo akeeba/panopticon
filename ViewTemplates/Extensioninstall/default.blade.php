@@ -16,7 +16,7 @@ use Akeeba\Panopticon\Library\Enumerations\CMSType;
 $token = $this->container->session->getCsrfToken()->getValue();
 
 ?>
-@js('media://js/extensioninstall.js')
+@js('media://js/extensioninstall.js', $this->getContainer()->application)
 
 {{-- Warning Box --}}
 <div class="alert alert-danger my-3">
