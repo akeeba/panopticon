@@ -12,6 +12,13 @@ defined('AKEEBA') || die;
  *
  * Maps API URL paths + HTTP methods to handler class names under src/Controller/Api/.
  *
+ * The route table below is consumed by a single generic matcher. Each entry is a tuple of
+ * `[METHOD, [segment, segment, ...], handlerClassSuffix]`. Segments that start with a colon
+ * are placeholders captured into `$vars` under the placeholder name (sans colon). The
+ * placeholder names `id` and `extId` additionally require the segment to be a non-negative
+ * integer (i.e. `ctype_digit()` true); all other placeholders accept any non-empty segment.
+ * First match wins; an unmatched request returns null so the dispatcher emits a 404.
+ *
  * @since  1.4.0
  */
 
@@ -21,14 +28,21 @@ $apiParseCallable = function (string $path): ?array
 {
 	$path = trim($path, '/');
 
-	// Only handle paths starting with "api/"
-	if (!str_starts_with($path, 'api/'))
+	// AWF strips most prefixes but some SAPI/rewrite combos leave "index.php/" in front;
+	// strip it ourselves so the API route always matches regardless of REQUEST_URI shape.
+	if (str_starts_with($path, 'index.php/'))
+	{
+		$path = substr($path, 10);
+	}
+
+	// Only handle paths whose first segment is "api"
+	if ($path !== 'api' && !str_starts_with($path, 'api/'))
 	{
 		return null;
 	}
 
-	// Strip "api/" prefix
-	$apiPath = substr($path, 4);
+	// Strip the leading "api" segment
+	$apiPath = ($path === 'api') ? '' : substr($path, 4);
 	$apiPath = trim($apiPath, '/');
 
 	if (empty($apiPath))
@@ -38,177 +52,99 @@ $apiParseCallable = function (string $path): ?array
 
 	$method   = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 	$segments = explode('/', $apiPath);
-	$vars     = ['view' => 'api'];
 
-	// Route map: pattern => [method => handler class]
-	// We match against the segments array
-	$handler = null;
+	// Route table: [METHOD, [path segments…], handler-class-suffix].
+	// Placeholders are segments that start with ':'. The names `id` / `extId` require ctype_digit().
+	$routes = [
+		['GET',  ['v1', 'sites'],                                                'V1\\Site\\GetList'],
+		['PUT',  ['v1', 'site'],                                                 'V1\\Site\\Add'],
+		['GET',  ['v1', 'site', ':id'],                                          'V1\\Site\\Get'],
+		['POST', ['v1', 'site', ':id'],                                          'V1\\Site\\Modify'],
+		['POST', ['v1', 'site', ':id', 'refresh'],                               'V1\\Site\\Refresh'],
+		['POST', ['v1', 'site', ':id', 'fixjoomlacoreupdate'],                   'V1\\Site\\FixJoomlaCoreUpdate'],
+		['GET',  ['v1', 'site', ':id', 'extensions'],                            'V1\\Site\\ExtensionsList'],
+		['POST', ['v1', 'site', ':id', 'extensions'],                            'V1\\Site\\ExtensionsRefresh'],
+		['POST', ['v1', 'site', ':id', 'extensions', 'clear'],                   'V1\\Site\\ExtensionsClear'],
+		['POST', ['v1', 'site', ':id', 'extensions', 'reset'],                   'V1\\Site\\ExtensionsReset'],
+		['POST', ['v1', 'site', ':id', 'extensions', 'scheduleupdate', ':extId'], 'V1\\Site\\ExtensionScheduleUpdate'],
+		['POST', ['v1', 'site', ':id', 'extensions', 'cancel', ':extId'],        'V1\\Site\\ExtensionCancelUpdate'],
+		['GET',  ['v1', 'site', ':id', 'extension', ':extId', 'downloadkey'],    'V1\\Site\\ExtensionDownloadKeyGet'],
+		['POST', ['v1', 'site', ':id', 'extension', ':extId', 'downloadkey'],    'V1\\Site\\ExtensionDownloadKeySet'],
+		['POST', ['v1', 'site', ':id', 'cmsupdate'],                             'V1\\Site\\CmsUpdate'],
+		['POST', ['v1', 'site', ':id', 'cmsupdate', 'cancel'],                   'V1\\Site\\CmsUpdateCancel'],
+		['POST', ['v1', 'site', ':id', 'cmsupdate', 'clear'],                    'V1\\Site\\CmsUpdateClear'],
+		['GET',  ['v1', 'sysconfig'],                                            'V1\\Sysconfig\\GetList'],
+		['GET',  ['v1', 'sysconfig', ':paramName'],                              'V1\\Sysconfig\\Get'],
+		['POST', ['v1', 'sysconfig', ':paramName'],                              'V1\\Sysconfig\\Set'],
+		['GET',  ['v1', 'tasks'],                                                'V1\\Task\\GetList'],
+		['PUT',  ['v1', 'task'],                                                 'V1\\Task\\Add'],
+		['GET',  ['v1', 'task', ':id'],                                          'V1\\Task\\Get'],
+		['POST', ['v1', 'task', ':id'],                                          'V1\\Task\\Modify'],
+		['GET',  ['v1', 'selfupdate'],                                           'V1\\Selfupdate\\Info'],
+		['GET',  ['v1', 'selfupdate', 'download'],                               'V1\\Selfupdate\\Download'],
+		['GET',  ['v1', 'selfupdate', 'install'],                                'V1\\Selfupdate\\Install'],
+		['GET',  ['v1', 'selfupdate', 'postinstall'],                            'V1\\Selfupdate\\Postinstall'],
+	];
 
-	// v1/sites — GET → V1\Site\GetList
-	if ($segments === ['v1', 'sites'] && $method === 'GET')
+	foreach ($routes as [$routeMethod, $pattern, $handler])
 	{
-		$handler = 'V1\\Site\\GetList';
-	}
-	// v1/site — PUT → V1\Site\Add
-	elseif ($segments === ['v1', 'site'] && $method === 'PUT')
-	{
-		$handler = 'V1\\Site\\Add';
-	}
-	// v1/site/:id/...
-	elseif (count($segments) >= 3 && $segments[0] === 'v1' && $segments[1] === 'site' && ctype_digit($segments[2]))
-	{
-		$vars['id'] = (int) $segments[2];
-		$rest       = array_slice($segments, 3);
+		if ($routeMethod !== $method)
+		{
+			continue;
+		}
 
-		if ($rest === [] && $method === 'GET')
+		if (count($pattern) !== count($segments))
 		{
-			$handler = 'V1\\Site\\Get';
+			continue;
 		}
-		elseif ($rest === [] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\Modify';
-		}
-		elseif ($rest === ['refresh'] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\Refresh';
-		}
-		elseif ($rest === ['fixjoomlacoreupdate'] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\FixJoomlaCoreUpdate';
-		}
-		elseif ($rest === ['extensions'] && $method === 'GET')
-		{
-			$handler = 'V1\\Site\\ExtensionsList';
-		}
-		elseif ($rest === ['extensions'] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\ExtensionsRefresh';
-		}
-		elseif ($rest === ['cmsupdate'] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\CmsUpdate';
-		}
-		elseif ($rest === ['cmsupdate', 'cancel'] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\CmsUpdateCancel';
-		}
-		elseif ($rest === ['cmsupdate', 'clear'] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\CmsUpdateClear';
-		}
-		elseif ($rest === ['extensions', 'clear'] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\ExtensionsClear';
-		}
-		elseif ($rest === ['extensions', 'reset'] && $method === 'POST')
-		{
-			$handler = 'V1\\Site\\ExtensionsReset';
-		}
-		elseif (
-			count($rest) === 3 && $rest[0] === 'extensions' && $rest[1] === 'scheduleupdate'
-			&& ctype_digit($rest[2]) && $method === 'POST'
-		)
-		{
-			$vars['extId'] = (int) $rest[2];
-			$handler       = 'V1\\Site\\ExtensionScheduleUpdate';
-		}
-		elseif (
-			count($rest) === 3 && $rest[0] === 'extensions' && $rest[1] === 'cancel'
-			&& ctype_digit($rest[2]) && $method === 'POST'
-		)
-		{
-			$vars['extId'] = (int) $rest[2];
-			$handler       = 'V1\\Site\\ExtensionCancelUpdate';
-		}
-		elseif (
-			count($rest) === 3 && $rest[0] === 'extension' && ctype_digit($rest[1])
-			&& $rest[2] === 'downloadkey' && $method === 'GET'
-		)
-		{
-			$vars['extId'] = (int) $rest[1];
-			$handler       = 'V1\\Site\\ExtensionDownloadKeyGet';
-		}
-		elseif (
-			count($rest) === 3 && $rest[0] === 'extension' && ctype_digit($rest[1])
-			&& $rest[2] === 'downloadkey' && $method === 'POST'
-		)
-		{
-			$vars['extId'] = (int) $rest[1];
-			$handler       = 'V1\\Site\\ExtensionDownloadKeySet';
-		}
-	}
-	// v1/sysconfig — GET → V1\Sysconfig\GetList
-	elseif ($segments === ['v1', 'sysconfig'] && $method === 'GET')
-	{
-		$handler = 'V1\\Sysconfig\\GetList';
-	}
-	// v1/sysconfig/:paramName
-	elseif (count($segments) === 3 && $segments[0] === 'v1' && $segments[1] === 'sysconfig')
-	{
-		$vars['paramName'] = $segments[2];
 
-		if ($method === 'GET')
-		{
-			$handler = 'V1\\Sysconfig\\Get';
-		}
-		elseif ($method === 'POST')
-		{
-			$handler = 'V1\\Sysconfig\\Set';
-		}
-	}
-	// v1/tasks — GET → V1\Task\GetList
-	elseif ($segments === ['v1', 'tasks'] && $method === 'GET')
-	{
-		$handler = 'V1\\Task\\GetList';
-	}
-	// v1/task — PUT → V1\Task\Add
-	elseif ($segments === ['v1', 'task'] && $method === 'PUT')
-	{
-		$handler = 'V1\\Task\\Add';
-	}
-	// v1/task/:id
-	elseif (count($segments) === 3 && $segments[0] === 'v1' && $segments[1] === 'task' && ctype_digit($segments[2]))
-	{
-		$vars['id'] = (int) $segments[2];
+		$vars      = ['view' => 'api'];
+		$matchedOk = true;
 
-		if ($method === 'GET')
+		foreach ($pattern as $i => $patternSegment)
 		{
-			$handler = 'V1\\Task\\Get';
+			if (str_starts_with($patternSegment, ':'))
+			{
+				$paramName  = substr($patternSegment, 1);
+				$incoming   = $segments[$i];
+
+				if ($incoming === '')
+				{
+					$matchedOk = false;
+					break;
+				}
+
+				if (($paramName === 'id' || $paramName === 'extId') && !ctype_digit($incoming))
+				{
+					$matchedOk = false;
+					break;
+				}
+
+				$vars[$paramName] = ($paramName === 'id' || $paramName === 'extId')
+					? (int) $incoming
+					: $incoming;
+
+				continue;
+			}
+
+			if ($patternSegment !== $segments[$i])
+			{
+				$matchedOk = false;
+				break;
+			}
 		}
-		elseif ($method === 'POST')
+
+		if (!$matchedOk)
 		{
-			$handler = 'V1\\Task\\Modify';
+			continue;
 		}
-	}
-	// v1/selfupdate — GET → V1\Selfupdate\Info
-	elseif ($segments === ['v1', 'selfupdate'] && $method === 'GET')
-	{
-		$handler = 'V1\\Selfupdate\\Info';
-	}
-	// v1/selfupdate/download — GET → V1\Selfupdate\Download
-	elseif ($segments === ['v1', 'selfupdate', 'download'] && $method === 'GET')
-	{
-		$handler = 'V1\\Selfupdate\\Download';
-	}
-	// v1/selfupdate/install — GET → V1\Selfupdate\Install
-	elseif ($segments === ['v1', 'selfupdate', 'install'] && $method === 'GET')
-	{
-		$handler = 'V1\\Selfupdate\\Install';
-	}
-	// v1/selfupdate/postinstall — GET → V1\Selfupdate\Postinstall
-	elseif ($segments === ['v1', 'selfupdate', 'postinstall'] && $method === 'GET')
-	{
-		$handler = 'V1\\Selfupdate\\Postinstall';
+
+		$vars['handler'] = $handler;
+
+		return $vars;
 	}
 
-	if ($handler === null)
-	{
-		return null;
-	}
-
-	$vars['handler'] = $handler;
-
-	return $vars;
+	return null;
 };
 
 $router->addRule(new Rule([

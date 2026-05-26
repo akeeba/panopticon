@@ -26,6 +26,27 @@ use Throwable;
  */
 class Sysconfig extends Model
 {
+	/**
+	 * System configuration keys considered sensitive.
+	 *
+	 * These keys MUST NOT be returned in API responses (sysconfig list / get) and MUST NOT be
+	 * writable through the API. Writing them through the legacy web UI is still allowed, but the
+	 * API enforces a hard block to prevent token-only exfiltration / tampering.
+	 *
+	 * @since  1.4.0
+	 */
+	private const SENSITIVE_KEYS = [
+		'dbpass',
+		'secret',
+		'smtppass',
+		'smtpuser',
+		'caching_redis_dsn',
+		'caching_memcached_dsn',
+		'webcron_key',
+		'captcha_recaptcha_secret_key',
+		'captcha_hcaptcha_secret_key',
+	];
+
 	private const EXCLUDED_EXTENSIONS = [
 		'mod_contacts', 'phpass', 'phputf8', 'plg_captcha_recaptcha_invisible', 'plg_com_com_ats', 'plg_multifactorauth_email', 'plg_multifactorauth_fixed', 'plg_multifactorauth_totp', 'plg_multifactorauth_webauthn', 'plg_multifactorauth_yubikey', 'plg_sampledata_testing', 'plg_schemaorg_blogposting', 'plg_schemaorg_book', 'plg_schemaorg_book', 'plg_schemaorg_event', 'plg_schemaorg_jobposting', 'plg_schemaorg_organization', 'plg_schemaorg_person', 'plg_schemaorg_recipe', 'plg_system_schedulerunner', 'plg_system_schemaorg', 'plg_system_shortcut', 'plg_task_checkfiles', 'plg_task_demotasks', 'plg_task_globalcheckin', 'plg_task_requests', 'plg_task_sitestatus', 'plg_webservices_installer', 'plg_workflow_featuring', 'plg_workflow_notification', 'plg_workflow_publishing', 'tpl_protostar',
 	];
@@ -382,6 +403,165 @@ class Sysconfig extends Model
             'plg' => count($parts) >= 3 && $noEmptyparts,
             default => false,
         };
+	}
+
+	/**
+	 * Get the list of sensitive system configuration keys.
+	 *
+	 * @return  string[]
+	 * @since   1.4.0
+	 */
+	public function getSensitiveKeys(): array
+	{
+		return self::SENSITIVE_KEYS;
+	}
+
+	/**
+	 * Is the given key considered sensitive?
+	 *
+	 * @param   string  $key
+	 *
+	 * @return  bool
+	 * @since   1.4.0
+	 */
+	public function isSensitiveKey(string $key): bool
+	{
+		return in_array($key, self::SENSITIVE_KEYS, true);
+	}
+
+	/**
+	 * Is the given key a known/recognised system configuration key?
+	 *
+	 * The list is derived from {@see validateValue()}: any key it recognises (anything that does
+	 * not fall into the `default` branch) is considered known. Always-true keys ('dbhost', etc.)
+	 * still count as known.
+	 *
+	 * @param   string  $key
+	 *
+	 * @return  bool
+	 * @since   1.4.0
+	 */
+	public function isKnownKey(string $key): bool
+	{
+		// We can't introspect a match() statement, so just maintain the list in sync with
+		// validateValue(). Anything in either array (or the always-true branches) is "known".
+		static $knownKeys = [
+			// System
+			'session_timeout', 'timezone', 'debug', 'error_reporting', 'finished_setup',
+			'behind_load_balancer', 'stats_collection', 'phpwarnings', 'session_encrypt',
+			'session_use_default_path', 'accurate_php_cli',
+			// Display
+			'darkmode', 'fontsize',
+			// Automation
+			'webcron_key', 'cron_stuck_threshold', 'max_execution', 'execution_bias',
+			// Site operations
+			'siteinfo_freq',
+			// Caching
+			'caching_time', 'cache_adapter', 'caching_redis_dsn', 'caching_memcached_dsn',
+			// Logging
+			'log_level', 'log_rotate_compress', 'log_rotate_files', 'log_backup_threshold',
+			// Database
+			'dbdriver', 'dbhost', 'dbuser', 'dbpass', 'dbname', 'dbprefix', 'dbencryption',
+			'dbsslca', 'dbsslkey', 'dbsslcert', 'dbsslverifyservercert',
+			'dbbackup_auto', 'dbbackup_compress',
+			// Email
+			'mail_online', 'mailer', 'mailfrom', 'fromname', 'smtphost', 'smtpport',
+			'smtpsecure', 'smtpauth', 'smtpuser', 'smtppass', 'mail_inline_images',
+			// Proxy
+			'proxy_enabled',
+			// Login / MFA / Passkey
+			'login_failure_enable', 'login_lockout_extend',
+			'mfa_superuser', 'mfa_admin', 'mfa_force_groups',
+			'passkey_login', 'passkey_login_no_mfa', 'passkey_login_force_superuser',
+			'passkey_login_force_admin', 'passkey_login_force_groups',
+			// Avatars / HIBP
+			'avatars', 'password_hibp',
+			// Password reset
+			'pwreset', 'pwreset_mfa', 'pwreset_passkeys', 'pwreset_superuser',
+			'pwreset_admin', 'pwreset_groups',
+			// User Registration
+			'user_registration', 'user_registration_allowed_domains',
+			'user_registration_disallowed_domains', 'user_registration_default_group',
+			'user_registration_block_usernames', 'user_registration_custom_blocked_usernames',
+			'user_registration_activation_days', 'user_registration_activation_tries',
+			'captcha_provider', 'captcha_recaptcha_site_key', 'captcha_recaptcha_secret_key',
+			'captcha_hcaptcha_site_key', 'captcha_hcaptcha_secret_key',
+			// Internal
+			'secret',
+		];
+
+		return in_array($key, $knownKeys, true);
+	}
+
+	/**
+	 * Return the flattened sysconfig array with sensitive keys completely omitted.
+	 *
+	 * @return  array
+	 * @since   1.4.0
+	 */
+	public function getNonSensitiveConfig(): array
+	{
+		$all = $this->container->appConfig->flatten('.');
+
+		foreach (self::SENSITIVE_KEYS as $key)
+		{
+			unset($all[$key]);
+		}
+
+		return $all;
+	}
+
+	/**
+	 * Set a single configuration key and persist to disk.
+	 *
+	 * Mirrors what `Controller\Sysconfig::save()` does for one key:
+	 *  - Validates the value against {@see validateValue()}.
+	 *  - Calls `$appConfig->set()` and `$appConfig->saveConfiguration()`.
+	 *  - Invalidates OPcache for config.php if available.
+	 *
+	 * Throws a RuntimeException with code:
+	 *  - 400 when the value fails validation
+	 *  - 500 when the configuration can't be persisted
+	 *
+	 * @param   string  $key
+	 * @param   mixed   $value
+	 *
+	 * @return  mixed  The value as stored after the underlying filter ran.
+	 * @throws  \RuntimeException
+	 * @since   1.4.0
+	 */
+	public function setKey(string $key, mixed $value): mixed
+	{
+		if (!$this->validateValue($key, $value))
+		{
+			throw new \RuntimeException(
+				sprintf('Invalid value for configuration key "%s".', $key),
+				400
+			);
+		}
+
+		$config = $this->container->appConfig;
+		$config->set($key, $value);
+
+		try
+		{
+			$config->saveConfiguration();
+		}
+		catch (\Throwable $e)
+		{
+			throw new \RuntimeException(
+				'Failed to save configuration: ' . $e->getMessage(),
+				500,
+				$e
+			);
+		}
+
+		if (function_exists('opcache_invalidate'))
+		{
+			@opcache_invalidate($config->getDefaultPath(), true);
+		}
+
+		return $config->get($key);
 	}
 
 	public function getUptimeOptions()

@@ -374,17 +374,19 @@ class Application extends AWFApplication
 		// Set up the media query key
 		$this->setupMediaVersioning();
 
-		// Set up the session
-		$this->container->session->start();
-
 		// Load routing information
 		$this->loadRoutes();
 
-		// Detect API requests early: skip all UI setup (MFA, consent, template, preload hints)
+		// Detect API requests early: no PHP session for API requests — auth is ephemeral, per-request only.
+		// We MUST skip session start() entirely, otherwise PHP will emit Set-Cookie headers and the API
+		// auth state could leak into a subsequent UI request from the same client.
 		if ($this->isApiRequest())
 		{
 			return;
 		}
+
+		// Set up the session
+		$this->container->session->start();
 
 		// HTTP 103 early hints
 		$this->preloadHints();

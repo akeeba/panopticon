@@ -137,9 +137,7 @@ class Selfupdate extends Controller
 		{
 			$sourceFile = $this->container->segment->getFlash('selfupdate.localfile');
 
-			$model->extract($sourceFile);
-			$model->invalidatePHPFiles($sourceFile);
-			$model->clearCompiledTemplates();
+			$model->performInstall($sourceFile);
 		}
 		catch (\Exception $e)
 		{

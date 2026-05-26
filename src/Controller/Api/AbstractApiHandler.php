@@ -71,25 +71,56 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 	/**
 	 * Send a JSON error response and terminate.
 	 *
-	 * @param   int     $httpCode  HTTP status code.
-	 * @param   string  $message   Error message.
+	 * @param   int          $httpCode  HTTP status code.
+	 * @param   string       $message   Human-readable error message.
+	 * @param   string|null  $code      Stable machine-readable error code (e.g. "auth.forbidden").
 	 *
 	 * @return  void
 	 * @since   1.4.0
 	 */
-	protected function sendJsonError(int $httpCode, string $message): void
+	protected function sendJsonError(int $httpCode, string $message, ?string $code = null): void
 	{
 		@ob_end_clean();
 		http_response_code($httpCode);
+
+		// On 401 always advertise the auth scheme per RFC 7235.
+		if ($httpCode === 401)
+		{
+			header('WWW-Authenticate: Bearer realm="Panopticon API"');
+		}
+
 		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode(
-			[
-				'success' => false,
-				'message' => $message,
-			],
-			JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-		);
+
+		$payload = [
+			'success' => false,
+		];
+
+		if ($code !== null)
+		{
+			$payload['code'] = $code;
+		}
+
+		$payload['message'] = $message;
+
+		echo json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		$this->container->application->close();
+	}
+
+	/**
+	 * Send a 401 Unauthorized JSON error and terminate. Includes the WWW-Authenticate header.
+	 *
+	 * @param   string  $message
+	 * @param   string  $code
+	 *
+	 * @return  void
+	 * @since   1.4.0
+	 */
+	protected function sendUnauthorized(
+		string $message = 'Authentication required.',
+		string $code = 'auth.required'
+	): void
+	{
+		$this->sendJsonError(401, $message, $code);
 	}
 
 	/**
@@ -106,7 +137,7 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 
 		if (!$user->getPrivilege('panopticon.super'))
 		{
-			$this->sendJsonError(403, 'This endpoint requires super user privileges.');
+			$this->sendJsonError(403, 'This endpoint requires super user privileges.', 'auth.forbidden');
 		}
 	}
 
@@ -129,10 +160,30 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 
 		if (!is_array($decoded))
 		{
-			$this->sendJsonError(400, 'Invalid JSON in request body.');
+			$this->sendJsonError(400, 'Invalid JSON in request body.', 'request.invalid_json');
 		}
 
 		return $decoded;
+	}
+
+	/**
+	 * Return the current client's IP as a packed (inet_pton) binary string, or NULL.
+	 *
+	 * @return  string|null
+	 * @since   1.4.0
+	 */
+	protected function getClientIpBinary(): ?string
+	{
+		$ip = $_SERVER['REMOTE_ADDR'] ?? null;
+
+		if (empty($ip))
+		{
+			return null;
+		}
+
+		$packed = @inet_pton((string) $ip);
+
+		return $packed === false ? null : $packed;
 	}
 
 	/**
@@ -155,7 +206,7 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 		}
 		catch (\Exception $e)
 		{
-			$this->sendJsonError(404, 'Site not found.');
+			$this->sendJsonError(404, 'Site not found.', 'site.not_found');
 		}
 
 		$user = $this->container->userManager->getUser();
@@ -164,7 +215,7 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 		{
 			if (!$user->authorise('panopticon.' . $privilege, $id))
 			{
-				$this->sendJsonError(403, 'You do not have permission to access this site.');
+				$this->sendJsonError(403, 'You do not have permission to access this site.', 'auth.forbidden');
 			}
 		}
 

@@ -15,7 +15,9 @@ use Akeeba\Panopticon\Model\Task as TaskModel;
 /**
  * API handler: GET /v1/task/:id
  *
- * Returns full details for a single task, including params and storage.
+ * Returns full details for a single task.
+ *
+ * ACL: super-user always; OR `panopticon.admin` on the task's site (for site-bound tasks).
  *
  * @since  1.4.0
  */
@@ -23,13 +25,11 @@ class Get extends AbstractApiHandler
 {
 	public function handle(): void
 	{
-		$this->requireSuperUser();
-
 		$id = $this->input->getInt('id', 0);
 
 		if ($id <= 0)
 		{
-			$this->sendJsonError(400, 'Missing or invalid required parameter: id');
+			$this->sendJsonError(400, 'Missing or invalid required parameter: id', 'validation.bad_request');
 		}
 
 		/** @var TaskModel $model */
@@ -39,27 +39,28 @@ class Get extends AbstractApiHandler
 		{
 			$model->findOrFail($id);
 		}
-		catch (\Exception $e)
+		catch (\Exception)
 		{
-			$this->sendJsonError(404, 'Task not found.');
+			$this->sendJsonError(404, 'Task not found.', 'task.not_found');
 		}
 
-		$this->sendJsonResponse([
-			'id'              => $model->id,
-			'site_id'         => $model->site_id,
-			'type'            => $model->type,
-			'params'          => $model->getParams()->toArray(),
-			'storage'         => $model->getStorage()->toArray(),
-			'cron_expression' => (string) $model->cron_expression,
-			'enabled'         => (bool) $model->enabled,
-			'last_exit_code'  => $model->last_exit_code,
-			'last_execution'  => $model->last_execution,
-			'last_run_end'    => $model->last_run_end,
-			'next_execution'  => $model->next_execution,
-			'times_executed'  => $model->times_executed,
-			'times_failed'    => $model->times_failed,
-			'locked'          => $model->locked,
-			'priority'        => $model->priority,
-		]);
+		$user    = $this->container->userManager->getUser();
+		$isSuper = (bool) $user->getPrivilege('panopticon.super');
+
+		if (!$isSuper)
+		{
+			$siteId = $model->site_id === null ? 0 : (int) $model->site_id;
+
+			if ($siteId <= 0 || !$user->authorise('panopticon.admin', $siteId))
+			{
+				$this->sendJsonError(
+					403,
+					'You do not have permission to view this task.',
+					'auth.forbidden'
+				);
+			}
+		}
+
+		$this->sendJsonResponse($model->toApiArray());
 	}
 }

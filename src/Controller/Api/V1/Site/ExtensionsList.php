@@ -14,6 +14,10 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 /**
  * API handler for GET /v1/site/:id/extensions — list site extensions.
  *
+ * Returns the extensions array exactly as `Model\Site::getExtensionsList()` provides it. Per the
+ * jolly-honey master plan §8, no secret redaction is applied: download keys and any other
+ * sensitive fields inside extension records are returned verbatim.
+ *
  * @since  1.4.0
  */
 class ExtensionsList extends AbstractApiHandler

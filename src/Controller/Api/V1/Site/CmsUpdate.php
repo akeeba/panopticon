@@ -11,135 +11,79 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
-use Akeeba\Panopticon\Library\Task\Status;
-use Akeeba\Panopticon\Model\Task as TaskModel;
-use Awf\Registry\Registry;
-use DateInterval;
-use DateTimeZone;
+use Akeeba\Panopticon\Model\AuditLog;
+use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\EnqueueWordPressUpdateTrait;
+use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 
 /**
  * API handler for POST /v1/site/:id/cmsupdate — schedule a CMS update for the site.
+ *
+ * DRY: reuses {@see EnqueueJoomlaUpdateTrait::enqueueJoomlaUpdate()} and
+ * {@see EnqueueWordPressUpdateTrait::enqueueWordPressUpdate()} which the legacy
+ * `Controller\Sites::scheduleJoomlaUpdate()` / `scheduleWordPressUpdate()` use.
  *
  * @since  1.4.0
  */
 class CmsUpdate extends AbstractApiHandler
 {
+	use EnqueueJoomlaUpdateTrait;
+	use EnqueueWordPressUpdateTrait;
+	use SaveSiteTrait;
+
 	public function handle(): void
 	{
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
 		$body = $this->getJsonBody();
+		$user = $this->container->userManager->getUser();
 
 		$force = (bool) ($body['force'] ?? false);
-		$user  = $this->container->userManager->getUser();
 
-		$taskType = match ($site->cmsType())
-		{
-			CMSType::JOOMLA    => 'joomlaupdate',
-			CMSType::WORDPRESS => 'wordpressupdate',
-			default            => null,
-		};
+		$cmsType = $site->cmsType();
 
-		if ($taskType === null)
+		if ($cmsType !== CMSType::JOOMLA && $cmsType !== CMSType::WORDPRESS)
 		{
-			$this->sendJsonError(400, 'Unsupported CMS type for update scheduling.');
+			$this->sendJsonError(422, 'Unsupported CMS type for update scheduling.', 'site.wrong_cms');
 		}
 
 		try
 		{
-			/** @var TaskModel $task */
-			$task = $this->container->mvcFactory->makeTempModel('Task');
-
-			// Try to load an existing task
-			try
+			if ($cmsType === CMSType::JOOMLA)
 			{
-				$task->findOrFail([
-					'site_id' => $site->getId(),
-					'type'    => $taskType,
-				]);
+				$this->enqueueJoomlaUpdate($site, $this->container, $force, $user);
 			}
-			catch (\RuntimeException)
+			else
 			{
-				$task->reset();
-				$task->site_id = $site->getId();
-				$task->type    = $taskType;
+				$this->enqueueWordPressUpdate($site, $this->container, $force, $user);
 			}
 
-			// Set up the task
-			$params = new Registry();
-			$params->set('run_once', 'disable');
-			$params->set('force', $force);
-			$params->set('toVersion', $site->getConfig()->get('core.latest.version'));
-			$params->set('initiatingUser', $user->getId());
-
-			$task->params         = $params->toString();
-			$task->storage        = '{}';
-			$task->enabled        = 1;
-			$task->last_exit_code = Status::INITIAL_SCHEDULE->value;
-			$task->locked         = null;
-
-			try
-			{
-				$tz = $this->container->appConfig->get('timezone', 'UTC');
-
-				// Validate the configured timezone
-				new DateTimeZone($tz);
-			}
-			catch (\Exception)
-			{
-				$tz = 'UTC';
-			}
-
-			$siteConfig = $site->getConfig() ?? new Registry();
-
-			switch ($siteConfig->get('config.core_update.when', 'immediately'))
-			{
-				default:
-				case 'immediately':
-					$then = $this->container->dateFactory('now', $tz);
-					$then->add(new DateInterval('PT2S'));
-
-					$task->cron_expression = $then->minute . ' ' . $then->hour . ' '
-						. $then->day . ' ' . $then->month . ' ' . $then->dayofweek;
-					$task->last_execution  = (clone $then)->sub(new DateInterval('PT1M'))->toSql();
-					$task->last_run_end    = null;
-					$task->next_execution  = $then->toSql();
-					break;
-
-				case 'time':
-					$hour   = max(0, min((int) $siteConfig->get('config.core_update.time.hour', 0), 23));
-					$minute = max(0, min((int) $siteConfig->get('config.core_update.time.minute', 0), 59));
-					$now    = $this->container->dateFactory('now', $tz);
-					$then   = (clone $now)->setTime($hour, $minute, 0);
-
-					// If the selected time of day is in the past, go forward one day
-					if ($now->diff($then)->invert)
-					{
-						$then->add(new DateInterval('P1D'));
-					}
-
-					$task->cron_expression =
-						$then->minute . ' ' . $then->hour . ' ' . $then->day . ' ' . $then->month . ' *';
-					$task->next_execution  = $then->toSql();
-					break;
-			}
-
-			$task->setState('disable_next_execution_recalculation', 1);
-			$task->save();
-
-			// For Joomla, update lastAutoUpdateVersion in site config
-			if ($site->cmsType() === CMSType::JOOMLA)
-			{
-				$siteConfig->set('core.lastAutoUpdateVersion', $siteConfig->get('core.latest.version'));
-				$site->config = $siteConfig->toString();
-				$site->save();
-			}
+			// Update core.lastAutoUpdateVersion after enqueueing (mirrors legacy controller).
+			$this->saveSite(
+				$site,
+				function (Site $site): void
+				{
+					$config = $site->getConfig();
+					$config->set('core.lastAutoUpdateVersion', $config->get('core.latest.version'));
+					$site->config = $config->toString();
+				}
+			);
 		}
 		catch (\Throwable $e)
 		{
 			$this->sendJsonError(500, 'Failed to schedule CMS update: ' . $e->getMessage());
 		}
 
-		$this->sendJsonResponse(null, 200, 'CMS update scheduled successfully.');
+		AuditLog::record(
+			'site.cmsupdate.schedule',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'site',
+			(int) $site->getId(),
+			['force' => $force, 'cmsType' => $cmsType->value]
+		);
+
+		$this->sendJsonResponse(null, 202, 'CMS update scheduled successfully.');
 	}
 }

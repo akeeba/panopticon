@@ -1,0 +1,43 @@
+### Akeeba Panopticon API — Sysconfig
+###
+### Super-user only. Sensitive keys (dbpass, secret, smtppass, …) are omitted from
+### list responses and are unreadable/unwritable through the API.
+
+@hostname = https://panopticon.local
+@token    = REPLACE-ME-WITH-A-REAL-TOKEN
+
+### List all non-sensitive sysconfig parameters
+GET {{hostname}}/api/v1/sysconfig
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Get a single non-sensitive parameter
+GET {{hostname}}/api/v1/sysconfig/timezone
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Get a sensitive parameter — returns 404 `sysconfig.unknown_param` (do NOT use in production)
+GET {{hostname}}/api/v1/sysconfig/dbpass
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Set a single parameter (super-user only)
+POST {{hostname}}/api/v1/sysconfig/debug
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "value": true }
+
+### Attempt to write a sensitive parameter — returns 403 auth.forbidden
+POST {{hostname}}/api/v1/sysconfig/dbpass
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "value": "nope" }
+
+### Attempt to set an invalid value — returns 422 sysconfig.invalid_value
+POST {{hostname}}/api/v1/sysconfig/session_timeout
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "value": -1 }

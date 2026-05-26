@@ -10,13 +10,13 @@ namespace Akeeba\Panopticon\Controller\Api\V1\Site;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
-use Akeeba\Panopticon\Library\Task\Status;
-use Akeeba\Panopticon\Task\RefreshSiteInfo;
-use Awf\Registry\Registry;
-use stdClass;
+use Akeeba\Panopticon\Model\AuditLog;
 
 /**
  * API handler for POST /v1/site/:id/refresh — refresh site information.
+ *
+ * Synchronous: returns 200 once the refresh task callback completes (mirrors the legacy
+ * controller's behaviour which calls `doRefreshSiteInformation()` then redirects with a flash).
  *
  * @since  1.4.0
  */
@@ -26,29 +26,24 @@ class Refresh extends AbstractApiHandler
 	{
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'read');
+		$user = $this->container->userManager->getUser();
 
 		try
 		{
-			/** @var RefreshSiteInfo $callback */
-			$callback = $this->container->taskRegistry->get('refreshsiteinfo');
-			$dummy    = new stdClass();
-			$registry = new Registry();
-
-			$registry->set('limitStart', 0);
-			$registry->set('limit', 1);
-			$registry->set('force', true);
-			$registry->set('filter.ids', [$site->getId()]);
-
-			do
-			{
-				$return = $callback($dummy, $registry);
-			}
-			while ($return === Status::WILL_RESUME->value);
+			$site->doRefreshSiteInformation();
 		}
 		catch (\Throwable $e)
 		{
 			$this->sendJsonError(500, 'Failed to refresh site information: ' . $e->getMessage());
 		}
+
+		AuditLog::record(
+			'site.refresh',
+			(int) $user->getId() ?: null,
+			$this->getClientIpBinary(),
+			'site',
+			(int) $site->getId()
+		);
 
 		$this->sendJsonResponse(null, 200, 'Site information refreshed successfully.');
 	}

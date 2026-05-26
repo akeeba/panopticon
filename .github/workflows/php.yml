@@ -11,25 +11,45 @@ permissions:
 
 jobs:
   build:
-    if: false
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: panopticon_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v4
       with:
         node-version: 16.x
         cache: 'npm'
     - run: npm ci
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: curl, dom, json, mbstring, openssl, simplexml, zip, pdo_mysql, mysqli
+        coverage: none
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -39,18 +59,34 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+    - name: Prepare test environment
+      run: |
+        cp .env.test.example .env.test
+        sed -i 's/^PANOPTICON_DBUSER=.*/PANOPTICON_DBUSER=root/' .env.test
+        sed -i 's/^PANOPTICON_DBPASS=.*/PANOPTICON_DBPASS=root/' .env.test
+        sed -i 's/^PANOPTICON_DBHOST=.*/PANOPTICON_DBHOST=127.0.0.1/' .env.test
+
+    - name: Wait for MariaDB
+      run: |
+        for i in $(seq 1 30); do
+          if mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; then
+            echo "MariaDB is ready"
+            exit 0
+          fi
+          sleep 2
+        done
+        echo "MariaDB did not become ready in time" >&2
+        exit 1
+
+    - name: Run test suite
+      run: composer test
+
     - name: Create archive
       run: composer archive --dir=release --format=zip
 
     - name: Archive production artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: installable-zip
         path: release/akeeba-panopticon-*.zip
         retention-days: 7
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test

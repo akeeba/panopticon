@@ -11,37 +11,32 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Model\Apitoken;
+use Akeeba\Panopticon\Model\AuditLog;
 use Awf\Date\Date;
-use Awf\Mvc\Controller;
+use Awf\Mvc\DataController;
+use Awf\Utils\Ip;
 
 /**
- * Controller for managing API Tokens (standalone page + AJAX token CRUD)
+ * Controller for managing API Tokens.
+ *
+ * Conventions-compliant DataController:
+ * - browse / add / edit / save / apply / cancel / publish / unpublish / remove from AWF.
+ * - audit-log entries emitted via the on{Before,After}{Task} hooks.
  *
  * @since  1.4.0
  */
-class Apitokens extends Controller
+class Apitokens extends DataController
 {
 	use ACLTrait;
 
 	/**
-	 * Runs before executing any task.
+	 * IDs of tokens about to be deleted, captured before {@see DataController::remove()}
+	 * actually deletes them so we can audit-log the owner/id.
 	 *
-	 * @return  bool
-	 * @since   1.4.0
+	 * @var  array<int, array{owner: int}>
 	 */
-	protected function onBeforeExecute(): bool
-	{
-		$this->disableLegacyHashes();
+	private array $pendingDeletes = [];
 
-		return true;
-	}
-
-	/**
-	 * Default task: display the token management page.
-	 *
-	 * @return  void
-	 * @since   1.4.0
-	 */
 	public function execute($task)
 	{
 		$this->aclCheck($task);
@@ -50,250 +45,259 @@ class Apitokens extends Controller
 	}
 
 	/**
-	 * AJAX: Create a new API token.
+	 * Normalise the data being saved.
+	 *
+	 * @param   array|object|null  $data
 	 *
 	 * @return  void
-	 * @since   1.4.0
 	 */
-	public function create(): void
+	protected function onBeforeApplySave(array|object|null &$data)
 	{
-		$this->csrfProtection();
+		$data = (array) $data;
 
-		$user = $this->getContainer()->userManager->getUser();
+		$user      = $this->getContainer()->userManager->getUser();
+		$isSuper   = (bool) $user->getPrivilege('panopticon.super');
+		$isNew     = empty($data['id']);
 
-		if (!$user->getId())
+		/** @var Apitoken $model */
+		$model = $this->getModel();
+
+		// Resolve the target user id (non-supers can only manage their own tokens).
+		$targetUserId = isset($data['user_id']) ? (int) $data['user_id'] : 0;
+
+		if ($targetUserId <= 0 || !$isSuper)
 		{
-			$this->sendJsonResponse(false, 'Not logged in');
-
-			return;
+			$targetUserId = (int) $user->getId();
 		}
 
-		$description = $this->input->getString('description', '');
-		$targetUserId = $this->input->getInt('user_id', 0);
+		// Normalise expires_at: empty => NULL; otherwise re-format through Date.
+		$expiresRaw = isset($data['expires_at']) ? trim((string) $data['expires_at']) : '';
 
-		// Non-super users can only create tokens for themselves
-		if ($targetUserId <= 0 || !$user->getPrivilege('panopticon.super'))
+		if ($expiresRaw === '' || $expiresRaw === '0000-00-00 00:00:00')
 		{
-			$targetUserId = $user->getId();
+			$data['expires_at'] = null;
 		}
-
-		try
+		else
 		{
-			$seed = Apitoken::generateSeed();
-
-			/** @var Apitoken $model */
-			$model = $this->getModel();
-			$model->reset();
-			$model->save([
-				'user_id'     => $targetUserId,
-				'description' => $description ?: null,
-				'seed'        => $seed,
-				'enabled'     => 1,
-				'created_by'  => $user->getId(),
-				'created_on'  => (new Date())->toSql(),
-			]);
-
-			// Compute the token value to return
-			$siteSecret = $this->getContainer()->appConfig->get('secret', '');
-			$tokenValue = Apitoken::computeToken($seed, $targetUserId, $siteSecret);
-
-			$this->sendJsonResponse(true, null, [
-				'id'          => $model->getId(),
-				'description' => $description,
-				'token'       => $tokenValue,
-			]);
-		}
-		catch (\Exception $e)
-		{
-			$this->sendJsonResponse(false, $e->getMessage());
-		}
-	}
-
-	/**
-	 * AJAX: Toggle a token's enabled status.
-	 *
-	 * @return  void
-	 * @since   1.4.0
-	 */
-	public function toggle(): void
-	{
-		$this->csrfProtection();
-
-		$user = $this->getContainer()->userManager->getUser();
-
-		if (!$user->getId())
-		{
-			$this->sendJsonResponse(false, 'Not logged in');
-
-			return;
-		}
-
-		$tokenId = $this->input->getInt('id', 0);
-
-		try
-		{
-			/** @var Apitoken $model */
-			$model = $this->getModel();
-			$model->findOrFail($tokenId);
-
-			// Check ownership or super user
-			if ($model->user_id != $user->getId() && !$user->getPrivilege('panopticon.super'))
+			try
 			{
-				$this->sendJsonResponse(false, 'Forbidden');
+				$data['expires_at'] = $this->getContainer()->dateFactory($expiresRaw)->toSql();
+			}
+			catch (\Throwable)
+			{
+				$data['expires_at'] = null;
+			}
+		}
 
-				return;
+		// Enabled defaults to 1 for new rows.
+		if ($isNew)
+		{
+			$data['enabled']    = isset($data['enabled']) ? (int) $data['enabled'] : 1;
+			$data['user_id']    = $targetUserId;
+			$data['seed']       = Apitoken::generateSeed();
+			$data['created_by'] = (int) $user->getId();
+			$data['created_on'] = $this->getContainer()->dateFactory()->toSql();
+
+			// Cap check.
+			$existing = $model->countEnabledForUser($targetUserId);
+
+			if ($existing >= Apitoken::MAX_PER_USER && (int) ($data['enabled'] ?? 0) === 1)
+			{
+				throw new \RuntimeException(
+					$this->getContainer()->language->text('PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED')
+				);
+			}
+		}
+		else
+		{
+			$data['modified_by'] = (int) $user->getId();
+			$data['modified_on'] = $this->getContainer()->dateFactory()->toSql();
+
+			// Ownership check: the existing row must be loaded.
+			if (!$model->getId())
+			{
+				$this->getIDsFromRequest($model, true);
 			}
 
-			$model->save([
-				'enabled'     => $model->enabled ? 0 : 1,
-				'modified_by' => $user->getId(),
-				'modified_on' => (new Date())->toSql(),
-			]);
-
-			$this->sendJsonResponse(true, null, [
-				'id'      => $model->getId(),
-				'enabled' => (bool) $model->enabled,
-			]);
-		}
-		catch (\Exception $e)
-		{
-			$this->sendJsonResponse(false, $e->getMessage());
-		}
-	}
-
-	/**
-	 * AJAX: Delete a token.
-	 *
-	 * @return  void
-	 * @since   1.4.0
-	 */
-	public function remove(): void
-	{
-		$this->csrfProtection();
-
-		$user = $this->getContainer()->userManager->getUser();
-
-		if (!$user->getId())
-		{
-			$this->sendJsonResponse(false, 'Not logged in');
-
-			return;
-		}
-
-		$tokenId = $this->input->getInt('id', 0);
-
-		try
-		{
-			/** @var Apitoken $model */
-			$model = $this->getModel();
-			$model->findOrFail($tokenId);
-
-			// Check ownership or super user
-			if ($model->user_id != $user->getId() && !$user->getPrivilege('panopticon.super'))
+			if ((int) $model->user_id !== (int) $user->getId() && !$isSuper)
 			{
-				$this->sendJsonResponse(false, 'Forbidden');
-
-				return;
+				throw new \RuntimeException(
+					$this->getContainer()->language->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'),
+					403
+				);
 			}
 
-			$model->delete();
-
-			$this->sendJsonResponse(true);
-		}
-		catch (\Exception $e)
-		{
-			$this->sendJsonResponse(false, $e->getMessage());
-		}
-	}
-
-	/**
-	 * AJAX: Get a token's computed value.
-	 *
-	 * @return  void
-	 * @since   1.4.0
-	 */
-	public function getTokenValue(): void
-	{
-		$this->csrfProtection();
-
-		$user = $this->getContainer()->userManager->getUser();
-
-		if (!$user->getId())
-		{
-			$this->sendJsonResponse(false, 'Not logged in');
-
-			return;
-		}
-
-		$tokenId = $this->input->getInt('id', 0);
-
-		try
-		{
-			/** @var Apitoken $model */
-			$model = $this->getModel();
-			$model->findOrFail($tokenId);
-
-			// Check ownership or super user
-			if ($model->user_id != $user->getId() && !$user->getPrivilege('panopticon.super'))
+			// Non-supers cannot change ownership.
+			if (!$isSuper)
 			{
-				$this->sendJsonResponse(false, 'Forbidden');
-
-				return;
+				unset($data['user_id']);
 			}
 
-			$siteSecret = $this->getContainer()->appConfig->get('secret', '');
-			$tokenValue = Apitoken::computeToken($model->seed, $model->user_id, $siteSecret);
-
-			$this->sendJsonResponse(true, null, [
-				'token' => $tokenValue,
-			]);
+			// Never let seed/created_* be overwritten via the form.
+			unset($data['seed'], $data['created_on'], $data['created_by']);
 		}
-		catch (\Exception $e)
+
+		// Description: empty string => NULL.
+		if (isset($data['description']))
 		{
-			$this->sendJsonResponse(false, $e->getMessage());
+			$data['description'] = trim((string) $data['description']);
+
+			if ($data['description'] === '')
+			{
+				$data['description'] = null;
+			}
 		}
 	}
 
-	/**
-	 * Send a JSON response and terminate.
-	 *
-	 * @param   bool         $success  Was the operation successful?
-	 * @param   string|null  $message  Optional message.
-	 * @param   array        $data     Optional extra data.
-	 *
-	 * @return  void
-	 * @since   1.4.0
-	 */
-	private function sendJsonResponse(bool $success, ?string $message = null, array $data = []): void
+	protected function onAfterApplySave(array|object|null &$data): void
 	{
-		$response = array_merge(['success' => $success], $data);
+		/** @var Apitoken $model */
+		$model = $this->getModel();
+		$user  = $this->getContainer()->userManager->getUser();
+		$ip    = $this->getClientIpBinary();
 
-		if ($message !== null)
-		{
-			$response['message'] = $message;
-		}
+		$wasNew = empty($data['id']);
 
-		@ob_end_clean();
-		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode($response, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-		$this->getContainer()->application->close();
+		AuditLog::record(
+			$wasNew ? 'apitoken.create' : 'apitoken.update',
+			(int) $user->getId(),
+			$ip,
+			'apitoken',
+			(int) $model->getId(),
+			[
+				'target_user_id' => (int) $model->user_id,
+				'has_expiry'     => !empty($model->expires_at),
+			]
+		);
 	}
 
 	/**
-	 * Disable the legacy triple hashes in front and behind JSON responses.
+	 * Called by AWF Controller::execute() after publish() runs. Audit-log each affected row.
+	 */
+	protected function onAfterPublish(): bool
+	{
+		$this->auditMassToggle(true);
+
+		return true;
+	}
+
+	/**
+	 * Called by AWF Controller::execute() after unpublish() runs.
+	 */
+	protected function onAfterUnpublish(): bool
+	{
+		$this->auditMassToggle(false);
+
+		return true;
+	}
+
+	/**
+	 * Called BEFORE remove() so we can capture target ids/owners (they vanish after delete).
+	 */
+	protected function onBeforeRemove(): bool
+	{
+		$model = $this->getModel();
+		$ids   = $this->getIDsFromRequest($model, false);
+
+		$this->pendingDeletes = [];
+
+		foreach ($ids as $id)
+		{
+			try
+			{
+				$tmp = $this->getContainer()->mvcFactory->makeTempModel('Apitoken');
+				$tmp->findOrFail((int) $id);
+
+				$this->pendingDeletes[(int) $id] = ['owner' => (int) $tmp->user_id];
+			}
+			catch (\Throwable)
+			{
+				// Skip rows that no longer exist.
+			}
+		}
+
+		return true;
+	}
+
+	protected function onAfterRemove(): bool
+	{
+		$user = $this->getContainer()->userManager->getUser();
+		$ip   = $this->getClientIpBinary();
+
+		foreach ($this->pendingDeletes as $id => $info)
+		{
+			AuditLog::record(
+				'apitoken.delete',
+				(int) $user->getId(),
+				$ip,
+				'apitoken',
+				$id,
+				['target_user_id' => (int) $info['owner']]
+			);
+		}
+
+		$this->pendingDeletes = [];
+
+		return true;
+	}
+
+	/**
+	 * Audit-log one entry per row affected by mass publish/unpublish.
+	 *
+	 * @param   bool  $enabled  The new enabled state.
 	 *
 	 * @return  void
-	 * @since   1.4.0
 	 */
-	private function disableLegacyHashes(): void
+	private function auditMassToggle(bool $enabled): void
 	{
-		$doc = $this->getContainer()->application->getDocument();
+		$model = $this->getModel();
+		$ids   = $this->getIDsFromRequest($model, false);
 
-		if (!$doc instanceof \Awf\Document\Json)
+		if (empty($ids))
 		{
 			return;
 		}
 
-		$doc->setUseHashes(false);
+		$user = $this->getContainer()->userManager->getUser();
+		$ip   = $this->getClientIpBinary();
+
+		foreach ($ids as $id)
+		{
+			AuditLog::record(
+				'apitoken.toggle',
+				(int) $user->getId(),
+				$ip,
+				'apitoken',
+				(int) $id,
+				['enabled' => $enabled]
+			);
+		}
+	}
+
+	/**
+	 * Get the current client IP packed as a binary string for audit logging.
+	 *
+	 * @return  string|null
+	 * @since   1.4.0
+	 */
+	private function getClientIpBinary(): ?string
+	{
+		try
+		{
+			$ip = Ip::getUserIP();
+
+			if (empty($ip))
+			{
+				return null;
+			}
+
+			$packed = @inet_pton($ip);
+
+			return $packed === false ? null : $packed;
+		}
+		catch (\Throwable)
+		{
+			return null;
+		}
 	}
 }

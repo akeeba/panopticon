@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 2.1.0
+================================================================================
++ Add JSON API (#344)
+
 Akeeba Panopticon 2.0.1
 ================================================================================
 + Schedule automatic extension, plugin, and theme updates for a specific time of day, mirroring the CMS Update option

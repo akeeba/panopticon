@@ -1803,38 +1803,13 @@ class Sites extends DataController
 
 	private function doRefreshExtensionsInformation(Site $site, bool $force = true, bool $forceUpdates = true)
 	{
-		/** @var RefreshSiteInfo $callback */
-		$callback = $this->container->taskRegistry->get('refreshinstalledextensions');
-		$dummy    = new stdClass();
-		$registry = new Registry();
-
-		$registry->set('limitStart', 0);
-		$registry->set('limit', 1);
-		$registry->set('force', $force);
-		$registry->set('forceUpdates', $forceUpdates);
-		$registry->set('filter.ids', [$site->getId()]);
-
-		do
-		{
-			$return = $callback($dummy, $registry);
-		} while ($return === Status::WILL_RESUME->value);
+		// Lifted into Model\Site::doRefreshExtensionsInformation() so the API handler shares this code.
+		$site->doRefreshExtensionsInformation($force, $forceUpdates);
 	}
 
 	private function doRefreshSiteInformation(Site $site)
 	{
-		/** @var RefreshSiteInfo $callback */
-		$callback = $this->container->taskRegistry->get('refreshsiteinfo');
-		$dummy    = new stdClass();
-		$registry = new Registry();
-
-		$registry->set('limitStart', 0);
-		$registry->set('limit', 1);
-		$registry->set('force', true);
-		$registry->set('filter.ids', [$site->id]);
-
-		do
-		{
-			$return = $callback($dummy, $registry);
-		} while ($return === Status::WILL_RESUME->value);
+		// Lifted into Model\Site::doRefreshSiteInformation() so the API handler shares this code.
+		$site->doRefreshSiteInformation();
 	}
 }

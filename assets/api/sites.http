@@ -1,0 +1,152 @@
+### Akeeba Panopticon API — Sites (read-only)
+###
+### PhpStorm HTTP Client request file. Use the run gutter icon next to each block
+### or right-click → Run All Requests in File.
+###
+### Replace the env vars below or define them in a sibling `http-client.env.json`.
+
+@hostname = https://panopticon.local
+@token    = REPLACE-ME-WITH-A-REAL-TOKEN
+
+### List sites (recommended: Bearer auth)
+GET {{hostname}}/api/v1/sites
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### List sites with filters and pagination
+GET {{hostname}}/api/v1/sites?search=example&cmsType=joomla&limit=10&offset=0
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Get a single site by id
+GET {{hostname}}/api/v1/site/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### --- Alternative authentication surfaces -------------------------------------
+
+### Custom header (X-Panopticon-Token)
+GET {{hostname}}/api/v1/sites
+X-Panopticon-Token: {{token}}
+Accept: application/json
+
+### GET parameter — NOT recommended for production.
+# WARNING: query-string tokens are leaked through web-server access logs and the
+# Referer header. Documented as a footgun in assets/api/docs/overview.md.
+# Use Bearer auth in real automations.
+GET {{hostname}}/api/v1/sites?_panopticon_token={{token}}
+Accept: application/json
+
+### --- Write endpoints -------------------------------------------------------
+
+### Add a new site
+PUT {{hostname}}/api/v1/site
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name":    "Example",
+  "url":     "https://example.com/api",
+  "enabled": true,
+  "notes":   "Production site",
+  "groups":  [1, 2],
+  "config":  {
+    "config": {
+      "cmsType":     "joomla",
+      "apiKey":      "REPLACE-WITH-THE-CONNECTOR-TOKEN"
+    }
+  }
+}
+
+### Modify an existing site (only the fields you send are updated)
+POST {{hostname}}/api/v1/site/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name":    "Example (renamed)",
+  "enabled": false,
+  "config":  {
+    "config.domain.warning": 180
+  }
+}
+
+### Refresh site information synchronously
+POST {{hostname}}/api/v1/site/1/refresh
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Fix a stuck Joomla core update site (Joomla sites only)
+POST {{hostname}}/api/v1/site/1/fixjoomlacoreupdate
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### --- CMS update lifecycle -------------------------------------------------
+
+### Schedule a CMS update (Joomla or WordPress); set "force": true to override version-skip
+POST {{hostname}}/api/v1/site/1/cmsupdate
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{ "force": false }
+
+### Cancel a not-yet-running CMS update
+POST {{hostname}}/api/v1/site/1/cmsupdate/cancel
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Clear a failed CMS update task
+POST {{hostname}}/api/v1/site/1/cmsupdate/clear
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### --- Extensions ----------------------------------------------------------
+
+### List extensions
+GET {{hostname}}/api/v1/site/1/extensions
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Refresh extensions info (synchronous, may take seconds)
+POST {{hostname}}/api/v1/site/1/extensions
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Clear a failed extensions-update task
+POST {{hostname}}/api/v1/site/1/extensions/clear
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Reset (optionally purge the queue too)
+POST {{hostname}}/api/v1/site/1/extensions/reset
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{ "resetqueue": true }
+
+### Schedule a single extension for update
+POST {{hostname}}/api/v1/site/1/extensions/scheduleupdate/42
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Cancel a single extension's queued update
+POST {{hostname}}/api/v1/site/1/extensions/cancel/42
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Get an extension's download key (Joomla only)
+GET {{hostname}}/api/v1/site/1/extension/42/downloadkey
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Set an extension's download key (Joomla only)
+POST {{hostname}}/api/v1/site/1/extension/42/downloadkey
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{ "key": "ABC-123-XYZ" }
