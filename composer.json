@@ -48,7 +48,7 @@
 		"delight-im/random": "^1.0",
 		"dragonmantank/cron-expression": "^3.3.2",
 		"guzzlehttp/guzzle": "^7.5",
-		"jfcherng/php-diff": "^6.15",
+		"jfcherng/php-diff": "^7.0",
 		"io-developer/php-whois": "^4.1.10",
 		"kevinrob/guzzle-cache-middleware": "^7.0",
 		"league/commonmark": "^2.4",
