@@ -64,7 +64,7 @@
 		"symfony/serializer": "^6.2.0",
 		"symfony/yaml": "^6.2.0",
 		"vlucas/phpdotenv": "^5.5.0",
-		"web-auth/webauthn-lib": "^4.6.2",
+		"web-auth/webauthn-lib": "^5.3.4",
 		"minishlink/web-push": "^10.0"
 	},
 	"require-dev": {
