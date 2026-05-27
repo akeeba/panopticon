@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 2.1.0
 ================================================================================
+! [CRITICAL] MFA bypass for password-only users
 + Add JSON API (#344)
 
 Akeeba Panopticon 2.0.1
