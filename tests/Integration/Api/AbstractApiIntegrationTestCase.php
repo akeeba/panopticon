@@ -239,6 +239,12 @@ abstract class AbstractApiIntegrationTestCase extends AbstractIntegrationTestCas
 	/**
 	 * Set an authenticated user on the container's userManager directly (skip token round-trip)
 	 * for tests that only care about the post-auth behaviour of a handler.
+	 *
+	 * Also injects a synthetic token row with scopes = null (all scopes allowed) so that
+	 * {@see \Akeeba\Panopticon\Controller\Api\AbstractApiHandler::requireScope()} does not
+	 * reject the request with a "missing token context" 403. This keeps scope enforcement
+	 * fail-closed in production while allowing handler-level integration tests to run
+	 * without a real token round-trip.
 	 */
 	protected function loginAs(int $userId): void
 	{
@@ -249,5 +255,29 @@ abstract class AbstractApiIntegrationTestCase extends AbstractIntegrationTestCas
 		$property = $ref->getProperty('currentUser');
 		$property->setAccessible(true);
 		$property->setValue($manager, $user);
+
+		// Inject a synthetic token row with null scopes so requireScope() treats this
+		// request as having all scopes. Real scope-restriction tests should call
+		// injectTokenScopes() instead to set a restricted scope list.
+		$this->container->apiCurrentToken = (object) [
+			'id'      => 0,
+			'user_id' => $userId,
+			'scopes'  => null,
+		];
+	}
+
+	/**
+	 * Override the synthetic token row's scopes for tests that specifically exercise
+	 * scope-restricted behaviour. Pass null to restore the "all scopes allowed" default.
+	 *
+	 * @param   string[]|null  $scopes  Scope value strings (e.g. ['sites:read']), or null for all.
+	 */
+	protected function injectTokenScopes(?array $scopes): void
+	{
+		$existing = $this->container->apiCurrentToken ?? (object) ['id' => 0, 'user_id' => 0, 'scopes' => null];
+
+		$existing->scopes = $scopes === null ? null : json_encode($scopes);
+
+		$this->container->apiCurrentToken = $existing;
 	}
 }

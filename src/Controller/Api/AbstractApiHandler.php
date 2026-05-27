@@ -141,12 +141,12 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 	{
 		$tokenRow = $this->container->apiCurrentToken;
 
-		// No token row on the container: authentication was either bypassed (e.g. in test
-		// infrastructure that calls handlers directly) or the token has no scope column yet
-		// (pre-scope-feature rows). Treat as "all scopes allowed" in both cases — the same
-		// semantics as a token whose scopes column is NULL.
+		// No token row: this should never happen in production (TokenAuthentication always
+		// sets apiCurrentToken before any handler runs). Fail closed.
 		if ($tokenRow === null)
 		{
+			$this->sendJsonError(403, 'Access denied: missing token context.', 'auth.forbidden');
+
 			return;
 		}
 
