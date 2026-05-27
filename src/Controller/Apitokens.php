@@ -41,6 +41,29 @@ class Apitokens extends DataController
 	{
 		$this->aclCheck($task);
 
+		// Gate: users whose effective token limit is 0 may only browse and delete.
+		// Super users are never subject to quota restrictions.
+		$limitedTasks = ['add', 'edit', 'save', 'apply', 'publish', 'unpublish'];
+
+		if (in_array($task, $limitedTasks, true))
+		{
+			$user = $this->getContainer()->userManager->getUser();
+
+			if (!$user->getPrivilege('panopticon.super'))
+			{
+				/** @var Apitoken $model */
+				$model = $this->getModel();
+
+				if ($model->getEffectiveLimitForUser((int) $user->getId()) === 0)
+				{
+					throw new \RuntimeException(
+						$this->getContainer()->language->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'),
+						403
+					);
+				}
+			}
+		}
+
 		return parent::execute($task);
 	}
 
@@ -98,10 +121,11 @@ class Apitokens extends DataController
 			$data['created_by'] = (int) $user->getId();
 			$data['created_on'] = $this->getContainer()->dateFactory()->toSql();
 
-			// Cap check.
-			$existing = $model->countEnabledForUser($targetUserId);
+			// Cap check: compare against the user's effective (configurable) limit.
+			$existing       = $model->countEnabledForUser($targetUserId);
+			$effectiveLimit = $model->getEffectiveLimitForUser($targetUserId);
 
-			if ($existing >= Apitoken::MAX_PER_USER && (int) ($data['enabled'] ?? 0) === 1)
+			if ($existing >= $effectiveLimit && (int) ($data['enabled'] ?? 0) === 1)
 			{
 				throw new \RuntimeException(
 					$this->getContainer()->language->text('PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED')

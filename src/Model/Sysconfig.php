@@ -129,6 +129,7 @@ class Sysconfig extends Model
 			'user_registration_custom_blocked_usernames' => true,
 			'user_registration_activation_days' => filter_var($value, FILTER_VALIDATE_INT) && $value >= 1 && $value <= 90,
 			'user_registration_activation_tries' => filter_var($value, FILTER_VALIDATE_INT) && $value >= 1 && $value <= 100,
+			'api_tokens_per_user_max' => filter_var($value, FILTER_VALIDATE_INT) !== false && (int) $value >= 0,
 			'captcha_provider'      => in_array($value, ['altcha', 'none', 'recaptcha_invisible', 'hcaptcha']),
 			'captcha_recaptcha_site_key' => true,
 			'captcha_recaptcha_secret_key' => true,
@@ -479,6 +480,8 @@ class Sysconfig extends Model
 			// Password reset
 			'pwreset', 'pwreset_mfa', 'pwreset_passkeys', 'pwreset_superuser',
 			'pwreset_admin', 'pwreset_groups',
+			// API Tokens
+			'api_tokens_per_user_max',
 			// User Registration
 			'user_registration', 'user_registration_allowed_domains',
 			'user_registration_disallowed_domains', 'user_registration_default_group',

@@ -87,6 +87,20 @@ $formatUserRef = function (?int $userId) use ($userManager): string {
 
 <form action="@route('index.php?view=apitoken')" method="post" name="adminForm" id="adminForm" class="akeeba-panopticon-form">
 
+    @if (!$this->container->userManager->getUser()->getPrivilege('panopticon.super'))
+        @if ($this->isZeroLimit)
+            <div class="alert alert-danger d-flex align-items-center gap-2 mb-3">
+                <span class="fa fa-ban" aria-hidden="true"></span>
+                @lang('PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED')
+            </div>
+        @elseif ($this->isOverQuota)
+            <div class="alert alert-warning d-flex align-items-center gap-2 mb-3">
+                <span class="fa fa-triangle-exclamation" aria-hidden="true"></span>
+                @lang('PANOPTICON_APITOKENS_LBL_QUOTA_EXCEEDED_HINT')
+            </div>
+        @endif
+    @endif
+
     @if ($isNew)
         {{-- API Endpoint URLs (collapsed by default) --}}
         <div class="card mb-3">

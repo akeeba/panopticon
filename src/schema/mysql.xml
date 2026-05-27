@@ -853,6 +853,15 @@ INSERT INTO `#__groups` (`title`, `privileges`) VALUES ('Users', '{}');
 ]]></query>
         </action>
 
+        <!-- Groups: add per-group API token limit (NULL = use global default) -->
+        <action table="#__groups" canfail="1">
+            <condition type="missing">api_token_limit</condition>
+            <query><![CDATA[
+ALTER TABLE `#__groups`
+    ADD COLUMN `api_token_limit` INT UNSIGNED NULL DEFAULT NULL;
+]]></query>
+        </action>
+
         <!-- Install mail template: registration_pending_admin -->
         <action table="#__mailtemplates" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[

@@ -17,6 +17,21 @@ $i     = 1;
 ?>
 
 <form action="@route('index.php?view=apitokens')" method="post" name="adminForm" id="adminForm">
+
+    @if (!$this->container->userManager->getUser()->getPrivilege('panopticon.super'))
+        @if ($this->isZeroLimit)
+            <div class="alert alert-danger d-flex align-items-center gap-2 mb-2">
+                <span class="fa fa-ban" aria-hidden="true"></span>
+                @lang('PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED')
+            </div>
+        @else
+            <div class="alert alert-info d-flex align-items-center gap-2 mb-2">
+                <span class="fa fa-circle-info" aria-hidden="true"></span>
+                @sprintf('PANOPTICON_APITOKENS_LBL_QUOTA_STATUS', $this->tokenCount, $this->tokenLimit)
+            </div>
+        @endif
+    @endif
+
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
         <div class="d-flex flex-row justify-content-center">
             <div class="input-group pnp-mw-50">

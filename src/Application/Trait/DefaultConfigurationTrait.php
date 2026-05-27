@@ -110,6 +110,7 @@ trait DefaultConfigurationTrait
 			'user_registration_custom_blocked_usernames' => '',
 			'user_registration_activation_days'          => 7,
 			'user_registration_activation_tries'         => 3,
+			'api_tokens_per_user_max'                    => 50,
 			'captcha_provider'                           => 'altcha',
 			'captcha_recaptcha_site_key'                 => '',
 			'captcha_recaptcha_secret_key'               => '',
@@ -228,6 +229,7 @@ trait DefaultConfigurationTrait
 			'user_registration_default_group' => fn($x) => $this->validateInteger($x, 0, 0, PHP_INT_MAX),
 			'user_registration_activation_days' => fn($x) => $this->validateInteger($x, 7, 1, 90),
 			'user_registration_activation_tries' => fn($x) => $this->validateInteger($x, 3, 1, 100),
+			'api_tokens_per_user_max' => fn($x) => $this->validateInteger($x, 50, 0, PHP_INT_MAX),
 			'captcha_provider' => fn($x) => $this->validatePresetValues(
 				$x, 'altcha', ['altcha', 'none', 'recaptcha_invisible', 'hcaptcha']
 			),

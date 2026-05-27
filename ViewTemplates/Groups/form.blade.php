@@ -65,6 +65,19 @@ $token      = $this->container->session->getCsrfToken()->getValue();
         </fieldset>
     </div>
 
+    <div class="row mb-3">
+        <label for="api_token_limit" class="col-sm-3 col-form-label">
+            @lang('PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT')
+        </label>
+        <div class="col-sm-9">
+            <input type="number" class="form-control" id="api_token_limit" name="api_token_limit"
+                   min="0" step="1"
+                   value="{{ $model->getApiTokenLimit() !== null ? $model->getApiTokenLimit() : '' }}"
+                   placeholder="@lang('PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER')">
+            <div class="form-text">@lang('PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP')</div>
+        </div>
+    </div>
+
     <input type="hidden" name="id" value="{{ (int) $model->id ?? 0 }}">
     <input type="hidden" name="token" value="@token()">
     <input type="hidden" name="task" id="task" value="browse">

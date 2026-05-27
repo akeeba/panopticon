@@ -30,5 +30,19 @@ class Groups extends DataController
 		$permissions = array_keys($data['permissions'] ?? []);
 		$this->getModel()->setPrivileges($permissions);
 		unset($data['permissions']);
+
+		// Handle the optional per-group API token limit (empty string → NULL).
+		$rawLimit = isset($data['api_token_limit']) ? trim((string) $data['api_token_limit']) : '';
+
+		if ($rawLimit === '')
+		{
+			$this->getModel()->api_token_limit = null;
+		}
+		else
+		{
+			$this->getModel()->api_token_limit = max(0, (int) $rawLimit);
+		}
+
+		unset($data['api_token_limit']);
 	}
 }

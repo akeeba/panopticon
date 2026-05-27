@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 2.1.0
 ================================================================================
++ Configurable API token limit per user, with optional per-group overrides [gh-965]
 + Add JSON API (#344)
 
 Akeeba Panopticon 2.0.1

@@ -16,9 +16,10 @@ use Awf\Utils\ArrayHelper;
 /**
  * Handle user groups
  *
- * @property int    $id         The group's ID
- * @property string $title      The group's title
- * @property string $privileges JSON-encoded list of privileges
+ * @property int      $id               The group's ID
+ * @property string   $title            The group's title
+ * @property string   $privileges       JSON-encoded list of privileges
+ * @property int|null $api_token_limit  Per-group API token limit override; NULL uses the global default.
  */
 class Groups extends DataModel
 {
@@ -53,6 +54,11 @@ class Groups extends DataModel
 		return is_array($this->privileges)
 			? $this->privileges
 			: (json_decode($this->privileges ?: '[]') ?: []);
+	}
+
+	public function getApiTokenLimit(): ?int
+	{
+		return $this->api_token_limit === null ? null : (int) $this->api_token_limit;
 	}
 
 	public function setPrivileges(array $privileges): void

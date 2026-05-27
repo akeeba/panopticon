@@ -297,6 +297,74 @@ class Apitoken extends DataModel
 	}
 
 	/**
+	 * Compute the effective API token limit for a given user.
+	 *
+	 * Resolution order:
+	 *  - If the user belongs to one or more groups that have an explicit `api_token_limit`
+	 *    (non-NULL), the effective limit is the MAX of those group limits.
+	 *  - Otherwise the global configuration key `api_tokens_per_user_max` is used
+	 *    (default: {@see self::MAX_PER_USER}).
+	 *
+	 * A return value of 0 means the user has no API access at all.
+	 *
+	 * @param   int  $userId
+	 *
+	 * @return  int
+	 * @since   1.5.0
+	 */
+	public function getEffectiveLimitForUser(int $userId): int
+	{
+		$container     = $this->getContainer();
+		$globalDefault = (int) $container->appConfig->get('api_tokens_per_user_max', self::MAX_PER_USER);
+
+		$db = $this->getDbo();
+
+		// Load the user's group IDs from the parameters JSON column.
+		$paramsJson = $db->setQuery(
+			$db->getQuery(true)
+				->select($db->quoteName('parameters'))
+				->from($db->quoteName('#__users'))
+				->where($db->quoteName('id') . ' = ' . $db->quote($userId))
+		)->loadResult();
+
+		$groupIds = [];
+
+		if ($paramsJson)
+		{
+			try
+			{
+				$params   = json_decode($paramsJson, true, 512, JSON_THROW_ON_ERROR);
+				$groupIds = array_filter(array_map('intval', (array) ($params['usergroups'] ?? [])));
+			}
+			catch (\JsonException)
+			{
+				// Ignore malformed parameters; fall back to global.
+			}
+		}
+
+		if (empty($groupIds))
+		{
+			return $globalDefault;
+		}
+
+		// Query only those groups which have an explicit api_token_limit.
+		$query = $db->getQuery(true)
+			->select($db->quoteName('api_token_limit'))
+			->from($db->quoteName('#__groups'))
+			->where($db->quoteName('id') . ' IN(' . implode(',', $groupIds) . ')')
+			->where($db->quoteName('api_token_limit') . ' IS NOT NULL');
+
+		$groupLimits = array_map('intval', $db->setQuery($query)->loadColumn() ?: []);
+
+		if (empty($groupLimits))
+		{
+			return $globalDefault;        // No group overrides → use global.
+		}
+
+		return max(...$groupLimits);      // Group overrides present → highest wins.
+	}
+
+	/**
 	 * Get all tokens for a given user ID.
 	 *
 	 * @param   int  $userId  The user ID.

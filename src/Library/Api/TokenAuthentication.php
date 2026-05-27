@@ -282,6 +282,25 @@ class TokenAuthentication
 			return null;
 		}
 
+		// If the user's effective token limit is 0, API access is denied entirely.
+		/** @var Apitoken $apitokenModel */
+		$apitokenModel  = $this->container->mvcFactory->makeTempModel('Apitoken');
+		$effectiveLimit = $apitokenModel->getEffectiveLimitForUser($userId);
+
+		if ($effectiveLimit === 0)
+		{
+			AuditLog::record(
+				'apitoken.auth_failure',
+				$userId,
+				$ipBinary,
+				'apitoken',
+				(int) $matchedRow->id,
+				['reason' => 'api_access_denied']
+			);
+
+			return null;
+		}
+
 		// Set the authenticated user on the in-memory userManager for this request.
 		// We use reflection because AWF's Manager has no public setUser() and we MUST NOT
 		// write to the session segment (per master plan: API auth is ephemeral, no session).
