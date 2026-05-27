@@ -1,0 +1,22 @@
+### Akeeba Panopticon API — Stats & Site Status
+###
+### PhpStorm HTTP Client request file. Use the run gutter icon next to each block
+### or right-click → Run All Requests in File.
+###
+### Replace the env vars below or define them in a sibling `http-client.env.json`.
+
+@hostname = https://panopticon.local
+@token    = REPLACE-ME-WITH-A-REAL-TOKEN
+@site_id  = 1
+
+### Get global dashboard counters (requires panopticon.super)
+GET {{hostname}}/api/v1/stats
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### Get per-site health summary
+GET {{hostname}}/api/v1/site/{{site_id}}/status
+Authorization: Bearer {{token}}
+Accept: application/json

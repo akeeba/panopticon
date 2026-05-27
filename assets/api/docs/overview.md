@@ -13,6 +13,8 @@ under `assets/api/docs/<group>.md` and is mirrored to the GitHub wiki.
 - [`sites.md`](sites.md) — Sites: list, create, read, modify, refresh, fix-Joomla-core-update,
   CMS-update lifecycle, extensions list/refresh/clear/reset, per-extension schedule/cancel
   updates, download-key get/set.
+- [`stats.md`](stats.md) — Aggregated dashboard counters (`GET /api/v1/stats`) and per-site
+  health summary (`GET /api/v1/site/:id/status`). Includes a Home Assistant integration example.
 - [`sysconfig.md`](sysconfig.md) — Application configuration parameters.
 - [`tasks.md`](tasks.md) — Background task CRUD.
 - [`selfupdate.md`](selfupdate.md) — Integrated self-update: info, download, install, postinstall.
@@ -252,6 +254,6 @@ with `v1` for a deprecation window.
 
 ## See also
 
-- [`sites.md`](./sites.md), [`sysconfig.md`](./sysconfig.md), [`tasks.md`](./tasks.md),
-  [`selfupdate.md`](./selfupdate.md) — per-group endpoint documentation.
+- [`sites.md`](./sites.md), [`stats.md`](./stats.md), [`sysconfig.md`](./sysconfig.md),
+  [`tasks.md`](./tasks.md), [`selfupdate.md`](./selfupdate.md) — per-group endpoint documentation.
 - [`../openapi.yaml`](../openapi.yaml) — machine-readable OpenAPI 3.1 specification.

@@ -73,6 +73,8 @@ $apiParseCallable = function (string $path): ?array
 		['POST', ['v1', 'site', ':id', 'cmsupdate'],                             'V1\\Site\\CmsUpdate'],
 		['POST', ['v1', 'site', ':id', 'cmsupdate', 'cancel'],                   'V1\\Site\\CmsUpdateCancel'],
 		['POST', ['v1', 'site', ':id', 'cmsupdate', 'clear'],                    'V1\\Site\\CmsUpdateClear'],
+		['GET',  ['v1', 'stats'],                                                'V1\\Stats\\Get'],
+		['GET',  ['v1', 'site', ':id', 'status'],                                'V1\\Site\\Status'],
 		['GET',  ['v1', 'sysconfig'],                                            'V1\\Sysconfig\\GetList'],
 		['GET',  ['v1', 'sysconfig', ':paramName'],                              'V1\\Sysconfig\\Get'],
 		['POST', ['v1', 'sysconfig', ':paramName'],                              'V1\\Sysconfig\\Set'],
