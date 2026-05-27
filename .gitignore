@@ -1,7 +1,7 @@
 ### phpStorm
 /.idea/laravel-idea.xml
 
-### Application stuff
+### Application configuration
 /config.php
 /config.php.*
 /.env
@@ -10,7 +10,8 @@
 /.env.dev
 /.env.docker
 /.env.test
-/.phpunit.cache
+
+### Cache, logs, temporary
 /cache/**
 !/cache/.htaccess
 !/cache/web.config
@@ -20,8 +21,11 @@
 /log/**
 !/log/.htaccess
 !/log/web.config
+
+### Generated files
 /version.php
 /.htaccess
+/assets/issues
 
 ### Automatically installed NPM dependencies
 /media/ace/**
@@ -53,5 +57,8 @@
 /docker-compose-frankenphp.override.yml
 /docker-testing
 
-## AI agents
-.claude/settings.local.json
+### Test artefacts
+/.phpunit.cache
+
+### AI agents
+/.claude/settings.local.json
