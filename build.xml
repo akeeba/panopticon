@@ -59,6 +59,7 @@
         <exclude name=".gitignore" />
         <exclude name=".htaccess" />
         <exclude name="build.xml" />
+        <exclude name="AGENTS.md" />
         <exclude name="CHANGELOG" />
         <exclude name="CLAUDE.md" />
         <exclude name="composer.json" />
