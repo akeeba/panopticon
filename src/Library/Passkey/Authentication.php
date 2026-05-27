@@ -16,37 +16,34 @@ use Cose\Algorithm\Signature\ECDSA;
 use Cose\Algorithm\Signature\EdDSA;
 use Cose\Algorithm\Signature\RSA;
 use Cose\Algorithms;
-use GuzzleHttp\Psr7\HttpFactory;
 use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Webauthn\AttestationStatement\AndroidKeyAttestationStatementSupport;
 use Webauthn\AttestationStatement\AppleAttestationStatementSupport;
-use Webauthn\AttestationStatement\AttestationObjectLoader;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AttestationStatement\FidoU2FAttestationStatementSupport;
 use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
 use Webauthn\AttestationStatement\PackedAttestationStatementSupport;
 use Webauthn\AttestationStatement\TPMAttestationStatementSupport;
-use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
-use Webauthn\AuthenticationExtensions\ExtensionOutputCheckerHandler;
+use Webauthn\AuthenticationExtensions\AuthenticationExtensions;
 use Webauthn\AuthenticatorAssertionResponse;
 use Webauthn\AuthenticatorAssertionResponseValidator;
 use Webauthn\AuthenticatorAttestationResponse;
 use Webauthn\AuthenticatorAttestationResponseValidator;
 use Webauthn\AuthenticatorSelectionCriteria;
+use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
+use Webauthn\Denormalizer\WebauthnSerializerFactory;
 use Webauthn\Exception\InvalidDataException;
+use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialDescriptor;
-use Webauthn\PublicKeyCredentialLoader;
 use Webauthn\PublicKeyCredentialParameters;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialSource;
-use Webauthn\PublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialUserEntity;
-use Webauthn\TokenBinding\TokenBindingNotSupportedHandler;
 
 defined('AKEEBA') || die;
 
@@ -55,21 +52,21 @@ final class Authentication implements AuthenticationInterface
 	/**
 	 * The credentials repository
 	 *
-	 * @var   PublicKeyCredentialSourceRepository
+	 * @var   CredentialRepository
 	 * @since 1.2.3
 	 */
-	protected PublicKeyCredentialSourceRepository $credentialsRepository;
+	protected CredentialRepository $credentialsRepository;
 
 	private readonly LoggerInterface $logger;
 
-	public function __construct(?PublicKeyCredentialSourceRepository $credRepo = null, ?LoggerInterface $logger = null)
+	public function __construct(?CredentialRepository $credRepo = null, ?LoggerInterface $logger = null)
 	{
 		$this->logger                = $logger ?? Factory::getContainer()->loggerFactory->get('passkey');
 		$this->credentialsRepository = $credRepo ?? new CredentialRepository();
 	}
 
 	final public static function create(
-		?PublicKeyCredentialSourceRepository $credRepo = null
+		?CredentialRepository $credRepo = null
 	)
 	{
 		$credRepo ??= new CredentialRepository();
@@ -80,11 +77,11 @@ final class Authentication implements AuthenticationInterface
 	/**
 	 * Returns the Public Key credential source repository object
 	 *
-	 * @return  PublicKeyCredentialSourceRepository|null
+	 * @return  CredentialRepository|null
 	 *
 	 * @since   1.2.3
 	 */
-	final public function getCredentialsRepository(): ?PublicKeyCredentialSourceRepository
+	final public function getCredentialsRepository(): ?CredentialRepository
 	{
 		return $this->credentialsRepository;
 	}
@@ -253,42 +250,31 @@ final class Authentication implements AuthenticationInterface
 		foreach ($records as $record)
 		{
 			$excludedPublicKeyDescriptors[] = new PublicKeyCredentialDescriptor(
-				$record->getType(), $record->getCredentialPublicKey()
+				$record->type, $record->credentialPublicKey
 			);
 		}
 
-		$authenticatorAttachment = AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE;
-
 		// Authenticator Selection Criteria (we used default values)
-		$authenticatorSelectionCriteria = (new AuthenticatorSelectionCriteria())
-			->setAuthenticatorAttachment($authenticatorAttachment)
-			->setResidentKey(
-				$resident
-					? AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED
-					: AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_DISCOURAGED
-			)
-			->setUserVerification(
-				AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED
-			);
-
-		// Extensions (not yet supported by the library)
-		$extensions = new AuthenticationExtensionsClientInputs;
-
-		// Attestation preference
-		$attestationPreference = PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE;
+		$authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
+			AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE,
+			AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED,
+			$resident
+				? AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED
+				: AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_DISCOURAGED
+		);
 
 		// Public key credential creation options
 		$publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
 			$rpEntity,
 			$userEntity,
 			$challenge,
-			$publicKeyCredentialParametersList
+			$publicKeyCredentialParametersList,
+			$authenticatorSelectionCriteria,
+			PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE,
+			$excludedPublicKeyDescriptors,
+			$timeout,
+			null
 		);
-		$publicKeyCredentialCreationOptions->setTimeout($timeout);
-		$publicKeyCredentialCreationOptions->excludeCredentials(...$excludedPublicKeyDescriptors);
-		$publicKeyCredentialCreationOptions->setAuthenticatorSelection($authenticatorSelectionCriteria);
-		$publicKeyCredentialCreationOptions->setAttestation($attestationPreference);
-		$publicKeyCredentialCreationOptions->setExtensions($extensions);
 
 		// Save data in the session
 		$session = Factory::getContainer()->segment;
@@ -368,9 +354,6 @@ final class Authentication implements AuthenticationInterface
 			->add(new RSA\RS256())
 			->add(new RSA\RS512());
 
-		// The token binding handler
-		$tokenBindingHandler = new TokenBindingNotSupportedHandler();
-
 		// Attestation Statement Support Manager
 		$attestationStatementSupportManager = new AttestationStatementSupportManager();
 		$attestationStatementSupportManager->add(new NoneAttestationStatementSupport());
@@ -380,41 +363,31 @@ final class Authentication implements AuthenticationInterface
 		$attestationStatementSupportManager->add(new TPMAttestationStatementSupport());
 		$attestationStatementSupportManager->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
 
-		// Attestation Object Loader
-		$attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
-
-		$attestationObjectLoader->setLogger($this->logger);
-
-		// Public Key Credential Loader
-		$publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
-
-		$publicKeyCredentialLoader->setLogger($this->logger);
-
-		// Extension output checker handler
-		$extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler();
-
 		// Authenticator Attestation Response Validator
-		$authenticatorAttestationResponseValidator = new AuthenticatorAttestationResponseValidator(
-			$attestationStatementSupportManager,
-			$this->getCredentialsRepository(),
-			$tokenBindingHandler,
-			$extensionOutputCheckerHandler
-		);
+		$factory = new CeremonyStepManagerFactory();
+		$factory->setAlgorithmManager($coseAlgorithmManager);
+		$factory->setAttestationStatementSupportManager($attestationStatementSupportManager);
+		$csm = $factory->creationCeremony();
 
+		$authenticatorAttestationResponseValidator = AuthenticatorAttestationResponseValidator::create($csm);
 		$authenticatorAttestationResponseValidator->setLogger($this->logger);
 
-		// Note: Any Throwable from this point will bubble up to the GUI
-
-		// Initialise a PSR-7 request object using Laminas Diactoros
-		$request = (new HttpFactory())->createServerRequest('', Uri::current(), $_SERVER);
-
-		// Load the data
-		$publicKeyCredential = $publicKeyCredentialLoader->load(
-			base64_decode(
-				$this->reshapeRegistrationData($data)
-			)
+		// Load the data using the Symfony Serializer
+		$asSM = new AttestationStatementSupportManager();
+		$asSM->add(new NoneAttestationStatementSupport());
+		$asSM->add(new AndroidKeyAttestationStatementSupport());
+		$asSM->add(new AppleAttestationStatementSupport());
+		$asSM->add(new FidoU2FAttestationStatementSupport());
+		$asSM->add(new TPMAttestationStatementSupport());
+		$asSM->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
+		$serializer          = (new WebauthnSerializerFactory($asSM))->create();
+		$publicKeyCredential = $serializer->deserialize(
+			base64_decode($this->reshapeRegistrationData($data)),
+			PublicKeyCredential::class,
+			'json'
 		);
-		$response            = $publicKeyCredential->getResponse();
+
+		$response = $publicKeyCredential->response;
 
 		// Check if the response is an Authenticator Attestation Response
 		if (!$response instanceof AuthenticatorAttestationResponse)
@@ -423,15 +396,15 @@ final class Authentication implements AuthenticationInterface
 		}
 
 		// Check the response against the request
-		$authenticatorAttestationResponseValidator->check($response, $publicKeyCredentialCreationOptions, $request);
-
-		/**
-		 * Everything is OK here. You can get the Public Key Credential Source. This object should be persisted using
-		 * the Public Key Credential Source repository.
-		 */
-		return $authenticatorAttestationResponseValidator->check(
-			$response, $publicKeyCredentialCreationOptions, $request
+		$host          = Uri::getInstance()->toString(['host']);
+		$credentialRecord = $authenticatorAttestationResponseValidator->check(
+			$response, $publicKeyCredentialCreationOptions, $host
 		);
+
+		// Persist the credential record
+		$this->credentialsRepository->saveCredentialSource($credentialRecord);
+
+		return PublicKeyCredentialSource::fromCredentialRecord($credentialRecord);
 	}
 
 	final public function getPubkeyRequestOptions(): ?PublicKeyCredentialRequestOptions
@@ -442,15 +415,15 @@ final class Authentication implements AuthenticationInterface
 		$session   = $container->segment;
 		$challenge = random_bytes(32);
 
-		// Extensions
-		$extensions = new AuthenticationExtensionsClientInputs();
-
 		// Public Key Credential Request Options
-		$publicKeyCredentialRequestOptions = (new PublicKeyCredentialRequestOptions($challenge))
-			->setTimeout(60000)
-			->allowCredentials(... [])
-			->setUserVerification(PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED)
-			->setExtensions($extensions);
+		$publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
+			$challenge,
+			null,
+			[],
+			PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED,
+			60000,
+			null
+		);
 
 		// Save in session. This is used during the verification stage to prevent replay attacks.
 		$session->set(
@@ -511,40 +484,15 @@ final class Authentication implements AuthenticationInterface
 		$attestationStatementSupportManager->add(new TPMAttestationStatementSupport);
 		$attestationStatementSupportManager->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
 
-		// Attestation Object Loader
-		$attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
-
-		$attestationObjectLoader->setLogger($this->logger);
-
-		// Public Key Credential Loader
-		$publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
-
-		$publicKeyCredentialLoader->setLogger($this->logger);
-
-		// The token binding handler
-		$tokenBindingHandler = new TokenBindingNotSupportedHandler();
-
-		// Extension Output Checker Handler
-		$extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler;
-
-		// Authenticator Assertion Response Validator
-		$authenticatorAssertionResponseValidator = new AuthenticatorAssertionResponseValidator(
-			$this->getCredentialsRepository(),
-			$tokenBindingHandler,
-			$extensionOutputCheckerHandler,
-			$coseAlgorithmManager
+		// Load the data using the Symfony Serializer
+		$serializer          = (new WebauthnSerializerFactory($attestationStatementSupportManager))->create();
+		$publicKeyCredential = $serializer->deserialize(
+			$this->reshapeValidationData($data),
+			PublicKeyCredential::class,
+			'json'
 		);
 
-		$authenticatorAssertionResponseValidator->setLogger($this->logger);
-
-		// Initialise a PSR-7 request object using Laminas Diactoros
-		$request = (new HttpFactory())->createServerRequest('', Uri::current(), $_SERVER);
-
-		// Load the data
-		$publicKeyCredential = $publicKeyCredentialLoader->load(
-			$this->reshapeValidationData($data)
-		);
-		$response            = $publicKeyCredential->getResponse();
+		$response = $publicKeyCredential->response;
 
 		// Check if the response is an Authenticator Assertion Response
 		if (!$response instanceof AuthenticatorAssertionResponse)
@@ -553,15 +501,37 @@ final class Authentication implements AuthenticationInterface
 		}
 
 		/** @var AuthenticatorAssertionResponse $authenticatorAssertionResponse */
-		$authenticatorAssertionResponse = $publicKeyCredential->getResponse();
+		$authenticatorAssertionResponse = $publicKeyCredential->response;
 
-		return $authenticatorAssertionResponseValidator->check(
-			$publicKeyCredential->getRawId(),
+		// Authenticator Assertion Response Validator
+		$factory = new CeremonyStepManagerFactory();
+		$factory->setAlgorithmManager($coseAlgorithmManager);
+		$factory->setAttestationStatementSupportManager($attestationStatementSupportManager);
+		$csm = $factory->requestCeremony();
+
+		$authenticatorAssertionResponseValidator = AuthenticatorAssertionResponseValidator::create($csm);
+		$authenticatorAssertionResponseValidator->setLogger($this->logger);
+
+		// Load the credential record first
+		$credentialRecord = $this->credentialsRepository->findOneByCredentialId($publicKeyCredential->rawId);
+
+		if ($credentialRecord === null)
+		{
+			throw new RuntimeException($lang->text('PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST'));
+		}
+
+		$host          = Uri::getInstance()->toString(['host']);
+		$updatedRecord = $authenticatorAssertionResponseValidator->check(
+			$credentialRecord,
 			$authenticatorAssertionResponse,
 			$publicKeyCredentialRequestOptions,
-			$request,
+			$host,
 			null
 		);
+
+		$this->credentialsRepository->saveCredentialSource($updatedRecord);
+
+		return PublicKeyCredentialSource::fromCredentialRecord($updatedRecord);
 	}
 
 	/**

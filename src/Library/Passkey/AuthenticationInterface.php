@@ -13,7 +13,6 @@ use Exception;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
-use Webauthn\PublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialUserEntity;
 
 defined('AKEEBA') || die;
@@ -23,22 +22,22 @@ interface AuthenticationInterface
 	/**
 	 * Public constructor.
 	 *
-	 * @param   PublicKeyCredentialSourceRepository|null  $credRepo  Credentials repo
+	 * @param   CredentialRepository|null  $credRepo  Credentials repo
 	 *
 	 * @since   2.0.0
 	 */
 	public function __construct(
-		?PublicKeyCredentialSourceRepository $credRepo = null
+		?CredentialRepository $credRepo = null
 	);
 
 	/**
 	 * Returns the Public Key credential source repository object
 	 *
-	 * @return  PublicKeyCredentialSourceRepository|null
+	 * @return  CredentialRepository|null
 	 *
 	 * @since   2.0.0
 	 */
-	public function getCredentialsRepository(): ?PublicKeyCredentialSourceRepository;
+	public function getCredentialsRepository(): ?CredentialRepository;
 
 	/**
 	 * Returns a User Entity object given a Panopticon user

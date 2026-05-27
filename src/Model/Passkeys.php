@@ -449,7 +449,7 @@ final class Passkeys extends Model
 		// Retrieve data from the request and session
 		return $this->authenticationHelper
 			->validateAssertionResponse($data)
-			->getUserHandle();
+			->userHandle;
 	}
 
 	/**

@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Library\WebAuthn\Helper;
 
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\User\User;
+use Akeeba\Panopticon\Library\WebAuthn\Repository\MFA;
 use Awf\Container\Container;
 use Awf\Container\ContainerAwareInterface;
 use Awf\Container\ContainerAwareTrait;
@@ -22,7 +23,6 @@ use Cose\Algorithm\Signature\EdDSA;
 use Cose\Algorithm\Signature\RSA;
 use Cose\Algorithms;
 use Exception;
-use GuzzleHttp\Psr7\HttpFactory;
 use ParagonIE\ConstantTime\Base64;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use Psr\Log\LoggerInterface;
@@ -30,30 +30,26 @@ use RuntimeException;
 use Throwable;
 use Webauthn\AttestationStatement\AndroidKeyAttestationStatementSupport;
 use Webauthn\AttestationStatement\AppleAttestationStatementSupport;
-use Webauthn\AttestationStatement\AttestationObjectLoader;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AttestationStatement\FidoU2FAttestationStatementSupport;
 use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
 use Webauthn\AttestationStatement\PackedAttestationStatementSupport;
 use Webauthn\AttestationStatement\TPMAttestationStatementSupport;
-use Webauthn\AttestedCredentialData;
-use Webauthn\AuthenticationExtensions\AuthenticationExtensionsClientInputs;
-use Webauthn\AuthenticationExtensions\ExtensionOutputCheckerHandler;
 use Webauthn\AuthenticatorAssertionResponse;
 use Webauthn\AuthenticatorAssertionResponseValidator;
 use Webauthn\AuthenticatorAttestationResponse;
 use Webauthn\AuthenticatorAttestationResponseValidator;
 use Webauthn\AuthenticatorSelectionCriteria;
+use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
+use Webauthn\Denormalizer\WebauthnSerializerFactory;
+use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialDescriptor;
-use Webauthn\PublicKeyCredentialLoader;
 use Webauthn\PublicKeyCredentialParameters;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialSource;
-use Webauthn\PublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialUserEntity;
-use Webauthn\TokenBinding\TokenBindingNotSupportedHandler;
 
 defined('AKEEBA') || die;
 
@@ -63,7 +59,7 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 	use LanguageAwareTrait;
 
 	public function __construct(
-		private readonly PublicKeyCredentialSourceRepository $repository, private ?LoggerInterface $logger, ?Container $container = null, ?Language $language = null
+		private readonly MFA $repository, private ?LoggerInterface $logger, ?Container $container = null, ?Language $language = null
 	)
 	{
 		$this->setContainer($container ?? Factory::getContainer());
@@ -118,15 +114,15 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 
 		$challenge = random_bytes(32);
 
-		// Extensions
-		$extensions = new AuthenticationExtensionsClientInputs;
-
 		// Public Key Credential Request Options
-		$publicKeyCredentialRequestOptions = (new PublicKeyCredentialRequestOptions($challenge))
-			->setTimeout(60000)
-			->allowCredentials(... $registeredPublicKeyCredentialDescriptors)
-			->setUserVerification(PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED)
-			->setExtensions($extensions);
+		$publicKeyCredentialRequestOptions = new PublicKeyCredentialRequestOptions(
+			$challenge,
+			null,
+			$registeredPublicKeyCredentialDescriptors,
+			PublicKeyCredentialRequestOptions::USER_VERIFICATION_REQUIREMENT_PREFERRED,
+			60000,
+			null
+		);
 
 		// Save in session. This is used during the verification stage to prevent replay attacks.
 		$session = Factory::getContainer()->segment;
@@ -210,36 +206,20 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		$attestationStatementSupportManager->add(new TPMAttestationStatementSupport);
 		$attestationStatementSupportManager->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
 
-		// Attestation Object Loader
-		$attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
-		$attestationObjectLoader->setLogger($this->logger);
-
-		// Public Key Credential Loader
-		$publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
-		$publicKeyCredentialLoader->setLogger($this->logger);
-
-		// The token binding handler
-		$tokenBindingHandler = new TokenBindingNotSupportedHandler();
-
-		// Extension Output Checker Handler
-		$extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler;
-
 		// Authenticator Assertion Response Validator
-		$authenticatorAssertionResponseValidator = new AuthenticatorAssertionResponseValidator(
-			$this->repository,
-			$tokenBindingHandler,
-			$extensionOutputCheckerHandler,
-			$coseAlgorithmManager
-		);
+		$factory = new CeremonyStepManagerFactory();
+		$factory->setAlgorithmManager($coseAlgorithmManager);
+		$factory->setAttestationStatementSupportManager($attestationStatementSupportManager);
+		$csm = $factory->requestCeremony();
+
+		$authenticatorAssertionResponseValidator = AuthenticatorAssertionResponseValidator::create($csm);
 		$authenticatorAssertionResponseValidator->setLogger($this->logger);
 
-		// Initialise a PSR-7 request object using Guzzle
-		$request = (new HttpFactory())->createServerRequest('', Uri::current(), $_SERVER);
-
-		// Load the data
-		$data = $this->reshapeValidationData($data);
-		$publicKeyCredential = $publicKeyCredentialLoader->load($data);
-		$response            = $publicKeyCredential->getResponse();
+		// Load the data using the Symfony Serializer
+		$serializer          = (new WebauthnSerializerFactory($attestationStatementSupportManager))->create();
+		$data                = $this->reshapeValidationData($data);
+		$publicKeyCredential = $serializer->deserialize($data, PublicKeyCredential::class, 'json');
+		$response            = $publicKeyCredential->response;
 
 		// Check if the response is an Authenticator Assertion Response
 		if (!$response instanceof AuthenticatorAssertionResponse)
@@ -248,14 +228,28 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		}
 
 		/** @var AuthenticatorAssertionResponse $authenticatorAssertionResponse */
-		$authenticatorAssertionResponse = $publicKeyCredential->getResponse();
-		$authenticatorAssertionResponseValidator->check(
-			$publicKeyCredential->getRawId(),
+		$authenticatorAssertionResponse = $publicKeyCredential->response;
+
+		// Load the credential record first
+		$credentialRecord = $this->repository->findOneByCredentialId($publicKeyCredential->rawId);
+
+		if ($credentialRecord === null)
+		{
+			throw new RuntimeException(
+				$this->getLanguage()->text('PANOPTICON_MFA_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST')
+			);
+		}
+
+		$host          = Uri::getInstance()->toString(['host']);
+		$updatedRecord = $authenticatorAssertionResponseValidator->check(
+			$credentialRecord,
 			$authenticatorAssertionResponse,
 			$publicKeyCredentialRequestOptions,
-			$request,
+			$host,
 			$userHandle
 		);
+
+		$this->repository->saveCredentialSource($updatedRecord);
 	}
 
 	/**
@@ -331,38 +325,29 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		foreach ($records as $record)
 		{
 			$excludedPublicKeyDescriptors[] = new PublicKeyCredentialDescriptor(
-				$record->getType(), $record->getCredentialPublicKey()
+				$record->type, $record->credentialPublicKey
 			);
 		}
 
-		$authenticatorAttachment = AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE;
-
 		// Authenticator Selection Criteria (we used default values)
-		$authenticatorSelectionCriteria = (new AuthenticatorSelectionCriteria())
-			->setAuthenticatorAttachment($authenticatorAttachment)
-			->setResidentKey(
-				AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_PREFERRED
-			)
-			->setUserVerification(AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED);
-
-		// Extensions (not yet supported by the library)
-		$extensions = new AuthenticationExtensionsClientInputs;
-
-		// Attestation preference
-		$attestationPreference = PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE;
+		$authenticatorSelectionCriteria = new AuthenticatorSelectionCriteria(
+			AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE,
+			AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_PREFERRED,
+			AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_PREFERRED
+		);
 
 		// Public key credential creation options
 		$publicKeyCredentialCreationOptions = new PublicKeyCredentialCreationOptions(
 			$rpEntity,
 			$userEntity,
 			$challenge,
-			$publicKeyCredentialParametersList
+			$publicKeyCredentialParametersList,
+			$authenticatorSelectionCriteria,
+			PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_NONE,
+			$excludedPublicKeyDescriptors,
+			$timeout,
+			null
 		);
-		$publicKeyCredentialCreationOptions->setTimeout($timeout);
-		$publicKeyCredentialCreationOptions->excludeCredentials(...$excludedPublicKeyDescriptors);
-		$publicKeyCredentialCreationOptions->setAuthenticatorSelection($authenticatorSelectionCriteria);
-		$publicKeyCredentialCreationOptions->setAttestation($attestationPreference);
-		$publicKeyCredentialCreationOptions->setExtensions($extensions);
 
 		// Save data in the session
 		$session = Factory::getContainer()->segment;
@@ -384,7 +369,7 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 	 *
 	 * @param   string  $data  The JSON-encoded data returned by the browser during the authentication flow
 	 *
-	 * @return  AttestedCredentialData|null
+	 * @return  PublicKeyCredentialSource|null
 	 * @since   1.0.0
 	 */
 	public function validateAuthenticationData(string $data): ?PublicKeyCredentialSource
@@ -435,9 +420,6 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 			->add(new RSA\RS256())
 			->add(new RSA\RS512());
 
-		// The token binding handler
-		$tokenBindingHandler = new TokenBindingNotSupportedHandler();
-
 		// Attestation Statement Support Manager
 		$attestationStatementSupportManager = new AttestationStatementSupportManager();
 		$attestationStatementSupportManager->add(new NoneAttestationStatementSupport());
@@ -447,37 +429,20 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		$attestationStatementSupportManager->add(new TPMAttestationStatementSupport);
 		$attestationStatementSupportManager->add(new PackedAttestationStatementSupport($coseAlgorithmManager));
 
-		// Attestation Object Loader
-		$attestationObjectLoader = new AttestationObjectLoader($attestationStatementSupportManager);
-		$attestationObjectLoader->setLogger($this->logger);
-
-		// Public Key Credential Loader
-		$publicKeyCredentialLoader = new PublicKeyCredentialLoader($attestationObjectLoader);
-		$publicKeyCredentialLoader->setLogger($this->logger);
-
-		// Extension output checker handler
-		$extensionOutputCheckerHandler = new ExtensionOutputCheckerHandler();
-
 		// Authenticator Attestation Response Validator
-		$authenticatorAttestationResponseValidator = new AuthenticatorAttestationResponseValidator(
-			$attestationStatementSupportManager,
-			$this->repository,
-			$tokenBindingHandler,
-			$extensionOutputCheckerHandler
-		);
+		$factory = new CeremonyStepManagerFactory();
+		$factory->setAlgorithmManager($coseAlgorithmManager);
+		$factory->setAttestationStatementSupportManager($attestationStatementSupportManager);
+		$csm = $factory->creationCeremony();
+
+		$authenticatorAttestationResponseValidator = AuthenticatorAttestationResponseValidator::create($csm);
 		$authenticatorAttestationResponseValidator->setLogger($this->logger);
 
-		// Any Throwable from this point will bubble up to the GUI
-
-		// Initialise a PSR-7 request object using Guzzle
-		$request = (new HttpFactory())->createServerRequest('', Uri::current(), $_SERVER);
-
-		// Load the data
-
-		$data = $this->reshapeRegistrationData($data);
-
-		$publicKeyCredential = $publicKeyCredentialLoader->load(base64_decode($data));
-		$response            = $publicKeyCredential->getResponse();
+		// Load the data using the Symfony Serializer
+		$data                = $this->reshapeRegistrationData($data);
+		$serializer          = (new WebauthnSerializerFactory($attestationStatementSupportManager))->create();
+		$publicKeyCredential = $serializer->deserialize(base64_decode($data), PublicKeyCredential::class, 'json');
+		$response            = $publicKeyCredential->response;
 
 		// Check if the response is an Authenticator Attestation Response
 		if (!$response instanceof AuthenticatorAttestationResponse)
@@ -486,15 +451,15 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		}
 
 		// Check the response against the request
-		$authenticatorAttestationResponseValidator->check($response, $publicKeyCredentialCreationOptions, $request);
-
-		/**
-		 * Everything is OK here. You can get the Public Key Credential Source. This object should be persisted using
-		 * the Public Key Credential Source repository.
-		 */
-		return $authenticatorAttestationResponseValidator->check(
-			$response, $publicKeyCredentialCreationOptions, $request
+		$host             = Uri::getInstance()->toString(['host']);
+		$credentialRecord = $authenticatorAttestationResponseValidator->check(
+			$response, $publicKeyCredentialCreationOptions, $host
 		);
+
+		// Persist the credential record
+		$this->repository->saveCredentialSource($credentialRecord);
+
+		return PublicKeyCredentialSource::fromCredentialRecord($credentialRecord);
 	}
 
 	/**

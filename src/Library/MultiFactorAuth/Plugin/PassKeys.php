@@ -27,6 +27,9 @@ use Awf\Text\LanguageAwareTrait;
 use Awf\Uri\Uri;
 use Exception;
 use RuntimeException;
+use Webauthn\AttestationStatement\AttestationStatementSupportManager;
+use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
+use Webauthn\Denormalizer\WebauthnSerializerFactory;
 use Webauthn\PublicKeyCredentialRequestOptions;
 
 class PassKeys
@@ -233,12 +236,15 @@ class PassKeys
 			$session->set('mfa_webauthn.registration_user_id', null);
 		}
 
+		// Serialize the credential source using the Symfony Serializer
+		$asSM = new AttestationStatementSupportManager();
+		$asSM->add(new NoneAttestationStatementSupport());
+		$serializer = (new WebauthnSerializerFactory($asSM))->create();
+
 		// Return the configuration to be serialized
 		return [
-			'credentialId' => base64_encode(
-				$publicKeyCredentialSource->getAttestedCredentialData()->getCredentialId()
-			),
-			'pubkeysource' => json_encode($publicKeyCredentialSource),
+			'credentialId' => base64_encode($publicKeyCredentialSource->publicKeyCredentialId),
+			'pubkeysource' => $serializer->serialize($publicKeyCredentialSource, 'json'),
 			'counter'      => 0,
 		];
 	}

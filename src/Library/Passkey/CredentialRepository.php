@@ -14,12 +14,15 @@ use Awf\Database\Driver;
 use Exception;
 use InvalidArgumentException;
 use JsonException;
+use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
+use Webauthn\AttestationStatement\AttestationStatementSupportManager;
+use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
+use Webauthn\Denormalizer\WebauthnSerializerFactory;
 use Webauthn\PublicKeyCredentialSource;
-use Webauthn\PublicKeyCredentialSourceRepository;
 use Webauthn\PublicKeyCredentialUserEntity;
 
-class CredentialRepository implements PublicKeyCredentialSourceRepository
+class CredentialRepository
 {
 	/**
 	 * Returns a PublicKeyCredentialSource object given the public key credential ID
@@ -47,7 +50,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 
 		try
 		{
-			return PublicKeyCredentialSource::createFromArray(json_decode((string) $json, true));
+			return $this->getCredentialSerializer()->deserialize((string) $json, PublicKeyCredentialSource::class, 'json');
 		}
 		catch (Throwable)
 		{
@@ -69,7 +72,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 	public function findAllForUserEntity(PublicKeyCredentialUserEntity $publicKeyCredentialUserEntity): array
 	{
 		$db         = $this->getDatabase();
-		$userHandle = $publicKeyCredentialUserEntity->getId();
+		$userHandle = $publicKeyCredentialUserEntity->id;
 		$query      = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__passkeys'))
@@ -84,6 +87,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 			return [];
 		}
 
+		$serializer = $this->getCredentialSerializer();
+
 		/**
 		 * Converts invalid credential records to PublicKeyCredentialSource objects, or null if they
 		 * are invalid.
@@ -95,26 +100,19 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		 *
 		 * @return  PublicKeyCredentialSource|null
 		 */
-		$recordsMapperClosure = function ($record) {
-			try
-			{
-				$data = json_decode((string) $record['credential'], true);
-			}
-			catch (JsonException)
-			{
-				return null;
-			}
+		$recordsMapperClosure = function ($record) use ($serializer) {
+			$json = (string) $record['credential'];
 
-			if (empty($data))
+			if (empty($json))
 			{
 				return null;
 			}
 
 			try
 			{
-				return PublicKeyCredentialSource::createFromArray($data);
+				return $serializer->deserialize($json, PublicKeyCredentialSource::class, 'json');
 			}
-			catch (InvalidArgumentException)
+			catch (Throwable)
 			{
 				return null;
 			}
@@ -154,7 +152,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 
 		// Default values for saving a new credential source
 		$defaultName  = $lang->text('PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR');
-		$credentialId = base64_encode($publicKeyCredentialSource->getPublicKeyCredentialId());
+		$credentialId = base64_encode($publicKeyCredentialSource->publicKeyCredentialId);
 		$user         = Factory::getContainer()->userManager->getUser();
 		$userHandle   = $publicKeyCredentialSource->userHandle ?: $this->getHandleFromUserId($user->getId());
 		$o            = (object) [
@@ -165,7 +163,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 				$defaultName,
 				$this->formatDate('now')
 			),
-			'credential' => json_encode($publicKeyCredentialSource),
+			'credential' => $this->getCredentialSerializer()->serialize($publicKeyCredentialSource, 'json'),
 		];
 		$update       = false;
 
@@ -190,7 +188,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 			 * save. Otherwise something fishy is going on.
 			 */
 			// phpcs:ignore
-			if ($oldRecord->user_id != $publicKeyCredentialSource->getUserHandle())
+			if ($oldRecord->user_id != $publicKeyCredentialSource->userHandle)
 			{
 				throw new \RuntimeException($lang->text('PANOPTICON_PASSKEYS_ERR_CREDENTIAL_ID_ALREADY_IN_USE'));
 			}
@@ -257,6 +255,8 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 			return [];
 		}
 
+		$serializer = $this->getCredentialSerializer();
+
 		/**
 		 * Decodes the credentials on each record.
 		 *
@@ -264,19 +264,10 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 		 *
 		 * @return  array
 		 */
-		$recordsMapperClosure = function ($record) {
-			try
-			{
-				$data = json_decode((string) $record['credential'], true);
-			}
-			catch (JsonException)
-			{
-				$record['credential'] = null;
+		$recordsMapperClosure = function ($record) use ($serializer) {
+			$json = (string) $record['credential'];
 
-				return $record;
-			}
-
-			if (empty($data))
+			if (empty($json))
 			{
 				$record['credential'] = null;
 
@@ -285,11 +276,11 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 
 			try
 			{
-				$record['credential'] = PublicKeyCredentialSource::createFromArray($data);
+				$record['credential'] = $serializer->deserialize($json, PublicKeyCredentialSource::class, 'json');
 
 				return $record;
 			}
-			catch (InvalidArgumentException)
+			catch (Throwable)
 			{
 				$record['credential'] = null;
 
@@ -399,7 +390,7 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 			return '';
 		}
 
-		return $publicKeyCredentialSource->getUserHandle();
+		return $publicKeyCredentialSource->userHandle;
 	}
 
 	/**
@@ -509,6 +500,20 @@ class CredentialRepository implements PublicKeyCredentialSourceRepository
 
 			$start += $limit;
 		}
+	}
+
+	/**
+	 * Create a Symfony Serializer configured for WebAuthn credential source serialization.
+	 *
+	 * @return  SerializerInterface
+	 * @since   1.2.3
+	 */
+	private function getCredentialSerializer(): SerializerInterface
+	{
+		$asSM = new AttestationStatementSupportManager();
+		$asSM->add(new NoneAttestationStatementSupport());
+
+		return (new WebauthnSerializerFactory($asSM))->create();
 	}
 
 	/**
