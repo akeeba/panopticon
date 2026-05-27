@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Selfupdate as SelfupdateModel;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler: GET /v1/selfupdate/postinstall
@@ -28,6 +29,7 @@ class Postinstall extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SelfupdateWrite);
 		$this->requireSuperUser();
 
 		/** @var SelfupdateModel $model */

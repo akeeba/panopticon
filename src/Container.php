@@ -34,6 +34,17 @@ use Psr\Log\LoggerInterface;
  */
 class Container extends AWFContainer
 {
+	/**
+	 * The API token row matched during the current API request, or NULL for non-API requests.
+	 *
+	 * Set by {@see \Akeeba\Panopticon\Library\Api\TokenAuthentication::authenticateRequest()} after
+	 * a successful token validation. Used by API endpoint handlers to enforce token-level scope
+	 * restrictions via {@see \Akeeba\Panopticon\Controller\Api\AbstractApiHandler::requireScope()}.
+	 *
+	 * @var  object|null
+	 * @since  1.6.0
+	 */
+	public ?object $apiCurrentToken = null;
 	public function __construct(array $values = [])
 	{
 		$values['application_name']     ??= 'Panopticon';

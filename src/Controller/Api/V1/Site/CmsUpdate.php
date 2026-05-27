@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\EnqueueJoomlaUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueueWordPressUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id/cmsupdate — schedule a CMS update for the site.
@@ -34,6 +35,7 @@ class CmsUpdate extends AbstractApiHandler
 
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesCmsUpdate);
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
 		$body = $this->getJsonBody();

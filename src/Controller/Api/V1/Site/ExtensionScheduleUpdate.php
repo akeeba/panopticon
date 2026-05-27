@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueuePluginUpdateTrait;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id/extensions/scheduleupdate/:extId — enqueue an extension for update.
@@ -33,6 +34,7 @@ class ExtensionScheduleUpdate extends AbstractApiHandler
 
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesExtensions);
 		$id    = $this->input->getInt('id', 0);
 		$extId = $this->input->getInt('extId', 0);
 		$site  = $this->getSiteWithPermission($id, 'run');

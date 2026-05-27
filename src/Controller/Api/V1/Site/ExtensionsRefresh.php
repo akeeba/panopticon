@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\AuditLog;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id/extensions — synchronously refresh installed-extension info.
@@ -24,6 +25,7 @@ class ExtensionsRefresh extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesExtensions);
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'read');
 		$user = $this->container->userManager->getUser();

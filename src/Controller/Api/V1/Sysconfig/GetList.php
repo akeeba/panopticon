@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\Sysconfig as SysconfigModel;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler: GET /v1/sysconfig
@@ -25,6 +26,7 @@ class GetList extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SysconfigRead);
 		$this->requireSuperUser();
 
 		/** @var SysconfigModel $model */

@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\AuditLog;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id/fixjoomlacoreupdate — clear a stuck Joomla core-update flag.
@@ -24,6 +25,7 @@ class FixJoomlaCoreUpdate extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesCmsUpdate);
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'admin');
 		$user = $this->container->userManager->getUser();

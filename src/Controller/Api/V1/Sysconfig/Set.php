@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Sysconfig as SysconfigModel;
 use RuntimeException;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler: POST /v1/sysconfig/:paramName
@@ -26,6 +27,7 @@ class Set extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SysconfigWrite);
 		$this->requireSuperUser();
 
 		$paramName = $this->input->getString('paramName', '');

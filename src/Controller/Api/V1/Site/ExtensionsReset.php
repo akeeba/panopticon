@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueuePluginUpdateTrait;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id/extensions/reset — purge the extensions queue and reschedule.
@@ -35,6 +36,7 @@ class ExtensionsReset extends AbstractApiHandler
 
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesExtensions);
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
 		$user = $this->container->userManager->getUser();

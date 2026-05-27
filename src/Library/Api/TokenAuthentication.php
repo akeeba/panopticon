@@ -301,6 +301,10 @@ class TokenAuthentication
 			return null;
 		}
 
+		// Store the matched token row on the container so that API handlers can enforce
+		// token-level scope restrictions without repeating the token lookup.
+		$this->container->apiCurrentToken = $matchedRow;
+
 		// Set the authenticated user on the in-memory userManager for this request.
 		// We use reflection because AWF's Manager has no public setUser() and we MUST NOT
 		// write to the session segment (per master plan: API auth is ephemeral, no session).

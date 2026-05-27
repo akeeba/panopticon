@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\Task as TaskModel;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler: GET /v1/task/:id
@@ -25,6 +26,7 @@ class Get extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::TasksRead);
 		$id = $this->input->getInt('id', 0);
 
 		if ($id <= 0)

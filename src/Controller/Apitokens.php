@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Controller;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 use Akeeba\Panopticon\Model\Apitoken;
 use Akeeba\Panopticon\Model\AuditLog;
 use Awf\Date\Date;
@@ -171,6 +172,16 @@ class Apitokens extends DataController
 				$data['description'] = null;
 			}
 		}
+
+		// Scopes: validate each submitted scope against the ApiScope enum; store as JSON or NULL.
+		// NULL means "all scopes allowed" — the backwards-compatible default.
+		$scopesRaw = isset($data['scopes']) && is_array($data['scopes']) ? $data['scopes'] : [];
+		$validValues   = array_column(ApiScope::cases(), 'value');
+		$filteredScopes = array_values(
+			array_filter($scopesRaw, fn($s) => in_array($s, $validValues, true))
+		);
+
+		$data['scopes'] = empty($filteredScopes) ? null : json_encode($filteredScopes);
 	}
 
 	protected function onAfterApplySave(array|object|null &$data): void

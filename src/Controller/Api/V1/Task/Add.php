@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Task as TaskModel;
 use RuntimeException;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler: PUT /v1/task
@@ -29,6 +30,7 @@ class Add extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::TasksWrite);
 		$body = $this->getJsonBody();
 
 		$siteId = $body['site_id'] ?? null;

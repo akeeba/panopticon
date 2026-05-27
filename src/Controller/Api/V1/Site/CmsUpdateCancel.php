@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\AuditLog;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id/cmsupdate/cancel — cancel (unpublish) a scheduled CMS update.
@@ -27,6 +28,7 @@ class CmsUpdateCancel extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesCmsUpdate);
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
 		$user = $this->container->userManager->getUser();

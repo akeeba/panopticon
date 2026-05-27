@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\AuditLog;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for GET /v1/site/:id/extension/:extId/downloadkey — read an extension's download key info.
@@ -25,6 +26,7 @@ class ExtensionDownloadKeyGet extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesExtensions);
 		$id    = $this->input->getInt('id', 0);
 		$extId = $this->input->getInt('extId', 0);
 		$site  = $this->getSiteWithPermission($id, 'admin');

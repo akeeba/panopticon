@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Site;
 use RuntimeException;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for PUT /v1/site — create a new site.
@@ -23,6 +24,7 @@ class Add extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesWrite);
 		$user = $this->container->userManager->getUser();
 
 		// Mirror legacy `Controller\Sites::onBeforeAdd()` ACL: super (implied) OR admin OR addown.

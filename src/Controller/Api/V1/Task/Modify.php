@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Task as TaskModel;
 use RuntimeException;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler: POST /v1/task/:id
@@ -27,6 +28,7 @@ class Modify extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::TasksWrite);
 		$id = $this->input->getInt('id', 0);
 
 		if ($id <= 0)

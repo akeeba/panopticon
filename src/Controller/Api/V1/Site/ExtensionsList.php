@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Controller\Api\V1\Site;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for GET /v1/site/:id/extensions — list site extensions.
@@ -24,6 +25,7 @@ class ExtensionsList extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesExtensions);
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'read');
 

@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Queue\QueueInterface;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Model\AuditLog;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id/extensions/cancel/:extId — remove an extension from the queue.
@@ -24,6 +25,7 @@ class ExtensionCancelUpdate extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesExtensions);
 		$id    = $this->input->getInt('id', 0);
 		$extId = $this->input->getInt('extId', 0);
 		$site  = $this->getSiteWithPermission($id, 'run');

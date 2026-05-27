@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Container;
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 use Akeeba\Panopticon\Model\Site;
 use Awf\Input\Input;
 
@@ -121,6 +122,59 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 	): void
 	{
 		$this->sendJsonError(401, $message, $code);
+	}
+
+	/**
+	 * Require the current API token to have the specified scope.
+	 *
+	 * When a token's scopes are NULL or an empty array the token is treated as having
+	 * ALL scopes (backwards-compatible default). A non-empty scopes array restricts the
+	 * token to exactly those listed scopes; any request for an unlisted scope is rejected
+	 * with a 403 Forbidden response.
+	 *
+	 * @param   ApiScope  $scope  The scope this endpoint requires.
+	 *
+	 * @return  void
+	 * @since   1.6.0
+	 */
+	protected function requireScope(ApiScope $scope): void
+	{
+		$tokenRow = $this->container->apiCurrentToken;
+
+		// No token context (should not happen in a properly authenticated request).
+		if ($tokenRow === null)
+		{
+			$this->sendJsonError(403, 'Access denied: missing token context.', 'auth.forbidden');
+
+			return;
+		}
+
+		// Decode the stored scopes; NULL / empty → all scopes allowed.
+		$allowedScopes = ApiScope::fromJson($tokenRow->scopes ?? null);
+
+		if ($allowedScopes === null)
+		{
+			// All scopes allowed — nothing to enforce.
+			return;
+		}
+
+		// Check whether the required scope appears in the token's allow-list.
+		foreach ($allowedScopes as $allowed)
+		{
+			if ($allowed === $scope)
+			{
+				return;
+			}
+		}
+
+		$this->sendJsonError(
+			403,
+			sprintf(
+				'The API token you are using does not have access to the requested scope (%s).',
+				$scope->value
+			),
+			'auth.scope_forbidden'
+		);
 	}
 
 	/**

@@ -17,6 +17,7 @@ use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Task as TaskModel;
 use Akeeba\Panopticon\Task\Trait\EnqueueExtensionUpdateTrait;
 use Akeeba\Panopticon\Task\Trait\EnqueuePluginUpdateTrait;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id/extensions/clear — clear a failed extensions update task.
@@ -35,6 +36,7 @@ class ExtensionsClear extends AbstractApiHandler
 
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesExtensions);
 		$id   = $this->input->getInt('id', 0);
 		$site = $this->getSiteWithPermission($id, 'run');
 		$user = $this->container->userManager->getUser();

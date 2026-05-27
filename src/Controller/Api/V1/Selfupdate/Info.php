@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Selfupdate as SelfupdateModel;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler: GET /v1/selfupdate
@@ -28,6 +29,7 @@ class Info extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SelfupdateRead);
 		$this->requireSuperUser();
 
 		$force = (bool) $this->input->getInt('force', 0);

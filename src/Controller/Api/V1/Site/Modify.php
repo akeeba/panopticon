@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\AuditLog;
 use Akeeba\Panopticon\Model\Site;
 use RuntimeException;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for POST /v1/site/:id — update an existing site.
@@ -23,6 +24,7 @@ class Modify extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesWrite);
 		$id   = $this->input->getInt('id', 0);
 		$user = $this->container->userManager->getUser();
 

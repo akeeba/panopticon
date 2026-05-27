@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Model\Task as TaskModel;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler: GET /v1/tasks
@@ -27,6 +28,7 @@ class GetList extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::TasksRead);
 		$user      = $this->container->userManager->getUser();
 		$isSuper   = (bool) $user->getPrivilege('panopticon.super');
 		$siteParam = $this->input->getString('site_id', '');

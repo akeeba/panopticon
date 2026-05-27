@@ -7,12 +7,19 @@
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
+
 /**
  * @var \Akeeba\Panopticon\View\Apitokens\Html $this
  * @var \Akeeba\Panopticon\Model\Apitoken      $model
  */
 $model  = $this->getModel();
 $isNew  = empty($model->id);
+
+// Decode current token scopes (null = all scopes, array = specific scopes)
+$currentScopes = ApiScope::fromJson($model->scopes ?? null);
+$currentScopeValues = $currentScopes === null ? [] : array_map(fn($s) => $s->value, $currentScopes);
+$scopesByGroup = ApiScope::byGroup();
 
 // Default the expiry: +1 year for new tokens, the stored value for existing ones.
 if ($isNew)
@@ -213,6 +220,62 @@ $formatUserRef = function (?int $userId) use ($userManager): string {
         </div>
     </div>
 
+    {{-- Scopes --}}
+    <div class="row mb-3">
+        <div class="col-sm-3 col-form-label fw-medium">
+            @lang('PANOPTICON_APITOKENS_LBL_SCOPES')
+        </div>
+        <div class="col-sm-9">
+            <p class="text-muted small mb-2">
+                @lang('PANOPTICON_APITOKENS_LBL_SCOPES_DESC')
+            </p>
+
+            @foreach ($scopesByGroup as $group => $groupScopes)
+                <?php
+                $groupChecked = !empty($currentScopeValues)
+                    && count(array_filter($groupScopes, fn($s) => in_array($s->value, $currentScopeValues, true))) === count($groupScopes);
+                $groupHtmlId = 'scope_group_' . $group;
+                ?>
+                <div class="card mb-2">
+                    <div class="card-header py-2">
+                        <div class="form-check mb-0">
+                            <input class="form-check-input scope-group-toggle"
+                                   type="checkbox"
+                                   id="{{ $groupHtmlId }}"
+                                   data-scope-group="{{ $group }}"
+                                   {{ $groupChecked ? 'checked' : '' }}>
+                            <label class="form-check-label fw-semibold" for="{{ $groupHtmlId }}">
+                                @lang('PANOPTICON_APITOKENS_SCOPE_GROUP_' . strtoupper($group))
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-body py-2">
+                        @foreach ($groupScopes as $scope)
+                            <?php $scopeHtmlId = 'scope_' . str_replace([':', '-'], '_', $scope->value); ?>
+                            <div class="form-check">
+                                <input class="form-check-input scope-item"
+                                       type="checkbox"
+                                       name="scopes[]"
+                                       id="{{ $scopeHtmlId }}"
+                                       value="{{ $scope->value }}"
+                                       data-scope-group="{{ $group }}"
+                                    {{ in_array($scope->value, $currentScopeValues, true) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="{{ $scopeHtmlId }}">
+                                    <?php $scopeLangKey = strtoupper(str_replace([':', '-'], '_', $scope->value)); ?>
+                                    <span class="fw-medium">@lang('PANOPTICON_APITOKENS_SCOPE_' . $scopeLangKey)</span>
+                                    <span class="text-muted small ms-1 font-monospace">{{ $scope->value }}</span>
+                                </label>
+                                <div class="form-text mt-0">
+                                    @lang('PANOPTICON_APITOKENS_SCOPE_' . $scopeLangKey . '_DESC')
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
     @unless ($isNew)
         {{-- Metadata (read-only) --}}
         <fieldset class="border rounded-1 p-3 mb-3">
@@ -282,3 +345,60 @@ $formatUserRef = function (?int $userId) use ($userManager): string {
     <input type="hidden" name="token" value="@token()">
     <input type="hidden" name="task" id="task" value="browse">
 </form>
+
+<script>
+(function () {
+    "use strict";
+
+    /**
+     * Update a group toggle checkbox to reflect the state of its child scope checkboxes.
+     *
+     * @param {string} group  The data-scope-group value.
+     */
+    function syncGroupToggle(group) {
+        const groupEl   = document.querySelector('.scope-group-toggle[data-scope-group="' + group + '"]');
+        const childEls  = Array.from(document.querySelectorAll('.scope-item[data-scope-group="' + group + '"]'));
+
+        if (!groupEl || childEls.length === 0) {
+            return;
+        }
+
+        const checkedCount = childEls.filter(function (el) { return el.checked; }).length;
+
+        if (checkedCount === 0) {
+            groupEl.checked       = false;
+            groupEl.indeterminate = false;
+        } else if (checkedCount === childEls.length) {
+            groupEl.checked       = true;
+            groupEl.indeterminate = false;
+        } else {
+            groupEl.checked       = false;
+            groupEl.indeterminate = true;
+        }
+    }
+
+    // Group toggle → check/uncheck all children in this group.
+    document.querySelectorAll('.scope-group-toggle').forEach(function (groupEl) {
+        groupEl.addEventListener('change', function () {
+            const group    = groupEl.getAttribute('data-scope-group');
+            const childEls = document.querySelectorAll('.scope-item[data-scope-group="' + group + '"]');
+
+            childEls.forEach(function (child) {
+                child.checked = groupEl.checked;
+            });
+        });
+    });
+
+    // Child scope → update parent group toggle state.
+    document.querySelectorAll('.scope-item').forEach(function (scopeEl) {
+        scopeEl.addEventListener('change', function () {
+            syncGroupToggle(scopeEl.getAttribute('data-scope-group'));
+        });
+    });
+
+    // Initialise indeterminate state for any partially-selected groups on page load.
+    @foreach ($scopesByGroup as $group => $groupScopes)
+    syncGroupToggle('{{ $group }}');
+    @endforeach
+}());
+</script>

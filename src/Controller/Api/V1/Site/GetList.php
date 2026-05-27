@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 
 /**
  * API handler for GET /v1/sites — list sites with optional filtering and pagination.
@@ -22,6 +23,7 @@ class GetList extends AbstractApiHandler
 {
 	public function handle(): void
 	{
+		$this->requireScope(ApiScope::SitesRead);
 		/** @var Site $model */
 		$model = $this->container->mvcFactory->makeTempModel('Site');
 
