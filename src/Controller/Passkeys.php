@@ -12,6 +12,9 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\View\Passkeys\Json;
 use Awf\Mvc\Controller;
+use Webauthn\AttestationStatement\AttestationStatementSupportManager;
+use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
+use Webauthn\Denormalizer\WebauthnSerializerFactory;
 
 class Passkeys extends Controller
 {
@@ -47,9 +50,14 @@ class Passkeys extends Controller
 			return;
 		}
 
-		$view->response = $this->getModel()->getCreateOptions(
-			$this->input->getBool('resident', false)
-		);
+		// We MUST use WebauthnSerializerFactory instead of letting the Json view call json_encode() directly.
+		// PublicKeyCredentialCreationOptions contains binary challenge bytes from random_bytes() which are not
+		// valid UTF-8; json_encode() silently returns false on such input, causing the browser to receive "false"
+		// and show the "Cannot get the passkey registration information" error.
+		$options        = $this->getModel()->getCreateOptions($this->input->getBool('resident', false));
+		$asSM           = new AttestationStatementSupportManager();
+		$asSM->add(new NoneAttestationStatementSupport());
+		$view->response = (new WebauthnSerializerFactory($asSM))->create()->serialize($options, 'json');
 
 		$this->display();
 	}
@@ -87,7 +95,7 @@ class Passkeys extends Controller
 		{
 			$this->getModel()->save($this->input->getRaw('data'));
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			$error = $e->getMessage();
 		}
@@ -163,9 +171,13 @@ class Passkeys extends Controller
 	{
 		$this->csrfProtection();
 
-		$this->getView()->response = $this->getModel()->challenge(
-			$this->input->getBase64('return_url', null)
-		);
+		// We MUST use WebauthnSerializerFactory instead of letting the Json view call json_encode() directly.
+		// PublicKeyCredentialRequestOptions contains binary challenge bytes from random_bytes() which are not
+		// valid UTF-8; json_encode() silently returns false on such input, breaking the passkey login flow.
+		$options                   = $this->getModel()->challenge($this->input->getBase64('return_url', null));
+		$asSM                      = new AttestationStatementSupportManager();
+		$asSM->add(new NoneAttestationStatementSupport());
+		$this->getView()->response = (new WebauthnSerializerFactory($asSM))->create()->serialize($options, 'json');
 
 		$this->display();
 	}

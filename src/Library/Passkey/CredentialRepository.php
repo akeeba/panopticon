@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
+use Webauthn\CredentialRecord;
 use Webauthn\Denormalizer\WebauthnSerializerFactory;
 use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialUserEntity;
@@ -25,14 +26,14 @@ use Webauthn\PublicKeyCredentialUserEntity;
 class CredentialRepository
 {
 	/**
-	 * Returns a PublicKeyCredentialSource object given the public key credential ID
+	 * Returns a CredentialRecord object given the public key credential ID
 	 *
 	 * @param   string  $publicKeyCredentialId  The identified of the public key credential we're searching for
 	 *
-	 * @return  PublicKeyCredentialSource|null
+	 * @return  CredentialRecord|null
 	 * @since   1.2.3
 	 */
-	public function findOneByCredentialId(string $publicKeyCredentialId): ?PublicKeyCredentialSource
+	public function findOneByCredentialId(string $publicKeyCredentialId): ?CredentialRecord
 	{
 		$db           = $this->getDatabase();
 		$credentialId = base64_encode($publicKeyCredentialId);
@@ -50,7 +51,7 @@ class CredentialRepository
 
 		try
 		{
-			return $this->getCredentialSerializer()->deserialize((string) $json, PublicKeyCredentialSource::class, 'json');
+			return $this->getCredentialSerializer()->deserialize((string) $json, CredentialRecord::class, 'json');
 		}
 		catch (Throwable)
 		{
@@ -59,14 +60,14 @@ class CredentialRepository
 	}
 
 	/**
-	 * Returns all PublicKeyCredentialSource objects given a user entity.
+	 * Returns all CredentialRecord objects given a user entity.
 	 *
 	 * We only use the `id` property of the user entity, cast to integer, as the Panopticon user ID by which records are
 	 * keyed in the database table.
 	 *
 	 * @param   PublicKeyCredentialUserEntity  $publicKeyCredentialUserEntity  Public key credential user entity record
 	 *
-	 * @return  PublicKeyCredentialSource[]
+	 * @return  CredentialRecord[]
 	 * @since   1.2.3
 	 */
 	public function findAllForUserEntity(PublicKeyCredentialUserEntity $publicKeyCredentialUserEntity): array
@@ -90,15 +91,14 @@ class CredentialRepository
 		$serializer = $this->getCredentialSerializer();
 
 		/**
-		 * Converts invalid credential records to PublicKeyCredentialSource objects, or null if they
-		 * are invalid.
+		 * Converts invalid credential records to CredentialRecord objects, or null if they are invalid.
 		 *
 		 * This closure is defined as a variable to prevent PHP-CS from getting a stoke trying to
 		 * figure out the correct indentation :)
 		 *
 		 * @param   array  $record  The record to convert
 		 *
-		 * @return  PublicKeyCredentialSource|null
+		 * @return  CredentialRecord|null
 		 */
 		$recordsMapperClosure = function ($record) use ($serializer) {
 			$json = (string) $record['credential'];
@@ -110,7 +110,7 @@ class CredentialRepository
 
 			try
 			{
-				return $serializer->deserialize($json, PublicKeyCredentialSource::class, 'json');
+				return $serializer->deserialize($json, CredentialRecord::class, 'json');
 			}
 			catch (Throwable)
 			{
@@ -123,16 +123,16 @@ class CredentialRepository
 		/**
 		 * Filters the list of records to only keep valid entries.
 		 *
-		 * Only array members that are PublicKeyCredentialSource objects survive the filter.
+		 * Only array members that are CredentialRecord objects survive the filter.
 		 *
 		 * This closure is defined as a variable to prevent PHP-CS from getting a stoke trying to
 		 * figure out the correct indentation :)
 		 *
-		 * @param   PublicKeyCredentialSource|mixed  $record  The record to filter
+		 * @param   CredentialRecord|mixed  $record  The record to filter
 		 *
 		 * @return boolean
 		 */
-		$filterClosure = (fn($record) => !\is_null($record) && \is_object($record) && ($record instanceof PublicKeyCredentialSource));
+		$filterClosure = (fn($record) => !\is_null($record) && \is_object($record) && ($record instanceof CredentialRecord));
 
 		return array_filter($records, $filterClosure);
 	}
@@ -228,7 +228,7 @@ class CredentialRepository
 	 *
 	 * @param   int  $userId  The user ID
 	 *
-	 * @return  array<PublicKeyCredentialSource|null>
+	 * @return  array<CredentialRecord|null>
 	 *
 	 * @since   1.2.3
 	 */
@@ -276,7 +276,7 @@ class CredentialRepository
 
 			try
 			{
-				$record['credential'] = $serializer->deserialize($json, PublicKeyCredentialSource::class, 'json');
+				$record['credential'] = $serializer->deserialize($json, CredentialRecord::class, 'json');
 
 				return $record;
 			}

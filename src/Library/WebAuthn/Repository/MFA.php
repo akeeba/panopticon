@@ -14,6 +14,7 @@ use Awf\Container\ContainerAwareTrait;
 use Symfony\Component\Serializer\SerializerInterface;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\AttestationStatement\NoneAttestationStatementSupport;
+use Webauthn\CredentialRecord;
 use Webauthn\Denormalizer\WebauthnSerializerFactory;
 use Webauthn\PublicKeyCredentialSource;
 use Webauthn\PublicKeyCredentialUserEntity;
@@ -51,7 +52,7 @@ class MFA implements ContainerAwareInterface
 		$this->userId = $userid;
 	}
 
-	public function findOneByCredentialId(string $publicKeyCredentialId): ?PublicKeyCredentialSource
+	public function findOneByCredentialId(string $publicKeyCredentialId): ?CredentialRecord
 	{
 		$publicKeyCredentialUserEntity = new PublicKeyCredentialUserEntity('', $this->userId, '', '');
 
@@ -103,13 +104,13 @@ class MFA implements ContainerAwareInterface
 					if (is_string($options['pubkeysource']))
 					{
 						return $serializer->deserialize(
-							$options['pubkeysource'], PublicKeyCredentialSource::class, 'json'
+							$options['pubkeysource'], CredentialRecord::class, 'json'
 						);
 					}
 					elseif (is_array($options['pubkeysource']))
 					{
 						return $serializer->deserialize(
-							json_encode($options['pubkeysource']), PublicKeyCredentialSource::class, 'json'
+							json_encode($options['pubkeysource']), CredentialRecord::class, 'json'
 						);
 					}
 				}

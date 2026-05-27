@@ -133,8 +133,11 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		$session->set('mfa_webauthn.userHandle', $user_id);
 		$session->set('mfa_webauthn.userId', $user_id);
 
-		// Return the JSON encoded data to the caller
-		return json_encode($publicKeyCredentialRequestOptions, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+		// Return the JSON encoded data to the caller.
+		// NOTE: We must use the WebauthnSerializerFactory, NOT json_encode(). The PublicKeyCredentialRequestOptions
+		// object contains a binary challenge (from random_bytes) which is not valid UTF-8. json_encode() would return
+		// false (silently!) causing the captive page to display an empty challenge.
+		return $this->serializeObject($publicKeyCredentialRequestOptions);
 	}
 
 	/**
@@ -249,7 +252,10 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 			$userHandle
 		);
 
-		$this->repository->saveCredentialSource($updatedRecord);
+		// The WebAuthn library's check() returns a CredentialRecord, but our repository stores
+		// PublicKeyCredentialSource objects. Convert before saving.
+		$updatedSource = PublicKeyCredentialSource::fromCredentialRecord($updatedRecord);
+		$this->repository->saveCredentialSource($updatedSource);
 	}
 
 	/**
@@ -358,7 +364,10 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		);
 		$session->set('mfa_webauthn.registration_user_id', $user->getId());
 
-		return json_encode($publicKeyCredentialCreationOptions, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+		// NOTE: We must use the WebauthnSerializerFactory, NOT json_encode(). The PublicKeyCredentialCreationOptions
+		// object contains a binary challenge (from random_bytes) which is not valid UTF-8. json_encode() would return
+		// false (silently!) causing the pkRequest hidden field to be empty and passkey setup to fail.
+		return $this->serializeObject($publicKeyCredentialCreationOptions);
 	}
 
 	/**
@@ -457,9 +466,31 @@ class Credentials implements ContainerAwareInterface, LanguageAwareInterface
 		);
 
 		// Persist the credential record
-		$this->repository->saveCredentialSource($credentialRecord);
+		$publicKeyCredentialSource = PublicKeyCredentialSource::fromCredentialRecord($credentialRecord);
+		$this->repository->saveCredentialSource($publicKeyCredentialSource);
 
-		return PublicKeyCredentialSource::fromCredentialRecord($credentialRecord);
+		return $publicKeyCredentialSource;
+	}
+
+	/**
+	 * Serialize a WebAuthn object to JSON using the WebauthnSerializerFactory.
+	 *
+	 * We MUST use this instead of json_encode() because WebAuthn credential options objects contain binary challenge
+	 * bytes (from random_bytes()) which are not valid UTF-8. json_encode() silently returns false on such input,
+	 * causing downstream failures (empty pkRequest field, empty captive challenge, etc.).
+	 * The WebauthnSerializerFactory handles binary → base64url conversion correctly.
+	 *
+	 * @param   mixed  $object  The WebAuthn object to serialize
+	 *
+	 * @return  string  JSON representation
+	 * @since   1.1.0
+	 */
+	private function serializeObject(mixed $object): string
+	{
+		$asSM = new AttestationStatementSupportManager();
+		$asSM->add(new NoneAttestationStatementSupport());
+
+		return (new WebauthnSerializerFactory($asSM))->create()->serialize($object, 'json');
 	}
 
 	/**

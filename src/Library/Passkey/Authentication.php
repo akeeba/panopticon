@@ -401,10 +401,12 @@ final class Authentication implements AuthenticationInterface
 			$response, $publicKeyCredentialCreationOptions, $host
 		);
 
-		// Persist the credential record
-		$this->credentialsRepository->saveCredentialSource($credentialRecord);
+		// The WebAuthn library's check() returns a CredentialRecord, but our repository stores
+		// PublicKeyCredentialSource objects. Convert before saving.
+		$publicKeyCredentialSource = PublicKeyCredentialSource::fromCredentialRecord($credentialRecord);
+		$this->credentialsRepository->saveCredentialSource($publicKeyCredentialSource);
 
-		return PublicKeyCredentialSource::fromCredentialRecord($credentialRecord);
+		return $publicKeyCredentialSource;
 	}
 
 	final public function getPubkeyRequestOptions(): ?PublicKeyCredentialRequestOptions
@@ -529,9 +531,12 @@ final class Authentication implements AuthenticationInterface
 			null
 		);
 
-		$this->credentialsRepository->saveCredentialSource($updatedRecord);
+		// The WebAuthn library's check() returns a CredentialRecord, but our repository stores
+		// PublicKeyCredentialSource objects. Convert before saving.
+		$updatedSource = PublicKeyCredentialSource::fromCredentialRecord($updatedRecord);
+		$this->credentialsRepository->saveCredentialSource($updatedSource);
 
-		return PublicKeyCredentialSource::fromCredentialRecord($updatedRecord);
+		return $updatedSource;
 	}
 
 	/**

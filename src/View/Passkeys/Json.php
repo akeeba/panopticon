@@ -17,6 +17,16 @@ class Json extends BaseView
 
 	public function display($tpl = null)
 	{
+		// If response is already a JSON string (e.g. serialized by WebauthnSerializerFactory to handle binary
+		// challenge bytes), echo it directly. json_encode() would either double-encode it or silently return false
+		// on objects containing non-UTF-8 binary data.
+		if (is_string($this->response))
+		{
+			echo $this->response;
+
+			return;
+		}
+
 		echo json_encode($this->response, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 	}
 }

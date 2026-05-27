@@ -324,7 +324,11 @@ class PassKeys
 				throw new RuntimeException('The pending key request is corrupt; a new one will be created');
 			}
 
-			$pkRequest = json_encode($pkOptions, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+			// NOTE: We must use the WebauthnSerializerFactory, NOT json_encode(). The object contains binary challenge
+			// bytes (from random_bytes) which are not valid UTF-8; json_encode() would silently return false.
+			$asSM = new AttestationStatementSupportManager();
+			$asSM->add(new NoneAttestationStatementSupport());
+			$pkRequest = (new WebauthnSerializerFactory($asSM))->create()->serialize($pkOptions, 'json');
 		}
 		catch (Exception)
 		{
