@@ -46,7 +46,29 @@ php cli/panopticon.php database:backup         # Backup database
 php cli/panopticon.php database:update         # Update database schema
 ```
 
-There is no automated test suite. The CI/CD workflow exists (`.github/workflows/php.yml`) but is currently disabled.
+## Testing
+
+PHPUnit suite in `tests/`. Requires `composer install` (dev deps) and a separate test database.
+
+```bash
+composer test               # both suites (unit + integration)
+composer test:unit          # unit suite only — no DB needed, fast
+composer test:integration   # integration suite only
+```
+
+Integration tests need `.env.test` (copy from `.env.test.example`). Key env vars:
+- `PANOPTICON_DBNAME` — must differ from your dev/prod DB name (bootstrap enforces this)
+- `PANOPTICON_SECRET` — non-empty string; generate with `openssl rand -hex 32`
+
+Integration tests run in `BEGIN … ROLLBACK` transactions — no rows persist between tests. Never use DDL in integration tests (it implicitly commits in MySQL).
+
+**Test helpers** (for API integration tests in `tests/Integration/Api/`):
+- `invokeHandler(class, inputData)` — call a handler directly
+- `dispatchApi(suffix, inputData)` — full `Api::dispatch` flow including token auth
+- `loginAs(userId)` — bypass token auth in tests
+- `setJsonRequestBody(body)` — install `php://input` stream wrapper
+
+CI runs `composer test` on every push to `main` and on PRs (`.github/workflows/php.yml`).
 
 ## Architecture
 
@@ -66,7 +88,7 @@ Built on **Akeeba Web Framework (AWF)** — a custom MVC framework. Not Joomla, 
 
 ### Background Task System
 Central to the application. Tasks run via CRON (`php cli/panopticon.php task:run`) or web CRON.
-- **Task implementations**: `src/Task/` — 24 task types (backups, updates, monitoring, email, scanning)
+- **Task implementations**: `src/Task/` — 27 task types (backups, updates, monitoring, email, scanning)
 - **Task registry**: `src/Library/Task/Registry.php` — discovers tasks via PHP 8 attributes
 - **Director pattern**: "Director" tasks orchestrate per-site tasks (e.g., `JoomlaUpdateDirector` creates individual `JoomlaUpdate` tasks per site)
 
