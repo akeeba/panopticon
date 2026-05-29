@@ -90,34 +90,29 @@ class AbstractDataShape implements ArrayAccess
 		throw new InvalidArgumentException(sprintf('Property %s not found in %s', $name, self::class));
 	}
 
-	#[\ReturnTypeWillChange]
-	public function __isset($name)
+	public function __isset($name): bool
 	{
 		$methodName = 'get' . ucfirst((string) $name);
 
 		return method_exists($this, $methodName) || property_exists($this, $name);
 	}
 
-	#[\ReturnTypeWillChange]
-	public function offsetExists($offset)
+	public function offsetExists(mixed $offset): bool
 	{
 		return isset($this->{$offset});
 	}
 
-	#[\ReturnTypeWillChange]
-	public function offsetGet($offset)
+	public function offsetGet(mixed $offset): mixed
 	{
 		return $this->{$offset};
 	}
 
-	#[\ReturnTypeWillChange]
-	public function offsetSet($offset, $value)
+	public function offsetSet(mixed $offset, mixed $value): void
 	{
 		$this->{$offset} = $value;
 	}
 
-	#[\ReturnTypeWillChange]
-	public function offsetUnset($offset)
+	public function offsetUnset(mixed $offset): void
 	{
 		throw new \LogicException(sprintf('You cannot unset members of %s', self::class));
 	}

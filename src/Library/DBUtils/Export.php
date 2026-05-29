@@ -178,7 +178,6 @@ class Export implements \JsonSerializable
 	 * @return  mixed
 	 * @since   1.0.3
 	 */
-	#[\ReturnTypeWillChange]
 	public function jsonSerialize(): mixed
 	{
 		return (object) [
