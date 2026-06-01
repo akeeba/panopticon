@@ -142,3 +142,5 @@ Language files in `languages/` using `.ini` format. English (GB) is the only off
 ## Docker
 
 `Dockerfile` uses PHP 8.4 Apache. `docker-compose.yml` for full stack. Alternative FrankenPHP setup in `docker-compose-frankenphp.yml`. Docker detection via absence of `src/.not_docker` file.
+
+When asked to build, test, or publish the Docker image to GHCR, read `assets/Docker Build.md` first — it contains the full step-by-step procedure including prerequisites, local testing with `docker-compose.override.yml`, tagging conventions, multi-arch Buildx commands, and the optional GitHub Actions workflow.
