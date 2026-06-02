@@ -35,11 +35,16 @@ config.php
 /.gitignore
 /.phpstorm.meta.php
 /1
+/AGENTS.md
 /build.xml
+/CLAUDE.md
 /docker-*.yml
 /docker-run.sh
 /docker-testing
 /Dockerfile
 /*.Dockerfile
+/mempalace.yaml
+/phpunit.xml
+/rector.php
 /RELEASENOTES.md
 /TODO.md

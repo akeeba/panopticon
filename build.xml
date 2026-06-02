@@ -72,6 +72,8 @@
         <exclude name="Dockerfile" />
         <exclude name="*.Dockerfile" />
         <exclude name="*.md" />
+        <exclude name="phpunit.xml" />
+        <exclude name="rector.php" />
 
         <!-- Exclude translation sources (PO / POT files) -->
         <exclude name="languages/*.po" />

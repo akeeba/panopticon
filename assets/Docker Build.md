@@ -1,4 +1,9 @@
-# Docker Build & GHCR Release Instructions
+# Docker Build & manual GHCR Release Instructions
+
+> [!IMPORTANT]
+> Docker images are built and published to GitHub Container Repository (GHCR) automatically when we tag a new release. This is taken care of by the `.github/workflows/docker.yml` file.
+> 
+> The instructions below are only meant to be used when building the image locally (e.g. for development reasons), or if the workflow breaks for any reason and a manual release of the Docker image is necessary. 
 
 ## Prerequisites
 
@@ -14,7 +19,7 @@ docker version
 docker buildx version
 ```
 
-If you need multi-arch builds, create a builder that can cross-compile:
+For manual GHCR releases we need multi-arch builds. Therefore, we must create a builder that can cross-compile:
 
 ```bash
 docker buildx create --name panopticon-builder --use
@@ -22,6 +27,8 @@ docker buildx inspect --bootstrap
 ```
 
 ### 2. GitHub CLI (`gh`)
+
+This step is only necessary if we are doing a manual GHCR release.
 
 ```bash
 gh --version          # must be ≥ 2.x
@@ -31,6 +38,8 @@ gh auth status        # must show "Logged in to github.com"
 If not logged in: `gh auth login`.
 
 ### 3. GHCR write access
+
+This step is only necessary if we are doing a manual GHCR release.
 
 Your GitHub account (or token) needs `write:packages` scope on `akeeba/panopticon`.
 
@@ -46,6 +55,8 @@ gh auth login --scopes "write:packages,read:packages,repo"
 ```
 
 ### 4. Docker logged in to GHCR
+
+This step is only necessary if we are doing a manual GHCR release.
 
 ```bash
 echo $(gh auth token) | docker login ghcr.io -u $(gh api user --jq .login) --password-stdin
@@ -66,9 +77,11 @@ composer install --no-dev --optimize-autoloader
 
 ## Creating the Image
 
-The `Dockerfile` at the repo root produces an Apache + PHP 8.4 image.
+The `Dockerfile` at the repo root produces an Apache + PHP image. The PHP version used is set up at the top of the `Dockerfile`, in the `PHP_VERSION` argument.
 
 ### Single-arch build (local, fast)
+
+This is only meant to be used for local development and testing.
 
 ```bash
 # From the repo root
@@ -81,6 +94,8 @@ docker build \
 Replace `$(git describe --tags --abbrev=0)` with the version tag manually if not on a tagged commit (e.g. `1.2.3`).
 
 ### Multi-arch build (amd64 + arm64, for release)
+
+This is meant to be used for a manual GHCR release.
 
 ```bash
 docker buildx build \
@@ -96,10 +111,12 @@ docker buildx build \
 
 ### Build-time PHP version override
 
-The `Dockerfile` exposes a `PHP_VERSION` build argument (default `8.4`):
+Only use this for development purposes, e.g. testing Panopticon with a newer PHP version without having to set up a local dev server.
+
+The `Dockerfile` exposes a `PHP_VERSION` build argument. You can override it at build time:
 
 ```bash
-docker build --build-arg PHP_VERSION=8.3 --tag ghcr.io/akeeba/panopticon:8.3 .
+docker build --build-arg PHP_VERSION=8.5 --tag ghcr.io/akeeba/panopticon:8.5 .
 ```
 
 ---
@@ -108,10 +125,29 @@ docker build --build-arg PHP_VERSION=8.3 --tag ghcr.io/akeeba/panopticon:8.3 .
 
 ### 1. Create the test directory structure
 
-`docker-compose.override.yml` (in the repo root) binds `./docker-testing/` as persistent data volumes instead of named Docker volumes, making data easily inspectable and disposable.
+When doing a local test you typically don't want your test data to mix with your regular Panopticon data. You can use the file `docker-compose.override.yml` (in the repo root) to bind `./docker-testing/` subdirectories as persistent data volumes instead of using named Docker volumes, making data easily inspectable and disposable.
 
 ```bash
 mkdir -p docker-testing/user_code docker-testing/config docker-testing/db
+```
+
+The contents of the `docker-compose.override.yml` file are:
+
+```yaml
+services:
+  php:
+    volumes:
+      - type: bind
+        source: ./docker-testing/user_code
+        target: /var/www/html/user_code
+      - type: bind
+        source: ./docker-testing/config
+        target: /var/www/html/config
+  mysql:
+    volumes:
+      - type: bind
+        source: ./docker-testing/db
+        target: /var/lib/mysql
 ```
 
 ### 2. Create `.env.docker`
@@ -122,7 +158,7 @@ The entrypoint reads this file. Create it from the distributed example:
 cp .env.dist .env.docker
 ```
 
-Then edit `.env.docker` with at minimum:
+Then edit `.env.docker` with at minimum the following settings:
 
 ```ini
 # Database (must match what the mysql container uses)
@@ -197,6 +233,8 @@ rm -rf docker-testing/db docker-testing/config
 
 ## Deploying the Image to GHCR
 
+This entire section is only relevant when doing a manual GHCR build.
+
 ### Tag conventions
 
 | Tag | Meaning |
@@ -249,66 +287,11 @@ docker run --rm ghcr.io/akeeba/panopticon:latest php --version
 
 ### Make the package public (first time only)
 
+> [!NOTE]
+> This step is already complete for our published image. This section only serves historical purposes.
+
 GHCR packages are private by default. To make it publicly pullable:
 
 1. Go to `https://github.com/akeeba/panopticon/pkgs/container/panopticon`
 2. Click **Package settings**
 3. Under **Danger Zone**, change visibility to **Public**
-
-### Automate with GitHub Actions (optional)
-
-To trigger a build-and-push automatically on every new tag, add `.github/workflows/docker.yml`:
-
-```yaml
-name: Publish Docker image
-
-on:
-  push:
-    tags: ['*']
-
-jobs:
-  push:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up QEMU (for arm64 emulation)
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install PHP dependencies
-        run: composer install --no-dev --optimize-autoloader
-
-      - name: Extract tags
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/akeeba/panopticon
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=raw,value=latest
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          provenance: false
-```
-
-Push this file, then the next `git push --tags` will trigger it automatically.
