@@ -40,6 +40,9 @@ $model = $this->getModel();
 
 @if ($this->renderOptions['pre_message'])
     <div class="my-3">
+        {{-- raw: MFA plugin-generated HTML; plugins are developer-installed code.
+             Filesystem access already grants full application compromise, so a
+             malicious plugin is not an incremental threat above that baseline. --}}
         {{ $this->renderOptions['pre_message'] }}
     </div>
 @endif
@@ -49,12 +52,14 @@ $model = $this->getModel();
       name="captive-form" id="captive-form"
 >
     @if ($this->renderOptions['field_type'] == 'custom')
+        {{-- raw: MFA plugin-generated HTML; see pre_message comment above. --}}
         {{ $this->renderOptions['html'] }}
     @else
         <div class="row mb-3">
             @if ($this->renderOptions['label'])
                 <label for="mfaCode"
                        class="col-sm-3 col-form-label">
+                    {{-- raw: MFA plugin-generated HTML; see pre_message comment above. --}}
                     {{ $this->renderOptions['label'] }}
                 </label>
             @endif
@@ -83,6 +88,7 @@ $model = $this->getModel();
             </button>
 
             @if ($this->renderOptions['field_type'] == 'custom')
+                {{-- raw: MFA plugin-generated HTML; see pre_message comment above. --}}
                 {{ $this->renderOptions['html_button'] ?? '' }}
             @endif
 
@@ -109,6 +115,7 @@ $model = $this->getModel();
 
 @if ($this->renderOptions['post_message'])
     <div class="my-3">
+        {{-- raw: MFA plugin-generated HTML; see pre_message comment above. --}}
         {{ $this->renderOptions['post_message'] }}
     </div>
 @endif

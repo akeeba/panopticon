@@ -223,13 +223,13 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
         <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_CODE')</strong>: {{ $this->backupRecords->getCode() }}
     </p>
     <p>
-        <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_MESSAGE')</strong>: {{ $this->backupRecords->getMessage() }}
+        <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_MESSAGE')</strong>: {{{ $this->backupRecords->getMessage() }}}
     </p>
     @if (defined('AKEEBADEBUG') && AKEEBADEBUG)
         <p>
             <strong>@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_TROUBLESHOOTING')</strong>:
         </p>
-        <pre>{{ $this->backupRecords->getTraceAsString() }}</pre>
+        <pre>{{{ $this->backupRecords->getTraceAsString() }}}</pre>
     @endif
 </div>
 @endrepeatable
@@ -448,7 +448,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                             @if (!empty($record->comment))
                                 <div class="collapse m-2 p-2 border rounded-2 bg-body-tertiary"
                                      id="akeebaBackupComment-{{ $record->id }}">
-                                    {{ $record->comment }}
+                                    {{ \Akeeba\Panopticon\Library\Html\Purifier::purify($record->comment) }}
                                 </div>
                             @endif
 

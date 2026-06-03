@@ -66,7 +66,7 @@ $moreThanOne = count($updateStatus) > 1;
                 $type = is_array($item) ? ($item['type'] ?? 'info') : 'info';
                 $type = is_string($type) ? $type : 'info';
 
-                return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
+                return htmlspecialchars(sprintf('[%s] %s', strtoupper($type), strip_tags($message)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             }, $info['messages']);
             ?>
             <p>
@@ -94,7 +94,7 @@ $moreThanOne = count($updateStatus) > 1;
                 $type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
                 $type = is_string($type) ? $type : 'info';
 
-                return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
+                return htmlspecialchars(sprintf('[%s] %s', strtoupper($type), strip_tags($message)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             }, $info['messages']);
             ?>
             <p>

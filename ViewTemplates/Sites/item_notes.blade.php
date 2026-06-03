@@ -31,7 +31,7 @@ defined('AKEEBA') || die;
                 @lang('PANOPTICON_SITE_LBL_NOTES_NONE')
             </div>
         @else
-            {{ $this->item->notes }}
+            {{ \Akeeba\Panopticon\Library\Html\Purifier::purify($this->item->notes) }}
         @endif
         <hr>
         <a href="@route(sprintf('index.php?view=site&task=edit&id=%u', $this->item->getId()))#siteTabContentNotes">

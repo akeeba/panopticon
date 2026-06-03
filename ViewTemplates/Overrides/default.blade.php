@@ -69,7 +69,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                 <td>
                     <div>
                         <div class="fw-bold text-primary-emphasis">
-                            {{ $item->template }}
+                            {{{ $item->template }}}
                         </div>
                         <div>
                             <span class="badge {{ $item->client_id == 0 ? 'bg-primary' : 'bg-secondary' }}">
@@ -90,7 +90,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                             $item->id
                         ))">
                         <span class="small font-monospace">
-                            {{ base64_decode($item->hash_id) ?: '???' }}
+                            {{{ base64_decode($item->hash_id) ?: '???' }}}
                         </span>
                     </a>
                 </td>
@@ -113,7 +113,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                 {{-- Action --}}
                 <td>
                     <span class="badge bg-dark">
-                        {{ $item->action }}
+                        {{{ $item->action }}}
                     </span>
                 </td>
             </tr>
