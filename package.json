@@ -28,7 +28,7 @@
 		"choices.js": "^11.2.3",
 		"core-js": "^3.34.0",
 		"petite-vue": "^0.4.1",
-		"altcha": "^2.3.0",
+		"altcha": "^3.0.11",
 		"tinymce": "^8.5.0"
 	},
 	"babel": {
