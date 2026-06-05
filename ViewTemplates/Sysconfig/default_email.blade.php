@@ -59,6 +59,27 @@ $user   = $this->container->userManager->getUser();
             </div>
         </div>
 
+        {{--log_attachment_groups--}}
+        <div class="row mb-3">
+            <label for="log_attachment_groups" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS')
+            </label>
+            <div class="col-sm-9">
+                {{ $this->container->html->select->genericList(
+                    data: $this->getModel()->getGroupsForSelect(includeEmpty: false),
+                    name: 'log_attachment_groups[]',
+                    attribs: [
+                        'class' => 'form-select js-choice',
+                        'multiple' => 'multiple',
+                    ],
+                    selected: $config->get('log_attachment_groups', [])
+                ) }}
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS_HELP')
+                </div>
+            </div>
+        </div>
+
         {{--mailer--}}
         <div class="row mb-3" data-showon='[{"field":"options[mail_online]","values":["1"],"sign":"=","op":""}]'>
             <label for="mailer" class="col-sm-3 col-form-label">

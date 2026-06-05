@@ -21,6 +21,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Registry\Registry;
@@ -43,6 +44,7 @@ class JoomlaUpdate extends AbstractCallback
 	use EmailSendingTrait;
 	use LanguageListTrait;
 	use JsonSanitizerTrait;
+	use LogAttachmentTrait;
 
 	protected string $currentState;
 
@@ -1736,6 +1738,8 @@ class JoomlaUpdate extends AbstractCallback
 		$data->set('email_variables_by_lang', $perLanguageVariables);
 		$data->set('permissions', $permissions);
 		$data->set('email_cc', $storage->get('email_cc', []));
+		$data->set('email_attachment', $storage->get('email_attachment', null));
+		$data->set('email_attachment_groups', $storage->get('email_attachment_groups', null));
 
 		$this->enqueueEmail($data, $storage->get('site_id'), 'now');
 	}
@@ -1936,8 +1940,27 @@ class JoomlaUpdate extends AbstractCallback
 
 		$storage->set('email_variables_by_lang', $perLanguageVariables);
 
+		// Add log file URL and attachment
+		$logIdentifier = $this->name . '.' . $storage->get('site_id');
+		$logFileName   = $logIdentifier . '.log';
+		$logUrl        = $this->getLogFileUrl($logFileName);
+		$logFilePath   = $this->getLogAttachmentPath($logIdentifier);
+
+		try
+		{
+			$site = $this->getSite($task);
+		}
+		catch (Throwable)
+		{
+			$site = null;
+		}
+
+		$storage->set('email_attachment', $logFilePath);
+		$storage->set('email_attachment_groups', $this->getLogAttachmentGroups($site));
+
 		$this->sendEmail('joomlaupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
 				'MESSAGE' => $e->getMessage(),
+				'LOG_URL' => $logUrl,
 			]
 		);
 	}

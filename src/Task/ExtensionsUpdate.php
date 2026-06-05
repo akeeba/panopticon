@@ -22,6 +22,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
 use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Mailtemplates\Html;
@@ -40,6 +41,7 @@ class ExtensionsUpdate extends AbstractCallback
 	use LanguageListTrait;
 	use JsonSanitizerTrait;
 	use SaveSiteTrait;
+	use LogAttachmentTrait;
 
 	public function __invoke(object $task, Registry $storage): int
 	{
@@ -516,11 +518,33 @@ class ExtensionsUpdate extends AbstractCallback
 			return;
 		}
 
+		$hasFailures = !empty(
+			array_filter(
+				$updateStatus,
+				fn($item) => ($item['status'] ?? 'success') !== 'success'
+			)
+		);
+
+		$logIdentifier = $this->name . '.' . $site->id;
+		$logFileName   = $logIdentifier . '.log';
+		$logUrl        = $this->getLogFileUrl($logFileName);
+		$logFilePath   = $hasFailures ? $this->getLogAttachmentPath($logIdentifier) : null;
+
 		$perLanguageVars = [];
 
 		foreach ($this->getAllKnownLanguages() as $language)
 		{
 			[$rendered, $renderedText] = $this->getRenderedResultsForEmail($language, $updateStatus, $site);
+
+			if ($hasFailures)
+			{
+				$rendered     .= '<p><small>' . sprintf(
+						'The complete task log can be reviewed at <a href="%1$s">%1$s</a>. The log file may also be attached to this email.',
+						htmlspecialchars($logUrl, ENT_QUOTES | ENT_HTML5)
+					) . '</small></p>';
+				$renderedText .= "\n\nThe complete task log can be reviewed at:\n" . $logUrl
+				                 . "\n\nThe log file may also be attached to this email.\n";
+			}
 
 			$perLanguageVars[$language] = [
 				'RENDERED_HTML' => $rendered,
@@ -555,6 +579,8 @@ class ExtensionsUpdate extends AbstractCallback
 		$data->set('email_variables_by_lang', $perLanguageVars);
 		$data->set('permissions', ['panopticon.super', 'panopticon.admin', 'panopticon.editown']);
 		$data->set('email_cc', $cc);
+		$data->set('email_attachment', $logFilePath);
+		$data->set('email_attachment_groups', $hasFailures ? $this->getLogAttachmentGroups($site) : null);
 
 		$this->logger->debug("Sending email extensions_update_done (results of extension updates)", $data->toArray());
 

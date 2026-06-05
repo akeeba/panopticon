@@ -132,4 +132,27 @@ $updateTime = sprintf(
     </div>
 </div>
 
+<?php /** @var \Akeeba\Panopticon\Model\Sysconfig $sysCfgModel */
+$sysCfgModel = $this->getModel('Sysconfig'); ?>
+<div class="row mb-3">
+    <label for="config_core_update_email_log_groups" class="col-sm-3 col-form-label">
+        @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS')
+    </label>
+    <div class="col-sm-9">
+        {{ $this->container->html->select->genericList(
+            data: $sysCfgModel->getGroupsForSelect(includeEmpty: false),
+            name: 'config[config.core_update.email_log_groups][]',
+            attribs: [
+                'class' => 'form-select js-choice',
+                'multiple' => 'multiple',
+                'id' => 'config_core_update_email_log_groups',
+            ],
+            selected: $config->get('config.core_update.email_log_groups', [])
+        ) }}
+        <div class="form-text">
+            @lang('PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS_HELP')
+        </div>
+    </div>
+</div>
+
 @include('Sites/form_akeebabackup')

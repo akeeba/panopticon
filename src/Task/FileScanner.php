@@ -17,7 +17,9 @@ use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\AdminToolsTrait;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
+use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
 use Awf\Registry\Registry;
 use GuzzleHttp\RequestOptions;
 
@@ -30,6 +32,8 @@ class FileScanner extends AbstractCallback
 	use ApiRequestTrait;
 	use AdminToolsTrait;
 	use JsonSanitizerTrait;
+	use EmailSendingTrait;
+	use LogAttachmentTrait;
 
 	private Site $site;
 
@@ -47,6 +51,8 @@ class FileScanner extends AbstractCallback
 		// Add a site-specific logger
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->site->id));
 
+		try
+		{
 		// Is Admin Tools Professional installed?
 		if (!($this->hasAdminTools($this->site, true)))
 		{
@@ -219,6 +225,36 @@ class FileScanner extends AbstractCallback
 		);
 
 		return Status::WILL_RESUME->value;
+		}
+		catch (\Throwable $e)
+		{
+			$this->sendFailureEmail($e);
+			throw $e;
+		}
+	}
+
+	private function sendFailureEmail(\Throwable $e): void
+	{
+		$logIdentifier = $this->name . '.' . $this->site->id;
+		$logFileName   = $logIdentifier . '.log';
+
+		$vars = [
+			'SITE_NAME' => $this->site->name,
+			'SITE_URL'  => $this->site->getBaseUrl(),
+			'MESSAGE'   => $e->getMessage(),
+			'LOG_URL'   => $this->getLogFileUrl($logFileName),
+		];
+
+		$data = new Registry();
+		$data->set('template', 'filescanner_failed');
+		$data->set('email_variables', $vars);
+		$data->set('permissions', ['panopticon.admin', 'panopticon.editown']);
+		$data->set('email_attachment', $this->getLogAttachmentPath($logIdentifier));
+		$data->set('email_attachment_groups', $this->getLogAttachmentGroups($this->site));
+
+		$this->logger->debug('Sending filescanner failure notification email');
+
+		$this->enqueueEmail($data, $this->site->getId(), 'now');
 	}
 
 	private function startScan(): ?object

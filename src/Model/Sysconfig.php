@@ -468,6 +468,7 @@ class Sysconfig extends Model
 			// Email
 			'mail_online', 'mailer', 'mailfrom', 'fromname', 'smtphost', 'smtpport',
 			'smtpsecure', 'smtpauth', 'smtpuser', 'smtppass', 'mail_inline_images',
+			'log_attachment_groups',
 			// Proxy
 			'proxy_enabled',
 			// Login / MFA / Passkey

@@ -136,6 +136,7 @@ class Sysconfig extends Controller
 		$this->handleGroupsListField('mfa_force_groups');
 		$this->handleGroupsListField('passkey_login_force_groups');
 		$this->handleGroupsListField('pwreset_groups');
+		$this->handleGroupsListField('log_attachment_groups');
 
 		// Save the appConfig to disk
 		$this->container->appConfig->saveConfiguration();

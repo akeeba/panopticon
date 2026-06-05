@@ -52,6 +52,19 @@ class SendMail extends AbstractCallback
 			$mailGroups       = empty($mailGroups) ? null : array_filter(ArrayHelper::toInteger($mailGroups));
 			$onlyMailGroups   = (bool) $sendingParams->get('only_email_groups', false);
 
+			// Attachment support: path to a file to attach, and optional group filter
+			$attachment       = $sendingParams->get('email_attachment', null);
+			$attachmentGroups = $sendingParams->get('email_attachment_groups', null);
+
+			if (!empty($attachment) && !is_file($attachment))
+			{
+				$attachment = null;
+			}
+
+			$attachmentGroups = ($attachment !== null && $attachmentGroups !== null)
+				? array_values(array_filter(ArrayHelper::toInteger((array) $attachmentGroups)))
+				: null;
+
 			if (empty($template))
 			{
 				$this->logger->error(
@@ -116,152 +129,85 @@ class SendMail extends AbstractCallback
 				}
 			}
 
-			// Distribute recipients by language
+			// Distribute recipients by language; when group-filtered attachments are in play, split
+			// into two maps — one for recipients who receive the attachment and one who do not.
 			$defaultLanguage      = $fallbackLanguage
 				?: $this->getContainer()->appConfig->get('language', 'en-GB')
 					?: 'en-GB';
-			$recipientsByLanguage = [
-				// Carbon Copied recipients always receive email in the default language
-				'en-GB' => $cc,
-			];
 
-			foreach ($recipients as $recipient)
+			if ($attachment !== null && $attachmentGroups !== null)
 			{
-				[$email, $name, $paramsJson] = $recipient;
-
-				try
-				{
-					$params = json_decode($paramsJson ?? '{}', flags: JSON_THROW_ON_ERROR);
-				}
-				catch (\JsonException)
-				{
-					continue;
-				}
-
-				$language                          = $params?->language ?? $defaultLanguage;
-				$recipientsByLanguage[$language]   ??= [];
-				$recipientsByLanguage[$language][] = [$email, $name];
-			}
-
-			// Send emails by language
-			$hasMultipleLanguages = count($recipientsByLanguage) > 1;
-
-			foreach ($recipientsByLanguage as $language => $recipients)
-			{
-				if ($hasMultipleLanguages)
-				{
-					if (empty($language))
-					{
-						$language = $defaultLanguage;
-
-						$this->logger->info(
-							sprintf(
-								'Sending email template %s for site %d and default language (%s)',
-								$template, $queueItem->getSiteId(), $defaultLanguage
-							)
-						);
-					}
-					else
-					{
-						$this->logger->info(
-							sprintf(
-								'Sending email template %s for site %d and language %s',
-								$template, $queueItem->getSiteId(), $language
-							)
-						);
-					}
-				}
-
-				$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
-				$mailer          = clone $this->container->mailer;
-				$mailer->initialiseWithTemplate(
-					$template, $language, array_merge((array) $variables, $varsForThisLang)
-				);
-
-				if (empty($mailer->Body) && $language != 'en-GB' && $language != $defaultLanguage)
-				{
-					$this->logger->notice(
-						sprintf(
-							'Email template %s does not exist for language %s; I will retry using the default language (%s).',
-							$template, $language, $defaultLanguage
-						)
-					);
-
-					$language        = $defaultLanguage;
-					$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
-					$mailer          = clone $this->container->mailer;
-					$mailer->initialiseWithTemplate(
-						$template, $language, array_merge((array) $variables, $varsForThisLang)
-					);
-				}
-
-				if (empty($mailer->Body) && $language != 'en-GB' && $language == $defaultLanguage)
-				{
-					$this->logger->notice(
-						sprintf(
-							'Email template %s does not exist for the default language %s; I will retry using en-GB.',
-							$template, $language
-						)
-					);
-
-					$language        = 'en-GB';
-					$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
-					$mailer          = clone $this->container->mailer;
-					$mailer->initialiseWithTemplate(
-						$template, $language, array_merge((array) $variables, $varsForThisLang)
-					);
-				}
-
-				if (empty($mailer->Body))
-				{
-					$this->logger->debug(
-						sprintf(
-							'Not sending email template %s for site %d; mail template empty',
-							$template, $queueItem->getSiteId()
-						)
-					);
-
-					continue;
-				}
-
-				$firstRecipient = true;
+				// Attachment restricted to specific groups: split into two per-language maps.
+				// CC recipients go into the no-attachment bucket (they are not Panopticon users).
+				$recipientsWithAttach    = [];
+				$recipientsWithoutAttach = ['en-GB' => $cc];
 
 				foreach ($recipients as $recipient)
 				{
-					[$email, $name] = $recipient;
+					[$email, $name, $paramsJson] = $recipient;
 
-					if ($firstRecipient)
+					try
 					{
-						$firstRecipient = false;
-						$mailer->addRecipient($email, $name);
+						$uparams = json_decode($paramsJson ?? '{}', flags: JSON_THROW_ON_ERROR);
+					}
+					catch (\JsonException)
+					{
+						continue;
+					}
+
+					$language   = $uparams?->language ?? $defaultLanguage;
+					$userGroups = array_values(
+						array_filter(ArrayHelper::toInteger((array) ($uparams?->usergroups ?? [])))
+					);
+
+					if (!empty(array_intersect($userGroups, $attachmentGroups)))
+					{
+						$recipientsWithAttach[$language]   ??= [];
+						$recipientsWithAttach[$language][] = [$email, $name];
 					}
 					else
 					{
-						$mailer->addBCC($email, $name);
+						$recipientsWithoutAttach[$language]   ??= [];
+						$recipientsWithoutAttach[$language][] = [$email, $name];
 					}
 				}
 
-				// Send the email
-				try
-				{
-					$mailer->Send();
+				$this->sendLanguageBatches(
+					$recipientsWithAttach, $template, $defaultLanguage,
+					$variables, $variablesByLang, $attachment, $queueItem->getSiteId()
+				);
+				$this->sendLanguageBatches(
+					$recipientsWithoutAttach, $template, $defaultLanguage,
+					$variables, $variablesByLang, null, $queueItem->getSiteId()
+				);
+			}
+			else
+			{
+				// No group filter: all recipients in one map; attach to all (or none if no attachment).
+				$recipientsByLanguage = ['en-GB' => $cc];
 
-					$this->logger->debug(
-						sprintf(
-							'Sent email template %s for site %d',
-							$template, $queueItem->getSiteId()
-						)
-					);
-				}
-				catch (\Throwable $e)
+				foreach ($recipients as $recipient)
 				{
-					$this->logger->error(
-						sprintf(
-							'Not sent email template %s for site %d: %s',
-							$template, $queueItem->getSiteId(), $e->getMessage()
-						)
-					);
+					[$email, $name, $paramsJson] = $recipient;
+
+					try
+					{
+						$params = json_decode($paramsJson ?? '{}', flags: JSON_THROW_ON_ERROR);
+					}
+					catch (\JsonException)
+					{
+						continue;
+					}
+
+					$language                          = $params?->language ?? $defaultLanguage;
+					$recipientsByLanguage[$language]   ??= [];
+					$recipientsByLanguage[$language][] = [$email, $name];
 				}
+
+				$this->sendLanguageBatches(
+					$recipientsByLanguage, $template, $defaultLanguage,
+					$variables, $variablesByLang, $attachment, $queueItem->getSiteId()
+				);
 			}
 
 			// Check for timeout
@@ -272,6 +218,158 @@ class SendMail extends AbstractCallback
 		}
 
 		return Status::OK->value;
+	}
+
+	/**
+	 * Send one email batch per language from the given recipients map.
+	 *
+	 * @param   array       $recipientsByLanguage  [lang => [[email, name], ...]]
+	 * @param   string      $template              Mail template key
+	 * @param   string      $defaultLanguage       Fallback language code
+	 * @param   mixed       $variables             Global template variables
+	 * @param   array       $variablesByLang       Per-language template variable overrides
+	 * @param   string|null $attachment            Absolute path to attach, or null
+	 * @param   int         $siteId                Site ID for log messages
+	 */
+	private function sendLanguageBatches(
+		array $recipientsByLanguage,
+		string $template,
+		string $defaultLanguage,
+		mixed $variables,
+		array $variablesByLang,
+		?string $attachment,
+		int $siteId
+	): void
+	{
+		$hasMultipleLanguages = count($recipientsByLanguage) > 1;
+
+		foreach ($recipientsByLanguage as $language => $recipients)
+		{
+			if (empty($recipients))
+			{
+				continue;
+			}
+
+			if ($hasMultipleLanguages)
+			{
+				if (empty($language))
+				{
+					$language = $defaultLanguage;
+
+					$this->logger->info(
+						sprintf(
+							'Sending email template %s for site %d and default language (%s)',
+							$template, $siteId, $defaultLanguage
+						)
+					);
+				}
+				else
+				{
+					$this->logger->info(
+						sprintf(
+							'Sending email template %s for site %d and language %s',
+							$template, $siteId, $language
+						)
+					);
+				}
+			}
+
+			$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
+			$mailer          = clone $this->container->mailer;
+			$mailer->initialiseWithTemplate(
+				$template, $language, array_merge((array) $variables, $varsForThisLang)
+			);
+
+			if (empty($mailer->Body) && $language != 'en-GB' && $language != $defaultLanguage)
+			{
+				$this->logger->notice(
+					sprintf(
+						'Email template %s does not exist for language %s; I will retry using the default language (%s).',
+						$template, $language, $defaultLanguage
+					)
+				);
+
+				$language        = $defaultLanguage;
+				$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
+				$mailer          = clone $this->container->mailer;
+				$mailer->initialiseWithTemplate(
+					$template, $language, array_merge((array) $variables, $varsForThisLang)
+				);
+			}
+
+			if (empty($mailer->Body) && $language != 'en-GB' && $language == $defaultLanguage)
+			{
+				$this->logger->notice(
+					sprintf(
+						'Email template %s does not exist for the default language %s; I will retry using en-GB.',
+						$template, $language
+					)
+				);
+
+				$language        = 'en-GB';
+				$varsForThisLang = (array) ($variablesByLang[$language] ?? []);
+				$mailer          = clone $this->container->mailer;
+				$mailer->initialiseWithTemplate(
+					$template, $language, array_merge((array) $variables, $varsForThisLang)
+				);
+			}
+
+			if (empty($mailer->Body))
+			{
+				$this->logger->debug(
+					sprintf(
+						'Not sending email template %s for site %d; mail template empty',
+						$template, $siteId
+					)
+				);
+
+				continue;
+			}
+
+			if (!empty($attachment) && is_file($attachment))
+			{
+				$mailer->addAttachment($attachment, basename($attachment), 'base64', 'text/plain');
+			}
+
+			$firstRecipient = true;
+
+			foreach ($recipients as $recipient)
+			{
+				[$email, $name] = $recipient;
+
+				if ($firstRecipient)
+				{
+					$firstRecipient = false;
+					$mailer->addRecipient($email, $name);
+				}
+				else
+				{
+					$mailer->addBCC($email, $name);
+				}
+			}
+
+			// Send the email
+			try
+			{
+				$mailer->Send();
+
+				$this->logger->debug(
+					sprintf(
+						'Sent email template %s for site %d',
+						$template, $siteId
+					)
+				);
+			}
+			catch (\Throwable $e)
+			{
+				$this->logger->error(
+					sprintf(
+						'Not sent email template %s for site %d: %s',
+						$template, $siteId, $e->getMessage()
+					)
+				);
+			}
+		}
 	}
 
 	private function getRecipientsByPermissions(array $permissions, ?Site $site = null, ?array $mailGroups = null

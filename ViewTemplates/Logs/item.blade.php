@@ -17,11 +17,17 @@ $timeFormat = 'j M y H:i:s T';
 $hasFacility = array_reduce($this->logLines, fn(bool $carry, object $item) => $carry || !empty($item->facility), false);
 ?>
 
+<?php $logFileName = basename($this->filePath); ?>
 <h3 class="d-flex flex-column flex-md-row align-items-center mt-md-3 mb-md-4">
     <span class="flex-md-grow-1">
-        {{{ basename($this->filePath) }}}
+        {{{ $logFileName }}}
     </span>
-    <span class="fs-5 font-monospace text-success-emphasis">{{{ $this->filesize(basename($this->filePath)) }}}</span>
+    <span class="fs-5 font-monospace text-success-emphasis">{{{ $this->filesize($logFileName) }}}</span>
+    <a href="@route(sprintf('index.php?view=log&task=download&logfile=%s&%s=1', urlencode($logFileName), $this->container->session->getCsrfToken()->getValue()))"
+       class="btn btn-sm btn-secondary ms-md-3 mt-2 mt-md-0">
+        <span class="fa fa-fw fa-download" aria-hidden="true"></span>
+        @lang('PANOPTICON_LOGS_LBL_DOWNLOAD')
+    </a>
 </h3>
 
 <div class="my-2 mb-4 border rounded-1 p-2 bg-body-tertiary">

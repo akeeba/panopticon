@@ -1616,6 +1616,22 @@ class Sites extends DataController
 				$config->set('config.groups', $groups);
 			}
 
+			// Handle array config keys that may be absent from POST when empty (multi-select with no selection)
+			$rawEmailLogGroups = $data['config']['config.core_update.email_log_groups'] ?? null;
+
+			if ($rawEmailLogGroups !== null)
+			{
+				$config->set(
+					'config.core_update.email_log_groups',
+					array_values(array_filter(\Awf\Utils\ArrayHelper::toInteger((array) $rawEmailLogGroups)))
+				);
+			}
+			else
+			{
+				// Key absent from POST → user cleared the selection → fall back to global setting
+				$config->set('config.core_update.email_log_groups', null);
+			}
+
 			// Apply the config parameters
 			$data['config'] = $config->toString('JSON');
 

@@ -18,6 +18,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
 use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Awf\Registry\Registry;
 
@@ -31,6 +32,7 @@ class CoreChecksums extends AbstractCallback
 	use JsonSanitizerTrait;
 	use EmailSendingTrait;
 	use SaveSiteTrait;
+	use LogAttachmentTrait;
 
 	private Site $site;
 
@@ -298,18 +300,24 @@ class CoreChecksums extends AbstractCallback
 
 	private function sendNotificationEmail(Site $site, array $invalidFiles): void
 	{
+		$logIdentifier = $this->name . '.' . $site->id;
+		$logFileName   = $logIdentifier . '.log';
+
 		$vars = [
 			'SITE_NAME'      => $site->name,
 			'SITE_URL'       => $site->getBaseUrl(),
 			'SITE_ID'        => $site->getId(),
 			'MODIFIED_COUNT' => count($invalidFiles),
 			'MODIFIED_FILES' => implode("\n", $invalidFiles),
+			'LOG_URL'        => $this->getLogFileUrl($logFileName),
 		];
 
 		$data = new Registry();
 		$data->set('template', 'core_checksums_found');
 		$data->set('email_variables', $vars);
 		$data->set('permissions', ['panopticon.admin', 'panopticon.editown']);
+		$data->set('email_attachment', $this->getLogAttachmentPath($logIdentifier));
+		$data->set('email_attachment_groups', $this->getLogAttachmentGroups($site));
 
 		$this->logger->debug('Sending core checksums notification email', $data->toArray());
 

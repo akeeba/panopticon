@@ -20,6 +20,7 @@ use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
+use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Registry\Registry;
@@ -40,6 +41,7 @@ class WordPressUpdate extends AbstractCallback
 	use EmailSendingTrait;
 	use LanguageListTrait;
 	use JsonSanitizerTrait;
+	use LogAttachmentTrait;
 
 	protected string $currentState;
 
@@ -145,9 +147,15 @@ class WordPressUpdate extends AbstractCallback
 			// Send email about the failed update
 			if ($storage->get('email_error', true) && !$e instanceof NonEmailedRuntimeException)
 			{
+				$logIdentifier = $this->name . '.' . $site->id;
+				$logFileName   = $logIdentifier . '.log';
+				$storage->set('email_attachment', $this->getLogAttachmentPath($logIdentifier));
+				$storage->set('email_attachment_groups', $this->getLogAttachmentGroups($site));
+
 				$this->sendEmail(
 					'wordpressupdate_failed', $storage, ['panopticon.super', 'panopticon.manage'], [
 						'MESSAGE' => $e->getMessage(),
+						'LOG_URL' => $this->getLogFileUrl($logFileName),
 					]
 				);
 			}
@@ -789,6 +797,8 @@ class WordPressUpdate extends AbstractCallback
 		$data->set('email_variables_by_lang', $perLanguageVariables);
 		$data->set('permissions', $permissions);
 		$data->set('email_cc', $storage->get('email_cc', []));
+		$data->set('email_attachment', $storage->get('email_attachment', null));
+		$data->set('email_attachment_groups', $storage->get('email_attachment_groups', null));
 
 		$this->enqueueEmail($data, $storage->get('site_id'), 'now');
 	}
