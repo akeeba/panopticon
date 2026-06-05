@@ -470,20 +470,36 @@ trait AkeebaBackupIntegrationTrait
 	 * @throws  Throwable
 	 * @since   1.0.0
 	 */
-	public function akeebaBackupStartBackup(int $profile = 1, ?string $description = null, ?string $comment = null
+	public function akeebaBackupStartBackup(
+		int $profile = 1,
+		?string $description = null,
+		?string $comment = null,
+		?LoggerInterface $logger = null
 	): object
 	{
 		$this->ensureAkeebaBackupConnectionOptions();
 
-		$httpClient = $this->getAkeebaBackupAPIClient();
+		$params = [
+			'profile'     => (int) $profile,
+			'description' => $description ?: 'Remote backup',
+			'comment'     => $comment,
+		];
 
-		$data = $httpClient->doQuery(
-			'startBackup', [
-				'profile'     => (int) $profile,
-				'description' => $description ?: 'Remote backup',
-				'comment'     => $comment,
-			]
-		);
+		$httpClient = $this->getAkeebaBackupAPIClient($logger, verbose: $logger !== null);
+
+		if ($logger !== null)
+		{
+			$logger->debug(
+				'Akeeba Backup API request',
+				[
+					'task'         => 'startBackup',
+					'request_url'  => $this->sanitizeAkeebaBackupUrl($httpClient->makeURL('startBackup', $params)),
+					'request_body' => $params,
+				]
+			);
+		}
+
+		$data = $httpClient->doQuery('startBackup', $params);
 
 		$info = $this->akeebaBackupHandleAPIResponse($data);
 
@@ -501,16 +517,28 @@ trait AkeebaBackupIntegrationTrait
 	 * @throws  Throwable
 	 * @since   1.0.0
 	 */
-	public function akeebaBackupStepBackup(?string $backupId): object
+	public function akeebaBackupStepBackup(?string $backupId, ?LoggerInterface $logger = null): object
 	{
 		$this->ensureAkeebaBackupConnectionOptions();
 
-		$httpClient = $this->getAkeebaBackupAPIClient();
+		$httpClient = $this->getAkeebaBackupAPIClient($logger, verbose: $logger !== null);
 		$parameters = [];
 
 		if (!empty($backupId))
 		{
 			$parameters['backupid'] = $backupId;
+		}
+
+		if ($logger !== null)
+		{
+			$logger->debug(
+				'Akeeba Backup API request',
+				[
+					'task'         => 'stepBackup',
+					'request_url'  => $this->sanitizeAkeebaBackupUrl($httpClient->makeURL('stepBackup', $parameters)),
+					'request_body' => $parameters,
+				]
+			);
 		}
 
 		$data = $httpClient->doQuery('stepBackup', $parameters);
@@ -785,7 +813,7 @@ trait AkeebaBackupIntegrationTrait
 	 *
 	 * @return  HttpClientInterface
 	 */
-	private function getAkeebaBackupAPIClient(?LoggerInterface $logger = null): HttpClientInterface
+	private function getAkeebaBackupAPIClient(?LoggerInterface $logger = null, bool $verbose = false): HttpClientInterface
 	{
 		$config            = $this->getConfig();
 		$connectionOptions = (array) $config->get('akeebabackup.endpoint', null);
@@ -800,12 +828,21 @@ trait AkeebaBackupIntegrationTrait
 
 		if ($logger)
 		{
-			$connectionOptions['logger'] = $logger;
+			$connectionOptions['logger']  = $logger;
+			$connectionOptions['verbose'] = $verbose;
 		}
 
 		$options = new JsonApiOptions($connectionOptions);
 
 		return new HttpClientGuzzle($options);
+	}
+
+	/**
+	 * Returns the given URL with the _akeebaAuth query parameter value redacted.
+	 */
+	private function sanitizeAkeebaBackupUrl(string $url): string
+	{
+		return preg_replace('/([?&]_akeebaAuth=)[^&]+/', '$1[REDACTED]', $url);
 	}
 
 	private function akeebaBackupHandleAPIResponse(object $data): object

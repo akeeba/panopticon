@@ -77,7 +77,7 @@ class AkeebaBackup extends AbstractCallback
 				)
 			);
 
-			$result = $site->akeebaBackupStartBackup($profile, $description, $comment);
+			$result = $site->akeebaBackupStartBackup($profile, $description, $comment, $this->logger);
 		}
 		else
 		{
@@ -90,7 +90,7 @@ class AkeebaBackup extends AbstractCallback
 				)
 			);
 
-			$result = $site->akeebaBackupStepBackup($backupId);
+			$result = $site->akeebaBackupStepBackup($backupId, $this->logger);
 		}
 
 		$storage->set('state', 'step');

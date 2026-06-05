@@ -22,6 +22,7 @@ use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
+use Akeeba\Panopticon\Task\Trait\ResponseLoggerTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Registry\Registry;
@@ -44,6 +45,7 @@ class JoomlaUpdate extends AbstractCallback
 	use EmailSendingTrait;
 	use LanguageListTrait;
 	use JsonSanitizerTrait;
+	use ResponseLoggerTrait;
 	use LogAttachmentTrait;
 
 	protected string $currentState;
@@ -551,7 +553,7 @@ class JoomlaUpdate extends AbstractCallback
 
 					$this->logger->debug(
 						'Received response for forced update check',
-						['body' => $this->sanitizeJson($response->getBody()->getContents())]
+						$this->formatResponseLog($response)
 					);
 				}
 
@@ -1624,7 +1626,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$this->logger->debug(
 			'Received post-update finalisation response',
-			['body' => $this->sanitizeJson($response->getBody()->getContents())]
+			$this->formatResponseLog($response)
 		);
 
 		$this->advanceState();
@@ -1669,7 +1671,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$this->logger->debug(
 			'Received reload updates response',
-			['body' => $this->sanitizeJson($response->getBody()->getContents())]
+			$this->formatResponseLog($response)
 		);
 
 		$this->advanceState();
@@ -1816,7 +1818,7 @@ class JoomlaUpdate extends AbstractCallback
 
 		$this->logger->debug(
 			'Received response for forced update check',
-			['body' => $this->sanitizeJson($response->getBody()->getContents())]
+			$this->formatResponseLog($response)
 		);
 
 		// Then, download the update

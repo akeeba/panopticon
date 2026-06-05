@@ -6,6 +6,8 @@ Akeeba Panopticon 2.1.0
 + API token scopes for fine-grained access control [gh-967]
 + API endpoints for site status and global dashboard stats, e.g. for Home Assistant integration [gh-969]
 + Task log files are attached to failure notification emails for CMS updates, extension/plugin updates, core file integrity checks, and the PHP File Change Scanner, with configurable per-group delivery
+~ Structured debug-level logging of HTTP responses (status, Content-Type, headers, body) across all remote API tasks; binary payloads reported as BLOB size sentinels; auth headers redacted
+~ Akeeba Backup API calls additionally log the sanitised request URL and parameters at debug level; the _akeebaAuth secret and CMS tokens are redacted from all log output
 ~ More verbose debug-level logging of remote server responses in the Joomla core update task
 ~ Upgraded passkey / WebAuthn library to version 5.3
 ~ PHP 9 compatibility: removed retired #[ReturnTypeWillChange] attributes and added proper return types [gh-985]

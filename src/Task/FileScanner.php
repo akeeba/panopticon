@@ -20,6 +20,7 @@ use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
+use Akeeba\Panopticon\Task\Trait\ResponseLoggerTrait;
 use Awf\Registry\Registry;
 use GuzzleHttp\RequestOptions;
 
@@ -32,6 +33,7 @@ class FileScanner extends AbstractCallback
 	use ApiRequestTrait;
 	use AdminToolsTrait;
 	use JsonSanitizerTrait;
+	use ResponseLoggerTrait;
 	use EmailSendingTrait;
 	use LogAttachmentTrait;
 
@@ -267,10 +269,11 @@ class FileScanner extends AbstractCallback
 
 		$response = $httpClient->post($url, $options);
 
-		$json = $this->sanitizeJson($response->getBody()->getContents());
+		$rawBody = $response->getBody()->getContents();
 
-		$this->logger->debug('Got response', ['body' => $json]);
+		$this->logger->debug('Got response', $this->formatResponseLog($response, $rawBody));
 
+		$json   = $this->sanitizeJson($rawBody);
 		$result = json_decode($json);
 
 		if ($result?->errors ?? null)
@@ -302,10 +305,11 @@ class FileScanner extends AbstractCallback
 
 		$response = $httpClient->post($url, $options);
 
-		$json = $this->sanitizeJson($response->getBody()->getContents());
+		$rawBody = $response->getBody()->getContents();
 
-		$this->logger->debug('Got response', ['body' => $json]);
+		$this->logger->debug('Got response', $this->formatResponseLog($response, $rawBody));
 
+		$json   = $this->sanitizeJson($rawBody);
 		$result = json_decode($json);
 
 		if ($result?->errors ?? null)

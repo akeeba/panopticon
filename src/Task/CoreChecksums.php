@@ -19,6 +19,7 @@ use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
+use Akeeba\Panopticon\Task\Trait\ResponseLoggerTrait;
 use Akeeba\Panopticon\Task\Trait\SaveSiteTrait;
 use Awf\Registry\Registry;
 
@@ -30,6 +31,7 @@ class CoreChecksums extends AbstractCallback
 {
 	use ApiRequestTrait;
 	use JsonSanitizerTrait;
+	use ResponseLoggerTrait;
 	use EmailSendingTrait;
 	use SaveSiteTrait;
 	use LogAttachmentTrait;
@@ -197,10 +199,11 @@ class CoreChecksums extends AbstractCallback
 
 		$response = $httpClient->get($url, $options);
 
-		$json = $this->sanitizeJson($response->getBody()->getContents());
+		$rawBody = $response->getBody()->getContents();
 
-		$this->logger->debug('Got prepare response', ['body' => $json]);
+		$this->logger->debug('Got prepare response', $this->formatResponseLog($response, $rawBody));
 
+		$json   = $this->sanitizeJson($rawBody);
 		$result = json_decode($json);
 
 		if ($result?->errors ?? null)
@@ -226,10 +229,11 @@ class CoreChecksums extends AbstractCallback
 
 		$response = $httpClient->get($url, $options);
 
-		$json = $this->sanitizeJson($response->getBody()->getContents());
+		$rawBody = $response->getBody()->getContents();
 
-		$this->logger->debug('Got step response', ['body' => $json]);
+		$this->logger->debug('Got step response', $this->formatResponseLog($response, $rawBody));
 
+		$json   = $this->sanitizeJson($rawBody);
 		$result = json_decode($json);
 
 		if ($result?->errors ?? null)

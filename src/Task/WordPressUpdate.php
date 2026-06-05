@@ -21,6 +21,7 @@ use Akeeba\Panopticon\Task\Trait\ApiRequestTrait;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Task\Trait\JsonSanitizerTrait;
 use Akeeba\Panopticon\Task\Trait\LogAttachmentTrait;
+use Akeeba\Panopticon\Task\Trait\ResponseLoggerTrait;
 use Akeeba\Panopticon\Task\Trait\SiteNotificationEmailTrait;
 use Akeeba\Panopticon\View\Trait\TimeAgoTrait;
 use Awf\Registry\Registry;
@@ -41,6 +42,7 @@ class WordPressUpdate extends AbstractCallback
 	use EmailSendingTrait;
 	use LanguageListTrait;
 	use JsonSanitizerTrait;
+	use ResponseLoggerTrait;
 	use LogAttachmentTrait;
 
 	protected string $currentState;
@@ -833,10 +835,11 @@ class WordPressUpdate extends AbstractCallback
 			);
 		}
 
-		$body = $response->getBody();
-		$body = $this->sanitizeJson(trim($body ?? ''));
+		$rawBody = (string) $response->getBody();
 
-		$this->logger->debug('Received response', ['response' => $body]);
+		$this->logger->debug('Received response', $this->formatResponseLog($response, $rawBody));
+
+		$body = $this->sanitizeJson(trim($rawBody));
 
 		if (!$this->jsonValidate($body))
 		{
