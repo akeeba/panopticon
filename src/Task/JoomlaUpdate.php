@@ -548,6 +548,11 @@ class JoomlaUpdate extends AbstractCallback
 							$this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED')
 						);
 					}
+
+					$this->logger->debug(
+						'Received response for forced update check',
+						['body' => $this->sanitizeJson($response->getBody()->getContents())]
+					);
 				}
 
 				// Then, download the update
@@ -642,6 +647,8 @@ class JoomlaUpdate extends AbstractCallback
 				$storage->set('update.size', $raw->data?->attributes?->size);
 				$storage->set('update.offset', $raw->data?->attributes?->offset);
 				$storage->set('update.chunk_index', $raw->data?->attributes?->chunk_index);
+
+				$this->logger->debug('Received chunked download response', (array) ($raw->data?->attributes ?? []));
 
 				$error = $raw->data?->attributes?->error;
 				$done  = $raw->data?->attributes?->done;
@@ -913,6 +920,8 @@ class JoomlaUpdate extends AbstractCallback
 		$storage->set('update.password', $password);
 		$storage->set('update.filesize', $filesize);
 
+		$this->logger->debug('Received activation response', ['file' => $baseName, 'filesize' => $filesize]);
+
 		$this->advanceState();
 	}
 
@@ -1047,6 +1056,8 @@ class JoomlaUpdate extends AbstractCallback
 		// First, we do a ping
 		$data = $this->doEncryptedAjax($site, $storage, ['task' => 'ping']);
 
+		$this->logger->debug('Extraction endpoint ping response', ['status' => $data?->status ?? false]);
+
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
@@ -1059,6 +1070,8 @@ class JoomlaUpdate extends AbstractCallback
 
 		// Then, we start the extraction
 		$data = $this->doEncryptedAjax($site, $storage, ['task' => 'startRestore']);
+
+		$this->logger->debug('Extraction start response', ['status' => $data?->status ?? false, 'hasFactory' => ($data?->factory ?? null) !== null]);
 
 		if (($data?->status ?? false) === false)
 		{
@@ -1217,6 +1230,13 @@ class JoomlaUpdate extends AbstractCallback
 		];
 
 		$data = $this->doEncryptedAjax($site, $storage, $data);
+
+		$this->logger->debug('Extraction step response', [
+			'done'     => $data?->done ?? false,
+			'bytesIn'  => $data?->bytesIn ?? 0,
+			'bytesOut' => $data?->bytesOut ?? 0,
+			'files'    => $data?->files ?? 0,
+		]);
 
 		if (($data?->status ?? false) === false)
 		{
@@ -1386,6 +1406,14 @@ class JoomlaUpdate extends AbstractCallback
 	 */
 	private function handleJ404ExtractResponse(mixed $data, Registry $storage): bool
 	{
+		$this->logger->debug('Extraction response', [
+			'done'     => $data?->done ?? false,
+			'bytesIn'  => $data?->bytesIn ?? 0,
+			'bytesOut' => $data?->bytesOut ?? 0,
+			'files'    => $data?->files ?? 0,
+			'percent'  => $data?->percent ?? 0,
+		]);
+
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
@@ -1542,6 +1570,8 @@ class JoomlaUpdate extends AbstractCallback
 	{
 		$data = $this->doExtractAjax($site, $storage, ['task' => 'finalizeUpdate']);
 
+		$this->logger->debug('Extraction finalise response', ['status' => $data?->status ?? false]);
+
 		if (($data?->status ?? false) === false)
 		{
 			throw new RuntimeException(
@@ -1592,6 +1622,11 @@ class JoomlaUpdate extends AbstractCallback
 			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_FINALISE_FAILED'));
 		}
 
+		$this->logger->debug(
+			'Received post-update finalisation response',
+			['body' => $this->sanitizeJson($response->getBody()->getContents())]
+		);
+
 		$this->advanceState();
 	}
 
@@ -1631,6 +1666,11 @@ class JoomlaUpdate extends AbstractCallback
 				$this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_RELOAD_UPDATES_FAILED')
 			);
 		}
+
+		$this->logger->debug(
+			'Received reload updates response',
+			['body' => $this->sanitizeJson($response->getBody()->getContents())]
+		);
 
 		$this->advanceState();
 	}
@@ -1774,6 +1814,11 @@ class JoomlaUpdate extends AbstractCallback
 			);
 		}
 
+		$this->logger->debug(
+			'Received response for forced update check',
+			['body' => $this->sanitizeJson($response->getBody()->getContents())]
+		);
+
 		// Then, download the update
 		[$url, $options] = $this->getRequestOptions($site, '/index.php/v1/panopticon/core/update/download');
 		$response = $httpClient->post($url, $options);
@@ -1792,6 +1837,8 @@ class JoomlaUpdate extends AbstractCallback
 		{
 			throw new RuntimeException($this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_DOWNLOAD_FAILED'));
 		}
+
+		$this->logger->debug('Received download response', (array) ($raw->data?->attributes ?? []));
 
 		$baseName = $raw->data?->attributes?->basename;
 		$check    = $raw->data?->attributes?->check ?? false;
