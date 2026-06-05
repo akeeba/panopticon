@@ -3,6 +3,15 @@ Akeeba Panopticon 2.1.0
 ================================================================================
 + Configurable API token limit per user, with optional per-group overrides [gh-965]
 + Add JSON API (#344)
++ API token scopes for fine-grained access control [gh-967]
++ API endpoints for site status and global dashboard stats, e.g. for Home Assistant integration [gh-969]
++ Task log files are attached to failure notification emails for CMS updates, extension/plugin updates, core file integrity checks, and the PHP File Change Scanner, with configurable per-group delivery
+~ More verbose debug-level logging of remote server responses in the Joomla core update task
+~ Upgraded passkey / WebAuthn library to version 5.3
+~ PHP 9 compatibility: removed retired #[ReturnTypeWillChange] attributes and added proper return types [gh-985]
+~ Improved Docker image build
+# [HIGH] Stored XSS vulnerabilities in several Blade templates
+# [HIGH] Passkey login and MFA regressions introduced by the WebAuthn library upgrade
 
 Akeeba Panopticon 2.0.1
 ================================================================================
