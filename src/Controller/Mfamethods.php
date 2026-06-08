@@ -42,6 +42,10 @@ class Mfamethods extends Controller
 	{
 		$this->assertLoggedInUser();
 
+		$this->csrfProtection();
+
+		$this->_assertMfaPassed();
+
 		// Make sure I am allowed to edit the specified user
 		$user_id = $this->input->getInt('user_id', 0);
 		$user    = $this->container->userManager->getUser($user_id);
@@ -164,6 +168,8 @@ class Mfamethods extends Controller
 		$this->assertLoggedInUser();
 
 		$this->csrfProtection();
+
+		$this->_assertMfaPassed();
 
 		// Make sure I am allowed to edit the specified user
 		$user_id = $this->input->getInt('user_id', 0);
@@ -311,6 +317,8 @@ class Mfamethods extends Controller
 
 		$this->csrfProtection();
 
+		$this->_assertMfaPassed();
+
 		// Make sure I am allowed to edit the specified user
 		$user_id = $this->input->getInt('user_id', 0);
 		$user    = $this->container->userManager->getUser($user_id);
@@ -346,6 +354,8 @@ class Mfamethods extends Controller
 		$this->assertLoggedInUser();
 
 		$this->csrfProtection();
+
+		$this->_assertMfaPassed();
 
 		// Make sure I am allowed to edit the specified user
 		$user_id = $this->input->getInt('user_id', 0);
@@ -416,6 +426,32 @@ class Mfamethods extends Controller
 		}
 
 		return $record;
+	}
+
+	/**
+	 * Assert that the current session has cleared the captive MFA gate.
+	 *
+	 * Mutating MFA configuration (add, save, regenerate backup codes, delete, disable) must require that
+	 * the user has already demonstrated control of their existing MFA. Otherwise an attacker holding only
+	 * the password could strip MFA from the account while parked on the captive page and then walk in
+	 * because needsMFA() auto-sets the mfa_checked flag once zero MFA records remain.
+	 *
+	 * The flag is auto-set to true by MFATrait for users with no MFA records, so first-time setup is not
+	 * affected by this check.
+	 *
+	 * @see GHSA-gcg3-gp86-7fpq
+	 */
+	private function _assertMfaPassed(): void
+	{
+		if ((bool) $this->container->segment->get('panopticon.mfa_checked', false))
+		{
+			return;
+		}
+
+		throw new RuntimeException(
+			$this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'),
+			403
+		);
 	}
 
 	/**

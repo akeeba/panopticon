@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 2.1.0
 ================================================================================
+! [CRITICAL] MFA bypass for password-only users
 + Configurable API token limit per user, with optional per-group overrides [gh-965]
 + Add JSON API (#344)
 + API token scopes for fine-grained access control [gh-967]
