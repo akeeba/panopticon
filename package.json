@@ -29,7 +29,7 @@
 		"core-js": "^3.34.0",
 		"petite-vue": "^0.4.1",
 		"altcha": "^3.0.11",
-		"tinymce": "^8.5.0"
+		"tinymce": "^8.6.0"
 	},
 	"babel": {
 		"presets": [
