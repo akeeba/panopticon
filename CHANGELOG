@@ -10,6 +10,7 @@ Akeeba Panopticon 2.1.0
 ~ Structured debug-level logging of HTTP responses (status, Content-Type, headers, body) across all remote API tasks; binary payloads reported as BLOB size sentinels; auth headers redacted
 ~ Akeeba Backup API calls additionally log the sanitised request URL and parameters at debug level; the _akeebaAuth secret and CMS tokens are redacted from all log output
 ~ More verbose debug-level logging of remote server responses in the Joomla core update task
+~ Upgraded TinyMCE to 8.6.0 (includes DOMPurify 3.4.5 security update)
 ~ Upgraded passkey / WebAuthn library to version 5.3
 ~ PHP 9 compatibility: removed retired #[ReturnTypeWillChange] attributes and added proper return types [gh-985]
 ~ Improved Docker image build
