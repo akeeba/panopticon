@@ -27,7 +27,6 @@ use chillerlan\QRCode\Common\EccLevel;
 use chillerlan\QRCode\Common\Version;
 use chillerlan\QRCode\Data\QRMatrix;
 use chillerlan\QRCode\Output\QRMarkupSVG;
-use chillerlan\QRCode\Output\QROutputInterface;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use ParagonIE\ConstantTime\Base32;
@@ -132,12 +131,11 @@ class TOTP
 					'svg'    => (new QRCode(
 						new QROptions(
 							[
-								'version'            => Version::AUTO,
-								'outputType'         => QROutputInterface::MARKUP_SVG,
-								'outputInterface'    => QRMarkupSVG::class,
-								'eol'                => "\n",
-								'imageBase64'        => false,
-								'eccLevel'           => EccLevel::L,
+								'version'          => Version::AUTO,
+								'outputInterface'  => QRMarkupSVG::class,
+								'eol'              => "\n",
+								'outputBase64'     => false,
+								'eccLevel'         => EccLevel::L,
 								'addQuietzone'       => true,
 								'drawLightModules'   => false,
 								'connectPaths'       => true,
