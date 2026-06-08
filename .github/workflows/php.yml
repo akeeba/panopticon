@@ -28,12 +28,12 @@ jobs:
           --health-retries=10
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v4
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v6
       with:
-        node-version: 16.x
+        node-version: 22.x
         cache: 'npm'
     - run: npm ci
 
@@ -49,7 +49,7 @@ jobs:
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -85,7 +85,7 @@ jobs:
       run: composer archive --dir=release --format=zip
 
     - name: Archive production artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: installable-zip
         path: release/akeeba-panopticon-*.zip
