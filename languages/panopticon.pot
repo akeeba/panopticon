@@ -11987,3 +11987,368 @@ msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
 msgid "Invalid JSON in request body."
 msgstr ""
 
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED"
+msgid "You have reached the maximum number of enabled API tokens. Please delete or disable an existing token before creating a new one."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED"
+msgid "API access is disabled for your account. Please contact a super administrator."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_COPY"
+msgid "Copy"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_BY"
+msgid "Created by"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHHTACCESS"
+msgid "API endpoint URL (recommended, requires <code>.htaccess</code> or equivalent URL rewriting)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHOUTHTACCESS"
+msgid "API endpoint URL (fallback, works without URL rewriting)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES"
+msgid "Expires"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_NEVER"
+msgid "Never"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_ON"
+msgid "Expires on %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER"
+msgid "Created after"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE"
+msgid "Expires before"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE"
+msgid "Last used before"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED"
+msgid "Last Used"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED_IP"
+msgid "Last Used IP Address"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_METADATA"
+msgid "Metadata"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NEVER"
+msgid "Never"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_EXCEEDED_HINT"
+msgid "You have reached your API token limit. Please delete or disable an existing token before creating or re-enabling one."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
+msgid "%1\$d of %2\$d API tokens created"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES"
+msgid "Scopes"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES_DESC"
+msgid "Select the API operations this token is allowed to perform. Leave all unchecked to grant access to all scopes (default)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION"
+msgid "Search by description"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SELECT_ENABLED"
+msgid "— Select state —"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SELFUPDATE"
+msgid "Self-Update"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SITES"
+msgid "Sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SYSCONFIG"
+msgid "System Configuration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_TASKS"
+msgid "Tasks"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ"
+msgid "Read update info"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ_DESC"
+msgid "Read self-update status and available version information."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE"
+msgid "Perform updates"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE_DESC"
+msgid "Download, install, and finalise Panopticon self-updates."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE"
+msgid "CMS updates"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE_DESC"
+msgid "Trigger, cancel, or clear CMS (Joomla/WordPress) core update operations."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS"
+msgid "Manage extensions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS_DESC"
+msgid "List extensions, refresh extension data, manage download keys, and schedule or cancel extension updates."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ"
+msgid "Read sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ_DESC"
+msgid "List sites and read their details, configuration, and status."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH"
+msgid "Refresh sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH_DESC"
+msgid "Trigger a manual data refresh for a site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE"
+msgid "Write sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE_DESC"
+msgid "Add new sites and modify existing site settings."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ"
+msgid "Read configuration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ_DESC"
+msgid "Read non-sensitive system configuration parameters."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE"
+msgid "Write configuration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE_DESC"
+msgid "Set system configuration parameters."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ"
+msgid "Read tasks"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ_DESC"
+msgid "List and read task details."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE"
+msgid "Write tasks"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE_DESC"
+msgid "Create and modify scheduled tasks."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION"
+msgid "Description"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED"
+msgid "Last Used"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE_EDIT"
+msgid "Edit API Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE_NEW"
+msgid "New API Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT"
+msgid "API Token Limit"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP"
+msgid "Override the global API token limit for users in this group. Leave empty to use the global default. Set to 0 to deny API access to group members (unless another group they belong to grants a higher limit)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER"
+msgid "(Use global default)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_COPIED"
+msgid "The API token has been copied."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_DELETED"
+msgid "The selected API tokens have been deleted."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_SAVED"
+msgid "The API token has been saved."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_MODIFIED_BY"
+msgid "Modified by"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_MODIFIED_ON"
+msgid "Modified on"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_FILESCANNER_FAILED"
+msgid "PHP File Change Scanner: Task Failure"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS"
+msgid "Attach Log File for These Groups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS_HELP"
+msgid "Override the global setting: select which user groups receive the task log file as an email attachment on failure. Leave empty to use the global Panopticon setting."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME"
+msgid "Time Of The Day to Install Extension Updates On (Hour:Minute)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_WHEN"
+msgid "When Should Updates Be Installed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_IMMEDIATELY"
+msgid "Immediately"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_TIME"
+msgid "Time of Day"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX"
+msgid "Maximum tokens per user"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX_HELP"
+msgid "The maximum number of enabled, non-expired API tokens a user may hold. User groups can override this on a per-group basis. Set to 0 to deny API access to all users by default (individual groups may still grant access via their own override)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS"
+msgid "Attach Log File to These Groups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS_HELP"
+msgid "Select which user groups receive the task log file as an email attachment when a core or extension update fails. Leave empty to send the attachment to all notification recipients."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
+msgid "API Tokens"
+msgstr ""

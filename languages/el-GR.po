@@ -12814,3 +12814,444 @@ msgstr "Δεν έχετε δικαίωμα εκτέλεσης αυτής της 
 msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
 msgid "Invalid JSON in request body."
 msgstr "Μη έγκυρο JSON στο σώμα του αιτήματος."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED"
+msgid "You have reached the maximum number of enabled API tokens. Please delete or disable an existing token before creating a new one."
+msgstr "Έχετε φτάσει στον μέγιστο αριθμό ενεργών διακριτικών API. Διαγράψτε ή απενεργοποιήστε ένα υπάρχον διακριτικό πριν δημιουργήσετε ένα νέο."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED"
+msgid "API access is disabled for your account. Please contact a super administrator."
+msgstr "Η πρόσβαση στο API είναι απενεργοποιημένη για τον λογαριασμό σας. Επικοινωνήστε με έναν υπερχρήστη."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_COPY"
+msgid "Copy"
+msgstr "Αντιγραφή"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_BY"
+msgid "Created by"
+msgstr "Δημιουργήθηκε από"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHHTACCESS"
+msgid "API endpoint URL (recommended, requires <code>.htaccess</code> or equivalent URL rewriting)"
+msgstr "URL τελικού σημείου API (προτεινόμενο, απαιτεί <code>.htaccess</code> ή αντίστοιχη αναγραφή URL)"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHOUTHTACCESS"
+msgid "API endpoint URL (fallback, works without URL rewriting)"
+msgstr "URL τελικού σημείου API (εναλλακτικό, λειτουργεί χωρίς αναγραφή URL)"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES"
+msgid "Expires"
+msgstr "Λήγει"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_NEVER"
+msgid "Never"
+msgstr "Ποτέ"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_ON"
+msgid "Expires on %s"
+msgstr "Λήγει την %s"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER"
+msgid "Created after"
+msgstr "Δημιουργήθηκε μετά"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE"
+msgid "Expires before"
+msgstr "Λήγει πριν"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE"
+msgid "Last used before"
+msgstr "Χρησιμοποιήθηκε τελευταία πριν"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED"
+msgid "Last Used"
+msgstr "Τελευταία Χρήση"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED_IP"
+msgid "Last Used IP Address"
+msgstr "Διεύθυνση IP Τελευταίας Χρήσης"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_METADATA"
+msgid "Metadata"
+msgstr "Μεταδεδομένα"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NEVER"
+msgid "Never"
+msgstr "Ποτέ"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_EXCEEDED_HINT"
+msgid "You have reached your API token limit. Please delete or disable an existing token before creating or re-enabling one."
+msgstr "Έχετε φτάσει στο όριο διακριτικών API. Διαγράψτε ή απενεργοποιήστε ένα υπάρχον διακριτικό πριν δημιουργήσετε ή επανενεργοποιήσετε κάποιο."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
+msgid "%1\$d of %2\$d API tokens created"
+msgstr "%1\$d από %2\$d διακριτικά API δημιουργήθηκαν"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES"
+msgid "Scopes"
+msgstr "Εμβέλειες"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES_DESC"
+msgid "Select the API operations this token is allowed to perform. Leave all unchecked to grant access to all scopes (default)."
+msgstr "Επιλέξτε τις λειτουργίες API που επιτρέπεται να εκτελέσει αυτό το διακριτικό. Αφήστε όλα απεπιλεγμένα για να παραχωρήσετε πρόσβαση σε όλες τις εμβέλειες (προεπιλογή)."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION"
+msgid "Search by description"
+msgstr "Αναζήτηση με περιγραφή"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SELECT_ENABLED"
+msgid "— Select state —"
+msgstr "— Επιλογή κατάστασης —"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SELFUPDATE"
+msgid "Self-Update"
+msgstr "Αυτο-Ενημέρωση"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SITES"
+msgid "Sites"
+msgstr "Ιστότοποι"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SYSCONFIG"
+msgid "System Configuration"
+msgstr "Διαμόρφωση Συστήματος"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_TASKS"
+msgid "Tasks"
+msgstr "Εργασίες"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ"
+msgid "Read update info"
+msgstr "Ανάγνωση πληροφοριών ενημέρωσης"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ_DESC"
+msgid "Read self-update status and available version information."
+msgstr "Ανάγνωση κατάστασης αυτο-ενημέρωσης και πληροφοριών διαθέσιμης έκδοσης."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE"
+msgid "Perform updates"
+msgstr "Εκτέλεση ενημερώσεων"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE_DESC"
+msgid "Download, install, and finalise Panopticon self-updates."
+msgstr "Λήψη, εγκατάσταση και ολοκλήρωση αυτο-ενημερώσεων του Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE"
+msgid "CMS updates"
+msgstr "Ενημερώσεις CMS"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE_DESC"
+msgid "Trigger, cancel, or clear CMS (Joomla/WordPress) core update operations."
+msgstr "Εκκίνηση, ακύρωση ή εκκαθάριση λειτουργιών ενημέρωσης πυρήνα CMS (Joomla/WordPress)."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS"
+msgid "Manage extensions"
+msgstr "Διαχείριση επεκτάσεων"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS_DESC"
+msgid "List extensions, refresh extension data, manage download keys, and schedule or cancel extension updates."
+msgstr "Καταγραφή επεκτάσεων, ανανέωση δεδομένων επεκτάσεων, διαχείριση κλειδιών λήψης και προγραμματισμός ή ακύρωση ενημερώσεων επεκτάσεων."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ"
+msgid "Read sites"
+msgstr "Ανάγνωση ιστοτόπων"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ_DESC"
+msgid "List sites and read their details, configuration, and status."
+msgstr "Καταγραφή ιστοτόπων και ανάγνωση λεπτομερειών, διαμόρφωσης και κατάστασής τους."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH"
+msgid "Refresh sites"
+msgstr "Ανανέωση ιστοτόπων"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH_DESC"
+msgid "Trigger a manual data refresh for a site."
+msgstr "Εκκίνηση χειροκίνητης ανανέωσης δεδομένων για έναν ιστότοπο."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE"
+msgid "Write sites"
+msgstr "Εγγραφή ιστοτόπων"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE_DESC"
+msgid "Add new sites and modify existing site settings."
+msgstr "Προσθήκη νέων ιστοτόπων και τροποποίηση υπαρχουσών ρυθμίσεων ιστοτόπου."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ"
+msgid "Read configuration"
+msgstr "Ανάγνωση διαμόρφωσης"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ_DESC"
+msgid "Read non-sensitive system configuration parameters."
+msgstr "Ανάγνωση μη ευαίσθητων παραμέτρων διαμόρφωσης συστήματος."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE"
+msgid "Write configuration"
+msgstr "Εγγραφή διαμόρφωσης"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE_DESC"
+msgid "Set system configuration parameters."
+msgstr "Ορισμός παραμέτρων διαμόρφωσης συστήματος."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ"
+msgid "Read tasks"
+msgstr "Ανάγνωση εργασιών"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ_DESC"
+msgid "List and read task details."
+msgstr "Καταγραφή και ανάγνωση λεπτομερειών εργασιών."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE"
+msgid "Write tasks"
+msgstr "Εγγραφή εργασιών"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE_DESC"
+msgid "Create and modify scheduled tasks."
+msgstr "Δημιουργία και τροποποίηση προγραμματισμένων εργασιών."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION"
+msgid "Description"
+msgstr "Περιγραφή"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED"
+msgid "Last Used"
+msgstr "Τελευταία Χρήση"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE_EDIT"
+msgid "Edit API Token"
+msgstr "Επεξεργασία Διακριτικού API"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE_NEW"
+msgid "New API Token"
+msgstr "Νέο Διακριτικό API"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMSVERSION_SELECT"
+msgid "– CMS Version –"
+msgstr "– Έκδοση CMS –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR"
+msgid "Extension Author"
+msgstr "Συγγραφέας Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_SELECT"
+msgid "– Author –"
+msgstr "– Συγγραφέας –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL"
+msgid "Author URL"
+msgstr "URL Συγγραφέα"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL_SELECT"
+msgid "– Author URL –"
+msgstr "– URL Συγγραφέα –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME"
+msgid "Extension Name"
+msgstr "Όνομα Επέκτασης"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME_SELECT"
+msgid "– Extension Name –"
+msgstr "– Όνομα Επέκτασης –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES"
+msgid "Extension Updates"
+msgstr "Ενημερώσεις Επεκτάσεων"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_NO"
+msgid "Up to Date"
+msgstr "Ενημερωμένο"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_SELECT"
+msgid "– Update Status –"
+msgstr "– Κατάσταση Ενημέρωσης –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_PHPVERSION_SELECT"
+msgid "– PHP Version –"
+msgstr "– Έκδοση PHP –"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT"
+msgid "API Token Limit"
+msgstr "Όριο Διακριτικών API"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP"
+msgid "Override the global API token limit for users in this group. Leave empty to use the global default. Set to 0 to deny API access to group members (unless another group they belong to grants a higher limit)."
+msgstr "Παράκαμψη του καθολικού ορίου διακριτικών API για τους χρήστες αυτής της ομάδας. Αφήστε κενό για να χρησιμοποιήσετε την καθολική προεπιλογή. Ορίστε σε 0 για να απορρίψετε την πρόσβαση API από τα μέλη της ομάδας (εκτός αν κάποια άλλη ομάδα στην οποία ανήκουν παρέχει υψηλότερο όριο)."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER"
+msgid "(Use global default)"
+msgstr "(Χρήση καθολικής προεπιλογής)"
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_COPIED"
+msgid "The API token has been copied."
+msgstr "Το διακριτικό API αντιγράφηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_DELETED"
+msgid "The selected API tokens have been deleted."
+msgstr "Τα επιλεγμένα διακριτικά API διαγράφηκαν."
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_SAVED"
+msgid "The API token has been saved."
+msgstr "Το διακριτικό API αποθηκεύτηκε."
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_MODIFIED_BY"
+msgid "Modified by"
+msgstr "Μεταβλήθηκε από"
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_MODIFIED_ON"
+msgid "Modified on"
+msgstr "Μεταβλήθηκε την"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_FILESCANNER_FAILED"
+msgid "PHP File Change Scanner: Task Failure"
+msgstr "Σαρωτής Αλλαγών Αρχείων PHP: Αποτυχία Εργασίας"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS"
+msgid "Attach Log File for These Groups"
+msgstr "Επισύναψη Αρχείου Καταγραφής για Αυτές τις Ομάδες"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS_HELP"
+msgid "Override the global setting: select which user groups receive the task log file as an email attachment on failure. Leave empty to use the global Panopticon setting."
+msgstr "Παράκαμψη της καθολικής ρύθμισης: επιλέξτε ποιες ομάδες χρηστών λαμβάνουν το αρχείο καταγραφής εργασίας ως συνημμένο email σε περίπτωση αποτυχίας. Αφήστε κενό για να χρησιμοποιήσετε την καθολική ρύθμιση Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME"
+msgid "Time Of The Day to Install Extension Updates On (Hour:Minute)"
+msgstr "Ώρα Εγκατάστασης Ενημερώσεων Επεκτάσεων (Ώρα:Λεπτό)"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid ""
+"The time expressed in the %s timezone. If updates are found <em>after</em> "
+"this time of the day the update installation will take place on the next "
+"calendar day. Avoid using the Daylight Savings Time changeover time of the "
+"day (usually: between 2am and 4am); otherwise, update scheduling will act in "
+"what you perceive to be a "weird" or "wrong" way if an update is found on "
+"the day of the Daylight Savings Time changeover. Manually-triggered updates "
+"always run immediately, regardless of this setting."
+msgstr ""
+"Η ώρα εκφράζεται στη ζώνη ώρας %s. Εάν εντοπιστούν ενημερώσεις <em>μετά</em> "
+"από αυτή την ώρα της ημέρας, η εγκατάσταση της ενημερωμένης έκδοσης θα "
+"πραγματοποιηθεί την επόμενη ημερολογιακή ημέρα. Αποφύγετε τη χρήση της ώρας "
+"μέσα στην ημέρα στην οποία λαμβάνει χώρα η μετάβαση μεταξύ χειμερινής και "
+"θερινής ώρας (συνήθως: μεταξύ 2πμ και 4πμ). Διαφορετικά, ο προγραμματισμός "
+"ενημέρωσης θα ενεργήσει με τρόπο που θεωρείτε «περίεργο» ή «λάθος» εάν "
+"εντοπιστεί ενημέρωση την ημέρα της αλλαγής από/σε θερινή ώρα. Οι χειροκίνητα "
+"ενεργοποιούμενες ενημερώσεις εκτελούνται πάντα αμέσως, ανεξάρτητα από αυτή "
+"τη ρύθμιση."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_WHEN"
+msgid "When Should Updates Be Installed"
+msgstr "Πότε Πρέπει να Εγκαθίστανται οι Ενημερώσεις"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_IMMEDIATELY"
+msgid "Immediately"
+msgstr "Αμέσως"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_TIME"
+msgid "Time of Day"
+msgstr "Ώρα Ημέρας"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX"
+msgid "Maximum tokens per user"
+msgstr "Μέγιστα διακριτικά ανά χρήστη"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX_HELP"
+msgid "The maximum number of enabled, non-expired API tokens a user may hold. User groups can override this on a per-group basis. Set to 0 to deny API access to all users by default (individual groups may still grant access via their own override)."
+msgstr "Ο μέγιστος αριθμός ενεργών, μη ληγμένων διακριτικών API που μπορεί να έχει ένας χρήστης. Οι ομάδες χρηστών μπορούν να παρακάμψουν αυτό ανά ομάδα. Ορίστε σε 0 για να απορρίψετε την πρόσβαση API σε όλους τους χρήστες από προεπιλογή (μεμονωμένες ομάδες μπορούν ακόμα να παρέχουν πρόσβαση μέσω της δικής τους παράκαμψης)."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS"
+msgid "Attach Log File to These Groups"
+msgstr "Επισύναψη Αρχείου Καταγραφής σε Αυτές τις Ομάδες"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS_HELP"
+msgid "Select which user groups receive the task log file as an email attachment when a core or extension update fails. Leave empty to send the attachment to all notification recipients."
+msgstr "Επιλέξτε ποιες ομάδες χρηστών λαμβάνουν το αρχείο καταγραφής εργασίας ως συνημμένο email όταν αποτύχει μια ενημέρωση πυρήνα ή επέκτασης. Αφήστε κενό για αποστολή του συνημμένου σε όλους τους παραλήπτες ειδοποιήσεων."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
+msgid "API Tokens"
+msgstr "Διακριτικά API"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_YES"
+msgid "Out of Date"
+msgstr "Μη Ενημερωμένο"
