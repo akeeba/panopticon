@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 2.1.1
+================================================================================
+# [HIGH] JSON API completely broken in release archives; routes.php was excluded from packages [gh-994]
+
 Akeeba Panopticon 2.1.0
 ================================================================================
 ! [CRITICAL] MFA bypass for password-only users

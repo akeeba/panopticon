@@ -719,7 +719,7 @@ class Application extends AWFApplication
 
 	private function loadRoutes(): void
 	{
-		$routesJSONPath = $this->container->basePath . '/assets/private/routes.json';
+		$routesJSONPath = $this->container->basePath . '/src/routes.json';
 		$router         = $this->container->router;
 		$importedRoutes = false;
 
@@ -736,7 +736,7 @@ class Application extends AWFApplication
 		}
 
 		// If we could not import routes from routes.json, try loading routes.php
-		$routesPHPPath = $this->container->basePath . '/assets/private/routes.php';
+		$routesPHPPath = $this->container->basePath . '/src/routes.php';
 
 		if (@file_exists($routesPHPPath))
 		{
