@@ -109,7 +109,9 @@ CREATE TABLE IF NOT EXISTS `#__tasks`
     `locked`          DATETIME        NULL,
     `priority`        INT             NOT NULL DEFAULT 0,
     FOREIGN KEY `#__tasks_sites` (`site_id`) REFERENCES `#__sites` (`id`) ON DELETE CASCADE,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    INDEX `idx_tasks_enabled_next_priority` (`enabled`, `next_execution`, `priority`),
+    INDEX `idx_tasks_enabled_exit_next` (`enabled`, `last_exit_code`, `next_execution`)
 )
     DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
@@ -129,6 +131,22 @@ ALTER TABLE `#__tasks`
             <query><![CDATA[
 ALTER TABLE `#__tasks`
     MODIFY COLUMN `storage` JSON;
+]]></query>
+        </action>
+
+        <action table="#__tasks" canfail="1">
+            <condition type="index" operator="not"><![CDATA[idx_tasks_enabled_next_priority]]></condition>
+            <query><![CDATA[
+ALTER TABLE `#__tasks`
+    ADD INDEX `idx_tasks_enabled_next_priority` (`enabled`, `next_execution`, `priority`);
+]]></query>
+        </action>
+
+        <action table="#__tasks" canfail="1">
+            <condition type="index" operator="not"><![CDATA[idx_tasks_enabled_exit_next]]></condition>
+            <query><![CDATA[
+ALTER TABLE `#__tasks`
+    ADD INDEX `idx_tasks_enabled_exit_next` (`enabled`, `last_exit_code`, `next_execution`);
 ]]></query>
         </action>
 
