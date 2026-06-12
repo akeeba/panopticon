@@ -206,7 +206,7 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 					<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_RECOMMENDED') ?>
 				</h3>
 				<div class="card-body">
-					<table class="table table-striped">
+					<table class="table table-striped pnp-stacked">
 						<thead>
 						<tr>
 							<th><?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_SETTING') ?></th>
@@ -225,12 +225,12 @@ $this->getContainer()->application->getDocument()->addScriptDeclaration($js);
 										</div>
 									<?php endif; ?>
 								</th>
-								<td>
+								<td data-label="<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_RECOMMENDED_VALUE') ?>">
 							<span class="badge bg-secondary">
 								<?= $option['recommended'] ? $this->getLanguage()->text('AWF_YES') : $this->getLanguage()->text('AWF_NO') ?>
 							</span>
 								</td>
-								<td>
+								<td data-label="<?= $this->getLanguage()->text('PANOPTICON_SETUP_LBL_CURRENT_SETTING') ?>">
 							<span class="badge <?= $option['current'] == $option['recommended'] ? 'bg-success' : 'text-bg-warning' ?>">
 								<span class="fa <?= $option['current'] == $option['recommended'] ? 'fa-check-circle' : 'fa-times-circle' ?>" aria-hidden="true"></span>
 								<?= $option['current'] ? $this->getLanguage()->text('AWF_YES') : $this->getLanguage()->text('AWF_NO') ?>
