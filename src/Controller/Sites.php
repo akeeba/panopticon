@@ -1220,8 +1220,8 @@ class Sites extends DataController
 		$html = $htmlView->loadAnyTemplate('Sites/item_admintools');
 		$sections['admintools'] = ['html' => $html, 'hash' => md5($html)];
 
-		// Core Checksums (Joomla only)
-		if ($cmsType === CMSType::JOOMLA)
+		// Core Checksums (Joomla and WordPress)
+		if (in_array($cmsType, [CMSType::JOOMLA, CMSType::WORDPRESS]))
 		{
 			$html = $htmlView->loadAnyTemplate('Sites/item_corechecksums');
 			$sections['corechecksums'] = ['html' => $html, 'hash' => md5($html)];

@@ -144,7 +144,7 @@ $favIcon = $this->item->getFavicon(asDataUrl: true, onlyIfCached: true);
         </div>
     </div>
 
-    @if ($this->item->cmsType() === CMSType::JOOMLA)
+    @if (in_array($this->item->cmsType(), [CMSType::JOOMLA, CMSType::WORDPRESS]))
     <div class="row g-3 mb-3">
         <div class="col-12">
             <div id="siteSection-corechecksums">

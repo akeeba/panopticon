@@ -445,7 +445,7 @@ class Html extends DataViewHtml
 		}
 
 		// Core File Integrity Checksums
-		if ($this->item->cmsType() === CMSType::JOOMLA)
+		if (in_array($this->item->cmsType(), [CMSType::JOOMLA, CMSType::WORDPRESS]))
 		{
 			$this->coreChecksumsModifiedCount = (int) $this->siteConfig->get('core.coreChecksums.modifiedCount', 0);
 			$this->coreChecksumsLastCheck     = $this->siteConfig->get('core.coreChecksums.lastCheck', null);
