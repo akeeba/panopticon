@@ -199,6 +199,13 @@ class CoreChecksums extends AbstractCallback
 			CMSType::WORDPRESS => '/v1/panopticon/core/checksum/prepare',
 		};
 
+		$base = trim((string) $this->container->appConfig->get('checksums_base_url', ''));
+
+		if ($base !== '')
+		{
+			$apiPath .= '?checksumsBaseUrl=' . urlencode($base);
+		}
+
 		[$url, $options] = $this->getRequestOptions($this->site, $apiPath);
 
 		$response = $httpClient->get($url, $options);

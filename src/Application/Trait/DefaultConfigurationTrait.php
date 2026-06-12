@@ -59,6 +59,7 @@ trait DefaultConfigurationTrait
 			'siteinfo_freq'            => 60,
 			'tasks_coreupdate_install' => 'patch',
 			'tasks_extupdate_install'  => 'none',
+			'checksums_base_url'       => '',
 			'caching_time'             => 60,
 			'cache_adapter'            => 'filesystem',
 			'caching_redis_dsn'        => '',
@@ -214,6 +215,7 @@ trait DefaultConfigurationTrait
 			'tasks_extupdate_install' => fn($x) => $this->validatePresetValues(
 				$x, 'none', ['none', 'email', 'patch', 'minor', 'major']
 			),
+			'checksums_base_url' => [$this, 'validateOptionalUrl'],
 			'caching_time' => fn($x) => $this->validateInteger($x, 60, 1, 1440),
 			'cache_adapter' => fn($x) => $this->validatePresetValues(
 				$x, 'filesystem', ['filesystem', 'linuxfs', 'db', 'memcached', 'redis',]
@@ -314,5 +316,22 @@ trait DefaultConfigurationTrait
 		}
 
 		return $x;
+	}
+
+	private function validateOptionalUrl($x): string
+	{
+		$x = trim((string) $x);
+
+		if ($x === '')
+		{
+			return '';
+		}
+
+		if (filter_var($x, FILTER_VALIDATE_URL) === false || !preg_match('#^https?://#i', $x))
+		{
+			throw new RuntimeException('Not a valid http(s) URL.');
+		}
+
+		return rtrim($x, '/');
 	}
 }

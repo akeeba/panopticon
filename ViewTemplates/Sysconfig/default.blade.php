@@ -106,6 +106,7 @@ $router = $this->getContainer()->router;
                 @include('Sysconfig/default_uptime')
                 @include('Sysconfig/default_sites')
                 @include('Sysconfig/default_coreupdates')
+                @include('Sysconfig/default_checksums')
                 @include('Sysconfig/default_extupdates')
             </div>
         </div>
