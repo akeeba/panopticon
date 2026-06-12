@@ -17,7 +17,7 @@ $timeFormat = 'j M y H:i:s T';
 $hasFacility = array_reduce($this->logLines, fn(bool $carry, object $item) => $carry || !empty($item->facility), false);
 ?>
 
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover pnp-stacked">
     <thead>
     <tr>
         <th>
@@ -72,19 +72,19 @@ $hasFacility = array_reduce($this->logLines, fn(bool $carry, object $item) => $c
 			};
 			?>
         <tr>
-            <td class="{{ $timeClass }} text-nowrap">
+            <td class="{{ $timeClass }} text-nowrap" data-label="@lang('PANOPTICON_LOGS_LBL_TIME')">
                 @html('basic.date', $item->timestamp->format(DATE_RSS), $timeFormat, false)
             </td>
-            <td class="{{ $textClass }} text-nowrap">
+            <td class="{{ $textClass }} text-nowrap" data-label="@lang('PANOPTICON_LOGS_LBL_LEVEL')">
                 <span class="fa fa-fw {{ $icon }}" aria-hidden="true"></span>
                 @lang('PANOPTICON_LOGS_LBL_PRIORITY_' . $item->loglevel)
             </td>
             @if ($hasFacility)
-                <td class="{{ $textClass }} text-nowrap">
+                <td class="{{ $textClass }} text-nowrap" data-label="@lang('PANOPTICON_LOGS_LBL_FACILITY')">
                     {{{ $item->facility }}}
                 </td>
             @endif
-            <td class="{{ $textClass }}">
+            <td class="{{ $textClass }}" data-label="@lang('PANOPTICON_LOGS_LBL_MESSAGE')">
                 <div>
                     {{{ $item->message }}}
                 </div>
