@@ -62,7 +62,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         @endif
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped align-middle pnp-stacked" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_SITES_TABLE_COMMENT')
         </caption>
@@ -94,7 +94,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 <td>
                     {{ $this->getContainer()->html->grid->id(++$i, $site->id) }}
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_SITES_TABLE_HEAD_NAME')">
                     <div class="fw-medium">
                         <a href="@route(sprintf('index.php?view=site&task=edit&id=%d', $site->id))">
                             {{{ $site->name }}}
@@ -120,7 +120,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         </div>
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')">
                     @if ($site->enabled)
                         <a class="text-decoration-none text-success"
                            href="@route(sprintf('index.php?view=sites&task=unpublish&id=%d&%s=1', $site->id, $token))"
@@ -141,7 +141,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         </a>
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                     {{ (int) $site->id }}
                 </td>
 

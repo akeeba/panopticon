@@ -128,7 +128,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </div>
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped pnp-stacked align-middle" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT')
         </caption>
@@ -176,7 +176,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         @sprintf('PANOPTICON_EXTENSIONINSTALL_LBL_SELECT_SITE', $site->name)
                     </label>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTENSIONINSTALL_LBL_SITE_NAME')">
                     <a class="fw-medium"
                        href="@route(sprintf('index.php?view=site&task=read&id=%s', $site->getId()))">
                         {{{ $site->name }}}
@@ -201,7 +201,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         </div>
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTENSIONINSTALL_LBL_CMS_TYPE')">
                     @if ($site->cmsType() === CMSType::JOOMLA)
                         <span class="fab fa-fw fa-joomla text-secondary" aria-hidden="true"></span>
                         Joomla!
@@ -210,10 +210,10 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         WordPress
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTENSIONINSTALL_LBL_CMS_VERSION')">
                     {{{ $config->get('core.current.version') }}}
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTENSIONINSTALL_LBL_PHP_VERSION')">
                     <span class="fab fa-fw fa-php text-primary" aria-hidden="true"></span>
                     {{{ $config->get('core.php') }}}
                 </td>

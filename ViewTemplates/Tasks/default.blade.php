@@ -79,7 +79,7 @@ $i     = 1;
         </div>
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped pnp-stacked align-middle" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_SITES_TABLE_COMMENT')
         </caption>
@@ -121,7 +121,7 @@ $i     = 1;
                     {{ $this->getContainer()->html->grid->id(++$i, $task->id) }}
                 </td>
                 {{-- Site --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_TASKS_LBL_FIELD_SITE_ID')">
                     @if ($task->site_id == 0)
                         <span class="fa fa-robot text-muted" aria-hidden="true"></span>
                         <span class="fw-medium">@lang('PANOPTICON_TASKS_LBL_SYSTEM')</span>
@@ -133,7 +133,7 @@ $i     = 1;
                     @endif
                 </td>
                 {{-- Task Type --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_TASKS_LBL_FIELD_TYPE')">
                     <code class="text-muted">{{{ $task->type }}}</code>
                     <div class="small text-muted">
                         <?php
@@ -147,7 +147,7 @@ $i     = 1;
                     </div>
                 </td>
                 {{-- Enabled --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')">
                     @if ($task->enabled)
                         @unless($task->site_id <= 0)
                             <a class="text-decoration-none text-success"
@@ -176,7 +176,7 @@ $i     = 1;
                     @endif
                 </td>
                 {{-- Status --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_TASKS_LBL_FIELD_STATUS')">
 						<?php $status = ($task->last_exit_code instanceof Status) ? $task->last_exit_code : Status::tryFrom($task->last_exit_code) ?>
                     @if ($status->value == Status::OK->value)
                         <span class="fa fa-check-circle text-success" aria-hidden="true"
@@ -237,7 +237,7 @@ $i     = 1;
 
                 </td>
                 {{-- Last / Next Run --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_TASKS_LBL_FIELD_TIMES')">
                     @if ($status->value !== Status::WILL_RESUME->value)
                         <div class="fw-semibold">
                             <span class="fa fa-clock" aria-hidden="true"
@@ -270,7 +270,7 @@ $i     = 1;
                     @endif
                 </td>
                 {{-- ID --}}
-                <td class="font-monospace text-end">
+                <td class="font-monospace text-end" data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                     {{ (int) $task->id }}
                 </td>
             </tr>

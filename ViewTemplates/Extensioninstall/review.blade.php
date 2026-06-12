@@ -52,7 +52,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
     {{-- Selected Sites Table --}}
     <h5>@lang('PANOPTICON_EXTENSIONINSTALL_LBL_SELECTED_SITES') ({{ count($this->selectedSites) }})</h5>
 
-    <table class="table table-striped align-middle table-sm mb-4">
+    <table class="table table-striped align-middle table-sm mb-4 pnp-stacked">
         <thead>
         <tr>
             <th>@lang('PANOPTICON_EXTENSIONINSTALL_LBL_SITE_NAME')</th>
@@ -68,7 +68,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             $config = $site->getConfig();
             ?>
             <tr>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTENSIONINSTALL_LBL_SITE_NAME')">
                     <a class="fw-medium"
                        href="@route(sprintf('index.php?view=site&task=read&id=%s', $site->getId()))">
                         {{{ $site->name }}}
@@ -77,7 +77,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         {{{ $site->getBaseUrl() }}}
                     </div>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTENSIONINSTALL_LBL_CMS_TYPE')">
                     @if ($site->cmsType() === CMSType::JOOMLA)
                         <span class="fab fa-fw fa-joomla text-secondary" aria-hidden="true"></span>
                         Joomla!
@@ -86,8 +86,8 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         WordPress
                     @endif
                 </td>
-                <td>{{{ $config->get('core.current.version') }}}</td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTENSIONINSTALL_LBL_CMS_VERSION')">{{{ $config->get('core.current.version') }}}</td>
+                <td data-label="@lang('PANOPTICON_EXTENSIONINSTALL_LBL_PHP_VERSION')">
                     <span class="fab fa-fw fa-php text-primary" aria-hidden="true"></span>
                     {{{ $config->get('core.php') }}}
                 </td>

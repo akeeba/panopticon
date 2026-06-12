@@ -1,0 +1,88 @@
+/*!*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2026 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+// Mobile-friendly stacked tables (GitHub #958)
+//
+// A `.table` that also has the `.pnp-stacked` class renders as a normal table on `lg`
+// displays and wider. Below the `lg` breakpoint each row collapses into a card-like
+// stack, with every cell labelled from its `data-label` attribute. This avoids the
+// horizontal scrolling that dense tables (e.g. a site's installed extensions) otherwise
+// force on narrow displays.
+//
+// Markup contract:
+//   - Add `pnp-stacked` to the `<table>` element.
+//   - Add `data-label="Column name"` to each `<td>` that should show a label when stacked.
+//   - Cells with no `data-label` (e.g. action-only cells) span the full width of the card.
+
+@include media-breakpoint-down(lg) {
+  .table.pnp-stacked {
+    // The whole table flows as a stack of block-level cards.
+    border-collapse: separate;
+
+    // Hide the header row visually but keep it in the accessibility tree.
+    > thead {
+      @include visually-hidden;
+    }
+
+    // Each body row becomes a self-contained card.
+    > tbody {
+      // Neutralise Bootstrap's group divider border between thead and tbody.
+      border-top: 0;
+
+      > tr {
+        display: block;
+        margin-bottom: 1rem;
+        padding: .5rem .75rem;
+        border: 1px solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        background-color: var(--bs-body-bg);
+
+        // Disable zebra striping while stacked: it fights the per-card border.
+        &,
+        &:nth-of-type(odd),
+        &:nth-of-type(even) {
+          --bs-table-accent-bg: transparent;
+          --bs-table-bg-type: transparent;
+        }
+
+        // Width of the label gutter on the left of each labelled cell.
+        --pnp-stacked-label-width: 7.5rem;
+
+        > td,
+        > th {
+          // Each cell is a normal block: its own content (whether inline like a
+          // version string, or stacked <div>s like an extension name) flows
+          // naturally. The column label is rendered into a fixed-width gutter on
+          // the left via an absolutely positioned ::before, so it sits on the same
+          // line as the start of the cell content without breaking that content
+          // into separate rows.
+          display: block;
+          position: relative;
+          padding: .25rem 0 .25rem calc(var(--pnp-stacked-label-width) + .75rem);
+          border: 0;
+          // Bootstrap paints striping through cell background; keep cells transparent.
+          background-color: transparent;
+
+          &[data-label]::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0;
+            top: .25rem;
+            width: var(--pnp-stacked-label-width);
+            font-weight: 600;
+            color: var(--bs-secondary-color);
+            word-break: break-word;
+          }
+
+          // Action-only / unlabelled cells span the whole card width.
+          &:not([data-label]) {
+            padding-left: 0;
+          }
+        }
+      }
+    }
+  }
+}

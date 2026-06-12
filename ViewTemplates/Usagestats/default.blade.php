@@ -62,7 +62,7 @@ $token = $this->getContainer()->session->getCsrfToken()->getValue();
             )
         @endif
     </p>
-    <table class="table table-striped">
+    <table class="table table-striped pnp-stacked">
         <comment class="visually-hidden">
             @lang('PANOPTICON_USAGESTATS_LBL_TABLE_COMMENT')
         </comment>
@@ -82,13 +82,13 @@ $token = $this->getContainer()->session->getCsrfToken()->getValue();
         <tbody>
         @foreach ($this->data as $k => $v)
             <tr>
-                <td>
+                <td data-label="@lang('PANOPTICON_USAGESTATS_LBL_KEY')">
                     <code>{{{$k}}}</code>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_USAGESTATS_LBL_VALUE')">
                     <code>{{{$v}}}</code>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_USAGESTATS_LBL_WHATIS')">
                     @if($this->getLanguage()->hasKey('PANOPTICON_USAGESTATS_LBL_DATAINFO_' . $k))
                         @lang('PANOPTICON_USAGESTATS_LBL_DATAINFO_' . $k)
                     @endif

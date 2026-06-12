@@ -37,7 +37,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
         </div>
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped align-middle pnp-stacked" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_USERS_TABLE_COMMENT')
         </caption>
@@ -92,7 +92,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
                 <td>
                     {{ $this->getContainer()->html->grid->id(++$i, $user->id) }}
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_USERS_TABLE_HEAD_USERNAME')">
                     <div class="d-flex flex-row gap-2">
                         @if ($hasAvatars)
                         <div>
@@ -115,7 +115,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
                         </div>
                     </div>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_SETUP_LBL_USER_NAME')">
                     <div>
                         <a href="@route(sprintf('index.php?view=users&task=edit&id=%d', $user->id))"
                            class="text-body fw-bold"
@@ -134,7 +134,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
                     </div>
                     @endif
                 </td>
-                <td style="max-width: 20vw">
+                <td data-label="@lang('PANOPTICON_GROUPS_FIELD_PERMISSIONS_GROUPS')" style="max-width: 20vw">
                     <div class="d-flex flex-row flex-wrap gap-3 align-items-start">
                         @if ($noPermissions && $noUserGroups)
                         <div class="d-flex flex-row gap-2 align-items-center">
@@ -197,7 +197,7 @@ $langInfo   = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
                     @endunless
 
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                     {{ (int) $user->id }}
                 </td>
             </tr>

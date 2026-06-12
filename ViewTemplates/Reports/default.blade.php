@@ -77,7 +77,7 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
         </p>
     @endif
 
-    <table class="table table-striped">
+    <table class="table table-striped pnp-stacked">
         <caption class="visually-hidden">
             @lang('PANOPTICON_REPORTS_LBL_TABLE_CAPTION')
         </caption>
@@ -120,10 +120,10 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
                 </div>
             </th>
             @endunless
-            <td class="font-monospace small">
+            <td class="font-monospace small" data-label="@lang('PANOPTICON_REPORTS_FIELD_CREATED_ON')">
                 {{{ $this->getContainer()->html->basic->date($item->created_on->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC6')) }}}
             </td>
-            <td>
+            <td data-label="@lang('PANOPTICON_REPORTS_FIELD_CREATED_BY')">
                 <div class="d-flex flex-row gap-2 align-items-center">
                 @if ($item->created_by->getId() == 0)
                     <div>
@@ -156,7 +156,7 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
                 @endif
                 </div>
             </td>
-            <td>
+            <td data-label="@lang('PANOPTICON_REPORTS_FIELD_ACTION')">
                 @include('Reports/default_' . $item->action->value, [
                     'item' => $item
                 ])

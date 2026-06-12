@@ -30,7 +30,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
 </h3>
 
 <form action="@route('index.php?view=overrides')" method="post" name="adminForm" id="adminForm">
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped pnp-stacked align-middle" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_OVERRIDES_TABLE_COMMENT')
         </caption>
@@ -66,7 +66,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     {{ $this->getContainer()->html->grid->id(++$i, $item->id) }}
                 </td>
                 {{-- Template --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_OVERRIDES_LBL_FIELD_TEMPLATE')">
                     <div>
                         <div class="fw-bold text-primary-emphasis">
                             {{{ $item->template }}}
@@ -83,7 +83,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     </div>
                 </td>
                 {{-- File --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_OVERRIDES_LBL_FIELD_FILE')">
                     <a href="@route(sprintf(
                             'index.php?view=override&task=read&site_id=%s&id=%d',
                             $this->site->id,
@@ -95,7 +95,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     </a>
                 </td>
                 {{-- Created --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_FIELD_CREATED_ON')">
                     @if($item->created_date)
                         {{{ $this->getContainer()->html->basic->date($item->created_date, $this->getLanguage()->text('DATE_FORMAT_LC5')) }}}
                     @else
@@ -103,7 +103,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     @endif
                 </td>
                 {{-- Modified --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_FIELD_MODIFIED_ON')">
                     @if($item->modified_date)
                         {{{ $this->getContainer()->html->basic->date($item->modified_date, $this->getLanguage()->text('DATE_FORMAT_LC5')) }}}
                     @else
@@ -111,7 +111,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     @endif
                 </td>
                 {{-- Action --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_OVERRIDES_LBL_FIELD_ACTION')">
                     <span class="badge bg-dark">
                         {{{ $item->action }}}
                     </span>

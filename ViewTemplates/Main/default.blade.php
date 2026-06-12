@@ -31,7 +31,7 @@ $mainModel = $this->getModel('main');
     {{-- The noTable param is passed by the dashboard layout to speed up the rendering by skipping this default section --}}
     @unless(isset($noTable) && $noTable)
         {{-- Results table --}}
-        <table class="table table-striped table-hover table-sm align-middle table-responsive-sm">
+        <table class="table table-striped table-hover table-sm align-middle table-responsive-sm pnp-stacked">
             <caption class="visually-hidden">
                 @lang('PANOPTICON_MAIN_SITES_TABLE_CAPTION')
             </caption>

@@ -32,7 +32,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </div>
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped pnp-stacked align-middle" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_GROUPS_TABLE_COMMENT')
         </caption>
@@ -60,12 +60,12 @@ $token = $this->container->session->getCsrfToken()->getValue();
             <td>
                 {{ $this->getContainer()->html->grid->id(++$i, $group->id) }}
             </td>
-            <td>
+            <td data-label="@lang('PANOPTICON_GROUPS_TABLE_HEAD_TITLE')">
                 <a href="@route(sprintf('index.php?view=group&task=edit&id=%d', $group->id))">
                     {{{ $group->title }}}
                 </a>
             </td>
-            <td>
+            <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                 {{{ $group->id }}}
             </td>
         </tr>

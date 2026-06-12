@@ -69,7 +69,7 @@ elseif (!$hasBcMath && !$hasBcMath)
                 </div>
             @endif
 
-            <table class="table table-striped">
+            <table class="table table-striped pnp-stacked">
                 <caption class="visually-hidden">
                     @lang('PANOPTICON_PASSKEYS_TABLE_CAPTION')
                 </caption>
@@ -91,7 +91,7 @@ elseif (!$hasBcMath && !$hasBcMath)
                             {{{ $method['label'] }}}
                         </span>
                         </th>
-                        <td class="passkey-cell w-35 text-end">
+                        <td class="passkey-cell w-35 text-end" data-label="@lang('PANOPTICON_PASSKEYS_MANAGE_HEADER_ACTIONS_LABEL')">
                             <button class="passkey-manage-edit btn btn-secondary m-1" type="button">
                                 <span class="icon-edit " aria-hidden="true"></span>
                                 @lang('PANOPTICON_PASSKEYS_MANAGE_BTN_EDIT_LABEL')
