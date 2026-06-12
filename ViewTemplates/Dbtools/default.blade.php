@@ -26,7 +26,7 @@ $totalSize  = 0;
 </div>
 
 
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover pnp-stacked">
     <thead>
     <tr>
         <th>
@@ -50,7 +50,7 @@ $totalSize  = 0;
 		$totalSize += $item->size;
     ?>
     <tr>
-        <td>
+        <td data-label="@lang('PANOPTICON_DBTOOLS_LBL_FILENAME')">
             @if (str_ends_with($item->filename, '.sql.gz'))
                 <span class="fa fa-fw fa-file-archive" aria-hidden="true"
                       data-bs-tooltip="tooltip" data-bs-placement="bottom"
@@ -70,10 +70,10 @@ $totalSize  = 0;
             @endif
             <code>{{{ $item->filename }}}</code>
         </td>
-        <td>
+        <td data-label="@lang('PANOPTICON_LBL_FIELD_CREATED_ON')">
             {{ $this->getContainer()->html->basic->date($item->ctime->format(DATE_ATOM), $this->getLanguage()->text('DATE_FORMAT_LC6')) }}
         </td>
-        <td>
+        <td data-label="@lang('PANOPTICON_DBTOOLS_LBL_SIZE')">
             {{  $this->formatFilesize($item->size) }}
         </td>
         <td>

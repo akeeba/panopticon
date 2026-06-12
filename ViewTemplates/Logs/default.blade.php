@@ -143,7 +143,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </div>
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped pnp-stacked align-middle" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_SITES_TABLE_COMMENT')
         </caption>
@@ -172,7 +172,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 <td class="text-center">
                     @yieldRepeatable('status', $logName)
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_LOGS_LBL_FIELD_FILE')">
                     <div class="d-flex flex-column flex-lg-row gap-2 gap-lg-3">
                         <div class="flex-grow-1">
                             @yieldRepeatable('logFileName', $logName)
@@ -182,7 +182,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         </div>
                     </div>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_LOGS_LBL_FIELD_SITE')">
                     <?php $siteId = $this->getSiteIdFromFilename($logName) ?>
                     @if (empty($siteId))
                         <span class="fa fa-robot text-muted" aria-hidden="true"></span>

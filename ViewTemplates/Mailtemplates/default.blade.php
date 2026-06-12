@@ -37,7 +37,7 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
 
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped align-middle pnp-stacked" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_MAILTEMPLATES_TABLE_COMMENT')
         </caption>
@@ -71,15 +71,15 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
                 <td>
                     {{ $this->getContainer()->html->grid->id(++$i, $mailtemplate->id) }}
                 </td>
-                <td class="small text-muted">
+                <td class="small text-muted" data-label="@lang('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_TYPE')">
                     @lang('PANOPTICON_MAILTEMPLATES_OPT_TYPE_' . $mailtemplate->type)
                 </td>
-                <td class="fw-medium">
+                <td class="fw-medium" data-label="@lang('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_SUBJECT')">
                     <a href="@route(sprintf('index.php?view=mailtemplate&task=edit&id=%d', $mailtemplate->id))">
                         {{{ $mailtemplate->subject ?: '&mdash;&mdash;&mdash;' }}}
                     </a>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_MAILTEMPLATES_TABLE_HEAD_LANGUAGE')">
                     @if ($langInfo[$mailtemplate->language] ?? null)
                         <div title="{{{ $langInfo[$mailtemplate->language][1]  }}}">
                             {{ $langInfo[$mailtemplate->language][0] }}
@@ -91,7 +91,7 @@ $langInfo = $this->getContainer()->helper->setup->getLanguagesAsFlagInfo(
                         {{ $mailtemplate->language }}
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                     {{ $mailtemplate->id }}
                 </td>
 

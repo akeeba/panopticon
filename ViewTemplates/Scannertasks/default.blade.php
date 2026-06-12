@@ -86,7 +86,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
         )
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped align-middle pnp-stacked" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_SITES_TABLE_COMMENT')
         </caption>
@@ -128,7 +128,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     {{ $this->getContainer()->html->grid->id(++$i, $task->id) }}
                 </td>
                 {{-- Schedule --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_BACKUPTASKS_LBL_FIELD_SCHEDULE')">
                     @if($params->get('enqueued_scan'))
                         <div class="d-flex flex-column flex-lg-row align-items-center gap-1 text-body-tertiary">
                             <span class="fa fa-computer-mouse me-1" aria-hidden="true"></span>
@@ -161,7 +161,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     @endif
                 </td>
                 {{-- Enabled --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')">
                     @if($params->get('enqueued_scan'))
                         @if ($task->enabled)
                             <span class="fa fa-circle-check text-success-emphasis" aria-hidden="true"
@@ -195,7 +195,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     @endif
                 </td>
                 {{-- Status --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_TASKS_LBL_FIELD_STATUS')">
 						<?php
 						$status = ($task->last_exit_code instanceof Status)
 							? $task->last_exit_code
@@ -263,7 +263,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
 
                 </td>
                 {{-- Last / Next Run --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_TASKS_LBL_FIELD_TIMES')">
                     @if ($status->value !== Status::WILL_RESUME->value)
                         <div class="fw-semibold">
                             <span class="fa fa-clock" aria-hidden="true"
@@ -296,7 +296,7 @@ $favIcon = $this->site->getFavicon(asDataUrl: true, onlyIfCached: true);
                     @endif
                 </td>
                 {{-- ID --}}
-                <td class="font-monospace text-end">
+                <td class="font-monospace text-end" data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                     {{ (int) $task->id }}
                 </td>
             </tr>

@@ -206,7 +206,7 @@ JS;
         </div>
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped align-middle pnp-stacked" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_EXTUPDATES_TABLE_COMMENT')
         </caption>
@@ -273,7 +273,7 @@ JS;
                            value="{{{ (int)$item->site_id . '_' . $extIdForUpdate  }}}"
                            onclick="akeeba.System.isChecked(this.checked);" />
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTUPDATES_FIELD_SITE')">
                     <a class="fw-medium"
                        href="@route(sprintf('index.php?view=site&task=read&id=%s', $site->getId()))">
                         {{{ $site->name }}}
@@ -310,7 +310,7 @@ JS;
                         </div>
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTUPDATES_FIELD_EXTENSION')">
                     <div>
                     <span class="text-body-tertiary pe-2">
                                 @if ($item->type === 'component')
@@ -398,7 +398,7 @@ JS;
                         @endif
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_EXTUPDATES_FIELD_VERSION')">
                     @if ($hasUpdate && $error)
                         <strong class="text-danger-emphasis">
                             {{{ $item->version->current }}}
@@ -426,7 +426,7 @@ JS;
                         {{{ $item->version->current }}}
                     @endif
                 </td>
-                <td class="small">
+                <td class="small" data-label="@lang('PANOPTICON_EXTUPDATES_FIELD_AUTHOR')">
                     <div>
                         @if ($item->authorUrl)
                             <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}"

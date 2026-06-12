@@ -78,7 +78,7 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
-        <table class="table table-hover table-responsive-sm">
+        <table class="table table-hover table-responsive-sm pnp-stacked">
             <caption class="visually-hidden">@lang('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION')</caption>
             <thead class="table-dark">
             <tr>
@@ -112,7 +112,7 @@ $config = $this->container->appConfig;
                         <span class="visually-hidden">@lang('PANOPTICON_SITE_LBL_CMSTYPE_OPT_OTHER')</span>
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_NAME')">
                     <span class="text-body-tertiary pe-2">
                         @if ($item->type === 'component')
                             <span class="fa fa-puzzle-piece" aria-hidden="true" title="@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_COMPONENT')"></span>
@@ -142,7 +142,7 @@ $config = $this->container->appConfig;
                      </span>
                     <div class="small text-muted font-monospace extensions-filterable-key">{{{ str_starts_with($key, 'atpl_') || str_starts_with($key, 'amod_') ? ltrim($key, 'a') : $key }}}</div>
                 </td>
-                <td class="d-none d-lg-table-cell">
+                <td class="d-none d-lg-table-cell" data-label="@lang('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_AUTHOR')">
                     <div class="small extensions-filterable-author">
                         @if ($item->authorUrl)
                             <a href="{{ (str_starts_with($item->authorUrl, 'http://') || str_starts_with($item->authorUrl, 'https://') || str_starts_with($item->authorUrl, '//')) ? '' : '//' }}{{{ $item->authorUrl }}}" target="_blank">
@@ -158,7 +158,7 @@ $config = $this->container->appConfig;
                     </div>
                     @endif
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_PREFERENCE')">
                     <label for="extupdates_{{ $key }}" class="visually-hidden">
                         @sprintf('PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_PREFERENCE_SELECT', strip_tags($item->name))
                     </label>

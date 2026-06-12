@@ -54,7 +54,7 @@ $token   = $this->container->session->getCsrfToken()->getValue();
                 @sprintf('PANOPTICON_CORECHECKSUMS_LBL_FOUND_MODIFIED', count($this->modifiedFiles))
             </div>
 
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover pnp-stacked">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -65,7 +65,7 @@ $token   = $this->container->session->getCsrfToken()->getValue();
                 @foreach ($this->modifiedFiles as $i => $filePath)
                     <tr>
                         <td class="text-muted">{{ $i + 1 }}</td>
-                        <td>
+                        <td data-label="@lang('PANOPTICON_CORECHECKSUMS_LBL_FILE_PATH')">
                             <code>{{{ $filePath }}}</code>
                         </td>
                     </tr>

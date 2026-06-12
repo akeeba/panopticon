@@ -143,7 +143,7 @@ JS;
         </div>
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped pnp-stacked align-middle" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_COREUPDATES_TABLE_COMMENT')
         </caption>
@@ -282,13 +282,13 @@ JS;
                         </div>
                     @endif
                 </th>
-                <td>
+                <td data-label="@lang('PANOPTICON_COREUPDATES_FIELD_CURRENT')">
                     {{{ $item->getConfig()->get('core.current.version')  }}}
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_COREUPDATES_FIELD_LATEST')">
                     {{{ $item->getConfig()->get('core.latest.version')  }}}
                 </td>
-                <td>
+                <td data-label="PHP">
                     {{{ $item->getConfig()->get('core.php')  }}}
                 </td>
             </tr>

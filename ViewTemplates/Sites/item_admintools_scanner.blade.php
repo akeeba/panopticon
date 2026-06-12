@@ -143,7 +143,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         @lang('PANOPTICON_SITE_LBL_SCANNER_TIP')
     </p>
 
-    <table class="table">
+    <table class="table pnp-stacked">
         <thead class="table-dark">
         <tr>
             <th rowspan="2" class="d-none d-md-table-cell">
@@ -228,13 +228,13 @@ $token = $this->container->session->getCsrfToken()->getValue();
             }
 			?>
             <tr>
-                <td class="d-none d-md-table-cell">
+                <td class="d-none d-md-table-cell" data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                     <a href="{{{ $backendUri->toString() }}}"
                        target="_blank">
                         {{ (int) $scan->id }}
                     </a>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_STATUS')">
                     <div class="d-flex flex-column flex-md-row gap-2">
                         <div>
                             <div class="badge bg-secondary">
@@ -313,7 +313,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         </div>
                     </div>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_DATE_TIME')">
                     <div class="d-flex flex-column gap-1">
                 <span class="fw-semibold d-md-none" aria-hidden="true">
                     @if (!empty($scan->scanstart) && $scan->scanstart != '0000-00-00 00:00:00')
@@ -339,16 +339,16 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         </div>
                     </div>
                 </td>
-                <td>
+                <td data-label="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_TOTAL')">
                     {{ (int) $scan->totalfiles }}
                 </td>
-                <td class="text-success-emphasis fw-semibold">
+                <td class="text-success-emphasis fw-semibold" data-label="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_NEW')">
                     {{ (int) $scan->files_new }}
                 </td>
-                <td class="text-warning-emphasis fw-bold">
+                <td class="text-warning-emphasis fw-bold" data-label="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_MODIFIED')">
                     {{ (int) $scan->files_modified }}
                 </td>
-                <td class="text-danger-emphasis fw-bold">
+                <td class="text-danger-emphasis fw-bold" data-label="@lang('PANOPTICON_SITE_LBL_ADMINTOOLS_SUSPICIOUS')">
                     {{ (int) $scan->files_suspicious }}
                 </td>
                 <td class="d-none d-md-table-cell">

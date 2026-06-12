@@ -85,7 +85,7 @@ $i     = 1;
         </div>
     </div>
 
-    <table class="table table-striped align-middle" id="adminList" role="table">
+    <table class="table table-striped align-middle pnp-stacked" id="adminList" role="table">
         <caption class="visually-hidden">
             @lang('PANOPTICON_APITOKENS_TITLE')
         </caption>
@@ -120,7 +120,7 @@ $i     = 1;
                     {{ $this->getContainer()->html->grid->id(++$i, $row->id) }}
                 </td>
                 {{-- Description + expiry sub-line --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION')">
                     <a href="@route(sprintf('index.php?view=apitoken&task=edit&id=%d', $row->id))" class="fw-medium">
                         {{{ $row->description ?: '—' }}}
                     </a>
@@ -137,7 +137,7 @@ $i     = 1;
                     @endif
                 </td>
                 {{-- Enabled (clickable icon) --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_ENABLED')">
                     @if ($row->enabled)
                         <a class="text-decoration-none text-success"
                            href="@route(sprintf('index.php?view=apitokens&task=unpublish&id=%d&%s=1', $row->id, $token))"
@@ -159,7 +159,7 @@ $i     = 1;
                     @endif
                 </td>
                 {{-- Last Used + IP sub-line --}}
-                <td>
+                <td data-label="@lang('PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED')">
                     @if (!empty($row->last_used_at) && $row->last_used_at !== '0000-00-00 00:00:00')
                         {{ $this->getContainer()->html->basic->date($row->last_used_at, $this->getLanguage()->text('DATE_FORMAT_LC2')) }}
                         @if (!empty($row->last_used_ip))
@@ -177,7 +177,7 @@ $i     = 1;
                     @endif
                 </td>
                 {{-- ID --}}
-                <td class="font-monospace text-end">
+                <td class="font-monospace text-end" data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                     {{ (int) $row->id }}
                 </td>
             </tr>

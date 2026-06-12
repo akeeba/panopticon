@@ -358,7 +358,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                 @lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_LATEST')
             </h4>
 
-            <table class="table">
+            <table class="table pnp-stacked">
                 <thead class="table-dark">
                 <tr>
                     <th scope="col" class="text-center d-none d-md-table-cell" style="max-width: 48px;">
@@ -392,12 +392,12 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
 						?>
                     <tr>
                         {{-- Backup ID --}}
-                        <td class="d-none d-md-table-cell" valign="middle">
+                        <td class="d-none d-md-table-cell" valign="middle" data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
 								<?= $record->id ?>
                         </td>
 
                         {{-- Frozen --}}
-                        <td class="text-center" valign="middle">
+                        <td class="text-center" valign="middle" data-label="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_FROZEN')">
                             @if ($record?->frozen ?? 0)
                                 <span class="fa fa-snowflake text-info" aria-hidden="true"
                                       data-bs-tooltip="tooltip" data-bs-placement="bottom"
@@ -412,7 +412,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                         </td>
 
                         {{-- Description, backup date, duration and size --}}
-                        <td>
+                        <td data-label="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_DESCRIPTION')">
                             {{-- Row: origin and description --}}
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 {{-- Origin --}}
@@ -505,7 +505,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
                         </td>
 
                         {{-- Status --}}
-                        <td valign="middle" class="text-center">
+                        <td valign="middle" class="text-center" data-label="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS')">
                             <div class="badge rounded-pill fs-6 {{ $statusClass }}"
                                  data-bs-toggle="tooltip" data-bs-placement="bottom"
                                  data-bs-title="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_STATUS_' . $record->meta)"
@@ -519,7 +519,7 @@ $lastRefreshResponse = $this->siteConfig->get('akeebabackup.lastRefreshResponse'
 
                         {{-- Actions --}}
                         @if($this->canEdit)
-                            <td valign="middle" class="text-end">
+                            <td valign="middle" class="text-end" data-label="@lang('PANOPTICON_SITES_LBL_AKEEBABACKUP_ACTIONS')">
                                 @if (in_array(strtolower($record->meta), ['ok', 'complete']))
                                     <a href="@route(sprintf('index.php?view=sites&task=akeebaBackupDeleteFiles&id=%s&backup_id=%d&%s=1', $this->item->getId(), $record->id, $token))"
                                        role="button" class="btn btn-outline-danger"

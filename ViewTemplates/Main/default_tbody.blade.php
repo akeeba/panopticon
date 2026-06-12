@@ -22,7 +22,7 @@ defined('AKEEBA') || die;
 					$uptimeStatus      = $this->getContainer()->helper->uptime->status($item);
 					?>
                 <tr>
-                    <td>
+                    <td data-label="@lang('PANOPTICON_MAIN_SITES_THEAD_SITE')">
                         <div class="d-flex flex-row gap-2">
                             @if ($favicon)
                                 <div class="d-none d-md-block text-center" style="width: 1.3em">
@@ -105,7 +105,7 @@ defined('AKEEBA') || die;
                             </div>
                         </div>
                     </td>
-                    <td>
+                    <td data-label="@lang('PANOPTICON_MAIN_SITES_THEAD_CMS')">
                         @if ($item->cmsType() === CMSType::JOOMLA)
                             @include('Main/site_joomla', [
                                 'item' => $item,
@@ -118,26 +118,26 @@ defined('AKEEBA') || die;
                             ])
                         @endif
                     </td>
-                    <td>
+                    <td data-label="@lang('PANOPTICON_MAIN_SITES_THEAD_EXTENSIONS')">
                         @include('Main/site_extensions', [
                             'item' => $item,
                             'config' => $config,
                         ])
                     </td>
-                    <td class="d-none d-md-table-cell">
+                    <td class="d-none d-md-table-cell" data-label="@lang('PANOPTICON_MAIN_SITES_THEAD_PHP')">
                         @include('Main/site_php', [
                             'item' => $item,
                             'config' => $config,
                             'php' => $config->get('core.php')
                         ])
                     </td>
-                    <td class="d-none d-md-table-cell">
+                    <td class="d-none d-md-table-cell" data-label="@lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD')">
                         @include('Main/site_backup', [
                             'item' => $item,
                             'config' => $config,
                         ])
                     </td>
-                    <td class="d-none d-md-table-cell font-monospace text-body-tertiary small px-2">
+                    <td class="d-none d-md-table-cell font-monospace text-body-tertiary small px-2" data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                         {{{ $item->id }}}
                     </td>
                 </tr>
