@@ -52,18 +52,18 @@ class CoreChecksums extends AbstractCallback
 		// Add a site-specific logger
 		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->site->id));
 
-		// Only Joomla sites are supported
-		if ($this->site->cmsType() !== CMSType::JOOMLA)
+		// Only Joomla and WordPress sites are supported
+		if (!in_array($this->site->cmsType(), [CMSType::JOOMLA, CMSType::WORDPRESS]))
 		{
 			$this->logger->error(
 				sprintf(
-					'Site #%d (%s) is not a Joomla site. Core file integrity checks are only supported for Joomla sites.',
+					'Site #%d (%s) is not a Joomla or WordPress site. Core file integrity checks are only supported for Joomla and WordPress sites.',
 					$this->site->getId(),
 					$this->site->name
 				)
 			);
 
-			throw new \RuntimeException('Core file integrity checks are only supported for Joomla sites.');
+			throw new \RuntimeException('Core file integrity checks are only supported for Joomla and WordPress sites.');
 		}
 
 		// Load the temporary storage
@@ -193,9 +193,13 @@ class CoreChecksums extends AbstractCallback
 	{
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
-		[$url, $options] = $this->getRequestOptions(
-			$this->site, '/index.php/v1/panopticon/core/checksum/prepare'
-		);
+		$apiPath = match ($this->site->cmsType())
+		{
+			CMSType::JOOMLA    => '/index.php/v1/panopticon/core/checksum/prepare',
+			CMSType::WORDPRESS => '/v1/panopticon/core/checksum/prepare',
+		};
+
+		[$url, $options] = $this->getRequestOptions($this->site, $apiPath);
 
 		$response = $httpClient->get($url, $options);
 
@@ -222,10 +226,13 @@ class CoreChecksums extends AbstractCallback
 	{
 		$httpClient = $this->container->httpFactory->makeClient(cache: false);
 
-		[$url, $options] = $this->getRequestOptions(
-			$this->site,
-			sprintf('/index.php/v1/panopticon/core/checksum/step/%d', $lastId)
-		);
+		$apiPath = match ($this->site->cmsType())
+		{
+			CMSType::JOOMLA    => sprintf('/index.php/v1/panopticon/core/checksum/step/%d', $lastId),
+			CMSType::WORDPRESS => sprintf('/v1/panopticon/core/checksum/step/%d', $lastId),
+		};
+
+		[$url, $options] = $this->getRequestOptions($this->site, $apiPath);
 
 		$response = $httpClient->get($url, $options);
 

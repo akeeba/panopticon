@@ -1,4 +1,8 @@
 <?php die(); ?>
+Akeeba Panopticon 2.1.2
+================================================================================
++ Core File Integrity Check now supports WordPress sites [gh-979]
+
 Akeeba Panopticon 2.1.1
 ================================================================================
 # [HIGH] JSON API completely broken in release archives; routes.php was excluded from packages [gh-994]

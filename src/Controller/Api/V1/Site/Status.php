@@ -477,10 +477,10 @@ class Status extends AbstractApiHandler
 	 */
 	private function getCoreChecksumsStatus(Registry $config, CMSType $cmsType): array
 	{
-		if ($cmsType !== CMSType::JOOMLA)
+		if (!in_array($cmsType, [CMSType::JOOMLA, CMSType::WORDPRESS]))
 		{
 			return $this->area(HealthStatus::Unknown, [
-				'reason' => 'wordpress_not_applicable',
+				'reason' => 'not_applicable',
 			]);
 		}
 
