@@ -259,7 +259,7 @@ class StatusTest extends AbstractApiIntegrationTestCase
 
 	// ── core_checksums area ─────────────────────────────────────────────────
 
-	public function testCoreChecksumsIsUnknownForWordPressSite(): void
+	public function testCoreChecksumsIsUnknownWhenNeverRunOnWordPressSite(): void
 	{
 		$user = $this->createUser(['parameters' => ['acl.panopticon.super' => 1]]);
 		$this->loginAs((int) $user->getId());
@@ -269,7 +269,7 @@ class StatusTest extends AbstractApiIntegrationTestCase
 
 		$area = $response['body']['data']['areas']['core_checksums'];
 		$this->assertSame('unknown', $area['status']);
-		$this->assertSame('wordpress_not_applicable', $area['detail']['reason']);
+		$this->assertSame('never_run', $area['detail']['reason']);
 	}
 
 	public function testCoreChecksumsIsUnknownWhenNeverRun(): void
