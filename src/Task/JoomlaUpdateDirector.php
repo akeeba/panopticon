@@ -12,6 +12,7 @@ defined('AKEEBA') || die;
 use Akeeba\Panopticon\Library\Task\AbstractCallback;
 use Akeeba\Panopticon\Library\Task\Attribute\AsTask;
 use Akeeba\Panopticon\Library\Task\Status;
+use Akeeba\Panopticon\Library\Version\UpdateActionResolver;
 use Akeeba\Panopticon\Library\Version\Version;
 use Akeeba\Panopticon\Model\Reports;
 use Akeeba\Panopticon\Model\Site;
@@ -347,32 +348,11 @@ class JoomlaUpdateDirector extends AbstractCallback
 
 	private function processUpdateAction(string $updateAction, Registry $siteConfig): string
 	{
-		switch ($updateAction)
-		{
-			case "none":
-			case "email":
-				return $updateAction;
-
-			case "major":
-				return "update";
-
-			default:
-			case "patch":
-				$current = Version::create($siteConfig->get('core.current.version'));
-				$latest  = Version::create($siteConfig->get('core.latest.version'));
-
-				$shortCurrent = $current->major() . '.' . $current->minor();
-				$shortLatest  = $latest->major() . '.' . $latest->minor();
-
-				return $shortCurrent === $shortLatest ? "update" : "email";
-
-			case "minor":
-				$current = Version::create($siteConfig->get('core.current.version'));
-				$latest  = Version::create($siteConfig->get('core.latest.version'));
-
-				return $current->major() === $latest->major() ? "update" : "email";
-				break;
-		}
+		return UpdateActionResolver::resolve(
+			$updateAction,
+			(string) $siteConfig->get('core.current.version'),
+			(string) $siteConfig->get('core.latest.version')
+		);
 	}
 
 	private function sendEmail(

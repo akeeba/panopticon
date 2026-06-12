@@ -446,6 +446,6 @@ class JoomlaVersion
 	{
 		$versionInformation = $this->getVersionInformation($version);
 
-		return !$versionInformation->security;
+		return $versionInformation->security;
 	}
 }

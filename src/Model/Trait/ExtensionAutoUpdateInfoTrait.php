@@ -10,7 +10,7 @@ namespace Akeeba\Panopticon\Model\Trait;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
-use Akeeba\Panopticon\Library\Version\Version;
+use Akeeba\Panopticon\Library\Version\ExtensionAutoUpdateResolver;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
 
@@ -88,19 +88,8 @@ trait ExtensionAutoUpdateInfoTrait
 			?: ($this->_cacheExtensionUpdatePreferencesGlobal[$key]?->preference ?? '')
 				?: $this->_cacheExtensionUpdateDefaultPreference;
 
-		// Parse the applicable update preference based on version settings
-		if (in_array($updatePreference, ['minor', 'patch']))
-		{
-			$vOld = Version::create($oldVersion);
-			$vNew = Version::create($newVersion);
-		}
-
-		return match ($updatePreference)
-		{
-			default => false,
-			'major' => true,
-			'minor' => $vOld->major() === $vNew->major(),
-			'patch' => $vOld->versionFamily() === $vNew->versionFamily(),
-		};
+		return ExtensionAutoUpdateResolver::willAutoUpdate(
+			(string) $updatePreference, (string) $oldVersion, (string) $newVersion
+		);
 	}
 }
