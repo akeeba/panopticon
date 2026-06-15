@@ -13255,3 +13255,728 @@ msgstr "Διακριτικά API"
 msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_YES"
 msgid "Out of Date"
 msgstr "Μη Ενημερωμένο"
+#, phpformat
+msgctxt "AWF_APPLICATION_ERROR_TASK_NOT_FOUND"
+msgid "Task \'%s\' not found"
+msgstr "Η εργασία \'%s\' δεν βρέθηκε"
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_UPTIMEMONITOR"
+msgid "Monitors sites\' uptime"
+msgstr "Παρακολουθεί τη διαθεσιμότητα των ιστοτόπων"
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED"
+msgid "The update package has disappeared from the site. Is a plugin, or your host, clearing your site\'s temporary directory automatically?"
+msgstr "Το πακέτο ενημέρωσης εξαφανίστηκε από τον ιστότοπο. Μήπως κάποιο πρόσθετο ή ο πάροχος φιλοξενίας διαγράφει αυτόματα τον προσωρινό κατάλογο του ιστοτόπου;"
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_HTTP_401"
+msgid "HTTP status 401 while extracting the update. Your site\'s administrator folder is password protected. Please edit the site and enter the Administrator Directory Username and Password in the Connection tab. Then, retry scheduling an update for this site."
+msgstr "Κατάσταση HTTP 401 κατά την αποσυμπίεση της ενημέρωσης. Ο κατάλογος διαχείρισης του ιστοτόπου σας προστατεύεται με κωδικό πρόσβασης. Επεξεργαστείτε τον ιστότοπο και εισαγάγετε το Όνομα χρήστη και τον Κωδικό πρόσβασης του καταλόγου διαχείρισης στην καρτέλα Σύνδεση. Στη συνέχεια, επαναλάβετε τον προγραμματισμό ενημέρωσης για αυτόν τον ιστότοπο."
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
+msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgstr "Ενεργοποίηση του σεναρίου αποσυμπίεσης του Joomla Update για τον ιστότοπο %d (%s)"
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_INVALID_JSON"
+msgid "Installing WordPress update on site #%d (%s) has failed. The server\'s response is not valid JSON."
+msgstr "Η εγκατάσταση της ενημέρωσης WordPress στον ιστότοπο #%d (%s) απέτυχε. Η απόκριση του διακομιστή δεν είναι έγκυρο JSON."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_BTN_LETS_GO"
+msgid "Let\'s go!"
+msgstr "Ας ξεκινήσουμε!"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_SESSION_LBL_WARNING_BODY"
+msgid "The session write path configured in PHP cannot be written to, making logging in impossible. To address this problem, Panopticon will attempt to create a session save path in the <code>%s</code> directory. For this to be possible, you need to enter the FTP or SFTP connection details to your site\'s root. If you are unsure about these settings, please ask your host."
+msgstr "Η διαδρομή εγγραφής συνεδρίας που έχει διαμορφωθεί στην PHP δεν επιτρέπει εγγραφή, καθιστώντας αδύνατη τη σύνδεση. Για να αντιμετωπιστεί αυτό το πρόβλημα, το Panopticon θα επιχειρήσει να δημιουργήσει μια διαδρομή αποθήκευσης συνεδρίας στον κατάλογο <code>%s</code>. Για να είναι αυτό εφικτό, πρέπει να εισαγάγετε τα στοιχεία σύνδεσης FTP ή SFTP προς τον ριζικό κατάλογο του ιστοτόπου σας. Εάν δεν είστε σίγουροι, επικοινωνήστε με τον πάροχο φιλοξενίας σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_HELP"
+msgid "On some shared hosting environments you need to use FTP or SFTP to be able to write to your site\'s files."
+msgstr "Σε ορισμένα περιβάλλοντα κοινής φιλοξενίας χρειάζεται να χρησιμοποιήσετε FTP ή SFTP για να μπορείτε να εγγράψετε αρχεία του ιστοτόπου σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PORT_HELP"
+msgid "The port number your (S)FTP server listens to. Usually it\'s 21 for FTP and 22 for SFTP. If unsure, ask your host."
+msgstr "Ο αριθμός θύρας στον οποίο ακούει ο διακομιστής (S)FTP σας. Συνήθως είναι 21 για FTP και 22 για SFTP. Εάν δεν είστε σίγουροι, ρωτήστε τον πάροχο φιλοξενίας σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_BROKEN_JS_EXPLAIN"
+msgid "The JavaScript files for Panopticon are not loading properly. Make sure you installation is not missing files, check permissions, and clear your browser\'s cache."
+msgstr "Τα αρχεία JavaScript του Panopticon δεν φορτώνονται σωστά. Βεβαιωθείτε ότι δεν λείπουν αρχεία από την εγκατάσταση, ελέγξτε τα δικαιώματα πρόσβασης και εκκαθαρίστε την κρυφή μνήμη του προγράμματος περιήγησής σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION_HELP"
+msgid "Should we connect to the database using an SSL certificate? This can be used instead of username and password authentication (encrypted connection with certificate authentication) or <em>on top of</em> username and password authentication (encrypted connection with password authentication). If you don\'t know what this means set this option to No and ignore the next few options as well."
+msgstr "Να συνδεθούμε στη βάση δεδομένων χρησιμοποιώντας πιστοποιητικό SSL; Αυτό μπορεί να χρησιμοποιηθεί αντί για έλεγχο ταυτότητας με όνομα χρήστη και κωδικό πρόσβασης (κρυπτογραφημένη σύνδεση με έλεγχο ταυτότητας πιστοποιητικού) ή <em>επιπλέον</em> του ελέγχου ταυτότητας με όνομα χρήστη και κωδικό πρόσβασης (κρυπτογραφημένη σύνδεση με έλεγχο ταυτότητας κωδικού). Εάν δεν γνωρίζετε τι σημαίνει αυτό, ορίστε αυτήν την επιλογή σε Όχι και αγνοήστε επίσης τις επόμενες επιλογές."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY"
+msgid "Database user\'s Private Key file"
+msgstr "Αρχείο ιδιωτικού κλειδιού χρήστη βάσης δεδομένων"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLCERT"
+msgid "Database user\'s Public Key (Certificate) file"
+msgstr "Αρχείο δημόσιου κλειδιού (Πιστοποιητικό) χρήστη βάσης δεδομένων"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLVERIFYSERVERCERT_HELP"
+msgid "Set to Yes to verify the certificate the server sends back to us. This is verified against the Certification Authority (CA) file you specified. If you get connection errors set this to No; some setups (especially those generated by the <code>mysql_ssl_rsa_setup</code>) may disallow a connection if certification verification is enabled. If you enable verification and the CA file field is left blank the server\'s certificate will be checked against the Certification Authority files your server knows about, see the <code>openssl.cafile</code> and <code>openssl.capath</code> PHP options."
+msgstr "Ορίστε σε Ναι για επαλήθευση του πιστοποιητικού που μας αποστέλλει ο διακομιστής. Αυτό επαληθεύεται με βάση το αρχείο Αρχής Πιστοποίησης (CA) που καθορίσατε. Εάν λαμβάνετε σφάλματα σύνδεσης, ορίστε αυτό σε Όχι. Ορισμένες διαμορφώσεις (ιδίως αυτές που δημιουργούνται από το <code>mysql_ssl_rsa_setup</code>) ενδέχεται να αποκλείουν μια σύνδεση εάν η επαλήθευση πιστοποιητικού είναι ενεργοποιημένη. Εάν ενεργοποιήσετε την επαλήθευση και το πεδίο αρχείου CA παραμείνει κενό, το πιστοποιητικό του διακομιστή θα ελεγχθεί με βάση τα αρχεία Αρχής Πιστοποίησης που γνωρίζει ο διακομιστής σας, δείτε τις επιλογές PHP <code>openssl.cafile</code> και <code>openssl.capath</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_HOST_DESCRIPTION"
+msgid "The FTP server\'s host name, without the protocol. Do not use <s><code>ftp://example.com</code></s>; use <code>example.com</code> instead."
+msgstr "Το όνομα κεντρικού υπολογιστή του διακομιστή FTP, χωρίς το πρωτόκολλο. Μη χρησιμοποιείτε <s><code>ftp://example.com</code></s>· χρησιμοποιήστε αντ\' αυτού <code>example.com</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_PORT_DESCRIPTION"
+msgid "FTP server\'s TCP/IP port. Usually 21. Please ask your host."
+msgstr "Θύρα TCP/IP του διακομιστή FTP. Συνήθως 21. Παρακαλούμε ρωτήστε τον πάροχο φιλοξενίας σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_PASSWORD_DESCRIPTION"
+msgid "Password, case-sensitive. Best use passwords consisting only of a-z, A-Z, 0-9, dashes, dots, underscores, and exclamation points. Other characters may trigger your web server\'s anti-hacking protection."
+msgstr "Κωδικός πρόσβασης, με διάκριση πεζών-κεφαλαίων. Χρησιμοποιείτε κατά προτίμηση κωδικούς που αποτελούνται μόνο από a-z, A-Z, 0-9, παύλες, τελείες, κάτω παύλες και θαυμαστικά. Άλλοι χαρακτήρες ενδέχεται να ενεργοποιήσουν την προστασία κατά εισβολής του διακομιστή ιστού σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_FTPS_DESCRIPTION"
+msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \"Secure FTP\"</strong>. If your server doesn\'t support this method you will get connection errors."
+msgstr "Σύνδεση στον διακομιστή FTP σας χρησιμοποιώντας κρυπτογραφημένη σύνδεση SSL. <strong>Αυτό δεν είναι το ίδιο με SFTP, SCP ή \"Secure FTP\"</strong>. Εάν ο διακομιστής σας δεν υποστηρίζει αυτή τη μέθοδο, θα λαμβάνετε σφάλματα σύνδεσης."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_INITDIR_DESCRIPTION"
+msgid "The absolute FTP path to the directory where the files will be uploaded. If unsure, connect to your server with FileZilla, browse to the intended directory and copy the path appearing on the right-hand pane above the directory list. Usually, it\'s something like <code>/public_html</code> or <code>/httpdocs</code>."
+msgstr "Η απόλυτη διαδρομή FTP προς τον κατάλογο όπου θα ανεβούν τα αρχεία. Εάν δεν είστε σίγουροι, συνδεθείτε στον διακομιστή σας με το FileZilla, περιηγηθείτε στον επιθυμητό κατάλογο και αντιγράψτε τη διαδρομή που εμφανίζεται στο δεξί παράθυρο πάνω από τη λίστα καταλόγων. Συνήθως είναι κάτι σαν <code>/public_html</code> ή <code>/httpdocs</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTSFTP_HOST_DESCRIPTION"
+msgid "SFTP server\'s hostname, without the protocol. Do not use <s><code>sftp://example.com</code></s>; use <code>example.com</code> instead."
+msgstr "Όνομα κεντρικού υπολογιστή του διακομιστή SFTP, χωρίς το πρωτόκολλο. Μη χρησιμοποιείτε <s><code>sftp://example.com</code></s>· χρησιμοποιήστε αντ\' αυτού <code>example.com</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTSFTP_INITDIR_DESCRIPTION"
+msgid "SFTP directory of the site\'s root. If unsure, use an SFTP desktop client, connect to your server, navigate to the directory and copy the path displayed in here. The must be absolute, e.g. <code>/home/myuser/public_html</code>, not just <s><code>public_html</code></s>."
+msgstr "Κατάλογος SFTP του ριζικού καταλόγου του ιστοτόπου. Εάν δεν είστε σίγουροι, χρησιμοποιήστε ένα πρόγραμμα-πελάτη SFTP επιφάνειας εργασίας, συνδεθείτε στον διακομιστή σας, μεταβείτε στον κατάλογο και αντιγράψτε τη διαδρομή που εμφανίζεται. Η διαδρομή πρέπει να είναι απόλυτη, π.χ. <code>/home/myuser/public_html</code>, όχι μόνο <s><code>public_html</code></s>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_USER_USERNAME_HELP"
+msgid "The username you will use to log in to Panopticon. It\'s best to only use lowercase letters a-z and numbers 0-9."
+msgstr "Το όνομα χρήστη που θα χρησιμοποιείτε για να συνδέεστε στο Panopticon. Συνιστάται να χρησιμοποιείτε μόνο πεζά γράμματα a-z και αριθμούς 0-9."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD2_HELP"
+msgid "Please repeat the password you entered above. We want to make sure you didn\'t accidentally mistype it."
+msgstr "Παρακαλούμε επαναλάβετε τον κωδικό πρόσβασης που εισαγάγατε παραπάνω. Θέλουμε να βεβαιωθούμε ότι δεν τον πληκτρολογήσατε κατά λάθος λανθασμένα."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP4_DETAIL"
+msgid "Upload into the folder you\'re installing Panopticon. That\'s the folder with the Panopticon <code>index.php</code> file in it."
+msgstr "Ανεβάστε στον φάκελο όπου εγκαθιστάτε το Panopticon. Αυτός είναι ο φάκελος που περιέχει το αρχείο <code>index.php</code> του Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_SUBHEAD_BREATHE"
+msgid "Take a breath. This is the last installation step. You\'re almost done."
+msgstr "Πάρτε μια ανάσα. Αυτό είναι το τελευταίο βήμα εγκατάστασης. Σχεδόν τελειώσατε."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_REPLACE_PHP_CLI"
+msgid "Replace <i>/path/to/php</i> with the path to the PHP %s CLI executable. Make sure it\'s the PHP CLI executable, <strong>not</strong> the PHP CGI/FastCGI executable."
+msgstr "Αντικαταστήστε το <i>/path/to/php</i> με τη διαδρομή προς το εκτελέσιμο αρχείο PHP %s CLI. Βεβαιωθείτε ότι είναι το εκτελέσιμο αρχείο PHP CLI, <strong>όχι</strong> το εκτελέσιμο αρχείο PHP CGI/FastCGI."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NOT_RUN_INFO_2"
+msgid "If even then nothing seems to happen, please contact your host. Either your account is not receiving the output of the CRON jobs, or the CRON jobs are not executing at all (while unlikely, we\'ve seen that happen a few times)."
+msgstr "Εάν ακόμη και τότε δεν φαίνεται να συμβαίνει τίποτα, επικοινωνήστε με τον πάροχο φιλοξενίας σας. Είτε ο λογαριασμός σας δεν λαμβάνει την έξοδο των εργασιών CRON, είτε οι εργασίες CRON δεν εκτελούνται καθόλου (αν και απίθανο, το έχουμε δει να συμβαίνει μερικές φορές)."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_2"
+msgid "Please ask your host for the correct path. If your host gave you this path to begin with, escalate your support ticket with your host, asking to speak with a server engineer. It\'s trivial for them to give you that path."
+msgstr "Παρακαλούμε ζητήστε από τον πάροχο φιλοξενίας σας τη σωστή διαδρομή. Εάν ο πάροχος σας έδωσε αρχικά αυτήν τη διαδρομή, κλιμακώστε το αίτημα υποστήριξης σας ζητώντας να μιλήσετε με μηχανικό διακομιστή. Είναι εύκολο γι\' αυτούς να σας δώσουν αυτήν τη διαδρομή."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_WRONG_PHP_INFO_2"
+msgid "Most servers have multiple versions of PHP installed. You need to ask your host to give you the path to the PHP CLI executable for PHP %s and use that in your CRON job\'s command line."
+msgstr "Οι περισσότεροι διακομιστές έχουν εγκατεστημένες πολλαπλές εκδόσεις PHP. Πρέπει να ζητήσετε από τον πάροχο φιλοξενίας σας τη διαδρομή προς το εκτελέσιμο αρχείο PHP CLI για PHP %s και να τη χρησιμοποιήσετε στη γραμμή εντολών της εργασίας CRON σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_CONS_1"
+msgid "Some hosts don\'t support it"
+msgstr "Ορισμένοι πάροχοι φιλοξενίας δεν το υποστηρίζουν"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_IF_URL_CRON"
+msgid "If your host uses URL-based CRON jobs, or you\'re using a third party system which accepts a URL, use the following URL:"
+msgstr "Εάν ο πάροχος φιλοξενίας σας χρησιμοποιεί εργασίες CRON βάσει URL ή χρησιμοποιείτε σύστημα τρίτου μέρους που δέχεται URL, χρησιμοποιήστε το παρακάτω URL:"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER"
+msgid "If you\'re an expert user - or just looking around - you can skip this step and set up CRON jobs later."
+msgstr "Εάν είστε έμπειρος χρήστης — ή απλά εξερευνάτε — μπορείτε να παραλείψετε αυτό το βήμα και να ρυθμίσετε τις εργασίες CRON αργότερα."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_MSG_CONFIGURATIONPHP"
+msgid "You can still continue the installation. The configuration settings will be displayed at the end. You will have to manually upload the code. At the end of the installation, click in the text area to highlight all of the code and then paste into a new text file. Name this file <code>config.php</code> and upload it to the folder where you\'ve installed Panopticon."
+msgstr "Μπορείτε να συνεχίσετε ακόμα την εγκατάσταση. Οι ρυθμίσεις διαμόρφωσης θα εμφανιστούν στο τέλος. Θα πρέπει να ανεβάσετε τον κώδικα χειροκίνητα. Στο τέλος της εγκατάστασης, κάντε κλικ στην περιοχή κειμένου για να επισημάνετε όλον τον κώδικα και στη συνέχεια επικολλήστε τον σε νέο αρχείο κειμένου. Ονομάστε αυτό το αρχείο <code>config.php</code> και ανεβάστε το στον φάκελο όπου έχετε εγκαταστήσει το Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA4ORLATER"
+msgid "<strong>Joomla! 4 or later</strong>: Go to your site\'s backend and click on Components, Akeeba Panopticon Connector to find your connection information."
+msgstr "<strong>Joomla! 4 ή νεότερο</strong>: Μεταβείτε στο backend του ιστοτόπου σας και κάντε κλικ στα Components, Akeeba Panopticon Connector για να βρείτε τα στοιχεία σύνδεσής σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA3"
+msgid "<strong>Joomla! 3</strong>: Go to your site\'s backend and click on Extensions, Plugins. Click on System - Panopticon Connector for Joomla 3."
+msgstr "<strong>Joomla! 3</strong>: Μεταβείτε στο backend του ιστοτόπου σας και κάντε κλικ στα Extensions, Plugins. Κάντε κλικ στο System - Panopticon Connector for Joomla 3."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_WORDPRESS"
+msgid "<strong>WordPress</strong>: Go to your site\'s wp-admin and click on Tools, Panopticon."
+msgstr "<strong>WordPress</strong>: Μεταβείτε στο wp-admin του ιστοτόπου σας και κάντε κλικ στα Tools, Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1"
+msgid "If your site\'s <code>administrator</code> directory is password\xe2\x80\x93protected, please enter the username and password used for this password protection. Otherwise, Joomla!&reg; updates will fail with an error mentioning \"401 Unauthorized\"."
+msgstr "Εάν ο κατάλογος <code>administrator</code> του ιστοτόπου σας προστατεύεται με κωδικό πρόσβασης, εισαγάγετε το όνομα χρήστη και τον κωδικό πρόσβασης που χρησιμοποιούνται για αυτήν την προστασία. Διαφορετικά, οι ενημερώσεις Joomla!&reg; θα αποτύχουν με σφάλμα \"401 Unauthorized\"."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2"
+msgid "You used a third party extension, e.g. Admin Tools\' \"Password-protect Administrator\" feature."
+msgstr "Χρησιμοποιήσατε επέκταση τρίτου μέρους, π.χ. τη λειτουργία \"Password-protect Administrator\" του Admin Tools."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3"
+msgid "You used your hosting control panel\'s directory password protection feature, if one is available."
+msgstr "Χρησιμοποιήσατε τη λειτουργία προστασίας καταλόγου με κωδικό πρόσβασης του πίνακα ελέγχου φιλοξενίας σας, εάν είναι διαθέσιμη."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING_HELP"
+msgid "Panopticon will warn you that your site\'s SSL/TLS certificate is expiring this many days before it expires. 0 disables the warning."
+msgstr "Το Panopticon θα σας ειδοποιεί ότι το πιστοποιητικό SSL/TLS του ιστοτόπου σας λήγει τόσες ημέρες πριν από τη λήξη του. Το 0 απενεργοποιεί την προειδοποίηση."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING_HELP"
+msgid "Panopticon will warn you that your site\'s domain name is expiring this many days before it expires. 0 disables the warning."
+msgstr "Το Panopticon θα σας ειδοποιεί ότι το όνομα τομέα του ιστοτόπου σας λήγει τόσες ημέρες πριν από τη λήξη του. Το 0 απενεργοποιεί την προειδοποίηση."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TOOSOON"
+msgid "The SSL/TLS certificate has a Valid From date in the future. Browsers will report it as invalid as it\'s not meant to be used just yet."
+msgstr "Το πιστοποιητικό SSL/TLS έχει ημερομηνία Έναρξης Ισχύος στο μέλλον. Τα προγράμματα περιήγησης θα το αναφέρουν ως μη έγκυρο, καθώς δεν προορίζεται για χρήση ακόμη."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRED"
+msgid "The SSL/TLS certificate has a Valid To date in the past. Browsers will report it as invalid as it\'s not meant to be used any more."
+msgstr "Το πιστοποιητικό SSL/TLS έχει ημερομηνία Λήξης Ισχύος στο παρελθόν. Τα προγράμματα περιήγησης θα το αναφέρουν ως μη έγκυρο, καθώς δεν προορίζεται πλέον για χρήση."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID"
+msgid "We could not retrieve the domain\'s expiration date. Either the domain name does not appear in the WHOIS database, or you are using a domain name which only resolves locally."
+msgstr "Δεν ήταν δυνατή η ανάκτηση της ημερομηνίας λήξης του τομέα. Είτε το όνομα τομέα δεν εμφανίζεται στη βάση δεδομένων WHOIS, είτε χρησιμοποιείτε όνομα τομέα που επιλύεται μόνο τοπικά."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
+msgid "The domain name has expired. You might still be able to access the domain due to your registrar\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
+msgstr "Το όνομα τομέα έχει λήξει. Ενδέχεται να έχετε ακόμη πρόσβαση στον τομέα λόγω της περιόδου χάριτος του καταχωρητή σας, αλλά <strong>πρέπει να ανανεώσετε αμέσως αυτό το όνομα τομέα μέσω του καταχωρητή σας</strong> για να αποφύγετε την απώλειά του."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS"
+msgid "There are no nameservers reported in the WHOIS database. A site without valid nameservers will not be accessible on the Internet. If you recently assigned nameservers to the domain don\'t panic; it may take up to 5 days for this information to propagate."
+msgstr "Δεν αναφέρονται διακομιστές ονομάτων στη βάση δεδομένων WHOIS. Ένας ιστότοπος χωρίς έγκυρους διακομιστές ονομάτων δεν θα είναι προσβάσιμος στο Διαδίκτυο. Εάν αναθέσατε πρόσφατα διακομιστές ονομάτων στον τομέα, μην ανησυχείτε· ενδέχεται να χρειαστούν έως και 5 ημέρες για να διαδοθεί αυτή η πληροφορία."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_NOTE"
+msgid "This is <em>very basic</em> uptime monitoring through Panopticon itself. It only notifies you by email when your site goes down and comes back up. It does not integrate with third party services, it does not offer history, it does not have a public uptime page. We strongly recommend using a third party service or software to monitor your sites\' uptime instead of using this feature."
+msgstr "Πρόκειται για <em>πολύ βασική</em> παρακολούθηση διαθεσιμότητας μέσω του ίδιου του Panopticon. Σας ειδοποιεί μόνο μέσω email όταν ο ιστότοπός σας καταρρέει και επανέρχεται. Δεν ενσωματώνεται με υπηρεσίες τρίτων, δεν προσφέρει ιστορικό, δεν διαθέτει δημόσια σελίδα διαθεσιμότητας. Συνιστούμε ανεπιφύλακτα τη χρήση υπηρεσίας ή λογισμικού τρίτου μέρους για την παρακολούθηση της διαθεσιμότητας των ιστοτόπων σας αντί για αυτή τη λειτουργία."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J4"
+msgid "Go to your site\'s administrator backend, System, Update, Update Sites, and click on the Rebuild button."
+msgstr "Μεταβείτε στο backend διαχείρισης του ιστοτόπου σας, System, Update, Update Sites, και κάντε κλικ στο κουμπί Rebuild."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J3"
+msgid "Go to your site\'s administrator backend, Extensions, Manage, Update Sites, and click on the Rebuild button."
+msgstr "Μεταβείτε στο backend διαχείρισης του ιστοτόπου σας, Extensions, Manage, Update Sites, και κάντε κλικ στο κουμπί Rebuild."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION"
+msgid "Go to your site\'s administrator backend, System, Update, Joomla, click on Options, and change the update channel to Joomla Next. Please check Joomla\'s requirements, especially the database version and PHP version requirements. Note that your site is currently using PHP %s."
+msgstr "Μεταβείτε στο backend διαχείρισης του ιστοτόπου σας, System, Update, Joomla, κάντε κλικ στις Options και αλλάξτε το κανάλι ενημέρωσης σε Joomla Next. Ελέγξτε τις απαιτήσεις του Joomla, ιδίως τις απαιτήσεις έκδοσης βάσης δεδομένων και έκδοσης PHP. Σημειώστε ότι ο ιστότοπός σας χρησιμοποιεί αυτήν τη στιγμή PHP %s."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_CALL_YOUR_HOST"
+msgid "If this keeps happening frequently you may want to contact your host about moving your site to a bigger hosting package, or otherwise upgrading your site\'s server."
+msgstr "Εάν αυτό συμβαίνει συχνά, ίσως θελήσετε να επικοινωνήσετε με τον πάροχο φιλοξενίας σας σχετικά με τη μεταφορά του ιστοτόπου σας σε μεγαλύτερο πακέτο φιλοξενίας ή με άλλη αναβάθμιση του διακομιστή του ιστοτόπου σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_IOWAIT_WHAT"
+msgid "Your server is spending a lot of time waiting for disk operations, as expressed by the I/O Wait time (it is expressed as a percentage of the total CPU time available). This means that your server\'s storage is struggling to keep up with the demand."
+msgstr "Ο διακομιστής σας αναλώνει πολύ χρόνο αναμένοντας λειτουργίες δίσκου, όπως εκφράζεται από τον χρόνο αναμονής I/O (εκφράζεται ως ποσοστό του συνολικού διαθέσιμου χρόνου CPU). Αυτό σημαίνει ότι ο χώρος αποθήκευσης του διακομιστή σας δυσκολεύεται να ανταποκριθεί στη ζήτηση."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_SITE_DISK_WHAT"
+msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
+msgstr "Ο χώρος αποθήκευσης του διακομιστή σας πλησιάζει στο όριο χωρητικότητας. Όταν υπερβείτε αυτό το όριο, δεν θα μπορείτε να δημιουργήσετε αρχεία (συμπεριλαμβανομένων αρχείων κρυφής μνήμης και προσωρινών αρχείων), με αποτέλεσμα ο ιστότοπός σας να μην μπορεί να λειτουργήσει σωστά."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_COMMON_DISK_WHAT"
+msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
+msgstr "Ο χώρος αποθήκευσης του διακομιστή σας πλησιάζει στο όριο χωρητικότητας. Όταν υπερβείτε αυτό το όριο, δεν θα μπορείτε να εκτελέσετε λειτουργίες βάσης δεδομένων που διαγράφουν ή δημιουργούν δεδομένα, δεν θα μπορείτε να δημιουργήσετε αρχεία (συμπεριλαμβανομένων αρχείων κρυφής μνήμης και προσωρινών αρχείων), με αποτέλεσμα ο ιστότοπός σας να μην μπορεί να λειτουργήσει σωστά."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_DB_DISK_WHAT"
+msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, leading to your site being unable to function properly."
+msgstr "Ο χώρος αποθήκευσης του διακομιστή σας πλησιάζει στο όριο χωρητικότητας. Όταν υπερβείτε αυτό το όριο, δεν θα μπορείτε να εκτελέσετε λειτουργίες βάσης δεδομένων που διαγράφουν ή δημιουργούν δεδομένα, με αποτέλεσμα ο ιστότοπός σας να μην μπορεί να λειτουργήσει σωστά."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY"
+msgid "Panopticon cannot find a way to connect to your site\'s Akeeba Backup JSON API."
+msgstr "Το Panopticon δεν μπορεί να βρει τρόπο σύνδεσης στο Akeeba Backup JSON API του ιστοτόπου σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
+msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set \"Enable JSON API (remote backup)\" to Yes. Enter a new \"Secret Word\"; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr "Συνδεθείτε στο backend του ιστοτόπου σας. Μεταβείτε στα Components, Akeeba Backup, Control Panel. Κάντε κλικ στις Options, Front-end Backup και ορίστε το \"Enable JSON API (remote backup)\" σε Yes. Εισαγάγετε νέα \"Secret Word\"· μπορείτε να δημιουργήσετε μια νέα, τυχαία, ασφαλή μυστική λέξη στο <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Στη συνέχεια, κάντε κλικ στο Save &amp Close στη γραμμή εργαλείων."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
+msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set \"Enable JSON API (remote backup)\" to Yes. Enter a new \"Secret Key\"; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr "Συνδεθείτε στο backend του ιστοτόπου σας. Μεταβείτε στα Akeeba Backup, System Configuration, Public API και ορίστε το \"Enable JSON API (remote backup)\" σε Yes. Εισαγάγετε νέο \"Secret Key\"· μπορείτε να δημιουργήσετε ένα νέο, τυχαίο, ασφαλές κλειδί στο <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Στη συνέχεια, κάντε κλικ στο Save &amp Close στη γραμμή εργαλείων."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_BODY"
+msgid "This may happen if Akeeba Backup was installed after adding the site to Akeeba Panopticon, the Panopticon Connector installed on the site is too old, or if there\'s been an error communicating with the site."
+msgstr "Αυτό μπορεί να συμβεί εάν το Akeeba Backup εγκαταστάθηκε μετά την προσθήκη του ιστοτόπου στο Akeeba Panopticon, εάν το Panopticon Connector που είναι εγκατεστημένο στον ιστότοπο είναι πολύ παλιό ή εάν υπήρξε σφάλμα επικοινωνίας με τον ιστότοπο."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_SOLUTION_ADMIN"
+msgid "Please click the button below to try relinking Akeeba Backup with Panopticon. If this doesn\'t work please update the Akeeba Panopticon Connector on your site, make sure its plugin is published, and check if you can communicate with the site correctly."
+msgstr "Κάντε κλικ στο κουμπί παρακάτω για να προσπαθήσετε να επανασυνδέσετε το Akeeba Backup με το Panopticon. Εάν αυτό δεν λειτουργήσει, ενημερώστε το Akeeba Panopticon Connector στον ιστότοπό σας, βεβαιωθείτε ότι το πρόσθετό του είναι δημοσιευμένο και ελέγξτε εάν μπορείτε να επικοινωνείτε με τον ιστότοπο σωστά."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_JSONAPI_ERROR"
+msgid "The API indicated there is an error. Please make sure that you have entered the correct API Token, and that your site\'s server does not block or otherwise interfere with the request."
+msgstr "Το API ανέφερε ότι υπάρχει σφάλμα. Βεβαιωθείτε ότι έχετε εισαγάγει το σωστό Διακριτικό API και ότι ο διακομιστής του ιστοτόπου σας δεν αποκλείει ή παρεμποδίζει με άλλο τρόπο το αίτημα."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SCANNER_TIP"
+msgid "Admin Tools Professional\'s PHP File Change Scanner monitors your site\'s .php files for changes, additions, and suspicious content. Click on the number of the scan attempt to open its results in the administrator backend of your site."
+msgstr "Ο Σαρωτής Αλλαγών Αρχείων PHP του Admin Tools Professional παρακολουθεί τα αρχεία .php του ιστοτόπου σας για αλλαγές, προσθήκες και ύποπτο περιεχόμενο. Κάντε κλικ στον αριθμό της απόπειρας σάρωσης για να ανοίξετε τα αποτελέσματά της στο backend διαχείρισης του ιστοτόπου σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_BODY"
+msgid "There was an error connecting to your site\'s Akeeba Backup JSON API."
+msgstr "Παρουσιάστηκε σφάλμα κατά τη σύνδεση στο Akeeba Backup JSON API του ιστοτόπου σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
+msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\"font-monospace\">%s</span>)."
+msgstr "Κάτι στον διακομιστή σας — όπως η διαμόρφωση διακομιστή που ελέγχει ο πάροχος φιλοξενίας, ένα αρχείο διαμόρφωσης όπως <code>.htaccess</code> ή κάποιο πρόσθετο του ιστοτόπου σας — αποκλείει το Panopticon από την πρόσβαση στην εφαρμογή API του ιστοτόπου σας (<span class=\"font-monospace\">%s</span>)."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
+msgid "Does your host have a server\xe2\x80\x93side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Ο πάροχος φιλοξενίας σας διαθέτει λύση προστασίας στην πλευρά του διακομιστή (όπως το mod_security2 του Apache) που ενδέχεται να αποκλείει το τελικό σημείο εφαρμογής API του Joomla! (<span class=\"font-monospace\">%s</span>), το Διακριτικό API σας (<span class=\"font-monospace\">%s</span>) ή τον User-Agent του Panopticon (<span class=\"font-monospace\">panopticon/%s</span>);"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
+msgid "Does your host have a server\xe2\x80\x93side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Ο πάροχος φιλοξενίας σας διαθέτει λύση προστασίας στην πλευρά του διακομιστή (όπως το mod_security2 του Apache) που ενδέχεται να αποκλείει το τελικό σημείο πρόσθετου API (<span class=\"font-monospace\">%s</span>), το Διακριτικό API σας (<span class=\"font-monospace\">%s</span>) ή τον User-Agent του Panopticon (<span class=\"font-monospace\">panopticon/%s</span>);"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
+msgid "Does your host have a server\xe2\x80\x93side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Ο πάροχος φιλοξενίας σας διαθέτει λύση προστασίας στην πλευρά του διακομιστή (όπως το mod_security2 του Apache) που ενδέχεται να αποκλείει το τελικό σημείο εφαρμογής WordPress API (<span class=\"font-monospace\">%s</span>), το Διακριτικό API σας (<span class=\"font-monospace\">%s</span>) ή τον User-Agent του Panopticon (<span class=\"font-monospace\">panopticon/%s</span>);"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH1"
+msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party software. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
+msgstr "Η απόκριση από το API προηγείται και/ή ακολουθείται από άλλο περιεχόμενο κειμένου, όπως μηνύματα PHP (π.χ. ειδοποιήσεις κατάργησης, προειδοποιήσεις ή θανατηφόρα σφάλματα), ή έξοδος από λογισμικό τρίτων. Ως αποτέλεσμα, η απόκριση API δεν μπορεί να αποκωδικοποιηθεί, που σημαίνει ότι το Panopticon δεν μπορεί να κατανοήσει την απόκριση του ιστοτόπου σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
+msgid "Make sure \"Error Reporting\" is set to None, and \"Debug Site\" is set to No in your site\'s Global Configuration page. This prevents PHP from printing messages which pollute the API response."
+msgstr "Βεβαιωθείτε ότι η \"Αναφορά Σφαλμάτων\" έχει οριστεί σε Καμία και η \"Εντοπισμός Σφαλμάτων Ιστοτόπου\" έχει οριστεί σε Όχι στη σελίδα Γενικής Διαμόρφωσης του ιστοτόπου σας. Αυτό αποτρέπει την PHP από την εκτύπωση μηνυμάτων που ρυπαίνουν την απόκριση API."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH1"
+msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party plugins. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
+msgstr "Η απόκριση από το API προηγείται και/ή ακολουθείται από άλλο περιεχόμενο κειμένου, όπως μηνύματα PHP (π.χ. ειδοποιήσεις κατάργησης, προειδοποιήσεις ή θανατηφόρα σφάλματα) ή έξοδος από πρόσθετα τρίτων. Ως αποτέλεσμα, η απόκριση API δεν μπορεί να αποκωδικοποιηθεί, που σημαίνει ότι το Panopticon δεν μπορεί να κατανοήσει την απόκριση του ιστοτόπου σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2"
+msgid "Make sure PHP on your server is configured with <code>display_errors</code> disabled, and that you have not enabled <code>WP_DEBUG</code> in your site\'s <code>wp-config.php</code> file. This prevents PHP from printing messages which pollute the API response."
+msgstr "Βεβαιωθείτε ότι η PHP στον διακομιστή σας έχει διαμορφωθεί με απενεργοποιημένο <code>display_errors</code> και ότι δεν έχετε ενεργοποιήσει το <code>WP_DEBUG</code> στο αρχείο <code>wp-config.php</code> του ιστοτόπου σας. Αυτό αποτρέπει την PHP από την εκτύπωση μηνυμάτων που ρυπαίνουν την απόκριση API."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2"
+msgid "Please make sure that there is no .htaccess code, third party plugins, or custom code (including in your theme\'s <code>functions.php</code> file) which block or otherwise limit WordPress\' JSON API \xe2\x80\x93 either at all, or for unauthenticated (guest) access."
+msgstr "Βεβαιωθείτε ότι δεν υπάρχει κώδικας .htaccess, πρόσθετα τρίτων ή προσαρμοσμένος κώδικας (συμπεριλαμβανομένου αυτού στο αρχείο <code>functions.php</code> του θέματός σας) που αποκλείει ή περιορίζει με άλλο τρόπο το JSON API του WordPress — είτε εντελώς είτε για μη ελεγμένη (επισκέπτη) πρόσβαση."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
+msgid "If you are using Admin Tools Professional please go to your site\'s backend and click on Components, Admin Tools for Joomla!, Web Application Firewall, Configure WAF, Request Filtering. Check the list of <em>Allowed Domains</em> towards the bottom of the page."
+msgstr "Εάν χρησιμοποιείτε Admin Tools Professional, μεταβείτε στο backend του ιστοτόπου σας και κάντε κλικ στα Components, Admin Tools for Joomla!, Web Application Firewall, Configure WAF, Request Filtering. Ελέγξτε τη λίστα <em>Επιτρεπόμενων Τομέων</em> στο κάτω μέρος της σελίδας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK2"
+msgid "Have you recently bought the domain, assigned the domain to a server, or transferred your site between hosts? Keep in mind that DNS propagation takes anywhere from 5 minutes to several days. Moreover, due to the distributed nature of DNS, it is possible that you can see your site <em>from your device</em> but the server you have installed Panopticon on can\'t."
+msgstr "Αγοράσατε πρόσφατα τον τομέα, αναθέσατε τον τομέα σε διακομιστή ή μεταφέρατε τον ιστότοπό σας μεταξύ παρόχων φιλοξενίας; Λάβετε υπόψη ότι η διάδοση DNS διαρκεί από 5 λεπτά έως αρκετές ημέρες. Επιπλέον, λόγω της κατανεμημένης φύσης του DNS, είναι πιθανό να βλέπετε τον ιστότοπό σας <em>από τη συσκευή σας</em>, αλλά ο διακομιστής στον οποίο έχετε εγκαταστήσει το Panopticon να μην μπορεί."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3"
+msgid "If your site\'s domain resolves to an IPv6 address - but not an IPv4 address - make sure that the server you have installed Panopticon on supports IPv6. You may have to ask your host to confirm that this is the case."
+msgstr "Εάν ο τομέας του ιστοτόπου σας επιλύεται σε διεύθυνση IPv6 — αλλά όχι IPv4 — βεβαιωθείτε ότι ο διακομιστής στον οποίο έχετε εγκαταστήσει το Panopticon υποστηρίζει IPv6. Ίσως χρειαστεί να ζητήσετε από τον πάροχο φιλοξενίας σας να επιβεβαιώσει ότι αυτό ισχύει."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
+msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
+msgstr "Εγκαταστήστε πιστοποιητικό SSL/TLS υπογεγραμμένο από εμπορική, γνωστή Αρχή Πιστοποίησης. Οι περισσότεροι διακομιστές επιτρέπουν τη χρήση του <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> που εκδίδει έγκυρα, υπογεγραμμένα, πλήρως λειτουργικά πιστοποιητικά SSL/TLS δωρεάν."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
+msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
+msgstr "Εάν βρίσκεστε σε Intranet, extranet ή χρειάζεστε με άλλο τρόπο να διατηρείτε τη δική σας Αρχή Πιστοποίησης, μπορείτε να ενημερώσετε το Panopticon να αναγνωρίζει την προσαρμοσμένη Αρχή Πιστοποίησης σας. Δημιουργήστε το αρχείο <code>cacert.pem</code> μέσα στον φάκελο <code>user_code</code> της εγκατάστασής σας στο Panopticon. Αντιγράψτε και επικολλήστε το/τα δημόσιο/-α πιστοποιητικό/-ά της Αρχής Πιστοποίησης (CA) σε μορφή <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a>. Αυτό φορτώνεται <em>επιπλέον</em> των τυπικών αρχείων CA αυτόματα, επιτρέποντας στο Panopticon να έχει πρόσβαση στον ιστότοπό σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
+msgid "Your site\'s SSL/TLS certificate has a problem"
+msgstr "Το πιστοποιητικό SSL/TLS του ιστοτόπου σας παρουσιάζει πρόβλημα"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
+msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
+msgstr "Είναι το πιστοποιητικό SSL/TLS για το σωστό όνομα τομέα; Εάν χρησιμοποιείτε το προεπιλεγμένο πιστοποιητικό SSL/TLS που παρέχει ο πάροχος φιλοξενίας σας, περιορίζεται στο προσωρινό όνομα τομέα που χρησιμοποιείτε για τη ρύθμιση του ιστοτόπου σας, όχι στο πραγματικό σας όνομα τομέα. Θα πρέπει να εγκαταστήσετε πιστοποιητικό SSL/TLS υπογεγραμμένο από εμπορική, γνωστή Αρχή Πιστοποίησης. Οι περισσότεροι διακομιστές επιτρέπουν τη χρήση του <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> που εκδίδει έγκυρα, υπογεγραμμένα, πλήρως λειτουργικά πιστοποιητικά SSL/TLS δωρεάν. Θυμηθείτε ότι ορισμένα πανελ ελέγχου φιλοξενίας αυτοεξυπηρέτησης (όπως cPanel ή Plesk) επιτρέπουν να επιλέξετε ποιο είναι το ενεργό πιστοποιητικό SSL/TLS για ένα όνομα τομέα. Βεβαιωθείτε ότι χρησιμοποιείται πράγματι το σωστό πιστοποιητικό."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
+msgid "Has the SSL/TLS certificate expired? In this case you need to renew it. Please note that if you are using Let\'s Encrypt the certificate has a short validity period (usually 90 days) and it should be renewed automatically by your host. If this did not happen, you will need to contact your host."
+msgstr "Έχει λήξει το πιστοποιητικό SSL/TLS; Σε αυτή την περίπτωση πρέπει να το ανανεώσετε. Σημειώστε ότι εάν χρησιμοποιείτε Let\'s Encrypt, το πιστοποιητικό έχει σύντομη περίοδο ισχύος (συνήθως 90 ημέρες) και θα πρέπει να ανανεώνεται αυτόματα από τον πάροχο φιλοξενίας σας. Εάν αυτό δεν συνέβη, θα πρέπει να επικοινωνήσετε με τον πάροχο φιλοξενίας σας."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
+msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
+msgstr "Έχει ανακληθεί το πιστοποιητικό SSL/TLS; Μερικές φορές οι Αρχές Πιστοποίησης ή οι ιδιοκτήτες ενός πιστοποιητικού SSL/TLS μπορεί να επιλέξουν να το ανακαλέσουν. Για παράδειγμα, οι Αρχές Πιστοποίησης θα το κάνουν αυτό εάν υποψιαστούν απάτη ή εάν πιστεύουν ότι η υποδομή που χρησιμοποιήθηκε για την έκδοση πιστοποιητικού παραβιάστηκε. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Ελέγξτε την κατάσταση ανάκλησης του πιστοποιητικού σας</a>. Εάν έχει ανακληθεί, θα χρειαστείτε νέο πιστοποιητικό."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
+msgid "Is it possible that your server serves the wrong SSL/TLS certificate? This may happen if you have recently switched to a new certificate, either manually or as part of an automated certificate rotation process (e.g. when your host issues a new certificate through Let\'s Encrypt). When the certificate changes the web server needs to be reloaded or restarted. In some rare cases this might not happen - or an inexperienced systems administrator may forget to do it. Please contact your host / systems administrator to check that and, if necessary, reload or restart the web server process."
+msgstr "Είναι πιθανό ο διακομιστής σας να εξυπηρετεί λανθασμένο πιστοποιητικό SSL/TLS; Αυτό μπορεί να συμβεί εάν μεταβήκατε πρόσφατα σε νέο πιστοποιητικό, είτε χειροκίνητα είτε ως μέρος αυτοματοποιημένης διαδικασίας εναλλαγής πιστοποιητικών (π.χ. όταν ο πάροχος φιλοξενίας εκδίδει νέο πιστοποιητικό μέσω Let\'s Encrypt). Όταν αλλάζει το πιστοποιητικό, ο διακομιστής ιστού πρέπει να επαναφορτωθεί ή να επανεκκινηθεί. Σε ορισμένες σπάνιες περιπτώσεις αυτό μπορεί να μην συμβεί — ή ένας άπειρος διαχειριστής συστήματος μπορεί να ξεχάσει να το κάνει. Επικοινωνήστε με τον πάροχο φιλοξενίας σας / διαχειριστή συστήματος για να ελέγξει αυτό και, εάν χρειαστεί, να επαναφορτώσει ή να επανεκκινήσει τη διαδικασία του διακομιστή ιστού."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2"
+msgid "Please go to your site\'s backend and click on System, Manage, Extensions. Search for the \"Web Services - Installer\" plugin and enable it."
+msgstr "Μεταβείτε στο backend του ιστοτόπου σας και κάντε κλικ στα System, Manage, Extensions. Αναζητήστε το πρόσθετο \"Web Services - Installer\" και ενεργοποιήστε το."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2"
+msgid "Please go to your site\'s backend and click on Extensions, Plugins. Search for the \"System - Panopticon Connector for Joomla 3\" plugin and enable it."
+msgstr "Μεταβείτε στο backend του ιστοτόπου σας και κάντε κλικ στα Extensions, Plugins. Αναζητήστε το πρόσθετο \"System - Panopticon Connector for Joomla 3\" και ενεργοποιήστε το."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3"
+msgid "Kindly note that the password protection may have been applied only to your site\'s <code>api</code> folder, or the root folder of your site. Look in both places, in this order."
+msgstr "Σημειώστε ότι η προστασία με κωδικό πρόσβασης μπορεί να έχει εφαρμοστεί μόνο στον φάκελο <code>api</code> του ιστοτόπου σας ή στον ριζικό κατάλογο του ιστοτόπου σας. Ελέγξτε και στα δύο μέρη, με αυτή τη σειρά."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
+msgid "Panopticon uses its own plugin, \"Akeeba Panopticon Connector for WordPress\", to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
+msgstr "Το Panopticon χρησιμοποιεί το δικό του πρόσθετο, \"Akeeba Panopticon Connector for WordPress\", για να παρέχει το απαραίτητο API μέσω του JSON services API του WordPress (<code>wp-json</code>)."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
+msgid "Please go to your site\'s wp-admin backend and click on Plugins. Search for the \"Akeeba Panopticon Connector for WordPress\" plugin and enable it."
+msgstr "Μεταβείτε στο wp-admin backend του ιστοτόπου σας και κάντε κλικ στα Plugins. Αναζητήστε το πρόσθετο \"Akeeba Panopticon Connector for WordPress\" και ενεργοποιήστε το."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
+msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
+msgstr "Αντίθετα, λάβαμε σφάλμα για το οποίο θα έπρεπε να μπορούμε να παρέχουμε πληροφορίες αντιμετώπισης προβλημάτων (<span class=\"font-monospace\">%s</span>), αλλά δεν διαθέτουμε τον κώδικα γι\' αυτό. Αυτό δεν έπρεπε να είχε συμβεί."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
+msgid "Please delete all files and folders inside the <code>tmp</code> folder of Akeeba Panopticon. This addresses the problem of this page\'s cached copy being severely out of date. If this doesn\'t help, please let us know."
+msgstr "Διαγράψτε όλα τα αρχεία και τους φακέλους μέσα στον φάκελο <code>tmp</code> του Akeeba Panopticon. Αυτό αντιμετωπίζει το πρόβλημα της αποθηκευμένης στην κρυφή μνήμη έκδοσης αυτής της σελίδας που είναι παρωχημένη. Εάν αυτό δεν βοηθήσει, παρακαλούμε ενημερώστε μας."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
+msgstr "Αποτρέπει τους χρήστες από τη χρήση κωδικών πρόσβασης που βρίσκονται σε διαδικτυακές διαρροές κωδικών. Υλοποιείται μέσω της υπηρεσίας τρίτου μέρους <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
+msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
+msgstr "Εμφάνιση avatar για τους χρήστες. Αυτή η λειτουργία υλοποιείται μέσω της υπηρεσίας τρίτου μέρους <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL_HELP"
+msgid "This preference can be overridden for any individual extension below. You can also override this for any individual extension and site in each site\'s configuration page."
+msgstr "Αυτή η προτίμηση μπορεί να παρακαμφθεί για οποιαδήποτε μεμονωμένη επέκταση παρακάτω. Μπορείτε επίσης να την παρακάμψετε για οποιαδήποτε μεμονωμένη επέκταση και ιστότοπο στη σελίδα διαμόρφωσης κάθε ιστοτόπου."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM_HELP"
+msgid "The hash algorithm for creating an anti-CSRF token. SHA-512 offers the best security, but may not work on some hosts because it\'s very long. MD5 offers the least security but is compatible with all hosts. Only change if you have problems when clicking action buttons in Panopticon."
+msgstr "Ο αλγόριθμος κατακερματισμού για τη δημιουργία διακριτικού anti-CSRF. Το SHA-512 προσφέρει την καλύτερη ασφάλεια, αλλά ενδέχεται να μην λειτουργεί σε ορισμένους παρόχους φιλοξενίας επειδή είναι πολύ μεγάλο. Το MD5 προσφέρει τη λιγότερη ασφάλεια, αλλά είναι συμβατό με όλους τους παρόχους φιλοξενίας. Αλλάξτε μόνο εάν αντιμετωπίζετε προβλήματα κατά τον κλικ κουμπιών ενεργειών στο Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION_HELP"
+msgid "Controls whether new users can create their own accounts. In \'Admin approval\' mode, an administrator must approve new accounts. In \'Self-approval\' mode, users activate their account via an email link."
+msgstr "Ελέγχει εάν οι νέοι χρήστες μπορούν να δημιουργούν τους δικούς τους λογαριασμούς. Στη λειτουργία \'Έγκριση από διαχειριστή\', ένας διαχειριστής πρέπει να εγκρίνει νέους λογαριασμούς. Στη λειτουργία \'Αυτο-έγκριση\', οι χρήστες ενεργοποιούν τον λογαριασμό τους μέσω συνδέσμου email."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME_HELP"
+msgid "Choose which service will be used to report your sites\' uptime. Please note that the integrated \"Panopticon\" provider is very basic and has some gotchas. Please read the documentation."
+msgstr "Επιλέξτε ποια υπηρεσία θα χρησιμοποιηθεί για την αναφορά διαθεσιμότητας των ιστοτόπων σας. Σημειώστε ότι ο ενσωματωμένος πάροχος \"Panopticon\" είναι πολύ βασικός και έχει ορισμένες ιδιαιτερότητες. Παρακαλούμε διαβάστε την τεκμηρίωση."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY"
+msgid "This email message confirms that Akeeba Panopticon, installed on %s, has been configured to send email messages correctly.\n\nIf this message ended up in your spam / junk inbox please check whether your domain has DKIM and SPF set up correctly, as well as whether your receiving mail server and mail client are configured in a way which misidentifies this message as spam. According to our experience, you can get pertinent troubleshooting information by looking at the source code of the received message in your mail client. Please consult your mail client\'s documentation for more information on how to do that."
+msgstr "Αυτό το μήνυμα email επιβεβαιώνει ότι το Akeeba Panopticon, εγκατεστημένο στο %s, έχει διαμορφωθεί σωστά για αποστολή μηνυμάτων email.\n\nΕάν αυτό το μήνυμα κατέληξε στα ανεπιθύμητα μηνύματα, ελέγξτε εάν ο τομέας σας έχει διαμορφωμένα σωστά DKIM και SPF, καθώς και εάν ο διακομιστής αλληλογραφίας λήψης και ο πελάτης αλληλογραφίας σας έχουν διαμορφωθεί με τρόπο που παρερμηνεύει αυτό το μήνυμα ως ανεπιθύμητο. Με βάση την εμπειρία μας, μπορείτε να βρείτε σχετικές πληροφορίες αντιμετώπισης προβλημάτων εξετάζοντας τον πηγαίο κώδικα του ληφθέντος μηνύματος στον πελάτη αλληλογραφίας σας. Συμβουλευτείτε την τεκμηρίωση του πελάτη αλληλογραφίας σας για περισσότερες πληροφορίες."
+
+#, phpformat
+msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
+msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
+msgstr "Το Panopticon δεν μπορεί να ενημερωθεί απευθείας από τη διεπαφή του όταν εκτελείται υπό Docker. Αντίθετα, πρέπει να ακολουθήσετε τις <a href=\'%s\'>οδηγίες τεκμηρίωσης</a> για να ενημερώσετε το container και τη βάση δεδομένων."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS_HELP"
+msgid "These privileges will be given to a user belonging to this group for any site which belongs to this group. To let the user see a site\'s overview you need to give them the View privilege."
+msgstr "Αυτά τα δικαιώματα θα δίνονται σε χρήστη που ανήκει σε αυτή την ομάδα για κάθε ιστότοπο που ανήκει σε αυτή την ομάδα. Για να επιτρέψετε στον χρήστη να βλέπει την επισκόπηση ενός ιστοτόπου, πρέπει να του παραχωρήσετε το δικαίωμα Προβολής."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_NAME"
+msgid "Full Name"
+msgstr "Πλήρες Όνομα"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
+msgid "The email address is used to email the user, as well as displaying the user\'s picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
+msgstr "Η διεύθυνση email χρησιμοποιείται για αποστολή email στον χρήστη, καθώς και για εμφάνιση της φωτογραφίας του χρήστη μέσω της υπηρεσίας τρίτου μέρους <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
+msgid "Confirm Password"
+msgstr "Επιβεβαίωση Κωδικού Πρόσβασης"
+
+#, phpformat
+msgctxt "PANOPTICON_ABOUT_LBL_VISIT_GITHUB"
+msgid "For a complete list of Panopticon\'s contributors please visit <a href=\"%s\">its GitHub repository</a>."
+msgstr "Για πλήρη λίστα συνεισφερόντων στο Panopticon επισκεφθείτε <a href=\"%s\">το αποθετήριο GitHub</a>."
+
+#, phpformat
+msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
+msgid "We would like to acknowledge and recognise the work of each and every person who has contributed to Akeeba Panopticon, no matter how small or big their contribution is; even the smallest of details are important. If you have contributed outside of GitHub and would like to be publicly acknowledged, please drop us a line and we\'ll rectify the omission; <em>every person matters</em>."
+msgstr "Θα θέλαμε να αναγνωρίσουμε και να τιμήσουμε το έργο κάθε προσώπου που έχει συνεισφέρει στο Akeeba Panopticon, ανεξάρτητα από το πόσο μικρή ή μεγάλη είναι η συνεισφορά του· ακόμη και οι μικρότερες λεπτομέρειες έχουν σημασία. Εάν έχετε συνεισφέρει εκτός GitHub και θα θέλατε δημόσια αναγνώριση, στείλτε μας μια γραμμή και θα διορθώσουμε την παράλειψη· <em>κάθε άτομο έχει σημασία</em>."
+
+#, phpformat
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
+msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>\xe2\x80\xa6<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site\'s server where Akeeba Backup runs."
+msgstr "Μπορείτε να χρησιμοποιήσετε μεταβλητές Akeeba Backup όπως <code>[DATE]</code>, <code>[SITE]</code>, κ.λπ. Θα αντικατασταθούν από το Akeeba Backup κατά τη δημιουργία αντιγράφου ασφαλείας. Μπορείτε επίσης να χρησιμοποιήσετε τις μεταβλητές <code>{DATE_FORMAT_LC}</code>, <code>{DATE_FORMAT_LC1}</code>\xe2\x80\xa6<code>{DATE_FORMAT_LC7}</code> που θα αντικατασταθούν από το Panopticon με μορφοποιημένη έκδοση της ώρας δημιουργίας αντιγράφου ασφαλείας. Σημειώστε ότι οι μεταβλητές του Panopticon μπορεί να διαφέρουν κατά μερικά δευτερόλεπτα σε σύγκριση με τις μεταβλητές του Akeeba Backup, καθώς επεξεργάζονται στον διακομιστή που εκτελεί το Panopticon, όχι στον διακομιστή του ιστοτόπου όπου εκτελείται το Akeeba Backup."
+
+#, phpformat
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma\xe2\x80\x93separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
+msgstr "Αριθμός <code>1</code> έως <code>31</code>, <code>L</code> για την τελευταία ημέρα του μήνα (δεν μπορεί να χρησιμοποιηθεί σε λίστες τιμών!), συνεχόμενο εύρος π.χ. <code>1-15</code>, λίστα τιμών διαχωρισμένη με κόμμα π.χ. <code>1,7,14,21,28</code>, κάθε ημέρα ως <code>*</code>, κάθε Χ ημέρες χρησιμοποιώντας κάθετο π.χ. <code>*/3</code> (κάθε 3 ημέρες).<br>Χρησιμοποιήστε αριθμό με <code>W</code> για την πλησιέστερη ημέρα εντός του ίδιου μήνα που δεν είναι Σάββατο ή Κυριακή, π.χ. <code>15W</code> είναι η πλησιέστερη ημέρα (από 13η έως 17η) που δεν είναι Σάββατο ή Κυριακή."
+
+#, phpformat
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The backup schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Το χρονοδιάγραμμα δημιουργίας αντιγράφων ασφαλείας είναι μια <a href=\'%s\' target=\'_blank\'>έκφραση CRON</a>. Χρησιμοποιεί τη ζώνη ώρας %s."
+
+#, phpformat
+msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma\xe2\x80\x93separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
+msgstr "Αριθμός <code>1</code> έως <code>31</code>, <code>L</code> για την τελευταία ημέρα του μήνα (δεν μπορεί να χρησιμοποιηθεί σε λίστες τιμών!), συνεχόμενο εύρος π.χ. <code>1-15</code>, λίστα τιμών διαχωρισμένη με κόμμα π.χ. <code>1,7,14,21,28</code>, κάθε ημέρα ως <code>*</code>, κάθε Χ ημέρες χρησιμοποιώντας κάθετο π.χ. <code>*/3</code> (κάθε 3 ημέρες).<br>Χρησιμοποιήστε αριθμό με <code>W</code> για την πλησιέστερη ημέρα εντός του ίδιου μήνα που δεν είναι Σάββατο ή Κυριακή, π.χ. <code>15W</code> είναι η πλησιέστερη ημέρα (από 13η έως 17η) που δεν είναι Σάββατο ή Κυριακή."
+
+#, phpformat
+msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The scan schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Το χρονοδιάγραμμα σάρωσης είναι μια <a href=\'%s\' target=\'_blank\'>έκφραση CRON</a>. Χρησιμοποιεί τη ζώνη ώρας %s."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The check schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Το χρονοδιάγραμμα ελέγχου είναι μια <a href=\'%s\' target=\'_blank\'>έκφραση CRON</a>. Χρησιμοποιεί τη ζώνη ώρας %s."
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_INSTRUCTIONS"
+msgid "Print this page and keep it in your wallet. Each of the following codes below can be used only once. Use them in case of emergency, when none of the other Multi-factor Authentication methods you\'ve set up can be used. For example, if your phone is out of battery or misplaced."
+msgstr "Εκτυπώστε αυτή τη σελίδα και φυλάξτε την στο πορτοφόλι σας. Καθένας από τους παρακάτω κωδικούς μπορεί να χρησιμοποιηθεί μόνο μία φορά. Χρησιμοποιήστε τους σε έκτακτη ανάγκη, όταν δεν μπορεί να χρησιμοποιηθεί καμία από τις άλλες μεθόδους Πολυπαραγοντικής Ταυτοποίησης που έχετε ρυθμίσει. Για παράδειγμα, εάν η μπαταρία του τηλεφώνου σας έχει εξαντληθεί ή εάν το χάσατε."
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE"
+msgid "<p>Enter a password below. This password will be required to be entered after logging in before you\'re able to use the site.</p>"
+msgstr "<p>Εισαγάγετε έναν κωδικό πρόσβασης παρακάτω. Αυτός ο κωδικός πρόσβασης θα απαιτείται να εισαχθεί μετά τη σύνδεση, πριν μπορέσετε να χρησιμοποιήσετε τον ιστότοπο.</p>"
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS"
+msgid "Follow the instructions on your device\'s screen to use your preferred Passkey."
+msgstr "Ακολουθήστε τις οδηγίες στην οθόνη της συσκευής σας για να χρησιμοποιήσετε τον προτιμώμενο Κωδικό Πρόσβασης."
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_BODY"
+msgid "Your browser doesn\'t support Passkeys, or your site does not meet the minimum requirements (HTTPS-only, with an SSL/TLS certificate signed by a commercial Certification Authority)."
+msgstr "Το πρόγραμμα περιήγησής σας δεν υποστηρίζει Passkeys ή ο ιστότοπός σας δεν πληροί τις ελάχιστες απαιτήσεις (μόνο HTTPS, με πιστοποιητικό SSL/TLS υπογεγραμμένο από εμπορική Αρχή Πιστοποίησης)."
+
+#, phpformat
+msgctxt "PANOPTICON_OVERRIDES_LBL_NO_OVERRIDE_SUGGESTION"
+msgid "Please visit your site\'s administrator backend to inspect the template overrides."
+msgstr "Επισκεφθείτε το backend διαχείρισης του ιστοτόπου σας για να επιθεωρήσετε τις παρακάμψεις προτύπου."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_CMS"
+msgid "You have selected both Joomla!\xae and WordPress sites. An extension package is typically only compatible with one CMS. Please remove one type."
+msgstr "Έχετε επιλέξει ιστοτόπους Joomla!® και WordPress. Ένα πακέτο επέκτασης είναι συνήθως συμβατό μόνο με ένα CMS. Παρακαλούμε αφαιρέστε έναν τύπο."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_JOOMLA"
+msgid "Remove Joomla!\xae sites"
+msgstr "Αφαίρεση ιστοτόπων Joomla!®"
+
+#, phpformat
+msgctxt "PANOPTICON_USAGESTATS_LBL_SERVER_DOMAIN"
+msgid "The usage statistics collection server\'s domain name is <code>%s</code>."
+msgstr "Το όνομα τομέα του διακομιστή συλλογής στατιστικών χρήσης είναι <code>%s</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The schedule for update summary emails is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Το χρονοδιάγραμμα για τα email σύνοψης ενημερώσεων είναι μια <a href=\'%s\' target=\'_blank\'>έκφραση CRON</a>. Χρησιμοποιεί τη ζώνη ώρας %s."
+
+#, phpformat
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
+msgid "If no groups are selected: emails are sent to all users who can make changes to the site. When any groups are selected: emails are sent to all users who are assigned to the selected group, <em>even if they can\'t even view the site in the Sites Overview page</em>."
+msgstr "Εάν δεν έχουν επιλεγεί ομάδες: τα email αποστέλλονται σε όλους τους χρήστες που μπορούν να κάνουν αλλαγές στον ιστότοπο. Εάν έχουν επιλεγεί ομάδες: τα email αποστέλλονται σε όλους τους χρήστες που ανήκουν στην επιλεγμένη ομάδα, <em>ακόμη και αν δεν μπορούν να δουν τον ιστότοπο στη σελίδα Επισκόπησης Ιστοτόπων</em>."
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The Site Action Summary schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Το χρονοδιάγραμμα Σύνοψης Ενεργειών Ιστοτόπου είναι μια <a href=\'%s\' target=\'_blank\'>έκφραση CRON</a>. Χρησιμοποιεί τη ζώνη ώρας %s."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a \"weird\" or \"wrong\" way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
+msgstr "Η ώρα εκφράζεται στη ζώνη ώρας %s. Εάν βρεθούν ενημερώσεις <em>μετά</em> από αυτή την ώρα της ημέρας, η εγκατάσταση ενημέρωσης θα πραγματοποιηθεί την επόμενη ημερολογιακή ημέρα. Αποφύγετε τη χρήση της ώρας αλλαγής Θερινής Ώρας (συνήθως: μεταξύ 2:00 και 4:00 π.μ.)· διαφορετικά, ο προγραμματισμός ενημερώσεων θα συμπεριφερθεί με τρόπο που μπορεί να σας φανεί \"παράξενος\" ή \"λανθασμένος\" εάν βρεθεί ενημέρωση την ημέρα αλλαγής Θερινής Ώρας. Οι χειροκίνητα εκκινημένες ενημερώσεις εκτελούνται πάντα αμέσως, ανεξάρτητα από αυτή τη ρύθμιση."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
+msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
+msgstr "Λίγα δευτερόλεπτα έως ένα λεπτό αφού ρυθμίσετε την εργασία CRON, αυτή η σελίδα θα αλλάξει σε αναφορά επιδόσεων. Μην κλείσετε αυτήν την καρτέλα προγράμματος περιήγησης, μην αλλάξετε σε διαφορετική καρτέλα/παράθυρο ή εφαρμογή, μην απενεργοποιήσετε ή αφήσετε τη συσκευή σας σε κατάσταση αναμονής, μην ταΐζετε το <em title=\"Αυτά είναι τα gremlins πριν γίνουν gremlins. Φαίνεται η ηλικία μας με αυτήν την παρωχημένη αναφορά σε ποπ κουλτούρα;\">mogwai</em> μετά τα μεσάνυχτα. Αρκετά απλό, έτσι δεν είναι;"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1"
+msgid "If your site\'s <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!&reg; updates will fail with an error mentioning “401 Unauthorized”."
+msgstr "Εάν ο κατάλογος <code>administrator</code> του ιστοτόπου σας προστατεύεται με κωδικό πρόσβασης, εισαγάγετε το όνομα χρήστη και τον κωδικό πρόσβασης που χρησιμοποιούνται για αυτήν την προστασία. Διαφορετικά, οι ενημερώσεις Joomla!&reg; θα αποτύχουν με σφάλμα \"401 Unauthorized\"."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2"
+msgid "You used a third party extension, e.g. Admin Tools\' “Password-protect Administrator” feature."
+msgstr "Χρησιμοποιήσατε επέκταση τρίτου μέρους, π.χ. τη λειτουργία \"Password-protect Administrator\" του Admin Tools."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
+msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr "Συνδεθείτε στο backend του ιστοτόπου σας. Μεταβείτε στα Components, Akeeba Backup, Control Panel. Κάντε κλικ στις Options, Front-end Backup και ορίστε το \"Enable JSON API (remote backup)\" σε Yes. Εισαγάγετε νέα \"Secret Word\"· μπορείτε να δημιουργήσετε μια νέα, τυχαία, ασφαλή μυστική λέξη στο <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Στη συνέχεια, κάντε κλικ στο Save &amp Close στη γραμμή εργαλείων."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
+msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr "Συνδεθείτε στο backend του ιστοτόπου σας. Μεταβείτε στα Akeeba Backup, System Configuration, Public API και ορίστε το \"Enable JSON API (remote backup)\" σε Yes. Εισαγάγετε νέο \"Secret Key\"· μπορείτε να δημιουργήσετε ένα νέο, τυχαίο, ασφαλές κλειδί στο <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Στη συνέχεια, κάντε κλικ στο Save &amp Close στη γραμμή εργαλείων."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Ο πάροχος φιλοξενίας σας διαθέτει λύση προστασίας στην πλευρά του διακομιστή (όπως το mod_security2 του Apache) που ενδέχεται να αποκλείει το τελικό σημείο εφαρμογής API του Joomla! (<span class=\"font-monospace\">%s</span>), το Διακριτικό API σας (<span class=\"font-monospace\">%s</span>) ή τον User-Agent του Panopticon (<span class=\"font-monospace\">panopticon/%s</span>);"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Ο πάροχος φιλοξενίας σας διαθέτει λύση προστασίας στην πλευρά του διακομιστή (όπως το mod_security2 του Apache) που ενδέχεται να αποκλείει το τελικό σημείο πρόσθετου API (<span class=\"font-monospace\">%s</span>), το Διακριτικό API σας (<span class=\"font-monospace\">%s</span>) ή τον User-Agent του Panopticon (<span class=\"font-monospace\">panopticon/%s</span>);"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Ο πάροχος φιλοξενίας σας διαθέτει λύση προστασίας στην πλευρά του διακομιστή (όπως το mod_security2 του Apache) που ενδέχεται να αποκλείει το τελικό σημείο εφαρμογής WordPress API (<span class=\"font-monospace\">%s</span>), το Διακριτικό API σας (<span class=\"font-monospace\">%s</span>) ή τον User-Agent του Panopticon (<span class=\"font-monospace\">panopticon/%s</span>);"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
+msgid "Make sure “Error Reporting” is set to None, and “Debug Site” is set to No in your site\'s Global Configuration page. This prevents PHP from printing messages which pollute the API response."
+msgstr "Βεβαιωθείτε ότι η \"Αναφορά Σφαλμάτων\" έχει οριστεί σε Καμία και η \"Εντοπισμός Σφαλμάτων Ιστοτόπου\" έχει οριστεί σε Όχι στη σελίδα Γενικής Διαμόρφωσης του ιστοτόπου σας. Αυτό αποτρέπει την PHP από την εκτύπωση μηνυμάτων που ρυπαίνουν την απόκριση API."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2"
+msgid "Please make sure that there is no .htaccess code, third party plugins, or custom code (including in your theme\'s <code>functions.php</code> file) which block or otherwise limit WordPress\' JSON API – either at all, or for unauthenticated (guest) access."
+msgstr "Βεβαιωθείτε ότι δεν υπάρχει κώδικας .htaccess, πρόσθετα τρίτων ή προσαρμοσμένος κώδικας (συμπεριλαμβανομένου αυτού στο αρχείο <code>functions.php</code> του θέματός σας) που αποκλείει ή περιορίζει με άλλο τρόπο το JSON API του WordPress – είτε εντελώς είτε για μη ελεγμένη (επισκέπτη) πρόσβαση."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2"
+msgid "Please go to your site\'s backend and click on System, Manage, Extensions. Search for the “Web Services - Installer” plugin and enable it."
+msgstr "Μεταβείτε στο backend του ιστοτόπου σας και κάντε κλικ στα System, Manage, Extensions. Αναζητήστε το πρόσθετο \"Web Services - Installer\" και ενεργοποιήστε το."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2"
+msgid "Please go to your site\'s backend and click on Extensions, Plugins. Search for the “System - Panopticon Connector for Joomla 3” plugin and enable it."
+msgstr "Μεταβείτε στο backend του ιστοτόπου σας και κάντε κλικ στα Extensions, Plugins. Αναζητήστε το πρόσθετο \"System - Panopticon Connector for Joomla 3\" και ενεργοποιήστε το."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
+msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
+msgstr "Το Panopticon χρησιμοποιεί το δικό του πρόσθετο, \"Akeeba Panopticon Connector for WordPress\", για να παρέχει το απαραίτητο API μέσω του JSON services API του WordPress (<code>wp-json</code>)."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
+msgid "Please go to your site\'s wp-admin backend and click on Plugins. Search for the “Akeeba Panopticon Connector for WordPress” plugin and enable it."
+msgstr "Μεταβείτε στο wp-admin backend του ιστοτόπου σας και κάντε κλικ στα Plugins. Αναζητήστε το πρόσθετο \"Akeeba Panopticon Connector for WordPress\" και ενεργοποιήστε το."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME_HELP"
+msgid "Choose which service will be used to report your sites\' uptime. Please note that the integrated “Panopticon” provider is very basic and has some gotchas. Please read the documentation."
+msgstr "Επιλέξτε ποια υπηρεσία θα χρησιμοποιηθεί για την αναφορά διαθεσιμότητας των ιστοτόπων σας. Σημειώστε ότι ο ενσωματωμένος πάροχος \"Panopticon\" είναι πολύ βασικός και έχει ορισμένες ιδιαιτερότητες. Παρακαλούμε διαβάστε την τεκμηρίωση."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY"
+msgid "This email message confirms that Akeeba Panopticon, installed on %s, has been configured to send email messages correctly.\\n\\nIf this message ended up in your spam / junk inbox please check whether your domain has DKIM and SPF set up correctly, as well as whether your receiving mail server and mail client are configured in a way which misidentifies this message as spam. According to our experience, you can get pertinent troubleshooting information by looking at the source code of the received message in your mail client. Please consult your mail client\'s documentation for more information on how to do that."
+msgstr "Αυτό το μήνυμα email επιβεβαιώνει ότι το Akeeba Panopticon, εγκατεστημένο στο %s, έχει διαμορφωθεί σωστά για αποστολή μηνυμάτων email.\\n\\nΕάν αυτό το μήνυμα κατέληξε στα ανεπιθύμητα μηνύματα, ελέγξτε εάν ο τομέας σας έχει διαμορφωμένα σωστά DKIM και SPF, καθώς και εάν ο διακομιστής αλληλογραφίας λήψης και ο πελάτης αλληλογραφίας σας έχουν διαμορφωθεί με τρόπο που παρερμηνεύει αυτό το μήνυμα ως ανεπιθύμητο. Με βάση την εμπειρία μας, μπορείτε να βρείτε σχετικές πληροφορίες αντιμετώπισης προβλημάτων εξετάζοντας τον πηγαίο κώδικα του ληφθέντος μηνύματος στον πελάτη αλληλογραφίας σας. Συμβουλευτείτε την τεκμηρίωση του πελάτη αλληλογραφίας σας για περισσότερες πληροφορίες."
+
+#, phpformat
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
+msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site\'s server where Akeeba Backup runs."
+msgstr "Μπορείτε να χρησιμοποιήσετε μεταβλητές Akeeba Backup όπως <code>[DATE]</code>, <code>[SITE]</code>, κ.λπ. Θα αντικατασταθούν από το Akeeba Backup κατά τη δημιουργία αντιγράφου ασφαλείας. Μπορείτε επίσης να χρησιμοποιήσετε τις μεταβλητές <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> που θα αντικατασταθούν από το Panopticon με μορφοποιημένη έκδοση της ώρας δημιουργίας αντιγράφου ασφαλείας. Σημειώστε ότι οι μεταβλητές του Panopticon μπορεί να διαφέρουν κατά μερικά δευτερόλεπτα σε σύγκριση με τις μεταβλητές του Akeeba Backup, καθώς επεξεργάζονται στον διακομιστή που εκτελεί το Panopticon, όχι στον διακομιστή του ιστοτόπου όπου εκτελείται το Akeeba Backup."
+
+#, phpformat
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
+msgstr "Αριθμός <code>1</code> έως <code>31</code>, <code>L</code> για την τελευταία ημέρα του μήνα (δεν μπορεί να χρησιμοποιηθεί σε λίστες τιμών!), συνεχόμενο εύρος π.χ. <code>1-15</code>, λίστα τιμών διαχωρισμένη με κόμμα π.χ. <code>1,7,14,21,28</code>, κάθε ημέρα ως <code>*</code>, κάθε Χ ημέρες χρησιμοποιώντας κάθετο π.χ. <code>*/3</code> (κάθε 3 ημέρες).<br>Χρησιμοποιήστε αριθμό με <code>W</code> για την πλησιέστερη ημέρα εντός του ίδιου μήνα που δεν είναι Σάββατο ή Κυριακή, π.χ. <code>15W</code> είναι η πλησιέστερη ημέρα (από 13η έως 17η) που δεν είναι Σάββατο ή Κυριακή."
+
+#, phpformat
+msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
+msgstr "Αριθμός <code>1</code> έως <code>31</code>, <code>L</code> για την τελευταία ημέρα του μήνα (δεν μπορεί να χρησιμοποιηθεί σε λίστες τιμών!), συνεχόμενο εύρος π.χ. <code>1-15</code>, λίστα τιμών διαχωρισμένη με κόμμα π.χ. <code>1,7,14,21,28</code>, κάθε ημέρα ως <code>*</code>, κάθε Χ ημέρες χρησιμοποιώντας κάθετο π.χ. <code>*/3</code> (κάθε 3 ημέρες).<br>Χρησιμοποιήστε αριθμό με <code>W</code> για την πλησιέστερη ημέρα εντός του ίδιου μήνα που δεν είναι Σάββατο ή Κυριακή, π.χ. <code>15W</code> είναι η πλησιέστερη ημέρα (από 13η έως 17η) που δεν είναι Σάββατο ή Κυριακή."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_CMS"
+msgid "You have selected both Joomla!® and WordPress sites. An extension package is typically only compatible with one CMS. Please remove one type."
+msgstr "Έχετε επιλέξει ιστοτόπους Joomla!® και WordPress. Ένα πακέτο επέκτασης είναι συνήθως συμβατό μόνο με ένα CMS. Παρακαλούμε αφαιρέστε έναν τύπο."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_JOOMLA"
+msgid "Remove Joomla!® sites"
+msgstr "Αφαίρεση ιστοτόπων Joomla!®"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
+msgstr "Η ώρα εκφράζεται στη ζώνη ώρας %s. Εάν βρεθούν ενημερώσεις <em>μετά</em> από αυτή την ώρα της ημέρας, η εγκατάσταση ενημέρωσης θα πραγματοποιηθεί την επόμενη ημερολογιακή ημέρα. Αποφύγετε τη χρήση της ώρας αλλαγής Θερινής Ώρας (συνήθως: μεταξύ 2:00 και 4:00 π.μ.)· διαφορετικά, ο προγραμματισμός ενημερώσεων θα συμπεριφερθεί με τρόπο που μπορεί να σας φανεί \"παράξενος\" ή \"λανθασμένος\" εάν βρεθεί ενημέρωση την ημέρα αλλαγής Θερινής Ώρας. Οι χειροκίνητα εκκινημένες ενημερώσεις εκτελούνται πάντα αμέσως, ανεξάρτητα από αυτή τη ρύθμιση."
+
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_YES"
+msgid "Out of Date"
+msgstr "Μη Ενημερωμένο"

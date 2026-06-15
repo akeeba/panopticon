@@ -267,3 +267,37 @@ CDN | — | Technical term
 XML | — | Technical term
 FIDO2 | — | Technical term
 MFA | — | Technical term
+
+## New terminology from 2026-06-15 translation session
+
+English Term | Greek Translation | Notes
+-------------|-------------------|-------
+Uptime | Διαθεσιμότητα | Site uptime monitoring
+Uptime monitoring | Παρακολούθηση διαθεσιμότητας |
+Host / Hosting provider | Πάροχος φιλοξενίας | Web hosting company
+Shared hosting | Κοινή φιλοξενία |
+Session write path | Διαδρομή εγγραφής συνεδρίας |
+Benchmark | Αναφορά επιδόσεων | Setup CRON benchmark page
+Certification Authority (CA) | Αρχή Πιστοποίησης (CA) |
+Certificate revocation | Ανάκληση πιστοποιητικού |
+Valid From / Valid To | Ημερομηνία Έναρξης / Λήξης Ισχύος | SSL certificate validity dates
+Nameserver | Διακομιστής ονομάτων | DNS nameserver
+WHOIS | WHOIS | Not translated
+DNS propagation | Διάδοση DNS |
+Grace period | Περίοδος χάριτος | Domain registrar grace period
+Registrar | Καταχωρητής | Domain name registrar
+I/O Wait | Χρόνος αναμονής I/O | Server metric
+Anti-CSRF token | Διακριτικό anti-CSRF |
+SHA-512 | SHA-512 | Not translated
+MD5 | MD5 | Not translated
+DKIM | DKIM | Not translated
+SPF | SPF | Email authentication term, not translated
+Passkey | Passkey | FIDO2 passkey, not translated (per glossary)
+Backup codes | Κωδικοί εφεδρείας | MFA backup codes
+Multi-factor Authentication | Πολυπαραγοντική Ταυτοποίηση | MFA full name
+Template override | Παράκαμψη προτύπου | Joomla template override
+Daylight Savings Time | Θερινή Ώρα |
+CRON expression | Έκφραση CRON |
+Full Name | Πλήρες Όνομα | User field
+Confirm Password | Επιβεβαίωση Κωδικού Πρόσβασης |
+Remove | Αφαίρεση | Button/action label

@@ -901,7 +901,7 @@ msgstr "Taal"
 #, phpformat
 msgctxt "PANOPTICON_APP_ERR_MFA_LOGOUT"
 msgid "Too many failed Multi-factor Authentication attempts. Please retry logging in."
-msgstr ""
+msgstr "Te veel mislukte meervoudige verificatiepogingen. Probeer opnieuw in te loggen."
 
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_AKEEBABACKUP"
@@ -1016,7 +1016,7 @@ msgstr "Plan automatische WordPress-plug-in- en thema-updates"
 #, phpformat
 msgctxt "PANOPTICON_TASKTYPE_DOMAINEXPIRATION"
 msgid "Send emails about domain expiration"
-msgstr ""
+msgstr "E-mails verzenden over domeinnaamvervaldatum"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED"
@@ -3566,12 +3566,12 @@ msgstr "Panopticon waarschuwt u dat het SSL/TLS-certificaat van uw site zoveel d
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING"
 msgid "Domain Expiration First Warning"
-msgstr ""
+msgstr "Eerste waarschuwing domeinnaamvervaldatum"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING_HELP"
 msgid "Panopticon will warn you that your site\'s domain name is expiring this many days before it expires. 0 disables the warning."
-msgstr ""
+msgstr "Panopticon waarschuwt u dat de domeinnaam van uw site dit aantal dagen voor de vervaldatum verloopt. 0 schakelt de waarschuwing uit."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE"
@@ -3686,92 +3686,92 @@ msgstr "De handtekening van uw SSL/TLS-certificaat kan niet worden geverifieerd 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO"
 msgid "Domain Information"
-msgstr ""
+msgstr "Domeingegevens"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID_HEAD"
 msgid "Unknown Validity"
-msgstr ""
+msgstr "Onbekende geldigheid"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID"
 msgid "We could not retrieve the domain\'s expiration date. Either the domain name does not appear in the WHOIS database, or you are using a domain name which only resolves locally."
-msgstr ""
+msgstr "De vervaldatum van het domein kon niet worden opgehaald. De domeinnaam staat mogelijk niet in de WHOIS-database, of u gebruikt een domeinnaam die alleen lokaal wordt omgezet."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TOOSOON_HEAD"
 msgid "Invalid (Too Soon)"
-msgstr ""
+msgstr "Ongeldig (te vroeg)"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TOOSOON"
 msgid "The domain registrar claims the domain name was registered in a future date. This does not seem right."
-msgstr ""
+msgstr "De domeinregistrar beweert dat de domeinnaam op een toekomstige datum is geregistreerd. Dit lijkt niet correct."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRING_HEAD"
 msgid "Imminent Expiration"
-msgstr ""
+msgstr "Nakende vervaldatum"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRING"
 msgid "The domain name will expire soon. You need to renew it with your registrar to avoid losing it."
-msgstr ""
+msgstr "De domeinnaam verloopt binnenkort. U moet deze verlengen bij uw registrar om te voorkomen dat u het kwijtraakt."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED_HEAD"
 msgid "Expired"
-msgstr ""
+msgstr "Verlopen"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
 msgid "The domain name has expired. You might still be able to access the domain due to your registrar\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
-msgstr ""
+msgstr "De domeinnaam is verlopen. U kunt het domein mogelijk nog bereiken dankzij de respijtperiode van uw registrar, maar <strong>u moet deze domeinnaam onmiddellijk verlengen bij uw registrar</strong> om te voorkomen dat u het kwijtraakt."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS_HEAD"
 msgid "Missing nameservers"
-msgstr ""
+msgstr "Ontbrekende naamservers"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS"
 msgid "There are no nameservers reported in the WHOIS database. A site without valid nameservers will not be accessible on the Internet. If you recently assigned nameservers to the domain don\'t panic; it may take up to 5 days for this information to propagate."
-msgstr ""
+msgstr "Er zijn geen naamservers gerapporteerd in de WHOIS-database. Een site zonder geldige naamservers is niet toegankelijk op internet. Als u onlangs naamservers aan het domein heeft toegewezen, maak u dan geen zorgen; het kan tot 5 dagen duren voordat deze informatie is doorgegeven."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_TABLE_CAPTION"
 msgid "Table of domain information"
-msgstr ""
+msgstr "Tabel met domeingegevens"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_DOMAIN"
 msgid "Domain"
-msgstr ""
+msgstr "Domein"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_REGISTERED"
 msgid "Registered On"
-msgstr ""
+msgstr "Geregistreerd op"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRES"
 msgid "Expires On"
-msgstr ""
+msgstr "Vervalt op"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_REGISTRAR"
 msgid "Registrar"
-msgstr ""
+msgstr "Registrar"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NAMESERVERS"
 msgid "Nameservers"
-msgstr ""
+msgstr "Naamservers"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_CACHING_NOTICE"
 msgid "Domain registration information may be cached in the WHOIS servers for a period ranging from a few hours to a few days. As a result, the information above may be out of date."
-msgstr ""
+msgstr "Domeinregistratiegegevens kunnen gedurende een periode van enkele uren tot enkele dagen gecached zijn op de WHOIS-servers. Hierdoor kan de bovenstaande informatie verouderd zijn."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_TITLE"
@@ -3931,12 +3931,12 @@ msgstr "Joomla!&reg; Update"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NO_VERSION_HEAD"
 msgid "Version information missing"
-msgstr ""
+msgstr "Versie-informatie ontbreekt"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NO_VERSION_BODY"
 msgid "Your site has not reported the version of Joomla!&reg; it is running on."
-msgstr ""
+msgstr "Uw site heeft de versie van Joomla!&reg; waarop het draait niet gerapporteerd."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_BTN_JUPDATE_RELOAD"
@@ -4221,12 +4221,12 @@ msgstr "WordPress update"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_NO_VERSION_HEAD"
 msgid "Version information missing"
-msgstr ""
+msgstr "Versie-informatie ontbreekt"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_NO_VERSION_BODY"
 msgid "Your site has not reported the version of WordPress it is running on."
-msgstr ""
+msgstr "Uw site heeft de versie van WordPress waarop het draait niet gerapporteerd."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_AVAILABLE_UPDATE"
@@ -4401,12 +4401,12 @@ msgstr "Extensie-informatie voor site \\\"%s\\\" opnieuw laden"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_MISSING"
 msgid "PHP version information missing"
-msgstr ""
+msgstr "PHP-versie-informatie ontbreekt"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_MISSING_INFO"
 msgid "Your site has not reported the version of PHP it is running on."
-msgstr ""
+msgstr "Uw site heeft de versie van PHP waarop het draait niet gerapporteerd."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_UNKNOWN"
@@ -5946,7 +5946,7 @@ msgstr "U kunt de systeemconfiguratie in Panopticon niet bekijken of wijzigen al
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_ERR_USING_ENVIRONMENT"
 msgid "You cannot view or modify the System Configuration in Panopticon when it runs containerized and you have set the <code>PANOPTICON_USING_ENV</code> environment variable to 1. Please configure Panopticon by setting environment variables instead."
-msgstr ""
+msgstr "U kunt de Systeemconfiguratie in Panopticon niet bekijken of wijzigen wanneer het gecontaineriseerd wordt uitgevoerd en u de omgevingsvariabele <code>PANOPTICON_USING_ENV</code> heeft ingesteld op 1. Configureer Panopticon in plaats daarvan via omgevingsvariabelen."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_BTN_PHPINFO"
@@ -6966,27 +6966,27 @@ msgstr "U hebt het verzenden van e-mail uitgeschakeld; er wordt geen e-mail verz
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_SUPERUSER"
 msgid "Force MFA for Superusers"
-msgstr ""
+msgstr "MFA verplichten voor superbeheerders"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_ADMIN"
 msgid "Force MFA for Administrators"
-msgstr ""
+msgstr "MFA verplichten voor beheerders"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_FORCE_GROUPS"
 msgid "Force MFA for these Groups"
-msgstr ""
+msgstr "MFA verplichten voor deze groepen"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_COUNTS_AS_LOGIN_FAILURE"
 msgid "MFA failure counts as login failure"
-msgstr ""
+msgstr "MFA-fout telt als aanmeldfout"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MFA_MAX_TRIES"
 msgid "Maximum MFA tries"
-msgstr ""
+msgstr "Maximum aantal MFA-pogingen"
 
 #, phpformat
 msgctxt "PANOPTICON_TASKS_TITLE"
@@ -7281,7 +7281,7 @@ msgstr "Samenvatting site acties"
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_DOMAIN_EXPIRING"
 msgid "Domain Expires Soon"
-msgstr ""
+msgstr "Domein verloopt binnenkort"
 
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_TITLE"
@@ -7696,12 +7696,12 @@ msgstr "De Dashboard-indeling is eenvoudiger te begrijpen, maar gebruikt meer br
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_NEEDED"
 msgid "You must set up Multi-factor Authentication to be allowed further access to this application."
-msgstr ""
+msgstr "U moet meervoudige verificatie instellen om verdere toegang tot deze applicatie te krijgen."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_COMPLETE"
 msgid "You can now click on the Cancel button in the toolbar to return to the application."
-msgstr ""
+msgstr "U kunt nu op de knop Annuleren in de werkbalk klikken om terug te keren naar de applicatie."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_TITLE"
@@ -10028,3 +10028,1979 @@ msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
 msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
 msgstr "Het wachtwoord dat u probeert te gebruiken, is aanwezig in online wachtwoordlekken, waardoor hackers heel gemakkelijk kunnen raden dat u dit gebruikt. Gebruik een ander wachtwoord."
 
+msgctxt "PANOPTICON_TASKTYPE_CORECHECKSUMS"
+msgid "Core File Integrity Check"
+msgstr "Integriteitscontrole kernbestanden"
+
+msgctxt "PANOPTICON_TASKTYPE_REGISTRATIONCLEANUP"
+msgid "Clean up expired user registrations"
+msgstr "Verlopen gebruikersregistraties opschonen"
+
+msgctxt "PANOPTICON_TASKTYPE_EXTENSIONINSTALL"
+msgid "Remote Extension Installation"
+msgstr "Externe extensie-installatie"
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIPS"
+msgid "Tips to connect Akeeba Panopticon to Akeeba Backup Professional"
+msgstr "Tips om Akeeba Panopticon te verbinden met Akeeba Backup Professional"
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1"
+msgid "Make sure that you have installed and enabled the Akeeba Backup Professional component, and the Web Services - Akeeba Backup plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
+msgstr "Zorg ervoor dat u de Akeeba Backup Professional-component en de Web Services - Akeeba Backup-plugin op uw site heeft geinstalleerd en ingeschakeld. Akeeba Backup Core is <em>niet</em> compatibel met Akeeba Panopticon."
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1_WP"
+msgid "Make sure that you have installed and enabled the Akeeba Backup Professional plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
+msgstr "Zorg ervoor dat u de Akeeba Backup Professional-plugin op uw site heeft geinstalleerd en ingeschakeld. Akeeba Backup Core is <em>niet</em> compatibel met Akeeba Panopticon."
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
+msgid "Make sure that no third party extensions (especially security extensions) and/or server configuration settings prevent access to your site\'s <code>api</code> folder. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
+msgstr "Zorg ervoor dat geen extensies van derden (met name beveiligingsextensies) en/of serverconfiguratie-instellingen de toegang tot de <code>api</code>-map van uw site blokkeren. Controleer ook of de antwoorden van dat bestand <em>niet</em> worden gecached door plug-ins van derden op uw site, uw webserver of een CDN/cachingproxy die voor uw site is geconfigureerd."
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP"
+msgid "Make sure that no third party plugins (especially security plugins) and/or server configuration settings prevent access to your site\'s <code>wp-admin/admin-ajax.php</code> file. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
+msgstr "Zorg ervoor dat geen plug-ins van derden (met name beveiligingsplug-ins) en/of serverconfiguratie-instellingen de toegang tot het bestand <code>wp-admin/admin-ajax.php</code> van uw site blokkeren. Controleer ook of de antwoorden van dat bestand <em>niet</em> worden gecached door plug-ins van derden op uw site, uw webserver of een CDN/cachingproxy die voor uw site is geconfigureerd."
+
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_HEAD"
+msgid "Core File Integrity"
+msgstr "Integriteit van kernbestanden"
+
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_NEVER_RUN"
+msgid "No core file integrity check has been run yet."
+msgstr "Er is nog geen integriteitscontrole voor kernbestanden uitgevoerd."
+
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_CLEAN"
+msgid "All core files are intact. Last checked: %s"
+msgstr "Alle kernbestanden zijn intact. Laatste controle: %s"
+
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
+msgid "%d modified core file(s) detected. Last checked: %s"
+msgstr "%d gewijzigd(e) kernbestand(en) gedetecteerd. Laatste controle: %s"
+
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"
+msgid "View Modified Files"
+msgstr "Gewijzigde bestanden weergeven"
+
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_RUN"
+msgid "Run Check"
+msgstr "Controle uitvoeren"
+
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_SCHEDULE"
+msgid "Schedule"
+msgstr "Plannen"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_HEAD"
+msgid "The WordPress JSON API application is blocked (HTTP error 403)"
+msgstr "De WordPress JSON API-applicatie is geblokkeerd (HTTP-fout 403)"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK1"
+msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the WordPress API Application endpoint (<span class="font-monospace">%s</span>) altogether?"
+msgstr "Blokkeert uw host of uw serverconfiguratibestand (bijv. <code>.htaccess</code>) de toegang tot het WordPress API-applicatie-eindpunt (<span class="font-monospace">%s</span>) volledig?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
+msgid "Does your host have a server–side protection solution (such as Apache's mod_security2) which might be blocking the WordPress API Application endpoint (<span class="font-monospace">%s</span>), your API token (<span class="font-monospace">%s</span>), or the User-Agent of Panopticon (<span class="font-monospace">panopticon/%s</span>)?"
+msgstr "Heeft uw host een serverbeveiliging (zoals Apache's mod_security2) die het WordPress API-applicatie-eindpunt (<span class="font-monospace">%s</span>), uw API-token (<span class="font-monospace">%s</span>) of de User-Agent van Panopticon (<span class="font-monospace">panopticon/%s</span>) kan blokkeren?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK3"
+msgid "Do you have a security, SEO, or other similar plugin which may be blocking the above?"
+msgstr "Heeft u een beveiligings-, SEO- of vergelijkbare plug-in die het bovenstaande mogelijk blokkeert?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_HEAD"
+msgid "The WordPress JSON API Application response includes non-API output"
+msgstr "Het antwoord van de WordPress JSON API-applicatie bevat niet-API-uitvoer"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH1"
+msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party plugins. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
+msgstr "Het antwoord van de API wordt voorafgegaan en/of gevolgd door andere tekstinhoud zoals PHP-berichten (bijv. verouderingsmeldingen, waarschuwingen of fatale fouten) of uitvoer van plug-ins van derden. Hierdoor kan het API-antwoord niet worden gedecodeerd, wat betekent dat Panopticon het antwoord van uw site niet kan begrijpen."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2"
+msgid "Make sure PHP on your server is configured with <code>display_errors</code> disabled, and that you have not enabled <code>WP_DEBUG</code> in your site\'s <code>wp-config.php</code> file. This prevents PHP from printing messages which pollute the API response."
+msgstr "Zorg ervoor dat PHP op uw server is geconfigureerd met <code>display_errors</code> uitgeschakeld, en dat u <code>WP_DEBUG</code> niet heeft ingeschakeld in het <code>wp-config.php</code>-bestand van uw site. Dit voorkomt dat PHP berichten afdrukt die het API-antwoord vervuilen."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH3"
+msgid "If this is not enough, it is possible that a third party plugin is causing an error in the API application. Check if there are any third party plugins, including any must-use plugins (<code>mu-plugins</code>), which may be accidentally breaking the API plugin and contact their author."
+msgstr "Als dit niet voldoende is, is het mogelijk dat een plug-in van een derde partij een fout veroorzaakt in de API-applicatie. Controleer of er plug-ins van derden zijn, inclusief verplichte plug-ins (<code>mu-plugins</code>), die de API-plug-in per ongeluk kunnen breken, en neem contact op met de auteur."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_HEAD"
+msgid "The WordPress JSON API application responded with non-JSON data"
+msgstr "De WordPress JSON API-applicatie heeft gereageerd met niet-JSON-gegevens"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH1"
+msgid "The WordPress JSON API application is supposed to respond with JSON data. Your server returned non-JSON data. This means that something is broken on your site."
+msgstr "De WordPress JSON API-applicatie dient te reageren met JSON-gegevens. Uw server heeft niet-JSON-gegevens geretourneerd. Dit betekent dat er iets kapot is op uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2"
+msgid "Please make sure that there is no .htaccess code, third party plugins, or custom code (including in your theme\'s <code>functions.php</code> file) which block or otherwise limit WordPress\' JSON API – either at all, or for unauthenticated (guest) access."
+msgstr "Zorg ervoor dat er geen .htaccess-code, plug-ins van derden of aangepaste code (inclusief in het <code>functions.php</code>-bestand van uw thema) is die de JSON API van WordPress blokkeert of anderszins beperkt – geheel, of voor niet-geverifieerde (gast)toegang."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_HEAD"
+msgid "The WordPress JSON API Application responded with an unexpected HTTP status code (%s)"
+msgstr "De WordPress JSON API-applicatie heeft gereageerd met een onverwachte HTTP-statuscode (%s)"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_5XX"
+msgid "The HTTP status code %s means there has been a server error. Check if there are any third party plugins which may be accidentally breaking the WordPress JSON API application and contact their author."
+msgstr "De HTTP-statuscode %s betekent dat er een serverfout is opgetreden. Controleer of er plug-ins van derden zijn die de WordPress JSON API-applicatie per ongeluk kunnen breken en neem contact op met de auteur."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400"
+msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class="font-monospace">%s</span>) may not be one of them. Please contact your host if you are unsure why you are receiving this message."
+msgstr "De HTTP-statuscode 400 betekent doorgaans dat uw site slechts via een beperkt aantal domeinnamen toegankelijk is; de naam die u heeft geprobeerd te gebruiken (<span class="font-monospace">%s</span>) is mogelijk niet een van die namen. Neem contact op met uw host als u niet zeker weet waarom u dit bericht ontvangt."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_HEAD"
+msgid "WordPress believes that your API Token is incorrect, corrupt, or otherwise cannot log you in."
+msgstr "WordPress meent dat uw API-token onjuist of beschadigd is, of u anderszins niet kan aanmelden."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH1"
+msgid "Make sure that the API Token you are using is up-to-date, and that you have not accidentally truncated it, or copied any whitespace around it."
+msgstr "Zorg ervoor dat het API-token dat u gebruikt actueel is en dat u het niet per ongeluk heeft afgekapt of witruimte rondom heeft gekopieerd."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH2"
+msgid "Make sure that the plugin "Akeeba Panopticon Connector for WordPress" is enabled on your site."
+msgstr "Zorg ervoor dat de plug-in "Akeeba Panopticon Connector for WordPress" is ingeschakeld op uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH3"
+msgid "It is also possible that something on your server, or a plugin on your site, is corrupting the API Token as it is transmitted to your site."
+msgstr "Het is ook mogelijk dat iets op uw server of een plug-in op uw site het API-token beschadigt tijdens de overdracht naar uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH4"
+msgid "Please check your installed plugins. Kindly note that no, Admin Tools Professional for WordPress <em>does not</em> interfere with the Panopticon API Token. If this does not help please contact your host."
+msgstr "Controleer uw geinstalleerde plug-ins. Houd er rekening mee dat Admin Tools Professional voor WordPress <em>geen</em> invloed heeft op het Panopticon API-token. Als dit niet helpt, neem dan contact op met uw host."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HUH_WPGENERIC"
+msgid "Most likely a plugin on your server modified the request we sent, resulting in an error. Please check your installed plugins."
+msgstr "Waarschijnlijk heeft een plug-in op uw server het door ons verzonden verzoek gewijzigd, wat tot een fout heeft geleid. Controleer uw geinstalleerde plug-ins."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_HEAD"
+msgid "Your site believes that your API Token is incorrect, corrupt, or otherwise cannot log you in."
+msgstr "Uw site meent dat uw API-token onjuist of beschadigd is, of u anderszins niet kan aanmelden."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH1"
+msgid "Make sure that the API Token you are using is up-to-date, and that you have not accidentally truncated it, or copied any whitespace around it."
+msgstr "Zorg ervoor dat het API-token dat u gebruikt actueel is en dat u het niet per ongeluk heeft afgekapt of witruimte rondom heeft gekopieerd."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH2"
+msgid "Make sure that the plugin "Akeeba Panopticon Connector for WordPress" is enabled on your site."
+msgstr "Zorg ervoor dat de plug-in "Akeeba Panopticon Connector for WordPress" is ingeschakeld op uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH3"
+msgid "It is also possible that something on your server, or a plugin on your site, is corrupting the API Token as it is transmitted to your site."
+msgstr "Het is ook mogelijk dat iets op uw server of een plug-in op uw site het API-token beschadigt tijdens de overdracht naar uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH4"
+msgid "Please check your installed plugins. Kindly note that no, Admin Tools Professional for WordPress <em>does not</em> interfere with the Panopticon API Token. If this does not help please contact your host."
+msgstr "Controleer uw geinstalleerde plug-ins. Houd er rekening mee dat Admin Tools Professional voor WordPress <em>geen</em> invloed heeft op het Panopticon API-token. Als dit niet helpt, neem dan contact op met uw host."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"
+msgid "Please consult the <a href="https://curl.se/libcurl/c/libcurl-errors.html" target="_blank">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your site is on - which requires contacting the respective host to help you address."
+msgstr "Raadpleeg de <a href="https://curl.se/libcurl/c/libcurl-errors.html" target="_blank">cURL bibliotheekfoutcodereferentie</a> voor meer informatie over de fout. In de meeste gevallen betreft het een netwerk- of serverconfiguratiprobleem - op de server waarop u Panopticon heeft geinstalleerd of op de server van uw site - waarvoor u contact moet opnemen met de betreffende host."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH3"
+msgid "In rare circumstances the problem may be caused by a third party plugin –especially security, cache, and SEO plugins– or an external CDN, proxy, or firewall which may modify or redirect the API request, even if they are not supposed to do so."
+msgstr "In zeldzame gevallen kan het probleem worden veroorzaakt door een plug-in van een derde partij –met name beveiligings-, cache- en SEO-plug-ins– of een externe CDN, proxy of firewall die het API-verzoek kan wijzigen of omleiden, ook al is dit niet de bedoeling."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_HEAD"
+msgid "The Akeeba Panopticon Connector for WordPress plugin is not enabled on your site"
+msgstr "De Akeeba Panopticon Connector voor WordPress-plug-in is niet ingeschakeld op uw site"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_BLAH"
+msgid "Your WordPress site needs to have the Akeeba Panopticon Connector for WordPress plugin installed and enabled for Akeeba Panopticon to work with it."
+msgstr "Op uw WordPress-site moet de Akeeba Panopticon Connector voor WordPress-plug-in zijn geinstalleerd en ingeschakeld, zodat Akeeba Panopticon ermee kan werken."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK"
+msgid "Please check the following:"
+msgstr "Controleer het volgende:"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK1"
+msgid "Have you installed the Akeeba Panopticon Connector for WordPress plugin on your site?"
+msgstr "Heeft u de Akeeba Panopticon Connector voor WordPress-plug-in op uw site geinstalleerd?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK2"
+msgid "Go to wp-admin, Plugins. Is the "Akeeba Panopticon Connector for WordPress" plugin installed <em>and</em> activated?"
+msgstr "Ga naar wp-admin, Plug-ins. Is de plug-in "Akeeba Panopticon Connector voor WordPress" geinstalleerd <em>en</em> geactiveerd?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
+msgid "Cannot communicate with the "System - Panopticon Connector for Joomla 3" plugin on your site"
+msgstr "Kan niet communiceren met de plug-in "Systeem - Panopticon Connector voor Joomla 3" op uw site"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_HEAD"
+msgid "Cannot communicate with the "Akeeba Panopticon Connector for WordPress" plugin on your site"
+msgstr "Kan niet communiceren met de plug-in "Akeeba Panopticon Connector voor WordPress" op uw site"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
+msgid "Panopticon uses its own plugin, "Akeeba Panopticon Connector for WordPress", to provide the necessary API through WordPress' JSON services API (<code>wp-json</code>)."
+msgstr "Panopticon gebruikt zijn eigen plug-in, "Akeeba Panopticon Connector voor WordPress", om de benodigde API te bieden via de JSON-services API van WordPress (<code>wp-json</code>)."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
+msgid "Please go to your site's wp-admin backend and click on Plugins. Search for the "Akeeba Panopticon Connector for WordPress" plugin and enable it."
+msgstr "Ga naar de wp-admin-beheeromgeving van uw site en klik op Plug-ins. Zoek naar de plug-in "Akeeba Panopticon Connector voor WordPress" en schakel deze in."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_REGISTRATION"
+msgid "User Registration"
+msgstr "Gebruikersregistratie"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSKEY"
+msgid "Passkey login"
+msgstr "Aanmelden met passkey"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_PWRESET"
+msgid "Self-service Password Reset"
+msgstr "Wachtwoordherstel voor eigen gebruik"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI"
+msgid "Accurate PHP-CLI path"
+msgstr "Nauwkeurig PHP-CLI-pad"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI_HELP"
+msgid "Enable to have Akeeba Panopticon try to detect the accurate PHP-CLI path on your server. Disable if your server does not allow you to do that, locking your IP address out of your site for several minutes to hours when this happens (for example IONOS)."
+msgstr "Inschakelen om Akeeba Panopticon het nauwkeurige PHP-CLI-pad op uw server te laten detecteren. Schakel uit als uw server dit niet toestaat, waardoor uw IP-adres gedurende enkele minuten tot uren van uw site wordt buitengesloten wanneer dit gebeurt (bijvoorbeeld IONOS)."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN"
+msgid "Login with passkey"
+msgstr "Aanmelden met passkey"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_NO_MFA"
+msgid "Bypass MFA when using a passkey"
+msgstr "MFA overslaan bij gebruik van een passkey"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_NO_PASSWORD"
+msgid "Disable password login when login with passkey is set up"
+msgstr "Wachtwoordaanmelding uitschakelen wanneer passkey-aanmelding is ingesteld"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_NO_PASSWORD_OPT_USER"
+msgid "Let the user decide"
+msgstr "De gebruiker laten beslissen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_FORCE_GROUPS"
+msgid "Force passkey login for these groups"
+msgstr "Passkey-aanmelding verplichten voor deze groepen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_FORCE_SUPERUSER"
+msgid "Force passkey login for Superusers"
+msgstr "Passkey-aanmelding verplichten voor superbeheerders"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSKEY_LOGIN_FORCE_ADMIN"
+msgid "Force passkey login for Administrators"
+msgstr "Passkey-aanmelding verplichten voor beheerders"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET"
+msgid "Allow self-service password reset"
+msgstr "Wachtwoordherstel voor eigen gebruik toestaan"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MINTIME"
+msgid "Minimum time between password reset requests (seconds)"
+msgstr "Minimale tijd tussen wachtwoordherstelaanvragen (seconden)"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MAXFAILS"
+msgid "Maximum failed password reset attempts"
+msgstr "Maximum aantal mislukte wachtwoordherstelpogingen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_MFA"
+msgid "Password reset removes MFA"
+msgstr "Wachtwoordherstel verwijdert MFA"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_COMMON_SECURITY_NOTE"
+msgid "<em>Caution</em>: Enabling this option will reduce the security of your installation."
+msgstr "<em>Let op</em>: Het inschakelen van deze optie vermindert de beveiliging van uw installatie."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_PASSKEYS"
+msgid "Password reset removes passkeys"
+msgstr "Wachtwoordherstel verwijdert passkeys"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_SUPERUSER"
+msgid "Password reset allowed for Superusers"
+msgstr "Wachtwoordherstel toegestaan voor superbeheerders"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_ADMIN"
+msgid "Password reset allowed for Administrators"
+msgstr "Wachtwoordherstel toegestaan voor beheerders"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS"
+msgid "Password reset allowed for these groups"
+msgstr "Wachtwoordherstel toegestaan voor deze groepen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PWRESET_GROUPS_HELP"
+msgid "Leaving empty will allow users in any user group to reset their password. Superuser and administrator restrictions take precedence over this option."
+msgstr "Als u dit leeg laat, kunnen gebruikers in elke gebruikersgroep hun wachtwoord herstellen. Beperkingen voor superbeheerders en beheerders hebben voorrang op deze optie."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION"
+msgid "User registration"
+msgstr "Gebruikersregistratie"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION_HELP"
+msgid "Controls whether new users can create their own accounts. In 'Admin approval' mode, an administrator must approve new accounts. In 'Self-approval' mode, users activate their account via an email link."
+msgstr "Bepaalt of nieuwe gebruikers hun eigen account kunnen aanmaken. In de modus 'Beheerdersgoedkeuring' moet een beheerder nieuwe accounts goedkeuren. In de modus 'Zelfgoedkeuring' activeren gebruikers hun account via een e-maillink."
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_DISABLED"
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_ADMIN"
+msgid "Admin approval"
+msgstr "Beheerdersgoedkeuring"
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_SELF"
+msgid "Self-approval (email activation)"
+msgstr "Zelfgoedkeuring (e-mailactivering)"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ALLOWED_DOMAINS"
+msgid "Allowed email domains"
+msgstr "Toegestane e-maildomeinen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ALLOWED_DOMAINS_HELP"
+msgid "Only email addresses from these domains will be allowed to register. Separate with commas or newlines. Leave empty to allow all domains."
+msgstr "Alleen e-mailadressen van deze domeinen mogen zich registreren. Scheiden met komma's of nieuwe regels. Leeg laten om alle domeinen toe te staan."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DISALLOWED_DOMAINS"
+msgid "Disallowed email domains"
+msgstr "Niet-toegestane e-maildomeinen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DISALLOWED_DOMAINS_HELP"
+msgid "Email addresses from these domains will be blocked from registering. Separate with commas or newlines. Useful for blocking disposable email services."
+msgstr "E-mailadressen van deze domeinen worden geblokkeerd bij registratie. Scheiden met komma's of nieuwe regels. Handig voor het blokkeren van wegwerp-e-maildiensten."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DEFAULT_GROUP"
+msgid "Default group"
+msgstr "Standaardgroep"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DEFAULT_GROUP_HELP"
+msgid "New registered users will be automatically added to this group."
+msgstr "Nieuw geregistreerde gebruikers worden automatisch aan deze groep toegevoegd."
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_NO_GROUP"
+msgid "— None —"
+msgstr "— Geen —"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_BLOCK_USERNAMES"
+msgid "Block common usernames"
+msgstr "Veelgebruikte gebruikersnamen blokkeren"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_BLOCK_USERNAMES_HELP"
+msgid "When enabled, a hardcoded list of commonly abused usernames (admin, root, test, etc.) will be blocked during registration."
+msgstr "Indien ingeschakeld, wordt een vaste lijst van veelgebruikte gebruikersnamen (admin, root, test, enz.) geblokkeerd tijdens registratie."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_CUSTOM_BLOCKED_USERNAMES"
+msgid "Custom blocked usernames"
+msgstr "Aangepaste geblokkeerde gebruikersnamen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_CUSTOM_BLOCKED_USERNAMES_HELP"
+msgid "Additional usernames to block during registration. Separate with commas or newlines."
+msgstr "Aanvullende gebruikersnamen om te blokkeren tijdens registratie. Scheiden met komma's of nieuwe regels."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ACTIVATION_DAYS"
+msgid "Activation period"
+msgstr "Activeringsperiode"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ACTIVATION_TRIES"
+msgid "Maximum activation attempts"
+msgstr "Maximum aantal activeringspogingen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER"
+msgid "CAPTCHA provider"
+msgstr "CAPTCHA-aanbieder"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER_HELP"
+msgid "The CAPTCHA provider to use on the registration form to prevent automated registrations."
+msgstr "De CAPTCHA-aanbieder die op het registratieformulier wordt gebruikt om geautomatiseerde registraties te voorkomen."
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_ALTCHA"
+msgid "ALTCHA (self-hosted proof-of-work)"
+msgstr "ALTCHA (zelf gehost proof-of-work)"
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_RECAPTCHA_INVISIBLE"
+msgid "reCAPTCHA Invisible (Google)"
+msgstr "reCAPTCHA Invisible (Google)"
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_HCAPTCHA"
+msgid "hCaptcha"
+msgstr "hCaptcha"
+
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_NONE"
+msgid "None"
+msgstr "Geen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY"
+msgid "reCAPTCHA Site Key"
+msgstr "reCAPTCHA-sitesleutel"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY_HELP"
+msgid "Enter the site key from your Google reCAPTCHA admin console. You need an Invisible reCAPTCHA v2 key."
+msgstr "Voer de sitesleutel in van uw Google reCAPTCHA-beheerconsole. U heeft een Invisible reCAPTCHA v2-sleutel nodig."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY"
+msgid "reCAPTCHA Secret Key"
+msgstr "reCAPTCHA geheime sleutel"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY_HELP"
+msgid "Enter the secret key from your Google reCAPTCHA admin console."
+msgstr "Voer de geheime sleutel in van uw Google reCAPTCHA-beheerconsole."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY"
+msgid "hCaptcha Site Key"
+msgstr "hCaptcha-sitesleutel"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY_HELP"
+msgid "Enter the site key from your hCaptcha dashboard."
+msgstr "Voer de sitesleutel in van uw hCaptcha-dashboard."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY"
+msgid "hCaptcha Secret Key"
+msgstr "hCaptcha geheime sleutel"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY_HELP"
+msgid "Enter the secret key from your hCaptcha dashboard."
+msgstr "Voer de geheime sleutel in van uw hCaptcha-dashboard."
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGIN_UPDATE_FOUND"
+msgid "WordPress Plugin/Theme Update: Update Found"
+msgstr "WordPress-plug-in/thema-update: update gevonden"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PLUGINS_UPDATE_DONE"
+msgid "WordPress Plugin/Theme Update: Autoupdate Results"
+msgstr "WordPress-plug-in/thema-update: automatische updateresultaten"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_CORE_CHECKSUMS_FOUND"
+msgid "Core File Integrity: Modified Files Found"
+msgstr "Integriteit kernbestanden: gewijzigde bestanden gevonden"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_PWRESET"
+msgid "Password Reset"
+msgstr "Wachtwoordherstel"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_PENDING_ADMIN"
+msgid "Registration: Pending Admin Approval"
+msgstr "Registratie: wachtend op beheerdersgoedkeuring"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_NOTIFY_ADMIN"
+msgid "Registration: Admin Notification"
+msgstr "Registratie: beheerdersmeldingen"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_ACTIVATE"
+msgid "Registration: Activation Required"
+msgstr "Registratie: activering vereist"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_APPROVED"
+msgid "Registration: Account Approved"
+msgstr "Registratie: account goedgekeurd"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_EXPIRED"
+msgid "Registration: Account Expired"
+msgstr "Registratie: account verlopen"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSION_INSTALL_SUMMARY"
+msgid "Remote Extension Installation: Summary"
+msgstr "Externe extensie-installatie: samenvatting"
+
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_BANNED"
+msgid "The password you entered is in a list of commonly used passwords. Please choose a different password."
+msgstr "Het ingevoerde wachtwoord staat op een lijst van veelgebruikte wachtwoorden. Kies een ander wachtwoord."
+
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_TOOSHORT"
+msgid "The password is too short. Please use at least 12 characters."
+msgstr "Het wachtwoord is te kort. Gebruik minimaal 12 tekens."
+
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_WEAK"
+msgid "The password is too easy to guess. Please use a more complex password with a mix of letters, numbers, and symbols."
+msgstr "Het wachtwoord is te gemakkelijk te raden. Gebruik een complexer wachtwoord met een combinatie van letters, cijfers en symbolen."
+
+msgctxt "PANOPTICON_USERS_LBL_FIELD_NAME"
+msgid "Full Name"
+msgstr "Volledige naam"
+
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
+msgid "Confirm Password"
+msgstr "Wachtwoord bevestigen"
+
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSKEY_LOGIN_NO_PASSWORD"
+msgid "Disable password login when passkeys are available"
+msgstr "Wachtwoordaanmelding uitschakelen wanneer passkeys beschikbaar zijn"
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_PROMPT"
+msgid "Forgot your password?"
+msgstr "Wachtwoord vergeten?"
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_HEAD"
+msgid "Request Password Reset"
+msgstr "Wachtwoordherstel aanvragen"
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_INFO"
+msgid "Enter your username and email address in the form below. An email will be sent to you with instructions to reset your password."
+msgstr "Voer uw gebruikersnaam en e-mailadres in het onderstaande formulier in. Er wordt een e-mail verzonden met instructies voor het herstellen van uw wachtwoord."
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_SUBMIT_BUTTON"
+msgid "Request password reset"
+msgstr "Wachtwoordherstel aanvragen"
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_SENT"
+msgid "Your password reset request has been submitted."
+msgstr "Uw wachtwoordherstelaanvraag is ingediend."
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_RESET"
+msgid "Your password has been reset. You can now log in."
+msgstr "Uw wachtwoord is hersteld. U kunt nu inloggen."
+
+msgctxt "PANOPTICON_USERS_LBL_PWRESET_NOT_RESET"
+msgid "Your password has not been reset."
+msgstr "Uw wachtwoord is niet hersteld."
+
+msgctxt "PANOPTICON_USERS_ERR_PWRESET_DISABLED"
+msgid "Password reset requests are not allowed."
+msgstr "Wachtwoordherstelaanvragen zijn niet toegestaan."
+
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_HEAD"
+msgid "Confirm Password Reset"
+msgstr "Wachtwoordherstel bevestigen"
+
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_TOKEN"
+msgid "Token"
+msgstr "Token"
+
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_PASSWORD"
+msgid "New Password"
+msgstr "Nieuw wachtwoord"
+
+msgctxt "PANOPTICON_USERS_LBL_CONFIRMRESET_SUBMIT_BUTTON"
+msgid "Reset Password"
+msgstr "Wachtwoord herstellen"
+
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_PROMPT"
+msgid "Create an account"
+msgstr "Een account aanmaken"
+
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_HEAD"
+msgid "Register New Account"
+msgstr "Nieuw account registreren"
+
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_INFO"
+msgid "Fill in the form below to create a new account."
+msgstr "Vul het onderstaande formulier in om een nieuw account aan te maken."
+
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUBMIT_BUTTON"
+msgid "Register"
+msgstr "Registreren"
+
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUCCESS_ADMIN"
+msgid "Your account has been created and is pending administrator approval. You will receive an email when your account is approved."
+msgstr "Uw account is aangemaakt en wacht op goedkeuring door een beheerder. U ontvangt een e-mail wanneer uw account is goedgekeurd."
+
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUCCESS_SELF"
+msgid "Your account has been created. Please check your email for the activation link."
+msgstr "Uw account is aangemaakt. Controleer uw e-mail voor de activeringslink."
+
+msgctxt "PANOPTICON_USERS_LBL_BACK_TO_LOGIN"
+msgid "Back to login"
+msgstr "Terug naar aanmelden"
+
+msgctxt "PANOPTICON_USERS_ERR_REGISTRATION_DISABLED"
+msgid "User registration is currently disabled."
+msgstr "Gebruikersregistratie is momenteel uitgeschakeld."
+
+msgctxt "PANOPTICON_USERS_ERR_FORBIDDEN_USERNAME"
+msgid "This username is not allowed. Please choose a different username."
+msgstr "Deze gebruikersnaam is niet toegestaan. Kies een andere gebruikersnaam."
+
+msgctxt "PANOPTICON_USERS_ERR_EMAIL_EXISTS"
+msgid "An account with this email address already exists."
+msgstr "Er bestaat al een account met dit e-mailadres."
+
+msgctxt "PANOPTICON_USERS_ERR_EMAIL_DOMAIN_NOT_ALLOWED"
+msgid "Registration is not allowed for this email domain."
+msgstr "Registratie is niet toegestaan voor dit e-maildomein."
+
+msgctxt "PANOPTICON_USERS_ERR_CAPTCHA_FAILED"
+msgid "CAPTCHA verification failed. Please try again."
+msgstr "CAPTCHA-verificatie mislukt. Probeer het opnieuw."
+
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_HEAD"
+msgid "Activate Your Account"
+msgstr "Uw account activeren"
+
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_INFO"
+msgid "Enter your username, password, and the activation token from your email to activate your account."
+msgstr "Voer uw gebruikersnaam, wachtwoord en het activeringstoken uit uw e-mail in om uw account te activeren."
+
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_TOKEN"
+msgid "Activation Token"
+msgstr "Activeringstoken"
+
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_SUBMIT_BUTTON"
+msgid "Activate Account"
+msgstr "Account activeren"
+
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_SUCCESS"
+msgid "Your account has been activated. You can now log in."
+msgstr "Uw account is geactiveerd. U kunt nu inloggen."
+
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_FAILED"
+msgid "Activation failed. Please check your username, password, and token."
+msgstr "Activering mislukt. Controleer uw gebruikersnaam, wachtwoord en token."
+
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_EXPIRED"
+msgid "Your registration has expired. Please register again."
+msgstr "Uw registratie is verlopen. Registreer opnieuw."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE"
+msgid "Core File Integrity Check Schedules"
+msgstr "Planningen integriteitscontrole kernbestanden"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE_NEW"
+msgid "New Checksum Check Schedule"
+msgstr "Nieuwe planning controlesomcontrole"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE_EDIT"
+msgid "Edit a Checksum Check Schedule"
+msgstr "Een planning controlesomcontrole bewerken"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_TABLE_COMMENT"
+msgid "List of core file integrity check task schedules"
+msgstr "Lijst van planningen voor integriteitscontroles van kernbestanden"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES"
+msgid "Minutes"
+msgstr "Minuten"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES_HELP"
+msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
+msgstr "Getal <code>0</code> tot <code>59</code>, aaneengesloten bereik bijv. <code>5-15</code>, door komma's gescheiden lijst van waarden bijv. <code>1,15,30,45</code>, elke minuut als <code>*</code>, elke X minuten met schuine streep bijv. <code>*/5</code> (elke 5 minuten)."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS"
+msgid "Hours"
+msgstr "Uren"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS_HELP"
+msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
+msgstr "Getal <code>0</code> tot <code>23</code> (0–11 is voormiddag, 12–23 is namiddag), aaneengesloten bereik bijv. <code>5-15</code>, door komma's gescheiden lijst bijv. <code>0,6,12,18</code>, elk uur als <code>*</code>, elke X uren met schuine streep bijv. <code>*/2</code> (elke 2 uren)."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM"
+msgid "Day of the Month"
+msgstr "Dag van de maand"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15</code>, every day as <code>*</code>, every X days using slash e.g. <code>*/2</code> (every 2 days)."
+msgstr "Getal <code>1</code> tot <code>31</code>, aaneengesloten bereik bijv. <code>5-15</code>, door komma's gescheiden lijst bijv. <code>1,15</code>, elke dag als <code>*</code>, elke X dagen met schuine streep bijv. <code>*/2</code> (elke 2 dagen)."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH"
+msgid "Month"
+msgstr "Maand"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH_HELP"
+msgid "Number <code>1</code> to <code>12</code>, contiguous range e.g. <code>1-6</code>, comma–separated list of values e.g. <code>1,4,7,10</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/3</code> (every 3 months)."
+msgstr "Getal <code>1</code> tot <code>12</code>, aaneengesloten bereik bijv. <code>1-6</code>, door komma's gescheiden lijst bijv. <code>1,4,7,10</code>, elke maand als <code>*</code>, elke X maanden met schuine streep bijv. <code>*/3</code> (elke 3 maanden)."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW"
+msgid "Day of the Week"
+msgstr "Dag van de week"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW_HELP"
+msgid "Number <code>0</code> to <code>7</code> (0 or 7 is Sunday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>."
+msgstr "Getal <code>0</code> tot <code>7</code> (0 of 7 is zondag), aaneengesloten bereik bijv. <code>1-5</code>, door komma's gescheiden lijst bijv. <code>1,3,5</code>, elke dag als <code>*</code>."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE"
+msgid "Repetition"
+msgstr "Herhaling"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_NONE"
+msgid "Repeat according to schedule"
+msgstr "Herhalen volgens planning"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
+msgid "Run once, then disable this check schedule"
+msgstr "Eenmalig uitvoeren, dan deze controleplanning uitschakelen"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_DELETE"
+msgid "⚠️ Run once, then DELETE this check schedule"
+msgstr "⚠️ Eenmalig uitvoeren, dan deze controleplanning VERWIJDEREN"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The check schedule is a <a href='%s' target='_blank'>CRON expression</a>. It uses the %s time zone."
+msgstr "De controleplanning is een <a href='%s' target='_blank'>CRON-expressie</a>. Deze gebruikt de tijdzone %s."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_ERR_CANNOT_EDIT_MANUAL"
+msgid "You cannot edit manual check schedules."
+msgstr "U kunt handmatige controleplanning niet bewerken."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_SCAN"
+msgid "Manual Check"
+msgstr "Handmatige controle"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_SELECT_MANUAL"
+msgid "– Manual –"
+msgstr "– Handmatig –"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_NO"
+msgid "Scheduled"
+msgstr "Gepland"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_YES"
+msgid "Manual"
+msgstr "Handmatig"
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_VIEW_MANUAL"
+msgid "List Manual Checks"
+msgstr "Handmatige controles weergeven"
+
+msgctxt "PANOPTICON_CORECHECKSUMS_TITLE"
+msgid "Core File Integrity Check Results"
+msgstr "Resultaten integriteitscontrole kernbestanden"
+
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_LAST_CHECK"
+msgid "Last check: %s"
+msgstr "Laatste controle: %s"
+
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_ALL_CLEAN"
+msgid "All core files are intact. No modifications detected."
+msgstr "Alle kernbestanden zijn intact. Geen wijzigingen gedetecteerd."
+
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_FOUND_MODIFIED"
+msgid "%d modified core file(s) detected"
+msgstr "%d gewijzigd(e) kernbestand(en) gedetecteerd"
+
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_FILE_PATH"
+msgid "File Path"
+msgstr "Bestandspad"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_TITLE"
+msgid "Install Extension"
+msgstr "Extensie installeren"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARNING_HEAD"
+msgid "Danger Zone"
+msgstr "Gevarenzone"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARNING_BODY"
+msgid "Installing extensions remotely is a powerful and potentially dangerous operation. Installing an incompatible or malicious extension can break your site, cause data loss, or introduce security vulnerabilities. Only install extensions you trust, and always have a recent backup before proceeding."
+msgstr "Het op afstand installeren van extensies is een krachtige en mogelijk gevaarlijke bewerking. Het installeren van een incompatibele of kwaadaardige extensie kan uw site beschadigen, gegevensverlies veroorzaken of beveiligingsproblemen introduceren. Installeer alleen extensies die u vertrouwt en zorg altijd voor een recente back-up voordat u doorgaat."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_STEP_SELECT"
+msgid "Step 1: Select Sites"
+msgstr "Stap 1: Sites selecteren"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_STEP_REVIEW"
+msgid "Step 2: Review & Install"
+msgstr "Stap 2: Controleren en installeren"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECT_SITE"
+msgid "Select site "%s""
+msgstr "Site "%s" selecteren"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CONTINUE"
+msgid "Continue to Review"
+msgstr "Doorgaan naar beoordeling"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_GOBACK"
+msgid "Go back to site selection"
+msgstr "Terug naar siteselectie"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_INSTALL"
+msgid "Install Extension"
+msgstr "Extensie installeren"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SITE_NAME"
+msgid "Site Name"
+msgstr "Sitenaam"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMS_TYPE"
+msgid "CMS"
+msgstr "CMS"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMS_VERSION"
+msgid "CMS Version"
+msgstr "CMS-versie"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_PHP_VERSION"
+msgid "PHP Version"
+msgstr "PHP-versie"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SITE_SELECT"
+msgid "– Site –"
+msgstr "– Site –"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMSTYPE_SELECT"
+msgid "– CMS Type –"
+msgstr "– CMS-type –"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMSVERSION_SELECT"
+msgid "– CMS Version –"
+msgstr "– CMS-versie –"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_PHPVERSION_SELECT"
+msgid "– PHP Version –"
+msgstr "– PHP-versie –"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES"
+msgid "Extension Updates"
+msgstr "Extensie-updates"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_SELECT"
+msgid "– Update Status –"
+msgstr "– Updatestatus –"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_YES"
+msgid "Out of Date"
+msgstr "Verouderd"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_NO"
+msgid "Up to Date"
+msgstr "Bijgewerkt"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME"
+msgid "Extension Name"
+msgstr "Extensienaam"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME_SELECT"
+msgid "– Extension Name –"
+msgstr "– Extensienaam –"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR"
+msgid "Extension Author"
+msgstr "Auteur van extensie"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_SELECT"
+msgid "– Author –"
+msgstr "– Auteur –"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL"
+msgid "Author URL"
+msgstr "URL auteur"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL_SELECT"
+msgid "– Author URL –"
+msgstr "– URL auteur –"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL"
+msgid "Extension Download URL"
+msgstr "Download-URL extensie"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_HELP"
+msgid "The direct download URL for the extension package (ZIP file). The remote site will download it directly from this URL."
+msgstr "De directe download-URL voor het extensiepakket (ZIP-bestand). De externe site zal het direct van deze URL downloaden."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE"
+msgid "Extension Package File"
+msgstr "Extensiepakketbestand"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE_HELP"
+msgid "Upload an extension package file (ZIP). It will be sent to each selected site for installation."
+msgstr "Upload een extensiepakketbestand (ZIP). Het wordt naar elke geselecteerde site verzonden voor installatie."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_OR_FILE"
+msgid "Provide a download URL or upload a file"
+msgstr "Geef een download-URL op of upload een bestand"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_CMS"
+msgid "You have selected both Joomla!® and WordPress sites. An extension package is typically only compatible with one CMS. Please remove one type."
+msgstr "U heeft zowel Joomla!® als WordPress-sites geselecteerd. Een extensiepakket is doorgaans slechts compatibel met één CMS. Verwijder een van de typen."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_VERSIONS"
+msgid "The selected sites use different CMS and/or PHP versions. This could lead to failed installations on some sites."
+msgstr "De geselecteerde sites gebruiken verschillende CMS- en/of PHP-versies. Dit kan leiden tot mislukte installaties op sommige sites."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_JOOMLA"
+msgid "Remove Joomla!® sites"
+msgstr "Joomla!®-sites verwijderen"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_WORDPRESS"
+msgid "Remove WordPress sites"
+msgstr "WordPress-sites verwijderen"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_TASK_CREATED"
+msgid "Extension installation has been scheduled. You will receive a summary email and push notification when it completes."
+msgstr "Extensie-installatie is gepland. U ontvangt een samenvattings-e-mail en pushmelding wanneer dit is voltooid."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECTED_SITES"
+msgid "Selected Sites"
+msgstr "Geselecteerde sites"
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_NO_SITES"
+msgid "No sites selected. Please go back and select at least one site."
+msgstr "Geen sites geselecteerd. Ga terug en selecteer minimaal een site."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_NO_URL_OR_FILE"
+msgid "Please provide an extension download URL or upload a file."
+msgstr "Geef een download-URL voor de extensie op of upload een bestand."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_SITES"
+msgid "You must select at least one site."
+msgstr "U moet minimaal een site selecteren."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_PERMISSION"
+msgid "You do not have permission to install extensions on one or more selected sites."
+msgstr "U heeft geen toestemming om extensies te installeren op een of meer geselecteerde sites."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_URL_OR_FILE"
+msgid "You must provide an extension download URL or upload a package file."
+msgstr "U moet een download-URL voor de extensie opgeven of een pakketbestand uploaden."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
+msgid "Table of selected sites for extension installation"
+msgstr "Tabel van geselecteerde sites voor extensie-installatie"
+
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_SUCCESS"
+msgid "Core file integrity check ran"
+msgstr "Integriteitscontrole kernbestanden uitgevoerd"
+
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_FAILED"
+msgid "Core file integrity check failed"
+msgstr "Integriteitscontrole kernbestanden mislukt"
+
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_MODIFIED_COUNT"
+msgid "%d modified core file(s) detected"
+msgstr "%d gewijzigd(e) kernbestand(en) gedetecteerd"
+
+msgctxt "PANOPTICON_PASSKEYS_TITLE"
+msgid "Passkey authentication"
+msgstr "Passkey-verificatie"
+
+msgctxt "PANOPTICON_PASSKEYS_DESCRIPTION"
+msgid "You can log in using a passkey &ndash;managed by your browser, and/or device&ndash; instead of your password. Passkeys are more secure."
+msgstr "U kunt inloggen met een passkey &ndash;beheerd door uw browser en/of apparaat&ndash; in plaats van uw wachtwoord. Passkeys zijn veiliger."
+
+msgctxt "PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR"
+msgid "Passkey"
+msgstr "Passkey"
+
+msgctxt "PANOPTICON_PASSKEYS_LBL_DEFAULT_AUTHENTICATOR_LABEL"
+msgid "%s added on %s"
+msgstr "%s toegevoegd op %s"
+
+msgctxt "PANOPTICON_PASSKEYS_TABLE_CAPTION"
+msgid "Table of passkeys."
+msgstr "Tabel met passkeys."
+
+msgctxt "PANOPTICON_PASSKEYS_FIELD_N_AUTHENTICATORS_REGISTERED"
+msgid "%d passkeys already set up: %s"
+msgstr "%d passkeys al ingesteld: %s"
+
+msgctxt "PANOPTICON_PASSKEYS_FIELD_N_AUTHENTICATORS_REGISTERED_0"
+msgid "No passkeys have been set up yet"
+msgstr "Er zijn nog geen passkeys ingesteld"
+
+msgctxt "PANOPTICON_PASSKEYS_FIELD_N_AUTHENTICATORS_REGISTERED_1"
+msgid "One passkey already set up: %2$s"
+msgstr "Een passkey al ingesteld: %2$s"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_FIELD_KEYLABEL_LABEL"
+msgid "Name"
+msgstr "Naam"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_FIELD_KEYLABEL_DESC"
+msgid "A short name for your login method."
+msgstr "Een korte naam voor uw aanmeldmethode."
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_HEADER_NOMETHODS_LABEL"
+msgid "No passkeys have been set up yet."
+msgstr "Er zijn nog geen passkeys ingesteld."
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_HEADER_ACTIONS_LABEL"
+msgid "Actions"
+msgstr "Acties"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_DELETE_LABEL"
+msgid "Remove"
+msgstr "Verwijderen"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_EDIT_LABEL"
+msgid "Edit name"
+msgstr "Naam bewerken"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_ADD_LABEL"
+msgid "Add new authenticator"
+msgstr "Nieuwe verificatiemethode toevoegen"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_ADDRESIDENT_LABEL"
+msgid "Add new passkey"
+msgstr "Nieuwe passkey toevoegen"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_SAVE_LABEL"
+msgid "Save"
+msgstr "Opslaan"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_BTN_CANCEL_LABEL"
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgctxt "PANOPTICON_PASSKEYS_MANAGE_LBL_WHATISTHIS"
+msgid "What is this?"
+msgstr "Wat is dit?"
+
+msgctxt "PANOPTICON_PASSKEYS_LBL_FORCED_NEEDED"
+msgid "You must set up a passkey to be allowed further access to this application."
+msgstr "U moet een passkey instellen om verdere toegang tot deze applicatie te verkrijgen."
+
+msgctxt "PANOPTICON_PASSKEYS_LBL_FORCED_COMPLETE"
+msgid "You can now click on the Cancel button in the toolbar to return to the application."
+msgstr "U kunt nu op de knop Annuleren in de werkbalk klikken om terug te keren naar de applicatie."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_DISABLED"
+msgid "Passkey login is disabled"
+msgstr "Passkey-aanmelding is uitgeschakeld"
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_NO_STORED_CREDENTIAL"
+msgid "Cannot find the stored credentials for your passkey."
+msgstr "De opgeslagen inloggegevens voor uw passkey kunnen niet worden gevonden."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CORRUPT_STORED_CREDENTIAL"
+msgid "The stored credentials are corrupt for your user account. Log in using another method, then remove and add again your passkey."
+msgstr "De opgeslagen inloggegevens voor uw gebruikersaccount zijn beschadigd. Log in met een andere methode, verwijder uw passkey en voeg deze opnieuw toe."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CANT_STORE_FOR_GUEST"
+msgid "Cannot possibly store credentials without a user!"
+msgstr "Het is onmogelijk om inloggegevens op te slaan zonder een gebruiker!"
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREDENTIAL_ID_ALREADY_IN_USE"
+msgid "Cannot save credentials. These credentials are already being used by a different user."
+msgstr "Kan de inloggegevens niet opslaan. Deze inloggegevens worden al gebruikt door een andere gebruiker."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_USER_REMOVED"
+msgid "The user for this passkey seems to no longer exist on this site."
+msgstr "De gebruiker voor deze passkey lijkt niet meer te bestaan op deze site."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_NO_BROWSER_SUPPORT"
+msgid "Sorry, your browser does not support passkeys. You will need to log into this site using your username and password."
+msgstr "Uw browser ondersteunt helaas geen passkeys. U moet inloggen op deze site met uw gebruikersnaam en wachtwoord."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_NO_PK"
+msgid "The server has not issued a Public Key for passkey registration but somehow received a passkey registration request from the browser. This means that someone tried to hack you or something is broken."
+msgstr "De server heeft geen publieke sleutel uitgegeven voor passkey-registratie, maar heeft toch een passkey-registratieverzoek ontvangen van de browser. Dit betekent dat iemand heeft geprobeerd u te hacken of dat er iets kapot is."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_PK"
+msgid "The passkey registration has failed. The authenticator response received from the browser does not match the Public Key issued by the server. This means that someone tried to hack you or something is broken."
+msgstr "De passkey-registratie is mislukt. Het verificatieantwoord van de browser komt niet overeen met de publieke sleutel die door de server is uitgegeven. Dit betekent dat iemand heeft geprobeerd u te hacken of dat er iets kapot is."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_USER"
+msgid "For security reasons you are not allowed to register passkeys on behalf of another user."
+msgstr "Om veiligheidsredenen mag u geen passkeys registreren namens een andere gebruiker."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_NO_ATTESTED_DATA"
+msgid "Something went wrong but no further information about the error is available at this time. Please retry registering your passkey."
+msgstr "Er is iets misgegaan, maar er is op dit moment geen verdere informatie over de fout beschikbaar. Probeer uw passkey opnieuw te registreren."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_LABEL_NOT_SAVED"
+msgid "Could not save the new label"
+msgstr "Het nieuwe label kon niet worden opgeslagen"
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_NOT_DELETED"
+msgid "Could not remove the passkey"
+msgstr "De passkey kon niet worden verwijderd"
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CREATE_INVALID_LOGIN_REQUEST"
+msgid "Invalid passwordless login request. Something is broken or this is an attempt to hack the site."
+msgstr "Ongeldig wachtwoordloos aanmeldverzoek. Er is iets kapot of dit is een poging om de site te hacken."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CANNOT_FIND_USERNAME"
+msgid "Cannot find the username field. Sorry, passkeys will not work on this site."
+msgstr "Het gebruikersnaamveld kan niet worden gevonden. Helaas zullen passkeys niet werken op deze site."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_EMPTY_USERNAME"
+msgid "You need to enter your username (but NOT your password) before clicking the Passwordless Login button."
+msgstr "U moet uw gebruikersnaam invoeren (maar NIET uw wachtwoord) voordat u op de knop Wachtwoordloos aanmelden klikt."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_INVALID_USERNAME"
+msgid "The specified username does not correspond to a user account that has enabled passwordless login on this site."
+msgstr "De opgegeven gebruikersnaam komt niet overeen met een gebruikersaccount dat wachtwoordloos aanmelden heeft ingeschakeld op deze site."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_INVALID_USERNAME_RESIDENT"
+msgid "The passkey you selected does not correspond to an active user of this site."
+msgstr "De passkey die u heeft geselecteerd komt niet overeen met een actieve gebruiker van deze site."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_WEBAUTHN_REQUIRES_GMP_OR_BCMATCH"
+msgid "One of the PHP extensions GMP and BCMath must be installed and enabled on your server to add passkeys."
+msgstr "Een van de PHP-extensies GMP en BCMath moet op uw server zijn geinstalleerd en ingeschakeld om passkeys toe te voegen."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_CANNOT_ADD_FOR_A_USER"
+msgid "You cannot add or remove passkeys on behalf of users. Users must login, and set up their own passkeys."
+msgstr "U kunt geen passkeys toevoegen of verwijderen namens gebruikers. Gebruikers moeten zelf inloggen en hun eigen passkeys instellen."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_NOPASSWORDLOGIN"
+msgid "You are not allowed to log into the site with a username and password."
+msgstr "U mag niet inloggen op de site met een gebruikersnaam en wachtwoord."
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_AJAX_INVALIDACTION"
+msgid "Invalid ajax action"
+msgstr "Ongeldige ajax-actie"
+
+msgctxt "PANOPTICON_PASSKEYS_ERR_XHR_INITCREATE"
+msgid "Cannot get the passkey registration information from your site."
+msgstr "De passkey-registratiegegevens kunnen niet van uw site worden opgehaald."
+
+msgctxt "PANOPTICON_PASSKEYS_BTN_LOGIN"
+msgid "Passkey login"
+msgstr "Aanmelden met passkey"
+
+msgctxt "PANOPTICON_POLICIES_TITLE"
+msgid "Legal Policies"
+msgstr "Juridische beleidsregels"
+
+msgctxt "PANOPTICON_POLICIES_TITLE_TOS"
+msgid "Terms of Service"
+msgstr "Gebruiksvoorwaarden"
+
+msgctxt "PANOPTICON_POLICIES_TITLE_PRIVACY"
+msgid "Privacy Policy"
+msgstr "Privacybeleid"
+
+msgctxt "PANOPTICON_POLICIES_TITLE_EDIT"
+msgid "Edit Legal Policies"
+msgstr "Juridische beleidsregels bewerken"
+
+msgctxt "PANOPTICON_POLICIES_LBL_TYPE"
+msgid "Policy Type"
+msgstr "Type beleid"
+
+msgctxt "PANOPTICON_POLICIES_LBL_LANGUAGE"
+msgid "Language"
+msgstr "Taal"
+
+msgctxt "PANOPTICON_POLICIES_LBL_CONTENT"
+msgid "Content"
+msgstr "Inhoud"
+
+msgctxt "PANOPTICON_POLICIES_LBL_PREVIEW_TOS"
+msgid "Preview Terms of Service"
+msgstr "Gebruiksvoorwaarden bekijken"
+
+msgctxt "PANOPTICON_POLICIES_LBL_PREVIEW_PRIVACY"
+msgid "Preview Privacy Policy"
+msgstr "Privacybeleid bekijken"
+
+msgctxt "PANOPTICON_POLICIES_MSG_SAVED"
+msgid "The policy has been saved."
+msgstr "Het beleid is opgeslagen."
+
+msgctxt "PANOPTICON_USERCONSENT_TITLE"
+msgid "Terms and Conditions"
+msgstr "Algemene voorwaarden"
+
+msgctxt "PANOPTICON_USERCONSENT_HEAD_REQUIRED"
+msgid "Your Consent is Required"
+msgstr "Uw toestemming is vereist"
+
+msgctxt "PANOPTICON_USERCONSENT_LBL_EXPLANATION"
+msgid "Before you can use this service, you must review and agree to our Terms of Service and Privacy Policy. You can also export your personal data or delete your account from this page."
+msgstr "Voordat u deze dienst kunt gebruiken, moet u onze gebruiksvoorwaarden en ons privacybeleid lezen en ermee akkoord gaan. U kunt ook uw persoonlijke gegevens exporteren of uw account verwijderen via deze pagina."
+
+msgctxt "PANOPTICON_USERCONSENT_LBL_VIEW_FULL"
+msgid "View full page"
+msgstr "Volledige pagina bekijken"
+
+msgctxt "PANOPTICON_USERCONSENT_LBL_AGREE_PROMPT"
+msgid "By clicking &ldquo;I Agree&rdquo;, you confirm that you have read and agree to the Terms of Service and Privacy Policy."
+msgstr "Door op &ldquo;Ik ga akkoord&rdquo; te klikken, bevestigt u dat u de gebruiksvoorwaarden en het privacybeleid heeft gelezen en ermee akkoord gaat."
+
+msgctxt "PANOPTICON_USERCONSENT_BTN_AGREE"
+msgid "I Agree"
+msgstr "Ik ga akkoord"
+
+msgctxt "PANOPTICON_USERCONSENT_BTN_DECLINE"
+msgid "I Decline (Log Out)"
+msgstr "Ik weiger (afmelden)"
+
+msgctxt "PANOPTICON_USERCONSENT_MSG_AGREED"
+msgid "Thank you for accepting the Terms of Service. You can now use the application."
+msgstr "Bedankt voor het accepteren van de gebruiksvoorwaarden. U kunt de applicatie nu gebruiken."
+
+msgctxt "PANOPTICON_USERCONSENT_MSG_DECLINED"
+msgid "You have declined the Terms of Service and have been logged out."
+msgstr "U heeft de gebruiksvoorwaarden geweigerd en bent afgemeld."
+
+msgctxt "PANOPTICON_USERCONSENT_HEAD_EXPORT"
+msgid "Export Your Data"
+msgstr "Uw gegevens exporteren"
+
+msgctxt "PANOPTICON_USERCONSENT_LBL_EXPORT_DESC"
+msgid "Download a copy of all personal data we hold about you, in XML format. This includes your profile information, owned sites, MFA methods, and passkey labels."
+msgstr "Download een kopie van alle persoonsgegevens die wij over u bewaren, in XML-formaat. Dit omvat uw profielinformatie, eigendomsrechten op sites, MFA-methoden en passkey-labels."
+
+msgctxt "PANOPTICON_USERCONSENT_BTN_EXPORT"
+msgid "Download My Data"
+msgstr "Mijn gegevens downloaden"
+
+msgctxt "PANOPTICON_USERCONSENT_HEAD_DELETE"
+msgid "Permanently Delete My Account"
+msgstr "Mijn account permanent verwijderen"
+
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_WARNING"
+msgid "Deleting your account is permanent and cannot be undone. All your data, including sites you own, will be permanently removed."
+msgstr "Het verwijderen van uw account is permanent en kan niet ongedaan worden gemaakt. Al uw gegevens, inclusief sites die u bezit, worden permanent verwijderd."
+
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_SOLE_ADMIN"
+msgid "You are the only administrator account. You cannot delete your own account as this would leave the system without an administrator."
+msgstr "U bent het enige beheerdersaccount. U kunt uw eigen account niet verwijderen, want dan is het systeem zonder beheerder."
+
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_TYPE_USERNAME"
+msgid "To confirm, type your username below:"
+msgstr "Typ ter bevestiging uw gebruikersnaam hieronder:"
+
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_CONFIRM"
+msgid "Are you absolutely sure you want to permanently delete your account? This action CANNOT be undone."
+msgstr "Weet u zeker dat u uw account permanent wilt verwijderen? Deze actie KAN NIET ongedaan worden gemaakt."
+
+msgctxt "PANOPTICON_USERCONSENT_BTN_DELETE"
+msgid "Permanently Delete My Account"
+msgstr "Mijn account permanent verwijderen"
+
+msgctxt "PANOPTICON_USERCONSENT_ERR_USERNAME_MISMATCH"
+msgid "The username you entered does not match your account username. Account deletion was cancelled."
+msgstr "De ingevoerde gebruikersnaam komt niet overeen met de gebruikersnaam van uw account. Het verwijderen van het account is geannuleerd."
+
+msgctxt "PANOPTICON_USERCONSENT_ERR_CANNOT_SELF_DELETE"
+msgid "You cannot delete your account. You may be the only administrator."
+msgstr "U kunt uw account niet verwijderen. Mogelijk bent u de enige beheerder."
+
+msgctxt "PANOPTICON_USERCONSENT_MSG_ACCOUNT_DELETED"
+msgid "Your account has been permanently deleted."
+msgstr "Uw account is permanent verwijderd."
+
+msgctxt "PANOPTICON_TASKTYPE_SENDWEBPUSH"
+msgid "Send Enqueued Web Push Notifications"
+msgstr "In wachtrij geplaatste webpushmeldingen verzenden"
+
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_MESSAGE"
+msgid "Would you like to receive browser push notifications for important events like updates, backups, and site status changes?"
+msgstr "Wilt u browserpushmeldingen ontvangen voor belangrijke gebeurtenissen zoals updates, back-ups en wijzigingen in de sitestatus?"
+
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_ENABLE"
+msgid "Enable Notifications"
+msgstr "Meldingen inschakelen"
+
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_REMIND"
+msgid "Remind Me Later"
+msgstr "Herinner mij later"
+
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_DECLINE"
+msgid "I Am Not Interested"
+msgstr "Ik ben niet geinteresseerd"
+
+msgctxt "PANOPTICON_WEBPUSH_PROFILE_TITLE"
+msgid "Push Notifications"
+msgstr "Pushmeldingen"
+
+msgctxt "PANOPTICON_WEBPUSH_PROFILE_DESC"
+msgid "Manage browser push notifications for this device. When enabled, you will receive real-time notifications about important events such as CMS updates, backup results, and site status changes."
+msgstr "Beheer browserpushmeldingen voor dit apparaat. Indien ingeschakeld, ontvangt u realtime meldingen over belangrijke gebeurtenissen zoals CMS-updates, back-upresultaten en wijzigingen in de sitestatus."
+
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS_ACTIVE"
+msgid "Active"
+msgstr "Actief"
+
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS_INACTIVE"
+msgid "Inactive"
+msgstr "Inactief"
+
+msgctxt "PANOPTICON_WEBPUSH_BTN_SUBSCRIBE"
+msgid "Enable Push Notifications"
+msgstr "Pushmeldingen inschakelen"
+
+msgctxt "PANOPTICON_WEBPUSH_BTN_UNSUBSCRIBE"
+msgid "Disable Push Notifications"
+msgstr "Pushmeldingen uitschakelen"
+
+msgctxt "PANOPTICON_WEBPUSH_ERR_SUBSCRIBE_FAILED"
+msgid "Failed to subscribe to push notifications. Please try again."
+msgstr "Abonneren op pushmeldingen mislukt. Probeer het opnieuw."
+
+msgctxt "PANOPTICON_WEBPUSH_ERR_PERMISSION_DENIED"
+msgid "Push notification permission was denied. Please allow notifications in your browser settings."
+msgstr "Toestemming voor pushmeldingen is geweigerd. Sta meldingen toe in uw browserinstellingen."
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_GENERIC"
+msgid "Panopticon Notification"
+msgstr "Panopticon-melding"
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_GENERIC"
+msgid "You have a new notification from Panopticon."
+msgstr "U heeft een nieuwe melding van Panopticon."
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_FOUND"
+msgid "Joomla Update Available"
+msgstr "Joomla-update beschikbaar"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_WILL_INSTALL"
+msgid "Joomla Update Scheduled"
+msgstr "Joomla-update gepland"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_INSTALLED"
+msgid "Joomla Update Installed"
+msgstr "Joomla-update geinstalleerd"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_FAILED"
+msgid "Joomla Update Failed"
+msgstr "Joomla-update mislukt"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_FOUND"
+msgid "WordPress Update Available"
+msgstr "WordPress-update beschikbaar"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "WordPress Update Scheduled"
+msgstr "WordPress-update gepland"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress Update Installed"
+msgstr "WordPress-update geinstalleerd"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_FAILED"
+msgid "WordPress Update Failed"
+msgstr "WordPress-update mislukt"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSION_UPDATE_FOUND"
+msgid "Extension Update Available"
+msgstr "Extensie-update beschikbaar"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSIONS_UPDATE_DONE"
+msgid "Extensions Updated"
+msgstr "Extensies bijgewerkt"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_PLUGIN_UPDATE_FOUND"
+msgid "Plugin Update Available"
+msgstr "Plug-in-update beschikbaar"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_PLUGINS_UPDATE_DONE"
+msgid "Plugins Updated"
+msgstr "Plug-ins bijgewerkt"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_AKEEBABACKUP_SUCCESS"
+msgid "Backup Completed"
+msgstr "Back-up voltooid"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_AKEEBABACKUP_FAIL"
+msgid "Backup Failed"
+msgstr "Back-up mislukt"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SSL_TLS_EXPIRING"
+msgid "SSL/TLS Certificate Expiring"
+msgstr "SSL/TLS-certificaat verloopt"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_DOMAIN_EXPIRING"
+msgid "Domain Expiring"
+msgstr "Domein verloopt"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SELFUPDATE_FOUND"
+msgid "Panopticon Update Available"
+msgstr "Panopticon-update beschikbaar"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_CORE_CHECKSUMS_FOUND"
+msgid "Core Files Modified"
+msgstr "Kernbestanden gewijzigd"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SITE_DOWN"
+msgid "Site Down"
+msgstr "Site offline"
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SITE_UP"
+msgid "Site Back Up"
+msgstr "Site weer online"
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_FOUND"
+msgid "A new Joomla version is available for [SITE_NAME]."
+msgstr "Er is een nieuwe Joomla-versie beschikbaar voor [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_WILL_INSTALL"
+msgid "A Joomla update has been scheduled for [SITE_NAME]."
+msgstr "Er is een Joomla-update gepland voor [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_INSTALLED"
+msgid "Joomla has been successfully updated on [SITE_NAME]."
+msgstr "Joomla is succesvol bijgewerkt op [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_FAILED"
+msgid "The Joomla update has failed on [SITE_NAME]."
+msgstr "De Joomla-update is mislukt op [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_FOUND"
+msgid "A new WordPress version is available for [SITE_NAME]."
+msgstr "Er is een nieuwe WordPress-versie beschikbaar voor [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "A WordPress update has been scheduled for [SITE_NAME]."
+msgstr "Er is een WordPress-update gepland voor [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress has been successfully updated on [SITE_NAME]."
+msgstr "WordPress is succesvol bijgewerkt op [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_FAILED"
+msgid "The WordPress update has failed on [SITE_NAME]."
+msgstr "De WordPress-update is mislukt op [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSION_UPDATE_FOUND"
+msgid "An extension update is available for [SITE_NAME]."
+msgstr "Er is een extensie-update beschikbaar voor [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSIONS_UPDATE_DONE"
+msgid "Extensions have been updated on [SITE_NAME]."
+msgstr "Extensies zijn bijgewerkt op [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_PLUGIN_UPDATE_FOUND"
+msgid "A plugin update is available for [SITE_NAME]."
+msgstr "Er is een plug-in-update beschikbaar voor [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_PLUGINS_UPDATE_DONE"
+msgid "Plugins have been updated on [SITE_NAME]."
+msgstr "Plug-ins zijn bijgewerkt op [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_AKEEBABACKUP_SUCCESS"
+msgid "The backup has been completed successfully for [SITE_NAME]."
+msgstr "De back-up voor [SITE_NAME] is succesvol voltooid."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_AKEEBABACKUP_FAIL"
+msgid "The backup has failed for [SITE_NAME]."
+msgstr "De back-up voor [SITE_NAME] is mislukt."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_SSL_TLS_EXPIRING"
+msgid "The SSL/TLS certificate for [SITE_NAME] is expiring soon."
+msgstr "Het SSL/TLS-certificaat voor [SITE_NAME] verloopt binnenkort."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_DOMAIN_EXPIRING"
+msgid "The domain for [SITE_NAME] is expiring soon."
+msgstr "Het domein voor [SITE_NAME] verloopt binnenkort."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_SELFUPDATE_FOUND"
+msgid "A new version of Panopticon is available."
+msgstr "Er is een nieuwe versie van Panopticon beschikbaar."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_CORE_CHECKSUMS_FOUND"
+msgid "Modified core files detected on [SITE_NAME]."
+msgstr "Gewijzigde kernbestanden gedetecteerd op [SITE_NAME]."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_SITE_DOWN"
+msgid "[SITE_NAME] appears to be down."
+msgstr "[SITE_NAME] lijkt offline te zijn."
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_SITE_UP"
+msgid "[SITE_NAME] is back up and running."
+msgstr "[SITE_NAME] is weer online."
+
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSION_INSTALL_SUMMARY"
+msgid "Extension Installation Complete"
+msgstr "Extensie-installatie voltooid"
+
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSION_INSTALL_SUMMARY"
+msgid "Mass extension installation finished. Check the summary email for per-site results."
+msgstr "Massa-extensie-installatie voltooid. Controleer de samenvattings-e-mail voor resultaten per site."
+
+msgctxt "PANOPTICON_APITOKENS_TITLE"
+msgid "API Tokens"
+msgstr "API-tokens"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_DESCRIPTION"
+msgid "Description"
+msgstr "Beschrijving"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_ENABLED"
+msgid "Enabled"
+msgstr "Ingeschakeld"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_ON"
+msgid "Created On"
+msgstr "Aangemaakt op"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_ACTIONS"
+msgid "Actions"
+msgstr "Acties"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_NO_TOKENS"
+msgid "You have no API tokens yet. Create one to get started."
+msgstr "U heeft nog geen API-tokens. Maak er een aan om te beginnen."
+
+msgctxt "PANOPTICON_APITOKENS_LBL_API_URL"
+msgid "API Endpoint URL"
+msgstr "URL API-eindpunt"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_API_URL_NOTE"
+msgid "Use this base URL for all API requests. Append the API path (e.g. <code>/v1/sites</code>) to this URL."
+msgstr "Gebruik deze basis-URL voor alle API-verzoeken. Voeg het API-pad toe (bijv. <code>/v1/sites</code>) aan deze URL."
+
+msgctxt "PANOPTICON_APITOKENS_LBL_SECURITY_WARNING"
+msgid "API tokens grant access to your Panopticon installation. Treat them like passwords: do not share them, do not commit them to version control, and revoke any tokens you no longer need."
+msgstr "API-tokens verlenen toegang tot uw Panopticon-installatie. Behandel ze als wachtwoorden: deel ze niet, zet ze niet in versiebeheer, en trek tokens in die u niet meer nodig heeft."
+
+msgctxt "PANOPTICON_APITOKENS_LBL_NEW_TOKEN_DESCRIPTION"
+msgid "New token description"
+msgstr "Beschrijving nieuw token"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_TOKEN_VALUE"
+msgid "Token Value"
+msgstr "Tokenwaarde"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_TOKEN_COPIED"
+msgid "Token copied to clipboard."
+msgstr "Token naar klembord gekopieerd."
+
+msgctxt "PANOPTICON_APITOKENS_LBL_USER"
+msgid "User"
+msgstr "Gebruiker"
+
+msgctxt "PANOPTICON_APITOKENS_BTN_CREATE"
+msgid "Create Token"
+msgstr "Token aanmaken"
+
+msgctxt "PANOPTICON_APITOKENS_BTN_SHOW_TOKEN"
+msgid "Show Token"
+msgstr "Token weergeven"
+
+msgctxt "PANOPTICON_APITOKENS_BTN_COPY_TOKEN"
+msgid "Copy Token"
+msgstr "Token kopiëren"
+
+msgctxt "PANOPTICON_APITOKENS_BTN_ENABLE"
+msgid "Enable"
+msgstr "Inschakelen"
+
+msgctxt "PANOPTICON_APITOKENS_BTN_DISABLE"
+msgid "Disable"
+msgstr "Uitschakelen"
+
+msgctxt "PANOPTICON_APITOKENS_BTN_DELETE"
+msgid "Delete"
+msgstr "Verwijderen"
+
+msgctxt "PANOPTICON_APITOKENS_BTN_CONFIRM_DELETE"
+msgid "Are you sure you want to delete this API token? This action cannot be undone."
+msgstr "Weet u zeker dat u dit API-token wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt."
+
+msgctxt "PANOPTICON_APITOKENS_MSG_CREATED"
+msgid "API token created successfully."
+msgstr "API-token succesvol aangemaakt."
+
+msgctxt "PANOPTICON_APITOKENS_MSG_TOGGLED"
+msgid "API token status updated."
+msgstr "Status API-token bijgewerkt."
+
+msgctxt "PANOPTICON_APITOKENS_MSG_DELETED"
+msgid "API token deleted."
+msgstr "API-token verwijderd."
+
+msgctxt "PANOPTICON_APITOKENS_ERR_NOT_FOUND"
+msgid "API token not found."
+msgstr "API-token niet gevonden."
+
+msgctxt "PANOPTICON_APITOKENS_ERR_FORBIDDEN"
+msgid "You do not have permission to manage this token."
+msgstr "U heeft geen toestemming om dit token te beheren."
+
+msgctxt "PANOPTICON_APITOKENS_ERR_CREATE_FAILED"
+msgid "Failed to create API token."
+msgstr "Aanmaken van API-token mislukt."
+
+msgctxt "PANOPTICON_API_ERR_INVALID_TOKEN"
+msgid "Invalid or missing API token."
+msgstr "Ongeldig of ontbrekend API-token."
+
+msgctxt "PANOPTICON_API_ERR_UNKNOWN_ENDPOINT"
+msgid "Unknown API endpoint."
+msgstr "Onbekend API-eindpunt."
+
+msgctxt "PANOPTICON_API_ERR_SUPER_REQUIRED"
+msgid "This endpoint requires super user privileges."
+msgstr "Dit eindpunt vereist superbeheerdersbevoegdheden."
+
+msgctxt "PANOPTICON_API_ERR_SITE_NOT_FOUND"
+msgid "Site not found."
+msgstr "Site niet gevonden."
+
+msgctxt "PANOPTICON_API_ERR_TASK_NOT_FOUND"
+msgid "Task not found."
+msgstr "Taak niet gevonden."
+
+msgctxt "PANOPTICON_API_ERR_FORBIDDEN"
+msgid "You do not have permission to perform this action."
+msgstr "U heeft geen toestemming om deze actie uit te voeren."
+
+msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
+msgid "Invalid JSON in request body."
+msgstr "Ongeldige JSON in de aanvraagbody."
+
+msgctxt "PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED"
+msgid "You have reached the maximum number of enabled API tokens. Please delete or disable an existing token before creating a new one."
+msgstr "U heeft het maximale aantal ingeschakelde API-tokens bereikt. Verwijder of schakel een bestaand token uit voordat u een nieuw aanmaakt."
+
+msgctxt "PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED"
+msgid "API access is disabled for your account. Please contact a super administrator."
+msgstr "API-toegang is uitgeschakeld voor uw account. Neem contact op met een superbeheerder."
+
+msgctxt "PANOPTICON_APITOKENS_LBL_COPY"
+msgid "Copy"
+msgstr "Kopiëren"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_BY"
+msgid "Created by"
+msgstr "Aangemaakt door"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHHTACCESS"
+msgid "API endpoint URL (recommended, requires <code>.htaccess</code> or equivalent URL rewriting)"
+msgstr "URL API-eindpunt (aanbevolen, vereist <code>.htaccess</code> of equivalente URL-herschrijving)"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHOUTHTACCESS"
+msgid "API endpoint URL (fallback, works without URL rewriting)"
+msgstr "URL API-eindpunt (terugvaloptie, werkt zonder URL-herschrijving)"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES"
+msgid "Expires"
+msgstr "Vervalt"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_NEVER"
+msgid "Never"
+msgstr "Nooit"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_ON"
+msgid "Expires on %s"
+msgstr "Vervalt op %s"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER"
+msgid "Created after"
+msgstr "Aangemaakt na"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE"
+msgid "Expires before"
+msgstr "Vervalt voor"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE"
+msgid "Last used before"
+msgstr "Laatst gebruikt voor"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED"
+msgid "Last Used"
+msgstr "Laatst gebruikt"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED_IP"
+msgid "Last Used IP Address"
+msgstr "Laatst gebruikt IP-adres"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_METADATA"
+msgid "Metadata"
+msgstr "Metagegevens"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_NEVER"
+msgid "Never"
+msgstr "Nooit"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_EXCEEDED_HINT"
+msgid "You have reached your API token limit. Please delete or disable an existing token before creating or re-enabling one."
+msgstr "U heeft uw API-tokenlimiet bereikt. Verwijder of schakel een bestaand token uit voordat u een nieuw aanmaakt of een token opnieuw inschakelt."
+
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
+msgid "%1\$d of %2\$d API tokens created"
+msgstr "%1\$d van %2\$d API-tokens aangemaakt"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES"
+msgid "Scopes"
+msgstr "Bereiken"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES_DESC"
+msgid "Select the API operations this token is allowed to perform. Leave all unchecked to grant access to all scopes (default)."
+msgstr "Selecteer de API-bewerkingen die dit token mag uitvoeren. Laat alle opties uitgeschakeld om toegang tot alle bereiken te verlenen (standaard)."
+
+msgctxt "PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION"
+msgid "Search by description"
+msgstr "Zoeken op beschrijving"
+
+msgctxt "PANOPTICON_APITOKENS_LBL_SELECT_ENABLED"
+msgid "— Select state —"
+msgstr "— Selecteer status —"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SELFUPDATE"
+msgid "Self-Update"
+msgstr "Zelfs-update"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SITES"
+msgid "Sites"
+msgstr "Sites"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SYSCONFIG"
+msgid "System Configuration"
+msgstr "Systeemconfiguratie"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_TASKS"
+msgid "Tasks"
+msgstr "Taken"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ"
+msgid "Read update info"
+msgstr "Update-informatie lezen"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ_DESC"
+msgid "Read self-update status and available version information."
+msgstr "Zelfs-updatestatus en beschikbare versie-informatie lezen."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE"
+msgid "Perform updates"
+msgstr "Updates uitvoeren"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE_DESC"
+msgid "Download, install, and finalise Panopticon self-updates."
+msgstr "Panopticon-zelfs-updates downloaden, installeren en afronden."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE"
+msgid "CMS updates"
+msgstr "CMS-updates"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE_DESC"
+msgid "Trigger, cancel, or clear CMS (Joomla/WordPress) core update operations."
+msgstr "CMS (Joomla/WordPress) kernupdatebewerkingen starten, annuleren of wissen."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS"
+msgid "Manage extensions"
+msgstr "Extensies beheren"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS_DESC"
+msgid "List extensions, refresh extension data, manage download keys, and schedule or cancel extension updates."
+msgstr "Extensies weergeven, extensiegegevens vernieuwen, downloadsleutels beheren en extensie-updates plannen of annuleren."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ"
+msgid "Read sites"
+msgstr "Sites lezen"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ_DESC"
+msgid "List sites and read their details, configuration, and status."
+msgstr "Sites weergeven en hun details, configuratie en status lezen."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH"
+msgid "Refresh sites"
+msgstr "Sites vernieuwen"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH_DESC"
+msgid "Trigger a manual data refresh for a site."
+msgstr "Een handmatige gegevensvernieuwing voor een site starten."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE"
+msgid "Write sites"
+msgstr "Sites schrijven"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE_DESC"
+msgid "Add new sites and modify existing site settings."
+msgstr "Nieuwe sites toevoegen en bestaande site-instellingen wijzigen."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ"
+msgid "Read configuration"
+msgstr "Configuratie lezen"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ_DESC"
+msgid "Read non-sensitive system configuration parameters."
+msgstr "Niet-gevoelige systeemconfiguratieparameters lezen."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE"
+msgid "Write configuration"
+msgstr "Configuratie schrijven"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE_DESC"
+msgid "Set system configuration parameters."
+msgstr "Systeemconfiguratieparameters instellen."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ"
+msgid "Read tasks"
+msgstr "Taken lezen"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ_DESC"
+msgid "List and read task details."
+msgstr "Taken weergeven en taakdetails lezen."
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE"
+msgid "Write tasks"
+msgstr "Taken schrijven"
+
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE_DESC"
+msgid "Create and modify scheduled tasks."
+msgstr "Geplande taken aanmaken en wijzigen."
+
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION"
+msgid "Description"
+msgstr "Beschrijving"
+
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED"
+msgid "Last Used"
+msgstr "Laatst gebruikt"
+
+msgctxt "PANOPTICON_APITOKENS_TITLE_EDIT"
+msgid "Edit API Token"
+msgstr "API-token bewerken"
+
+msgctxt "PANOPTICON_APITOKENS_TITLE_NEW"
+msgid "New API Token"
+msgstr "Nieuw API-token"
+
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT"
+msgid "API Token Limit"
+msgstr "API-tokenlimiet"
+
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP"
+msgid "Override the global API token limit for users in this group. Leave empty to use the global default. Set to 0 to deny API access to group members (unless another group they belong to grants a higher limit)."
+msgstr "Overschrijf de globale API-tokenlimiet voor gebruikers in deze groep. Leeg laten om de globale standaard te gebruiken. Stel in op 0 om API-toegang voor groepsleden te weigeren (tenzij een andere groep waarbij ze horen een hogere limiet toestaat)."
+
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER"
+msgid "(Use global default)"
+msgstr "(Gebruik globale standaard)"
+
+msgctxt "PANOPTICON_LBL_APITOKEN_COPIED"
+msgid "The API token has been copied."
+msgstr "Het API-token is gekopieerd."
+
+msgctxt "PANOPTICON_LBL_APITOKEN_DELETED"
+msgid "The selected API tokens have been deleted."
+msgstr "De geselecteerde API-tokens zijn verwijderd."
+
+msgctxt "PANOPTICON_LBL_APITOKEN_SAVED"
+msgid "The API token has been saved."
+msgstr "Het API-token is opgeslagen."
+
+msgctxt "PANOPTICON_LBL_MODIFIED_BY"
+msgid "Modified by"
+msgstr "Gewijzigd door"
+
+msgctxt "PANOPTICON_LBL_MODIFIED_ON"
+msgid "Modified on"
+msgstr "Gewijzigd op"
+
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_FILESCANNER_FAILED"
+msgid "PHP File Change Scanner: Task Failure"
+msgstr "PHP-bestandswijzigingsscanner: taakfout"
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS"
+msgid "Attach Log File for These Groups"
+msgstr "Logbestand bijvoegen voor deze groepen"
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS_HELP"
+msgid "Override the global setting: select which user groups receive the task log file as an email attachment on failure. Leave empty to use the global Panopticon setting."
+msgstr "Overschrijf de globale instelling: selecteer welke gebruikersgroepen het taaklogbestand als e-mailbijlage ontvangen bij een fout. Leeg laten om de globale Panopticon-instelling te gebruiken."
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME"
+msgid "Time Of The Day to Install Extension Updates On (Hour:Minute)"
+msgstr "Tijdstip van de dag voor het installeren van extensie-updates (Uur:Minuut)"
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a "weird" or "wrong" way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
+msgstr "De tijd uitgedrukt in de tijdzone %s. Als updates worden gevonden <em>na</em> dit tijdstip van de dag, vindt de update-installatie plaats op de volgende kalenderdag. Vermijd het gebruik van het tijdstip van de zomertijdswisseling (gewoonlijk: tussen 2.00 en 4.00 uur); anders gedraagt de updateplanning zich op een manier die u als \"vreemd\" of \"verkeerd\" ervaart als er op de dag van de zomertijdswisseling een update wordt gevonden. Handmatig gestarte updates worden altijd onmiddellijk uitgevoerd, ongeacht deze instelling."
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_WHEN"
+msgid "When Should Updates Be Installed"
+msgstr "Wanneer moeten updates worden geinstalleerd"
+
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_IMMEDIATELY"
+msgid "Immediately"
+msgstr "Onmiddellijk"
+
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_TIME"
+msgid "Time of Day"
+msgstr "Tijdstip van de dag"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX"
+msgid "Maximum tokens per user"
+msgstr "Maximum tokens per gebruiker"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX_HELP"
+msgid "The maximum number of enabled, non-expired API tokens a user may hold. User groups can override this on a per-group basis. Set to 0 to deny API access to all users by default (individual groups may still grant access via their own override)."
+msgstr "Het maximale aantal ingeschakelde, niet-verlopen API-tokens dat een gebruiker mag bezitten. Gebruikersgroepen kunnen dit per groep overschrijven. Stel in op 0 om standaard API-toegang voor alle gebruikers te weigeren (individuele groepen kunnen nog steeds toegang verlenen via hun eigen overschrijving)."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS"
+msgid "Attach Log File to These Groups"
+msgstr "Logbestand bijvoegen voor deze groepen"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS_HELP"
+msgid "Select which user groups receive the task log file as an email attachment when a core or extension update fails. Leave empty to send the attachment to all notification recipients."
+msgstr "Selecteer welke gebruikersgroepen het taaklogbestand als e-mailbijlage ontvangen wanneer een kern- of extensie-update mislukt. Leeg laten om de bijlage naar alle ontvangers van meldingen te sturen."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
+msgid "API Tokens"
+msgstr "API-tokens"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK1"
+msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
+msgstr "Blokkeert uw host of uw serverconfiguratibestand (bijv. <code>.htaccess</code>) de toegang tot het WordPress API-applicatie-eindpunt (<span class=\"font-monospace\">%s</span>) volledig?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Heeft uw host een serverbeveiliging (zoals Apache\'s mod_security2) die het WordPress API-applicatie-eindpunt (<span class=\"font-monospace\">%s</span>), uw API-token (<span class=\"font-monospace\">%s</span>) of de User-Agent van Panopticon (<span class=\"font-monospace\">panopticon/%s</span>) kan blokkeren?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400"
+msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them. Please contact your host if you are unsure why you are receiving this message."
+msgstr "De HTTP-statuscode 400 betekent doorgaans dat uw site slechts via een beperkt aantal domeinnamen toegankelijk is; de naam die u heeft geprobeerd te gebruiken (<span class=\"font-monospace\">%s</span>) is mogelijk niet een van die namen. Neem contact op met uw host als u niet zeker weet waarom u dit bericht ontvangt."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH2"
+msgid "Make sure that the plugin "Akeeba Panopticon Connector for WordPress" is enabled on your site."
+msgstr "Zorg ervoor dat de plug-in "Akeeba Panopticon Connector for WordPress" is ingeschakeld op uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH2"
+msgid "Make sure that the plugin "Akeeba Panopticon Connector for WordPress" is enabled on your site."
+msgstr "Zorg ervoor dat de plug-in "Akeeba Panopticon Connector for WordPress" is ingeschakeld op uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"
+msgid "Please consult the <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your site is on - which requires contacting the respective host to help you address."
+msgstr "Raadpleeg de <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">cURL bibliotheekfoutcodereferentie</a> voor meer informatie over de fout. In de meeste gevallen betreft het een netwerk- of serverconfiguratiprobleem - op de server waarop u Panopticon heeft geinstalleerd of op de server van uw site - waarvoor u contact moet opnemen met de betreffende host."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK2"
+msgid "Go to wp-admin, Plugins. Is the "Akeeba Panopticon Connector for WordPress" plugin installed <em>and</em> activated?"
+msgstr "Ga naar wp-admin, Plug-ins. Is de plug-in "Akeeba Panopticon Connector voor WordPress" geinstalleerd <em>en</em> geactiveerd?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
+msgid "Cannot communicate with the "System - Panopticon Connector for Joomla 3" plugin on your site"
+msgstr "Kan niet communiceren met de plug-in "Systeem - Panopticon Connector voor Joomla 3" op uw site"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_HEAD"
+msgid "Cannot communicate with the "Akeeba Panopticon Connector for WordPress" plugin on your site"
+msgstr "Kan niet communiceren met de plug-in "Akeeba Panopticon Connector voor WordPress" op uw site"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
+msgid "Panopticon uses its own plugin, "Akeeba Panopticon Connector for WordPress", to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
+msgstr "Panopticon gebruikt zijn eigen plug-in, "Akeeba Panopticon Connector voor WordPress", om de benodigde API te bieden via de JSON-services API van WordPress (<code>wp-json</code>)."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
+msgid "Please go to your site\'s wp-admin backend and click on Plugins. Search for the "Akeeba Panopticon Connector for WordPress" plugin and enable it."
+msgstr "Ga naar de wp-admin-beheeromgeving van uw site en klik op Plug-ins. Zoek naar de plug-in "Akeeba Panopticon Connector voor WordPress" en schakel deze in."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION_HELP"
+msgid "Controls whether new users can create their own accounts. In \'Admin approval\' mode, an administrator must approve new accounts. In \'Self-approval\' mode, users activate their account via an email link."
+msgstr "Bepaalt of nieuwe gebruikers hun eigen account kunnen aanmaken. In de modus \'Beheerdersgoedkeuring\' moet een beheerder nieuwe accounts goedkeuren. In de modus \'Zelfgoedkeuring\' activeren gebruikers hun account via een e-maillink."
+
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The check schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "De controleplanning is een <a href=\'%s\' target=\'_blank\'>CRON-expressie</a>. Deze gebruikt de tijdzone %s."
+
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECT_SITE"
+msgid "Select site \"%s\""
+msgstr "Site \"%s\" selecteren"
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a "weird" or "wrong" way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
+msgstr "De tijd uitgedrukt in de tijdzone %s. Als updates worden gevonden <em>na</em> dit tijdstip van de dag, vindt de update-installatie plaats op de volgende kalenderdag. Vermijd het gebruik van het tijdstip van de zomertijdswisseling (gewoonlijk: tussen 2.00 en 4.00 uur); anders gedraagt de updateplanning zich op een manier die u als "vreemd" of "verkeerd" ervaart als er op de dag van de zomertijdswisseling een update wordt gevonden. Handmatig gestarte updates worden altijd onmiddellijk uitgevoerd, ongeacht deze instelling."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH2"
+msgid "Make sure that the plugin “Akeeba Panopticon Connector for WordPress” is enabled on your site."
+msgstr "Zorg ervoor dat de plug-in “Akeeba Panopticon Connector for WordPress” is ingeschakeld op uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH2"
+msgid "Make sure that the plugin “Akeeba Panopticon Connector for WordPress” is enabled on your site."
+msgstr "Zorg ervoor dat de plug-in “Akeeba Panopticon Connector for WordPress” is ingeschakeld op uw site."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK2"
+msgid "Go to wp-admin, Plugins. Is the “Akeeba Panopticon Connector for WordPress” plugin installed <em>and</em> activated?"
+msgstr "Ga naar wp-admin, Plug-ins. Is de plug-in “Akeeba Panopticon Connector voor WordPress” geinstalleerd <em>en</em> geactiveerd?"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
+msgid "Cannot communicate with the “System - Panopticon Connector for Joomla 3” plugin on your site"
+msgstr "Kan niet communiceren met de plug-in “Systeem - Panopticon Connector voor Joomla 3” op uw site"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_HEAD"
+msgid "Cannot communicate with the “Akeeba Panopticon Connector for WordPress” plugin on your site"
+msgstr "Kan niet communiceren met de plug-in “Akeeba Panopticon Connector voor WordPress” op uw site"
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
+msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
+msgstr "Panopticon gebruikt zijn eigen plug-in, “Akeeba Panopticon Connector voor WordPress”, om de benodigde API te bieden via de JSON-services API van WordPress (<code>wp-json</code>)."
+
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
+msgid "Please go to your site\'s wp-admin backend and click on Plugins. Search for the “Akeeba Panopticon Connector for WordPress” plugin and enable it."
+msgstr "Ga naar de wp-admin-beheeromgeving van uw site en klik op Plug-ins. Zoek naar de plug-in “Akeeba Panopticon Connector voor WordPress” en schakel deze in."
+
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
+msgstr "De tijd uitgedrukt in de tijdzone %s. Als updates worden gevonden <em>na</em> dit tijdstip van de dag, vindt de update-installatie plaats op de volgende kalenderdag. Vermijd het gebruik van het tijdstip van de zomertijdswisseling (gewoonlijk: tussen 2.00 en 4.00 uur); anders gedraagt de updateplanning zich op een manier die u als “vreemd” of “verkeerd” ervaart als er op de dag van de zomertijdswisseling een update wordt gevonden. Handmatig gestarte updates worden altijd onmiddellijk uitgevoerd, ongeacht deze instelling."
+
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
+msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr "Log in op de beheeromgeving van uw site. Ga naar Componenten, Akeeba Backup, Configuratiescherm. Klik op Opties, Front-end back-up en stel “JSON API inschakelen (externe back-up)” in op Ja. Voer een nieuw “Geheimwoord” in; u kunt een nieuw, willekeurig, veilig geheimwoord aanmaken op <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Klik vervolgens op Opslaan &amp; Sluiten in de werkbalk."
+
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
+msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr "Log in op de beheeromgeving van uw site. Ga naar Akeeba Backup, Systeemconfiguratie, Publieke API en stel “JSON API inschakelen (externe back-up)” in op Ja. Voer een nieuwe “Geheime sleutel” in; u kunt een nieuwe, willekeurige, veilige sleutel aanmaken op <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Klik vervolgens op Opslaan &amp; Sluiten in de werkbalk."

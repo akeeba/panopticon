@@ -11041,3 +11041,2358 @@ msgid ""
 msgstr ""
 "Heslo, které se snažíte použít, bylo nalezeno v únikách hesel na internetu, "
 "což hackerům velmi usnadňuje jeho uhodnutí. Použijte prosím jiné heslo."
+#, phpformat
+msgctxt "AWF_APPLICATION_ERROR_TASK_NOT_FOUND"
+msgid "Task \'%s\' not found"
+msgstr "Úloha '%s' nebyla nalezena"
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_CORECHECKSUMS"
+msgid "Core File Integrity Check"
+msgstr "Kontrola integrity základních souborů"
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_UPTIMEMONITOR"
+msgid "Monitors sites\' uptime"
+msgstr "Monitorování dostupnosti webů"
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_REGISTRATIONCLEANUP"
+msgid "Clean up expired user registrations"
+msgstr "Vyčistit vypršelé registrace uživatelů"
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_EXTENSIONINSTALL"
+msgid "Remote Extension Installation"
+msgstr "Vzdálená instalace rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED"
+msgid "The update package has disappeared from the site. Is a plugin, or your host, clearing your site\'s temporary directory automatically?"
+msgstr "Balíček aktualizace ze serveru zmizel. Maže snad některý plugin nebo váš hosting automaticky dočasný adresář vašeho webu?"
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_HTTP_401"
+msgid "HTTP status 401 while extracting the update. Your site\'s administrator folder is password protected. Please edit the site and enter the Administrator Directory Username and Password in the Connection tab. Then, retry scheduling an update for this site."
+msgstr "Stav HTTP 401 při extrakci aktualizace. Adresář správce vašeho webu je chráněn heslem. Upravte prosím web a zadejte uživatelské jméno a heslo pro adresář správce na záložce Připojení. Poté opakujte plánování aktualizace pro tento web."
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
+msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgstr "Povolování extrakčního skriptu Joomla Update pro web %d (%s)"
+
+#, phpformat
+msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_INVALID_JSON"
+msgid "Installing WordPress update on site #%d (%s) has failed. The server\'s response is not valid JSON."
+msgstr "Instalace aktualizace WordPress na webu č. %d (%s) selhala. Odpověď serveru není platný JSON."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_BTN_LETS_GO"
+msgid "Let\'s go!"
+msgstr "Jdeme na to!"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_SESSION_LBL_WARNING_BODY"
+msgid "The session write path configured in PHP cannot be written to, making logging in impossible. To address this problem, Panopticon will attempt to create a session save path in the <code>%s</code> directory. For this to be possible, you need to enter the FTP or SFTP connection details to your site\'s root. If you are unsure about these settings, please ask your host."
+msgstr "Cesta pro zápis relací nastavená v PHP není zapisovatelná, přihlášení je proto nemožné. Pro vyřešení tohoto problému se Panopticon pokusí vytvořit cestu pro ukládání relací v adresáři <code>%s</code>. Aby to bylo možné, musíte zadat přístupové údaje FTP nebo SFTP ke kořenovému adresáři vašeho webu. Pokud si nejste jisti tímto nastavením, obraťte se prosím na svého poskytovatele hostingu."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_HELP"
+msgid "On some shared hosting environments you need to use FTP or SFTP to be able to write to your site\'s files."
+msgstr "Na některých sdílených hostingových prostředích je k zápisu souborů vašeho webu nutné použít FTP nebo SFTP."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PORT_HELP"
+msgid "The port number your (S)FTP server listens to. Usually it\'s 21 for FTP and 22 for SFTP. If unsure, ask your host."
+msgstr "Číslo portu, na kterém naslouchá váš (S)FTP server. Obvykle je to 21 pro FTP a 22 pro SFTP. Pokud si nejste jisti, zeptejte se svého poskytovatele hostingu."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_BROKEN_JS_EXPLAIN"
+msgid "The JavaScript files for Panopticon are not loading properly. Make sure you installation is not missing files, check permissions, and clear your browser\'s cache."
+msgstr "Soubory JavaScript pro Panopticon se nenačítají správně. Ujistěte se, že vaše instalace nepostrádá soubory, zkontrolujte oprávnění a vymažte mezipaměť prohlížeče."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION_HELP"
+msgid "Should we connect to the database using an SSL certificate? This can be used instead of username and password authentication (encrypted connection with certificate authentication) or <em>on top of</em> username and password authentication (encrypted connection with password authentication). If you don\'t know what this means set this option to No and ignore the next few options as well."
+msgstr "Má se připojení k databázi provést pomocí certifikátu SSL? To lze použít místo ověřování uživatelským jménem a heslem (šifrované připojení s ověřením certifikátem) nebo <em>vedle</em> ověřování uživatelským jménem a heslem (šifrované připojení s ověřením heslem). Pokud nevíte, co to znamená, nastavte tuto možnost na Ne a ignorujte i několik následujících možností."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY"
+msgid "Database user\'s Private Key file"
+msgstr "Soubor privátního klíče uživatele databáze"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLCERT"
+msgid "Database user\'s Public Key (Certificate) file"
+msgstr "Soubor veřejného klíče (certifikátu) uživatele databáze"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLVERIFYSERVERCERT_HELP"
+msgid "Set to Yes to verify the certificate the server sends back to us. This is verified against the Certification Authority (CA) file you specified. If you get connection errors set this to No; some setups (especially those generated by the <code>mysql_ssl_rsa_setup</code>) may disallow a connection if certification verification is enabled. If you enable verification and the CA file field is left blank the server\'s certificate will be checked against the Certification Authority files your server knows about, see the <code>openssl.cafile</code> and <code>openssl.capath</code> PHP options."
+msgstr "Nastavte na Ano, chcete-li ověřit certifikát, který nám server odesílá. Certifikát se ověřuje vůči souboru certifikační autority (CA), který jste zadali. Pokud se zobrazují chyby připojení, nastavte tuto možnost na Ne; některá nastavení (zejména ta vygenerovaná nástrojem <code>mysql_ssl_rsa_setup</code>) mohou při povoleném ověřování certifikátu bránit připojení. Pokud povolíte ověřování a pole pro soubor CA ponecháte prázdné, certifikát serveru bude ověřen vůči souborům certifikační autority, které váš server zná; viz možnosti PHP <code>openssl.cafile</code> a <code>openssl.capath</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_HOST_DESCRIPTION"
+msgid "The FTP server\'s host name, without the protocol. Do not use <s><code>ftp://example.com</code></s>; use <code>example.com</code> instead."
+msgstr "Název hostitele FTP serveru bez protokolu. Nepoužívejte <s><code>ftp://example.com</code></s>; použijte <code>example.com</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_PORT_DESCRIPTION"
+msgid "FTP server\'s TCP/IP port. Usually 21. Please ask your host."
+msgstr "TCP/IP port FTP serveru. Obvykle 21. Zeptejte se prosím svého poskytovatele hostingu."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_PASSWORD_DESCRIPTION"
+msgid "Password, case-sensitive. Best use passwords consisting only of a-z, A-Z, 0-9, dashes, dots, underscores, and exclamation points. Other characters may trigger your web server\'s anti-hacking protection."
+msgstr "Heslo rozlišující velká a malá písmena. Nejlépe používejte hesla sestávající pouze z a-z, A-Z, 0-9, pomlček, teček, podtržítek a vykřičníků. Ostatní znaky mohou spustit ochranu webového serveru proti hackerům."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_FTPS_DESCRIPTION"
+msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \"Secure FTP\"</strong>. If your server doesn\'t support this method you will get connection errors."
+msgstr "Připojit se k FTP serveru pomocí SSL-šifrovaného připojení. <strong>To není totéž jako SFTP, SCP nebo "Secure FTP"</strong>. Pokud váš server tuto metodu nepodporuje, zobrazí se chyby připojení."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTFTP_INITDIR_DESCRIPTION"
+msgid "The absolute FTP path to the directory where the files will be uploaded. If unsure, connect to your server with FileZilla, browse to the intended directory and copy the path appearing on the right-hand pane above the directory list. Usually, it\'s something like <code>/public_html</code> or <code>/httpdocs</code>."
+msgstr "Absolutní FTP cesta k adresáři, kam budou soubory nahrány. Pokud si nejste jisti, připojte se k serveru přes FileZilla, přejděte do požadovaného adresáře a zkopírujte cestu zobrazenou v pravém panelu nad seznamem adresářů. Obvykle je to něco jako <code>/public_html</code> nebo <code>/httpdocs</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTSFTP_HOST_DESCRIPTION"
+msgid "SFTP server\'s hostname, without the protocol. Do not use <s><code>sftp://example.com</code></s>; use <code>example.com</code> instead."
+msgstr "Název hostitele SFTP serveru bez protokolu. Nepoužívejte <s><code>sftp://example.com</code></s>; použijte <code>example.com</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_DIRECTSFTP_INITDIR_DESCRIPTION"
+msgid "SFTP directory of the site\'s root. If unsure, use an SFTP desktop client, connect to your server, navigate to the directory and copy the path displayed in here. The must be absolute, e.g. <code>/home/myuser/public_html</code>, not just <s><code>public_html</code></s>."
+msgstr "Adresář SFTP kořene webu. Pokud si nejste jisti, použijte klienta SFTP, připojte se k serveru, přejděte do adresáře a zkopírujte zde zobrazenou cestu. Musí být absolutní, např. <code>/home/myuser/public_html</code>, nikoli jen <s><code>public_html</code></s>."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_USER_USERNAME_HELP"
+msgid "The username you will use to log in to Panopticon. It\'s best to only use lowercase letters a-z and numbers 0-9."
+msgstr "Uživatelské jméno, které budete používat pro přihlášení do Panopticon. Nejlépe používejte pouze malá písmena a-z a čísla 0-9."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD2_HELP"
+msgid "Please repeat the password you entered above. We want to make sure you didn\'t accidentally mistype it."
+msgstr "Prosím, zopakujte výše zadané heslo. Chceme se ujistit, že jste ho omylem nezadali chybně."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP4_DETAIL"
+msgid "Upload into the folder you\'re installing Panopticon. That\'s the folder with the Panopticon <code>index.php</code> file in it."
+msgstr "Nahrajte do složky, do které instalujete Panopticon. To je složka se souborem <code>index.php</code> systému Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_SUBHEAD_BREATHE"
+msgid "Take a breath. This is the last installation step. You\'re almost done."
+msgstr "Vydechněte. Toto je poslední krok instalace. Jste téměř hotovi."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_REPLACE_PHP_CLI"
+msgid "Replace <i>/path/to/php</i> with the path to the PHP %s CLI executable. Make sure it\'s the PHP CLI executable, <strong>not</strong> the PHP CGI/FastCGI executable."
+msgstr "Nahraďte <i>/path/to/php</i> cestou ke spustitelnému souboru PHP %s CLI. Ujistěte se, že jde o spustitelný soubor PHP CLI, <strong>nikoli</strong> PHP CGI/FastCGI."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NOT_RUN_INFO_2"
+msgid "If even then nothing seems to happen, please contact your host. Either your account is not receiving the output of the CRON jobs, or the CRON jobs are not executing at all (while unlikely, we\'ve seen that happen a few times)."
+msgstr "Pokud se přesto zdá, že se nic neděje, obraťte se na svého poskytovatele hostingu. Buď váš účet nedostává výstup CRON úloh, nebo se CRON úlohy vůbec nevykonávají (ačkoli je to nepravděpodobné, několikrát jsme to viděli)."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_2"
+msgid "Please ask your host for the correct path. If your host gave you this path to begin with, escalate your support ticket with your host, asking to speak with a server engineer. It\'s trivial for them to give you that path."
+msgstr "Zeptejte se svého poskytovatele hostingu na správnou cestu. Pokud vám tuto cestu dal sám poskytovatel, eskalujte svůj požadavek a vyžádejte si konzultaci s technikem. Pro ně je triviální správnou cestu sdělit."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_WRONG_PHP_INFO_2"
+msgid "Most servers have multiple versions of PHP installed. You need to ask your host to give you the path to the PHP CLI executable for PHP %s and use that in your CRON job\'s command line."
+msgstr "Většina serverů má nainstalováno více verzí PHP. Musíte požádat svého poskytovatele hostingu, aby vám dal cestu ke spustitelnému souboru PHP CLI pro PHP %s, a tu pak použijte v příkazovém řádku CRON úlohy."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_CONS_1"
+msgid "Some hosts don\'t support it"
+msgstr "Někteří poskytovatelé to nepodporují"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_IF_URL_CRON"
+msgid "If your host uses URL-based CRON jobs, or you\'re using a third party system which accepts a URL, use the following URL:"
+msgstr "Pokud váš poskytovatel hostingu používá CRON úlohy na bázi URL nebo pokud používáte systém třetí strany, který přijímá URL, použijte následující URL:"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
+msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
+msgstr "Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na benchmark. Nezavírejte tuto záložku prohlížeče, nepřepínejte na jinou záložku / okno nebo aplikaci, nevypínejte zařízení ani ho nenechte přejít do režimu spánku. Celkem jednoduché, že?"
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER"
+msgid "If you\'re an expert user - or just looking around - you can skip this step and set up CRON jobs later."
+msgstr "Pokud jste zkušený uživatel – nebo se jen rozhlížíte – můžete tento krok přeskočit a nastavit CRON úlohy později."
+
+#, phpformat
+msgctxt "PANOPTICON_SETUP_MSG_CONFIGURATIONPHP"
+msgid "You can still continue the installation. The configuration settings will be displayed at the end. You will have to manually upload the code. At the end of the installation, click in the text area to highlight all of the code and then paste into a new text file. Name this file <code>config.php</code> and upload it to the folder where you\'ve installed Panopticon."
+msgstr "Instalaci lze přesto dokončit. Konfigurační nastavení se zobrazí na konci. Kód budete muset nahrát ručně. Na konci instalace klikněte do textové oblasti, abyste zvýraznili veškerý kód, a vložte ho do nového textového souboru. Pojmenujte tento soubor <code>config.php</code> a nahrajte ho do složky, kde máte nainstalovaný Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA4ORLATER"
+msgid "<strong>Joomla! 4 or later</strong>: Go to your site\'s backend and click on Components, Akeeba Panopticon Connector to find your connection information."
+msgstr "<strong>Joomla! 4 nebo novější</strong>: Přejděte do administrace svého webu a klikněte na Komponenty, Akeeba Panopticon Connector, kde najdete informace o připojení."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA3"
+msgid "<strong>Joomla! 3</strong>: Go to your site\'s backend and click on Extensions, Plugins. Click on System - Panopticon Connector for Joomla 3."
+msgstr "<strong>Joomla! 3</strong>: Přejděte do administrace svého webu a klikněte na Rozšíření, Pluginy. Klikněte na System - Panopticon Connector for Joomla 3."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_WORDPRESS"
+msgid "<strong>WordPress</strong>: Go to your site\'s wp-admin and click on Tools, Panopticon."
+msgstr "<strong>WordPress</strong>: Přejděte do administrace wp-admin svého webu a klikněte na Nástroje, Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1"
+msgid "If your site\'s <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!&reg; updates will fail with an error mentioning “401 Unauthorized”."
+msgstr "Pokud je adresář <code>administrator</code> vašeho webu chráněn heslem, zadejte prosím uživatelské jméno a heslo pro tuto ochranu. V opačném případě budou aktualizace Joomla!&reg; selhávat s chybou "401 Unauthorized"."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2"
+msgid "You used a third party extension, e.g. Admin Tools\' “Password-protect Administrator” feature."
+msgstr "Použili jste rozšíření třetí strany, např. funkci "Password-protect Administrator" z Admin Tools."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3"
+msgid "You used your hosting control panel\'s directory password protection feature, if one is available."
+msgstr "Použili jste funkci ochrany adresáře heslem ve vašem hostingovém ovládacím panelu, je-li k dispozici."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING_HELP"
+msgid "Panopticon will warn you that your site\'s SSL/TLS certificate is expiring this many days before it expires. 0 disables the warning."
+msgstr "Panopticon vás upozorní, že certifikát SSL/TLS vašeho webu vyprší za tento počet dní. Hodnota 0 upozornění deaktivuje."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING_HELP"
+msgid "Panopticon will warn you that your site\'s domain name is expiring this many days before it expires. 0 disables the warning."
+msgstr "Panopticon vás upozorní, že doménové jméno vašeho webu vyprší za tento počet dní. Hodnota 0 upozornění deaktivuje."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TOOSOON"
+msgid "The SSL/TLS certificate has a Valid From date in the future. Browsers will report it as invalid as it\'s not meant to be used just yet."
+msgstr "Certifikát SSL/TLS má datum Platný od v budoucnosti. Prohlížeče ho budou hlásit jako neplatný, protože ještě není určen k použití."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRED"
+msgid "The SSL/TLS certificate has a Valid To date in the past. Browsers will report it as invalid as it\'s not meant to be used any more."
+msgstr "Certifikát SSL/TLS má datum Platný do v minulosti. Prohlížeče ho budou hlásit jako neplatný, protože již není určen k použití."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID"
+msgid "We could not retrieve the domain\'s expiration date. Either the domain name does not appear in the WHOIS database, or you are using a domain name which only resolves locally."
+msgstr "Nepodařilo se získat datum vypršení platnosti domény. Doménové jméno se buď nezobrazuje v databázi WHOIS, nebo používáte doménové jméno, které je přeložitelné pouze lokálně."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
+msgid "The domain name has expired. You might still be able to access the domain due to your registrar\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
+msgstr "Doménové jméno vypršelo. Ke stránce možná stále přistupujete díky lhůtě registrátora, ale <strong>musíte toto doménové jméno ihned obnovit u svého registrátora</strong>, abyste ho neztratili."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS"
+msgid "There are no nameservers reported in the WHOIS database. A site without valid nameservers will not be accessible on the Internet. If you recently assigned nameservers to the domain don\'t panic; it may take up to 5 days for this information to propagate."
+msgstr "V databázi WHOIS nejsou hlášeny žádné jmenné servery. Web bez platných jmenných serverů nebude přístupný na internetu. Pokud jste jmenné servery přiřadili doméně teprve nedávno, nepanikařte; rozšíření těchto informací může trvat až 5 dní."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_NOTE"
+msgid "This is <em>very basic</em> uptime monitoring through Panopticon itself. It only notifies you by email when your site goes down and comes back up. It does not integrate with third party services, it does not offer history, it does not have a public uptime page. We strongly recommend using a third party service or software to monitor your sites\' uptime instead of using this feature."
+msgstr "Jedná se o <em>velmi základní</em> monitorování dostupnosti přímo přes Panopticon. Pouze vás informuje e-mailem, když váš web vypadne nebo se obnoví. Neintegruje se se službami třetích stran, nenabízí historii ani veřejnou stránku dostupnosti. Důrazně doporučujeme namísto této funkce používat pro monitorování dostupnosti webů službu nebo software třetí strany."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J4"
+msgid "Go to your site\'s administrator backend, System, Update, Update Sites, and click on the Rebuild button."
+msgstr "Přejděte do administrace webu, Systém, Aktualizace, Weby s aktualizacemi a klikněte na tlačítko Obnovit."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J3"
+msgid "Go to your site\'s administrator backend, Extensions, Manage, Update Sites, and click on the Rebuild button."
+msgstr "Přejděte do administrace webu, Rozšíření, Spravovat, Weby s aktualizacemi a klikněte na tlačítko Obnovit."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION"
+msgid "Go to your site\'s administrator backend, System, Update, Joomla, click on Options, and change the update channel to Joomla Next. Please check Joomla\'s requirements, especially the database version and PHP version requirements. Note that your site is currently using PHP %s."
+msgstr "Přejděte do administrace webu, Systém, Aktualizace, Joomla, klikněte na Možnosti a změňte kanál aktualizací na Joomla Next. Zkontrolujte prosím požadavky Joomla, zejména požadavky na verzi databáze a PHP. Váš web aktuálně používá PHP %s."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_CALL_YOUR_HOST"
+msgid "If this keeps happening frequently you may want to contact your host about moving your site to a bigger hosting package, or otherwise upgrading your site\'s server."
+msgstr "Pokud se to stává často, zvažte kontaktování poskytovatele hostingu ohledně přechodu na větší hostingový balíček nebo jiného vylepšení serveru vašeho webu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_IOWAIT_WHAT"
+msgid "Your server is spending a lot of time waiting for disk operations, as expressed by the I/O Wait time (it is expressed as a percentage of the total CPU time available). This means that your server\'s storage is struggling to keep up with the demand."
+msgstr "Váš server tráví hodně času čekáním na diskové operace, vyjádřeno dobou čekání I/O (vyjadřuje se jako procento celkového dostupného času CPU). To znamená, že úložiště serveru nestíhá zvládnout zátěž."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_SITE_DISK_WHAT"
+msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
+msgstr "Úložiště vašeho serveru je téměř plné. Když překročíte tento limit, nebudete moci vytvářet soubory (včetně mezipaměti a dočasných souborů), což povede k neschopnosti vašeho webu správně fungovat."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_COMMON_DISK_WHAT"
+msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
+msgstr "Úložiště vašeho serveru je téměř plné. Když překročíte tento limit, nebudete moci provádět databázové operace, které odstraňují nebo vytvářejí data, ani vytvářet soubory (včetně mezipaměti a dočasných souborů), což povede k neschopnosti vašeho webu správně fungovat."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_DB_DISK_WHAT"
+msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, leading to your site being unable to function properly."
+msgstr "Úložiště vašeho serveru je téměř plné. Když překročíte tento limit, nebudete moci provádět databázové operace, které odstraňují nebo vytvářejí data, což povede k neschopnosti vašeho webu správně fungovat."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY"
+msgid "Panopticon cannot find a way to connect to your site\'s Akeeba Backup JSON API."
+msgstr "Panopticon nemůže najít způsob, jak se připojit k JSON API Akeeba Backup vašeho webu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIPS"
+msgid "Tips to connect Akeeba Panopticon to Akeeba Backup Professional"
+msgstr "Tipy pro připojení Akeeba Panopticon k Akeeba Backup Professional"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1"
+msgid "Make sure that you have installed and enabled the Akeeba Backup Professional component, and the Web Services - Akeeba Backup plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
+msgstr "Ujistěte se, že máte nainstalovanou a povolenou komponentu Akeeba Backup Professional a plugin Web Services - Akeeba Backup na vašem webu. Akeeba Backup Core <em>není</em> kompatibilní s Akeeba Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1_WP"
+msgid "Make sure that you have installed and enabled the Akeeba Backup Professional plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
+msgstr "Ujistěte se, že máte nainstalovaný a povolený plugin Akeeba Backup Professional na vašem webu. Akeeba Backup Core <em>není</em> kompatibilní s Akeeba Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
+msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr "Přihlaste se do administrace webu. Přejděte na Komponenty, Akeeba Backup, Ovládací panel. Klikněte na Možnosti, Záloha z prohlížeče a nastavte "Povolit JSON API (vzdálená záloha)" na Ano. Zadejte nové "Tajné slovo"; nové náhodné bezpečné tajné slovo lze vygenerovat na <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Poté klikněte na Uložit &amp; Zavřít na panelu nástrojů."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
+msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgstr "Přihlaste se do administrace webu. Přejděte na Akeeba Backup, Konfigurace systému, Veřejné API a nastavte "Povolit JSON API (vzdálená záloha)" na Ano. Zadejte nový "Tajný klíč"; nový náhodný bezpečný klíč lze vygenerovat na <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Poté klikněte na Uložit &amp; Zavřít na panelu nástrojů."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
+msgid "Make sure that no third party extensions (especially security extensions) and/or server configuration settings prevent access to your site\'s <code>api</code> folder. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
+msgstr "Ujistěte se, že žádná rozšíření třetích stran (zejména bezpečnostní rozšíření) ani nastavení konfigurace serveru nebrání přístupu ke složce <code>api</code> vašeho webu. Ověřte také, že odpovědi z tohoto souboru <em>nejsou</em> ukládány do mezipaměti žádnými pluginy třetích stran na vašem webu, webovým serverem ani žádným CDN / cachovacím proxy, který může být nakonfigurován před vaším webem."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP"
+msgid "Make sure that no third party plugins (especially security plugins) and/or server configuration settings prevent access to your site\'s <code>wp-admin/admin-ajax.php</code> file. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
+msgstr "Ujistěte se, že žádné pluginy třetích stran (zejména bezpečnostní pluginy) ani nastavení konfigurace serveru nebrání přístupu k souboru <code>wp-admin/admin-ajax.php</code> vašeho webu. Ověřte také, že odpovědi z tohoto souboru <em>nejsou</em> ukládány do mezipaměti žádnými pluginy třetích stran na vašem webu, webovým serverem ani žádným CDN / cachovacím proxy, který může být nakonfigurován před vaším webem."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_BODY"
+msgid "This may happen if Akeeba Backup was installed after adding the site to Akeeba Panopticon, the Panopticon Connector installed on the site is too old, or if there\'s been an error communicating with the site."
+msgstr "K tomu může dojít, pokud byl Akeeba Backup nainstalován po přidání webu do Akeeba Panopticon, pokud je Panopticon Connector nainstalovaný na webu příliš starý, nebo pokud došlo k chybě při komunikaci s webem."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_SOLUTION_ADMIN"
+msgid "Please click the button below to try relinking Akeeba Backup with Panopticon. If this doesn\'t work please update the Akeeba Panopticon Connector on your site, make sure its plugin is published, and check if you can communicate with the site correctly."
+msgstr "Klikněte prosím na níže uvedené tlačítko a pokuste se znovu propojit Akeeba Backup s Panopticon. Pokud to nefunguje, aktualizujte Akeeba Panopticon Connector na vašem webu, ujistěte se, že je jeho plugin publikován, a zkontrolujte, zda lze se webem správně komunikovat."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_JSONAPI_ERROR"
+msgid "The API indicated there is an error. Please make sure that you have entered the correct API Token, and that your site\'s server does not block or otherwise interfere with the request."
+msgstr "API hlásí chybu. Ujistěte se, že jste zadali správný API token a že server vašeho webu neblokuje ani jinak nezasahuje do požadavku."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_SCANNER_TIP"
+msgid "Admin Tools Professional\'s PHP File Change Scanner monitors your site\'s .php files for changes, additions, and suspicious content. Click on the number of the scan attempt to open its results in the administrator backend of your site."
+msgstr "PHP File Change Scanner nástroje Admin Tools Professional sleduje soubory .php vašeho webu na změny, přidání a podezřelý obsah. Kliknutím na číslo pokusu o skenování otevřete jeho výsledky v administraci vašeho webu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_HEAD"
+msgid "Core File Integrity"
+msgstr "Integrita základních souborů"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_NEVER_RUN"
+msgid "No core file integrity check has been run yet."
+msgstr "Kontrola integrity základních souborů dosud nebyla spuštěna."
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_CLEAN"
+msgid "All core files are intact. Last checked: %s"
+msgstr "Všechny základní soubory jsou v pořádku. Naposledy zkontrolováno: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
+msgid "%d modified core file(s) detected. Last checked: %s"
+msgstr "Zjištěno %d upravených základních souborů. Naposledy zkontrolováno: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"
+msgid "View Modified Files"
+msgstr "Zobrazit upravené soubory"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_RUN"
+msgid "Run Check"
+msgstr "Spustit kontrolu"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_SCHEDULE"
+msgid "Schedule"
+msgstr "Naplánovat"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_BODY"
+msgid "There was an error connecting to your site\'s Akeeba Backup JSON API."
+msgstr "Při připojování k JSON API Akeeba Backup vašeho webu došlo k chybě."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
+msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\"font-monospace\">%s</span>)."
+msgstr "Něco na vašem serveru – například konfigurace serveru řízená vaším poskytovatelem hostingu, konfigurační soubor jako <code>.htaccess</code> nebo plugin vašeho webu – blokuje přístup Panopticon k API aplikaci vašeho webu (<span class="font-monospace">%s</span>)."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Má váš poskytovatel hostingu ochranné řešení na straně serveru (například Apache mod_security2), které by mohlo blokovat koncový bod API aplikace Joomla! (<span class="font-monospace">%s</span>), váš API token (<span class="font-monospace">%s</span>) nebo User-Agent Panopticon (<span class="font-monospace">panopticon/%s</span>)?"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Má váš poskytovatel hostingu ochranné řešení na straně serveru (například Apache mod_security2), které by mohlo blokovat koncový bod API pluginu (<span class="font-monospace">%s</span>), váš API token (<span class="font-monospace">%s</span>) nebo User-Agent Panopticon (<span class="font-monospace">panopticon/%s</span>)?"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
+msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
+msgstr "Má váš poskytovatel hostingu ochranné řešení na straně serveru (například Apache mod_security2), které by mohlo blokovat koncový bod WordPress API aplikace (<span class="font-monospace">%s</span>), váš API token (<span class="font-monospace">%s</span>) nebo User-Agent Panopticon (<span class="font-monospace">panopticon/%s</span>)?"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH1"
+msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party software. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
+msgstr "Odpověď z API je předcházena nebo následována jiným textovým obsahem, jako jsou zprávy PHP (např. upozornění na zastarání, varování nebo fatální chyby) nebo výstup softwaru třetích stran. V důsledku toho nelze odpověď API dekódovat, což znamená, že Panopticon nemůže porozumět odpovědi vašeho webu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
+msgid "Make sure “Error Reporting” is set to None, and “Debug Site” is set to No in your site\'s Global Configuration page. This prevents PHP from printing messages which pollute the API response."
+msgstr "V globální konfiguraci vašeho webu nastavte "Hlášení chyb" na Žádné a "Ladicí režim webu" na Ne. To zabrání PHP v tisku zpráv, které znečišťují odpověď API."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH1"
+msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party plugins. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
+msgstr "Odpověď z API je předcházena nebo následována jiným textovým obsahem, jako jsou zprávy PHP (např. upozornění na zastarání, varování nebo fatální chyby) nebo výstup pluginů třetích stran. V důsledku toho nelze odpověď API dekódovat, což znamená, že Panopticon nemůže porozumět odpovědi vašeho webu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2"
+msgid "Make sure PHP on your server is configured with <code>display_errors</code> disabled, and that you have not enabled <code>WP_DEBUG</code> in your site\'s <code>wp-config.php</code> file. This prevents PHP from printing messages which pollute the API response."
+msgstr "Ujistěte se, že PHP na vašem serveru je nakonfigurováno s vypnutým <code>display_errors</code> a že jste v souboru <code>wp-config.php</code> svého webu nepovolili <code>WP_DEBUG</code>. To zabrání PHP v tisku zpráv, které znečišťují odpověď API."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2"
+msgid "Please make sure that there is no .htaccess code, third party plugins, or custom code (including in your theme\'s <code>functions.php</code> file) which block or otherwise limit WordPress\' JSON API – either at all, or for unauthenticated (guest) access."
+msgstr "Ujistěte se, že žádný kód v .htaccess, pluginy třetích stran ani vlastní kód (včetně souboru <code>functions.php</code> vašeho tématu) neblokují ani jinak neomezují JSON API WordPressu – zcela ani pro neověřený (anonymní) přístup."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
+msgid "If you are using Admin Tools Professional please go to your site\'s backend and click on Components, Admin Tools for Joomla!, Web Application Firewall, Configure WAF, Request Filtering. Check the list of <em>Allowed Domains</em> towards the bottom of the page."
+msgstr "Pokud používáte Admin Tools Professional, přejděte do administrace webu a klikněte na Komponenty, Admin Tools for Joomla!, Firewall webových aplikací, Konfigurovat WAF, Filtrování požadavků. Zkontrolujte seznam <em>Povolených domén</em> ve spodní části stránky."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK2"
+msgid "Have you recently bought the domain, assigned the domain to a server, or transferred your site between hosts? Keep in mind that DNS propagation takes anywhere from 5 minutes to several days. Moreover, due to the distributed nature of DNS, it is possible that you can see your site <em>from your device</em> but the server you have installed Panopticon on can\'t."
+msgstr "Koupili jste doménu teprve nedávno, přiřadili ji k serveru nebo přesunuli web mezi poskytovateli hostingu? Mějte na paměti, že propagace DNS trvá od 5 minut do několika dní. Navíc kvůli distribuované povaze DNS je možné, že vy web vidíte <em>ze svého zařízení</em>, ale server, na kterém je nainstalovaný Panopticon, ho nevidí."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3"
+msgid "If your site\'s domain resolves to an IPv6 address - but not an IPv4 address - make sure that the server you have installed Panopticon on supports IPv6. You may have to ask your host to confirm that this is the case."
+msgstr "Pokud se doménové jméno vašeho webu překládá na adresu IPv6 – ale nikoli IPv4 – ujistěte se, že server, na kterém je nainstalovaný Panopticon, podporuje IPv6. Možná budete muset požádat svého poskytovatele hostingu, aby to potvrdil."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
+msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
+msgstr "Nainstalujte certifikát SSL/TLS podepsaný komerční, dobře známou certifikační autoritou. Většina serverů umožňuje používat <a href="https://en.wikipedia.org/wiki/Let%27s_Encrypt" target="_blank">Let's Encrypt</a>, který vydává platné, podepsané a plně funkční certifikáty SSL/TLS zdarma."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
+msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
+msgstr "Pokud jste v intranetu, extranetu nebo z jiného důvodu potřebujete spravovat vlastní certifikační autoritu, můžete Panopticon říci, aby vaši vlastní certifikační autoritu rozpoznal. Vytvořte soubor <code>cacert.pem</code> ve složce <code>user_code</code> vaší instalace Panopticon. Zkopírujte a vložte veřejné certifikáty vaší certifikační autority (CA) ve formátu <a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail" target="_blank">PEM</a>. Tyto certifikáty se načtou <em>vedle</em> standardních souborů CA automaticky, což Panopticonu umožní přistupovat na váš web."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
+msgid "Your site\'s SSL/TLS certificate has a problem"
+msgstr "Certifikát SSL/TLS vašeho webu má problém"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
+msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
+msgstr "Je certifikát SSL/TLS pro správné doménové jméno? Pokud používáte výchozí certifikát SSL/TLS poskytnutý vaším poskytovatelem hostingu, je omezen na dočasné doménové jméno používané k nastavení webu, nikoli na vaše skutečné doménové jméno. Budete muset nainstalovat certifikát SSL/TLS podepsaný komerční, dobře známou certifikační autoritou. Většina serverů umožňuje používat <a href="https://en.wikipedia.org/wiki/Let%27s_Encrypt" target="_blank">Let's Encrypt</a> zdarma. Zkontrolujte, že je skutečně používán správný certifikát."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
+msgid "Has the SSL/TLS certificate expired? In this case you need to renew it. Please note that if you are using Let\'s Encrypt the certificate has a short validity period (usually 90 days) and it should be renewed automatically by your host. If this did not happen, you will need to contact your host."
+msgstr "Vypršela platnost certifikátu SSL/TLS? V takovém případě ho musíte obnovit. Pokud používáte Let's Encrypt, certifikát má krátkou dobu platnosti (obvykle 90 dní) a měl by být automaticky obnovován vaším poskytovatelem hostingu. Pokud se tak nestalo, kontaktujte svého poskytovatele hostingu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
+msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
+msgstr "Byl certifikát SSL/TLS odvolán? Certifikační autority nebo vlastníci certifikátu SSL/TLS ho mohou odvolat. Certifikační autority to například dělají, pokud mají podezření na podvod nebo pokud se domnívají, že jejich infrastruktura byla kompromitována. <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/" target="_blank">Zkontrolujte stav odvolání certifikátu</a>. Pokud byl odvolán, budete potřebovat nový certifikát."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
+msgid "Is it possible that your server serves the wrong SSL/TLS certificate? This may happen if you have recently switched to a new certificate, either manually or as part of an automated certificate rotation process (e.g. when your host issues a new certificate through Let\'s Encrypt). When the certificate changes the web server needs to be reloaded or restarted. In some rare cases this might not happen - or an inexperienced systems administrator may forget to do it. Please contact your host / systems administrator to check that and, if necessary, reload or restart the web server process."
+msgstr "Je možné, že váš server zobrazuje nesprávný certifikát SSL/TLS? K tomu může dojít, pokud jste nedávno přešli na nový certifikát. Při změně certifikátu je třeba webový server znovu načíst nebo restartovat. Kontaktujte prosím svého poskytovatele hostingu nebo správce systému, aby to zkontroloval."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2"
+msgid "Please go to your site\'s backend and click on System, Manage, Extensions. Search for the “Web Services - Installer” plugin and enable it."
+msgstr "Přejděte do administrace webu a klikněte na Systém, Spravovat, Rozšíření. Vyhledejte plugin "Web Services - Installer" a povolte ho."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2"
+msgid "Please go to your site\'s backend and click on Extensions, Plugins. Search for the “System - Panopticon Connector for Joomla 3” plugin and enable it."
+msgstr "Přejděte do administrace webu a klikněte na Rozšíření, Pluginy. Vyhledejte plugin "System - Panopticon Connector for Joomla 3" a povolte ho."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3"
+msgid "Kindly note that the password protection may have been applied only to your site\'s <code>api</code> folder, or the root folder of your site. Look in both places, in this order."
+msgstr "Vezměte prosím na vědomí, že ochrana heslem mohla být použita pouze na adresář <code>administrator</code> vašeho webu. V takovém případě stačí nastavit heslo pro adresář správce pouze v Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
+msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
+msgstr "Panopticon používá vlastní plugin "Akeeba Panopticon Connector for WordPress" pro komunikaci s vaším webem WordPress. Ujistěte se prosím, že máte tento plugin nainstalovaný a povolený."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
+msgid "Please go to your site\'s wp-admin backend and click on Plugins. Search for the “Akeeba Panopticon Connector for WordPress” plugin and enable it."
+msgstr "Přejděte do administrace wp-admin vašeho webu a klikněte na Pluginy. Vyhledejte plugin Panopticon connector a ujistěte se, že je aktivní."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
+msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
+msgstr "Namísto toho jsme obdrželi chybu, pro kterou bychom vám měli poskytnout informace pro řešení potíží."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
+msgid "Please delete all files and folders inside the <code>tmp</code> folder of Akeeba Panopticon. This addresses the problem of this page\'s cached copy being severely out of date. If this doesn\'t help, please let us know."
+msgstr "Vymažte prosím všechny soubory a složky uvnitř složky <code>tmp</code> aplikace Akeeba Backup. Pokud si nejste jisti, kde se nachází, přejděte na stránku Konfigurace v Akeeba Backup a zkontrolujte možnost Dočasný adresář."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_REGISTRATION"
+msgid "User Registration"
+msgstr "Registrace uživatelů"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
+msgstr "Zabraňte uživatelům v používání hesel, která jsou nalezena v online únicích hesel. Tato funkce využívá službu třetí strany <a href="https://haveibeenpwned.com" target="_blank">Have I Been Pwned</a>."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
+msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
+msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href="https://gravatar.com" target="_blank">Gravatar</a>. Pokud si přejete zachovat soukromí, tuto funkci vypněte."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI"
+msgid "Accurate PHP-CLI path"
+msgstr "Přesná cesta PHP-CLI"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI_HELP"
+msgid "Enable to have Akeeba Panopticon try to detect the accurate PHP-CLI path on your server. Disable if your server does not allow you to do that, locking your IP address out of your site for several minutes to hours when this happens (for example IONOS)."
+msgstr "Povolte, aby se Akeeba Panopticon pokusil detekovat přesnou cestu PHP-CLI na vašem serveru. Toto nastavení může zpomalit první spuštění CRON úlohy asi o 2 sekundy. Pokud vaše CRON úlohy nefungují, nejprve zkuste nastavit přesnou cestu PHP-CLI ručně."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL_HELP"
+msgid "This preference can be overridden for any individual extension below. You can also override this for any individual extension and site in each site\'s configuration page."
+msgstr "Toto nastavení lze přepsat pro jakékoli individuální rozšíření níže. Chcete-li přepsat nastavení pro konkrétní rozšíření, klikněte na ikonu klíče ve sloupci Nainstalovat aktualizace na stránce správy rozšíření webu."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM_HELP"
+msgid "The hash algorithm for creating an anti-CSRF token. SHA-512 offers the best security, but may not work on some hosts because it\'s very long. MD5 offers the least security but is compatible with all hosts. Only change if you have problems when clicking action buttons in Panopticon."
+msgstr "Hashovací algoritmus pro vytvoření tokenu anti-CSRF. SHA-512 nabízí nejlepší bezpečnost, ale je pomalejší. SHA-256 je dobrý kompromis. MD5 je nejrychlejší, ale nejméně bezpečný. Ve výchozím nastavení se používá SHA-512."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION"
+msgid "User registration"
+msgstr "Registrace uživatelů"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION_HELP"
+msgid "Controls whether new users can create their own accounts. In \'Admin approval\' mode, an administrator must approve new accounts. In \'Self-approval\' mode, users activate their account via an email link."
+msgstr "Určuje, zda si noví uživatelé mohou vytvářet vlastní účty. Při možnosti "Schválení správcem" musí správce ručně schválit každý nový účet. Při možnosti "Samoschválení" dostane uživatel aktivační e-mail."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_DISABLED"
+msgid "Disabled"
+msgstr "Zakázáno"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_ADMIN"
+msgid "Admin approval"
+msgstr "Schválení správcem"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_SELF"
+msgid "Self-approval (email activation)"
+msgstr "Samoschválení (e-mailová aktivace)"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ALLOWED_DOMAINS"
+msgid "Allowed email domains"
+msgstr "Povolené e-mailové domény"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ALLOWED_DOMAINS_HELP"
+msgid "Only email addresses from these domains will be allowed to register. Separate with commas or newlines. Leave empty to allow all domains."
+msgstr "Registrace budou povoleny pouze pro e-mailové adresy z těchto domén. Oddělte čárkami nebo novými řádky. Ponechte prázdné pro povolení všech domén."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DISALLOWED_DOMAINS"
+msgid "Disallowed email domains"
+msgstr "Zakázané e-mailové domény"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DISALLOWED_DOMAINS_HELP"
+msgid "Email addresses from these domains will be blocked from registering. Separate with commas or newlines. Useful for blocking disposable email services."
+msgstr "E-mailové adresy z těchto domén budou zablokovány z registrace. Oddělte čárkami nebo novými řádky."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DEFAULT_GROUP"
+msgid "Default group"
+msgstr "Výchozí skupina"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_DEFAULT_GROUP_HELP"
+msgid "New registered users will be automatically added to this group."
+msgstr "Nově registrovaní uživatelé budou automaticky přidáni do této skupiny."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_REGISTRATION_NO_GROUP"
+msgid "— None —"
+msgstr "— Žádná —"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_BLOCK_USERNAMES"
+msgid "Block common usernames"
+msgstr "Blokovat běžná uživatelská jména"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_BLOCK_USERNAMES_HELP"
+msgid "When enabled, a hardcoded list of commonly abused usernames (admin, root, test, etc.) will be blocked during registration."
+msgstr "Při aktivaci bude zakázáno používání pevně zakódovaného seznamu běžně zneužívaných uživatelských jmen (admin, root, test, atd.) při registraci."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_CUSTOM_BLOCKED_USERNAMES"
+msgid "Custom blocked usernames"
+msgstr "Vlastní blokovaná uživatelská jména"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_CUSTOM_BLOCKED_USERNAMES_HELP"
+msgid "Additional usernames to block during registration. Separate with commas or newlines."
+msgstr "Další uživatelská jména, která mají být blokována při registraci. Oddělte čárkami nebo novými řádky."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ACTIVATION_DAYS"
+msgid "Activation period"
+msgstr "Aktivační lhůta"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_REGISTRATION_ACTIVATION_TRIES"
+msgid "Maximum activation attempts"
+msgstr "Maximální počet pokusů o aktivaci"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER"
+msgid "CAPTCHA provider"
+msgstr "Poskytovatel CAPTCHA"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_PROVIDER_HELP"
+msgid "The CAPTCHA provider to use on the registration form to prevent automated registrations."
+msgstr "Poskytovatel CAPTCHA, který se má použít v registračním formuláři pro prevenci automatizovaných registrací."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_ALTCHA"
+msgid "ALTCHA (self-hosted proof-of-work)"
+msgstr "ALTCHA (vlastní proof-of-work)"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_RECAPTCHA_INVISIBLE"
+msgid "reCAPTCHA Invisible (Google)"
+msgstr "reCAPTCHA Invisible (Google)"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_HCAPTCHA"
+msgid "hCaptcha"
+msgstr "hCaptcha"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_OPT_CAPTCHA_NONE"
+msgid "None"
+msgstr "Žádný"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY"
+msgid "reCAPTCHA Site Key"
+msgstr "Klíč webu reCAPTCHA"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SITE_KEY_HELP"
+msgid "Enter the site key from your Google reCAPTCHA admin console. You need an Invisible reCAPTCHA v2 key."
+msgstr "Zadejte klíč webu z administrátorské konzole Google reCAPTCHA. Potřebujete klíč Invisible reCAPTCHA v2."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY"
+msgid "reCAPTCHA Secret Key"
+msgstr "Tajný klíč reCAPTCHA"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_RECAPTCHA_SECRET_KEY_HELP"
+msgid "Enter the secret key from your Google reCAPTCHA admin console."
+msgstr "Zadejte tajný klíč z administrátorské konzole Google reCAPTCHA."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY"
+msgid "hCaptcha Site Key"
+msgstr "Klíč webu hCaptcha"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY_HELP"
+msgid "Enter the site key from your hCaptcha dashboard."
+msgstr "Zadejte klíč webu z řídicího panelu hCaptcha."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY"
+msgid "hCaptcha Secret Key"
+msgstr "Tajný klíč hCaptcha"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY_HELP"
+msgid "Enter the secret key from your hCaptcha dashboard."
+msgstr "Zadejte tajný klíč z řídicího panelu hCaptcha."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME_HELP"
+msgid "Choose which service will be used to report your sites\' uptime. Please note that the integrated “Panopticon” provider is very basic and has some gotchas. Please read the documentation."
+msgstr "Vyberte, která služba bude použita pro hlášení dostupnosti vašich webů. Vezměte prosím na vědomí, že tato možnost se vztahuje pouze na monitorování dostupnosti třetí stranou, nikoli na integrované monitorování dostupnosti Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY"
+msgid "This email message confirms that Akeeba Panopticon, installed on %s, has been configured to send email messages correctly.\\n\\nIf this message ended up in your spam / junk inbox please check whether your domain has DKIM and SPF set up correctly, as well as whether your receiving mail server and mail client are configured in a way which misidentifies this message as spam. According to our experience, you can get pertinent troubleshooting information by looking at the source code of the received message in your mail client. Please consult your mail client\'s documentation for more information on how to do that."
+msgstr "Tato e-mailová zpráva potvrzuje, že Akeeba Panopticon nainstalovaný na adrese %s byl nakonfigurován k odesílání e-mailů. Pokud jste tento e-mail neočekávali, ignorujte ho."
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_CORE_CHECKSUMS_FOUND"
+msgid "Core File Integrity: Modified Files Found"
+msgstr "Integrita základních souborů: Nalezeny upravené soubory"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_PENDING_ADMIN"
+msgid "Registration: Pending Admin Approval"
+msgstr "Registrace: Čeká na schválení správcem"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_NOTIFY_ADMIN"
+msgid "Registration: Admin Notification"
+msgstr "Registrace: Oznámení správci"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_ACTIVATE"
+msgid "Registration: Activation Required"
+msgstr "Registrace: Vyžadována aktivace"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_APPROVED"
+msgid "Registration: Account Approved"
+msgstr "Registrace: Účet schválen"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_REGISTRATION_EXPIRED"
+msgid "Registration: Account Expired"
+msgstr "Registrace: Účet vypršel"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_EXTENSION_INSTALL_SUMMARY"
+msgid "Remote Extension Installation: Summary"
+msgstr "Vzdálená instalace rozšíření: Souhrn"
+
+#, phpformat
+msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
+msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
+msgstr "Panopticon nelze aktualizovat přímo z jeho rozhraní, pokud běží v prostředí Docker. Aktualizujte prosím Docker image, ze kterého váš kontejner vychází."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS_HELP"
+msgid "These privileges will be given to a user belonging to this group for any site which belongs to this group. To let the user see a site\'s overview you need to give them the View privilege."
+msgstr "Tato oprávnění budou udělena uživateli patřícímu do této skupiny pro jakýkoli web, jehož součástí je tato skupina. Oprávnění lze přepsat na úrovni jednotlivého webu."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_BANNED"
+msgid "The password you entered is in a list of commonly used passwords. Please choose a different password."
+msgstr "Vámi zadané heslo se nachází v seznamu běžně používaných hesel. Zvolte prosím bezpečnější heslo."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_TOOSHORT"
+msgid "The password is too short. Please use at least 12 characters."
+msgstr "Heslo je příliš krátké. Použijte prosím alespoň 12 znaků."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_PASSWORD_WEAK"
+msgid "The password is too easy to guess. Please use a more complex password with a mix of letters, numbers, and symbols."
+msgstr "Heslo je příliš snadné k uhodnutí. Použijte prosím složitější heslo s kombinací velkých a malých písmen, číslic a speciálních znaků."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_NAME"
+msgid "Full Name"
+msgstr "Celé jméno"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
+msgid "The email address is used to email the user, as well as displaying the user\'s picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
+msgstr "E-mailová adresa se používá k zasílání e-mailů uživateli, a také k zobrazení avatara uživatele (pokud jsou avatary povoleny)."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
+msgid "Confirm Password"
+msgstr "Potvrdit heslo"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_PROMPT"
+msgid "Create an account"
+msgstr "Vytvořit účet"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_HEAD"
+msgid "Register New Account"
+msgstr "Registrace nového účtu"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_INFO"
+msgid "Fill in the form below to create a new account."
+msgstr "Vyplňte níže uvedený formulář pro vytvoření nového účtu."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUBMIT_BUTTON"
+msgid "Register"
+msgstr "Registrovat"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUCCESS_ADMIN"
+msgid "Your account has been created and is pending administrator approval. You will receive an email when your account is approved."
+msgstr "Váš účet byl vytvořen a čeká na schválení správcem. Po schválení obdržíte e-mail."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_REGISTER_SUCCESS_SELF"
+msgid "Your account has been created. Please check your email for the activation link."
+msgstr "Váš účet byl vytvořen. Zkontrolujte prosím svůj e-mail, kde najdete aktivační odkaz."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_BACK_TO_LOGIN"
+msgid "Back to login"
+msgstr "Zpět na přihlášení"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_REGISTRATION_DISABLED"
+msgid "User registration is currently disabled."
+msgstr "Registrace uživatelů je momentálně zakázána."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_FORBIDDEN_USERNAME"
+msgid "This username is not allowed. Please choose a different username."
+msgstr "Toto uživatelské jméno není povoleno. Zvolte prosím jiné uživatelské jméno."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_EMAIL_EXISTS"
+msgid "An account with this email address already exists."
+msgstr "Účet s touto e-mailovou adresou již existuje."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_EMAIL_DOMAIN_NOT_ALLOWED"
+msgid "Registration is not allowed for this email domain."
+msgstr "Registrace pro tuto e-mailovou doménu není povolena."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_ERR_CAPTCHA_FAILED"
+msgid "CAPTCHA verification failed. Please try again."
+msgstr "Ověření CAPTCHA selhalo. Zkuste to prosím znovu."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_HEAD"
+msgid "Activate Your Account"
+msgstr "Aktivace účtu"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_INFO"
+msgid "Enter your username, password, and the activation token from your email to activate your account."
+msgstr "Zadejte své uživatelské jméno, heslo a aktivační token z e-mailu pro aktivaci svého účtu."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_TOKEN"
+msgid "Activation Token"
+msgstr "Aktivační token"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_SUBMIT_BUTTON"
+msgid "Activate Account"
+msgstr "Aktivovat účet"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_SUCCESS"
+msgid "Your account has been activated. You can now log in."
+msgstr "Váš účet byl aktivován. Nyní se můžete přihlásit."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_FAILED"
+msgid "Activation failed. Please check your username, password, and token."
+msgstr "Aktivace selhala. Zkontrolujte prosím své uživatelské jméno, heslo a token."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_ACTIVATE_EXPIRED"
+msgid "Your registration has expired. Please register again."
+msgstr "Vaše registrace vypršela. Zaregistrujte se prosím znovu."
+
+#, phpformat
+msgctxt "PANOPTICON_ABOUT_LBL_VISIT_GITHUB"
+msgid "For a complete list of Panopticon\'s contributors please visit <a href=\"%s\">its GitHub repository</a>."
+msgstr "Úplný seznam přispěvatelů Panopticon naleznete na <a href="%s">stránce GitHub</a>."
+
+#, phpformat
+msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
+msgid "We would like to acknowledge and recognise the work of each and every person who has contributed to Akeeba Panopticon, no matter how small or big their contribution is; even the smallest of details are important. If you have contributed outside of GitHub and would like to be publicly acknowledged, please drop us a line and we\'ll rectify the omission; <em>every person matters</em>."
+msgstr "Rádi bychom ocenili a uznali práci každého jednotlivce, který přispěl k tomuto projektu. Pokud vás v seznamu postrádáme, dejte nám prosím vědět."
+
+#, phpformat
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
+msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site\'s server where Akeeba Backup runs."
+msgstr "Můžete použít proměnné Akeeba Backup jako <code>[DATE]</code>, <code>[SITE]</code> atd."
+
+#, phpformat
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci, nebo <code>*</code> pro každý den. Oddělte čárkami pro více hodnot nebo použijte pomlčku pro rozsah."
+
+#, phpformat
+msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The backup schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Plán zálohy je <a href='%s' target='_blank'>výraz CRON</a>. Časy jsou v časovém pásmu %s."
+
+#, phpformat
+msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci, nebo <code>*</code> pro každý den. Oddělte čárkami pro více hodnot nebo použijte pomlčku pro rozsah."
+
+#, phpformat
+msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The scan schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Plán skenování je <a href='%s' target='_blank'>výraz CRON</a>. Časy jsou v časovém pásmu %s."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE"
+msgid "Core File Integrity Check Schedules"
+msgstr "Plány kontrol integrity základních souborů"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE_NEW"
+msgid "New Checksum Check Schedule"
+msgstr "Nový plán kontroly kontrolního součtu"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TITLE_EDIT"
+msgid "Edit a Checksum Check Schedule"
+msgstr "Upravit plán kontroly kontrolního součtu"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_TABLE_COMMENT"
+msgid "List of core file integrity check task schedules"
+msgstr "Seznam plánů úloh pro kontrolu integrity základních souborů"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES"
+msgid "Minutes"
+msgstr "Minuty"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES_HELP"
+msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
+msgstr "Číslo <code>0</code> až <code>59</code>, souvislý rozsah např. <code>5-15</code>, seznam oddělený čárkami např. <code>0,15,30,45</code>, nebo <code>*</code> pro každou minutu."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS"
+msgid "Hours"
+msgstr "Hodiny"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS_HELP"
+msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
+msgstr "Číslo <code>0</code> až <code>23</code> (0–11 je dopoledne, 12–23 je odpoledne), souvislý rozsah např. <code>8-17</code>, seznam oddělený čárkami nebo <code>*</code> pro každou hodinu."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM"
+msgid "Day of the Month"
+msgstr "Den v měsíci"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM_HELP"
+msgid "Number <code>1</code> to <code>31</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15</code>, every day as <code>*</code>, every X days using slash e.g. <code>*/2</code> (every 2 days)."
+msgstr "Číslo <code>1</code> až <code>31</code>, souvislý rozsah např. <code>1-15</code>, seznam oddělený čárkami nebo <code>*</code> pro každý den."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH"
+msgid "Month"
+msgstr "Měsíc"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH_HELP"
+msgid "Number <code>1</code> to <code>12</code>, contiguous range e.g. <code>1-6</code>, comma–separated list of values e.g. <code>1,4,7,10</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/3</code> (every 3 months)."
+msgstr "Číslo <code>1</code> až <code>12</code>, souvislý rozsah např. <code>1-6</code>, seznam oddělený čárkami nebo <code>*</code> pro každý měsíc."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW"
+msgid "Day of the Week"
+msgstr "Den v týdnu"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW_HELP"
+msgid "Number <code>0</code> to <code>7</code> (0 or 7 is Sunday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>."
+msgstr "Číslo <code>0</code> až <code>7</code> (0 nebo 7 je neděle), souvislý rozsah např. <code>1-5</code>, seznam oddělený čárkami nebo <code>*</code> pro každý den."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE"
+msgid "Repetition"
+msgstr "Opakování"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_NONE"
+msgid "Repeat according to schedule"
+msgstr "Opakovat dle plánu"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_DISABLE"
+msgid "Run once, then disable this check schedule"
+msgstr "Spustit jednou, poté zakázat tento plán kontroly"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE_DELETE"
+msgid "⚠️ Run once, then DELETE this check schedule"
+msgstr "⚠️ Spustit jednou, poté SMAZAT tento plán kontroly"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The check schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Plán kontroly je <a href='%s' target='_blank'>výraz CRON</a>. Časy jsou v časovém pásmu %s."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_ERR_CANNOT_EDIT_MANUAL"
+msgid "You cannot edit manual check schedules."
+msgstr "Ruční plány kontrol nelze upravovat."
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_SCAN"
+msgid "Manual Check"
+msgstr "Ruční kontrola"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_SELECT_MANUAL"
+msgid "– Manual –"
+msgstr "– Ruční –"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_NO"
+msgid "Scheduled"
+msgstr "Naplánováno"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MANUAL_YES"
+msgid "Manual"
+msgstr "Ručně"
+
+#, phpformat
+msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_VIEW_MANUAL"
+msgid "List Manual Checks"
+msgstr "Zobrazit ruční kontroly"
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_TITLE"
+msgid "Core File Integrity Check Results"
+msgstr "Výsledky kontroly integrity základních souborů"
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_LAST_CHECK"
+msgid "Last check: %s"
+msgstr "Poslední kontrola: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_ALL_CLEAN"
+msgid "All core files are intact. No modifications detected."
+msgstr "Všechny základní soubory jsou v pořádku. Nebyly zjištěny žádné úpravy."
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_FOUND_MODIFIED"
+msgid "%d modified core file(s) detected"
+msgstr "Zjištěno %d upravených základních souborů"
+
+#, phpformat
+msgctxt "PANOPTICON_CORECHECKSUMS_LBL_FILE_PATH"
+msgid "File Path"
+msgstr "Cesta k souboru"
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_INSTRUCTIONS"
+msgid "Print this page and keep it in your wallet. Each of the following codes below can be used only once. Use them in case of emergency, when none of the other Multi-factor Authentication methods you\'ve set up can be used. For example, if your phone is out of battery or misplaced."
+msgstr "Vytiskněte tuto stránku a uložte ji na bezpečném místě. Každý z níže uvedených kódů lze použít jednou místo kódu MFA. Každý kód je platný pouze jednou."
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE"
+msgid "<p>Enter a password below. This password will be required to be entered after logging in before you\'re able to use the site.</p>"
+msgstr "<p>Zadejte níže heslo. Toto heslo bude vyžadováno po přihlášení jako druhý faktor ověření. Nepoužívejte jako heslo MFA stejné heslo jako pro přihlášení.</p>"
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS"
+msgid "Follow the instructions on your device\'s screen to use your preferred Passkey."
+msgstr "Postupujte podle pokynů na obrazovce vašeho zařízení a použijte preferovaný Passkey."
+
+#, phpformat
+msgctxt "PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_BODY"
+msgid "Your browser doesn\'t support Passkeys, or your site does not meet the minimum requirements (HTTPS-only, with an SSL/TLS certificate signed by a commercial Certification Authority)."
+msgstr "Váš prohlížeč nepodporuje Passkeys nebo váš web nesplňuje minimální požadavky pro jejich použití."
+
+#, phpformat
+msgctxt "PANOPTICON_OVERRIDES_LBL_NO_OVERRIDE_SUGGESTION"
+msgid "Please visit your site\'s administrator backend to inspect the template overrides."
+msgstr "Navštivte prosím administraci vašeho webu a zkontrolujte přepisy šablon."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_TITLE"
+msgid "Install Extension"
+msgstr "Instalace rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARNING_HEAD"
+msgid "Danger Zone"
+msgstr "Nebezpečná zóna"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARNING_BODY"
+msgid "Installing extensions remotely is a powerful and potentially dangerous operation. Installing an incompatible or malicious extension can break your site, cause data loss, or introduce security vulnerabilities. Only install extensions you trust, and always have a recent backup before proceeding."
+msgstr "Vzdálená instalace rozšíření je mocná a potenciálně nebezpečná operace. Chybně nainstalované nebo nekompatibilní rozšíření může váš web poškodit. Pokračujte prosím opatrně."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_STEP_SELECT"
+msgid "Step 1: Select Sites"
+msgstr "Krok 1: Výběr webů"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_STEP_REVIEW"
+msgid "Step 2: Review & Install"
+msgstr "Krok 2: Přehled a instalace"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECT_SITE"
+msgid "Select site \"%s\"
+msgstr "Vybrat web "%s""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CONTINUE"
+msgid "Continue to Review"
+msgstr "Pokračovat k přehledu"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_GOBACK"
+msgid "Go back to site selection"
+msgstr "Zpět na výběr webu"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_INSTALL"
+msgid "Install Extension"
+msgstr "Instalovat rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SITE_NAME"
+msgid "Site Name"
+msgstr "Název webu"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMS_TYPE"
+msgid "CMS"
+msgstr "CMS"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMS_VERSION"
+msgid "CMS Version"
+msgstr "Verze CMS"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_PHP_VERSION"
+msgid "PHP Version"
+msgstr "Verze PHP"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SITE_SELECT"
+msgid "– Site –"
+msgstr "– Web –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMSTYPE_SELECT"
+msgid "– CMS Type –"
+msgstr "– Typ CMS –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_CMSVERSION_SELECT"
+msgid "– CMS Version –"
+msgstr "– Verze CMS –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_PHPVERSION_SELECT"
+msgid "– PHP Version –"
+msgstr "– Verze PHP –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES"
+msgid "Extension Updates"
+msgstr "Aktualizace rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_SELECT"
+msgid "– Update Status –"
+msgstr "– Stav aktualizace –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_YES"
+msgid "Out of Date"
+msgstr "Zastaralé"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_UPDATES_NO"
+msgid "Up to Date"
+msgstr "Aktuální"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME"
+msgid "Extension Name"
+msgstr "Název rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_NAME_SELECT"
+msgid "– Extension Name –"
+msgstr "– Název rozšíření –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR"
+msgid "Extension Author"
+msgstr "Autor rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_SELECT"
+msgid "– Author –"
+msgstr "– Autor –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL"
+msgid "Author URL"
+msgstr "URL autora"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_EXT_AUTHOR_URL_SELECT"
+msgid "– Author URL –"
+msgstr "– URL autora –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL"
+msgid "Extension Download URL"
+msgstr "URL ke stažení rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_HELP"
+msgid "The direct download URL for the extension package (ZIP file). The remote site will download it directly from this URL."
+msgstr "Přímá URL pro stažení balíčku rozšíření (soubor ZIP). Vzdálený web stáhne balíček z této URL a nainstaluje ho."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE"
+msgid "Extension Package File"
+msgstr "Soubor balíčku rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE_HELP"
+msgid "Upload an extension package file (ZIP). It will be sent to each selected site for installation."
+msgstr "Nahrajte soubor balíčku rozšíření (ZIP). Bude odeslán na každý vybraný web pro instalaci."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_OR_FILE"
+msgid "Provide a download URL or upload a file"
+msgstr "Zadejte URL ke stažení nebo nahrajte soubor"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_CMS"
+msgid "You have selected both Joomla!® and WordPress sites. An extension package is typically only compatible with one CMS. Please remove one type."
+msgstr "Vybrali jste weby Joomla!® i WordPress. Balíček rozšíření je obvykle kompatibilní pouze s jedním typem CMS. Pokračováním riskujete selhání instalace na nekompatibilních webech."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_VERSIONS"
+msgid "The selected sites use different CMS and/or PHP versions. This could lead to failed installations on some sites."
+msgstr "Vybrané weby používají různé verze CMS nebo PHP. To může vést k selhání instalace na nekompatibilních webech."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_JOOMLA"
+msgid "Remove Joomla!® sites"
+msgstr "Odebrat weby Joomla!®"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_REMOVE_WORDPRESS"
+msgid "Remove WordPress sites"
+msgstr "Odebrat weby WordPress"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_TASK_CREATED"
+msgid "Extension installation has been scheduled. You will receive a summary email and push notification when it completes."
+msgstr "Instalace rozšíření byla naplánována. Po dokončení obdržíte souhrnný e-mail a výsledky lze zkontrolovat na stránce protokolů."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECTED_SITES"
+msgid "Selected Sites"
+msgstr "Vybrané weby"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_NO_SITES"
+msgid "No sites selected. Please go back and select at least one site."
+msgstr "Žádné weby nebyly vybrány. Přejděte prosím zpět a vyberte alespoň jeden web."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_NO_URL_OR_FILE"
+msgid "Please provide an extension download URL or upload a file."
+msgstr "Zadejte prosím URL ke stažení rozšíření nebo nahrajte soubor."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_SITES"
+msgid "You must select at least one site."
+msgstr "Musíte vybrat alespoň jeden web."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_PERMISSION"
+msgid "You do not have permission to install extensions on one or more selected sites."
+msgstr "Nemáte oprávnění instalovat rozšíření na jednom nebo více vybraných webech."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_NO_URL_OR_FILE"
+msgid "You must provide an extension download URL or upload a package file."
+msgstr "Musíte zadat URL ke stažení rozšíření nebo nahrát soubor balíčku."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
+msgid "Table of selected sites for extension installation"
+msgstr "Tabulka vybraných webů pro instalaci rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_USAGESTATS_LBL_SERVER_DOMAIN"
+msgid "The usage statistics collection server\'s domain name is <code>%s</code>."
+msgstr "Název domény serveru pro sběr statistik využití je <code>%s</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_SUCCESS"
+msgid "Core file integrity check ran"
+msgstr "Kontrola integrity základních souborů proběhla"
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_FAILED"
+msgid "Core file integrity check failed"
+msgstr "Kontrola integrity základních souborů selhala"
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_CORECHECKSUMS_MODIFIED_COUNT"
+msgid "%d modified core file(s) detected"
+msgstr "Zjištěno %d upravených základních souborů"
+
+#, phpformat
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The schedule for update summary emails is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Plán souhrnných e-mailů aktualizací je <a href='%s' target='_blank'>výraz CRON</a>. Časy jsou v časovém pásmu %s."
+
+#, phpformat
+msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
+msgid "If no groups are selected: emails are sent to all users who can make changes to the site. When any groups are selected: emails are sent to all users who are assigned to the selected group, <em>even if they can\'t even view the site in the Sites Overview page</em>."
+msgstr "Pokud nejsou vybrány žádné skupiny: e-maily jsou odesílány všem uživatelům, kteří mohou provádět změny na webech zahrnutých v souhrnu. Vyberte skupiny pro omezení příjemců."
+
+#, phpformat
+msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
+msgid "The Site Action Summary schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
+msgstr "Plán souhrnů akcí webu je <a href='%s' target='_blank'>výraz CRON</a>. Časy jsou v časovém pásmu %s."
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE"
+msgid "Legal Policies"
+msgstr "Právní zásady"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_TOS"
+msgid "Terms of Service"
+msgstr "Podmínky použití"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_PRIVACY"
+msgid "Privacy Policy"
+msgstr "Zásady ochrany osobních údajů"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_TITLE_EDIT"
+msgid "Edit Legal Policies"
+msgstr "Upravit právní zásady"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_TYPE"
+msgid "Policy Type"
+msgstr "Typ zásad"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_LANGUAGE"
+msgid "Language"
+msgstr "Jazyk"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_CONTENT"
+msgid "Content"
+msgstr "Obsah"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_PREVIEW_TOS"
+msgid "Preview Terms of Service"
+msgstr "Náhled podmínek použití"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_LBL_PREVIEW_PRIVACY"
+msgid "Preview Privacy Policy"
+msgstr "Náhled zásad ochrany osobních údajů"
+
+#, phpformat
+msgctxt "PANOPTICON_POLICIES_MSG_SAVED"
+msgid "The policy has been saved."
+msgstr "Zásady byly uloženy."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_TITLE"
+msgid "Terms and Conditions"
+msgstr "Smluvní podmínky"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_REQUIRED"
+msgid "Your Consent is Required"
+msgstr "Je vyžadován váš souhlas"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_EXPLANATION"
+msgid "Before you can use this service, you must review and agree to our Terms of Service and Privacy Policy. You can also export your personal data or delete your account from this page."
+msgstr "Než budete moci tuto službu používat, musíte si přečíst a odsouhlasit naše podmínky použití a zásady ochrany osobních údajů."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_VIEW_FULL"
+msgid "View full page"
+msgstr "Zobrazit celou stránku"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_AGREE_PROMPT"
+msgid "By clicking &ldquo;I Agree&rdquo;, you confirm that you have read and agree to the Terms of Service and Privacy Policy."
+msgstr "Kliknutím na &ldquo;Souhlasím&rdquo; potvrzujete, že jste si přečetli a souhlasíte s podmínkami použití a zásadami ochrany osobních údajů."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_AGREE"
+msgid "I Agree"
+msgstr "Souhlasím"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_DECLINE"
+msgid "I Decline (Log Out)"
+msgstr "Nesouhlasím (Odhlásit se)"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_AGREED"
+msgid "Thank you for accepting the Terms of Service. You can now use the application."
+msgstr "Děkujeme za přijetí podmínek použití. Nyní můžete aplikaci používat."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_DECLINED"
+msgid "You have declined the Terms of Service and have been logged out."
+msgstr "Odmítli jste podmínky použití a byli jste odhlášeni."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_EXPORT"
+msgid "Export Your Data"
+msgstr "Export vašich dat"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_EXPORT_DESC"
+msgid "Download a copy of all personal data we hold about you, in XML format. This includes your profile information, owned sites, MFA methods, and passkey labels."
+msgstr "Stáhněte kopii všech osobních údajů, které o vás evidujeme, ve formátu XML. Zahrnuje to vaše profilové informace a záznamy o souhlasech."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_EXPORT"
+msgid "Download My Data"
+msgstr "Stáhnout moje data"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_HEAD_DELETE"
+msgid "Permanently Delete My Account"
+msgstr "Trvale smazat můj účet"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_WARNING"
+msgid "Deleting your account is permanent and cannot be undone. All your data, including sites you own, will be permanently removed."
+msgstr "Smazání vašeho účtu je trvalé a nelze ho vrátit zpět. Všechna vaše data, včetně nastavení a záznamů o aktivitě, budou trvale odstraněna."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_SOLE_ADMIN"
+msgid "You are the only administrator account. You cannot delete your own account as this would leave the system without an administrator."
+msgstr "Jste jediný administrátorský účet. Nemůžete smazat vlastní účet, protože by tím byl systém bez správce."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_TYPE_USERNAME"
+msgid "To confirm, type your username below:"
+msgstr "Pro potvrzení zadejte své uživatelské jméno níže:"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_LBL_DELETE_CONFIRM"
+msgid "Are you absolutely sure you want to permanently delete your account? This action CANNOT be undone."
+msgstr "Jste si naprosto jisti, že chcete trvale smazat svůj účet? Tuto akci nelze vrátit zpět."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_BTN_DELETE"
+msgid "Permanently Delete My Account"
+msgstr "Trvale smazat můj účet"
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_ERR_USERNAME_MISMATCH"
+msgid "The username you entered does not match your account username. Account deletion was cancelled."
+msgstr "Zadané uživatelské jméno neodpovídá uživatelskému jménu vašeho účtu. Smazání účtu bylo zrušeno."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_ERR_CANNOT_SELF_DELETE"
+msgid "You cannot delete your account. You may be the only administrator."
+msgstr "Nemůžete smazat svůj účet. Možná jste jediný administrátor."
+
+#, phpformat
+msgctxt "PANOPTICON_USERCONSENT_MSG_ACCOUNT_DELETED"
+msgid "Your account has been permanently deleted."
+msgstr "Váš účet byl trvale smazán."
+
+#, phpformat
+msgctxt "PANOPTICON_TASKTYPE_SENDWEBPUSH"
+msgid "Send Enqueued Web Push Notifications"
+msgstr "Odeslat zařazená webová push oznámení"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_MESSAGE"
+msgid "Would you like to receive browser push notifications for important events like updates, backups, and site status changes?"
+msgstr "Chcete dostávat push oznámení prohlížeče pro důležité události, jako jsou aktualizace webu, výpadky nebo problémy se zálohováním?"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_ENABLE"
+msgid "Enable Notifications"
+msgstr "Povolit oznámení"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_REMIND"
+msgid "Remind Me Later"
+msgstr "Připomenout později"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROMPT_BTN_DECLINE"
+msgid "I Am Not Interested"
+msgstr "Nemám zájem"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROFILE_TITLE"
+msgid "Push Notifications"
+msgstr "Push oznámení"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_PROFILE_DESC"
+msgid "Manage browser push notifications for this device. When enabled, you will receive real-time notifications about important events such as CMS updates, backup results, and site status changes."
+msgstr "Správa push oznámení prohlížeče pro toto zařízení. Při povolení budete dostávat oznámení pro důležité události."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS"
+msgid "Status"
+msgstr "Stav"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS_ACTIVE"
+msgid "Active"
+msgstr "Aktivní"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_LBL_STATUS_INACTIVE"
+msgid "Inactive"
+msgstr "Neaktivní"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BTN_SUBSCRIBE"
+msgid "Enable Push Notifications"
+msgstr "Povolit push oznámení"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BTN_UNSUBSCRIBE"
+msgid "Disable Push Notifications"
+msgstr "Zakázat push oznámení"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_ERR_SUBSCRIBE_FAILED"
+msgid "Failed to subscribe to push notifications. Please try again."
+msgstr "Přihlášení k odběru push oznámení selhalo. Zkuste to prosím znovu."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_ERR_PERMISSION_DENIED"
+msgid "Push notification permission was denied. Please allow notifications in your browser settings."
+msgstr "Oprávnění pro push oznámení bylo zamítnuto. Povolte prosím oznámení v nastavení vašeho prohlížeče."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_GENERIC"
+msgid "Panopticon Notification"
+msgstr "Oznámení Panopticon"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_GENERIC"
+msgid "You have a new notification from Panopticon."
+msgstr "Máte nové oznámení od Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_FOUND"
+msgid "Joomla Update Available"
+msgstr "Dostupná aktualizace Joomla"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_WILL_INSTALL"
+msgid "Joomla Update Scheduled"
+msgstr "Aktualizace Joomla naplánována"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_INSTALLED"
+msgid "Joomla Update Installed"
+msgstr "Aktualizace Joomla nainstalována"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_JOOMLAUPDATE_FAILED"
+msgid "Joomla Update Failed"
+msgstr "Aktualizace Joomla selhala"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_FOUND"
+msgid "WordPress Update Available"
+msgstr "Dostupná aktualizace WordPress"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "WordPress Update Scheduled"
+msgstr "Aktualizace WordPress naplánována"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress Update Installed"
+msgstr "Aktualizace WordPress nainstalována"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_WORDPRESSUPDATE_FAILED"
+msgid "WordPress Update Failed"
+msgstr "Aktualizace WordPress selhala"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSION_UPDATE_FOUND"
+msgid "Extension Update Available"
+msgstr "Dostupná aktualizace rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSIONS_UPDATE_DONE"
+msgid "Extensions Updated"
+msgstr "Rozšíření aktualizována"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_PLUGIN_UPDATE_FOUND"
+msgid "Plugin Update Available"
+msgstr "Dostupná aktualizace pluginu"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_PLUGINS_UPDATE_DONE"
+msgid "Plugins Updated"
+msgstr "Pluginy aktualizovány"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_AKEEBABACKUP_SUCCESS"
+msgid "Backup Completed"
+msgstr "Záloha dokončena"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_AKEEBABACKUP_FAIL"
+msgid "Backup Failed"
+msgstr "Záloha selhala"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SSL_TLS_EXPIRING"
+msgid "SSL/TLS Certificate Expiring"
+msgstr "Certifikát SSL/TLS vyprší"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_DOMAIN_EXPIRING"
+msgid "Domain Expiring"
+msgstr "Doména vyprší"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SELFUPDATE_FOUND"
+msgid "Panopticon Update Available"
+msgstr "Dostupná aktualizace Panopticon"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_CORE_CHECKSUMS_FOUND"
+msgid "Core Files Modified"
+msgstr "Základní soubory byly upraveny"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SITE_DOWN"
+msgid "Site Down"
+msgstr "Web je nedostupný"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_SITE_UP"
+msgid "Site Back Up"
+msgstr "Web je opět dostupný"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_FOUND"
+msgid "A new Joomla version is available for [SITE_NAME]."
+msgstr "Je dostupná nová verze Joomla pro [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_WILL_INSTALL"
+msgid "A Joomla update has been scheduled for [SITE_NAME]."
+msgstr "Aktualizace Joomla byla naplánována pro [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_INSTALLED"
+msgid "Joomla has been successfully updated on [SITE_NAME]."
+msgstr "Joomla bylo úspěšně aktualizováno na [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_JOOMLAUPDATE_FAILED"
+msgid "The Joomla update has failed on [SITE_NAME]."
+msgstr "Aktualizace Joomla selhala na [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_FOUND"
+msgid "A new WordPress version is available for [SITE_NAME]."
+msgstr "Je dostupná nová verze WordPress pro [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_WILL_INSTALL"
+msgid "A WordPress update has been scheduled for [SITE_NAME]."
+msgstr "Aktualizace WordPress byla naplánována pro [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_INSTALLED"
+msgid "WordPress has been successfully updated on [SITE_NAME]."
+msgstr "WordPress byl úspěšně aktualizován na [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_WORDPRESSUPDATE_FAILED"
+msgid "The WordPress update has failed on [SITE_NAME]."
+msgstr "Aktualizace WordPress selhala na [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSION_UPDATE_FOUND"
+msgid "An extension update is available for [SITE_NAME]."
+msgstr "Je dostupná aktualizace rozšíření pro [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSIONS_UPDATE_DONE"
+msgid "Extensions have been updated on [SITE_NAME]."
+msgstr "Rozšíření byla aktualizována na [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_PLUGIN_UPDATE_FOUND"
+msgid "A plugin update is available for [SITE_NAME]."
+msgstr "Je dostupná aktualizace pluginu pro [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_PLUGINS_UPDATE_DONE"
+msgid "Plugins have been updated on [SITE_NAME]."
+msgstr "Pluginy byly aktualizovány na [SITE_NAME]."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_AKEEBABACKUP_SUCCESS"
+msgid "The backup has been completed successfully for [SITE_NAME]."
+msgstr "Záloha pro [SITE_NAME] byla úspěšně dokončena."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_AKEEBABACKUP_FAIL"
+msgid "The backup has failed for [SITE_NAME]."
+msgstr "Záloha pro [SITE_NAME] selhala."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SSL_TLS_EXPIRING"
+msgid "The SSL/TLS certificate for [SITE_NAME] is expiring soon."
+msgstr "Certifikát SSL/TLS pro [SITE_NAME] brzy vyprší."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_DOMAIN_EXPIRING"
+msgid "The domain for [SITE_NAME] is expiring soon."
+msgstr "Doména pro [SITE_NAME] brzy vyprší."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SELFUPDATE_FOUND"
+msgid "A new version of Panopticon is available."
+msgstr "Je dostupná nová verze Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_CORE_CHECKSUMS_FOUND"
+msgid "Modified core files detected on [SITE_NAME]."
+msgstr "Na [SITE_NAME] byly zjištěny upravené základní soubory."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SITE_DOWN"
+msgid "[SITE_NAME] appears to be down."
+msgstr "[SITE_NAME] se zdá být nedostupný."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_SITE_UP"
+msgid "[SITE_NAME] is back up and running."
+msgstr "[SITE_NAME] je opět funkční."
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_TITLE_EXTENSION_INSTALL_SUMMARY"
+msgid "Extension Installation Complete"
+msgstr "Instalace rozšíření dokončena"
+
+#, phpformat
+msgctxt "PANOPTICON_WEBPUSH_BODY_EXTENSION_INSTALL_SUMMARY"
+msgid "Mass extension installation finished. Check the summary email for per-site results."
+msgstr "Hromadná instalace rozšíření dokončena. Zkontrolujte souhrnný e-mail pro výsledky jednotlivých webů."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE"
+msgid "API Tokens"
+msgstr "API tokeny"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_DESCRIPTION"
+msgid "Description"
+msgstr "Popis"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENABLED"
+msgid "Enabled"
+msgstr "Povolen"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_ON"
+msgid "Created On"
+msgstr "Vytvořeno"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ACTIONS"
+msgid "Actions"
+msgstr "Akce"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NO_TOKENS"
+msgid "You have no API tokens yet. Create one to get started."
+msgstr "Dosud nemáte žádné API tokeny. Vytvořte jeden pro začátek."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_URL"
+msgid "API Endpoint URL"
+msgstr "URL koncového bodu API"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_URL_NOTE"
+msgid "Use this base URL for all API requests. Append the API path (e.g. <code>/v1/sites</code>) to this URL."
+msgstr "Použijte tuto základní URL pro všechny požadavky API. Přidejte cestu API (např. <code>/v1/sites</code>) k této URL."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SECURITY_WARNING"
+msgid "API tokens grant access to your Panopticon installation. Treat them like passwords: do not share them, do not commit them to version control, and revoke any tokens you no longer need."
+msgstr "API tokeny umožňují přístup k vaší instalaci Panopticon. Zacházejte s nimi jako s hesly – nikomu je nesdělujte."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NEW_TOKEN_DESCRIPTION"
+msgid "New token description"
+msgstr "Popis nového tokenu"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_TOKEN_VALUE"
+msgid "Token Value"
+msgstr "Hodnota tokenu"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_TOKEN_COPIED"
+msgid "Token copied to clipboard."
+msgstr "Token byl zkopírován do schránky."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_USER"
+msgid "User"
+msgstr "Uživatel"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_CREATE"
+msgid "Create Token"
+msgstr "Vytvořit token"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_SHOW_TOKEN"
+msgid "Show Token"
+msgstr "Zobrazit token"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_COPY_TOKEN"
+msgid "Copy Token"
+msgstr "Kopírovat token"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_ENABLE"
+msgid "Enable"
+msgstr "Povolit"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_DISABLE"
+msgid "Disable"
+msgstr "Zakázat"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_DELETE"
+msgid "Delete"
+msgstr "Smazat"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_BTN_CONFIRM_DELETE"
+msgid "Are you sure you want to delete this API token? This action cannot be undone."
+msgstr "Opravdu chcete smazat tento API token? Tuto akci nelze vrátit zpět."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_CREATED"
+msgid "API token created successfully."
+msgstr "API token byl úspěšně vytvořen."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_TOGGLED"
+msgid "API token status updated."
+msgstr "Stav API tokenu byl aktualizován."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_MSG_DELETED"
+msgid "API token deleted."
+msgstr "API token byl smazán."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_NOT_FOUND"
+msgid "API token not found."
+msgstr "API token nebyl nalezen."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_FORBIDDEN"
+msgid "You do not have permission to manage this token."
+msgstr "Nemáte oprávnění spravovat tento token."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_CREATE_FAILED"
+msgid "Failed to create API token."
+msgstr "Vytvoření API tokenu selhalo."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_INVALID_TOKEN"
+msgid "Invalid or missing API token."
+msgstr "Neplatný nebo chybějící API token."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_UNKNOWN_ENDPOINT"
+msgid "Unknown API endpoint."
+msgstr "Neznámý koncový bod API."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_SUPER_REQUIRED"
+msgid "This endpoint requires super user privileges."
+msgstr "Tento koncový bod vyžaduje oprávnění superuživatele."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_SITE_NOT_FOUND"
+msgid "Site not found."
+msgstr "Web nebyl nalezen."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_TASK_NOT_FOUND"
+msgid "Task not found."
+msgstr "Úloha nebyla nalezena."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_FORBIDDEN"
+msgid "You do not have permission to perform this action."
+msgstr "Nemáte oprávnění provést tuto akci."
+
+#, phpformat
+msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
+msgid "Invalid JSON in request body."
+msgstr "Neplatný JSON v těle požadavku."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED"
+msgid "You have reached the maximum number of enabled API tokens. Please delete or disable an existing token before creating a new one."
+msgstr "Dosáhli jste maximálního počtu povolených API tokenů. Smažte nebo zakažte některý stávající token."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED"
+msgid "API access is disabled for your account. Please contact a super administrator."
+msgstr "Přístup k API je pro váš účet zakázán. Kontaktujte prosím superadministrátora."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_COPY"
+msgid "Copy"
+msgstr "Kopírovat"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_BY"
+msgid "Created by"
+msgstr "Vytvořeno uživatelem"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHHTACCESS"
+msgid "API endpoint URL (recommended, requires <code>.htaccess</code> or equivalent URL rewriting)"
+msgstr "URL koncového bodu API (doporučeno, vyžaduje <code>.htaccess</code> nebo ekvivalentní přepisování URL)"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHOUTHTACCESS"
+msgid "API endpoint URL (fallback, works without URL rewriting)"
+msgstr "URL koncového bodu API (záložní, funguje bez přepisování URL)"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES"
+msgid "Expires"
+msgstr "Vyprší"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_NEVER"
+msgid "Never"
+msgstr "Nikdy"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_ON"
+msgid "Expires on %s"
+msgstr "Vyprší dne %s"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER"
+msgid "Created after"
+msgstr "Vytvořeno po"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE"
+msgid "Expires before"
+msgstr "Vyprší před"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE"
+msgid "Last used before"
+msgstr "Naposledy použito před"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED"
+msgid "Last Used"
+msgstr "Naposledy použito"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED_IP"
+msgid "Last Used IP Address"
+msgstr "IP adresa posledního použití"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_METADATA"
+msgid "Metadata"
+msgstr "Metadata"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NEVER"
+msgid "Never"
+msgstr "Nikdy"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_EXCEEDED_HINT"
+msgid "You have reached your API token limit. Please delete or disable an existing token before creating or re-enabling one."
+msgstr "Dosáhli jste limitu API tokenů. Smažte nebo zakažte stávající token pro vytvoření nového."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
+msgid "%1\$d of %2\$d API tokens created"
+msgstr "Vytvořeno %1\$d z %2\$d API tokenů"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES"
+msgid "Scopes"
+msgstr "Oprávnění"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES_DESC"
+msgid "Select the API operations this token is allowed to perform. Leave all unchecked to grant access to all scopes (default)."
+msgstr "Vyberte operace API, které smí tento token provádět. Ponechte vše nezaškrtnuté pro udělení plného přístupu."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION"
+msgid "Search by description"
+msgstr "Hledat podle popisu"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SELECT_ENABLED"
+msgid "— Select state —"
+msgstr "— Vyberte stav —"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SELFUPDATE"
+msgid "Self-Update"
+msgstr "Samoaktualizace"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SITES"
+msgid "Sites"
+msgstr "Weby"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SYSCONFIG"
+msgid "System Configuration"
+msgstr "Konfigurace systému"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_TASKS"
+msgid "Tasks"
+msgstr "Úlohy"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ"
+msgid "Read update info"
+msgstr "Číst informace o aktualizaci"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ_DESC"
+msgid "Read self-update status and available version information."
+msgstr "Číst stav samoaktualizace a informace o dostupné verzi."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE"
+msgid "Perform updates"
+msgstr "Provádět aktualizace"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE_DESC"
+msgid "Download, install, and finalise Panopticon self-updates."
+msgstr "Stahovat, instalovat a dokončovat samoaktualizace Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE"
+msgid "CMS updates"
+msgstr "Aktualizace CMS"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE_DESC"
+msgid "Trigger, cancel, or clear CMS (Joomla/WordPress) core update operations."
+msgstr "Spouštět, rušit nebo mazat operace aktualizace jádra CMS (Joomla/WordPress)."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS"
+msgid "Manage extensions"
+msgstr "Správa rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS_DESC"
+msgid "List extensions, refresh extension data, manage download keys, and schedule or cancel extension updates."
+msgstr "Zobrazovat rozšíření, obnovovat data rozšíření, spravovat klíče ke stažení a plánovat nebo rušit aktualizace rozšíření."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ"
+msgid "Read sites"
+msgstr "Číst weby"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ_DESC"
+msgid "List sites and read their details, configuration, and status."
+msgstr "Zobrazovat seznam webů a číst jejich podrobnosti, konfiguraci a stav."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH"
+msgid "Refresh sites"
+msgstr "Obnovit weby"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH_DESC"
+msgid "Trigger a manual data refresh for a site."
+msgstr "Spustit ruční obnovení dat pro web."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE"
+msgid "Write sites"
+msgstr "Zapisovat weby"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE_DESC"
+msgid "Add new sites and modify existing site settings."
+msgstr "Přidávat nové weby a upravovat nastavení stávajících webů."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ"
+msgid "Read configuration"
+msgstr "Číst konfiguraci"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ_DESC"
+msgid "Read non-sensitive system configuration parameters."
+msgstr "Číst necitlivé parametry konfigurace systému."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE"
+msgid "Write configuration"
+msgstr "Zapisovat konfiguraci"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE_DESC"
+msgid "Set system configuration parameters."
+msgstr "Nastavovat parametry konfigurace systému."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ"
+msgid "Read tasks"
+msgstr "Číst úlohy"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ_DESC"
+msgid "List and read task details."
+msgstr "Zobrazovat seznam a číst podrobnosti úloh."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE"
+msgid "Write tasks"
+msgstr "Zapisovat úlohy"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE_DESC"
+msgid "Create and modify scheduled tasks."
+msgstr "Vytvářet a upravovat naplánované úlohy."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION"
+msgid "Description"
+msgstr "Popis"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED"
+msgid "Last Used"
+msgstr "Naposledy použito"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE_EDIT"
+msgid "Edit API Token"
+msgstr "Upravit API token"
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE_NEW"
+msgid "New API Token"
+msgstr "Nový API token"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT"
+msgid "API Token Limit"
+msgstr "Limit API tokenů"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP"
+msgid "Override the global API token limit for users in this group. Leave empty to use the global default. Set to 0 to deny API access to group members (unless another group they belong to grants a higher limit)."
+msgstr "Přepsat globální limit API tokenů pro uživatele v této skupině. Ponechte prázdné pro použití globálního výchozího nastavení."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER"
+msgid "(Use global default)"
+msgstr "(Použít globální výchozí nastavení)"
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_COPIED"
+msgid "The API token has been copied."
+msgstr "API token byl zkopírován."
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_DELETED"
+msgid "The selected API tokens have been deleted."
+msgstr "Vybrané API tokeny byly smazány."
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_SAVED"
+msgid "The API token has been saved."
+msgstr "API token byl uložen."
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_MODIFIED_BY"
+msgid "Modified by"
+msgstr "Upraveno uživatelem"
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_MODIFIED_ON"
+msgid "Modified on"
+msgstr "Upraveno dne"
+
+#, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_FILESCANNER_FAILED"
+msgid "PHP File Change Scanner: Task Failure"
+msgstr "PHP File Change Scanner: Selhání úlohy"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS"
+msgid "Attach Log File for These Groups"
+msgstr "Připojit soubor protokolu pro tyto skupiny"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS_HELP"
+msgid "Override the global setting: select which user groups receive the task log file as an email attachment on failure. Leave empty to use the global Panopticon setting."
+msgstr "Přepsat globální nastavení: vyberte skupiny uživatelů, které obdrží soubor protokolu úlohy jako přílohu e-mailu při selhání aktualizace."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME"
+msgid "Time Of The Day to Install Extension Updates On (Hour:Minute)"
+msgstr "Čas dne pro instalaci aktualizací rozšíření (hodina:minuta)"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
+msgstr "Čas vyjádřený v časovém pásmu %s. Pokud jsou aktualizace nalezeny <em>po</em> tomto čase, nainstalují se následující den."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_WHEN"
+msgid "When Should Updates Be Installed"
+msgstr "Kdy mají být aktualizace nainstalovány"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_IMMEDIATELY"
+msgid "Immediately"
+msgstr "Ihned"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_TIME"
+msgid "Time of Day"
+msgstr "V určitou dobu"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX"
+msgid "Maximum tokens per user"
+msgstr "Maximální počet tokenů na uživatele"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX_HELP"
+msgid "The maximum number of enabled, non-expired API tokens a user may hold. User groups can override this on a per-group basis. Set to 0 to deny API access to all users by default (individual groups may still grant access via their own override)."
+msgstr "Maximální počet povolených, nevypršených API tokenů, které může uživatel mít. Skupiny uživatelů mohou toto nastavení přepsat."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS"
+msgid "Attach Log File to These Groups"
+msgstr "Připojit soubor protokolu k těmto skupinám"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS_HELP"
+msgid "Select which user groups receive the task log file as an email attachment when a core or extension update fails. Leave empty to send the attachment to all notification recipients."
+msgstr "Vyberte skupiny uživatelů, které obdrží soubor protokolu úlohy jako přílohu e-mailu při selhání úlohy."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
+msgid "API Tokens"
+msgstr "API tokeny"
+
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_SELECT_SITE"
+msgid "Select site \"%s\""
+msgstr "Vybrat web \"%s\""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSERROR_LEAKED_PASSWORD"
+msgid "The password you are trying to use is present in online password leaks, making it very easy for hackers to guess this is what you are using. Please use a different password."
+msgstr "Heslo, které se pokoušíte použít, se vyskytuje v únicích hesel dostupných online. Hackerům to výrazně usnadňuje uhodnutí vašeho hesla. Prosím, použijte jiné heslo."

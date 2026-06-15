@@ -12367,3 +12367,8 @@ msgstr "Sie haben keine Berechtigung, diese Aktion auszuführen."
 msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
 msgid "Invalid JSON in request body."
 msgstr "Ungültiger JSON im Anfrage-Body."
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
+msgid "%1\$d of %2\$d API tokens created"
+msgstr "%1\$d von %2\$d API-Token erstellt"
