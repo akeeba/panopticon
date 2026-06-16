@@ -2,6 +2,7 @@
 Akeeba Panopticon 2.1.2
 ================================================================================
 + Core File Integrity Check now supports WordPress sites [gh-979]
+~ Main update source is now https://getpanopticon.com/update.json
 + Configurable base URL for the Core File Integrity checksums source [gh-981]
 + Machine translation to German (de-DE)
 

@@ -96,7 +96,12 @@ class Selfupdate extends Model
 	private string $currentVersion;
 
 	/**
-	 * @var string The URL of the update stream for this software
+	 * @var string Primary update stream URL (update.json format)
+	 */
+	private string $primaryUpdateUrl;
+
+	/**
+	 * @var string Fallback update stream URL (GitHub releases API)
 	 */
 	private string $updateStreamUrl;
 
@@ -104,9 +109,11 @@ class Selfupdate extends Model
 	{
 		parent::__construct($container);
 
-		$this->currentVersion  = defined('AKEEBA_PANOPTICON_VERSION') ? AKEEBA_PANOPTICON_VERSION : 'dev';
-		$this->updateStreamUrl = $this->container['updateStreamUrl'] ??
-		                         'https://api.github.com/repos/akeeba/panopticon/releases';
+		$this->currentVersion   = defined('AKEEBA_PANOPTICON_VERSION') ? AKEEBA_PANOPTICON_VERSION : 'dev';
+		$this->primaryUpdateUrl = $this->container['primaryUpdateUrl'] ??
+		                          'https://getpanopticon.com/update.json';
+		$this->updateStreamUrl  = $this->container['updateStreamUrl'] ??
+		                          'https://api.github.com/repos/akeeba/panopticon/releases';
 	}
 
 	/**
@@ -126,65 +133,131 @@ class Selfupdate extends Model
 
 		return $cacheController->get(
 			function (): UpdateInformation {
-				/** @var Client $httpClient */
-				$httpClient = $this->container->httpFactory->makeClient(cache: false);
-				$options    = $this->container->httpFactory->getDefaultRequestOptions();
+				$updateInfo = $this->fetchFromPrimaryUrl();
 
-				$options[RequestOptions::TIMEOUT] = 5.0;
-
-				if (str_contains($this->updateStreamUrl, 'api.github.com'))
-				{
-					$options[RequestOptions::HEADERS] = array_merge(
-						$options[RequestOptions::HEADERS] ?? [], [
-							'Accept'               => 'application/vnd.github+json',
-							'X-GitHub-Api-Version' => '2022-11-28',
-							'User-Agent'           => 'panopticon/' . $this->currentVersion,
-						]
-					);
-				}
-
-				$updateInfo = new UpdateInformation();
-
-				try
-				{
-					$response = $httpClient->get($this->updateStreamUrl, $options);
-				}
-				catch (GuzzleException $e)
-				{
-					$updateInfo->error            = $e->getMessage();
-					$updateInfo->errorLocation    = $e->getFile() . ':' . $e->getLine();
-					$updateInfo->errorTraceString = $e->getTraceAsString();
-
-					return $updateInfo;
-				}
-
-				$updateInfo->stuck            = false;
-				$updateInfo->error            = null;
-				$updateInfo->errorLocation    = null;
-				$updateInfo->errorTraceString = null;
-
-				$json = $this->sanitizeJson($response->getBody()->getContents());
-
-				try
-				{
-					$rawData = @json_decode($json);
-				}
-				catch (Exception)
-				{
-					$rawData = null;
-				}
-
-				if (empty($rawData) || !is_array($rawData))
+				if ($updateInfo !== null && $updateInfo->loadedUpdate)
 				{
 					return $updateInfo;
 				}
 
-				$updateInfo->populateVersionsFromGitHubReleases($rawData);
-				$updateInfo->loadedUpdate = !empty($updateInfo->versions);
-
-				return $updateInfo;
+				return $this->fetchFromGitHub();
 			}, id: 'updateInformation', expiration: $force ? 0 : new DateInterval('PT6H')
 		);
+	}
+
+	/**
+	 * Try to fetch update information from the primary update URL (update.json format).
+	 *
+	 * Returns null on any failure so the caller can fall back to GitHub.
+	 */
+	private function fetchFromPrimaryUrl(): ?UpdateInformation
+	{
+		/** @var Client $httpClient */
+		$httpClient = $this->container->httpFactory->makeClient(cache: false);
+		$options    = $this->container->httpFactory->getDefaultRequestOptions();
+
+		$options[RequestOptions::TIMEOUT] = 5.0;
+
+		try
+		{
+			$response = $httpClient->get($this->primaryUpdateUrl, $options);
+		}
+		catch (GuzzleException)
+		{
+			return null;
+		}
+
+		if ($response->getStatusCode() !== 200)
+		{
+			return null;
+		}
+
+		$json = $this->sanitizeJson($response->getBody()->getContents());
+
+		try
+		{
+			$rawData = @json_decode($json, true);
+		}
+		catch (Exception)
+		{
+			return null;
+		}
+
+		if (empty($rawData) || !is_array($rawData) || empty($rawData['version']))
+		{
+			return null;
+		}
+
+		$updateInfo        = new UpdateInformation();
+		$updateInfo->stuck = false;
+		$updateInfo->populateVersionFromUpdateJson($rawData);
+		$updateInfo->loadedUpdate = !empty($updateInfo->versions);
+
+		return $updateInfo->loadedUpdate ? $updateInfo : null;
+	}
+
+	/**
+	 * Fetch update information from the GitHub releases API (fallback).
+	 */
+	private function fetchFromGitHub(): UpdateInformation
+	{
+		/** @var Client $httpClient */
+		$httpClient = $this->container->httpFactory->makeClient(cache: false);
+		$options    = $this->container->httpFactory->getDefaultRequestOptions();
+
+		$options[RequestOptions::TIMEOUT] = 5.0;
+
+		if (str_contains($this->updateStreamUrl, 'api.github.com'))
+		{
+			$options[RequestOptions::HEADERS] = array_merge(
+				$options[RequestOptions::HEADERS] ?? [], [
+					'Accept'               => 'application/vnd.github+json',
+					'X-GitHub-Api-Version' => '2022-11-28',
+					'User-Agent'           => 'panopticon/' . $this->currentVersion,
+				]
+			);
+		}
+
+		$updateInfo = new UpdateInformation();
+
+		try
+		{
+			$response = $httpClient->get($this->updateStreamUrl, $options);
+		}
+		catch (GuzzleException $e)
+		{
+			$updateInfo->error            = $e->getMessage();
+			$updateInfo->errorLocation    = $e->getFile() . ':' . $e->getLine();
+			$updateInfo->errorTraceString = $e->getTraceAsString();
+
+			return $updateInfo;
+		}
+
+		$updateInfo->stuck            = false;
+		$updateInfo->error            = null;
+		$updateInfo->errorLocation    = null;
+		$updateInfo->errorTraceString = null;
+
+		$json = $this->sanitizeJson($response->getBody()->getContents());
+
+		try
+		{
+			$rawData = @json_decode($json);
+		}
+		catch (Exception)
+		{
+			$rawData = null;
+		}
+
+		if (empty($rawData) || !is_array($rawData))
+		{
+			return $updateInfo;
+		}
+
+		$updateInfo->populateVersionsFromGitHubReleases($rawData);
+		$updateInfo->loadedUpdate = !empty($updateInfo->versions);
+
+		return $updateInfo;
 	}
 
 	public function getLatestVersion(bool $force = false): ?VersionInformation

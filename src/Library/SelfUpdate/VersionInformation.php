@@ -26,6 +26,31 @@ class VersionInformation
 
 	public bool $preRelease = false;
 
+	public static function fromUpdateJson(array $data): self
+	{
+		$item = new self();
+
+		$item->version      = $data['version'] ?? null;
+		$item->infoUrl      = $data['infoURL'] ?? null;
+		$item->releaseNotes = $data['releaseNotes'] ?? null;
+		$item->downloadUrl  = $data['download'] ?? null;
+		$item->preRelease   = false;
+
+		if (!empty($data['date']))
+		{
+			try
+			{
+				$item->releaseDate = new DateTime($data['date']);
+			}
+			catch (\Exception)
+			{
+				$item->releaseDate = new DateTime();
+			}
+		}
+
+		return $item;
+	}
+
 	public static function fromGitHubRelease(object $data): self
 	{
 		$item = new self();

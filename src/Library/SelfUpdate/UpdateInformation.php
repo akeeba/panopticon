@@ -31,6 +31,20 @@ class UpdateInformation
 		$this->lastCheckTimestamp = time();
 	}
 
+	public function populateVersionFromUpdateJson(array $data): void
+	{
+		$this->versions = [];
+
+		$version = VersionInformation::fromUpdateJson($data);
+
+		if (empty($version->version))
+		{
+			return;
+		}
+
+		$this->versions[$version->version] = $version;
+	}
+
 	public function populateVersionsFromGitHubReleases(array $releases): void
 	{
 		$this->versions = [];
