@@ -339,7 +339,7 @@
     ====================================================================================================
     -->
     <target name="all" description="Makes everything, publishes the release, and generates update.json"
-            depends="git,documentation,release,updatejson">
+            depends="git,documentation,release,update">
     </target>
 
     <target name="git" description="Makes only packages, not the documentation"
@@ -387,7 +387,6 @@
         </exec>
     </target>
 
-    <!-- Task to call updatejson and also upload file to getpanopticon.com site -->
 
     <!--
     ====================================================================================================
@@ -432,6 +431,25 @@
             repository="${github.repository}"
             token="${github.token}"
             outfile="${dirs.release}/update.json" />
+    </target>
+
+    <!-- Task to call updatejson and also upload file to getpanopticon.com site -->
+    <target name="update" depends="updatejson">
+        <echo>Uploading ${docsdeploy.name}</echo>
+        <curlsftp
+                host="${getpanopticon.host}"
+                port="${getpanopticon.port}"
+                username="${getpanopticon.username}"
+                password="${getpanopticon.password}"
+                pubkeyfile="${getpanopticon.pubkeyfile}"
+                privkeyfile="${getpanopticon.privkeyfile}"
+                privkeyfilepassphrase="${getpanopticon.privkeyfilepassphrase}"
+                todir="${getpanopticon.path}"
+                level="debug">
+            <fileset dir="${dirs.release}">
+                <include name="update.json"/>
+            </fileset>
+        </curlsftp>
     </target>
 
 </project>
