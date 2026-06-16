@@ -9,6 +9,10 @@
 <project name="panopticon" description="Akeeba Panopticon" default="git">
     <import file="${phing.dir}/../buildfiles/phing/common.xml"/>
 
+    <!-- Project-specific Phing task classes -->
+    <includepath classpath="${phing.dir}/build" />
+    <taskdef name="panopticonupdatejson" classname="tasks\PanopticonUpdateJson" />
+
     <!-- Override properties set up in common.xml -->
     <property name="dirs.root" value="${phing.dir}" override="true" />
     <property name="dirs.phpapp" value="${phing.dir}" override="true" />
@@ -334,6 +338,10 @@
     Tasks - General
     ====================================================================================================
     -->
+    <target name="all" description="Makes everything, publishes the release, and generates update.json"
+            depends="git,documentation,release,updatejson">
+    </target>
+
     <target name="git" description="Makes only packages, not the documentation"
             depends="new-release,setup-properties,app-package">
     </target>
@@ -379,6 +387,8 @@
         </exec>
     </target>
 
+    <!-- Task to call updatejson and also upload file to getpanopticon.com site -->
+
     <!--
     ====================================================================================================
     Tasks - Packages
@@ -407,6 +417,21 @@
 
     <target name="documentation" description="Documentation is provided as a Wiki">
         <!-- Intentionally left blank -->
+    </target>
+
+    <!--
+    ====================================================================================================
+    Tasks - Update JSON
+    ====================================================================================================
+    -->
+
+    <target name="updatejson" description="Create release/update.json with the latest stable GitHub release info"
+            depends="new-release">
+        <panopticonupdatejson
+            organization="${github.organization}"
+            repository="${github.repository}"
+            token="${github.token}"
+            outfile="${dirs.release}/update.json" />
     </target>
 
 </project>
