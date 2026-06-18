@@ -180,28 +180,26 @@ abstract class InstallationScript
 	 * @since        1.0.0
 	 * @noinspection PhpUnused
 	 */
-	public static function babel(Event $event): void
+	public static function minifyJs(Event $event): void
 	{
 		$io = $event->getIO();
-		$io->debug('Compiling JavaScript files');
+		$io->debug('Minifying JavaScript files');
 
 		$container = self::getAWFContainer();
 		$extras    = $event->getComposer()->getPackage()->getExtra();
 
-		foreach ($extras['babel'] ?? [] as $definition)
+		foreach ($extras['minify-js'] ?? [] as $definition)
 		{
 			$folder  = trim((string) $definition['folder'], '/');
-			$outdir  = trim((string) $definition['outdir'], '/');
 			$names   = $definition['names'] ?? ['*.js'];
 			$exclude = $definition['exclude'] ?? null;
 
-			if (empty($folder) || empty($outdir))
+			if (empty($folder))
 			{
 				continue;
 			}
 
 			$folder = $container->basePath . '/' . $folder;
-			$outdir = $container->basePath . '/' . $outdir;
 
 			$finder = new Finder();
 			$finder->ignoreDotFiles(true)
@@ -225,6 +223,8 @@ abstract class InstallationScript
 			{
 				$inFile  = $file->getPathname();
 				$outFile = $file->getPath() . '/' . $file->getBasename('.js') . '.min.js';
+				$mapFile = $outFile . '.map';
+				$mapUrl  = $file->getBasename('.js') . '.min.js.map';
 
 				if (file_exists($outFile) && filemtime($outFile) >= filemtime($inFile))
 				{
@@ -234,8 +234,10 @@ abstract class InstallationScript
 				$cwd = getcwd();
 				chdir($container->basePath);
 
-				$command = 'npx babel ' . escapeshellarg((string) $inFile) . ' --out-dir ' . escapeshellarg($outdir)
-				           . ' --out-file-extension ' . escapeshellarg('.min.js') . ' --source-maps';
+				$command = 'npx terser ' . escapeshellarg((string) $inFile)
+				           . ' --compress --mangle --comments false'
+				           . ' --output ' . escapeshellarg($outFile)
+				           . ' --source-map ' . escapeshellarg('filename=' . $mapFile . ',url=' . $mapUrl);
 
 				passthru($command);
 

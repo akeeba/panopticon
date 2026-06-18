@@ -279,10 +279,9 @@
 				"to": "media/altcha/altcha.js"
 			}
 		],
-		"babel": [
+		"minify-js": [
 			{
 				"folder": "media/js",
-				"outdir": "media/js",
 				"names": [
 					"*.js"
 				],
@@ -314,7 +313,7 @@
 		"npm-deps": [
 			"npm install",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyNodeDependencies",
-			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::babel",
+			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::minifyJs",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::sass",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::copyPackageLock",
 			"\\Akeeba\\Panopticon\\Composer\\InstallationScript::tinyMCELanguages"

@@ -22,23 +22,23 @@
       <envs />
     </TaskOptions>
     <TaskOptions isEnabled="true">
-      <option name="arguments" value="$FileName$ -o $FileNameWithoutExtension$.min.js --source-maps" />
+      <option name="arguments" value="$FilePath$ --compress --mangle --comments false --output $FileDir$/$FileNameWithoutExtension$.min.js --source-map filename=$FileDir$/$FileNameWithoutExtension$.min.js.map,url=$FileNameWithoutExtension$.min.js.map" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" />
       <option name="exitCodeBehavior" value="ERROR" />
       <option name="fileExtension" value="js" />
       <option name="immediateSync" value="false" />
-      <option name="name" value="Babel" />
-      <option name="output" value="$FileNameWithoutExtension$.min.js:$FileNameWithoutExtension$.min.js.map" />
+      <option name="name" value="Terser" />
+      <option name="output" value="$FileDir$/$FileNameWithoutExtension$.min.js:$FileDir$/$FileNameWithoutExtension$.min.js.map" />
       <option name="outputFilters">
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="$ProjectFileDir$/node_modules/.bin/babel" />
+      <option name="program" value="$ProjectFileDir$/node_modules/.bin/terser" />
       <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="JS Files" />
       <option name="trackOnlyRoot" value="true" />
-      <option name="workingDir" value="$FileDir$" />
+      <option name="workingDir" value="$ProjectFileDir$" />
       <envs />
     </TaskOptions>
   </component>

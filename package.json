@@ -10,54 +10,17 @@
 		"node": ">=16",
 		"npm": ">=8.5.5"
 	},
-	"browserslist": [
-		"last 2 major version",
-		"not ie < 11"
-	],
 	"overrides": {
 		"minimatch": ">=3.1.5"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.29.7",
-		"@babel/core": "^7.26.7",
-		"@babel/preset-env": "^7.26.9",
 		"@fortawesome/fontawesome-free": "^7.2.0",
 		"ace-builds": "^1.38.0",
-		"babel-preset-minify": "^0.5.1",
 		"bootstrap": "^5.3.2",
 		"choices.js": "^11.2.3",
-		"core-js": "^3.34.0",
 		"petite-vue": "^0.4.1",
 		"altcha": "^3.1.0",
+		"terser": "^5.0.0",
 		"tinymce": "^8.6.0"
-	},
-	"babel": {
-		"presets": [
-			[
-				"@babel/preset-env",
-				{
-					"useBuiltIns": "entry",
-					"corejs": {
-						"version": "3.9",
-						"proposals": true
-					},
-					"modules": false
-				}
-			],
-			[
-				"minify",
-				{
-					"builtIns": false,
-					"removeConsole": false
-				}
-			]
-		],
-		"comments": false,
-		"sourceType": "unambiguous",
-		"ignore": [
-			"**/bootstrap.bundle.*",
-			"**/*.min.js",
-			"**/*.min.css"
-		]
 	}
 }
