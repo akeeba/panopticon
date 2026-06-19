@@ -510,7 +510,7 @@ class ExtensionsUpdate extends AbstractCallback
 	private function enqueueResultsEmail(Site $site, Registry $storage): void
 	{
 		// Render the messages as HTML
-		$updateStatus = (array) $storage->get('updateStatus', []);
+		$updateStatus = json_decode(json_encode($storage->get('updateStatus', [])), true) ?: [];
 
 		if (empty($updateStatus))
 		{
