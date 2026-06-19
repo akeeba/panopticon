@@ -5,6 +5,7 @@ Akeeba Panopticon 2.1.2
 ~ Main update source is now https://getpanopticon.com/update.json
 + Configurable base URL for the Core File Integrity checksums source [gh-981]
 + Machine translation to German (de-DE)
+# Extension updates: fatal "Cannot use object of type stdClass as array" error when reporting update results [gh-1001]
 
 Akeeba Panopticon 2.1.1
 ================================================================================
