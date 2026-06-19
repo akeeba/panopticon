@@ -112,6 +112,8 @@ trait DefaultConfigurationTrait
 			'user_registration_activation_days'          => 7,
 			'user_registration_activation_tries'         => 3,
 			'api_tokens_per_user_max'                    => 50,
+			'mcp_enabled'                                => false,
+			'mcp_disallowed_tools'                       => '',
 			'captcha_provider'                           => 'altcha',
 			'captcha_recaptcha_site_key'                 => '',
 			'captcha_recaptcha_secret_key'               => '',
@@ -128,7 +130,7 @@ trait DefaultConfigurationTrait
 			'accurate_php_cli', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto',
 			'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt',
 			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path',
-			'user_registration_block_usernames' => [
+			'user_registration_block_usernames', 'mcp_enabled' => [
 				'true',
 				'yes',
 				'1',
@@ -177,8 +179,9 @@ trait DefaultConfigurationTrait
 			'accurate_php_cli', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto',
 			'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt',
 			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path',
-			'user_registration_block_usernames'
+			'user_registration_block_usernames', 'mcp_enabled'
 			=> [$this, 'validateBool'],
+			'mcp_disallowed_tools' => [$this, 'validateMcpToolList'],
 			'session_timeout' => fn($x) => $this->validateInteger($x, 1440, 3, 535600),
 			'session_save_levels' => fn($x) => $this->validateInteger($x, 0, 0, 5),
 			'login_max_failures' => fn($x) => $this->validateInteger($x, 5, 1, PHP_INT_MAX),
@@ -316,6 +319,37 @@ trait DefaultConfigurationTrait
 		}
 
 		return $x;
+	}
+
+	/**
+	 * Normalise a comma-separated list of MCP tool names.
+	 *
+	 * Accepts a comma-, whitespace-, or newline-separated string (or an array) of tool names and
+	 * returns a clean, comma-separated, de-duplicated list. Tool names are lower-cased and trimmed;
+	 * any character that is not a valid tool-name character (letters, digits, underscore) is dropped.
+	 *
+	 * @param   mixed  $x  The raw value.
+	 *
+	 * @return  string  Comma-separated list of normalised tool names.
+	 * @since   2.2.0
+	 */
+	private function validateMcpToolList($x): string
+	{
+		if (is_array($x))
+		{
+			$x = implode(',', $x);
+		}
+
+		$parts = preg_split('/[\s,]+/', (string) $x, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+		$parts = array_filter(
+			array_map(
+				fn($name) => preg_replace('/[^a-z0-9_]/', '', strtolower(trim((string) $name))),
+				$parts
+			)
+		);
+
+		return implode(',', array_values(array_unique($parts)));
 	}
 
 	private function validateOptionalUrl($x): string

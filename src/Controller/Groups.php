@@ -44,5 +44,9 @@ class Groups extends DataController
 		}
 
 		unset($data['api_token_limit']);
+
+		// Handle the optional per-group list of disallowed MCP tools.
+		$this->getModel()->setMcpDisallowedTools((array) ($data['mcp_disallowed_tools'] ?? []));
+		unset($data['mcp_disallowed_tools']);
 	}
 }

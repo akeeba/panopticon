@@ -902,6 +902,15 @@ ALTER TABLE `#__groups`
 ]]></query>
         </action>
 
+        <!-- Groups: add per-group disallowed MCP tools (JSON array of tool names; NULL = no restriction) -->
+        <action table="#__groups" canfail="1">
+            <condition type="missing" value="mcp_disallowed_tools"/>
+            <query><![CDATA[
+ALTER TABLE `#__groups`
+    ADD COLUMN `mcp_disallowed_tools` JSON NULL DEFAULT NULL;
+]]></query>
+        </action>
+
         <!-- Install mail template: registration_pending_admin -->
         <action table="#__mailtemplates" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[

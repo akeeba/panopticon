@@ -15,6 +15,14 @@ $model      = $this->getModel();
 $privileges = $model->getPrivileges();
 $token      = $this->container->session->getCsrfToken()->getValue();
 
+$mcpToolNames = array_map(
+	fn($tool) => $tool->getName(),
+	(new \Akeeba\Panopticon\Library\Mcp\ToolRegistry($this->container))->getAllTools()
+);
+sort($mcpToolNames);
+$mcpToolOptions     = array_combine($mcpToolNames, $mcpToolNames);
+$mcpDisallowedTools = $model->getMcpDisallowedTools();
+
 ?>
 <form action="@route('index.php?view=groups')" method="post" name="adminForm" id="adminForm">
     <div class="row mb-3">
@@ -75,6 +83,24 @@ $token      = $this->container->session->getCsrfToken()->getValue();
                    value="{{ $model->getApiTokenLimit() !== null ? $model->getApiTokenLimit() : '' }}"
                    placeholder="@lang('PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER')">
             <div class="form-text">@lang('PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP')</div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="mcp_disallowed_tools" class="col-sm-3 col-form-label">
+            @lang('PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS')
+        </label>
+        <div class="col-sm-9">
+            {{ $this->container->html->select->genericList(
+                data: $mcpToolOptions,
+                name: 'mcp_disallowed_tools[]',
+                attribs: [
+                    'class' => 'form-select js-choice',
+                    'multiple' => 'multiple',
+                ],
+                selected: $mcpDisallowedTools
+            ) }}
+            <div class="form-text">@lang('PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP')</div>
         </div>
     </div>
 
