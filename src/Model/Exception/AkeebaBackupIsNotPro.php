@@ -17,7 +17,7 @@ class AkeebaBackupIsNotPro extends AkeebaBackupException
 {
 	#[Pure] public function __construct(string $message = "", int $code = 500, ?Throwable $previous = null)
 	{
-		$message = $message ?: "Akeeba Backup is either not installed, or it's not Akeeba Backup Professional.";
+		$message = $message ?: "Akeeba Backup Core is installed, but Akeeba Backup Professional is required.";
 
 		parent::__construct($message, $code, $previous);
 	}
