@@ -210,7 +210,7 @@ trait AkeebaBackupIntegrationTrait
 
 			if (empty($endpoints))
 			{
-				throw new AkeebaBackupIsNotPro();
+				$throwThis ??= new AkeebaBackupIsNotPro();
 			}
 
 			foreach ($endpoints as $someEndpoint)
