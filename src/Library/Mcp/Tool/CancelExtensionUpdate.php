@@ -51,20 +51,21 @@ class CancelExtensionUpdate extends AbstractTool
 					'description' => 'The numeric ID of the site.',
 				],
 				'extension_id' => [
-					'type'        => 'integer',
-					'description' => 'The ID of the extension/plugin whose queued update should be cancelled.',
+					'type'        => 'string',
+					'description' => 'The ID of the extension/plugin whose queued update should be cancelled, exactly as '
+						. 'returned by list_site_extensions.',
 				],
 			],
 			'required'   => ['id', 'extension_id'],
 		];
 	}
 
-	public function __invoke(int $id, int $extension_id): array
+	public function __invoke(int $id, string $extension_id): array
 	{
 		$site = $this->getSiteWithPermission($id, 'run');
 		$user = $this->getUser();
 
-		if ($extension_id <= 0)
+		if (empty($extension_id))
 		{
 			throw new \RuntimeException('Invalid extension ID.');
 		}

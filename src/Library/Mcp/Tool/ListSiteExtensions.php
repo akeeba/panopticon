@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\Library\Mcp\Tool;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Enumerations\ApiScope;
+use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Mcp\AbstractTool;
 
 /**
@@ -47,7 +48,7 @@ class ListSiteExtensions extends AbstractTool
 			'properties' => [
 				'id'              => [
 					'type'        => 'integer',
-					'description' => 'The numeric ID of the site.',
+					'description' => 'The numeric ID of the site in Panopticon.',
 				],
 				'updates_only'    => [
 					'type'        => 'boolean',
@@ -60,9 +61,10 @@ class ListSiteExtensions extends AbstractTool
 
 	public function __invoke(int $id, bool $updates_only = false): array
 	{
-		$site       = $this->getSiteWithPermission($id, 'read');
-		$extensions = $site->getExtensionsList();
-		$quickInfo  = $site->getExtensionsQuickInfo($extensions);
+		$site        = $this->getSiteWithPermission($id, 'read');
+		$extensions  = $site->getExtensionsList();
+		$quickInfo   = $site->getExtensionsQuickInfo($extensions);
+		$isWordPress = $site->cmsType() === CMSType::WORDPRESS;
 
 		$result = [];
 
@@ -79,8 +81,20 @@ class ListSiteExtensions extends AbstractTool
 				continue;
 			}
 
+			// WordPress plugins/themes use a composite string key (`plg_folder_element` or `tpl_element`)
+			// matching what PluginsUpdate expects. Joomla extensions use their numeric extension_id.
+			if ($isWordPress)
+			{
+				$extId = ($extension->type === 'plugin' ? 'plg_' : 'tpl_')
+					. trim(implode('_', [(string) ($extension->folder ?? ''), (string) ($extension->element ?? '')]), '_');
+			}
+			else
+			{
+				$extId = (int) $extId;
+			}
+
 			$result[] = [
-				'id'               => (int) $extId,
+				'id'               => $extId,
 				'name'             => $extension->name ?? null,
 				'type'             => $extension->type ?? null,
 				'author'           => $extension->author ?? null,

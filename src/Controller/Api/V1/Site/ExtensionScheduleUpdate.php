@@ -62,9 +62,20 @@ class ExtensionScheduleUpdate extends AbstractApiHandler
 
 		try
 		{
-			$enqueued = $cmsType === CMSType::JOOMLA
-				? $this->enqueueExtensionUpdate($site, $extId, user: $user)
-				: $this->enqueuePluginUpdate($site, (string) $extId, user: $user);
+			if ($cmsType === CMSType::JOOMLA)
+			{
+				$enqueued = $this->enqueueExtensionUpdate($site, $extId, user: $user);
+			}
+			else
+			{
+				// WordPress plugins/themes are indexed by integer in extensions.list but PluginsUpdate expects
+				// the composite `plg_folder_element` / `tpl_element` key. Derive it from the extension object.
+				$ext        = $extensions[$extId];
+				$softwareId = (($ext->type === 'plugin') ? 'plg_' : 'tpl_')
+					. trim(implode('_', [(string) ($ext->folder ?? ''), (string) ($ext->element ?? '')]), '_');
+
+				$enqueued = $this->enqueuePluginUpdate($site, $softwareId, user: $user);
+			}
 
 			if (!$enqueued)
 			{

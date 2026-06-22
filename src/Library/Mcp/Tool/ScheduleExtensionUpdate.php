@@ -55,65 +55,100 @@ class ScheduleExtensionUpdate extends AbstractTool
 					'description' => 'The numeric ID of the site.',
 				],
 				'extension_id' => [
-					'type'        => 'integer',
-					'description' => 'The ID of the extension/plugin to update (as returned by list_site_extensions).',
+					'type'        => 'string',
+					'description' => 'The ID of the extension/plugin to update, exactly as returned by list_site_extensions '
+						. '(a numeric string for Joomla extensions; a "plg_…" or "tpl_…" string for WordPress plugins/themes).',
 				],
 			],
 			'required'   => ['id', 'extension_id'],
 		];
 	}
 
-	public function __invoke(int $id, int $extension_id): array
+	public function __invoke(int $id, string $extension_id): array
 	{
 		$site = $this->getSiteWithPermission($id, 'run');
 		$user = $this->getUser();
 
-		if ($extension_id <= 0)
+		if (empty($extension_id))
 		{
 			throw new \RuntimeException('Invalid extension ID.');
 		}
 
+		$cmsType    = $site->cmsType();
 		$extensions = (array) $site->getConfig()->get('extensions.list');
 
-		if (!array_key_exists($extension_id, $extensions))
+		if ($cmsType === CMSType::JOOMLA)
 		{
-			throw new \RuntimeException('Extension not found on this site.');
-		}
+			$numericId = (int) $extension_id;
 
-		$cmsType = $site->cmsType();
-
-		if ($cmsType !== CMSType::JOOMLA && $cmsType !== CMSType::WORDPRESS)
-		{
-			throw new \RuntimeException('Unsupported CMS type for extension updates.');
-		}
-
-		try
-		{
-			$enqueued = $cmsType === CMSType::JOOMLA
-				? $this->enqueueExtensionUpdate($site, $extension_id, user: $user)
-				: $this->enqueuePluginUpdate($site, (string) $extension_id, user: $user);
-
-			if (!$enqueued)
+			if ($numericId <= 0)
 			{
-				throw new \RuntimeException('Extension is already queued for update.');
+				throw new \RuntimeException('Invalid extension ID.');
 			}
 
-			if ($cmsType === CMSType::JOOMLA)
+			if (!array_key_exists($numericId, $extensions))
 			{
+				throw new \RuntimeException('Extension not found on this site.');
+			}
+
+			try
+			{
+				$enqueued = $this->enqueueExtensionUpdate($site, $numericId, user: $user);
+
+				if (!$enqueued)
+				{
+					throw new \RuntimeException('Extension is already queued for update.');
+				}
+
 				$this->scheduleExtensionsUpdateForSite($site, $this->container, runNow: true);
 			}
-			else
+			catch (\RuntimeException $e)
 			{
-				$this->schedulePluginsUpdateForSite($site, $this->container, runNow: true);
+				throw $e;
+			}
+			catch (\Throwable $e)
+			{
+				throw new \RuntimeException('Failed to schedule extension update: ' . $e->getMessage());
 			}
 		}
-		catch (\RuntimeException $e)
+		elseif ($cmsType === CMSType::WORDPRESS)
 		{
-			throw $e;
+			// Build the same composite key map that PluginsUpdate uses, so the queued ID resolves correctly.
+			$extKeys         = array_map(
+				fn($item) => (($item->type === 'plugin') ? 'plg_' : 'tpl_')
+					. trim(implode('_', [(string) ($item->folder ?? ''), (string) ($item->element ?? '')]), '_'),
+				$extensions
+			);
+			$extensionsByKey = array_combine($extKeys, $extensions);
+
+			if (!array_key_exists($extension_id, $extensionsByKey))
+			{
+				throw new \RuntimeException('Extension not found on this site.');
+			}
+
+			try
+			{
+				$enqueued = $this->enqueuePluginUpdate($site, $extension_id, user: $user);
+
+				if (!$enqueued)
+				{
+					throw new \RuntimeException('Extension is already queued for update.');
+				}
+
+				$this->schedulePluginsUpdateForSite($site, $this->container, runNow: true);
+			}
+			catch (\RuntimeException $e)
+			{
+				throw $e;
+			}
+			catch (\Throwable $e)
+			{
+				throw new \RuntimeException('Failed to schedule extension update: ' . $e->getMessage());
+			}
 		}
-		catch (\Throwable $e)
+		else
 		{
-			throw new \RuntimeException('Failed to schedule extension update: ' . $e->getMessage());
+			throw new \RuntimeException('Unsupported CMS type for extension updates.');
 		}
 
 		AuditLog::record(
