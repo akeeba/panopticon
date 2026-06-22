@@ -63,10 +63,12 @@ class ListSiteExtensions extends AbstractTool
 	{
 		$site        = $this->getSiteWithPermission($id, 'read');
 		$extensions  = $site->getExtensionsList();
-		$quickInfo   = $site->getExtensionsQuickInfo($extensions);
 		$isWordPress = $site->cmsType() === CMSType::WORDPRESS;
 
-		$result = [];
+		$result      = [];
+		$cntUpdates  = 0;
+		$cntKeys     = 0;
+		$cntSites    = 0;
 
 		foreach ($extensions as $extId => $extension)
 		{
@@ -75,6 +77,22 @@ class ListSiteExtensions extends AbstractTool
 			$hasUpdate = !empty($latest) && !empty($current)
 				&& ($current != $latest)
 				&& version_compare($current, $latest, 'lt');
+
+			// Tally summary counts from every extension, regardless of updates_only filter.
+			if ($hasUpdate)
+			{
+				$cntUpdates++;
+			}
+
+			if (!($extension->hasUpdateSites ?? false))
+			{
+				$cntSites++;
+			}
+
+			if (($extension->downloadkey?->supported ?? false) && !($extension->downloadkey?->valid ?? false))
+			{
+				$cntKeys++;
+			}
 
 			if ($updates_only && !$hasUpdate)
 			{
@@ -107,9 +125,9 @@ class ListSiteExtensions extends AbstractTool
 		return [
 			'extensions' => $result,
 			'summary'    => [
-				'updates'       => (int) $quickInfo->update,
-				'missing_keys'  => (int) $quickInfo->key,
-				'missing_sites' => (int) $quickInfo->site,
+				'updates'       => $cntUpdates,
+				'missing_keys'  => $cntKeys,
+				'missing_sites' => $cntSites,
 			],
 		];
 	}
