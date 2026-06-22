@@ -31,7 +31,7 @@ class Application extends AWFApplication
 	/**
 	 * List of view names we're allowed to access directly, without a login, and without redirection to the setup view
 	 */
-	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup', 'passkeys', 'policies', 'api'];
+	private const NO_LOGIN_VIEWS = ['check', 'cron', 'login', 'setup', 'passkeys', 'policies', 'api', 'mcp'];
 
 	/**
 	 * Main menu structure
@@ -377,10 +377,10 @@ class Application extends AWFApplication
 		// Load routing information
 		$this->loadRoutes();
 
-		// Detect API requests early: no PHP session for API requests — auth is ephemeral, per-request only.
-		// We MUST skip session start() entirely, otherwise PHP will emit Set-Cookie headers and the API
+		// Detect API and MCP requests early: no PHP session for these — auth is ephemeral, per-request only.
+		// We MUST skip session start() entirely, otherwise PHP will emit Set-Cookie headers and the
 		// auth state could leak into a subsequent UI request from the same client.
-		if ($this->isApiRequest())
+		if ($this->isApiRequest() || $this->isMcpRequest())
 		{
 			return;
 		}
@@ -825,6 +825,23 @@ class Application extends AWFApplication
 		$view = $this->container->input->getCmd('view', '');
 
 		return $view === 'api';
+	}
+
+	/**
+	 * Is this an MCP (Model Context Protocol) server request?
+	 *
+	 * Parses the URL through the router, checking if the view resolves to 'mcp'.
+	 *
+	 * @return  bool
+	 * @since   2.2.0
+	 */
+	private function isMcpRequest(): bool
+	{
+		$this->container->router->parse();
+
+		$view = $this->container->input->getCmd('view', '');
+
+		return $view === 'mcp';
 	}
 
 	private function setupMediaVersioning(): void

@@ -496,7 +496,7 @@ class PluginsUpdate extends AbstractCallback
 	private function enqueueResultsEmail(Site $site, Registry $storage): void
 	{
 		// Render the messages as HTML
-		$updateStatus = (array) $storage->get('updateStatus', []);
+		$updateStatus = array_map(fn($x) => (array) $x, (array) $storage->get('updateStatus', []));
 
 		if (empty($updateStatus))
 		{

@@ -50,13 +50,30 @@ class ExtensionCancelUpdate extends AbstractApiHandler
 			$this->sendJsonError(422, 'Unsupported CMS type for extension updates.', 'site.wrong_cms');
 		}
 
+		// WordPress uses a composite string key in the queue; translate the integer route parameter.
+		$queueId = $extId;
+
+		if ($cmsType === CMSType::WORDPRESS)
+		{
+			$extensions = (array) $site->getConfig()->get('extensions.list');
+
+			if (!array_key_exists($extId, $extensions))
+			{
+				$this->sendJsonError(404, 'Extension not found on this site.', 'extension.not_found');
+			}
+
+			$ext     = $extensions[$extId];
+			$queueId = (($ext->type === 'plugin') ? 'plg_' : 'tpl_')
+				. trim(implode('_', [(string) ($ext->folder ?? ''), (string) ($ext->element ?? '')]), '_');
+		}
+
 		$queueKey = sprintf($queuePattern, $site->getId());
 
 		try
 		{
 			/** @var QueueInterface $queue */
 			$queue    = $this->container->queueFactory->makeQueue($queueKey);
-			$existing = $queue->countByCondition(['data.id' => $extId, 'siteId' => $site->getId()]);
+			$existing = $queue->countByCondition(['data.id' => $queueId, 'siteId' => $site->getId()]);
 		}
 		catch (\Throwable $e)
 		{
@@ -76,7 +93,7 @@ class ExtensionCancelUpdate extends AbstractApiHandler
 
 		try
 		{
-			$queue->clear(['data.id' => $extId, 'siteId' => $site->getId()]);
+			$queue->clear(['data.id' => $queueId, 'siteId' => $site->getId()]);
 		}
 		catch (\Throwable $e)
 		{

@@ -16,10 +16,11 @@ use Awf\Utils\ArrayHelper;
 /**
  * Handle user groups
  *
- * @property int      $id               The group's ID
- * @property string   $title            The group's title
- * @property string   $privileges       JSON-encoded list of privileges
- * @property int|null $api_token_limit  Per-group API token limit override; NULL uses the global default.
+ * @property int         $id                    The group's ID
+ * @property string      $title                 The group's title
+ * @property string      $privileges            JSON-encoded list of privileges
+ * @property int|null    $api_token_limit       Per-group API token limit override; NULL uses the global default.
+ * @property string|null $mcp_disallowed_tools  JSON-encoded list of MCP tool names this group is denied access to.
  */
 class Groups extends DataModel
 {
@@ -59,6 +60,59 @@ class Groups extends DataModel
 	public function getApiTokenLimit(): ?int
 	{
 		return $this->api_token_limit === null ? null : (int) $this->api_token_limit;
+	}
+
+	/**
+	 * Get the list of MCP tool names this group is denied access to.
+	 *
+	 * @return  string[]  A (possibly empty) list of tool names.
+	 * @since   2.2.0
+	 */
+	public function getMcpDisallowedTools(): array
+	{
+		$raw = $this->mcp_disallowed_tools;
+
+		if (is_array($raw))
+		{
+			return array_values(array_filter(array_map('strval', $raw)));
+		}
+
+		if (empty($raw))
+		{
+			return [];
+		}
+
+		$decoded = json_decode($raw, true);
+
+		return is_array($decoded)
+			? array_values(array_filter(array_map('strval', $decoded)))
+			: [];
+	}
+
+	/**
+	 * Set the list of MCP tool names this group is denied access to.
+	 *
+	 * An empty list is stored as NULL, meaning "this group imposes no MCP tool restriction".
+	 *
+	 * @param   string[]  $tools  The list of tool names to deny.
+	 *
+	 * @return  void
+	 * @since   2.2.0
+	 */
+	public function setMcpDisallowedTools(array $tools): void
+	{
+		$tools = array_values(
+			array_unique(
+				array_filter(
+					array_map(
+						fn($name) => preg_replace('/[^a-z0-9_]/', '', strtolower(trim((string) $name))),
+						$tools
+					)
+				)
+			)
+		);
+
+		$this->mcp_disallowed_tools = empty($tools) ? null : json_encode($tools);
 	}
 
 	public function setPrivileges(array $privileges): void

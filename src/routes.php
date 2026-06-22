@@ -152,3 +152,36 @@ $apiParseCallable = function (string $path): ?array
 $router->addRule(new Rule([
 	'parseCallable' => $apiParseCallable,
 ]));
+
+/**
+ * MCP (Model Context Protocol) Route Parser
+ *
+ * Maps the single MCP endpoint — `/mcp` (and `index.php/mcp` for servers without URL rewriting) — to the
+ * `mcp` view, regardless of the HTTP method. The MCP controller itself inspects the request method and the
+ * JSON-RPC body to decide what to do (it implements the Streamable HTTP transport in stateless mode).
+ *
+ * @since  2.2.0
+ */
+$mcpParseCallable = function (string $path): ?array
+{
+	$path = trim($path, '/');
+
+	// Some SAPI/rewrite combos leave "index.php/" in front; strip it so /mcp matches either way.
+	if (str_starts_with($path, 'index.php/'))
+	{
+		$path = substr($path, 10);
+	}
+
+	if (strtolower($path) !== 'mcp')
+	{
+		return null;
+	}
+
+	return [
+		'view' => 'mcp',
+	];
+};
+
+$router->addRule(new Rule([
+	'parseCallable' => $mcpParseCallable,
+]));
