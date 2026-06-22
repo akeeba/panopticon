@@ -52,22 +52,26 @@ class ScheduleCmsUpdate extends AbstractTool
 		return [
 			'type'       => 'object',
 			'properties' => [
-				'id'    => [
+				'site_id' => [
 					'type'        => 'integer',
 					'description' => 'The numeric ID of the site to update.',
 				],
-				'force' => [
+				'id'      => [
+					'type'        => 'integer',
+					'description' => 'Alias for site_id. The numeric ID of the site to update.',
+				],
+				'force'   => [
 					'type'        => 'boolean',
 					'description' => 'Force scheduling even if no update appears to be available (default false).',
 				],
 			],
-			'required'   => ['id'],
+			'required'   => ['site_id'],
 		];
 	}
 
-	public function __invoke(int $id, bool $force = false): array
+	public function __invoke(int $site_id = 0, int $id = 0, bool $force = false): array
 	{
-		$site    = $this->getSiteWithPermission($id, 'run');
+		$site    = $this->getSiteWithPermission($site_id ?: $id, 'run');
 		$user    = $this->getUser();
 		$cmsType = $site->cmsType();
 

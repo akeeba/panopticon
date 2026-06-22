@@ -46,22 +46,27 @@ class ListSiteExtensions extends AbstractTool
 		return [
 			'type'       => 'object',
 			'properties' => [
-				'id'              => [
+				'site_id'      => [
 					'type'        => 'integer',
 					'description' => 'The numeric ID of the site in Panopticon.',
 				],
-				'updates_only'    => [
+				'id'           => [
+					'type'        => 'integer',
+					'description' => 'Alias for site_id. The numeric ID of the site in Panopticon.',
+				],
+				'updates_only' => [
 					'type'        => 'boolean',
 					'description' => 'When true, only return extensions that have an update available (default false).',
 				],
 			],
-			'required'   => ['id'],
+			'required'   => ['site_id'],
 		];
 	}
 
-	public function __invoke(int $id, bool $updates_only = false): array
+	public function __invoke(int $site_id = 0, int $id = 0, bool $updates_only = false): array
 	{
-		$site        = $this->getSiteWithPermission($id, 'read');
+		$resolvedId  = $site_id ?: $id;
+		$site        = $this->getSiteWithPermission($resolvedId, 'read');
 		$extensions  = $site->getExtensionsList();
 		$isWordPress = $site->cmsType() === CMSType::WORDPRESS;
 

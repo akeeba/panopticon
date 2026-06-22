@@ -46,9 +46,13 @@ class CancelExtensionUpdate extends AbstractTool
 		return [
 			'type'       => 'object',
 			'properties' => [
-				'id'           => [
+				'site_id'      => [
 					'type'        => 'integer',
 					'description' => 'The numeric ID of the site.',
+				],
+				'id'           => [
+					'type'        => 'integer',
+					'description' => 'Alias for site_id. The numeric ID of the site.',
 				],
 				'extension_id' => [
 					'type'        => 'string',
@@ -56,13 +60,13 @@ class CancelExtensionUpdate extends AbstractTool
 						. 'returned by list_site_extensions.',
 				],
 			],
-			'required'   => ['id', 'extension_id'],
+			'required'   => ['site_id', 'extension_id'],
 		];
 	}
 
-	public function __invoke(int $id, string $extension_id): array
+	public function __invoke(int $site_id = 0, int $id = 0, string $extension_id = ''): array
 	{
-		$site = $this->getSiteWithPermission($id, 'run');
+		$site = $this->getSiteWithPermission($site_id ?: $id, 'run');
 		$user = $this->getUser();
 
 		if (empty($extension_id))
