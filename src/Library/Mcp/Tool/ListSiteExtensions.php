@@ -117,13 +117,15 @@ class ListSiteExtensions extends AbstractTool
 			}
 
 			$result[] = [
-				'id'               => $extId,
-				'name'             => $extension->name ?? null,
-				'type'             => $extension->type ?? null,
-				'author'           => $extension->author ?? null,
-				'current_version'  => $current,
-				'latest_version'   => $latest,
-				'update_available' => $hasUpdate,
+				'id'                   => $extId,
+				'name'                 => $extension->name ?? null,
+				'type'                 => $extension->type ?? null,
+				'author'               => $extension->author ?? null,
+				'current_version'      => $current,
+				'latest_version'       => $latest,
+				'update_available'     => $hasUpdate,
+				'download_key_missing' => ($extension->downloadkey?->supported ?? false)
+					&& !($extension->downloadkey?->valid ?? false),
 			];
 		}
 
