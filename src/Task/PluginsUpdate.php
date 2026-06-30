@@ -107,7 +107,7 @@ class PluginsUpdate extends AbstractCallback
 
 	private function installUpdate(Site $site, QueueItem $item, Registry $storage): void
 	{
-		$updateStatus = (array) $storage->get('updateStatus', []);
+		$updateStatus = array_map(fn($x) => (array) $x, (array) $storage->get('updateStatus', []));
 
 		// This is the plugin/theme ID we are asked to install
 		$data = $item->getData();

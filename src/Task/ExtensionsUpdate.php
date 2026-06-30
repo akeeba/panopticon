@@ -108,7 +108,7 @@ class ExtensionsUpdate extends AbstractCallback
 
 	private function installUpdate(Site $site, QueueItem $item, Registry $storage): void
 	{
-		$updateStatus = (array) $storage->get('updateStatus', []);
+		$updateStatus = json_decode(json_encode($storage->get('updateStatus', [])), true) ?: [];
 
 		// This is the extension ID we are asked to install
 		$data = $item->getData();
