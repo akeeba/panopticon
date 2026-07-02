@@ -184,7 +184,7 @@ class Coreupdates extends DataController
 			}
 
 			// You can only cancel updates if you have the admin or editown privilege on the site
-			$haveGlobalPrivilege = !$user->authorise('panopticon.admin', $site);
+			$haveGlobalPrivilege = $user->authorise('panopticon.admin', $site);
 			$canEditOwn          = $user->authorise('panopticon.editown', $site) && $site->created_by == $user->getId();
 
 			if (!$haveGlobalPrivilege && !$canEditOwn)

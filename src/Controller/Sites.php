@@ -74,6 +74,8 @@ class Sites extends DataController
      */
     public function batch(): void
     {
+	    $this->csrfProtection();
+
 	    $type    = null;
 	    $message = $this->getLanguage()->text('PANOPTICON_SITES_BATCH_COMPLETED');
 
@@ -90,9 +92,25 @@ class Sites extends DataController
 
 	    $data['groups_remove'] = $removeGroups;
 
+	    // Only allow batch operations on sites the current user may administer. The `sites => batch` ACL only
+	    // checks that the user is logged in; group assignment can grant site privileges, so it must be gated
+	    // per-site on the admin privilege here (super users pass authorise() automatically).
+	    $user = $this->container->userManager->getUser();
+
 	    try
 	    {
 		    $ids = $this->getIDsFromRequest($model, false);
+		    $ids = array_values(
+			    array_filter($ids, fn($id) => $user->authorise('panopticon.admin', (int) $id))
+		    );
+
+		    if (empty($ids))
+		    {
+			    throw new RuntimeException(
+				    $this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403
+			    );
+		    }
+
 		    $model->batch($ids, $data);
 	    }
 	    catch (RuntimeException $e)
@@ -115,6 +133,8 @@ class Sites extends DataController
 	 */
 	public function connectionDoctor(): void
 	{
+		$this->csrfProtection();
+
 		$id = $this->input->get->getInt('id', 0);
 		/** @var SiteModel $site */
 		$site = $this
@@ -762,6 +782,11 @@ class Sites extends DataController
 
 		$site->findOrFail($siteId);
 
+		if (!$this->canScheduleUpdateForSite($site))
+		{
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
 		if ($site->cmsType() !== CMSType::JOOMLA)
 		{
 			throw new RuntimeException('This is only possible with Joomla! sites.');
@@ -1098,6 +1123,11 @@ class Sites extends DataController
 		);
 
 		$site->findOrFail($siteId);
+
+		if (!$this->canScheduleUpdateForSite($site))
+		{
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
 
 		if ($site->cmsType() !== CMSType::WORDPRESS)
 		{
@@ -1448,6 +1478,36 @@ class Sites extends DataController
 	protected function onBeforeSaveorder()
 	{
 		return false;
+	}
+
+	/**
+	 * Can the current user schedule update operations (core / extension / plugin) on this site?
+	 *
+	 * These tasks identify the target site via the `site_id` request parameter, but their ACL entry is
+	 * keyed on the `id` parameter (which holds an extension id or plugin slug), so the ACLTrait per-site
+	 * check evaluates the wrong object. This method re-authorises the operation against the actual target
+	 * site so a user cannot schedule updates on a site they have no privilege over.
+	 *
+	 * @param   SiteModel  $site  The site the update would be scheduled for.
+	 *
+	 * @return  bool
+	 */
+	protected function canScheduleUpdateForSite(SiteModel $site): bool
+	{
+		$user = $this->container->userManager->getUser();
+
+		if ($user->getId() <= 0 || empty($site->getId()))
+		{
+			return false;
+		}
+
+		if ($user->getPrivilege('panopticon.super'))
+		{
+			return true;
+		}
+
+		return $user->authorise('panopticon.admin', $site)
+		       || $user->authorise('panopticon.run', $site);
 	}
 
 	/**

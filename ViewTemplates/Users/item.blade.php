@@ -69,7 +69,7 @@ $amISuper   = $this->getContainer()->userManager->getUser()->getPrivilege('panop
                 @lang('PANOPTICON_USERS_LBL_EDIT_PROFILE')
             </a>
 
-            <a href="@route('index.php?view=login&task=logout')" class="btn btn-danger" role="button">
+            <a href="@route(sprintf('index.php?view=login&task=logout&%s=1', $this->getContainer()->session->getCsrfToken()->getValue()))" class="btn btn-danger" role="button">
                 <span class="fa fa-right-from-bracket" aria-hidden="true"></span>
                 @lang('PANOPTICON_APP_LBL_LOGOUT')
             </a>

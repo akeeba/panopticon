@@ -618,7 +618,11 @@ class Html extends DataViewHtml
 						'icon'  => 'fa fa-fw fa-stethoscope',
 						'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
 						'url'   => $router->route(
-							sprintf("index.php?view=site&task=connectionDoctor&id=%s", $this->item->getId())
+							sprintf(
+								"index.php?view=site&task=connectionDoctor&id=%s&%s=1",
+								$this->item->getId(),
+								$this->getContainer()->session->getCsrfToken()->getValue()
+							)
 						),
 					]
 				)

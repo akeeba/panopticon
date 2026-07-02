@@ -113,14 +113,21 @@ trait ACLTrait
 			'*' => ['*'],
 		],
 		'overrides'     => [
-			'default' => ['read'],
-			'browse'  => ['read'],
-			'read'    => ['read'],
+			// Per-site admin is enforced in Overrides::execute() (the per-site ACL block below only
+			// applies to the sites/site views). These read tasks only need to pass this global gate so a
+			// per-site admin who lacks a *global* privilege can reach that in-controller check. There is
+			// deliberately no '*' fallback, so every write task (save/apply/remove/…) stays denied.
+			'default' => ['*'],
+			'browse'  => ['*'],
+			'read'    => ['*'],
 		],
 		'passkeys' => [
 			'*'         => ['*'],
 			'challenge' => ['#'],
 			'login'     => ['#'],
+		],
+		'phpinfo'       => [
+			'*' => ['super'],
 		],
 		'pushsubscriptions' => [
 			'*' => ['*'],
@@ -160,20 +167,35 @@ trait ACLTrait
 			'save'                               => ['*'],
 			'batch'                              => ['*'],
 			'cancel'                             => ['addown', 'editown', 'admin'],
+			// NOTE: task keys MUST be lower-case. hasAccess() lower-cases the incoming task before
+			// looking it up here, so a camelCase key can never match and silently falls through to
+			// the '*' => ['admin'] default, defeating the finer read/run grants below.
 			// The connection doctor needs the same permissions as the `save` task.
-			'connectionDoctor'                   => ['*'],
-			// Reloading a site's information requires the read privilege on it
-			'refreshSiteInformation'             => ['read'],
-			'refreshExtensionsInformation'       => ['read'],
-			'refreshSections'                    => ['read'],
-			// Actions which modify the site need the run privilege
-			'fixJoomlaCoreUpdateSite'            => ['run'],
-			'scheduleJoomlaUpdate'               => ['run'],
-			'clearUpdateScheduleError'           => ['run'],
-			'clearExtensionUpdatesScheduleError' => ['run'],
-			'scheduleExtensionUpdate'            => ['run'],
+			'connectiondoctor'                   => ['*'],
+			// Reloading a site's information requires the read (i.e. `view`) privilege on it (site is the
+			// `id` param). NOTE: `view` is the actual assignable "read" privilege — there is no
+			// `panopticon.read` privilege, so the previous ['read'] value could never be granted to a
+			// non-super user and (masked by the camelCase-key bug) fell back to ['admin'].
+			'refreshsiteinformation'             => ['view'],
+			'refreshextensionsinformation'       => ['view'],
+			'refreshsections'                    => ['view'],
+			// Actions which modify the site need the run privilege (site is the `id` param).
+			'fixjoomlacoreupdatesite'            => ['run'],
+			'schedulejoomlaupdate'               => ['run'],
+			'clearupdatescheduleerror'           => ['run'],
+			'clearextensionupdatesscheduleerror' => ['run'],
+			// The extension/plugin update scheduling tasks identify the target site via `site_id`, not
+			// `id` (which holds an extension id / plugin slug), so the per-site ACL check below (keyed on
+			// `id`) would authorise the wrong object. Authority for these is enforced in-controller by
+			// Sites::canScheduleUpdateForSite() against the real target site.
+			'scheduleextensionupdate'            => ['*'],
+			'schedulepluginupdate'               => ['*'],
 			// Anything else (like publish / unpublish), we automatically restrict to the admin privilege
 			'*'                                  => ['admin'],
+		],
+		'reports'       => [
+			// The reports browser aggregates action reports across all sites with no per-user scoping.
+			'*' => ['super'],
 		],
 		'selfupdate'    => [
 			'*' => ['super'],
@@ -217,7 +239,12 @@ trait ACLTrait
 			'cancel'       => ['*'],
 		],
 		'usagestats'    => [
-			'*' => ['super'],
+			// The anonymous stats submission runs from every logged-in user's browser (injected into the
+			// `main` view for everyone), so it must be reachable by any logged-in user.
+			'ajax' => ['*'],
+			// Everything else (viewing the page, toggling collection, resetting the site id, sending now)
+			// changes the telemetry configuration and is superuser-only.
+			'*'    => ['super'],
 		],
 		'updatesummarytasks' => [
 			'*' => ['*']

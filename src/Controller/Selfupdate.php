@@ -53,6 +53,8 @@ class Selfupdate extends Controller
 
 	public function preupdate()
 	{
+		$this->csrfProtection();
+
 		if (defined('APATH_IN_DOCKER') && APATH_IN_DOCKER)
 		{
 			$this->setRedirect(
@@ -71,7 +73,9 @@ class Selfupdate extends Controller
 
 		if (!$this->areTasksRunning())
 		{
-			$url = $this->container->router->route('index.php?view=selfupdate&task=update');
+			$token = $this->container->session->getCsrfToken()->getValue();
+			$url   = $this->container->router->route('index.php?view=selfupdate&task=update')
+			         . '&' . urlencode($token) . '=1';
 
 			$this->setRedirect($url);
 		}
@@ -82,6 +86,8 @@ class Selfupdate extends Controller
 
 	public function update()
 	{
+		$this->csrfProtection();
+
 		if (defined('APATH_IN_DOCKER') && APATH_IN_DOCKER)
 		{
 			$this->setRedirect(
@@ -112,13 +118,17 @@ class Selfupdate extends Controller
 
 		$this->container->segment->setFlash('selfupdate.localfile', $targetFile);
 
-		$url = $this->container->router->route('index.php?view=selfupdate&task=install');
+		$token = $this->container->session->getCsrfToken()->getValue();
+		$url   = $this->container->router->route('index.php?view=selfupdate&task=install')
+		         . '&' . urlencode($token) . '=1';
 
 		$this->setRedirect($url);
 	}
 
 	public function install()
 	{
+		$this->csrfProtection();
+
 		if (defined('APATH_IN_DOCKER') && APATH_IN_DOCKER)
 		{
 			$this->setRedirect(
@@ -149,13 +159,17 @@ class Selfupdate extends Controller
 			);
 		}
 
-		$url = $this->container->router->route('index.php?view=selfupdate&task=postinstall');
+		$token = $this->container->session->getCsrfToken()->getValue();
+		$url   = $this->container->router->route('index.php?view=selfupdate&task=postinstall')
+		         . '&' . urlencode($token) . '=1';
 
 		$this->setRedirect($url);
 	}
 
 	public function postinstall()
 	{
+		$this->csrfProtection();
+
 		/** @var \Akeeba\Panopticon\Model\Selfupdate $model */
 		$model = $this->getModel();
 

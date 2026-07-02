@@ -39,7 +39,7 @@ if ($releaseDate instanceof DateTime)
 <div class="my-5 d-flex flex-row justify-content-center align-items-center gap-3">
     <div>
         <a class="btn btn-primary btn-lg" role="button"
-           href="@route('index.php?view=selfupdate&task=update')">
+           href="@route(sprintf('index.php?view=selfupdate&task=update&%s=1', $this->getContainer()->session->getCsrfToken()->getValue()))">
             <span class="fa fa-play" aria-hidden="true"></span>
             @lang('PANOPTICON_SELFUPDATE_LBL_UPGRADE_BTN')
         </a>

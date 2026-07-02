@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Akeeba\Panopticon\Model\Log;
 use Awf\Mvc\Controller;
 
@@ -19,6 +20,15 @@ use Awf\Mvc\Controller;
  */
 class Logs extends Controller
 {
+	use ACLTrait;
+
+	public function execute($task)
+	{
+		$this->aclCheck($task);
+
+		return parent::execute($task);
+	}
+
 	/**
 	 * Main page: list the log files, paginated
 	 *

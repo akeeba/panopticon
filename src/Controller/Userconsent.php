@@ -49,6 +49,8 @@ class Userconsent extends Controller
 
 	public function decline(): void
 	{
+		$this->csrfProtection();
+
 		$this->container->segment->setFlash(
 			'userconsent.declined',
 			$this->getLanguage()->text('PANOPTICON_USERCONSENT_MSG_DECLINED')

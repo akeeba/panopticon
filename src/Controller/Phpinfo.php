@@ -9,9 +9,17 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
 
 class Phpinfo extends Controller
 {
+	use ACLTrait;
 
+	public function execute($task)
+	{
+		$this->aclCheck($task);
+
+		return parent::execute($task);
+	}
 }

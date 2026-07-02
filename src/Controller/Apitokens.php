@@ -207,6 +207,26 @@ class Apitokens extends DataController
 	}
 
 	/**
+	 * Called BEFORE publish() runs. Enforce token ownership so a user cannot enable another user's token.
+	 */
+	protected function onBeforePublish(): bool
+	{
+		$this->assertOwnershipOfRequestedIds();
+
+		return true;
+	}
+
+	/**
+	 * Called BEFORE unpublish() runs. Enforce token ownership so a user cannot disable another user's token.
+	 */
+	protected function onBeforeUnpublish(): bool
+	{
+		$this->assertOwnershipOfRequestedIds();
+
+		return true;
+	}
+
+	/**
 	 * Called by AWF Controller::execute() after publish() runs. Audit-log each affected row.
 	 */
 	protected function onAfterPublish(): bool
@@ -231,6 +251,9 @@ class Apitokens extends DataController
 	 */
 	protected function onBeforeRemove(): bool
 	{
+		// Enforce token ownership so a user cannot delete another user's token.
+		$this->assertOwnershipOfRequestedIds();
+
 		$model = $this->getModel();
 		$ids   = $this->getIDsFromRequest($model, false);
 
@@ -306,6 +329,53 @@ class Apitokens extends DataController
 				(int) $id,
 				['enabled' => $enabled]
 			);
+		}
+	}
+
+	/**
+	 * Assert that the current user owns every API token id in the request.
+	 *
+	 * The list of tokens a user can browse is scoped to their own tokens by the model's buildQuery(), but the
+	 * DataController publish/unpublish/remove tasks load rows by primary key with no ownership scoping. Without
+	 * this guard any logged-in user could enable, disable, or delete another user's (including a super user's)
+	 * API tokens by supplying arbitrary cid[] values. Super users are exempt (they manage all tokens).
+	 *
+	 * @return  void
+	 * @throws  \RuntimeException  (403) if any requested token belongs to another user.
+	 */
+	private function assertOwnershipOfRequestedIds(): void
+	{
+		$user = $this->getContainer()->userManager->getUser();
+
+		if ((bool) $user->getPrivilege('panopticon.super'))
+		{
+			return;
+		}
+
+		/** @var Apitoken $model */
+		$model = $this->getModel();
+		$ids   = $this->getIDsFromRequest($model, false);
+
+		foreach ($ids as $id)
+		{
+			try
+			{
+				$tmp = $this->getContainer()->mvcFactory->makeTempModel('Apitoken');
+				$tmp->findOrFail((int) $id);
+			}
+			catch (\Throwable)
+			{
+				// A row that does not exist cannot be acted upon; skip it.
+				continue;
+			}
+
+			if ((int) $tmp->user_id !== (int) $user->getId())
+			{
+				throw new \RuntimeException(
+					$this->getContainer()->language->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'),
+					403
+				);
+			}
 		}
 	}
 

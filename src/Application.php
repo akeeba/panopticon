@@ -537,6 +537,13 @@ class Application extends AWFApplication
 				if (isset($params['task']))
 				{
 					$options['params']['task'] = $params['task'];
+
+					// The logout task is CSRF-protected; carry the anti-CSRF token in the menu link.
+					if ($params['task'] === 'logout')
+					{
+						$token                    = $this->container->session->getCsrfToken()->getValue();
+						$options['params'][$token] = 1;
+					}
 				}
 			}
 			elseif (isset($params['params']))

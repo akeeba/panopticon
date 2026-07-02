@@ -328,7 +328,7 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
 @stop
 
 @section('jUpdateOverrides')
-    @if ($overridesChanged > 0)
+    @if ($overridesChanged > 0 && $this->container->userManager->getUser()->authorise('panopticon.admin', $this->item->id))
         <div class="alert alert-warning mt-4">
             <h4 class="alert-heading fs-5">
                 <span class="fa fa-arrows-to-eye fa-fw" aria-hidden="true"></span>

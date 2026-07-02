@@ -101,7 +101,7 @@ $model = $this->getModel();
                 </a>
             @endif
 
-            <a href="@route('index.php?view=login&task=logout')"
+            <a href="@route(sprintf('index.php?view=login&task=logout&%s=1', $this->getContainer()->session->getCsrfToken()->getValue()))"
                class="btn btn-outline-danger"
                id="loginguard-captive-button-logout">
                 <span class="fa fa-right-from-bracket" aria-hidden="true"></span>

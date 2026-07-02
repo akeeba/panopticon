@@ -1,12 +1,23 @@
 <?php die(); ?>
 Akeeba Panopticon 2.2.0
 ================================================================================
+! [CRITICAL] API token management vulnerabilities due to insufficient checks
+! Insufficient checks when canceling a Joomla core update task
+! Sites batch processing had insufficient checks
+! Log viewer had insufficient checks
+! Self-update tasks had a CSRF vulnerability, but without much practical interest
+! Information disclosure in the PHP information page
+! Extension/plugin update scheduling had insufficient checks
+! Missing anti-CSRF checks on logout, decline consent, and the site connection doctor
+! The reports view had insufficient checks
 + Optional MCP (Model Context Protocol) server for AI agents and chatbots [gh-1000]
 + Core File Integrity Check now supports WordPress sites [gh-979]
-~ Main update source is now https://getpanopticon.com/update.json
 + Configurable base URL for the Core File Integrity checksums source [gh-981]
 + Machine translation to German (de-DE)
-# Extension updates: fatal "Cannot use object of type stdClass as array" error when reporting update results [gh-1001]
+~ Main update source is now https://getpanopticon.com/update.json
+~ Template Overrides view now consistently requires the admin privilege on the site (view and its entry button)
+# [HIGH] Site refresh/update-scheduling applied too-tight authorisation checks
+# [HIGH] Extension updates: fatal "Cannot use object of type stdClass as array" error when reporting update results [gh-1001]
 
 Akeeba Panopticon 2.1.1
 ================================================================================

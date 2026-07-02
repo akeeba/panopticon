@@ -59,11 +59,8 @@ class Overrides extends DataController
 
 		$user = $this->getContainer()->userManager->getUser();
 
-		if (
-			!$user->authorise('panopticon.admin', $this->site)
-			&& !$user->authorise('panopticon.view', $this->site)
-			&& !$user->authorise('panopticon.editown', $this->site)
-		)
+		// Viewing a site's template overrides requires the admin privilege on that specific site.
+		if (!$user->authorise('panopticon.admin', $this->site))
 		{
 			throw new AccessDenied();
 		}

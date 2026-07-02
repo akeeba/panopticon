@@ -88,7 +88,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         @lang('PANOPTICON_USERCONSENT_BTN_AGREE')
                     </button>
                 </form>
-                <a href="@route('index.php?view=userconsent&task=decline')" class="btn btn-outline-secondary btn-lg">
+                <a href="@route(sprintf('index.php?view=userconsent&task=decline&%s=1', $this->getContainer()->session->getCsrfToken()->getValue()))" class="btn btn-outline-secondary btn-lg">
                     <span class="fa fa-xmark me-1" aria-hidden="true"></span>
                     @lang('PANOPTICON_USERCONSENT_BTN_DECLINE')
                 </a>

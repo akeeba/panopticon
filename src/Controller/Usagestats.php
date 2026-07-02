@@ -9,10 +9,20 @@ namespace Akeeba\Panopticon\Controller;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
 
 class Usagestats extends Controller
 {
+	use ACLTrait;
+
+	public function execute($task)
+	{
+		$this->aclCheck($task);
+
+		return parent::execute($task);
+	}
+
 	public function resetsid()
 	{
 		$this->csrfProtection();

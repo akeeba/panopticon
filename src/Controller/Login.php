@@ -129,6 +129,8 @@ class Login extends Controller
 
 	public function logout(): bool
 	{
+		$this->csrfProtection();
+
 		/** @var LoggerInterface $logger */
 		$logger   = $this->container->loggerFactory->get('login');
 		$manager  = $this->container->userManager;

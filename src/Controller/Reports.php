@@ -17,6 +17,13 @@ class Reports extends Controller
 {
 	use ACLTrait;
 
+	public function execute($task)
+	{
+		$this->aclCheck($task);
+
+		return parent::execute($task);
+	}
+
 	public function test()
 	{
 		$this->display();
