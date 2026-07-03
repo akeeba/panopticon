@@ -65,7 +65,7 @@ msgstr "Tümünü seç"
 
 msgctxt "AWF_COMMON_LBL_DISPLAY_NUM"
 msgid "Number of displayed items"
-msgstr "Görüntülenen öğe sayısı"
+msgstr "Görüntülenen öge sayısı"
 
 msgctxt "AWF_DOWNLOAD_ERR_LIB_COULDNOTDOWNLOADFROMURL"
 msgid "Could not download from URL <code>%s</code>"
@@ -1072,9 +1072,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
 msgid "Enabling Joomla Update\\'s extraction script for site %d (%s)"
-msgstr ""
-"%d (%s) sitesi için Joomla Güncellemesinin dosya ayıklama komut dosyası "
-"etkinleştiriliyor"
+msgstr "%d (%s) sitesi için Joomla Güncellemenin ayıklama betiği etkinleştiriliyor"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START"
 msgid "Starting the update package extraction for site %d (%s)"
@@ -1184,8 +1182,8 @@ msgid ""
 "Installing WordPress update on site #%d (%s) has failed. The server's response "
 "is not valid JSON."
 msgstr ""
-"#%d (%s) numaralı sitede WordPress güncellemesi yükleme işlemi başarısız oldu. "
-"Sunucunun yanıtı geçerli bir JSON değil."
+"Site #%d (%s) üzerinde WordPress güncellemesi yüklenemedi. Sunucunun yanıtı "
+"geçerli JSON değil."
 
 msgctxt "PANOPTICON_SETUP_TITLE"
 msgid "Installation"
@@ -1240,12 +1238,10 @@ msgid ""
 "enter the FTP or SFTP connection details to your site's root. If you are unsure "
 "about these settings, please ask your host."
 msgstr ""
-"PHP'de yapılandırılan oturum yazma yoluna yazılamadığından oturum açmayı "
-"imkansız hale getirir. Bu sorunu çözmek için Panopticon <code>%s</code> "
-"dizininde bir oturum kaydetme yolu oluşturmaya çalışacaktır. Bunun mümkün "
-"olabilmesi için sitenizin kök dizinine FTP veya SFTP bağlantı ayrıntılarını "
-"girmeniz gerekmektedir. Bu ayarlardan emin değilseniz lütfen barındırıcınıza "
-"sorun."
+"PHP'de yapılandırılan oturum yazma yolu yazılabilir değil; bu da oturum açmayı "
+"imkânsız kılıyor. Devam edebilirsiniz, ancak Panopticon kurulumu tamamlanana "
+"kadar oturum açamazsınız. Yönetici bilgilerini girdikten sonra Panopticon, "
+"oturumları yönetmek için veritabanını kullanmaya geçecektir."
 
 msgctxt "PANOPTICON_SETUP_SESSION_LBL_ERROR_HEADER"
 msgid "An error occurred while trying to create a session save path"
@@ -1280,8 +1276,9 @@ msgid ""
 "On some shared hosting environments you need to use FTP or SFTP to be able to "
 "write to your site's files."
 msgstr ""
-"Bazı paylaşılan barındırma ortamlarında, sitenizin dosyalarına yazabilmek için "
-"FTP veya SFTP kullanmanız gerekir."
+"Bazı paylaşımlı barındırma ortamlarında dosyaları sunucuya yazabilmek için FTP "
+"veya SFTP kullanmanız gerekebilir. Bu durumda lütfen aşağıdaki FTP/SFTP "
+"bilgilerini girin."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_SFTP"
 msgid "SFTP - Secure File Transfer Protocol (over SSH)"
@@ -1352,7 +1349,7 @@ msgid ""
 "for SFTP. If unsure, ask your host."
 msgstr ""
 "(S)FTP sunucunuzun dinlediği bağlantı noktası numarası. Genellikle FTP için 21 "
-"ve SFTP için 22'dir. Emin değilseniz barındırıcınıza sorun."
+"ve SFTP için 22 olur. Emin değilseniz barındırıcınıza sorun."
 
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_SSL"
 msgid "Use SSL"
@@ -1399,9 +1396,9 @@ msgid ""
 "installation is not missing files, check permissions, and clear your browser's "
 "cache."
 msgstr ""
-"Panopticon'un JavaScript dosyaları düzgün yüklenmiyor. Kurulumda dosyaların "
-"eksik olmadığından emin olun, izinleri kontrol edin ve tarayıcınızın önbelleğini "
-"temizleyin."
+"Panopticon için JavaScript dosyaları düzgün yüklenmiyor. Panopticon uygulamasını "
+"bir dizine yüklediğinizden emin olun ve o dizini doğrudan tarayıcınızda açmayı "
+"deneyin."
 
 msgctxt "PANOPTICON_SETUP_LBL_PRECHECK_HEAD_OK"
 msgid "All systems go!"
@@ -1756,8 +1753,8 @@ msgstr "Bağlantı Noktası"
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_PORT_DESCRIPTION"
 msgid "FTP server's TCP/IP port. Usually 21. Please ask your host."
 msgstr ""
-"FTP sunucusunun TCP/IP bağlantı noktası. Genellikle 21. Lütfen barındırıcınıza "
-"sorun."
+"FTP sunucusunun TCP/IP bağlantı noktası. Genellikle 21 olur. Lütfen "
+"barındırıcınıza sorun."
 
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_USER_TITLE"
 msgid "User name"
@@ -1777,9 +1774,9 @@ msgid ""
 "dashes, dots, underscores, and exclamation points. Other characters may trigger "
 "your web server's anti-hacking protection."
 msgstr ""
-"Parola, büyük/küçük harfe duyarlıdır. En iyisi yalnızca a-z, A-Z, 0-9, tire, "
-"nokta, alt çizgi ve ünlem işaretlerinden oluşan parolalar kullanın. Diğer "
-"karakterler web sunucunuzun anti-hack korumasını tetikleyebilir."
+"Şifre, büyük/küçük harf duyarlıdır. En iyisi, yalnızca a-z, A-Z, 0-9, tire, "
+"nokta, alt çizgi ve ünlem işaretlerinden oluşan şifreler kullanın. Diğer "
+"karakterler, web sunucunuzun siber saldırı önleme korumasını tetikleyebilir."
 
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_FTPS_TITLE"
 msgid "Use FTP over SSL (FTPS)"
@@ -1792,8 +1789,8 @@ msgid ""
 "support this method you will get connection errors."
 msgstr ""
 "SSL şifreli bir bağlantı kullanarak FTP sunucunuza bağlanın. <strong>Bu, SFTP, "
-"SCP veya \"Güvenli FTP\" ile aynı değildir</strong>. Sunucunuz bu yöntemi "
-"desteklemiyorsa bağlantı hataları alırsınız."
+"SCP veya \\\"Güvenli FTP\\\" ile aynı şey değildir</strong>. Sunucunuz bu "
+"yöntemi desteklemiyorsa, bağlantı hataları alacaksınız."
 
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_INITDIR_TITLE"
 msgid "Initial directory"
@@ -1806,10 +1803,10 @@ msgid ""
 "and copy the path appearing on the right-hand pane above the directory list. "
 "Usually, it's something like <code>/public_html</code> or <code>/httpdocs</code>."
 msgstr ""
-"Dosyaların yükleneceği dizine giden mutlak FTP yolu. Emin değilseniz FileZilla "
-"ile sunucunuza bağlanın, istediğiniz dizine göz atın ve sağdaki bölmede dizin "
-"listesinin üzerinde görünen yolu kopyalayın. Genellikle <code>/public_html</"
-"code> veya <code>/httpdocs</code> gibi bir şeydir."
+"Dosyaların yükleneceği dizine ait mutlak FTP yolu. Emin değilseniz, FileZilla "
+"ile sunucunuza bağlanın, hedef dizine gidin ve dizin listesinin üstünde, sağdaki "
+"bölmede görünen yolu kopyalayın. Genellikle bu yol, <code>/public_html</code> "
+"veya <code>/httpdocs</code> gibi bir şekildedir."
 
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_PASSIVE_TITLE"
 msgid "Passive mode"
@@ -1894,10 +1891,11 @@ msgid ""
 "here. The must be absolute, e.g. <code>/home/myuser/public_html</code>, not just "
 "<s><code>public_html</code></s>."
 msgstr ""
-"Sitenin kökünün SFTP dizini. Emin değilseniz bir SFTP masaüstü istemcisi "
-"kullanın, sunucunuza bağlanın, dizine gidin ve burada görüntülenen yolu "
-"kopyalayın. Mutlak olmalıdır, ör. <code>/home/myuser/public_html</code>, "
-"yalnızca <s><code>public_html</code></s> değil."
+"Sitenin kök dizinindeki SFTP dizini. Emin değilseniz, bir SFTP masaüstü "
+"istemcisi kullanarak sunucunuza bağlanın, ilgili dizine gidin ve burada "
+"görüntülenen yolu kopyalayın. Yolun mutlak olması gerekir; örneğin, <code>/home/"
+"myuser/public_html</code>, sadece <s><code>public_html</code></s> şeklinde "
+"olmamalıdır."
 
 msgctxt "PANOPTICON_SETUP_DIRECTSFTP_TEST_DESCRIPTION"
 msgid "Test the connection to the SFTP server."
@@ -1947,8 +1945,8 @@ msgid ""
 "The username you will use to log in to Panopticon. It's best to only use "
 "lowercase letters a-z and numbers 0-9."
 msgstr ""
-"Panopticon'a giriş yapmak için kullanacağınız kullanıcı adı. Yalnızca a'dan z'ye "
-"küçük harfleri ve 0-9 arasındaki rakamları kullanmak en iyisidir."
+"Panopticon uygulamasına giriş yapmak için kullanacağınız kullanıcı adı. Yalnızca "
+"küçük harf, rakam ve alt çizgi kullanmanız önerilir."
 
 msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD"
 msgid "Password"
@@ -1971,8 +1969,8 @@ msgid ""
 "Please repeat the password you entered above. We want to make sure you didn't "
 "accidentally mistype it."
 msgstr ""
-"Lütfen yukarıda girdiğiniz şifreyi tekrarlayınız. Yanlışlıkla yanlış "
-"yazmadığınızdan emin olmak istiyoruz."
+"Lütfen yukarıya girdiğiniz parolayı tekrar girin. Yanlış yazmadığınızdan emin "
+"olmak istiyoruz."
 
 msgctxt "PANOPTICON_SETUP_LBL_USER_EMAIL"
 msgid "Email Address"
@@ -2044,8 +2042,8 @@ msgid ""
 "Upload into the folder you're installing Panopticon. That's the folder with the "
 "Panopticon <code>index.php</code> file in it."
 msgstr ""
-"Panopticon'u kurduğunuz klasöre yükleyin. Bu, içinde Panopticon <code>index.php</"
-"code> dosyasının bulunduğu klasördür."
+"Panopticon uygulamasını kurduğunuz klasöre yükleyin. Bu, içinde Panopticon "
+"<code>index.php</code> dosyasının bulunduğu klasördür."
 
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP5"
 msgid "Come back to this window and click on the “Continue” button."
@@ -2139,9 +2137,9 @@ msgid ""
 "sure it's the PHP CLI executable, <strong>not</strong> the PHP CGI/FastCGI "
 "executable."
 msgstr ""
-"<i>/path/to/php</i> yerine PHP %s CLI çalıştırılabilir dosyasının yolunu yazın. "
-"Bunun PHP CGI/FastCGI çalıştırılabiliri <strong>değil</strong>, PHP CLI "
-"çalıştırılabiliri olduğundan emin olun."
+"<i>/path/to/php</i> ifadesini, PHP %s CLI yürütülebilir dosyasının yoluyla "
+"değiştirin. Bunun PHP CLI yürütülebilir dosyası olduğundan emin olun; PHP CGI/"
+"FastCGI yürütülebilir dosyası <strong>değil</strong>."
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_IF_UNSURE"
 msgid "If unsure what some or any of the above means, please ask your host."
@@ -2171,9 +2169,10 @@ msgid ""
 "account is not receiving the output of the CRON jobs, or the CRON jobs are not "
 "executing at all (while unlikely, we've seen that happen a few times)."
 msgstr ""
-"Bu durumda bile hiçbir şey olmuyorsa, lütfen ana bilgisayarınızla iletişime "
-"geçin. Ya hesabınız CRON işlevinin çıktısını almıyor ya da CRON işlevi hiç "
-"yürütülmüyor (pek olası olmasa da, bunun birkaç kez olduğunu gördük)."
+"Eğer bu durumda bile bir değişiklik gözlemlenmezse, lütfen barındırma "
+"sağlayıcınızla iletişime geçin. Ya hesabınız CRON işlevinin çıktılarını almıyor "
+"ya da CRON işlevi hiç çalışmıyor (olasılığı düşük olsa da, bunu birkaç kez "
+"gördük)."
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_HEAD"
 msgid "I get “Status: 403 Forbidden” running the CRON job"
@@ -2218,9 +2217,9 @@ msgid ""
 "to give you the path to the PHP CLI executable for PHP %s and use that in your "
 "CRON job's command line."
 msgstr ""
-"Çoğu sunucuda PHP'nin birden fazla sürümü yüklüdür. Sunucunuzdan PHP %s için PHP "
-"CLI çalıştırılabilir dosyasının yolunu vermesini istemeniz ve CRON işlevinin "
-"komut satırında bunu kullanmanız gerekir."
+"Çoğu sunucuda birden fazla PHP sürümü yüklüdür. PHP %s veya daha yenisini "
+"çalıştıran doğru yürütülebilir dosyayı size sağlaması için barındırıcınıza "
+"sormanız gerekir."
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_URL_CRON_HEAD"
 msgid "The host only allows URLs in CRON"
@@ -2249,7 +2248,7 @@ msgid ""
 msgstr ""
 "Panopticon yalnızca otomasyon özellikleri tutarlı ve güvenilir bir şekilde "
 "çalıştığında kullanışlıdır. Bu, CRON işlevinin her dakika - <em>günde 1440 kez</"
-"em>- yürütülmesini gerektirir. Bu, üçüncü taraf bir hizmetle pahalıya mal "
+"em>- yürütülmesini gerektirir. Bu, üçüncü parti bir hizmetle pahalıya mal "
 "olabilir; günde yaklaşık 10 dolar! Bunun yerine gerçek, komut satırı CRON "
 "işlevini destekleyen iyi bir ana bilgisayara <em>aylık</em> aynı miktarda para "
 "harcayabilirsiniz."
@@ -2307,8 +2306,9 @@ msgid ""
 "If your host uses URL-based CRON jobs, or you're using a third party system "
 "which accepts a URL, use the following URL:"
 msgstr ""
-"Ana bilgisayarınız URL tabanlı CRON işleri kullanıyorsa veya URL kabul eden bir "
-"üçüncü taraf sistemi kullanıyorsanız, aşağıdaki URL'yi kullanın:"
+"Barındırıcınız URL tabanlı CRON işlevi kullanıyorsa ya da bu bağlantıyı belirli "
+"aralıklarla çağıran bir üçüncü parti sistem kullanıyorsanız bu bağlantıyı "
+"kullanın:"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_IF_REGULAR_CRON"
 msgid ""
@@ -2352,7 +2352,7 @@ msgstr "Yavaş"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_CONS_3"
 msgid "High cost (when used with a third party service)"
-msgstr "Yüksek maliyet (üçüncü taraf bir hizmetle kullanıldığında)"
+msgstr "Yüksek maliyet (üçüncü parti bir hizmetle kullanıldığında)"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_CONS_4"
 msgid "Typically unsuitable when monitoring several sites"
@@ -2379,13 +2379,11 @@ msgid ""
 "Are we showing our age with this outdated popular culture reference?\">mogwai</"
 "em> after midnight. Pretty straightforward, right?"
 msgstr ""
-"CRON işlevini ayarladıktan birkaç saniye ila bir dakika sonra bu sayfa bir "
-"kıyaslamaya dönüşecektir. Bu tarayıcı sekmesini kapatmayın, farklı bir tarayıcı "
-"sekmesine / penceresine veya uygulamaya geçmeyin, cihazınızı kapatmayın veya "
-"uyumasına izin vermeyin, gece yarısından sonra <em title=\"These are the "
-"gremlins before they become gremlins. Are we showing our age with this outdated "
-"popular culture reference?\">mogwai</em> 'nizi beslemeyin. Oldukça basit, değil "
-"mi?"
+"CRON işlevini ayarladıktan birkaç saniye ile bir dakika sonra bu sayfa bir "
+"performans testi sayfasına dönüşecektir. Bu tarayıcı sekmesini kapatmayın, başka "
+"bir tarayıcı sekmesine/penceresine veya uygulamaya geçmeyin, cihazınızı "
+"kapatmayın ya da uyku kipine almayın, sayfa değişecek ve Panopticon "
+"uygulamasının sizi beklediğini gösterecektir."
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER"
 msgid ""
@@ -3300,7 +3298,7 @@ msgid ""
 "Components, Akeeba Panopticon Connector to find your connection information."
 msgstr ""
 "<strong>Joomla! 4 veya Üzeri</strong>: Sitenizin yönetim paneline gidin ve "
-"Bileşenler, Akeeba Panopticon  Connector seçeneğine tıklayarak bağlantı "
+"Bileşenler, Akeeba Panopticon Connector seçeneğine tıklayarak bağlantı "
 "bilgilerinizi bulun."
 
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA3"
@@ -3308,9 +3306,9 @@ msgid ""
 "<strong>Joomla! 3</strong>: Go to your site's backend and click on Extensions, "
 "Plugins. Click on System - Panopticon Connector for Joomla 3."
 msgstr ""
-"<strong>Joomla! 3</strong>: Sitenizin yönetici paneline gidin ve Eklentiler "
-"sekmesine tıklayın. Ardından Sistem - Panopticon Connector Joomla 3 seçeneğine "
-"tıklayın."
+"<strong>Joomla! 3</strong>: Sitenizin yönetim paneline gidin ve Eklentiler, "
+"Uygulama Ekleri seçeneğine tıklayın. “Sistem - Joomla 3 için Panopticon "
+"Connector” seçeneğine tıklayın."
 
 msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_WORDPRESS"
 msgid ""
@@ -3377,8 +3375,8 @@ msgid ""
 "You used a third party extension, e.g. Admin Tools' “Password-protect "
 "Administrator” feature."
 msgstr ""
-"Üçüncü taraf bir uzantı kullandınız, örneğin Admin Tools'un \"Yöneticiyi Parola "
-"ile Koru\" özelliği."
+"Üçüncü parti bir eklenti kullandınız; örneğin, Admin Tools “Yöneticiyi Şifreyle "
+"Koruma” özelliği."
 
 msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3"
 msgid ""
@@ -3583,15 +3581,15 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE"
 msgid "Maximum Backup Age"
-msgstr "Maksimum Yedekleme Ömrü"
+msgstr "En Çok Yedekleme Ömrü"
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_BACKUP_MAX_AGE_HELP"
 msgid ""
 "Successful backups will be considered “too old” after this many hours. Use 0 to "
 "disable this feature."
 msgstr ""
-"Başarılı yedeklemeler birkaç saatten sonra \"çok eski\" olarak kabul "
-"edilecektir. Bu özelliği devre dışı bırakmak için 0 kullanın."
+"Başarılı yedeklemeler birkaç saatten sonra “çok eski” olarak kabul edilecektir. "
+"Bu özelliği devre dışı bırakmak için 0 kullanın."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_SSL_TLS_CERT_INFO"
 msgid "SSL/TLS (HTTPS) Certificate Information"
@@ -3646,8 +3644,9 @@ msgid ""
 "The SSL/TLS certificate has a Valid From date in the future. Browsers will "
 "report it as invalid as it's not meant to be used just yet."
 msgstr ""
-"SSL/TLS sertifikasının gelecekte bir Geçerlilik Başlangıç tarihi vardır. Henüz "
-"kullanılması amaçlanmadığından tarayıcılar onu geçersiz olarak bildirecektir."
+"SSL/TLS sertifikasının Geçerlilik Başlangıç Tarihi sonraki zamana ayarlıdır. "
+"Tarayıcılar, bu sertifikanın henüz kullanılmak üzere tasarlanmadığı için "
+"geçersiz olduğunu bildirecektir."
 
 msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRING_HEAD"
 msgid "Imminent Expiration"
@@ -3819,9 +3818,9 @@ msgid ""
 msgstr ""
 "Bu, Panopticon'un kendisi aracılığıyla <em>çok temel</em> çalışma süresi "
 "izlemesidir. Siteniz kapandığında ve tekrar açıldığında sizi yalnızca e-posta "
-"ile bilgilendirir. Üçüncü taraf hizmetlerle tümleştirilmez, geçmiş sunmaz ve "
+"ile bilgilendirir. Üçüncü parti hizmetlerle tümleştirilmez, geçmiş sunmaz ve "
 "genel bir çalışma süresi sayfası yoktur. Bu özelliği kullanmak yerine "
-"sitelerinizin çalışma süresini izlemek için üçüncü taraf bir hizmet veya yazılım "
+"sitelerinizin çalışma süresini izlemek için üçüncü parti bir hizmet veya yazılım "
 "kullanmanızı şiddetle tavsiye ederiz."
 
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_ENABLED"
@@ -4006,16 +4005,16 @@ msgid ""
 "Go to your site's administrator backend, System, Update, Update Sites, and click "
 "on the Rebuild button."
 msgstr ""
-"Sitenizin yönetici arka ucuna gidin, Sistem, Güncelle, Siteleri Güncelle ve "
-"Yeniden Oluştur düğmesine tıklayın."
+"Sitenizin yönetici paneline gidin, Sistem, Güncelleme, Siteleri Güncelle "
+"seçeneklerini seçin ve Yenile düğmesine tıklayın."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J3"
 msgid ""
 "Go to your site's administrator backend, Extensions, Manage, Update Sites, and "
 "click on the Rebuild button."
 msgstr ""
-"Sitenizin yönetici arka ucuna, Eklentiler, Yönet, Siteleri Güncelle'ye gidin ve "
-"Yeniden Oluştur düğmesine tıklayın."
+"Sitenizin yönetici paneline gidin: Eklentiler, Yönet, Güncelleme Siteleri ve "
+"Yenile düğmesine tıklayın."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_COREUPDATESITEFIX_BTN"
 msgid "Attempt an automatic fix"
@@ -4038,7 +4037,7 @@ msgid ""
 "This is a minor (version family) update which may affect your template "
 "overrides, templates, and some third party extensions."
 msgstr ""
-"Bu, şablon geçersiz kılmalarınızı, şablonlarınızı ve bazı üçüncü taraf "
+"Bu, şablon geçersiz kılmalarınızı, şablonlarınızı ve bazı üçüncü parti "
 "eklentilerinizi etkileyebilecek küçük (sürüm ailesi) bir güncellemedir."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_MINOR_RELEASE_ADMONISHMENT"
@@ -4055,7 +4054,7 @@ msgid ""
 "overrides, templates, and possibly some third party extensions."
 msgstr ""
 "Bu büyük olasılıkla şablon geçersiz kılmalarınızı, şablonlarınızı ve muhtemelen "
-"bazı üçüncü taraf eklentilerinizi etkileyecek büyük bir sürüm güncellemesidir."
+"bazı üçüncü parti eklentilerinizi etkileyecek büyük bir sürüm güncellemesidir."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_MAJOR_RELEASE_ADMONISHMENT"
 msgid ""
@@ -4126,10 +4125,11 @@ msgid ""
 "requirements, especially the database version and PHP version requirements. Note "
 "that your site is currently using PHP %s."
 msgstr ""
-"Sitenizin yönetici arka ucuna gidin, Sistem, Güncelleme, Joomla, Seçenekler'e "
-"tıklayın ve güncelleme kanalını Joomla Sonraki olarak değiştirin. Lütfen "
-"Joomla'nın gereksinimlerini, özellikle de veritabanı sürümü ve PHP sürümü "
-"gereksinimlerini kontrol edin. Sitenizin şu anda PHP %s kullandığını unutmayın."
+"Sitenizin yönetici paneline gidin, Sistem, Güncelleme, Joomla seçeneğini seçin, "
+"Seçenekler düğmesine tıklayın ve güncelleme kanalını Joomla Sonraki olarak "
+"değiştirin. Lütfen Joomla gereksinimlerini, özellikle de veritabanı sürümü ve "
+"PHP sürümü gereksinimlerini kontrol edin. Sitenizin şu anda PHP %s kullandığını "
+"unutmayın."
 
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED"
 msgid ""
@@ -4905,7 +4905,7 @@ msgstr "Yedek"
 
 msgctxt "PANOPTICON_SITE_LBL_BACKUP_SUBHEAD"
 msgid "using Akeeba Backup Professional"
-msgstr "Akeeba Backup Professional Kullanımı"
+msgstr "Akeeba Backup Pro Kullanımı"
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTFOUND_HEAD"
 msgid "Akeeba Backup not found."
@@ -5024,10 +5024,10 @@ msgid ""
 "any third party plugins on your site, your web server, or any CDN / caching "
 "proxy which may be configured to be in front of your site."
 msgstr ""
-"Üçüncü taraf eklentilerin (özellikle güvenlik eklentileri) ve/veya sunucu "
+"Üçüncü parti eklentilerin (özellikle güvenlik eklentileri) ve/veya sunucu "
 "yapılandırma ayarlarının, sitenizin <code>api</code> klasörüne erişimi "
 "engellemediğinden emin olun. Ayrıca, bu dosyadan gelen yanıtların "
-"<em>sitenizdeki herhangi bir üçüncü taraf eklentisi, web sunucunuz veya "
+"<em>sitenizdeki herhangi bir üçüncü parti eklentisi, web sunucunuz veya "
 "sitenizin önünde yapılandırılmış olabilecek herhangi bir CDN / önbellekleme "
 "proxy'si tarafından </em>önbelleğe alınmadığından</em> emin olun."
 
@@ -5039,10 +5039,10 @@ msgid ""
 "em> cached by any third party plugins on your site, your web server, or any "
 "CDN / caching proxy which may be configured to be in front of your site."
 msgstr ""
-"Üçüncü taraf eklentilerin (özellikle güvenlik eklentileri) ve/veya sunucu "
+"Üçüncü parti eklentilerin (özellikle güvenlik eklentileri) ve/veya sunucu "
 "yapılandırma ayarlarının, sitenizin <code>wp-admin/admin-ajax.php</code> "
 "dosyasına erişimi engellemediğinden emin olun. Ayrıca, bu dosyadan gelen "
-"yanıtların <em>sitenizdeki herhangi bir üçüncü taraf eklenti, web sunucunuz veya "
+"yanıtların <em>sitenizdeki herhangi bir üçüncü parti eklenti, web sunucunuz veya "
 "sitenizin önünde yapılandırılmış olabilecek herhangi bir CDN / önbellekleme "
 "proxy'si tarafından </em>önbelleğe alınmadığından</em> emin olun."
 
@@ -5056,9 +5056,10 @@ msgid ""
 "Panopticon, the Panopticon Connector installed on the site is too old, or if "
 "there's been an error communicating with the site."
 msgstr ""
-"Bu durum, siteyi Akeeba Panopticon'a ekledikten sonra Akeeba Backup yüklendiyse, "
-"siteye yüklenen Panopticon Bağlayıcısı çok eskiyse veya siteyle iletişimde bir "
-"hata oluştuysa meydana gelebilir."
+"Bu durum, site Akeeba Panopticon uygulamasına eklendikten sonra Akeeba Backup "
+"bileşeninin yüklenmiş olması, sitede yüklü olan Panopticon Connector "
+"eklentisinin çok eski olması veya siteyle iletişimde bir hata oluşması durumunda "
+"ortaya çıkabilir."
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_SOLUTION_ADMIN"
 msgid ""
@@ -5069,8 +5070,8 @@ msgid ""
 msgstr ""
 "Akeeba Backup'ı Panopticon'a yeniden bağlamayı denemek için lütfen aşağıdaki "
 "düğmeye tıklayın. Bu işe yaramazsa lütfen sitenizdeki Akeeba Panopticon "
-"Connector güncelleyin, eklentisinin yayınlandığından emin olun ve siteyle doğru "
-"şekilde iletişim kurup kuramadığınızı kontrol edin."
+"Connector eklentisini güncelleyin, eklentisinin yayınlandığından emin olun ve "
+"siteyle doğru şekilde iletişim kurup kuramadığınızı kontrol edin."
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_SOLUTION_NONADMIN"
 msgid "Please contact an administrator to relink Akeeba Backup with Panopticon."
@@ -5153,7 +5154,7 @@ msgstr "Güvenlik"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_SUBHEAD"
 msgid "using Admin Tools Professional"
-msgstr "Admin Tools Professional Kullanımı"
+msgstr "Admin Tools Pro Kullanımı"
 
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_CORE"
 msgid "Admin Tools Core is not compatible with Panopticon."
@@ -5262,10 +5263,10 @@ msgid ""
 "files for changes, additions, and suspicious content. Click on the number of the "
 "scan attempt to open its results in the administrator backend of your site."
 msgstr ""
-"Admin Tools Professional'ın PHP Dosya Değişikliği Tarayıcısı sitenizin .php "
-"dosyalarını değişikliklere, eklemelere ve şüpheli içeriğe karşı izler. "
-"Sonuçlarını sitenizin yönetici arka ucunda açmak için tarama girişiminin "
-"sayısına tıklayın."
+"Admin Tools Pro uygulamasının PHP Dosya Değişiklik Tarayıcısı, sitenizin .php "
+"dosyalarını değişiklikler, eklemeler ve şüpheli içerik açısından izler. Tarama "
+"denemesinin numarasına tıklayarak sonuçları sitenizin yönetici panelinde "
+"açabilirsiniz."
 
 msgctxt "PANOPTICON_SITE_LBL_SCANNER_ERROR_HEAD"
 msgid "Admin Tools API Error"
@@ -5646,10 +5647,11 @@ msgid ""
 "your site - is blocking Panopticon from accessing your site's API application "
 "(<span class=\"font-monospace\">%s</span>)."
 msgstr ""
-"Sunucunuzdaki bir şey - barındırıcınız tarafından kontrol edilen sunucu "
-"yapılandırması, <code>.htaccess</code> gibi bir sunucu yapılandırma dosyası veya "
-"sitenizin bir eklentisi gibi - Panopticon'un sitenizin API uygulamasına "
-"erişmesini engelliyor (<span class=\"font-monospace\">%s</span>)."
+"Sunucunuzdaki bir öge — örneğin, barındırma sağlayıcınız tarafından yönetilen "
+"sunucu yapılandırması, <code>.htaccess</code> gibi bir sunucu yapılandırma "
+"dosyası veya sitenizin bir eklentisi — Panopticon uygulamasının sitenizin API "
+"uygulamasına (<span class=\\\"font-monospace\\\">%s</span>) erişmesini "
+"engelliyor."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS_J3"
 msgid ""
@@ -5695,11 +5697,11 @@ msgid ""
 "monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-"
 "monospace\">panopticon/%s</span>)?"
 msgstr ""
-"Barındırmanızın sunucu tarafı koruma çözümü (Apache'nin mod_security2'si gibi) "
-"Joomla! API Uygulaması uç noktasını engelliyor olabilir mi (<span class=\"font-"
-"monospace\">%s</span>), API belirteciniz (<span class=\"font-monospace\">%s</"
-"span>) veya Panopticon'un Kullanıcı Aracısı<span class=\"font-"
-"monospace\">(panopticon/%s</span>)?"
+"Barındırma sağlayıcınızda, Joomla! API Uygulama uç noktasını (<span class=\\"
+"\"font-monospace\\\">%s</span>), API belirtecinizi (<span class=\\\"font-"
+"monospace\\\">%s</span>) veya Panopticon uygulamasının User-Agent işlevini "
+"(<span class=\\\"font-monospace\\\">panopticon/%s</span>) engelleyebilecek bir "
+"sunucu tarafı koruma çözümü (örneğin Apache mod_security2) var mı?"
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
 msgid ""
@@ -5709,11 +5711,11 @@ msgid ""
 "monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-"
 "monospace\">panopticon/%s</span>)?"
 msgstr ""
-"Barındırmanızın API eklentisi uç noktasını engelleyen sunucu tarafı koruma "
-"çözümü (Apache'nin mod_security2'si gibi) var mı (<span class=\"font-"
-"monospace\">%s</span>), API belirteciniz (<span class=\"font-monospace\">%s</"
-"span>) veya Panopticon'un Kullanıcı Aracısı<span class=\"font-"
-"monospace\">(panopticon/%s</span>)?"
+"Barındırma sağlayıcınızda, API eklentisi uç noktasını (<span class=\\\"font-"
+"monospace\\\">%s</span>)), API belirtecinizi (<span class=\\\"font-monospace\\\" "
+">%s</span>) veya Panopticon uygulamasının User-Agent işlevini (<span class=\\"
+"\"font-monospace\\\">panopticon/%s</span>) engelleyebilecek bir sunucu tarafı "
+"koruma çözümü (örneğin Apache mod_security2) var mı?"
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK3"
 msgid ""
@@ -5745,11 +5747,11 @@ msgid ""
 "monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-"
 "monospace\">panopticon/%s</span>)?"
 msgstr ""
-"Barındırma sağlayıcınızda, WordPress API Uygulama uç noktasını (<span "
-"class=\"font-monospace\">%s</span>), API jetonunuzu (<span class=\"font-"
-"monospace\" >%s</span>) veya Panopticon'un User-Agent'ını (<span class=\"font-"
-"monospace\">panopticon/%s</span>) engelleyebilecek bir sunucu tarafı koruma "
-"çözümü (örneğin Apache'nin mod_security2'si) var mı?"
+"Barındırma sağlayıcınızın, WordPress API Uygulama uç noktasını (<span class=\\"
+"\"font-monospace\\\">%s</span>)), API belirtecinizi (<span class=\\\"font-"
+"monospace\\\" >%s</span>) veya Panopticon uygulamasının User-Agent işlevini "
+"(<span class=\\\"font-monospace\\\">panopticon/%s</span>) engelleyebilecek bir "
+"sunucu tarafı koruma çözümü (örneğin Apache mod_security2) var mı?"
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK3"
 msgid ""
@@ -5774,11 +5776,11 @@ msgid ""
 "output from third party software. As a result, the API response cannot be "
 "decoded, meaning that Panopticon cannot understand your site's response."
 msgstr ""
-"API'den gelen yanıttan önce ve/veya sonra PHP mesajları (örn. kullanımdan "
-"kaldırma bildirimleri, uyarılar veya önemli hatalar) veya üçüncü taraf "
-"yazılımlardan alınan çıktılar gibi diğer metin içerikleri gelir. Sonuç olarak "
-"API yanıtının kodu çözülemiyor, bu da Panopticon'un sitenizin yanıtını "
-"anlayamadığı anlamına geliyor."
+"API yanıtının başında ve/veya sonunda PHP mesajları (örneğin, kullanımdan "
+"kaldırılma bildirimleri, uyarılar veya ölümcül hatalar) veya üçüncü parti "
+"yazılımların çıktıları gibi başka metin içerikleri yer almaktadır. Sonuç olarak, "
+"API yanıtı çözümlenememektedir; bu da Panopticon uygulamasının sitenizin "
+"yanıtını anlayamadığı anlamına gelmektedir."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
 msgid ""
@@ -5786,9 +5788,9 @@ msgid ""
 "your site's Global Configuration page. This prevents PHP from printing messages "
 "which pollute the API response."
 msgstr ""
-"Sitenizin Genel Yapılandırma sayfasında \"Hata Raporlama\"nın Yok olarak "
-"ayarlandığından ve \"Sitede Hata Ayıklama\"nın Hayır olarak ayarlandığından emin "
-"olun. Bu, PHP'nin API yanıtını kirleten mesajları yazdırmasını engeller."
+"Sitenizin Genel Yapılandırma sayfasında “Hata Raporlama” seçeneğinin “Yok” "
+"olarak, “Hata Ayıklama Sitesi” seçeneğinin ise “Hayır” olarak ayarlandığından "
+"emin olun. Bu, PHP’nin API yanıtını bozacak mesajları görüntülemesini engeller."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH3"
 msgid ""
@@ -5797,7 +5799,7 @@ msgid ""
 "especially system plugins, which may be accidentally breaking the API plugin and "
 "contact their author."
 msgstr ""
-"Bu yeterli değilse, üçüncü taraf bir eklentinin API uygulamasında hataya neden "
+"Bu yeterli değilse, üçüncü parti bir eklentinin API uygulamasında hataya neden "
 "olması mümkündür. API eklentisini yanlışlıkla bozabilecek herhangi bir üçüncü "
 "taraf eklentinin, özellikle de sistem eklentilerinin olup olmadığını kontrol "
 "edin ve yazarlarıyla iletişime geçin."
@@ -5813,11 +5815,11 @@ msgid ""
 "output from third party plugins. As a result, the API response cannot be "
 "decoded, meaning that Panopticon cannot understand your site's response."
 msgstr ""
-"API yanıtının başında ve/veya sonunda PHP mesajları (ör. kullanımdan kaldırılma "
-"bildirimleri, uyarılar veya ölümcül hatalar) veya üçüncü taraf eklentilerin "
-"çıktıları gibi başka metin içerikleri bulunuyor. Sonuç olarak, API yanıtı "
-"çözümlenemiyor; bu da Panopticon'un sitenizin yanıtını anlayamadığı anlamına "
-"geliyor."
+"API yanıtının başında ve/veya sonunda PHP mesajları (örneğin, kullanımdan "
+"kaldırılma bildirimleri, uyarılar veya ölümcül hatalar) veya üçüncü taraf "
+"eklentilerden gelen çıktılar gibi başka metin içerikleri yer almaktadır. Sonuç "
+"olarak, API yanıtı çözümlenememektedir; bu da Panopticon’un sitenizin yanıtını "
+"anlayamadığı anlamına gelmektedir."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2"
 msgid ""
@@ -5826,10 +5828,10 @@ msgid ""
 "<code>wp-config.php</code> file. This prevents PHP from printing messages which "
 "pollute the API response."
 msgstr ""
-"Sunucunuzdaki PHP'nin <code>display_errors</code> seçeneği devre dışı "
-"bırakılacak şekilde yapılandırıldığından ve sitenizin <code>wp-config.php</code> "
-"dosyasında <code>WP_DEBUG</code> seçeneğini etkinleştirmediğinizden emin olun. "
-"Bu, PHP'nin API yanıtını bozan mesajları görüntülemesini engeller."
+"Sunucunuzdaki PHP <code>display_errors</code> seçeneği devre dışı bırakılacak "
+"şekilde yapılandırıldığından ve sitenizin <code>wp-config.php</code> dosyasında "
+"<code>WP_DEBUG</code> seçeneğini etkinleştirmediğinizden emin olun. Bu, PHP API "
+"yanıtını bozacak mesajları görüntülemesini engeller."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH3"
 msgid ""
@@ -5866,7 +5868,7 @@ msgid ""
 msgstr ""
 "Lütfen, WordPress'in JSON API'sini tamamen veya kimlik doğrulaması yapılmamış "
 "(misafir) erişim için engelleyen ya da başka şekilde kısıtlayan herhangi "
-"bir .htaccess kodu, üçüncü taraf eklentisi veya özel kod (temanızın "
+"bir .htaccess kodu, üçüncü parti eklentisi veya özel kod (temanızın "
 "<code>functions.php</code> dosyasında bulunanlar dahil) bulunmadığından emin "
 "olun."
 
@@ -5918,10 +5920,10 @@ msgid ""
 "Configure WAF, Request Filtering. Check the list of <em>Allowed Domains</em> "
 "towards the bottom of the page."
 msgstr ""
-"Admin Tools Professional kullanıyorsanız lütfen sitenizin arka ucuna gidin ve "
-"Bileşenler, Joomla Yönetici Araçları, Web Uygulaması Güvenlik Duvarı, WAF "
-"Yapılandırması, Filtreleme İsteği'ne tıklayın. Sayfanın alt kısmındaki <em>İzin "
-"Verilen Alan Adları</em> listesini kontrol edin."
+"Admin Tools Pro kullanıyorsanız, lütfen sitenizin arka ucuna gidin ve sırasıyla "
+"Bileşenler, Admin Tools, Web Uygulaması Güvenlik Duvarı, WAF'ı Yapılandır, "
+"Filtreleme İsteği seçeneklerine tıklayın. Sayfanın alt kısmında yer alan "
+"<em>İzin Verilen Etki Alanları</em> listesini kontrol edin."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_WHATEVER"
 msgid "If this was not the case, please contact your host."
@@ -6297,11 +6299,12 @@ msgid ""
 "of DNS, it is possible that you can see your site <em>from your device</em> but "
 "the server you have installed Panopticon on can't."
 msgstr ""
-"Yakın zamanda alan adını satın aldınız mı, alan adını bir sunucuya atadınız mı "
-"veya sitenizi ana bilgisayarlar arasında mı aktardınız? DNS yayılımının 5 "
-"dakikadan birkaç güne kadar sürebileceğini unutmayın. Üstelik DNS'in dağıtık "
-"yapısı nedeniyle sitenizi <em>cihazınızdan</em> görebilmeniz ancak Panopticon'u "
-"kurduğunuz sunucunun görememesi mümkündür."
+"Son zamanlarda bir alan adı satın aldınız mı, alan adını bir sunucuya atadınız "
+"mı veya sitenizi bir barındırma sağlayıcısından diğerine aktardınız mı? DNS "
+"yayılmasının 5 dakikadan birkaç güne kadar sürebileceğini unutmayın. Ayrıca, "
+"DNS’nin dağıtık yapısı nedeniyle, adresindeki sitenizi <em>kendi cihazınızdan</"
+"em> görebilmenize rağmen, Panopticon uygulamasını kurduğunuz sunucunun "
+"görememesi mümkündür."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3"
 msgid ""
@@ -6309,10 +6312,10 @@ msgid ""
 "make sure that the server you have installed Panopticon on supports IPv6. You "
 "may have to ask your host to confirm that this is the case."
 msgstr ""
-"Sitenizin etki alanı bir IPv6 adresine çözümleniyorsa ancak bir IPv4 adresine "
-"çözümlenmiyorsa, Panopticon'u kurduğunuz sunucunun IPv6'yı desteklediğinden emin "
-"olun. Barındırıcınızdan durumun böyle olduğunu onaylamasını istemeniz "
-"gerekebilir."
+"Sitenizin alan adı bir IPv6 adresine yönlendiriliyorsa – ancak bir IPv4 adresine "
+"yönlendirilmiyorsa – Panopticon uygulamasını kurduğunuz sunucunun IPv6 "
+"desteklediğinden emin olun. Bunun doğru olup olmadığını doğrulamak için "
+"barındırma sağlayıcınıza danışmanız gerekebilir."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_HEAD"
 msgid "The Akeeba Panopticon Connector is not enabled on your site"
@@ -6438,10 +6441,10 @@ msgid ""
 "signed, fully working SSL/TLS certificates free of charge."
 msgstr ""
 "Ticari ve tanınmış bir Sertifika Yetkilisi tarafından imzalanmış bir SSL/TLS "
-"sertifikası yükleyin. Çoğu sunucu, geçerli, imzalı ve tam olarak çalışan SSL/TLS "
-"sağlayan <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" "
-"target=\"_blank\">Let's Encrypt</a>'i kullanmanıza izin verir. sertifikalar "
-"ücretsizdir."
+"sertifikası yükleyin. Çoğu sunucu, geçerli, imzalanmış ve tam olarak çalışan SSL/"
+"TLS sertifikalarını ücretsiz olarak veren <a href=\\\"https://en.wikipedia.org/"
+"wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let’s Encrypt</a> hizmetini "
+"kullanmanıza izin verir."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
 msgid ""
@@ -6454,14 +6457,15 @@ msgid ""
 "This is loaded <em>on top of</em> the standard CA files automatically, allowing "
 "Panopticon to access your site."
 msgstr ""
-"Bir Intranet, extranet üzerindeyseniz veya başka bir şekilde kendi Sertifika "
-"Yetkilinizi sürdürmeniz gerekiyorsa, Panopticon'a özel Sertifika Yetkilinizi "
-"tanımasını söyleyebilirsiniz. Panopticon kurulumunuzun <code>user_code</code> "
-"klasörünün içinde <code>cacert.pem</code> dosyasını oluşturun. Sertifika "
-"Yetkilinizin (CA) genel sertifikasını (sertifikalarını) <a href=\"https://"
-"en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> "
-"formatında kopyalayıp yapıştırın. Bu, standart CA dosyalarının <em>üzerine</em> "
-"otomatik olarak yüklenir ve Panopticon'un sitenize erişmesine izin verir."
+"Bir intranet veya extranet ağındaysanız ya da başka bir nedenle kendi Sertifika "
+"Otoritenizi yönetmeniz gerekiyorsa, Panopticon uygulamasına özel Sertifika "
+"Otoritenizi tanımasını sağlayabilirsiniz. Panopticon kurulumunuzun "
+"<code>user_code</code> klasörü içinde <code>cacert.pem</code> dosyasını "
+"oluşturun. Sertifika Otoritenizin (CA) genel sertifikalarını <a href=\\\"https://"
+"en.wikipedia.org/wiki/Privacy-Enhanced_Mail\\\" target=\\\"_blank\\\">PEM</a> "
+"biçiminde kopyalayıp yapıştırın. Bu, standart CA dosyalarının <em>üstüne ek "
+"olarak</em> otomatik olarak yüklenir ve Panopticon uygulamasının sitenize "
+"erişmesine olanak tanır."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
 msgid "Your site's SSL/TLS certificate has a problem"
@@ -6576,8 +6580,9 @@ msgid ""
 "Please go to your site's backend and click on System, Manage, Extensions. Search "
 "for the “Web Services - Installer” plugin and enable it."
 msgstr ""
-"Lütfen sitenizin arka ucuna gidin ve Sistem, Yönet, Eklentilere tıklayın. “Web "
-"Servisleri - Yükleyici” uygulama ekini arayın ve etkinleştirin."
+"Lütfen sitenizin yönetim paneline gidin ve Sistem, Yönet, Eklentiler "
+"seçeneklerini sırasıyla tıklayın. “Web Hizmetleri - Yükleyici” eklentisini "
+"arayın ve etkinleştirin."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
 msgid ""
@@ -6600,8 +6605,9 @@ msgid ""
 "Please go to your site's backend and click on Extensions, Plugins. Search for "
 "the “System - Panopticon Connector for Joomla 3” plugin and enable it."
 msgstr ""
-"Lütfen sitenizin arka ucuna gidin ve Uzantılar, Eklentilere tıklayın. “System - "
-"Joomla 3 İÇin Panopticon Connector” uygulama ekini arayın ve etkinleştirin."
+"Lütfen sitenizin yönetim paneline gidin ve “Eklentiler, Uygulama Ekleri” "
+"seçeneğine tıklayın. “System - Joomla 3 için Panopticon Connector” eklentisini "
+"arayın ve etkinleştirin."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH3"
 msgid ""
@@ -6658,9 +6664,9 @@ msgid ""
 "provide the necessary API through WordPress' JSON services API (<code>wp-json</"
 "code>)."
 msgstr ""
-"Panopticon, WordPress'in JSON hizmetleri API'si (<code>wp-json</code>) "
-"aracılığıyla gerekli API'yi sağlamak için kendi eklentisi olan “Akeeba "
-"Panopticon Connector for WordPress”i kullanır."
+"Panopticon, WordPress JSON hizmetleri API (<code>wp-json</code>) aracılığıyla "
+"gerekli API\\'yi sağlamak için kendi eklentisi olan “WordPress için Akeeba "
+"Panopticon Connector” eklentisini kullanır."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
 msgid ""
@@ -6703,9 +6709,10 @@ msgid ""
 "Panopticon. This addresses the problem of this page's cached copy being severely "
 "out of date. If this doesn't help, please let us know."
 msgstr ""
-"Lütfen Akeeba Panopticon'un <code>tmp</code> klasöründeki tüm dosya ve "
-"klasörleri silin. Bu, bu sayfanın önbelleğe alınmış kopyasının önemli ölçüde "
-"güncel olmaması sorununu giderir. Bu işe yaramazsa lütfen bize bildirin."
+"Lütfen Akeeba Panopticon uygulamasının <code>tmp</code> klasörü içindeki tüm "
+"dosya ve klasörleri silin. Bu işlem, bu sayfanın önbellekteki kopyasının çok "
+"eski olması sorununu çözecektir. Eğer bu çözüm işe yaramazsa, lütfen bize "
+"bildirin."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DEBUG_INFO"
 msgid "Troubleshooting information"
@@ -7005,7 +7012,7 @@ msgid ""
 msgstr ""
 "Kullanıcıların, çevrimiçi şifre sızıntılarında yer alan şifreleri kullanmasını "
 "engelleyin. Bu özellik, <a href='https://haveibeenpwned.com/' "
-"_target='blank'>Have I Been Pwned</a> adlı üçüncü taraf hizmet tarafından "
+"_target='blank'>Have I Been Pwned</a> adlı üçüncü parti hizmeti tarafından "
 "sağlanmaktadır."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
@@ -7124,7 +7131,7 @@ msgid ""
 msgstr ""
 "Akeeba Panopticon'un sunucunuzdaki doğru PHP-CLI yolunu algılamasını sağlayın. "
 "Sunucunuz bunu izin vermiyorsa bu seçeneği devre dışı bırakın; bu durumda IP "
-"adresiniz birkaç dakika ila birkaç saat boyunca sitenize erişemez hale gelir "
+"adresiniz birkaç dakika ile birkaç saat boyunca sitenize erişemez hale gelir "
 "(örneğin IONOS)."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SITEINFO_FREQ"
@@ -7412,11 +7419,11 @@ msgid ""
 "least security but is compatible with all hosts. Only change if you have "
 "problems when clicking action buttons in Panopticon."
 msgstr ""
-"CSRF karşıtı bir belirteç oluşturmak için karma algoritması. SHA-512 en iyi "
-"güvenliği sunar ancak çok uzun olduğundan bazı ana bilgisayarlarda "
-"çalışmayabilir. MD5 en az güvenliği sunar ancak tüm ana bilgisayarlarla "
-"uyumludur. Yalnızca Panopticon'daki eylem düğmelerini tıklarken sorun "
-"yaşıyorsanız değiştirin."
+"Anti-CSRF belirteci oluşturmak için kullanılan karma algoritması. SHA-512 en "
+"yüksek güvenlik seviyesini sunar, ancak çok uzun olması nedeniyle bazı "
+"sunucularda çalışmayabilir. MD5 en düşük güvenlik seviyesini sunar, ancak tüm "
+"sunucularla uyumludur. Yalnızca Panopticon uygulamasında eylem düğmelerine "
+"tıkladığınızda sorun yaşıyorsanız bu ayarı değiştirin."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LANGUAGE"
 msgid "Default language"
@@ -7731,7 +7738,7 @@ msgstr "hCaptcha Site Anahtarı"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SITE_KEY_HELP"
 msgid "Enter the site key from your hCaptcha dashboard."
-msgstr "hCaptcha kontrol panelinizden site anahtarını girin."
+msgstr "Kontrol panelinizden hCaptcha site anahtarını girin."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY"
 msgid "hCaptcha Secret Key"
@@ -7739,7 +7746,7 @@ msgstr "hCaptcha Gizli Anahtarı"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CAPTCHA_HCAPTCHA_SECRET_KEY_HELP"
 msgid "Enter the secret key from your hCaptcha dashboard."
-msgstr "hCaptcha kontrol panelinizden gizli anahtarı girin."
+msgstr "Kontrol panelinizden hCaptcha gizli anahtarı girin."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_EXTENSIONS_TABLE_CAPTION"
 msgid "Table of known extensions and their automatic update preferences"
@@ -8499,7 +8506,7 @@ msgid ""
 "a> to update the container, and the database."
 msgstr ""
 "Panopticon, Docker altında çalışırken ara yüzünden doğrudan güncellenemez. Bunun "
-"yerine, kapsayıcı ve veri tabanını güncellemek için <a href='%s'>kılavuzdaki "
+"yerine, kapsam ve veri tabanını güncellemek için <a href='%s'>kılavuzdaki "
 "yönergeleri</a> izlemeniz gerekir."
 
 msgctxt "PANOPTICON_GROUPS_TITLE"
@@ -8540,9 +8547,9 @@ msgid ""
 "which belongs to this group. To let the user see a site's overview you need to "
 "give them the View privilege."
 msgstr ""
-"Bu ayrıcalıklar, bu gruba ait olan herhangi bir site için bu gruba ait bir "
-"kullanıcıya verilecektir. Kullanıcının bir sitenin genel görünümünü görmesine "
-"izin vermek için onlara Görüntüleme ayrıcalığını vermeniz gerekir."
+"Bu ayrıcalıklar, bu gruba ait herhangi bir site için, bu gruba üye olan bir "
+"kullanıcıya verilecektir. Kullanıcının bir sitenin genel görünümünü görebilmesi "
+"için ona “Görüntüleme” ayrıcalığını vermeniz gerekir."
 
 msgctxt "PANOPTICON_GROUP_ERR_TITLE_EMPTY"
 msgid "You cannot have an empty Group Name."
@@ -9037,7 +9044,7 @@ msgid ""
 "GitHub repository</a>."
 msgstr ""
 "Panopticon'a katkıda bulunanların tam listesi için lütfen <a href=\"%s\">GitHub "
-"deposunu</a> ziyaret edin."
+"sayfasını</a> ziyaret edin."
 
 msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
 msgid ""
@@ -9048,10 +9055,10 @@ msgid ""
 "drop us a line and we'll rectify the omission; <em>every person matters</em>."
 msgstr ""
 "Katkıları ne kadar küçük veya büyük olursa olsun, Akeeba Panopticon'a katkıda "
-"bulunan her bir kişinin çalışmalarını kabul etmek ve tanımak istiyoruz; en küçük "
-"ayrıntılar bile önemlidir. GitHub dışında katkıda bulunduysanız ve kamuya açık "
-"olarak tanınmak istiyorsanız, lütfen bize bir satır bırakın ve ihmali "
-"düzeltelim; <em>her insan önemlidir</em>."
+"bulunan her bir kişinin çalışmalarını takdir etmek ve anmak istiyoruz; en küçük "
+"ayrıntılar bile önemlidir. GitHub dışında katkıda bulunduysanız ve adınızın "
+"kamuoyuna duyurulmasını istiyorsanız, lütfen bize bir mesaj gönderin; bu "
+"eksikliği giderelim; <em>herkes değerlidir</em>."
 
 msgctxt "PANOPTICON_BACKUPTASKS_TITLE"
 msgid "Backup Tasks"
@@ -9097,7 +9104,7 @@ msgstr ""
 "değiştirilecektir. Ayrıca şu değişkenleri de kullanabilirsiniz "
 "<code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>.."
 "<code>{DATE_FORMAT_LC7}</code> panopticon tarafından yedekleme zamanının "
-"biçimlendirilmiş bir versiyonu ile değiştirilecektir. Lütfen Panopticon "
+"biçimlendirilmiş bir sürümü ile değiştirilecektir. Lütfen Panopticon "
 "değişkenlerinin Akeeba Backup değişkenlerine kıyasla birkaç saniye farklı "
 "olabileceğini unutmayın, çünkü bunlar Akeeba Backup'ın çalıştığı sitenin "
 "sunucusunda değil, Panopticon'u çalıştıran sunucuda işlenir."
@@ -9160,10 +9167,11 @@ msgstr ""
 "<code>1</code> den <code>31</code> e kadar sayı, ayın son günü için <code>L</"
 "code> (değer listelerinde kullanılamaz!), bitişik aralık ör. <code>1-15</code>, "
 "virgülle ayrılmış değerler listesi ör. <code>1,7,14,21,28</code>, her gün "
-"<code>*</code> olarak,  her X günde bir eğik çizgi kullanılarak ör.<code>*/3</"
+"<code>*</code> olarak, her X günde bir eğik çizgi kullanılarak ör.<code>*/3</"
 "code> (her 3 günde bir).<br>Aynı ay içinde Cumartesi veya Pazar olmayan en yakın "
-"gün için <code>W</code> ile bir sayı kullanın, ör. <code>15W</code> en yakın "
-"gündür (13'ten 17'ye kadar) ve Cumartesi veya Pazar değildir."
+"gün için <code>W</code> ile bir sayı kullanın; örneğn <code>15W</code>, "
+"13.günden 17.güne kadar olan aralıkta Cumartesi veya Pazar olmayan en yakın "
+"gündür."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH"
 msgid "Month"
@@ -9380,10 +9388,11 @@ msgstr ""
 "<code>1</code> den <code>31</code> e kadar sayı, ayın son günü için <code>L</"
 "code> (değer listelerinde kullanılamaz!), bitişik aralık ör. <code>1-15</code>, "
 "virgülle ayrılmış değerler listesi ör. <code>1,7,14,21,28</code>, her gün "
-"<code>*</code> olarak,  her X günde bir eğik çizgi kullanılarak ör.<code>*/3</"
+"<code>*</code> olarak, her X günde bir eğik çizgi kullanılarak ör.<code>*/3</"
 "code> (her 3 günde bir).<br>Aynı ay içinde Cumartesi veya Pazar olmayan en yakın "
-"gün için <code>W</code> ile bir sayı kullanın, ör. <code>15W</code> en yakın "
-"gündür (13'ten 17'ye kadar) ve Cumartesi veya Pazar değildir."
+"günü belirtmek için bir sayı ile <code>W</code> kullanın; örneğin, <code>15W</"
+"code>,13.günden 17.güne kadar olan aralıkta Cumartesi veya Pazar olmayan en "
+"yakın gündür."
 
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MONTH"
 msgid "Month"
@@ -9859,10 +9868,11 @@ msgid ""
 "Multi-factor Authentication methods you've set up can be used. For example, if "
 "your phone is out of battery or misplaced."
 msgstr ""
-"Bu sayfayı yazdırın ve cüzdanınızda saklayın. Aşağıdaki kodların her biri "
-"yalnızca bir kez kullanılabilir. Acil durumlarda, kurduğunuz diğer Çok Faktörlü "
-"Kimlik Doğrulama yöntemlerinden hiçbirinin kullanılamadığı durumlarda bunları "
-"kullanın. Örneğin, telefonunuzun pili bitmiş veya yanlış yerleştirilmişse."
+"Bu sayfayı yazdırın ve güvenli yerde saklayın. Aşağıda yer alan kodların her "
+"biri yalnızca bir kez kullanılabilir. Bu kodları, ayarladığınız diğer çok "
+"faktörlü kimlik doğrulama yöntemlerinin hiçbirini kullanamadığınız acil "
+"durumlarda kullanın. Örneğin, telefonunuzun şarjı bitmişse veya telefonunuzu "
+"kaybetmişseniz."
 
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_RESET"
 msgid "Regenerate Backup Codes"
@@ -9988,8 +9998,8 @@ msgctxt "PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS"
 msgid ""
 "Follow the instructions on your device's screen to use your preferred Passkey."
 msgstr ""
-"Tercih ettiğiniz Şifreyi kullanmak için cihazınızın ekranındaki yönergeleri "
-"izleyin."
+"Tercih ettiğiniz geçiş anahtarını kullanmak için cihazınızın ekranındaki "
+"yönergeleri izleyin."
 
 msgctxt "PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_HEAD"
 msgid "Your browser lacks support for Passkeys"
@@ -10001,9 +10011,9 @@ msgid ""
 "requirements (HTTPS-only, with an SSL/TLS certificate signed by a commercial "
 "Certification Authority)."
 msgstr ""
-"Tarayıcınız Geçiş Anahtarlarını desteklemiyor veya siteniz minimum "
-"gereksinimleri (yalnızca HTTPS, ticari Sertifika Yetkilisi tarafından imzalanmış "
-"bir SSL/TLS sertifikasıyla) karşılamıyor."
+"Tarayıcınız geçiş anahtarlarını desteklemiyor veya siteniz gerekli en düşük "
+"gereksinimleri karşılamıyor. (Yalnızca HTTPS, ticari bir Sertifika Yetkilisi "
+"tarafından imzalanmış bir SSL/TLS sertifikası ile)"
 
 msgctxt "PANOPTICON_MFA_PASSKEYS_ERR_NO_STORED_CREDENTIAL"
 msgid ""
@@ -10079,11 +10089,11 @@ msgstr "Kimlik doğrulama yazılımınıza bağlı olarak aşağıdakilerden bir
 
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT1"
 msgid "Scan this QR Code&trade;."
-msgstr "QR Kodunu Tarayın"
+msgstr "QR Kodunu Tarayın;."
 
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT2"
 msgid "Use this <a href=\"%s\">link</a>."
-msgstr "Bu <a href=\"%s\">Bağlantıyı</a> Kullanın"
+msgstr "Bu <a href=\"%s\">bağlantıyı</a> kullanın."
 
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT3"
 msgid "Enter the Secret"
@@ -10575,7 +10585,9 @@ msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_HELP"
 msgid ""
 "The direct download URL for the extension package (ZIP file). The remote site "
 "will download it directly from this URL."
-msgstr "Uzantı paketi (ZIP dosyası) için doğrudan indirme URL'si. Uzak site bunu doğrudan bu URL'den indirecektir."
+msgstr ""
+"Eklenti paketinin (ZIP dosyası) doğrudan indirme bağlantısı. Uzak site, dosyayı "
+"doğrudan bu bağlantıdan indirecektir."
 
 msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_FILE"
 msgid "Extension Package File"
@@ -10591,7 +10603,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_URL_OR_FILE"
 msgid "Provide a download URL or upload a file"
-msgstr "İndirme URL'si girin veya dosya yükleyin"
+msgstr "İndirme bağlantısı girin veya bir dosya yükleyin"
 
 msgctxt "PANOPTICON_EXTENSIONINSTALL_LBL_WARN_MIXED_CMS"
 msgid ""
@@ -11237,10 +11249,10 @@ msgid ""
 "assigned to the selected group, <em>even if they can't even view the site in the "
 "Sites Overview page</em>."
 msgstr ""
-"Hiçbir grup seçilmezse: e-postalar, sitede değişiklik yapabilen tüm "
-"kullanıcılara gönderilir. Herhangi bir grup seçildiğinde: e-postalar, seçilen "
-"gruba atanmış tüm kullanıcılara gönderilir; <em>Siteler Genel Bakış Sayfasında</"
-"em> siteyi görüntüleyemiyor olsalar bile."
+"Hiçbir grup seçilmediyse: Sitede değişiklik yapabilen tüm kullanıcılara e-posta "
+"gönderilir. Herhangi bir grup seçildiğinde: Seçilen gruba atanmış tüm "
+"kullanıcılara e-posta gönderilir, <em>siteye Genel Bakış sayfasından "
+"erişemeseler bile</em>."
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE"
 msgid "Scheduled Action Summary"
@@ -11267,8 +11279,8 @@ msgid ""
 "The Site Action Summary schedule is a <a href='%s' target='_blank'>CRON "
 "expression</a>. It uses the %s time zone."
 msgstr ""
-"Eylem zamanlaması bir <a href='%s' target='_blank'>CRON ifadesidir</a>. %s saat "
-"dilimini kullanıyor."
+"Site Eylem Özeti zamanlaması bir <a href=\\'%s\\' target=\\'_blank\\'>CRON "
+"ifadesidir</a>. %s saat dilimini kullanır."
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_OPTIONS"
 msgid "Report Options"
@@ -12385,1580 +12397,477 @@ msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
 msgid "Invalid JSON in request body."
 msgstr "İstek gövdesinde geçersiz JSON."
 
-#, phpformat
-msgctxt "AWF_APPLICATION_ERROR_TASK_NOT_FOUND"
-msgid "Task \\'%s\\' not found"
-msgstr "'%s' görevi bulunamadı"
-
-#, phpformat
-msgctxt "PANOPTICON_TASKTYPE_UPTIMEMONITOR"
-msgid "Monitors sites\\' uptime"
-msgstr "Sitelerin çalışma süresini izler"
-
-#, phpformat
-msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED"
-msgid "The update package has disappeared from the site. Is a plugin, or your host, clearing your site\\'s temporary directory automatically?"
-msgstr "Güncelleme paketi siteden kayboldu. Bir eklenti veya barındırma sağlayıcınız sitenizin geçici dizinini otomatik olarak temizliyor olabilir mi?"
-
-#, phpformat
-msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_HTTP_401"
-msgid "HTTP status 401 while extracting the update. Your site\\'s administrator folder is password protected. Please edit the site and enter the Administrator Directory Username and Password in the Connection tab. Then, retry scheduling an update for this site."
-msgstr "Güncelleme çıkartılırken HTTP 401 hatası alındı. Sitenizin yönetici klasörü şifre korumalı. Lütfen siteyi düzenleyin ve Bağlantı sekmesinde Yönetici Dizini Kullanıcı Adı ile Şifreyi girin. Ardından bu site için güncelleme zamanlamasını tekrar deneyin."
-
-#, phpformat
-msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\\\\'s extraction script for site %d (%s)"
-msgstr "%d (%s) sitesi için Joomla Update\\'ın çıkartma betiği etkinleştiriliyor"
-
-#, phpformat
-msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_INVALID_JSON"
-msgid "Installing WordPress update on site #%d (%s) has failed. The server\\'s response is not valid JSON."
-msgstr "#%d (%s) sitesine WordPress güncellemesi yüklenemedi. Sunucunun yanıtı geçerli bir JSON değil."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_BTN_LETS_GO"
-msgid "Let\\'s go!"
-msgstr "Hadi başlayalım!"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_SESSION_LBL_WARNING_BODY"
-msgid "The session write path configured in PHP cannot be written to, making logging in impossible. To address this problem, Panopticon will attempt to create a session save path in the <code>%s</code> directory. For this to be possible, you need to enter the FTP or SFTP connection details to your site\\'s root. If you are unsure about these settings, please ask your host."
-msgstr "PHP'de yapılandırılan oturum yazma yoluna yazılamıyor, bu da oturum açmayı imkânsız kılıyor. Bu sorunu gidermek için Panopticon, <code>%s</code> dizininde bir oturum kayıt yolu oluşturmaya çalışacak. Bunun mümkün olması için sitenizin kök dizinine FTP veya SFTP bağlantı bilgilerini girmeniz gerekiyor. Bu ayarlar hakkında emin değilseniz lütfen barındırma sağlayıcınıza danışın."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_HELP"
-msgid "On some shared hosting environments you need to use FTP or SFTP to be able to write to your site\\'s files."
-msgstr "Bazı paylaşımlı barındırma ortamlarında sitenizin dosyalarına yazabilmek için FTP veya SFTP kullanmanız gerekebilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PORT_HELP"
-msgid "The port number your (S)FTP server listens to. Usually it\\'s 21 for FTP and 22 for SFTP. If unsure, ask your host."
-msgstr "(S)FTP sunucunuzun dinlediği port numarası. Genellikle FTP için 21, SFTP için 22'dir. Emin değilseniz barındırma sağlayıcınıza sorun."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_BROKEN_JS_EXPLAIN"
-msgid "The JavaScript files for Panopticon are not loading properly. Make sure you installation is not missing files, check permissions, and clear your browser\\'s cache."
-msgstr "Panopticon'un JavaScript dosyaları düzgün yüklenemiyor. Kurulumunuzda eksik dosya olmadığından emin olun, izinleri kontrol edin ve tarayıcı önbelleğinizi temizleyin."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION_HELP"
-msgid "Should we connect to the database using an SSL certificate? This can be used instead of username and password authentication (encrypted connection with certificate authentication) or <em>on top of</em> username and password authentication (encrypted connection with password authentication). If you don\\'t know what this means set this option to No and ignore the next few options as well."
-msgstr "Veritabanına SSL sertifikası kullanarak bağlanılsın mı? Bu seçenek, kullanıcı adı ve şifre kimlik doğrulaması yerine (sertifika kimlik doğrulamalı şifreli bağlantı) veya <em>bunlara ek olarak</em> (şifre kimlik doğrulamalı şifreli bağlantı) kullanılabilir. Bu seçeneğin ne anlama geldiğini bilmiyorsanız Hayır olarak ayarlayın ve sonraki birkaç seçeneği de görmezden gelin."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY"
-msgid "Database user\\'s Private Key file"
-msgstr "Veritabanı kullanıcısının Özel Anahtar dosyası"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLCERT"
-msgid "Database user\\'s Public Key (Certificate) file"
-msgstr "Veritabanı kullanıcısının Genel Anahtar (Sertifika) dosyası"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLVERIFYSERVERCERT_HELP"
-msgid "Set to Yes to verify the certificate the server sends back to us. This is verified against the Certification Authority (CA) file you specified. If you get connection errors set this to No; some setups (especially those generated by the <code>mysql_ssl_rsa_setup</code>) may disallow a connection if certification verification is enabled. If you enable verification and the CA file field is left blank the server\\'s certificate will be checked against the Certification Authority files your server knows about, see the <code>openssl.cafile</code> and <code>openssl.capath</code> PHP options."
-msgstr "Sunucunun bize gönderdiği sertifikayı doğrulamak için Evet olarak ayarlayın. Bu, belirttiğiniz Sertifika Otoritesi (CA) dosyasıyla karşılaştırılarak doğrulanır. Bağlantı hatası alırsanız Hayır olarak ayarlayın; bazı kurulumlar (özellikle <code>mysql_ssl_rsa_setup</code> tarafından oluşturulanlar) sertifika doğrulaması etkinleştirildiğinde bağlantıya izin vermeyebilir. Doğrulamayı etkinleştirir ve CA dosyası alanını boş bırakırsanız sunucunun sertifikası, sunucunuzun bildiği Sertifika Otoritesi dosyalarına göre kontrol edilir; <code>openssl.cafile</code> ve <code>openssl.capath</code> PHP seçeneklerine bakın."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_HOST_DESCRIPTION"
-msgid "The FTP server\\'s host name, without the protocol. Do not use <s><code>ftp://example.com</code></s>; use <code>example.com</code> instead."
-msgstr "FTP sunucusunun host adı, protokol olmadan. <s><code>ftp://example.com</code></s> kullanmayın; bunun yerine <code>example.com</code> kullanın."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_PORT_DESCRIPTION"
-msgid "FTP server\\'s TCP/IP port. Usually 21. Please ask your host."
-msgstr "FTP sunucusunun TCP/IP portu. Genellikle 21'dir. Barındırma sağlayıcınıza sorun."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_PASSWORD_DESCRIPTION"
-msgid "Password, case-sensitive. Best use passwords consisting only of a-z, A-Z, 0-9, dashes, dots, underscores, and exclamation points. Other characters may trigger your web server\\'s anti-hacking protection."
-msgstr "Şifre, büyük/küçük harf duyarlıdır. Yalnızca a-z, A-Z, 0-9, tire, nokta, alt çizgi ve ünlem işaretlerinden oluşan şifreler kullanmanız önerilir. Diğer karakterler web sunucunuzun saldırı önleme korumasını tetikleyebilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_FTPS_DESCRIPTION"
-msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \\\"Secure FTP\\\"</strong>. If your server doesn\\'t support this method you will get connection errors."
-msgstr "FTP sunucunuza SSL şifreli bağlantı kullanarak bağlanın. <strong>Bu, SFTP, SCP veya \\\"Güvenli FTP\\\" ile aynı şey değildir</strong>. Sunucunuz bu yöntemi desteklemiyorsa bağlantı hatası alırsınız."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_INITDIR_DESCRIPTION"
-msgid "The absolute FTP path to the directory where the files will be uploaded. If unsure, connect to your server with FileZilla, browse to the intended directory and copy the path appearing on the right-hand pane above the directory list. Usually, it\\'s something like <code>/public_html</code> or <code>/httpdocs</code>."
-msgstr "Dosyaların yükleneceği dizinin mutlak FTP yolu. Emin değilseniz FileZilla ile sunucunuza bağlanın, hedef dizine gidin ve dizin listesinin üzerindeki sağ bölmede görünen yolu kopyalayın. Genellikle <code>/public_html</code> veya <code>/httpdocs</code> gibi bir şeydir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTSFTP_HOST_DESCRIPTION"
-msgid "SFTP server\\'s hostname, without the protocol. Do not use <s><code>sftp://example.com</code></s>; use <code>example.com</code> instead."
-msgstr "SFTP sunucusunun host adı, protokol olmadan. <s><code>sftp://example.com</code></s> kullanmayın; bunun yerine <code>example.com</code> kullanın."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTSFTP_INITDIR_DESCRIPTION"
-msgid "SFTP directory of the site\\'s root. If unsure, use an SFTP desktop client, connect to your server, navigate to the directory and copy the path displayed in here. The must be absolute, e.g. <code>/home/myuser/public_html</code>, not just <s><code>public_html</code></s>."
-msgstr "Sitenin kök dizininin SFTP yolu. Emin değilseniz bir SFTP masaüstü istemcisi kullanın, sunucunuza bağlanın, dizine gidin ve burada görüntülenen yolu kopyalayın. Mutlak yol olmalıdır, örneğin <code>/home/kullanici/public_html</code>, yalnızca <s><code>public_html</code></s> değil."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_USER_USERNAME_HELP"
-msgid "The username you will use to log in to Panopticon. It\\'s best to only use lowercase letters a-z and numbers 0-9."
-msgstr "Panopticon'a giriş yapmak için kullanacağınız kullanıcı adı. Yalnızca küçük harfler a-z ve rakamlar 0-9 kullanmanız önerilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD2_HELP"
-msgid "Please repeat the password you entered above. We want to make sure you didn\\'t accidentally mistype it."
-msgstr "Lütfen yukarıda girdiğiniz şifreyi tekrar girin. Yanlışlıkla yazım hatası yapmadığınızdan emin olmak istiyoruz."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP4_DETAIL"
-msgid "Upload into the folder you\\'re installing Panopticon. That\\'s the folder with the Panopticon <code>index.php</code> file in it."
-msgstr "Panopticon'u kurduğunuz klasöre yükleyin. Bu, Panopticon'un <code>index.php</code> dosyasının bulunduğu klasördür."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_SUBHEAD_BREATHE"
-msgid "Take a breath. This is the last installation step. You\\'re almost done."
-msgstr "Bir nefes alın. Bu, son kurulum adımıdır. Neredeyse tamamladınız."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_REPLACE_PHP_CLI"
-msgid "Replace <i>/path/to/php</i> with the path to the PHP %s CLI executable. Make sure it\\'s the PHP CLI executable, <strong>not</strong> the PHP CGI/FastCGI executable."
-msgstr "<i>/path/to/php</i> ifadesini PHP %s CLI çalıştırılabilir dosyasının yoluyla değiştirin. PHP CLI çalıştırılabilir dosyası olduğundan emin olun, PHP CGI/FastCGI çalıştırılabilir dosyası <strong>değil</strong>."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NOT_RUN_INFO_2"
-msgid "If even then nothing seems to happen, please contact your host. Either your account is not receiving the output of the CRON jobs, or the CRON jobs are not executing at all (while unlikely, we\\'ve seen that happen a few times)."
-msgstr "O zaman bile hiçbir şey olmuyorsa lütfen barındırma sağlayıcınızla iletişime geçin. Ya hesabınız CRON görevlerinin çıktısını almıyordur ya da CRON görevleri hiç çalışmıyordur (düşük olasılıklı olsa da bunu birkaç kez gördük)."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_2"
-msgid "Please ask your host for the correct path. If your host gave you this path to begin with, escalate your support ticket with your host, asking to speak with a server engineer. It\\'s trivial for them to give you that path."
-msgstr "Lütfen barındırma sağlayıcınızdan doğru yolu isteyin. Barındırma sağlayıcınız bu yolu size baştan verdiyse destek talebinizi ilerletin ve bir sunucu mühendisiyle konuşmak istediğinizi belirtin. Bu yolu size vermek onlar için çok kolaydır."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_WRONG_PHP_INFO_2"
-msgid "Most servers have multiple versions of PHP installed. You need to ask your host to give you the path to the PHP CLI executable for PHP %s and use that in your CRON job\\'s command line."
-msgstr "Çoğu sunucuda birden fazla PHP sürümü yüklüdür. Barındırma sağlayıcınızdan PHP %s için PHP CLI çalıştırılabilir dosyasının yolunu istemeniz ve bunu CRON görevinizin komut satırında kullanmanız gerekir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_CONS_1"
-msgid "Some hosts don\\'t support it"
-msgstr "Bazı barındırma sağlayıcıları bunu desteklemiyor"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_IF_URL_CRON"
-msgid "If your host uses URL-based CRON jobs, or you\\'re using a third party system which accepts a URL, use the following URL:"
-msgstr "Barındırma sağlayıcınız URL tabanlı CRON görevleri kullanıyorsa veya bir URL kabul eden üçüncü taraf sistem kullanıyorsanız şu URL'yi kullanın:"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
-msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\\'t close this browser tab, don\\'t change to a different browser tab / window or application, don\\'t turn off or let your device sleep, don\\'t feed your <em title=\\\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\\\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "CRON görevinizi kurduktan birkaç saniye ila bir dakika sonra bu sayfa bir kıyaslama ekranına dönüşecek. Bu tarayıcı sekmesini kapatmayın, farklı bir tarayıcı sekmesi/penceresi veya uygulamaya geçmeyin, cihazınızı kapatmayın veya uyku moduna geçirmesine izin vermeyin, <em title=\\\"Bunlar, gremlinlere dönüşmeden önceki mogwai'lerdir. Bu güncelliğini yitirmiş popüler kültür referansıyla yaşımızı mı belli ediyoruz?\\\">mogwai</em>'nizi gece yarısından sonra beslemeyin. Oldukça açık, değil mi?"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER"
-msgid "If you\\'re an expert user - or just looking around - you can skip this step and set up CRON jobs later."
-msgstr "Uzman bir kullanıcıysanız veya yalnızca göz atıyorsanız bu adımı atlayabilir ve CRON görevlerini daha sonra kurabilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_MSG_CONFIGURATIONPHP"
-msgid "You can still continue the installation. The configuration settings will be displayed at the end. You will have to manually upload the code. At the end of the installation, click in the text area to highlight all of the code and then paste into a new text file. Name this file <code>config.php</code> and upload it to the folder where you\\'ve installed Panopticon."
-msgstr "Kuruluma devam edebilirsiniz. Yapılandırma ayarları sonunda görüntülenecek. Kodu manuel olarak yüklemeniz gerekecek. Kurulumun sonunda tüm kodu seçmek için metin alanına tıklayın ve ardından yeni bir metin dosyasına yapıştırın. Bu dosyayı <code>config.php</code> olarak adlandırın ve Panopticon'u kurduğunuz klasöre yükleyin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA4ORLATER"
-msgid "<strong>Joomla! 4 or later</strong>: Go to your site\\'s backend and click on Components, Akeeba Panopticon Connector to find your connection information."
-msgstr "<strong>Joomla! 4 veya üstü</strong>: Sitenizin yönetim paneline gidin ve bağlantı bilgilerinizi bulmak için Bileşenler, Akeeba Panopticon Connector'a tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA3"
-msgid "<strong>Joomla! 3</strong>: Go to your site\\'s backend and click on Extensions, Plugins. Click on System - Panopticon Connector for Joomla 3."
-msgstr "<strong>Joomla! 3</strong>: Sitenizin yönetim paneline gidin ve Uzantılar, Eklentiler'e tıklayın. Sistem - Joomla 3 için Panopticon Connector'a tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_WORDPRESS"
-msgid "<strong>WordPress</strong>: Go to your site\\'s wp-admin and click on Tools, Panopticon."
-msgstr "<strong>WordPress</strong>: Sitenizin wp-admin paneline gidin ve Araçlar, Panopticon'a tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1"
-msgid "If your site\\'s <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!&reg; updates will fail with an error mentioning "401 Unauthorized"."
-msgstr "Sitenizin <code>administrator</code> dizini şifre korumalıysa lütfen bu şifre koruması için kullanılan kullanıcı adı ve şifreyi girin. Aksi takdirde Joomla!&reg; güncellemeleri \"401 Unauthorized\" hatasıyla başarısız olacaktır."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2"
-msgid "You used a third party extension, e.g. Admin Tools\\' "Password-protect Administrator" feature."
-msgstr "Admin Tools'un \"Yöneticiyi Şifre ile Koru\" özelliği gibi bir üçüncü taraf uzantı kullandınız."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3"
-msgid "You used your hosting control panel\\'s directory password protection feature, if one is available."
-msgstr "Barındırma kontrol panelinizin dizin şifre koruma özelliğini kullandınız (varsa)."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING_HELP"
-msgid "Panopticon will warn you that your site\\'s SSL/TLS certificate is expiring this many days before it expires. 0 disables the warning."
-msgstr "Panopticon, sitenizin SSL/TLS sertifikasının sona ermesine bu kadar gün kala sizi uyaracaktır. 0 uyarıyı devre dışı bırakır."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING_HELP"
-msgid "Panopticon will warn you that your site\\'s domain name is expiring this many days before it expires. 0 disables the warning."
-msgstr "Panopticon, sitenizin alan adının sona ermesine bu kadar gün kala sizi uyaracaktır. 0 uyarıyı devre dışı bırakır."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TOOSOON"
-msgid "The SSL/TLS certificate has a Valid From date in the future. Browsers will report it as invalid as it\\'s not meant to be used just yet."
-msgstr "SSL/TLS sertifikasının Geçerlilik Başlangıç tarihi gelecekte. Tarayıcılar henüz kullanılmaması gerektiği için bunu geçersiz olarak raporlayacaktır."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRED"
-msgid "The SSL/TLS certificate has a Valid To date in the past. Browsers will report it as invalid as it\\'s not meant to be used any more."
-msgstr "SSL/TLS sertifikasının Geçerlilik Bitiş tarihi geçmişte. Tarayıcılar artık kullanılmaması gerektiği için bunu geçersiz olarak raporlayacaktır."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID"
-msgid "We could not retrieve the domain\\'s expiration date. Either the domain name does not appear in the WHOIS database, or you are using a domain name which only resolves locally."
-msgstr "Alan adının son kullanma tarihi alınamadı. Alan adı WHOIS veritabanında görünmüyor veya yalnızca yerel olarak çözümlenen bir alan adı kullanıyorsunuz."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
-msgid "The domain name has expired. You might still be able to access the domain due to your registrar\\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
-msgstr "Alan adının süresi dolmuş. Kayıt kuruluşunuzun yetkisiz kullanım süresi nedeniyle alana hâlâ erişebilirsiniz; ancak kaybetmemek için <strong>bu alan adını kayıt kuruluşunuzda hemen yenilemeniz gerekir</strong>."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS"
-msgid "There are no nameservers reported in the WHOIS database. A site without valid nameservers will not be accessible on the Internet. If you recently assigned nameservers to the domain don\\'t panic; it may take up to 5 days for this information to propagate."
-msgstr "WHOIS veritabanında bildirilen ad sunucusu yok. Geçerli ad sunucusu olmayan bir site İnternet'te erişilemez olacaktır. Alan adına yakın zamanda ad sunucusu atadıysanız paniklemeyın; bu bilgilerin yayılması 5 güne kadar sürebilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_NOTE"
-msgid "This is <em>very basic</em> uptime monitoring through Panopticon itself. It only notifies you by email when your site goes down and comes back up. It does not integrate with third party services, it does not offer history, it does not have a public uptime page. We strongly recommend using a third party service or software to monitor your sites\\' uptime instead of using this feature."
-msgstr "Bu, Panopticon'un kendisi aracılığıyla yapılan <em>çok temel</em> bir çalışma süresi izlemesidir. Yalnızca siteniz çöktüğünde ve tekrar ayağa kalktığında e-posta ile bildirim gönderir. Üçüncü taraf hizmetlerle entegre olmaz, geçmiş sunmaz, kamuya açık bir çalışma süresi sayfası yoktur. Bu özelliği kullanmak yerine sitelerinizin çalışma süresini izlemek için üçüncü taraf bir hizmet veya yazılım kullanmanızı şiddetle tavsiye ederiz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J4"
-msgid "Go to your site\\'s administrator backend, System, Update, Update Sites, and click on the Rebuild button."
-msgstr "Sitenizin yönetim paneline gidin, Sistem, Güncelleme, Güncelleme Siteleri'ne gidin ve Yeniden Oluştur düğmesine tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J3"
-msgid "Go to your site\\'s administrator backend, Extensions, Manage, Update Sites, and click on the Rebuild button."
-msgstr "Sitenizin yönetim paneline gidin, Uzantılar, Yönet, Güncelleme Siteleri'ne gidin ve Yeniden Oluştur düğmesine tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION"
-msgid "Go to your site\\'s administrator backend, System, Update, Joomla, click on Options, and change the update channel to Joomla Next. Please check Joomla\\'s requirements, especially the database version and PHP version requirements. Note that your site is currently using PHP %s."
-msgstr "Sitenizin yönetim paneline gidin, Sistem, Güncelleme, Joomla'ya gidin, Seçenekler'e tıklayın ve güncelleme kanalını Joomla Next olarak değiştirin. Joomla'nın gereksinimlerini, özellikle veritabanı sürümü ve PHP sürümü gereksinimlerini kontrol edin. Sitenizin şu anda PHP %s kullandığını unutmayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_CALL_YOUR_HOST"
-msgid "If this keeps happening frequently you may want to contact your host about moving your site to a bigger hosting package, or otherwise upgrading your site\\'s server."
-msgstr "Bu durum sık sık yaşanıyorsa sitenizi daha büyük bir barındırma paketine taşıma veya sunucunuzu başka şekilde yükseltme konusunda barındırma sağlayıcınızla iletişime geçmek isteyebilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_IOWAIT_WHAT"
-msgid "Your server is spending a lot of time waiting for disk operations, as expressed by the I/O Wait time (it is expressed as a percentage of the total CPU time available). This means that your server\\'s storage is struggling to keep up with the demand."
-msgstr "Sunucunuz, disk işlemlerini beklemek için çok zaman harcıyor (I/O Bekleme süresi ile ifade edilir ve toplam CPU süresinin yüzdesi olarak gösterilir). Bu, sunucunuzun depolama alanının talebi karşılamakta zorlandığı anlamına geliyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_SITE_DISK_WHAT"
-msgid "Your server\\'s storage is almost at capacity. When you exceed this limit you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
-msgstr "Sunucunuzun depolama alanı neredeyse doldu. Bu sınırı aştığınızda dosya oluşturamayacaksınız (önbellek ve geçici dosyalar dahil), bu da sitenizin düzgün çalışamamasına yol açacak."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_COMMON_DISK_WHAT"
-msgid "Your server\\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
-msgstr "Sunucunuzun depolama alanı neredeyse doldu. Bu sınırı aştığınızda veri silen veya oluşturan veritabanı işlemleri gerçekleştiremeyecek, dosya oluşturamayacaksınız (önbellek ve geçici dosyalar dahil), bu da sitenizin düzgün çalışamamasına yol açacak."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_DB_DISK_WHAT"
-msgid "Your server\\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, leading to your site being unable to function properly."
-msgstr "Sunucunuzun depolama alanı neredeyse doldu. Bu sınırı aştığınızda veri silen veya oluşturan veritabanı işlemleri gerçekleştiremeyeceksiniz, bu da sitenizin düzgün çalışamamasına yol açacak."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY"
-msgid "Panopticon cannot find a way to connect to your site\\'s Akeeba Backup JSON API."
-msgstr "Panopticon, sitenizin Akeeba Backup JSON API'sine bağlanacak bir yol bulamıyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
-msgid "Log into your site\\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set "Enable JSON API (remote backup)" to Yes. Enter a new "Secret Word"; you can create a new, random, secure secret word at <a href=\\\\\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\\\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Sitenizin yönetim paneline giriş yapın. Bileşenler, Akeeba Backup, Kontrol Paneli'ne gidin. Seçenekler, Ön Yüz Yedekleme'ye tıklayın ve \"JSON API'yi Etkinleştir (uzak yedekleme)\" seçeneğini Evet olarak ayarlayın. Yeni bir \"Gizli Kelime\" girin; <a href=\\\\\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\\\\\">random.org</a> adresinde yeni, rastgele, güvenli bir gizli kelime oluşturabilirsiniz. Ardından araç çubuğunda Kaydet ve Kapat'a tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
-msgid "Log into your site\\'s backend. Go to Akeeba Backup, System Configuration, Public API and set "Enable JSON API (remote backup)" to Yes. Enter a new "Secret Key"; you can create a new, random, secure key at <a href=\\\\\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\\\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Sitenizin yönetim paneline giriş yapın. Akeeba Backup, Sistem Yapılandırması, Genel API'ye gidin ve \"JSON API'yi Etkinleştir (uzak yedekleme)\" seçeneğini Evet olarak ayarlayın. Yeni bir \"Gizli Anahtar\" girin; <a href=\\\\\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\\\\\">random.org</a> adresinde yeni, rastgele, güvenli bir anahtar oluşturabilirsiniz. Ardından araç çubuğunda Kaydet ve Kapat'a tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
-msgid "Make sure that no third party extensions (especially security extensions) and/or server configuration settings prevent access to your site\\'s <code>api</code> folder. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
-msgstr "Hiçbir üçüncü taraf uzantının (özellikle güvenlik uzantıları) ve/veya sunucu yapılandırma ayarlarının sitenizin <code>api</code> klasörüne erişimi engellemediğinden emin olun. Ayrıca bu dosyadan gelen yanıtların sitenizdeki üçüncü taraf eklentiler, web sunucunuz veya sitenizin önünde yapılandırılmış herhangi bir CDN / önbelleğe alma proxy'si tarafından önbelleğe <em>alınmadığını</em> kontrol edin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP"
-msgid "Make sure that no third party plugins (especially security plugins) and/or server configuration settings prevent access to your site\\'s <code>wp-admin/admin-ajax.php</code> file. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
-msgstr "Hiçbir üçüncü taraf eklentinin (özellikle güvenlik eklentileri) ve/veya sunucu yapılandırma ayarlarının sitenizin <code>wp-admin/admin-ajax.php</code> dosyasına erişimi engellemediğinden emin olun. Ayrıca bu dosyadan gelen yanıtların sitenizdeki üçüncü taraf eklentiler, web sunucunuz veya sitenizin önünde yapılandırılmış herhangi bir CDN / önbelleğe alma proxy'si tarafından önbelleğe <em>alınmadığını</em> kontrol edin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_BODY"
-msgid "This may happen if Akeeba Backup was installed after adding the site to Akeeba Panopticon, the Panopticon Connector installed on the site is too old, or if there\\'s been an error communicating with the site."
-msgstr "Bu durum, Akeeba Backup siteyi Akeeba Panopticon'a ekledikten sonra yüklendiyse, sitede yüklü Panopticon Connector çok eskiyse veya siteyle iletişimde bir hata yaşandıysa ortaya çıkabilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_SOLUTION_ADMIN"
-msgid "Please click the button below to try relinking Akeeba Backup with Panopticon. If this doesn\\'t work please update the Akeeba Panopticon Connector on your site, make sure its plugin is published, and check if you can communicate with the site correctly."
-msgstr "Akeeba Backup'ı Panopticon ile yeniden bağlamayı denemek için aşağıdaki düğmeye tıklayın. Bu işe yaramazsa lütfen sitenizdeki Akeeba Panopticon Connector'ı güncelleyin, eklentisinin yayınlandığından emin olun ve siteyle doğru şekilde iletişim kurup kuramadığınızı kontrol edin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_JSONAPI_ERROR"
-msgid "The API indicated there is an error. Please make sure that you have entered the correct API Token, and that your site\\'s server does not block or otherwise interfere with the request."
-msgstr "API bir hata olduğunu belirtti. Lütfen doğru API Belirtecini girdiğinizden ve sitenizin sunucusunun isteği engellemediğinden veya başka şekilde müdahale etmediğinden emin olun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SCANNER_TIP"
-msgid "Admin Tools Professional\\'s PHP File Change Scanner monitors your site\\'s .php files for changes, additions, and suspicious content. Click on the number of the scan attempt to open its results in the administrator backend of your site."
-msgstr "Admin Tools Professional'ın PHP Dosya Değişiklik Tarayıcısı, sitenizin .php dosyalarını değişiklikler, eklemeler ve şüpheli içerik açısından izler. Tarama sonuçlarını sitenizin yönetim panelinde açmak için tarama denemesinin numarasına tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_BODY"
-msgid "There was an error connecting to your site\\'s Akeeba Backup JSON API."
-msgstr "Sitenizin Akeeba Backup JSON API'sine bağlanılırken bir hata oluştu."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
-msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\\'s API application (<span class=\\\"font-monospace\\\">%s</span>)."
-msgstr "Sunucunuzdaki bir şey — barındırma sağlayıcınızın kontrolündeki sunucu yapılandırması, <code>.htaccess</code> gibi bir sunucu yapılandırma dosyası veya sitenizin bir eklentisi — Panopticon'un sitenizin API uygulamasına (<span class=\\\"font-monospace\\\">%s</span>) erişmesini engelliyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
-msgid "Does your host have a server–side protection solution (such as Apache\\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
-msgstr "Barındırma sağlayıcınızın Joomla! API Uygulama uç noktasını (<span class=\\\"font-monospace\\\">%s</span>), API belirtecinizi (<span class=\\\"font-monospace\\\">%s</span>) veya Panopticon'un Kullanıcı Aracısını (<span class=\\\"font-monospace\\\">panopticon/%s</span>) engelleyebilecek sunucu tarafı bir koruma çözümü (Apache'nin mod_security2 gibi) var mı?"
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
-msgid "Does your host have a server–side protection solution (such as Apache\\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
-msgstr "Barındırma sağlayıcınızın API eklenti uç noktasını (<span class=\\\"font-monospace\\\">%s</span>), API belirtecinizi (<span class=\\\"font-monospace\\\">%s</span>) veya Panopticon'un Kullanıcı Aracısını (<span class=\\\"font-monospace\\\">panopticon/%s</span>) engelleyebilecek sunucu tarafı bir koruma çözümü (Apache'nin mod_security2 gibi) var mı?"
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
-msgid "Does your host have a server–side protection solution (such as Apache\\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
-msgstr "Barındırma sağlayıcınızın WordPress API Uygulama uç noktasını (<span class=\\\"font-monospace\\\">%s</span>), API belirtecinizi (<span class=\\\"font-monospace\\\">%s</span>) veya Panopticon'un Kullanıcı Aracısını (<span class=\\\"font-monospace\\\">panopticon/%s</span>) engelleyebilecek sunucu tarafı bir koruma çözümü (Apache'nin mod_security2 gibi) var mı?"
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH1"
-msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party software. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\\'s response."
-msgstr "API'den gelen yanıtın öncesinde ve/veya sonrasında PHP mesajları (örn. kullanımdan kaldırma bildirimleri, uyarılar veya kritik hatalar) veya üçüncü taraf yazılımların çıktısı gibi başka metin içeriği bulunuyor. Sonuç olarak API yanıtı çözümlenemiyor, yani Panopticon sitenizin yanıtını anlayamıyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
-msgid "Make sure "Error Reporting" is set to None, and "Debug Site" is set to No in your site\\'s Global Configuration page. This prevents PHP from printing messages which pollute the API response."
-msgstr "Sitenizin Global Yapılandırma sayfasında \"Hata Raporlama\" seçeneğinin Hiçbiri, \"Hata Ayıklama Sitesi\" seçeneğinin Hayır olarak ayarlandığından emin olun. Bu, PHP'nin API yanıtını kirleten mesajlar yazdırmasını önler."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH1"
-msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party plugins. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\\'s response."
-msgstr "API'den gelen yanıtın öncesinde ve/veya sonrasında PHP mesajları (örn. kullanımdan kaldırma bildirimleri, uyarılar veya kritik hatalar) veya üçüncü taraf eklentilerin çıktısı gibi başka metin içeriği bulunuyor. Sonuç olarak API yanıtı çözümlenemiyor, yani Panopticon sitenizin yanıtını anlayamıyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2"
-msgid "Make sure PHP on your server is configured with <code>display_errors</code> disabled, and that you have not enabled <code>WP_DEBUG</code> in your site\\'s <code>wp-config.php</code> file. This prevents PHP from printing messages which pollute the API response."
-msgstr "Sunucunuzdaki PHP'nin <code>display_errors</code> devre dışı bırakılmış olarak yapılandırıldığından ve sitenizin <code>wp-config.php</code> dosyasında <code>WP_DEBUG</code>'ı etkinleştirmediğinizden emin olun. Bu, PHP'nin API yanıtını kirleten mesajlar yazdırmasını önler."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2"
-msgid "Please make sure that there is no .htaccess code, third party plugins, or custom code (including in your theme\\'s <code>functions.php</code> file) which block or otherwise limit WordPress\\' JSON API – either at all, or for unauthenticated (guest) access."
-msgstr "Lütfen WordPress'in JSON API'sini tamamen veya kimliği doğrulanmamış (misafir) erişim için engelleyen ya da başka şekilde kısıtlayan herhangi bir .htaccess kodu, üçüncü taraf eklenti veya özel kod (temanızın <code>functions.php</code> dosyasındakiler dahil) olmadığından emin olun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
-msgid "If you are using Admin Tools Professional please go to your site\\'s backend and click on Components, Admin Tools for Joomla!, Web Application Firewall, Configure WAF, Request Filtering. Check the list of <em>Allowed Domains</em> towards the bottom of the page."
-msgstr "Admin Tools Professional kullanıyorsanız lütfen sitenizin yönetim paneline gidin ve Bileşenler, Joomla! için Admin Tools, Web Uygulama Güvenlik Duvarı, WAF'ı Yapılandır, İstek Filtreleme'ye tıklayın. Sayfanın alt kısmındaki <em>İzin Verilen Etki Alanları</em> listesini kontrol edin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK2"
-msgid "Have you recently bought the domain, assigned the domain to a server, or transferred your site between hosts? Keep in mind that DNS propagation takes anywhere from 5 minutes to several days. Moreover, due to the distributed nature of DNS, it is possible that you can see your site <em>from your device</em> but the server you have installed Panopticon on can\\'t."
-msgstr "Alan adını yakın zamanda satın aldınız mı, bir sunucuya atadınız mı veya sitenizi barındırıcılar arasında taşıdınız mı? DNS yayılımının 5 dakika ile birkaç gün arasında sürebileceğini unutmayın. Ayrıca DNS'nin dağıtık yapısı nedeniyle sitenizi <em>kendi cihazınızdan</em> görebilmeniz mümkünken Panopticon'u kurduğunuz sunucu göremeyebilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3"
-msgid "If your site\\'s domain resolves to an IPv6 address - but not an IPv4 address - make sure that the server you have installed Panopticon on supports IPv6. You may have to ask your host to confirm that this is the case."
-msgstr "Sitenizin etki alanı bir IPv6 adresine çözümleniyorsa — ancak bir IPv4 adresine değilse — Panopticon'u kurduğunuz sunucunun IPv6'yı desteklediğinden emin olun. Bunun doğrulanması için barındırıcınıza sormak zorunda kalabilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
-msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\\\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let\\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
-msgstr "Ticari, tanınmış bir Sertifika Otoritesi tarafından imzalanmış bir SSL/TLS sertifikası yükleyin. Çoğu sunucu, geçerli, imzalı ve tam işlevli SSL/TLS sertifikalarını ücretsiz olarak veren <a href=\\\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let's Encrypt</a> kullanımına izin verir."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
-msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\\'s (CA) public certificate(s) in <a href=\\\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\\\" target=\\\"_blank\\\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
-msgstr "Bir intranet, extranet üzerindeyseniz veya başka nedenlerle kendi Sertifika Otoritenizi yönetmeniz gerekiyorsa Panopticon'a özel Sertifika Otoritenizi tanımasını söyleyebilirsiniz. Panopticon kurulumunuzun <code>user_code</code> klasörü içinde <code>cacert.pem</code> dosyası oluşturun. Sertifika Otoritenizin (CA) genel sertifikasını/sertifikalarını <a href=\\\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\\\" target=\\\"_blank\\\">PEM</a> biçiminde kopyalayıp yapıştırın. Bu, standart CA dosyalarının <em>üstüne</em> otomatik olarak yüklenerek Panopticon'un sitenize erişmesini sağlar."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
-msgid "Your site\\'s SSL/TLS certificate has a problem"
-msgstr "Sitenizin SSL/TLS sertifikasında bir sorun var"
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
-msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\\\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let\\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
-msgstr "SSL/TLS sertifikası doğru alan adı için mi? Barındırıcınız tarafından sağlanan varsayılan SSL/TLS sertifikasını kullanıyorsanız bu sertifika, gerçek alan adınız için değil, sitenizi kurmak için kullandığınız geçici alan adıyla sınırlıdır. Ticari, tanınmış bir Sertifika Otoritesi tarafından imzalanmış bir SSL/TLS sertifikası yüklemeniz gerekecek. Çoğu sunucu, geçerli, imzalı ve tam işlevli SSL/TLS sertifikalarını ücretsiz olarak veren <a href=\\\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\\\" target=\\\"_blank\\\">Let's Encrypt</a> kullanımına izin verir. Bazı self-servis barındırma kontrol panellerinin (cPanel veya Plesk gibi) bir alan adı için etkin SSL/TLS sertifikasını seçmenize izin verdiğini unutmayın. Doğru sertifikanın gerçekten kullanıldığını kontrol edin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
-msgid "Has the SSL/TLS certificate expired? In this case you need to renew it. Please note that if you are using Let\\'s Encrypt the certificate has a short validity period (usually 90 days) and it should be renewed automatically by your host. If this did not happen, you will need to contact your host."
-msgstr "SSL/TLS sertifikasının süresi doldu mu? Bu durumda yenilemeniz gerekiyor. Let's Encrypt kullanıyorsanız sertifikanın kısa bir geçerlilik süresi (genellikle 90 gün) olduğunu ve barındırıcınız tarafından otomatik olarak yenilenmesi gerektiğini unutmayın. Bu gerçekleşmediyse barındırıcınızla iletişime geçmeniz gerekecek."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
-msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\\\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\\\" target=\\\"_blank\\\">Check your certificate\\'s revocation status</a>. If it\\'s been revoked you will need a new certificate."
-msgstr "SSL/TLS sertifikası iptal edildi mi? Bazen Sertifika Otoriteleri veya bir SSL/TLS sertifikasının sahipleri onu iptal etmeyi tercih edebilir. Örneğin Sertifika Otoriteleri, dolandırıcılıktan şüphelenildiğinde veya sertifika vermek için kullanılan altyapılarının güvenliğinin ihlal edildiğine inandıklarında bunu yapar. <a href=\\\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\\\" target=\\\"_blank\\\">Sertifikanızın iptal durumunu kontrol edin</a>. İptal edildiyse yeni bir sertifikaya ihtiyacınız olacak."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
-msgid "Is it possible that your server serves the wrong SSL/TLS certificate? This may happen if you have recently switched to a new certificate, either manually or as part of an automated certificate rotation process (e.g. when your host issues a new certificate through Let\\'s Encrypt). When the certificate changes the web server needs to be reloaded or restarted. In some rare cases this might not happen - or an inexperienced systems administrator may forget to do it. Please contact your host / systems administrator to check that and, if necessary, reload or restart the web server process."
-msgstr "Sunucunuzun yanlış SSL/TLS sertifikası sunması mümkün mü? Bu durum, manuel olarak veya otomatik sertifika rotasyonu sürecinin bir parçası olarak (örn. barındırıcınız Let's Encrypt aracılığıyla yeni bir sertifika verdiğinde) yakın zamanda yeni bir sertifikaya geçtiyseniz yaşanabilir. Sertifika değiştiğinde web sunucusunun yeniden yüklenmesi veya yeniden başlatılması gerekir. Bazı nadir durumlarda bu gerçekleşmeyebilir veya deneyimsiz bir sistem yöneticisi bunu yapmayı unutabilir. Lütfen bunu kontrol etmesi ve gerekirse web sunucusu sürecini yeniden yüklemesi veya yeniden başlatması için barındırıcınız / sistem yöneticinizle iletişime geçin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2"
-msgid "Please go to your site\\'s backend and click on System, Manage, Extensions. Search for the "Web Services - Installer" plugin and enable it."
-msgstr "Lütfen sitenizin yönetim paneline gidin ve Sistem, Yönet, Uzantılar'a tıklayın. \"Web Hizmetleri - Yükleyici\" eklentisini arayın ve etkinleştirin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2"
-msgid "Please go to your site\\'s backend and click on Extensions, Plugins. Search for the "System - Panopticon Connector for Joomla 3" plugin and enable it."
-msgstr "Lütfen sitenizin yönetim paneline gidin ve Uzantılar, Eklentiler'e tıklayın. \"Sistem - Joomla 3 için Panopticon Connector\" eklentisini arayın ve etkinleştirin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3"
-msgid "Kindly note that the password protection may have been applied only to your site\\'s <code>api</code> folder, or the root folder of your site. Look in both places, in this order."
-msgstr "Şifre korumasının yalnızca sitenizin <code>api</code> klasörüne veya sitenizin kök klasörüne uygulanmış olabileceğini lütfen unutmayın. Bu sırayla her iki yere de bakın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
-msgid "Panopticon uses its own plugin, "Akeeba Panopticon Connector for WordPress", to provide the necessary API through WordPress\\' JSON services API (<code>wp-json</code>)."
-msgstr "Panopticon, WordPress'in JSON hizmetleri API'si (<code>wp-json</code>) aracılığıyla gerekli API'yi sağlamak için kendi eklentisi olan \"WordPress için Akeeba Panopticon Connector\"ı kullanır."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
-msgid "Please go to your site\\'s wp-admin backend and click on Plugins. Search for the "Akeeba Panopticon Connector for WordPress" plugin and enable it."
-msgstr "Lütfen sitenizin wp-admin paneline gidin ve Eklentiler'e tıklayın. \"WordPress için Akeeba Panopticon Connector\" eklentisini arayın ve etkinleştirin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
-msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\\\"font-monospace\\\">%s</span>), but we don\\'t have the code for it. This should have not happened."
-msgstr "Bunun yerine sorun giderme bilgisi sunmamız gereken (<span class=\\\"font-monospace\\\">%s</span>), ancak kodu olmayan bir hata aldık. Bu yaşanmamalıydı."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
-msgid "Please delete all files and folders inside the <code>tmp</code> folder of Akeeba Panopticon. This addresses the problem of this page\\'s cached copy being severely out of date. If this doesn\\'t help, please let us know."
-msgstr "Lütfen Akeeba Panopticon'un <code>tmp</code> klasöründeki tüm dosya ve klasörleri silin. Bu, sayfanın önbelleğe alınmış kopyasının çok eskimiş olması sorununu giderir. Bu işe yaramazsa lütfen bize bildirin."
-
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\\'https://haveibeenpwned.com/\\' _target=\\'blank\\'>Have I Been Pwned</a>."
-msgstr "Kullanıcıların çevrimiçi şifre sızıntılarında bulunan şifreler kullanmasını engelleyin. Üçüncü taraf <a href=\\'https://haveibeenpwned.com/\\' _target=\\'blank\\'>Have I Been Pwned</a> hizmeti tarafından desteklenmektedir."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid "Display avatars for users. This feature is powered by the third party service <a href=\\'https://gravatar.com\\' _target=\\'_blank\\'>Gravatar</a>."
-msgstr "Kullanıcılar için avatarlar görüntüleyin. Bu özellik, üçüncü taraf <a href=\\'https://gravatar.com\\' _target=\\'_blank\\'>Gravatar</a> hizmeti tarafından desteklenmektedir."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL_HELP"
-msgid "This preference can be overridden for any individual extension below. You can also override this for any individual extension and site in each site\\'s configuration page."
-msgstr "Bu tercih, aşağıdaki herhangi bir bireysel uzantı için geçersiz kılınabilir. Bunu her sitenin yapılandırma sayfasında herhangi bir bireysel uzantı ve site için de geçersiz kılabilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM_HELP"
-msgid "The hash algorithm for creating an anti-CSRF token. SHA-512 offers the best security, but may not work on some hosts because it\\'s very long. MD5 offers the least security but is compatible with all hosts. Only change if you have problems when clicking action buttons in Panopticon."
-msgstr "Anti-CSRF belirteci oluşturmak için karma algoritması. SHA-512 en iyi güvenliği sunar, ancak çok uzun olduğu için bazı barındırıcılarda çalışmayabilir. MD5 en az güvenliği sunar, ancak tüm barındırıcılarla uyumludur. Yalnızca Panopticon'daki işlem düğmelerine tıklamada sorun yaşıyorsanız değiştirin."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION_HELP"
-msgid "Controls whether new users can create their own accounts. In \\'Admin approval\\' mode, an administrator must approve new accounts. In \\'Self-approval\\' mode, users activate their account via an email link."
-msgstr "Yeni kullanıcıların kendi hesaplarını oluşturup oluşturamayacağını denetler. \\'Yönetici onayı\\' modunda, bir yönetici yeni hesapları onaylamalıdır. \\'Kendi kendine onay\\' modunda, kullanıcılar hesaplarını bir e-posta bağlantısı aracılığıyla etkinleştirir."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME_HELP"
-msgid "Choose which service will be used to report your sites\\' uptime. Please note that the integrated "Panopticon" provider is very basic and has some gotchas. Please read the documentation."
-msgstr "Sitelerinizin çalışma süresini raporlamak için hangi hizmetin kullanılacağını seçin. Entegre \"Panopticon\" sağlayıcısının çok temel olduğunu ve bazı tuzakları bulunduğunu lütfen unutmayın. Lütfen belgeleri okuyun."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY"
-msgid "This email message confirms that Akeeba Panopticon, installed on %s, has been configured to send email messages correctly.\\\\n\\\\nIf this message ended up in your spam / junk inbox please check whether your domain has DKIM and SPF set up correctly, as well as whether your receiving mail server and mail client are configured in a way which misidentifies this message as spam. According to our experience, you can get pertinent troubleshooting information by looking at the source code of the received message in your mail client. Please consult your mail client\\'s documentation for more information on how to do that."
-msgstr "Bu e-posta mesajı, %s üzerine kurulu Akeeba Panopticon'un e-posta mesajlarını doğru şekilde gönderecek biçimde yapılandırıldığını onaylar.\\\\n\\\\nBu mesaj spam/istenmeyen posta klasörünüze düştüyse lütfen etki alanınızda DKIM ve SPF'nin doğru şekilde ayarlanıp ayarlanmadığını ve alıcı posta sunucunuzun ile posta istemcinizin bu mesajı yanlışlıkla spam olarak tanımlayacak şekilde yapılandırılıp yapılandırılmadığını kontrol edin. Deneyimlerimize göre posta istemcinizde alınan mesajın kaynak koduna bakarak ilgili sorun giderme bilgilerini edinebilirsiniz. Bunu nasıl yapacağınız hakkında daha fazla bilgi için lütfen posta istemcinizin belgelerine başvurun."
-
-#, phpformat
-msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
-msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\\'%s\\'>documentation instructions</a> to update the container, and the database."
-msgstr "Panopticon, Docker altında çalışırken arayüzünden doğrudan güncellenemez. Bunun yerine, konteyneri ve veritabanını güncellemek için <a href=\\'%s\\'>belgelerdeki talimatları</a> izlemeniz gerekir."
-
-#, phpformat
-msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS_HELP"
-msgid "These privileges will be given to a user belonging to this group for any site which belongs to this group. To let the user see a site\\'s overview you need to give them the View privilege."
-msgstr "Bu ayrıcalıklar, bu gruba ait herhangi bir site için bu gruba ait bir kullanıcıya verilecektir. Kullanıcının bir sitenin genel görünümünü görmesine izin vermek için onlara Görüntüleme ayrıcalığı vermeniz gerekir."
-
-#, phpformat
-msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
-msgid "The email address is used to email the user, as well as displaying the user\\'s picture using the third party <a href=\\\"https://en.gravatar.com\\\" target=\\\"_blank\\\">Gravatar</a> service."
-msgstr "E-posta adresi, kullanıcıya e-posta göndermek ve üçüncü taraf <a href=\\\"https://en.gravatar.com\\\" target=\\\"_blank\\\">Gravatar</a> hizmeti kullanılarak kullanıcının fotoğrafını görüntülemek için kullanılır."
-
-#, phpformat
-msgctxt "PANOPTICON_ABOUT_LBL_VISIT_GITHUB"
-msgid "For a complete list of Panopticon\\'s contributors please visit <a href=\\\"%s\\\">its GitHub repository</a>."
-msgstr "Panopticon'un katkıda bulunanlarının tam listesi için lütfen <a href=\\\"%s\\\">GitHub deposunu</a> ziyaret edin."
-
-#, phpformat
-msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
-msgid "We would like to acknowledge and recognise the work of each and every person who has contributed to Akeeba Panopticon, no matter how small or big their contribution is; even the smallest of details are important. If you have contributed outside of GitHub and would like to be publicly acknowledged, please drop us a line and we\\'ll rectify the omission; <em>every person matters</em>."
-msgstr "Akeeba Panopticon'a katkıda bulunan her kişinin çalışmasını, katkısının ne kadar küçük ya da büyük olduğundan bağımsız olarak kabul etmek ve tanımak istiyoruz; en küçük ayrıntılar bile önemlidir. GitHub dışında katkıda bulunduysanız ve kamuoyu tarafından kabul görmek istiyorsanız lütfen bize bir mesaj gönderin, eksikliği gidereceğiz; <em>her kişi önemlidir</em>."
-
-#, phpformat
-msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
-msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site\\'s server where Akeeba Backup runs."
-msgstr "<code>[DATE]</code>, <code>[SITE]</code> vb. Akeeba Backup değişkenlerini kullanabilirsiniz. Bunlar yedekleme zamanında Akeeba Backup tarafından değiştirilecektir. Ayrıca Panopticon tarafından yedekleme zamanının biçimlendirilmiş bir sürümüyle değiştirilecek <code>{DATE_FORMAT_LC}</code>, <code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> değişkenlerini de kullanabilirsiniz. Panopticon değişkenlerinin Akeeba Backup'ın çalıştığı sitenin sunucusunda değil, Panopticon'u çalıştıran sunucuda işlenmesi nedeniyle Akeeba Backup değişkenlerine kıyasla birkaç saniye farklılık gösterebileceğini lütfen unutmayın."
-
-#, phpformat
-msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
-msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "<code>1</code>'den <code>31</code>'e kadar sayı, ayın son günü için <code>L</code> (değer listelerinde kullanılamaz!), bitişik aralık örn. <code>1-15</code>, virgülle ayrılmış değer listesi örn. <code>1,7,14,21,28</code>, her gün için <code>*</code>, bölü işareti kullanarak her X günde bir örn. <code>*/3</code> (her 3 günde bir).<br>Aynı ay içinde Cumartesi veya Pazar olmayan en yakın gün için <code>W</code> ile bir sayı kullanın, örn. <code>15W</code> (13. ile 17. arasında) Cumartesi veya Pazar olmayan en yakın gündür."
-
-#, phpformat
-msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The backup schedule is a <a href=\\'%s\\' target=\\'_blank\\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Yedekleme programı bir <a href=\\'%s\\' target=\\'_blank\\'>CRON ifadesidir</a>. %s saat dilimini kullanır."
-
-#, phpformat
-msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
-msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "<code>1</code>'den <code>31</code>'e kadar sayı, ayın son günü için <code>L</code> (değer listelerinde kullanılamaz!), bitişik aralık örn. <code>1-15</code>, virgülle ayrılmış değer listesi örn. <code>1,7,14,21,28</code>, her gün için <code>*</code>, bölü işareti kullanarak her X günde bir örn. <code>*/3</code> (her 3 günde bir).<br>Aynı ay içinde Cumartesi veya Pazar olmayan en yakın gün için <code>W</code> ile bir sayı kullanın, örn. <code>15W</code> (13. ile 17. arasında) Cumartesi veya Pazar olmayan en yakın gündür."
-
-#, phpformat
-msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The scan schedule is a <a href=\\'%s\\' target=\\'_blank\\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Tarama programı bir <a href=\\'%s\\' target=\\'_blank\\'>CRON ifadesidir</a>. %s saat dilimini kullanır."
-
-#, phpformat
-msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The check schedule is a <a href=\\'%s\\' target=\\'_blank\\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Kontrol programı bir <a href=\\'%s\\' target=\\'_blank\\'>CRON ifadesidir</a>. %s saat dilimini kullanır."
-
-#, phpformat
-msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_INSTRUCTIONS"
-msgid "Print this page and keep it in your wallet. Each of the following codes below can be used only once. Use them in case of emergency, when none of the other Multi-factor Authentication methods you\\'ve set up can be used. For example, if your phone is out of battery or misplaced."
-msgstr "Bu sayfayı yazdırın ve cüzdanınızda saklayın. Aşağıdaki kodların her biri yalnızca bir kez kullanılabilir. Kurduğunuz diğer Çok Faktörlü Kimlik Doğrulama yöntemlerinin hiçbirinin kullanılamadığı acil durumlarda bunları kullanın. Örneğin, telefonunuzun şarjı bittiğinde veya kaybolduğunda."
-
-#, phpformat
-msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE"
-msgid "<p>Enter a password below. This password will be required to be entered after logging in before you\\'re able to use the site.</p>"
-msgstr "<p>Aşağıya bir şifre girin. Bu şifre, siteyi kullanabilmek için oturum açtıktan sonra girilmesi gerekecektir.</p>"
-
-#, phpformat
-msgctxt "PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS"
-msgid "Follow the instructions on your device\\'s screen to use your preferred Passkey."
-msgstr "Tercih ettiğiniz Geçiş Anahtarını kullanmak için cihazınızın ekranındaki talimatları izleyin."
-
-#, phpformat
-msgctxt "PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_BODY"
-msgid "Your browser doesn\\'t support Passkeys, or your site does not meet the minimum requirements (HTTPS-only, with an SSL/TLS certificate signed by a commercial Certification Authority)."
-msgstr "Tarayıcınız Geçiş Anahtarlarını desteklemiyor veya siteniz minimum gereksinimleri karşılamıyor (yalnızca HTTPS, ticari bir Sertifika Otoritesi tarafından imzalanmış SSL/TLS sertifikasıyla)."
-
-#, phpformat
-msgctxt "PANOPTICON_OVERRIDES_LBL_NO_OVERRIDE_SUGGESTION"
-msgid "Please visit your site\\'s administrator backend to inspect the template overrides."
-msgstr "Şablon geçersiz kılmalarını incelemek için lütfen sitenizin yönetim panelini ziyaret edin."
-
-#, phpformat
-msgctxt "PANOPTICON_USAGESTATS_LBL_SERVER_DOMAIN"
-msgid "The usage statistics collection server\\'s domain name is <code>%s</code>."
-msgstr "Kullanım istatistikleri toplama sunucusunun etki alanı adı <code>%s</code>."
-
-#, phpformat
-msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The schedule for update summary emails is a <a href=\\'%s\\' target=\\'_blank\\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Güncelleme özeti e-postaları programı bir <a href=\\'%s\\' target=\\'_blank\\'>CRON ifadesidir</a>. %s saat dilimini kullanır."
-
-#, phpformat
-msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
-msgid "If no groups are selected: emails are sent to all users who can make changes to the site. When any groups are selected: emails are sent to all users who are assigned to the selected group, <em>even if they can\\'t even view the site in the Sites Overview page</em>."
-msgstr "Hiçbir grup seçilmezse: e-postalar, sitede değişiklik yapabilecek tüm kullanıcılara gönderilir. Herhangi bir grup seçildiğinde: e-postalar, seçilen gruba atanan tüm kullanıcılara gönderilir; <em>Siteler Genel Bakış sayfasında siteyi görüntüleyemeseler bile</em>."
-
-#, phpformat
-msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The Site Action Summary schedule is a <a href=\\'%s\\' target=\\'_blank\\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Site Eylem Özeti programı bir <a href=\\'%s\\' target=\\'_blank\\'>CRON ifadesidir</a>. %s saat dilimini kullanır."
-
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED"
-msgid "You have reached the maximum number of enabled API tokens. Please delete or disable an existing token before creating a new one."
-msgstr "Etkinleştirilmiş API belirteçlerinin maksimum sayısına ulaştınız. Yeni bir belirteç oluşturmadan önce lütfen mevcut bir belirteci silin veya devre dışı bırakın."
+msgid ""
+"You have reached the maximum number of enabled API tokens. Please delete or "
+"disable an existing token before creating a new one."
+msgstr ""
+"Etkinleştirilmiş API belirteçlerinin en çok sayısına ulaştınız. Yeni bir "
+"belirteç oluşturmadan önce mevcut belirteçlerden birini silin veya devre dışı "
+"bırakın."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED"
-msgid "API access is disabled for your account. Please contact a super administrator."
-msgstr "Hesabınız için API erişimi devre dışı bırakıldı. Lütfen bir süper yöneticiyle iletişime geçin."
+msgid ""
+"API access is disabled for your account. Please contact a super administrator."
+msgstr ""
+"Hesabınız için API erişimi devre dışı bırakılmıştır. Lütfen bir süper "
+"yöneticiyle iletişime geçin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_COPY"
 msgid "Copy"
 msgstr "Kopyala"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_BY"
 msgid "Created by"
 msgstr "Oluşturan"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHHTACCESS"
-msgid "API endpoint URL (recommended, requires <code>.htaccess</code> or equivalent URL rewriting)"
-msgstr "API uç nokta URL'si (önerilir, <code>.htaccess</code> veya eşdeğer URL yeniden yazma gerektirir)"
+msgid ""
+"API endpoint URL (recommended, requires <code>.htaccess</code> or equivalent URL "
+"rewriting)"
+msgstr ""
+"API uç nokta bağlantısı (önerilen, <code>.htaccess</code> veya eşdeğer bir "
+"bağlantı yeniden yazma dosyası gerektirir)"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHOUTHTACCESS"
 msgid "API endpoint URL (fallback, works without URL rewriting)"
-msgstr "API uç nokta URL'si (yedek, URL yeniden yazma olmadan çalışır)"
+msgstr ""
+"API uç nokta bağantısı (yedek, bağlantı yeniden yazma işlemi olmadan çalışır)"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES"
 msgid "Expires"
-msgstr "Son kullanma tarihi"
+msgstr "Süresi Doluyor"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_NEVER"
 msgid "Never"
-msgstr "Hiçbir zaman"
+msgstr "Asla"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_ON"
 msgid "Expires on %s"
-msgstr "%s tarihinde sona erer"
+msgstr "Son Kullanma Tarihi: %s"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER"
 msgid "Created after"
-msgstr "Şu tarihten sonra oluşturulan"
+msgstr "Oluşturulduktan Sonra"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE"
 msgid "Expires before"
-msgstr "Şu tarihten önce sona eren"
+msgstr "Son Kullanma Tarihi Öncesi"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE"
 msgid "Last used before"
-msgstr "Şu tarihten önce son kullanılan"
+msgstr "Son Kullanma Öncesi"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED"
 msgid "Last Used"
 msgstr "Son Kullanım"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED_IP"
 msgid "Last Used IP Address"
-msgstr "Son Kullanılan IP Adresi"
+msgstr "En Son Kullanılan IP Adresi"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_METADATA"
 msgid "Metadata"
-msgstr "Meta Veri"
+msgstr "Meta Verisi"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_NEVER"
 msgid "Never"
-msgstr "Hiçbir zaman"
+msgstr "Asla"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_EXCEEDED_HINT"
-msgid "You have reached your API token limit. Please delete or disable an existing token before creating or re-enabling one."
-msgstr "API belirteci limitinize ulaştınız. Yeni bir tane oluşturmadan veya yeniden etkinleştirmeden önce lütfen mevcut bir belirteci silin veya devre dışı bırakın."
+msgid ""
+"You have reached your API token limit. Please delete or disable an existing "
+"token before creating or re-enabling one."
+msgstr ""
+"API belirteç sınırınıza ulaştınız. Yeni bir belirteç oluşturmadan veya mevcut "
+"bir belirteci yeniden etkinleştirmeden önce, lütfen mevcut belirteçlerden birini "
+"silin veya devre dışı bırakın."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
 msgid "%1\\$d of %2\\$d API tokens created"
-msgstr "%2\\$d API belirtecinden %1\\$d'si oluşturuldu"
+msgstr "%2\\$d API belirtecinden %1\\$d tanesi oluşturuldu"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES"
 msgid "Scopes"
-msgstr "Kapsamlar"
+msgstr "Kapsama"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES_DESC"
-msgid "Select the API operations this token is allowed to perform. Leave all unchecked to grant access to all scopes (default)."
-msgstr "Bu belirtecin gerçekleştirmesine izin verilen API işlemlerini seçin. Tüm kapsamlara erişim vermek için hepsini işaretlemeden bırakın (varsayılan)."
+msgid ""
+"Select the API operations this token is allowed to perform. Leave all unchecked "
+"to grant access to all scopes (default)."
+msgstr ""
+"Bu belirtecin gerçekleştirmesine izin verilen API işlemlerini seçin. Tüm "
+"kapsamlara erişim izni vermek için hiçbir seçeneği işaretlemeyin (varsayılan "
+"ayar)."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION"
 msgid "Search by description"
 msgstr "Açıklamaya göre ara"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_SELECT_ENABLED"
 msgid "— Select state —"
-msgstr "— Durum seçin —"
+msgstr "– Durum Seçin –"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SELFUPDATE"
 msgid "Self-Update"
-msgstr "Kendi Kendini Güncelleme"
+msgstr "Otomatik Güncelleme"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SITES"
 msgid "Sites"
-msgstr "Siteler"
+msgstr "Web Siteleri"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SYSCONFIG"
 msgid "System Configuration"
 msgstr "Sistem Yapılandırması"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_TASKS"
 msgid "Tasks"
 msgstr "Görevler"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ"
 msgid "Read update info"
-msgstr "Güncelleme bilgisini oku"
+msgstr "Güncelleme bilgilerini irdeleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ_DESC"
 msgid "Read self-update status and available version information."
-msgstr "Kendi kendini güncelleme durumunu ve mevcut sürüm bilgisini okuyun."
+msgstr "Otomatik güncelleme durumunu ve mevcut sürüm bilgilerini irdeleyin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE"
 msgid "Perform updates"
-msgstr "Güncellemeleri gerçekleştir"
+msgstr "Güncellemeleri Gerçekleştirin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE_DESC"
 msgid "Download, install, and finalise Panopticon self-updates."
-msgstr "Panopticon kendi kendini güncellemelerini indirin, yükleyin ve sonlandırın."
+msgstr "Panopticon'un otomatik güncellemelerini indirin, kurun ve tamamlayın."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE"
 msgid "CMS updates"
-msgstr "CMS güncellemeleri"
+msgstr "CMS Güncellemeleri"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE_DESC"
 msgid "Trigger, cancel, or clear CMS (Joomla/WordPress) core update operations."
-msgstr "CMS (Joomla/WordPress) çekirdek güncelleme işlemlerini tetikleyin, iptal edin veya temizleyin."
+msgstr ""
+"CMS (Joomla/WordPress) çekirdek güncelleme işlemlerini başlatın, iptal edin veya "
+"silin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS"
 msgid "Manage extensions"
-msgstr "Uzantıları yönet"
+msgstr "Eklentileri Yönet"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS_DESC"
-msgid "List extensions, refresh extension data, manage download keys, and schedule or cancel extension updates."
-msgstr "Uzantıları listeleyin, uzantı verilerini yenileyin, indirme anahtarlarını yönetin ve uzantı güncellemelerini zamanlayin veya iptal edin."
+msgid ""
+"List extensions, refresh extension data, manage download keys, and schedule or "
+"cancel extension updates."
+msgstr ""
+"Eklentileri listeleyin, eklenti verilerini yenileyin, indirme anahtarlarını "
+"yönetin ve eklenti güncellemelerini planlayın veya iptal edin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ"
 msgid "Read sites"
-msgstr "Siteleri oku"
+msgstr "Web Sitelerini İrdeleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ_DESC"
 msgid "List sites and read their details, configuration, and status."
-msgstr "Siteleri listeleyin ve ayrıntılarını, yapılandırmalarını ve durumlarını okuyun."
+msgstr ""
+"Web sitelerini listeleyin ve ayrıntılarını, yapılandırmalarını ve durumlarını "
+"irdeleyin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH"
 msgid "Refresh sites"
-msgstr "Siteleri yenile"
+msgstr "Web Sitelerini Yenileyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH_DESC"
 msgid "Trigger a manual data refresh for a site."
-msgstr "Bir site için manuel veri yenilemesini tetikleyin."
+msgstr "Bir site için manuel veri yenileme işlemini başlatın."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE"
 msgid "Write sites"
-msgstr "Sitelere yaz"
+msgstr "Web Sitelerini İşleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE_DESC"
 msgid "Add new sites and modify existing site settings."
 msgstr "Yeni siteler ekleyin ve mevcut site ayarlarını değiştirin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ"
 msgid "Read configuration"
-msgstr "Yapılandırmayı oku"
+msgstr "Yapılandırmayı İrdeleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ_DESC"
 msgid "Read non-sensitive system configuration parameters."
-msgstr "Hassas olmayan sistem yapılandırma parametrelerini okuyun."
+msgstr "Hassas olmayan sistem yapılandırma parametrelerini irdeleyin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE"
 msgid "Write configuration"
-msgstr "Yapılandırmaya yaz"
+msgstr "Yapılandırmayı İşleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE_DESC"
 msgid "Set system configuration parameters."
 msgstr "Sistem yapılandırma parametrelerini ayarlayın."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ"
 msgid "Read tasks"
-msgstr "Görevleri oku"
+msgstr "Görevleri İşleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ_DESC"
 msgid "List and read task details."
-msgstr "Görev ayrıntılarını listeleyin ve okuyun."
+msgstr "Görev ayrıntılarını listeleyin ve irdeleyin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE"
 msgid "Write tasks"
-msgstr "Görevlere yaz"
+msgstr "Görevleri İşleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE_DESC"
 msgid "Create and modify scheduled tasks."
-msgstr "Zamanlanmış görevler oluşturun ve değiştirin."
+msgstr "Zamanlanmış görevleri oluşturun ve düzenleyin."
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION"
 msgid "Description"
 msgstr "Açıklama"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED"
 msgid "Last Used"
-msgstr "Son Kullanım"
+msgstr "Son Kullanılan"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_TITLE_EDIT"
 msgid "Edit API Token"
-msgstr "API Belirtecini Düzenle"
+msgstr "API Belirtecini Düzenleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_APITOKENS_TITLE_NEW"
 msgid "New API Token"
 msgstr "Yeni API Belirteci"
 
-#, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT"
 msgid "API Token Limit"
-msgstr "API Belirteci Limiti"
+msgstr "API Belirteci Sınırı"
 
-#, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP"
-msgid "Override the global API token limit for users in this group. Leave empty to use the global default. Set to 0 to deny API access to group members (unless another group they belong to grants a higher limit)."
-msgstr "Bu gruptaki kullanıcılar için genel API belirteci limitini geçersiz kılın. Genel varsayılanı kullanmak için boş bırakın. Grup üyelerinin API erişimini reddetmek için 0 olarak ayarlayın (ait oldukları başka bir grup daha yüksek bir limit tanılamadıkça)."
+msgid ""
+"Override the global API token limit for users in this group. Leave empty to use "
+"the global default. Set to 0 to deny API access to group members (unless another "
+"group they belong to grants a higher limit)."
+msgstr ""
+"Bu gruptaki kullanıcılar için genel API belirteci sınırını geçersiz kılın. Genel "
+"varsayılan değeri kullanmak için bu alanı boş bırakın. Grup üyelerinin API "
+"erişimini engellemek için 0 olarak ayarlayın (tabii ki, üye oldukları başka bir "
+"grup daha yüksek bir sınır vermiyorsa)."
 
-#, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER"
 msgid "(Use global default)"
-msgstr "(Genel varsayılanı kullan)"
+msgstr "(genel varsayılanı kullanılsın)"
 
-#, phpformat
 msgctxt "PANOPTICON_LBL_APITOKEN_COPIED"
 msgid "The API token has been copied."
 msgstr "API belirteci kopyalandı."
 
-#, phpformat
 msgctxt "PANOPTICON_LBL_APITOKEN_DELETED"
 msgid "The selected API tokens have been deleted."
 msgstr "Seçilen API belirteçleri silindi."
 
-#, phpformat
 msgctxt "PANOPTICON_LBL_APITOKEN_SAVED"
 msgid "The API token has been saved."
 msgstr "API belirteci kaydedildi."
 
-#, phpformat
 msgctxt "PANOPTICON_LBL_MODIFIED_BY"
 msgid "Modified by"
-msgstr "Düzenleyen"
+msgstr "Değiştiren"
 
-#, phpformat
 msgctxt "PANOPTICON_LBL_MODIFIED_ON"
 msgid "Modified on"
-msgstr "Düzenlenme tarihi"
+msgstr "Değiştirilme Tarihi"
 
-#, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_FILESCANNER_FAILED"
 msgid "PHP File Change Scanner: Task Failure"
-msgstr "PHP Dosya Değişiklik Tarayıcısı: Görev Başarısızlığı"
+msgstr "PHP Dosya Değişikliği Tarayıcısı: Görev Hatası"
 
-#, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS"
 msgid "Attach Log File for These Groups"
-msgstr "Bu Gruplar İçin Günlük Dosyası Ekle"
+msgstr "Bu Gruplar İçin Günlük Dosyasını Ekle"
 
-#, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS_HELP"
-msgid "Override the global setting: select which user groups receive the task log file as an email attachment on failure. Leave empty to use the global Panopticon setting."
-msgstr "Genel ayarı geçersiz kıl: hangi kullanıcı gruplarının başarısızlık durumunda görev günlük dosyasını e-posta eki olarak alacağını seçin. Genel Panopticon ayarını kullanmak için boş bırakın."
+msgid ""
+"Override the global setting: select which user groups receive the task log file "
+"as an email attachment on failure. Leave empty to use the global Panopticon "
+"setting."
+msgstr ""
+"Genel ayarı geçersiz kılın: Hata durumunda görev günlüğü dosyasını e-posta eki "
+"olarak alacak kullanıcı gruplarını seçin. Genel Panopticon ayarını kullanmak "
+"için bu alanı boş bırakın."
 
-#, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME"
 msgid "Time Of The Day to Install Extension Updates On (Hour:Minute)"
-msgstr "Uzantı Güncellemelerinin Yükleneceği Günün Saati (Saat:Dakika)"
+msgstr "Eklenti Güncellemelerinin Yükleneceği Saat (Saat:Dakika)"
 
-#, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
-msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a "weird" or "wrong" way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
-msgstr "%s saat dilimiyle ifade edilen saat. Günün bu saatinden <em>sonra</em> güncelleme bulunursa güncelleme yüklemesi bir sonraki takvim gününde gerçekleşecektir. Yaz saati uygulaması geçiş saatini kullanmaktan kaçının (genellikle: sabah 2 ile 4 arasında); aksi takdirde, yaz saati uygulaması geçiş gününde bir güncelleme bulunursa güncelleme zamanlaması sizin "garip" veya "yanlış" olarak algılayacağınız şekilde davranacaktır. Manuel olarak tetiklenen güncellemeler bu ayardan bağımsız olarak her zaman hemen çalışır."
+msgid ""
+"The time expressed in the %s timezone. If updates are found <em>after</em> this "
+"time of the day the update installation will take place on the next calendar "
+"day. Avoid using the Daylight Savings Time changeover time of the day (usually: "
+"between 2am and 4am); otherwise, update scheduling will act in what you perceive "
+"to be a “weird” or “wrong” way if an update is found on the day of the Daylight "
+"Savings Time changeover. Manually-triggered updates always run immediately, "
+"regardless of this setting."
+msgstr ""
+"Zaman, %s saat diliminde ifade edilir. Günün bu saatinden <em>sonrasında</em> "
+"güncellemeler bulunursa, güncelleme kurulumu bir sonraki takvim gününde "
+"gerçekleştirilecektir. Yaz saati uygulamasına geçiş saatlerini (genellikle: "
+"02:00 ile 04:00 arası) kullanmaktan kaçının; aksi takdirde, yaz saati "
+"uygulamasına geçiş gününde bir güncelleme bulunursa, güncelleme zamanlaması "
+"sizin için “tuhaf” veya “yanlış” olarak algılayacağınız bir şekilde "
+"çalışacaktır. Manuel olarak tetiklenen güncellemeler, bu ayardan bağımsız olarak "
+"her zaman hemen çalıştırılır."
 
-#, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_WHEN"
 msgid "When Should Updates Be Installed"
-msgstr "Güncellemeler Ne Zaman Yüklenmelidir"
+msgstr "Güncellemeler Ne Zaman Yüklenmeli"
 
-#, phpformat
 msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_IMMEDIATELY"
 msgid "Immediately"
 msgstr "Hemen"
 
-#, phpformat
 msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_TIME"
 msgid "Time of Day"
-msgstr "Günün Saati"
+msgstr "Günün Bir Saatinde"
 
-#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX"
 msgid "Maximum tokens per user"
-msgstr "Kullanıcı başına maksimum belirteç sayısı"
+msgstr "Kullanıcı başına en fazla belirteç sayısı"
 
-#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX_HELP"
-msgid "The maximum number of enabled, non-expired API tokens a user may hold. User groups can override this on a per-group basis. Set to 0 to deny API access to all users by default (individual groups may still grant access via their own override)."
-msgstr "Bir kullanıcının sahip olabileceği etkinleştirilmiş, süresi dolmamış API belirteçlerinin maksimum sayısı. Kullanıcı grupları bunu grup bazında geçersiz kılabilir. Varsayılan olarak tüm kullanıcıların API erişimini reddetmek için 0 olarak ayarlayın (bireysel gruplar kendi geçersiz kılmaları aracılığıyla hâlâ erişim tanıyabilir)."
+msgid ""
+"The maximum number of enabled, non-expired API tokens a user may hold. User "
+"groups can override this on a per-group basis. Set to 0 to deny API access to "
+"all users by default (individual groups may still grant access via their own "
+"override)."
+msgstr ""
+"Bir kullanıcının sahip olabileceği, etkin ve süresi dolmamış API belirteçlerini "
+"en çok sayısı. Kullanıcı grupları bu ayarı grup bazında geçersiz kılabilir. "
+"Varsayılan olarak tüm kullanıcıların API erişimini engellemek için bu değeri 0 "
+"olarak ayarlayın (bireysel gruplar kendi geçersiz kılma ayarları aracılığıyla "
+"erişim izni verebilir)."
 
-#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS"
 msgid "Attach Log File to These Groups"
-msgstr "Günlük Dosyasını Bu Gruplara Ekle"
+msgstr "Günlük Dosyasını Bu Gruplara Ekleyin"
 
-#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS_HELP"
-msgid "Select which user groups receive the task log file as an email attachment when a core or extension update fails. Leave empty to send the attachment to all notification recipients."
-msgstr "Bir çekirdek veya uzantı güncellemesi başarısız olduğunda hangi kullanıcı gruplarının görev günlük dosyasını e-posta eki olarak alacağını seçin. Eki tüm bildirim alıcılarına göndermek için boş bırakın."
+msgid ""
+"Select which user groups receive the task log file as an email attachment when a "
+"core or extension update fails. Leave empty to send the attachment to all "
+"notification recipients."
+msgstr ""
+"Çekirdek veya eklenti güncellemesi başarısız olduğunda görev günlüğü dosyasını e-"
+"posta eki olarak alacak kullanıcı gruplarını seçin. Eki tüm bildirim alıcılarına "
+"göndermek için bu alanı boş bırakın."
 
-#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
 msgid "API Tokens"
 msgstr "API Belirteçleri"
 
-
-#, phpformat
-msgctxt "AWF_APPLICATION_ERROR_TASK_NOT_FOUND"
-msgid "Task \'%s\' not found"
-msgstr "Task \'%s\' bulunamadı"
-
-#, phpformat
-msgctxt "PANOPTICON_TASKTYPE_UPTIMEMONITOR"
-msgid "Monitors sites\' uptime"
-msgstr "Sitelerin çalışma süresini izler"
-
-#, phpformat
-msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_UPDATE_DISAPPEARED"
-msgid "The update package has disappeared from the site. Is a plugin, or your host, clearing your site\'s temporary directory automatically?"
-msgstr "Güncelleme paketi siteden kayboldu. Bir eklenti veya barındırıcınız, sitenizin geçici dizinini otomatik olarak temizliyor mu?"
-
-#, phpformat
-msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_HTTP_401"
-msgid "HTTP status 401 while extracting the update. Your site\'s administrator folder is password protected. Please edit the site and enter the Administrator Directory Username and Password in the Connection tab. Then, retry scheduling an update for this site."
-msgstr "Güncelleme ayıklanırken HTTP 401 durum kodu alındı. Sitenizin yönetici klasörü parola korumalı. Lütfen siteyi düzenleyin ve Bağlantı sekmesindeki Yönetici Dizini Kullanıcı Adı ile Parolayı girin. Ardından bu site için güncelleme zamanlamayı yeniden deneyin."
-
-#, phpformat
-msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
-msgstr "Site %d (%s) için Joomla Update\\\'nin ayıklama betiği etkinleştiriliyor"
-
-#, phpformat
-msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_INVALID_JSON"
-msgid "Installing WordPress update on site #%d (%s) has failed. The server\'s response is not valid JSON."
-msgstr "Site #%d (%s) üzerinde WordPress güncellemesi yüklenemedi. Sunucunun yanıtı geçerli JSON değil."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_BTN_LETS_GO"
-msgid "Let\'s go!"
-msgstr "Hadi başlayalım!"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_SESSION_LBL_WARNING_BODY"
-msgid "The session write path configured in PHP cannot be written to, making logging in impossible. To address this problem, Panopticon will attempt to create a session save path in the <code>%s</code> directory. For this to be possible, you need to enter the FTP or SFTP connection details to your site\'s root. If you are unsure about these settings, please ask your host."
-msgstr "PHP\'de yapılandırılan oturum yazma yolu yazılabilir değil; bu da oturum açmayı imkânsız kılıyor. Devam edebilirsiniz, ancak Panopticon kurulumu tamamlanana kadar oturum açamazsınız. Yönetici bilgilerini girdikten sonra Panopticon, oturumları yönetmek için veritabanını kullanmaya geçecektir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_FS_DRIVER_HELP"
-msgid "On some shared hosting environments you need to use FTP or SFTP to be able to write to your site\'s files."
-msgstr "Bazı paylaşımlı barındırma ortamlarında dosyaları sunucuya yazabilmek için FTP veya SFTP kullanmanız gerekebilir. Bu durumda lütfen aşağıdaki FTP/SFTP bilgilerini girin."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PORT_HELP"
-msgid "The port number your (S)FTP server listens to. Usually it\'s 21 for FTP and 22 for SFTP. If unsure, ask your host."
-msgstr "(S)FTP sunucunuzun dinlediği port numarası. Genellikle FTP için 21, SFTP için ise 22\'dir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_BROKEN_JS_EXPLAIN"
-msgid "The JavaScript files for Panopticon are not loading properly. Make sure you installation is not missing files, check permissions, and clear your browser\'s cache."
-msgstr "Panopticon için JavaScript dosyaları düzgün yüklenmiyor. Panopticon\'u bir dizine yüklediğinizden emin olun ve o dizini doğrudan tarayıcınızda açmayı deneyin."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBENCRYPTION_HELP"
-msgid "Should we connect to the database using an SSL certificate? This can be used instead of username and password authentication (encrypted connection with certificate authentication) or <em>on top of</em> username and password authentication (encrypted connection with password authentication). If you don\'t know what this means set this option to No and ignore the next few options as well."
-msgstr "Veritabanına SSL sertifikası kullanarak bağlanmalı mıyız? Bu, iç ağlarda olduğu gibi her zaman güvenli olmayan ağlarda kullanılabilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLKEY"
-msgid "Database user\'s Private Key file"
-msgstr "Veritabanı kullanıcısının Özel Anahtar dosyası"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLCERT"
-msgid "Database user\'s Public Key (Certificate) file"
-msgstr "Veritabanı kullanıcısının Ortak Anahtarı (Sertifika) dosyası"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DBSSLVERIFYSERVERCERT_HELP"
-msgid "Set to Yes to verify the certificate the server sends back to us. This is verified against the Certification Authority (CA) file you specified. If you get connection errors set this to No; some setups (especially those generated by the <code>mysql_ssl_rsa_setup</code>) may disallow a connection if certification verification is enabled. If you enable verification and the CA file field is left blank the server\'s certificate will be checked against the Certification Authority files your server knows about, see the <code>openssl.cafile</code> and <code>openssl.capath</code> PHP options."
-msgstr "Sunucunun bize gönderdiği sertifikayı doğrulamak için Evet olarak ayarlayın. Bu işlem, Veritabanı CA Sertifikası alanında belirtilen CA sertifikasına göre doğrulanır."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_HOST_DESCRIPTION"
-msgid "The FTP server\'s host name, without the protocol. Do not use <s><code>ftp://example.com</code></s>; use <code>example.com</code> instead."
-msgstr "FTP sunucusunun protokolsüz host adı. <s><code>ftp://ornek.com</code></s> değil, <code>ornek.com</code> şeklinde kullanın."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_PORT_DESCRIPTION"
-msgid "FTP server\'s TCP/IP port. Usually 21. Please ask your host."
-msgstr "FTP sunucusunun TCP/IP portu. Genellikle 21\'dir. Lütfen barındırıcınıza sorun."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_PASSWORD_DESCRIPTION"
-msgid "Password, case-sensitive. Best use passwords consisting only of a-z, A-Z, 0-9, dashes, dots, underscores, and exclamation points. Other characters may trigger your web server\'s anti-hacking protection."
-msgstr "Parola, büyük/küçük harf duyarlıdır. En iyi yalnızca a-z, A-Z, 0-9 ve noktalama işaretlerinden oluşan parolalar kullanın."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_FTPS_DESCRIPTION"
-msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \"Secure FTP\"</strong>. If your server doesn\'t support this method you will get connection errors."
-msgstr "FTP sunucunuza SSL şifreli bağlantı kullanarak bağlanın. <strong>Bu, barındırıcınız tarafından açıkça desteklenmiyorsa çalışmaz.</strong>"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTFTP_INITDIR_DESCRIPTION"
-msgid "The absolute FTP path to the directory where the files will be uploaded. If unsure, connect to your server with FileZilla, browse to the intended directory and copy the path appearing on the right-hand pane above the directory list. Usually, it\'s something like <code>/public_html</code> or <code>/httpdocs</code>."
-msgstr "Dosyaların yükleneceği dizinin mutlak FTP yolu. Emin değilseniz, bir FTP masaüstü istemcisi kullanarak bağlanın ve sunucunuzdaki siteye gidin."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTSFTP_HOST_DESCRIPTION"
-msgid "SFTP server\'s hostname, without the protocol. Do not use <s><code>sftp://example.com</code></s>; use <code>example.com</code> instead."
-msgstr "SFTP sunucusunun protokolsüz host adı. <s><code>sftp://ornek.com</code></s> değil, <code>ornek.com</code> şeklinde kullanın."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_DIRECTSFTP_INITDIR_DESCRIPTION"
-msgid "SFTP directory of the site\'s root. If unsure, use an SFTP desktop client, connect to your server, navigate to the directory and copy the path displayed in here. The must be absolute, e.g. <code>/home/myuser/public_html</code>, not just <s><code>public_html</code></s>."
-msgstr "Sitenin kök dizininin SFTP yolu. Emin değilseniz, bir SFTP masaüstü istemcisiyle bağlanın ve siteye gidin."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_USER_USERNAME_HELP"
-msgid "The username you will use to log in to Panopticon. It\'s best to only use lowercase letters a-z and numbers 0-9."
-msgstr "Panopticon\'a giriş yapmak için kullanacağınız kullanıcı adı. Yalnızca küçük harf, rakam ve alt çizgi kullanmanız önerilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_USER_PASSWORD2_HELP"
-msgid "Please repeat the password you entered above. We want to make sure you didn\'t accidentally mistype it."
-msgstr "Lütfen yukarıya girdiğiniz parolayı tekrar girin. Yanlış yazmadığınızdan emin olmak istiyoruz."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP4_DETAIL"
-msgid "Upload into the folder you\'re installing Panopticon. That\'s the folder with the Panopticon <code>index.php</code> file in it."
-msgstr "Panopticon\'u yüklediğiniz klasöre yükleyin. Bu, config.php ve index.php dosyalarını içeren klasördür."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_SUBHEAD_BREATHE"
-msgid "Take a breath. This is the last installation step. You\'re almost done."
-msgstr "Bir nefes alın. Bu son kurulum adımı. Neredeyse bitti."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_REPLACE_PHP_CLI"
-msgid "Replace <i>/path/to/php</i> with the path to the PHP %s CLI executable. Make sure it\'s the PHP CLI executable, <strong>not</strong> the PHP CGI/FastCGI executable."
-msgstr "<i>/path/to/php</i> ifadesini PHP %s CLI yürütülebilir dosyasının yoluyla değiştirin. Doğru çalıştığından emin olmak için lütfen önce SSH üzerinden test edin."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NOT_RUN_INFO_2"
-msgid "If even then nothing seems to happen, please contact your host. Either your account is not receiving the output of the CRON jobs, or the CRON jobs are not executing at all (while unlikely, we\'ve seen that happen a few times)."
-msgstr "Hâlâ hiçbir şey olmuyorsa lütfen barındırıcınızla iletişime geçin. Hesabınız CRON işlerini desteklemiyor olabilir veya CRON ayarlarında bir sorun olabilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_2"
-msgid "Please ask your host for the correct path. If your host gave you this path to begin with, escalate your support ticket with your host, asking to speak with a server engineer. It\'s trivial for them to give you that path."
-msgstr "Lütfen barındırıcınızdan doğru yolu isteyin. Barındırıcınız size bu yolu zaten verdiyse başka bir PHP sürümünün yolunu deneyin."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_WRONG_PHP_INFO_2"
-msgid "Most servers have multiple versions of PHP installed. You need to ask your host to give you the path to the PHP CLI executable for PHP %s and use that in your CRON job\'s command line."
-msgstr "Çoğu sunucuda birden fazla PHP sürümü yüklüdür. PHP %s veya daha yenisini çalıştıran doğru yürütülebilir dosyayı size sağlaması için barındırıcınıza sormanız gerekir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_CONS_1"
-msgid "Some hosts don\'t support it"
-msgstr "Bazı barındırıcılar bunu desteklemez"
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_IF_URL_CRON"
-msgid "If your host uses URL-based CRON jobs, or you\'re using a third party system which accepts a URL, use the following URL:"
-msgstr "Barındırıcınız URL tabanlı CRON işleri kullanıyorsa ya da bu URL\'yi belirli aralıklarla çağıran bir üçüncü taraf sistem kullanıyorsanız bu URL\'yi kullanın."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
-msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "CRON işini ayarladıktan birkaç saniye ile bir dakika sonra bu sayfa değişecek ve Panopticon\'un sizi beklediğini gösterecektir."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER"
-msgid "If you\'re an expert user - or just looking around - you can skip this step and set up CRON jobs later."
-msgstr "Uzman bir kullanıcıysanız — ya da sadece etrafı keşfediyorsanız — bu adımı atlayabilir ve doğrudan Panopticon\'a gidebilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SETUP_MSG_CONFIGURATIONPHP"
-msgid "You can still continue the installation. The configuration settings will be displayed at the end. You will have to manually upload the code. At the end of the installation, click in the text area to highlight all of the code and then paste into a new text file. Name this file <code>config.php</code> and upload it to the folder where you\'ve installed Panopticon."
-msgstr "Kuruluma devam edebilirsiniz. Yapılandırma ayarları ekranda görüntülenecektir. Lütfen bu ayarları kopyalayın ve config.php dosyasına yapıştırın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA4ORLATER"
-msgid "<strong>Joomla! 4 or later</strong>: Go to your site\'s backend and click on Components, Akeeba Panopticon Connector to find your connection information."
-msgstr "<strong>Joomla! 4 veya üzeri</strong>: Sitenizin yönetici paneline gidin ve Bileşenler, Akeeba Panopticon Bağlayıcı\'ya tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_JOOMLA3"
-msgid "<strong>Joomla! 3</strong>: Go to your site\'s backend and click on Extensions, Plugins. Click on System - Panopticon Connector for Joomla 3."
-msgstr "<strong>Joomla! 3</strong>: Sitenizin yönetici paneline gidin ve Uzantılar, Eklentiler\'e tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_INSTRUCTIONS_WORDPRESS"
-msgid "<strong>WordPress</strong>: Go to your site\'s wp-admin and click on Tools, Panopticon."
-msgstr "<strong>WordPress</strong>: Sitenizin wp-admin\'ine gidin ve Araçlar, Panopticon\'a tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_INFO_1"
-msgid "If your site\'s <code>administrator</code> directory is password–protected, please enter the username and password used for this password protection. Otherwise, Joomla!&reg; updates will fail with an error mentioning “401 Unauthorized”."
-msgstr "Sitenizin <code>administrator</code> dizini parola korumalıysa lütfen Bağlantı sekmesini açın ve Yönetici Dizini Kullanıcı Adı ile Parolayı girin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_2"
-msgid "You used a third party extension, e.g. Admin Tools\' “Password-protect Administrator” feature."
-msgstr "Admin Tools\'un \"Yöneticiyi Parola ile Koru\" özelliği gibi üçüncü taraf bir uzantı kullandınız."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_ADMIN_PASSWORD_NEEDED_INFO_3"
-msgid "You used your hosting control panel\'s directory password protection feature, if one is available."
-msgstr "Barındırma kontrol panelinizin dizin parola koruma özelliğini kullandınız."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING_HELP"
-msgid "Panopticon will warn you that your site\'s SSL/TLS certificate is expiring this many days before it expires. 0 disables the warning."
-msgstr "Panopticon, sitenizin SSL/TLS sertifikasının bu kadar gün içinde sona ereceği konusunda sizi uyaracaktır."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_DOMAIN_WARNING_HELP"
-msgid "Panopticon will warn you that your site\'s domain name is expiring this many days before it expires. 0 disables the warning."
-msgstr "Panopticon, sitenizin alan adının bu kadar gün içinde sona ereceği konusunda sizi uyaracaktır."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_TOOSOON"
-msgid "The SSL/TLS certificate has a Valid From date in the future. Browsers will report it as invalid as it\'s not meant to be used just yet."
-msgstr "SSL/TLS sertifikasının Geçerlilik Başlangıç tarihi gelecekte. Tarayıcılar bunu geçersiz olarak bildirecektir."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_SSLTLS_EXPIRED"
-msgid "The SSL/TLS certificate has a Valid To date in the past. Browsers will report it as invalid as it\'s not meant to be used any more."
-msgstr "SSL/TLS sertifikasının Geçerlilik Bitiş tarihi geçmişte. Tarayıcılar bunu geçersiz olarak bildirecektir."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_ERR_DATE_INVALID"
-msgid "We could not retrieve the domain\'s expiration date. Either the domain name does not appear in the WHOIS database, or you are using a domain name which only resolves locally."
-msgstr "Alan adının sona erme tarihini alamadık. Alan adı mevcut olmayabilir veya WHOIS hizmeti şu anda kullanılamıyor."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
-msgid "The domain name has expired. You might still be able to access the domain due to your registrar\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
-msgstr "Alan adının süresi dolmuş. Kayıt kuruluşunun yetkisiz kullanım süresi nedeniyle alana hâlâ erişebiliyor olabilirsiniz, ancak ziyaretçiler artık bu sitenin süresi dolmuş olduğunu görebilir."
-
-#, phpformat
-msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS"
-msgid "There are no nameservers reported in the WHOIS database. A site without valid nameservers will not be accessible on the Internet. If you recently assigned nameservers to the domain don\'t panic; it may take up to 5 days for this information to propagate."
-msgstr "WHOIS veritabanında bildirilen ad sunucusu yok. Geçerli ad sunucuları olmayan bir site, çoğu tarayıcıdan erişilemez olabilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_UPTIME_NOTE"
-msgid "This is <em>very basic</em> uptime monitoring through Panopticon itself. It only notifies you by email when your site goes down and comes back up. It does not integrate with third party services, it does not offer history, it does not have a public uptime page. We strongly recommend using a third party service or software to monitor your sites\' uptime instead of using this feature."
-msgstr "Bu, Panopticon aracılığıyla <em>çok temel</em> çalışma süresi izlemesidir. Yalnızca görevler çalıştığında kontrol eder ve yalnızca HTTP 200 durumunu kontrol eder. Daha iyi izleme için üçüncü taraf bir hizmet kullanmanızı öneririz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J4"
-msgid "Go to your site\'s administrator backend, System, Update, Update Sites, and click on the Rebuild button."
-msgstr "Sitenizin yönetici paneline gidin: Sistem, Güncelle, Güncelleme Siteleri ve Yenile\'ye tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_JUPDATE_UPDATESITE_FIX_J3"
-msgid "Go to your site\'s administrator backend, Extensions, Manage, Update Sites, and click on the Rebuild button."
-msgstr "Sitenizin yönetici paneline gidin: Uzantılar, Yönet, Güncelleme Siteleri ve Yenile\'ye tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION"
-msgid "Go to your site\'s administrator backend, System, Update, Joomla, click on Options, and change the update channel to Joomla Next. Please check Joomla\'s requirements, especially the database version and PHP version requirements. Note that your site is currently using PHP %s."
-msgstr "Sitenizin yönetici paneline gidin: Sistem, Güncelle, Joomla\'ya tıklayın, Seçenekler\'e tıklayın ve Güncellemelere Bak\'ta \"Bir sonraki küçük sürüm\" seçeneğini seçin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_CALL_YOUR_HOST"
-msgid "If this keeps happening frequently you may want to contact your host about moving your site to a bigger hosting package, or otherwise upgrading your site\'s server."
-msgstr "Bu sık sık olmaya devam ederse, sunucunuzu daha güçlü birine taşımak için barındırıcınızla iletişime geçmek isteyebilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_IOWAIT_WHAT"
-msgid "Your server is spending a lot of time waiting for disk operations, as expressed by the I/O Wait time (it is expressed as a percentage of the total CPU time available). This means that your server\'s storage is struggling to keep up with the demand."
-msgstr "Sunucunuz, disk işlemlerini beklemek için çok zaman harcıyor. Bu durum, ortalama yük olarak ifade edilmekte ve genellikle aşırı yüklenmiş bir depolama alt sistemi veya ağ bağlantılı depolama sorunlarından kaynaklanmaktadır."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_SITE_DISK_WHAT"
-msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
-msgstr "Sunucunuzun depolama alanı neredeyse doldu. Bu sınırı aştığınızda sitenize yazma yapamayabilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_COMMON_DISK_WHAT"
-msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, you will not be able to create files (including cache and temporary files), leading to your site being unable to function properly."
-msgstr "Sunucunuzun depolama alanı neredeyse doldu. Bu sınırı aştığınızda sitenize yazma yapamayabilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SERVER_WARN_DB_DISK_WHAT"
-msgid "Your server\'s storage is almost at capacity. When you exceed this limit you will not be able to perform database operations which delete or create data, leading to your site being unable to function properly."
-msgstr "Sunucunuzun depolama alanı neredeyse doldu. Bu sınırı aştığınızda veritabanına yazma yapamayabilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY"
-msgid "Panopticon cannot find a way to connect to your site\'s Akeeba Backup JSON API."
-msgstr "Panopticon, sitenizin Akeeba Backup JSON API\'sine bağlanmanın bir yolunu bulamıyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
-msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Sitenizin yönetici paneline giriş yapın. Bileşenler, Akeeba Backup, Kontrol Paneline gidin. Panopticon Entegrasyonu kutucuğuna tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
-msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Sitenizin yönetici paneline giriş yapın. Akeeba Backup, Sistem Yapılandırması, Genel Yapılandırmaya gidin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
-msgid "Make sure that no third party extensions (especially security extensions) and/or server configuration settings prevent access to your site\'s <code>api</code> folder. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
-msgstr "Üçüncü taraf uzantıların (özellikle güvenlik uzantıları) ve/veya sunucu tarafı güvenlik duvarlarının API uç noktasına erişimi engellemediğinden emin olun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP"
-msgid "Make sure that no third party plugins (especially security plugins) and/or server configuration settings prevent access to your site\'s <code>wp-admin/admin-ajax.php</code> file. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
-msgstr "Üçüncü taraf eklentilerin (özellikle güvenlik eklentileri) ve/veya sunucu tarafı güvenlik duvarlarının API uç noktasına erişimi engellemediğinden emin olun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_BODY"
-msgid "This may happen if Akeeba Backup was installed after adding the site to Akeeba Panopticon, the Panopticon Connector installed on the site is too old, or if there\'s been an error communicating with the site."
-msgstr "Bu durum, Akeeba Backup Panopticon\'a site eklendikten sonra yüklenirse ortaya çıkabilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOTLINKED_SOLUTION_ADMIN"
-msgid "Please click the button below to try relinking Akeeba Backup with Panopticon. If this doesn\'t work please update the Akeeba Panopticon Connector on your site, make sure its plugin is published, and check if you can communicate with the site correctly."
-msgstr "Akeeba Backup\'ı Panopticon ile yeniden bağlamayı denemek için lütfen aşağıdaki düğmeye tıklayın. Bu işe yaramazsa lütfen sitenizin yönetici paneline gidin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_JSONAPI_ERROR"
-msgid "The API indicated there is an error. Please make sure that you have entered the correct API Token, and that your site\'s server does not block or otherwise interfere with the request."
-msgstr "API bir hata olduğunu bildirdi. Lütfen Akeeba Backup Secret Key\'ini doğru girdiğinizden emin olun ve API uç noktasına erişimin engellenip engellenmediğini kontrol edin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITE_LBL_SCANNER_TIP"
-msgid "Admin Tools Professional\'s PHP File Change Scanner monitors your site\'s .php files for changes, additions, and suspicious content. Click on the number of the scan attempt to open its results in the administrator backend of your site."
-msgstr "Admin Tools Professional\'in PHP Dosya Değişiklik Tarayıcısı, sitenizin .php dosyalarını değiştirilmiş ya da yeni eklenmiş dosyalar için izler."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_APIERROR_BODY"
-msgid "There was an error connecting to your site\'s Akeeba Backup JSON API."
-msgstr "Sitenizin Akeeba Backup JSON API\'sine bağlanılırken bir hata oluştu."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
-msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\"font-monospace\">%s</span>)."
-msgstr "Sunucunuzdaki bir şey — barındırıcınızın kontrol ettiği sunucu yapılandırması veya sitenize yüklü bir güvenlik uzantısı gibi — API\'ye erişimi engelliyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
-msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "Barındırıcınızın bir sunucu tarafı koruma çözümü var mı (Apache\'s mod_security gibi)? Varsa barındırıcınızdan bunu devre dışı bırakmasını isteyin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
-msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "Barındırıcınızın bir sunucu tarafı koruma çözümü var mı (Apache\'s mod_security gibi)? Varsa barındırıcınızdan bunu devre dışı bırakmasını isteyin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
-msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "Barındırıcınızın bir sunucu tarafı koruma çözümü var mı (Apache\'s mod_security gibi)? Varsa barındırıcınızdan bunu devre dışı bırakmasını isteyin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH1"
-msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party software. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
-msgstr "API\'den gelen yanıt, PHP uyarıları, bildirimler veya hata ayıklama çıktısı gibi metin içerikle önceden ve/veya ardından geliyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
-msgid "Make sure “Error Reporting” is set to None, and “Debug Site” is set to No in your site\'s Global Configuration page. This prevents PHP from printing messages which pollute the API response."
-msgstr "Sitenizin Küresel Yapılandırmasında \"Hata Raporlama\" seçeneğinin Yok, \"Hata Ayıklama Sitesi\" seçeneğinin ise Hayır olarak ayarlandığından emin olun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH1"
-msgid "The response from the API is preceded and / or followed by other text content such as PHP messages (e.g. deprecation notices, warnings, or fatal errors), or output from third party plugins. As a result, the API response cannot be decoded, meaning that Panopticon cannot understand your site\'s response."
-msgstr "API\'den gelen yanıt, PHP uyarıları, bildirimler veya hata ayıklama çıktısı gibi metin içerikle önceden ve/veya ardından geliyor."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2"
-msgid "Make sure PHP on your server is configured with <code>display_errors</code> disabled, and that you have not enabled <code>WP_DEBUG</code> in your site\'s <code>wp-config.php</code> file. This prevents PHP from printing messages which pollute the API response."
-msgstr "Sunucunuzdaki PHP\'nin <code>display_errors</code> devre dışı ve <code>error_reporting</code> 0 olarak yapılandırıldığından emin olun. wp-config.php dosyanızda WP_DEBUG sabitinin false olarak ayarlandığından emin olun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2"
-msgid "Please make sure that there is no .htaccess code, third party plugins, or custom code (including in your theme\'s <code>functions.php</code> file) which block or otherwise limit WordPress\' JSON API – either at all, or for unauthenticated (guest) access."
-msgstr "JSON yanıtını engelleyen herhangi bir .htaccess kodu, üçüncü taraf eklenti veya özel kod bulunmadığından emin olun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
-msgid "If you are using Admin Tools Professional please go to your site\'s backend and click on Components, Admin Tools for Joomla!, Web Application Firewall, Configure WAF, Request Filtering. Check the list of <em>Allowed Domains</em> towards the bottom of the page."
-msgstr "Admin Tools Professional kullanıyorsanız lütfen sitenizin yönetici paneline gidin ve Admin Tools, Web Uygulaması Güvenlik Duvarı, İstisnalar\'a tıklayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK2"
-msgid "Have you recently bought the domain, assigned the domain to a server, or transferred your site between hosts? Keep in mind that DNS propagation takes anywhere from 5 minutes to several days. Moreover, due to the distributed nature of DNS, it is possible that you can see your site <em>from your device</em> but the server you have installed Panopticon on can\'t."
-msgstr "Alan adını yakın zamanda satın aldınız mı, bir sunucuya atadınız mı ya da başka bir sağlayıcıya aktardınız mı? DNS değişikliklerinin yayılması 24-72 saat sürebilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3"
-msgid "If your site\'s domain resolves to an IPv6 address - but not an IPv4 address - make sure that the server you have installed Panopticon on supports IPv6. You may have to ask your host to confirm that this is the case."
-msgstr "Sitenizin alan adı bir IPv6 adresine çözümleniyorsa — ancak IPv4 adresine çözümlenmiyorsa — barındırıcınızla iletişime geçin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
-msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
-msgstr "Ticari, tanınmış bir Sertifika Otoritesi tarafından imzalanmış bir SSL/TLS sertifikası yükleyin. Let\'s Encrypt ücretsiz sertifikalar sunmaktadır."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
-msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
-msgstr "Bir intranet, extranet veya başka bir nedenle kendi Sertifika Otoritenizi sürdürmeniz gerekiyorsa, Panopticon\'un bu CA\'ya güvenmesini sağlamak için sunucu yapılandırmanızı güncelleyin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
-msgid "Your site\'s SSL/TLS certificate has a problem"
-msgstr "Sitenizin SSL/TLS sertifikasında bir sorun var"
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
-msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
-msgstr "SSL/TLS sertifikası doğru alan adına mı ait? Varsayılan barındırıcı sertifikasını kullanıyorsanız bu sorunla karşılaşabilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
-msgid "Has the SSL/TLS certificate expired? In this case you need to renew it. Please note that if you are using Let\'s Encrypt the certificate has a short validity period (usually 90 days) and it should be renewed automatically by your host. If this did not happen, you will need to contact your host."
-msgstr "SSL/TLS sertifikasının süresi doldu mu? Bu durumda yenilemeniz gerekiyor. Let\'s Encrypt kullanıyorsanız otomatik yenilemenin çalıştığını doğrulayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
-msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
-msgstr "SSL/TLS sertifikası iptal edildi mi? Bazen Sertifika Otoriteleri, güvenliği ihlal edilmiş sertifikaları iptal eder."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
-msgid "Is it possible that your server serves the wrong SSL/TLS certificate? This may happen if you have recently switched to a new certificate, either manually or as part of an automated certificate rotation process (e.g. when your host issues a new certificate through Let\'s Encrypt). When the certificate changes the web server needs to be reloaded or restarted. In some rare cases this might not happen - or an inexperienced systems administrator may forget to do it. Please contact your host / systems administrator to check that and, if necessary, reload or restart the web server process."
-msgstr "Sunucunuzun yanlış SSL/TLS sertifikası sunması mümkün mü? Bu, paylaşımlı barındırma ortamlarında ve SNI yapılandırması yanlış olduğunda meydana gelebilir."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2"
-msgid "Please go to your site\'s backend and click on System, Manage, Extensions. Search for the “Web Services - Installer” plugin and enable it."
-msgstr "Lütfen sitenizin yönetici paneline gidin ve Sistem, Yönet, Uzantılar\'a tıklayın. \"API - Joomla\" eklentisini arayın ve etkinleştirin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2"
-msgid "Please go to your site\'s backend and click on Extensions, Plugins. Search for the “System - Panopticon Connector for Joomla 3” plugin and enable it."
-msgstr "Lütfen sitenizin yönetici paneline gidin ve Uzantılar, Eklentiler\'e tıklayın. Akeeba Panopticon Bağlayıcı eklentisini arayın ve etkinleştirin."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3"
-msgid "Kindly note that the password protection may have been applied only to your site\'s <code>api</code> folder, or the root folder of your site. Look in both places, in this order."
-msgstr "Parola korumasının yalnızca sitenizin yönetici dizinine uygulanmış olabileceğini lütfen göz önünde bulundurun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
-msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
-msgstr "Panopticon, WordPress sitenizle iletişim kurmak için \"Akeeba Panopticon Connector for WordPress\" adlı kendi eklentisini kullanır."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
-msgid "Please go to your site\'s wp-admin backend and click on Plugins. Search for the “Akeeba Panopticon Connector for WordPress” plugin and enable it."
-msgstr "Lütfen sitenizin wp-admin yönetici paneline gidin ve Eklentiler\'e tıklayın. \"Panopticon\" eklentisini arayın ve etkinleştirdiğinizden emin olun."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
-msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
-msgstr "Bunun yerine, sorun giderme bilgisi sağlayabileceğimiz bir hata aldık."
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
-msgid "Please delete all files and folders inside the <code>tmp</code> folder of Akeeba Panopticon. This addresses the problem of this page\'s cached copy being severely out of date. If this doesn\'t help, please let us know."
-msgstr "Lütfen Akeeba Panopticon\'un <code>tmp</code> klasörü içindeki tüm dosya ve klasörleri silin."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Kullanıcıların çevrimiçi parola sızıntılarında bulunan parolaları kullanmasını engelleyin. Bu özellik, Have I Been Pwned (HIBP) hizmeti tarafından desteklenmektedir."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Kullanıcılar için avatar görüntüleyin. Bu özellik, üçüncü taraf hizmet olan <a href=\'https://gravatar.com\' target=\'_blank\'>Gravatar</a> tarafından desteklenmektedir."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL_HELP"
-msgid "This preference can be overridden for any individual extension below. You can also override this for any individual extension and site in each site\'s configuration page."
-msgstr "Bu tercih, aşağıdaki bireysel uzantılar için geçersiz kılınabilir. Ayrıca site başına da yapılandırabilirsiniz."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_TOKEN_ALGORITHM_HELP"
-msgid "The hash algorithm for creating an anti-CSRF token. SHA-512 offers the best security, but may not work on some hosts because it\'s very long. MD5 offers the least security but is compatible with all hosts. Only change if you have problems when clicking action buttons in Panopticon."
-msgstr "CSRF karşıtı belirteç oluşturmak için kullanılan hash algoritması. SHA-512 en iyi güvenliği sunar; MD5 ise en hızlısıdır."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_USER_REGISTRATION_HELP"
-msgid "Controls whether new users can create their own accounts. In \'Admin approval\' mode, an administrator must approve new accounts. In \'Self-approval\' mode, users activate their account via an email link."
-msgstr "Yeni kullanıcıların kendi hesaplarını oluşturup oluşturamayacağını kontrol eder. \'Yönetici onayı\' modunda yönetici, her yeni kaydı onaylamalıdır. \'Kendi kendine onay\' modunda kullanıcı, bir etkinleştirme e-postası alarak hesabını kendisi etkinleştirir."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_UPTIME_HELP"
-msgid "Choose which service will be used to report your sites\' uptime. Please note that the integrated “Panopticon” provider is very basic and has some gotchas. Please read the documentation."
-msgstr "Sitelerinizin çalışma süresini raporlamak için hangi hizmetin kullanılacağını seçin. Lütfen bu hizmetlerin üçüncü taraf çözümler olduğunu ve Panopticon tarafından yönetilmediğini unutmayın."
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_EMAILTEST_BODY"
-msgid "This email message confirms that Akeeba Panopticon, installed on %s, has been configured to send email messages correctly.\\n\\nIf this message ended up in your spam / junk inbox please check whether your domain has DKIM and SPF set up correctly, as well as whether your receiving mail server and mail client are configured in a way which misidentifies this message as spam. According to our experience, you can get pertinent troubleshooting information by looking at the source code of the received message in your mail client. Please consult your mail client\'s documentation for more information on how to do that."
-msgstr "Bu e-posta mesajı, %s üzerinde yüklü Akeeba Panopticon\'un e-posta gönderimini başarıyla yapılandırdığınızı onaylar."
-
-#, phpformat
-msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
-msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
-msgstr "Panopticon, Docker altında çalışırken arayüzünden doğrudan güncellenemez. Docker imajını yeni sürüme güncellemek için lütfen Docker dokümantasyonunu izleyin."
-
-#, phpformat
-msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS_HELP"
-msgid "These privileges will be given to a user belonging to this group for any site which belongs to this group. To let the user see a site\'s overview you need to give them the View privilege."
-msgstr "Bu ayrıcalıklar, bu gruba ait bir kullanıcıya, grubun üyesi olduğu herhangi bir site için verilecektir."
-
-#, phpformat
-msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
-msgid "The email address is used to email the user, as well as displaying the user\'s picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
-msgstr "E-posta adresi, kullanıcıya e-posta göndermek ve kullanıcının profil fotoğrafını görüntülemek için kullanılır (Gravatar aracılığıyla)."
-
-#, phpformat
-msgctxt "PANOPTICON_ABOUT_LBL_VISIT_GITHUB"
-msgid "For a complete list of Panopticon\'s contributors please visit <a href=\"%s\">its GitHub repository</a>."
-msgstr "Panopticon\'in katkıda bulunanlarının tam listesi için lütfen <a href=\"%s\">GitHub sayfasını</a> ziyaret edin."
-
-#, phpformat
-msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
-msgid "We would like to acknowledge and recognise the work of each and every person who has contributed to Akeeba Panopticon, no matter how small or big their contribution is; even the smallest of details are important. If you have contributed outside of GitHub and would like to be publicly acknowledged, please drop us a line and we\'ll rectify the omission; <em>every person matters</em>."
-msgstr "Panopticon\'a katkıda bulunan her kişinin çalışmasını takdir etmek ve tanımak istiyoruz."
-
-#, phpformat
-msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
-msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site\'s server where Akeeba Backup runs."
-msgstr "Akeeba Backup değişkenlerini kullanabilirsiniz, örneğin <code>[DATE]</code>, <code>[SITE]</code> vb."
-
-#, phpformat
-msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
-msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Ayın günü: <code>1</code> ile <code>31</code> arasında bir sayı, ayın son günü için <code>L</code> veya tüm günler için <code>*</code>."
-
-#, phpformat
-msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The backup schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Yedekleme zamanlaması bir <a href=\'%s\' target=\'_blank\'>CRON ifadesidir</a>. İfadeler sunucu saatinde yorumlanır."
-
-#, phpformat
-msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
-msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Ayın günü: <code>1</code> ile <code>31</code> arasında bir sayı, ayın son günü için <code>L</code> veya tüm günler için <code>*</code>."
-
-#, phpformat
-msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The scan schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Tarama zamanlaması bir <a href=\'%s\' target=\'_blank\'>CRON ifadesidir</a>. İfadeler sunucu saatinde yorumlanır."
-
-#, phpformat
-msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The check schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Kontrol zamanlaması bir <a href=\'%s\' target=\'_blank\'>CRON ifadesidir</a>. İfadeler sunucu saatinde yorumlanır."
-
-#, phpformat
-msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_INSTRUCTIONS"
-msgid "Print this page and keep it in your wallet. Each of the following codes below can be used only once. Use them in case of emergency, when none of the other Multi-factor Authentication methods you\'ve set up can be used. For example, if your phone is out of battery or misplaced."
-msgstr "Bu sayfayı yazdırın ve cüzdanınızda saklayın. Aşağıdaki kodların her biri yalnızca bir kez kullanılabilir."
-
-#, phpformat
-msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE"
-msgid "<p>Enter a password below. This password will be required to be entered after logging in before you\'re able to use the site.</p>"
-msgstr "<p>Aşağıya bir parola girin. Bu parola, oturum açtıktan sonra çok faktörlü kimlik doğrulama olarak girilmesi gerekecektir.</p>"
-
-#, phpformat
-msgctxt "PANOPTICON_MFA_PASSKEYS_LBL_INSTRUCTIONS"
-msgid "Follow the instructions on your device\'s screen to use your preferred Passkey."
-msgstr "Tercih ettiğiniz Passkey\'i kullanmak için cihazınızın ekranındaki talimatları izleyin."
-
-#, phpformat
-msgctxt "PANOPTICON_MFA_PASSKEYS_ERR_NOTAVAILABLE_BODY"
-msgid "Your browser doesn\'t support Passkeys, or your site does not meet the minimum requirements (HTTPS-only, with an SSL/TLS certificate signed by a commercial Certification Authority)."
-msgstr "Tarayıcınız Passkey\'leri desteklemiyor veya siteniz gerekli minimum gereksinimleri karşılamıyor."
-
-#, phpformat
-msgctxt "PANOPTICON_OVERRIDES_LBL_NO_OVERRIDE_SUGGESTION"
-msgid "Please visit your site\'s administrator backend to inspect the template overrides."
-msgstr "Şablon geçersiz kılmalarını incelemek için lütfen sitenizin yönetici panelini ziyaret edin."
-
-#, phpformat
-msgctxt "PANOPTICON_USAGESTATS_LBL_SERVER_DOMAIN"
-msgid "The usage statistics collection server\'s domain name is <code>%s</code>."
-msgstr "Kullanım istatistikleri toplama sunucusunun alan adı: <code>%s</code>."
-
-#, phpformat
-msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The schedule for update summary emails is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Güncelleme özeti e-postaları için zamanlama bir <a href=\'%s\' target=\'_blank\'>CRON ifadesidir</a>. İfadeler sunucu saatinde yorumlanır."
-
-#, phpformat
-msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
-msgid "If no groups are selected: emails are sent to all users who can make changes to the site. When any groups are selected: emails are sent to all users who are assigned to the selected group, <em>even if they can\'t even view the site in the Sites Overview page</em>."
-msgstr "Hiçbir grup seçilmezse: e-postalar, herhangi bir sitede değişiklik yapabilecek tüm kullanıcılara gönderilir."
-
-#, phpformat
-msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
-msgid "The Site Action Summary schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Site Eylem Özeti zamanlaması bir <a href=\'%s\' target=\'_blank\'>CRON ifadesidir</a>. İfadeler sunucu saatinde yorumlanır."
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
-msgid "%1\$d of %2\$d API tokens created"
-msgstr "%2\$d API belirtecinden %1\$d tanesi oluşturuldu"
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
-msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
-msgstr "%s saat diliminde ifade edilen saat. Güncellemeler bu saatten <em>sonra</em> bulunursa bir sonraki güne ertelenir."
-
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_MCP"
+msgid "MCP Server"
+msgstr "MCP Sunucusu"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_MCP_INTRO"
+msgid ""
+"The Model Context Protocol (MCP) server lets AI agents and chatbots — such as "
+"Claude Code, Claude Desktop, Codex, Cursor, or VS Code — drive Panopticon using "
+"the same capabilities as the JSON API. Each request authenticates with a "
+"Panopticon API token sent as a Bearer Authorization header, and an agent can "
+"only see and do what the token\'s owner could through the API."
+msgstr ""
+"Model Bağlam Protokolü (MCP) sunucusu; Claude Code, Claude Desktop, Codex, "
+"Cursor veya VS Code gibi yapay zeka ajanlarının ve sohbet botlarının, JSON API "
+"ile aynı yetenekleri kullanarak Panopticon\'u yönetmesine olanak tanır. Her "
+"istek, Bearer Authorization başlığı olarak gönderilen bir Panopticon API "
+"belirteci ile kimlik doğrular; bir ajan yalnızca belirtecin sahibinin API "
+"üzerinden görebileceği ve yapabileceği şeyleri görebilir ve yapabilir."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED"
+msgid "Enable the MCP server"
+msgstr "MCP Sunucusunu Etkinleştirme"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED_HELP"
+msgid "When disabled (the default) the MCP endpoint responds as if it does not exist."
+msgstr ""
+"Devre dışı bırakıldığında (varsayılan durum), MCP uç noktası sanki mevcut "
+"değilmiş gibi yanıt verir."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT"
+msgid "MCP endpoint URL"
+msgstr "MCP Uç Nokta Bağlantısı"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT_HELP"
+msgid ""
+"Configure your AI tool to use this URL as a Streamable HTTP MCP server, with "
+"an <code>Authorization: Bearer &lt;your API token&gt;</code> header."
+msgstr ""
+"Yapay zeka aracınızı, bu bağlantıyı <code>Authorization: Bearer &lt;API "
+"belirteciniz&gt;</code> başlığıyla bir Streamable HTTP MCP sunucusu olarak "
+"kullanacak şekilde yapılandırın."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Globally disabled tools"
+msgstr "Genel Olarak Devre Dışı Bırakılan Araçlar"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid ""
+"A comma-separated list of MCP tool names that are never exposed to anyone, "
+"regardless of user, token, or group. This is the absolute kill-switch (for "
+"example, list <code>get_sysconfig</code> here to keep system configuration "
+"entirely out of MCP). Leave empty to allow all tools."
+msgstr ""
+"Kullanıcı, belirteç veya gruptan bağımsız olarak hiç kimseye asla sunulmayan "
+"MCP araç adlarının virgülle ayrılmış bir listesi. Bu, mutlak bir acil kapatma "
+"anahtarıdır (örneğin, sistem yapılandırmasını MCP\'nin tamamen dışında tutmak "
+"için buraya <code>get_sysconfig</code> yazın). Tüm araçlara izin vermek için "
+"bu alanı boş bırakın."
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_AVAILABLE_TOOLS"
+msgid "Available tools"
+msgstr "Kullanılabilir Araçlar"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_CHECKSUMS"
+msgid "Core File Integrity"
+msgstr "Çekirdek Dosya Bütünlüğü"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL"
+msgid "Checksums source base URL"
+msgstr "Sağlama Toplamları Kaynak Taban Bağlantısı"
+
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL_HELP"
+msgid ""
+"Base URL Panopticon\'s connectors use to download the reference checksums for "
+"the Core File Integrity check. Leave empty to use the default "
+"<code>https://getpanopticon.com/checksums</code>. If you host your own "
+"mirror, it must serve the same layout: the connector appends "
+"<code>/joomla/&lt;version&gt;/sha256_squash.json.gz</code> or "
+"<code>/wordpress/&lt;version&gt;/sha256_squash.json.gz</code> to this base "
+"URL. Do not include a trailing slash or the CMS name."
+msgstr ""
+"Panopticon Connector eklentisinin, Çekirdek Dosya Bütünlüğü kontrolü için "
+"referans sağlama toplamlarını indirmek üzere kullandığı taban bağlantı. "
+"Varsayılan <code>https://getpanopticon.com/checksums</code> bağlantısını "
+"kullanmak için bu alanı boş bırakın. Kendi ayna sunucunuzu barındırıyorsanız, "
+"aynı düzeni sunması gerekir: Connector, bu taban bağlantıya "
+"<code>/joomla/&lt;sürüm&gt;/sha256_squash.json.gz</code> veya "
+"<code>/wordpress/&lt;sürüm&gt;/sha256_squash.json.gz</code> ekler. Sonuna "
+"eğik çizgi veya CMS adı eklemeyin."
+
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Disabled MCP tools"
+msgstr "Devre Dışı Bırakılan MCP Araçları"
+
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid ""
+"MCP tools that members of this group may NOT use. Important: access is "
+"granted if ANY of a user\'s groups allows a tool. A tool is only blocked for "
+"a user when EVERY group they belong to disables it. This is the opposite of "
+"Joomla\'s “deny wins” logic. The globally disabled tools list in System "
+"Configuration always takes precedence."
+msgstr ""
+"Bu grubun üyelerinin KULLANMAMASI gereken MCP araçları. Önemli: kullanıcının "
+"gruplarından HERHANGİ biri bir araca izin veriyorsa erişim verilir. Bir araç, "
+"yalnızca kullanıcının üye olduğu HER grup onu devre dışı bıraktığında "
+"engellenir. Bu, Joomla\'nın “reddetme kazanır” mantığının tam tersidir. "
+"Sistem Yapılandırması\'ndaki genel olarak devre dışı bırakılan araçlar "
+"listesi her zaman önceliklidir."

@@ -12372,3 +12372,58 @@ msgstr "Ungültiger JSON im Anfrage-Body."
 msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
 msgid "%1\$d of %2\$d API tokens created"
 msgstr "%1\$d von %2\$d API-Token erstellt"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_MCP"
+msgid "MCP Server"
+msgstr "MCP-Server"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_MCP_INTRO"
+msgid "The Model Context Protocol (MCP) server lets AI agents and chatbots — such as Claude Code, Claude Desktop, Codex, Cursor, or VS Code — drive Panopticon using the same capabilities as the JSON API. Each request authenticates with a Panopticon API token sent as a Bearer Authorization header, and an agent can only see and do what the token\'s owner could through the API."
+msgstr "Der Model-Context-Protocol-(MCP)-Server ermöglicht es KI-Agenten und Chatbots — wie Claude Code, Claude Desktop, Codex, Cursor oder VS Code — Panopticon mit denselben Funktionen wie der JSON-API zu steuern. Jede Anfrage wird mit einem Panopticon-API-Token authentifiziert, das als Bearer-Authorization-Header gesendet wird, und ein Agent kann nur das sehen und tun, wozu der Besitzer des Tokens über die API berechtigt wäre."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED"
+msgid "Enable the MCP server"
+msgstr "MCP-Server aktivieren"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED_HELP"
+msgid "When disabled (the default) the MCP endpoint responds as if it does not exist."
+msgstr "Wenn deaktiviert (Standardeinstellung), antwortet der MCP-Endpunkt so, als würde er nicht existieren."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT"
+msgid "MCP endpoint URL"
+msgstr "MCP-Endpunkt-URL"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT_HELP"
+msgid "Configure your AI tool to use this URL as a Streamable HTTP MCP server, with an <code>Authorization: Bearer &lt;your API token&gt;</code> header."
+msgstr "Konfigurieren Sie Ihr KI-Tool so, dass es diese URL als Streamable-HTTP-MCP-Server verwendet, mit einem <code>Authorization: Bearer &lt;Ihr API-Token&gt;</code>-Header."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Globally disabled tools"
+msgstr "Global deaktivierte Werkzeuge"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "A comma-separated list of MCP tool names that are never exposed to anyone, regardless of user, token, or group. This is the absolute kill-switch (for example, list <code>get_sysconfig</code> here to keep system configuration entirely out of MCP). Leave empty to allow all tools."
+msgstr "Eine durch Kommas getrennte Liste von MCP-Werkzeugnamen, die niemandem zugänglich gemacht werden, unabhängig von Benutzer, Token oder Gruppe. Dies ist der absolute Notausschalter (listen Sie hier beispielsweise <code>get_sysconfig</code> auf, um die Systemkonfiguration vollständig aus MCP herauszuhalten). Leer lassen, um alle Werkzeuge zuzulassen."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_AVAILABLE_TOOLS"
+msgid "Available tools"
+msgstr "Verfügbare Werkzeuge"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Disabled MCP tools"
+msgstr "Deaktivierte MCP-Werkzeuge"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "MCP tools that members of this group may NOT use. Important: access is granted if ANY of a user\'s groups allows a tool. A tool is only blocked for a user when EVERY group they belong to disables it. This is the opposite of Joomla\'s “deny wins” logic. The globally disabled tools list in System Configuration always takes precedence."
+msgstr "MCP-Werkzeuge, die Mitglieder dieser Gruppe NICHT verwenden dürfen. Wichtig: Der Zugriff wird gewährt, wenn IRGENDEINE der Gruppen eines Benutzers ein Werkzeug erlaubt. Ein Werkzeug wird für einen Benutzer nur dann gesperrt, wenn JEDE Gruppe, der er angehört, es deaktiviert. Dies ist das Gegenteil der „Verbot gewinnt“-Logik von Joomla. Die Liste der global deaktivierten Werkzeuge in der Systemkonfiguration hat immer Vorrang."

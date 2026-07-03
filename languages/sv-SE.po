@@ -17008,3 +17008,73 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
 msgid "API Tokens"
 msgstr "API-token"
 
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_MCP"
+msgid "MCP Server"
+msgstr "MCP-server"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_MCP_INTRO"
+msgid "The Model Context Protocol (MCP) server lets AI agents and chatbots — such as Claude Code, Claude Desktop, Codex, Cursor, or VS Code — drive Panopticon using the same capabilities as the JSON API. Each request authenticates with a Panopticon API token sent as a Bearer Authorization header, and an agent can only see and do what the token's owner could through the API."
+msgstr "MCP-servern (Model Context Protocol) låter AI-agenter och chattbottar — till exempel Claude Code, Claude Desktop, Codex, Cursor eller VS Code — styra Panopticon med samma möjligheter som JSON-API:et. Varje förfrågan autentiseras med en Panopticon API-token som skickas som en Bearer Authorization-header, och en agent kan bara se och göra det som token-ägaren kan göra via API:et."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED"
+msgid "Enable the MCP server"
+msgstr "Aktivera MCP-servern"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED_HELP"
+msgid "When disabled (the default) the MCP endpoint responds as if it does not exist."
+msgstr "När den är inaktiverad (standard) svarar MCP-slutpunkten som om den inte existerar."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT"
+msgid "MCP endpoint URL"
+msgstr "MCP-slutpunktens URL"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT_HELP"
+msgid "Configure your AI tool to use this URL as a Streamable HTTP MCP server, with an <code>Authorization: Bearer &lt;your API token&gt;</code> header."
+msgstr "Konfigurera ditt AI-verktyg att använda denna URL som en Streamable HTTP MCP-server, med en <code>Authorization: Bearer &lt;din API-token&gt;</code>-header."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Globally disabled tools"
+msgstr "Globalt inaktiverade verktyg"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "A comma-separated list of MCP tool names that are never exposed to anyone, regardless of user, token, or group. This is the absolute kill-switch (for example, list <code>get_sysconfig</code> here to keep system configuration entirely out of MCP). Leave empty to allow all tools."
+msgstr "En kommaseparerad lista över namn på MCP-verktyg som aldrig exponeras för någon, oavsett användare, token eller grupp. Detta är den absoluta nödbrytaren (ange till exempel <code>get_sysconfig</code> här för att hålla systemkonfigurationen helt utanför MCP). Lämna tomt för att tillåta alla verktyg."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_AVAILABLE_TOOLS"
+msgid "Available tools"
+msgstr "Tillgängliga verktyg"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_CHECKSUMS"
+msgid "Core File Integrity"
+msgstr "Kärnfilernas integritet"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL"
+msgid "Checksums source base URL"
+msgstr "Bas-URL för checksummekälla"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL_HELP"
+msgid "Base URL Panopticon's connectors use to download the reference checksums for the Core File Integrity check. Leave empty to use the default <code>https://getpanopticon.com/checksums</code>. If you host your own mirror, it must serve the same layout: the connector appends <code>/joomla/&lt;version&gt;/sha256_squash.json.gz</code> or <code>/wordpress/&lt;version&gt;/sha256_squash.json.gz</code> to this base URL. Do not include a trailing slash or the CMS name."
+msgstr "Bas-URL som Panopticons anslutningsprogram använder för att ladda ner referenschecksummorna för kontrollen av kärnfilernas integritet. Lämna tomt för att använda standardvärdet <code>https://getpanopticon.com/checksums</code>. Om du kör din egen spegel måste den tillhandahålla samma struktur: anslutningsprogrammet lägger till <code>/joomla/&lt;version&gt;/sha256_squash.json.gz</code> eller <code>/wordpress/&lt;version&gt;/sha256_squash.json.gz</code> till denna bas-URL. Inkludera inte ett avslutande snedstreck eller CMS-namnet."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Disabled MCP tools"
+msgstr "Inaktiverade MCP-verktyg"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "MCP tools that members of this group may NOT use. Important: access is granted if ANY of a user's groups allows a tool. A tool is only blocked for a user when EVERY group they belong to disables it. This is the opposite of Joomla's \"deny wins\" logic. The globally disabled tools list in System Configuration always takes precedence."
+msgstr "MCP-verktyg som medlemmar i den här gruppen INTE får använda. Viktigt: åtkomst beviljas om NÅGON av en användares grupper tillåter ett verktyg. Ett verktyg blockeras för en användare bara när VARJE grupp de tillhör inaktiverar det. Detta är motsatsen till Joomlas \"nekande vinner\"-logik. Listan över globalt inaktiverade verktyg i systemkonfigurationen har alltid företräde."

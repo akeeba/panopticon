@@ -89,7 +89,7 @@ Update found | Güncelleme bulundu |
 Update will be installed | Güncelleme yüklenecek |
 Update installed | Güncelleme yüklendi |
 Update failed | Güncelleme başarısız oldu |
-Self-Update | Kendi Kendini Güncelleme | Panopticon self-update
+Self-Update | Otomatik Güncelleme | Panopticon self-update (superseded "Kendi Kendini Güncelleme")
 Available | Mevcut | For güncelleme
 Scheduled | Zamanlandı |
 Installed | Yüklendi |
@@ -121,8 +121,9 @@ Token Value | Belirteç Değeri |
 Create Token | Belirteç Oluştur |
 Show Token | Belirteci Göster |
 Copy Token | Belirteci Kopyala |
-Scopes | Kapsamlar | API access scopes
+Scopes | Kapsama | API access scopes (superseded plural "Kapsamlar" as a field/column label)
 Download Key | İndirme Anahtarı | Extension download key
+Passkey | Geçiş Anahtarı | WebAuthn/FIDO2 passkey; now translated (previously kept in English)
 Permission | İzin | In privileges context
 Add Own | Kendininkini Ekle | Privilege
 Edit Own | Kendininkini Düzenle | Privilege
@@ -197,7 +198,7 @@ Debug System | Hata Ayıklama Sistemi |
 Panopticon URL | Panopticon URL'si |
 Accurate PHP-CLI path | Doğru PHP-CLI yolu |
 API Endpoint URL | API Uç Nokta URL'si |
-Metadata | Meta Veri |
+Metadata | Meta Verisi | Superseded "Meta Veri"
 Log File | Günlük Dosyası |
 Attach Log File | Günlük Dosyası Ekle | Email attachment of task log on failure
 
@@ -239,7 +240,7 @@ Created On | Oluşturulma Tarihi |
 Created By | Oluşturan |
 Modified On | Değiştirilme Tarihi |
 Modified By | Değiştiren |
-Last Used | Son Kullanım | Last time an API token was used
+Last Used | Son Kullanılan | Last time an API token was used (superseded "Son Kullanım")
 Last check | Son kontrol |
 
 ## Non-translated Terms (keep in English)
@@ -268,7 +269,6 @@ FIDO2 | — | Technical term
 MFA | — | Technical term
 Have I Been Pwned | — | Service name (keep in English)
 Gravatar | — | Service name (keep in English)
-Passkey | — | Technical term (keep in English)
 Let's Encrypt | — | Service name (keep in English)
 SNI | — | Technical term (keep in English)
 HIBP | — | Abbreviation (keep in English)
@@ -306,3 +306,30 @@ day of month | ayın günü | CRON field
 time zone notice | saat dilimi bildirimi |
 update summary | güncelleme özeti |
 action summary | eylem özeti |
+
+## New Terminology from Continuation Pass 2
+Human translator revisions to tr-TR.po. These supersede earlier machine-translated choices.
+
+English Term | Turkish Translation | Notes
+-------------|---------------------|-------
+third party | üçüncü parti | Superseding "üçüncü taraf" (older term still present in untouched strings; prefer "parti" going forward)
+Professional (product edition) | Pro | Product edition names abbreviated, e.g. "Akeeba Backup Professional" → "Akeeba Backup Pro", "Admin Tools Professional" → "Admin Tools Pro"
+Maximum (UI label/adjective) | En Çok / En Fazla | Superseding the loanword "Maksimum", e.g. "Maximum Backup Age" → "En Çok Yedekleme Ömrü", "Maximum tokens per user" → "Kullanıcı başına en fazla belirteç sayısı"
+Limit (as in token/quota limit) | Sınır | Preferred over "Limit" as a loanword, e.g. "API Token Limit" → "API Belirteci Sınırı"
+URL (in UI field labels) | bağlantı | Often rendered as "bağlantı" (link) rather than literally transliterated, e.g. "Provide a download URL" → "İndirme bağlantısı girin", "API endpoint URL" → "API uç nokta bağlantısı"
+Read (API scope privilege verb) | İrdele / İrdeleyin | API/permission scope descriptions, e.g. "Read sites" → "Web Sitelerini İrdeleyin", "Read configuration" → "Yapılandırmayı İrdeleyin"
+Write (API scope privilege verb) | İşle / İşleyin | API/permission scope descriptions, e.g. "Write sites" → "Web Sitelerini İşleyin", "Write configuration" → "Yapılandırmayı İşleyin"
+Sites (API scope context) | Web Siteleri | In API scope/permission names "Site(s)" is rendered "Web Sitesi/Web Siteleri" rather than the bare "Site"; general UI usage elsewhere is unaffected
+
+## New Terminology from MCP Server / Checksums Base URL Pass
+
+English Term | Turkish Translation | Notes
+-------------|---------------------|-------
+MCP / MCP Server | MCP / MCP Sunucusu | "MCP" kept untranslated like other protocol acronyms (API, JSON, CRON)
+Model Context Protocol | Model Bağlam Protokolü | Spelled out once in the intro string; abbreviation MCP used everywhere else
+tool (MCP tool) | araç | An MCP-exposed function/capability, e.g. "Available tools" → "Kullanılabilir Araçlar"
+endpoint URL | uç nokta bağlantısı | Consistent with existing "API endpoint URL" → "API uç nokta bağlantısı"
+kill-switch | acil kapatma anahtarı | Figurative "absolute kill-switch" for a hard override control
+mirror (self-hosted download mirror) | ayna sunucu | "If you host your own mirror" → "Kendi ayna sunucunuzu barındırıyorsanız"
+Connector (Panopticon connector extension) | Connector | Kept in English/capitalized as the product component name, per existing usage at PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_HERE
+Core File Integrity (base URL context) | Çekirdek Dosya Bütünlüğü | Reused verbatim from the existing Security/Integrity glossary entry

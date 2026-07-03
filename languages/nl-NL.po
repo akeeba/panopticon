@@ -12004,3 +12004,73 @@ msgstr "Log in op de beheeromgeving van uw site. Ga naar Componenten, Akeeba Bac
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
 msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
 msgstr "Log in op de beheeromgeving van uw site. Ga naar Akeeba Backup, Systeemconfiguratie, Publieke API en stel “JSON API inschakelen (externe back-up)” in op Ja. Voer een nieuwe “Geheime sleutel” in; u kunt een nieuwe, willekeurige, veilige sleutel aanmaken op <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Klik vervolgens op Opslaan &amp; Sluiten in de werkbalk."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_MCP"
+msgid "MCP Server"
+msgstr "MCP-server"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_MCP_INTRO"
+msgid "The Model Context Protocol (MCP) server lets AI agents and chatbots — such as Claude Code, Claude Desktop, Codex, Cursor, or VS Code — drive Panopticon using the same capabilities as the JSON API. Each request authenticates with a Panopticon API token sent as a Bearer Authorization header, and an agent can only see and do what the token's owner could through the API."
+msgstr "Met de Model Context Protocol (MCP)-server kunnen AI-agents en chatbots — zoals Claude Code, Claude Desktop, Codex, Cursor of VS Code — Panopticon aansturen met dezelfde mogelijkheden als de JSON API. Elk verzoek authenticeert met een Panopticon API-token dat wordt meegestuurd als een Bearer Authorization-header, en een agent kan alleen zien en doen wat de eigenaar van het token via de API zou kunnen."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED"
+msgid "Enable the MCP server"
+msgstr "MCP-server inschakelen"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED_HELP"
+msgid "When disabled (the default) the MCP endpoint responds as if it does not exist."
+msgstr "Indien uitgeschakeld (de standaardinstelling) reageert het MCP endpoint alsof het niet bestaat."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT"
+msgid "MCP endpoint URL"
+msgstr "MCP endpoint-URL"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT_HELP"
+msgid "Configure your AI tool to use this URL as a Streamable HTTP MCP server, with an <code>Authorization: Bearer &lt;your API token&gt;</code> header."
+msgstr "Configureer uw AI-tool om deze URL te gebruiken als een Streamable HTTP MCP-server, met een <code>Authorization: Bearer &lt;uw API-token&gt;</code> header."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Globally disabled tools"
+msgstr "Globaal uitgeschakelde tools"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "A comma-separated list of MCP tool names that are never exposed to anyone, regardless of user, token, or group. This is the absolute kill-switch (for example, list <code>get_sysconfig</code> here to keep system configuration entirely out of MCP). Leave empty to allow all tools."
+msgstr "Een door komma\'s gescheiden lijst van MCP-toolnamen die nooit aan iemand worden blootgesteld, ongeacht gebruiker, token of groep. Dit is de absolute noodstop (vermeld hier bijvoorbeeld <code>get_sysconfig</code> om de systeemconfiguratie volledig buiten MCP te houden). Leeg laten om alle tools toe te staan."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_AVAILABLE_TOOLS"
+msgid "Available tools"
+msgstr "Beschikbare tools"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_CHECKSUMS"
+msgid "Core File Integrity"
+msgstr "Integriteit van kernbestanden"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL"
+msgid "Checksums source base URL"
+msgstr "Basis-URL van controlesombron"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL_HELP"
+msgid "Base URL Panopticon's connectors use to download the reference checksums for the Core File Integrity check. Leave empty to use the default <code>https://getpanopticon.com/checksums</code>. If you host your own mirror, it must serve the same layout: the connector appends <code>/joomla/&lt;version&gt;/sha256_squash.json.gz</code> or <code>/wordpress/&lt;version&gt;/sha256_squash.json.gz</code> to this base URL. Do not include a trailing slash or the CMS name."
+msgstr "Basis-URL die de connectors van Panopticon gebruiken om de referentiecontrolesommen voor de controle op integriteit van kernbestanden te downloaden. Leeg laten om de standaard <code>https://getpanopticon.com/checksums</code> te gebruiken. Als u uw eigen mirror host, moet deze dezelfde indeling gebruiken: de connector voegt <code>/joomla/&lt;versie&gt;/sha256_squash.json.gz</code> of <code>/wordpress/&lt;versie&gt;/sha256_squash.json.gz</code> toe aan deze basis-URL. Voeg geen afsluitende schuine streep of de naam van het CMS toe."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Disabled MCP tools"
+msgstr "Uitgeschakelde MCP-tools"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "MCP tools that members of this group may NOT use. Important: access is granted if ANY of a user's groups allows a tool. A tool is only blocked for a user when EVERY group they belong to disables it. This is the opposite of Joomla's \"deny wins\" logic. The globally disabled tools list in System Configuration always takes precedence."
+msgstr "MCP-tools die leden van deze groep NIET mogen gebruiken. Belangrijk: toegang wordt verleend als OM HET EVEN WELKE groep van een gebruiker een tool toestaat. Een tool wordt alleen geblokkeerd voor een gebruiker wanneer ELKE groep waartoe hij behoort deze uitschakelt. Dit is het tegenovergestelde van de \"weigeren wint\"-logica van Joomla. De lijst met globaal uitgeschakelde tools in Systeemconfiguratie heeft altijd voorrang."

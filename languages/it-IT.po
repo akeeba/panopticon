@@ -14823,3 +14823,73 @@ msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
 msgid "%1\$d of %2\$d API tokens created"
 msgstr "%1\$d di %2\$d token API creati"
 
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_MCP"
+msgid "MCP Server"
+msgstr "Server MCP"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_MCP_INTRO"
+msgid "The Model Context Protocol (MCP) server lets AI agents and chatbots — such as Claude Code, Claude Desktop, Codex, Cursor, or VS Code — drive Panopticon using the same capabilities as the JSON API. Each request authenticates with a Panopticon API token sent as a Bearer Authorization header, and an agent can only see and do what the token's owner could through the API."
+msgstr "Il server Model Context Protocol (MCP) permette ad agenti e chatbot basati su IA — come Claude Code, Claude Desktop, Codex, Cursor o VS Code — di controllare Panopticon con le stesse funzionalità dell'API JSON. Ogni richiesta si autentica con un token API di Panopticon inviato come intestazione Authorization di tipo Bearer, e un agente può vedere e fare solo ciò che il proprietario del token potrebbe fare tramite l'API."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED"
+msgid "Enable the MCP server"
+msgstr "Abilita il server MCP"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED_HELP"
+msgid "When disabled (the default) the MCP endpoint responds as if it does not exist."
+msgstr "Se disabilitato (impostazione predefinita) l'endpoint MCP risponde come se non esistesse."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT"
+msgid "MCP endpoint URL"
+msgstr "URL endpoint MCP"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT_HELP"
+msgid "Configure your AI tool to use this URL as a Streamable HTTP MCP server, with an <code>Authorization: Bearer &lt;your API token&gt;</code> header."
+msgstr "Configura il tuo strumento IA per usare questo URL come server MCP Streamable HTTP, con un'intestazione <code>Authorization: Bearer &lt;il tuo token API&gt;</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Globally disabled tools"
+msgstr "Strumenti disabilitati globalmente"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "A comma-separated list of MCP tool names that are never exposed to anyone, regardless of user, token, or group. This is the absolute kill-switch (for example, list <code>get_sysconfig</code> here to keep system configuration entirely out of MCP). Leave empty to allow all tools."
+msgstr "Un elenco, separato da virgole, di nomi di strumenti MCP che non vengono mai esposti a nessuno, indipendentemente da utente, token o gruppo. Questo è l'interruttore di emergenza assoluto (ad esempio, elenca qui <code>get_sysconfig</code> per tenere la configurazione di sistema completamente fuori da MCP). Lasciare vuoto per consentire tutti gli strumenti."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_AVAILABLE_TOOLS"
+msgid "Available tools"
+msgstr "Strumenti disponibili"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_CHECKSUMS"
+msgid "Core File Integrity"
+msgstr "Integrità dei file principali"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL"
+msgid "Checksums source base URL"
+msgstr "URL di base della fonte dei checksum"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL_HELP"
+msgid "Base URL Panopticon's connectors use to download the reference checksums for the Core File Integrity check. Leave empty to use the default <code>https://getpanopticon.com/checksums</code>. If you host your own mirror, it must serve the same layout: the connector appends <code>/joomla/&lt;version&gt;/sha256_squash.json.gz</code> or <code>/wordpress/&lt;version&gt;/sha256_squash.json.gz</code> to this base URL. Do not include a trailing slash or the CMS name."
+msgstr "URL di base che i connettori di Panopticon usano per scaricare i checksum di riferimento per la verifica dell'integrità dei file principali. Lasciare vuoto per usare il valore predefinito <code>https://getpanopticon.com/checksums</code>. Se ospiti un tuo mirror, deve avere la stessa struttura: il connettore aggiunge <code>/joomla/&lt;version&gt;/sha256_squash.json.gz</code> oppure <code>/wordpress/&lt;version&gt;/sha256_squash.json.gz</code> a questo URL di base. Non includere una barra finale o il nome del CMS."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Disabled MCP tools"
+msgstr "Strumenti MCP disabilitati"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "MCP tools that members of this group may NOT use. Important: access is granted if ANY of a user's groups allows a tool. A tool is only blocked for a user when EVERY group they belong to disables it. This is the opposite of Joomla's \"deny wins\" logic. The globally disabled tools list in System Configuration always takes precedence."
+msgstr "Gli strumenti MCP che i membri di questo gruppo NON possono usare. Importante: l'accesso viene concesso se ANCHE UNO SOLO dei gruppi dell'utente consente uno strumento. Uno strumento viene bloccato per un utente solo quando OGNI gruppo a cui appartiene lo disabilita. Questo è l'opposto della logica di Joomla \"il diniego vince\". L'elenco degli strumenti disabilitati globalmente nella Configurazione di sistema ha sempre la precedenza."
+

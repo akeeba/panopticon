@@ -12454,3 +12454,73 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
 msgid "API Tokens"
 msgstr "API tokeni"
 
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_MCP"
+msgid "MCP Server"
+msgstr "MCP poslužitelj"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_MCP_INTRO"
+msgid "The Model Context Protocol (MCP) server lets AI agents and chatbots — such as Claude Code, Claude Desktop, Codex, Cursor, or VS Code — drive Panopticon using the same capabilities as the JSON API. Each request authenticates with a Panopticon API token sent as a Bearer Authorization header, and an agent can only see and do what the token's owner could through the API."
+msgstr "MCP (Model Context Protocol) poslužitelj omogućuje AI agentima i chatbotovima — poput Claude Codea, Claude Desktopa, Codexa, Cursora ili VS Codea — upravljanje Panopticonom koristeći iste mogućnosti kao JSON API. Svaki zahtjev se autenticira Panopticon API tokenom poslanim kao Bearer Authorization zaglavlje, a agent može vidjeti i učiniti samo ono što bi mogao vlasnik tog tokena putem API-ja."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED"
+msgid "Enable the MCP server"
+msgstr "Omogući MCP poslužitelj"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED_HELP"
+msgid "When disabled (the default) the MCP endpoint responds as if it does not exist."
+msgstr "Kada je onemogućeno (zadano), MCP krajnja točka odgovara kao da ne postoji."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT"
+msgid "MCP endpoint URL"
+msgstr "URL MCP krajnje točke"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT_HELP"
+msgid "Configure your AI tool to use this URL as a Streamable HTTP MCP server, with an <code>Authorization: Bearer &lt;your API token&gt;</code> header."
+msgstr "Konfigurirajte svoj AI alat da koristi ovaj URL kao Streamable HTTP MCP poslužitelj, sa zaglavljem <code>Authorization: Bearer &lt;vaš API token&gt;</code>."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Globally disabled tools"
+msgstr "Globalno onemogućeni alati"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "A comma-separated list of MCP tool names that are never exposed to anyone, regardless of user, token, or group. This is the absolute kill-switch (for example, list <code>get_sysconfig</code> here to keep system configuration entirely out of MCP). Leave empty to allow all tools."
+msgstr "Popis naziva MCP alata odvojenih zarezom koji se nikome ne izlažu, bez obzira na korisnika, token ili grupu. Ovo je apsolutni prekidač za isključivanje (na primjer, ovdje navedite <code>get_sysconfig</code> kako biste sistemsku konfiguraciju potpuno isključili iz MCP-a). Ostavite prazno za dopuštanje svih alata."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_AVAILABLE_TOOLS"
+msgid "Available tools"
+msgstr "Dostupni alati"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_CHECKSUMS"
+msgid "Core File Integrity"
+msgstr "Integritet datoteka jezgre"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL"
+msgid "Checksums source base URL"
+msgstr "Osnovni URL izvora kontrolnih zbrojeva"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL_HELP"
+msgid "Base URL Panopticon's connectors use to download the reference checksums for the Core File Integrity check. Leave empty to use the default <code>https://getpanopticon.com/checksums</code>. If you host your own mirror, it must serve the same layout: the connector appends <code>/joomla/&lt;version&gt;/sha256_squash.json.gz</code> or <code>/wordpress/&lt;version&gt;/sha256_squash.json.gz</code> to this base URL. Do not include a trailing slash or the CMS name."
+msgstr "Osnovni URL koji konektori Panopticona koriste za preuzimanje referentnih kontrolnih zbrojeva za provjeru integriteta datoteka jezgre. Ostavite prazno za korištenje zadanog <code>https://getpanopticon.com/checksums</code>. Ako hostirate vlastito zrcalo, ono mora poslužiti isti raspored: konektor dodaje <code>/joomla/&lt;verzija&gt;/sha256_squash.json.gz</code> ili <code>/wordpress/&lt;verzija&gt;/sha256_squash.json.gz</code> na ovaj osnovni URL. Nemojte uključivati kosu crtu na kraju ili naziv CMS-a."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Disabled MCP tools"
+msgstr "Onemogućeni MCP alati"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "MCP tools that members of this group may NOT use. Important: access is granted if ANY of a user's groups allows a tool. A tool is only blocked for a user when EVERY group they belong to disables it. This is the opposite of Joomla's \"deny wins\" logic. The globally disabled tools list in System Configuration always takes precedence."
+msgstr "MCP alati koje članovi ove grupe NE smiju koristiti. Važno: pristup se odobrava ako BILO KOJA od korisnikovih grupa dopušta alat. Alat je blokiran za korisnika samo kada ga onemogućuju SVE grupe kojima pripada. Ovo je suprotno od Joomline logike \"zabrana pobjeđuje\". Popis globalno onemogućenih alata u Sistemskoj konfiguraciji uvijek ima prednost."
+
