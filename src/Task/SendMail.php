@@ -174,11 +174,11 @@ class SendMail extends AbstractCallback
 
 				$this->sendLanguageBatches(
 					$recipientsWithAttach, $template, $defaultLanguage,
-					$variables, $variablesByLang, $attachment, $queueItem->getSiteId()
+					$variables, $variablesByLang, $attachment, $queueItem->getSiteId() ?: 0
 				);
 				$this->sendLanguageBatches(
 					$recipientsWithoutAttach, $template, $defaultLanguage,
-					$variables, $variablesByLang, null, $queueItem->getSiteId()
+					$variables, $variablesByLang, null, $queueItem->getSiteId() ?: 0
 				);
 			}
 			else
@@ -206,7 +206,7 @@ class SendMail extends AbstractCallback
 
 				$this->sendLanguageBatches(
 					$recipientsByLanguage, $template, $defaultLanguage,
-					$variables, $variablesByLang, $attachment, $queueItem->getSiteId()
+					$variables, $variablesByLang, $attachment, $queueItem->getSiteId() ?: 0
 				);
 			}
 
