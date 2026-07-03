@@ -338,8 +338,8 @@
     Tasks - General
     ====================================================================================================
     -->
-    <target name="all" description="Makes everything, publishes the release, and generates update.json"
-            depends="git,documentation,release,update">
+    <target name="all" description="Makes the packages and documentation. Run release and update separately to publish."
+            depends="git,documentation">
     </target>
 
     <target name="git" description="Makes only packages, not the documentation"
