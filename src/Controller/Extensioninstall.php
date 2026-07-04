@@ -169,7 +169,29 @@ class Extensioninstall extends Controller
 
 			if (file_exists($filePath))
 			{
-				$filePath .= '-' . bin2hex(random_bytes(4));
+				// Supported package extensions, compound (tar.*) variants first so they win over
+				// their single suffix. The random uniqueness token goes BEFORE the extension so the
+				// remote site still receives a filename with a valid archive extension.
+				static $knownExtensions = [
+					'.tar.gz', '.tar.bz2', '.tar.xz', '.tar.zst', '.tar.zstd', '.tar.z', '.zip',
+				];
+
+				$lower = strtolower($safeName);
+				$ext   = '';
+				$stem  = $safeName;
+
+				foreach ($knownExtensions as $candidate)
+				{
+					if (substr($lower, -strlen($candidate)) === $candidate)
+					{
+						$ext  = substr($safeName, -strlen($candidate));
+						$stem = substr($safeName, 0, -strlen($candidate));
+
+						break;
+					}
+				}
+
+				$filePath = $cacheDir . '/' . $stem . '-' . bin2hex(random_bytes(4)) . $ext;
 			}
 
 			if (!move_uploaded_file($file['tmp_name'], $filePath))
