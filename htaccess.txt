@@ -34,6 +34,11 @@
     ## This rule is REQUIRED for clean URLs to the API endpoints (`/api/v1/...`).
     ## Users without .htaccess support can fall back to `/index.php/api/v1/...`.
     RewriteRule ^api(/.*)?$ index.php/api$1 [L,QSA]
+
+    ## MCP server clean URL
+    ## This rule is REQUIRED for the short `/mcp` endpoint. Without it, `/mcp` is a filesystem 404.
+    ## Users without .htaccess support can fall back to `/index.php/mcp`.
+    RewriteRule ^mcp(/.*)?$ index.php/mcp$1 [L,QSA]
 </IfModule>
 
 ### ============================================================================

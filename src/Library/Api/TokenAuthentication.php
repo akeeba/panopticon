@@ -36,6 +36,12 @@ class TokenAuthentication
 	 * 2. X-Panopticon-Token: <token> header
 	 * 3. $_GET['_panopticon_token'] query parameter
 	 *
+	 * For headers we consult both `$_SERVER` (populated by the SetEnvIf/CGIPassAuth trick in the
+	 * shipped .htaccess) and, as a fallback, `getallheaders()` / `apache_request_headers()`. The
+	 * latter recovers the Authorization header on hosts where the SetEnvIf directive is missing or
+	 * inactive (e.g. a hand-managed .htaccess, or mod_setenvif disabled), which would otherwise
+	 * silently break Bearer-token authentication for both the JSON API and the MCP server.
+	 *
 	 * @return  string|null  The token string, or null if not found.
 	 * @since   1.4.0
 	 */
@@ -44,7 +50,7 @@ class TokenAuthentication
 		// 1. Authorization: Bearer header
 		$authHeader = $_SERVER['HTTP_AUTHORIZATION']
 			?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION']
-			?? null;
+			?? $this->getRequestHeader('Authorization');
 
 		if ($authHeader !== null && stripos($authHeader, 'Bearer ') === 0)
 		{
@@ -57,22 +63,91 @@ class TokenAuthentication
 		}
 
 		// 2. X-Panopticon-Token header
-		$customHeader = $_SERVER['HTTP_X_PANOPTICON_TOKEN'] ?? null;
+		$customHeader = $_SERVER['HTTP_X_PANOPTICON_TOKEN']
+			?? $this->getRequestHeader('X-Panopticon-Token');
 
 		if ($customHeader !== null && trim($customHeader) !== '')
 		{
 			return trim($customHeader);
 		}
 
-		// 3. Query parameter
+		// 3. Query parameter.
+		//
+		// API tokens are Base64 and routinely contain '+'. In a URL query string an unencoded '+'
+		// decodes to a space, corrupting the token; a space is never valid in a Base64 token, so we
+		// unambiguously restore any spaces back to '+' before use. Clients SHOULD url-encode the
+		// token, but this keeps the documented fallback working even when they do not.
 		$queryToken = $_GET['_panopticon_token'] ?? null;
 
 		if ($queryToken !== null && trim($queryToken) !== '')
 		{
-			return trim($queryToken);
+			return str_replace(' ', '+', trim($queryToken));
 		}
 
 		return null;
+	}
+
+	/**
+	 * Read a request header case-insensitively via getallheaders()/apache_request_headers().
+	 *
+	 * Fallback for SAPIs where the header is not surfaced in `$_SERVER` (notably the Authorization
+	 * header when the .htaccess SetEnvIf/CGIPassAuth trick is absent). Returns null when neither
+	 * function exists or the header is not present.
+	 *
+	 * @param   string  $name  The header name to look up (case-insensitive).
+	 *
+	 * @return  string|null
+	 * @since   2.2.1
+	 */
+	private function getRequestHeader(string $name): ?string
+	{
+		$headers = $this->getAllRequestHeaders();
+
+		if (empty($headers))
+		{
+			return null;
+		}
+
+		$needle = strtolower($name);
+
+		foreach ($headers as $headerName => $headerValue)
+		{
+			if (strtolower((string) $headerName) === $needle)
+			{
+				return (string) $headerValue;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Return all request headers as a name => value array.
+	 *
+	 * Wraps getallheaders()/apache_request_headers() (neither of which exists under the CLI SAPI)
+	 * behind a single seam so it can be overridden in tests. Returns an empty array when no header
+	 * source is available.
+	 *
+	 * @return  array<string,string>
+	 * @since   2.2.1
+	 */
+	protected function getAllRequestHeaders(): array
+	{
+		if (function_exists('getallheaders'))
+		{
+			$headers = getallheaders();
+
+			return is_array($headers) ? $headers : [];
+		}
+
+		if (function_exists('apache_request_headers'))
+		{
+			$headers = apache_request_headers();
+
+			return is_array($headers) ? $headers : [];
+		}
+
+		return [];
 	}
 
 	/**

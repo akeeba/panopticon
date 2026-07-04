@@ -1,4 +1,10 @@
 <?php die(); ?>
+Akeeba Panopticon 2.2.1
+================================================================================
+# [HIGH] MCP server (and JSON API) always returned 401 when the web server stripped the Authorization header [gh-1010]
+# The short /mcp endpoint returned a 404 because htaccess.txt lacked a rewrite rule for it
+# The _panopticon_token query parameter failed for Base64 tokens containing "+" (decoded to a space)
+
 Akeeba Panopticon 2.2.0
 ================================================================================
 ! [CRITICAL] API token management vulnerabilities due to insufficient checks

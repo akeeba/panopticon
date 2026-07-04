@@ -25,7 +25,7 @@ class McpControllerTest extends AbstractApiIntegrationTestCase
 {
 	protected function tearDown(): void
 	{
-		unset($_SERVER['REQUEST_METHOD'], $_SERVER['HTTP_AUTHORIZATION']);
+		unset($_SERVER['REQUEST_METHOD'], $_SERVER['HTTP_AUTHORIZATION'], $_GET['_panopticon_token']);
 		PhpInputMock::restore();
 
 		parent::tearDown();
@@ -117,6 +117,46 @@ class McpControllerTest extends AbstractApiIntegrationTestCase
 		$token = $this->createApiToken((int) $user->getId())['token'];
 
 		$_SERVER['HTTP_AUTHORIZATION'] = 'Bearer ' . $token;
+
+		$body     = '{"jsonrpc":"2.0","id":1,"method":"initialize","params":'
+			. '{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"phpunit","version":"1"}}}';
+		$response = $this->dispatchMcp('POST', $body);
+
+		$this->assertSame(200, $response['status']);
+		$this->assertSame('Akeeba Panopticon', $response['body']['result']['serverInfo']['name']);
+	}
+
+	public function testEnabledServerAcceptsTokenViaQueryParameter(): void
+	{
+		$this->container->appConfig->set('mcp_enabled', true);
+
+		$user  = $this->createUser(['parameters' => ['acl.panopticon.super' => true]]);
+		$token = $this->createApiToken((int) $user->getId())['token'];
+
+		// Documented fallback for clients that cannot send an Authorization header.
+		unset($_SERVER['HTTP_AUTHORIZATION']);
+		$_GET['_panopticon_token'] = $token;
+
+		$body     = '{"jsonrpc":"2.0","id":1,"method":"initialize","params":'
+			. '{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"phpunit","version":"1"}}}';
+		$response = $this->dispatchMcp('POST', $body);
+
+		$this->assertSame(200, $response['status']);
+		$this->assertSame('Akeeba Panopticon', $response['body']['result']['serverInfo']['name']);
+	}
+
+	public function testEnabledServerAcceptsQueryParameterWithPlusDecodedToSpace(): void
+	{
+		$this->container->appConfig->set('mcp_enabled', true);
+
+		$user  = $this->createUser(['parameters' => ['acl.panopticon.super' => true]]);
+		$token = $this->createApiToken((int) $user->getId())['token'];
+
+		// A '+' in the Base64 token decodes to a space when the client fails to URL-encode it. The
+		// controller must restore the space back to '+' and still authenticate. (For tokens without
+		// a '+' this is a no-op and the assertion still holds.)
+		unset($_SERVER['HTTP_AUTHORIZATION']);
+		$_GET['_panopticon_token'] = str_replace('+', ' ', $token);
 
 		$body     = '{"jsonrpc":"2.0","id":1,"method":"initialize","params":'
 			. '{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"phpunit","version":"1"}}}';

@@ -23,16 +23,17 @@ While the server is disabled the endpoint responds as if it does not exist (HTTP
 
 ## Endpoint URL
 
-With `mod_rewrite` (recommended) or an nginx equivalent:
-
-```
-https://panopticon.example.com/mcp
-```
-
-Without URL rewriting (e.g. a barebones Apache without `mod_rewrite`):
+The universal form, which works on any server with or without URL rewriting:
 
 ```
 https://panopticon.example.com/index.php/mcp
+```
+
+The short form, which requires a rewrite rule (the shipped `.htaccess` provides it as of Panopticon 2.2.1; without it,
+`/mcp` is a plain filesystem 404):
+
+```
+https://panopticon.example.com/mcp
 ```
 
 Both forms route to the same server. The MCP server implements the **Streamable HTTP** transport in **stateless** mode:
@@ -126,8 +127,9 @@ claude mcp add --transport http panopticon https://panopticon.example.com/mcp \
 
 Open **Settings → Connectors → Add custom connector**, give it a name (e.g. *Panopticon*), and set the URL to your
 endpoint. If your build of Claude Desktop lets you add request headers, add `Authorization: Bearer YOUR_API_TOKEN`.
-Otherwise, append the token as a query parameter instead (`…/mcp?_panopticon_token=YOUR_API_TOKEN`), which Panopticon
-also accepts.
+Otherwise, append the token as a query parameter instead (`…/index.php/mcp?_panopticon_token=YOUR_API_TOKEN`), which
+Panopticon also accepts. **URL-encode the token** when passing it this way: API tokens are Base64 and contain characters
+such as `+` that a URL otherwise mangles (an unencoded `+` decodes to a space and corrupts the token).
 
 ### Codex CLI
 

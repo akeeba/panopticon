@@ -107,6 +107,50 @@ class TokenAuthenticationTest extends AbstractUnitTestCase
 		$this->assertNull($auth->extractToken());
 	}
 
+	public function testExtractTokenFallsBackToGetallheadersBearer(): void
+	{
+		// Simulate a host where the SetEnvIf trick does not fire: nothing in $_SERVER, but the
+		// Authorization header is available via getallheaders(). Header name is deliberately
+		// lower-cased to prove the lookup is case-insensitive.
+		$auth = $this->buildAuthWithHeaders(
+			$this->buildContainer(),
+			['authorization' => 'Bearer getallheaders-token']
+		);
+
+		$this->assertSame('getallheaders-token', $auth->extractToken());
+	}
+
+	public function testExtractTokenFallsBackToGetallheadersCustomHeader(): void
+	{
+		$auth = $this->buildAuthWithHeaders(
+			$this->buildContainer(),
+			['X-Panopticon-Token' => 'getallheaders-custom']
+		);
+
+		$this->assertSame('getallheaders-custom', $auth->extractToken());
+	}
+
+	public function testExtractTokenServerBearerWinsOverGetallheaders(): void
+	{
+		$_SERVER['HTTP_AUTHORIZATION'] = 'Bearer server-token';
+
+		$auth = $this->buildAuthWithHeaders(
+			$this->buildContainer(),
+			['Authorization' => 'Bearer getallheaders-token']
+		);
+
+		$this->assertSame('server-token', $auth->extractToken());
+	}
+
+	public function testExtractTokenRepairsQueryParamPlusCorruption(): void
+	{
+		// An unencoded '+' in the query string decodes to a space; extractToken() must restore it.
+		$_GET['_panopticon_token'] = 'U0hBLTI1Njo1 abc+def';
+		$auth                      = new TokenAuthentication($this->buildContainer());
+
+		$this->assertSame('U0hBLTI1Njo1+abc+def', $auth->extractToken());
+	}
+
 	// ----------------------------------------------------------------------------------------
 	// validateToken — constant-time invariant
 	//
@@ -243,6 +287,30 @@ class TokenAuthenticationTest extends AbstractUnitTestCase
 	// ----------------------------------------------------------------------------------------
 	// helpers
 	// ----------------------------------------------------------------------------------------
+
+	/**
+	 * Build a TokenAuthentication whose getallheaders()/apache_request_headers() seam returns a
+	 * fixed set of headers, so the header-fallback path can be exercised under the CLI SAPI (where
+	 * neither function exists).
+	 *
+	 * @param   \Akeeba\Panopticon\Container  $container  The container to inject.
+	 * @param   array<string,string>          $headers    The request headers to expose.
+	 */
+	private function buildAuthWithHeaders(\Akeeba\Panopticon\Container $container, array $headers): TokenAuthentication
+	{
+		return new class($container, $headers) extends TokenAuthentication
+		{
+			public function __construct(\Akeeba\Panopticon\Container $container, private readonly array $fakeHeaders)
+			{
+				parent::__construct($container);
+			}
+
+			protected function getAllRequestHeaders(): array
+			{
+				return $this->fakeHeaders;
+			}
+		};
+	}
 
 	/**
 	 * Build a real Container with overridden `appConfig` and `mvcFactory` services so
