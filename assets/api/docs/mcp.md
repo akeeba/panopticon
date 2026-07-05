@@ -55,6 +55,39 @@ honours those scopes exactly like the JSON API does. See [API Overview](API-Over
 > permissions. Prefer a dedicated, least-privilege token (restricted scopes, and an account that only has access to the
 > sites you want the assistant to manage).
 
+> **Header-stripping gotcha.** Many web server / PHP combinations strip the `Authorization` header before it reaches
+> PHP, causing every request to fail with a 401 even when the token is correct. The shipped `.htaccess` handles this on
+> Apache; Nginx and IIS need a little configuration. If the header is dropped *before PHP starts* (common on shared
+> hosting running `cgi-fcgi`/LSPHP with restricted `AllowOverride`) and no configuration recovers it, use the
+> `X-Panopticon-Token` header described next.
+
+### Alternative: the `X-Panopticon-Token` header
+
+If the `Authorization` header does not reach PHP on your host, send the token in the `X-Panopticon-Token` header
+instead — Panopticon accepts it identically, and being a custom header it survives most `cgi-fcgi`/LSPHP setups:
+
+```
+X-Panopticon-Token: YOUR_API_TOKEN
+```
+
+For stdio-only clients, or clients that do not let you set a raw header, bridge with
+[supergateway](https://github.com/supercorp-ai/supergateway):
+
+```json
+{
+  "mcpServers": {
+    "panopticon-yoursite": {
+      "command": "npx",
+      "args": [
+        "-y", "supergateway",
+        "--streamableHttp", "https://panopticon.example.com/index.php/mcp",
+        "--header", "X-Panopticon-Token: YOUR_API_TOKEN"
+      ]
+    }
+  }
+}
+```
+
 ## Security model
 
 The MCP server is designed so that an AI agent can never exceed the boundaries of the token it uses:
@@ -254,7 +287,11 @@ as shown above.
 ## Troubleshooting
 
 - **404 responses:** the MCP server is disabled. Enable it in System Configuration.
-- **401 responses:** the `Authorization: Bearer …` header is missing or the token is invalid, disabled, or expired.
+- **401 responses:** the `Authorization: Bearer …` header is missing or the token is invalid, disabled, or expired. If
+  the header is being stripped before it reaches PHP (common on `cgi-fcgi`/LSPHP shared hosting), send the token in the
+  `X-Panopticon-Token` header instead. The audit log records a *reason* per failed attempt: `missing_token` = no token
+  reached PHP (header stripping); `no_secret` = `config.php` has no persisted `secret` (fixed in 2.2.1 — upgrade and
+  re-mint your tokens).
 - **A tool you expected is missing from the list:** check (1) the token's scopes, (2) whether the tool is in the
   *Globally disabled tools* list, (3) whether every one of your groups disables it, and (4) for Super-User-only tools,
   whether your account is a Super User.

@@ -382,27 +382,16 @@ final class BootstrapUtilities
 
 		if (defined('AKEEBA_SECRET'))
 		{
+			// Adopt the secret we just loaded from tmp/secret.php so loadConfiguration() can transcribe it into
+			// config.php on this (or a subsequent) request. Without this, a configured-but-secret-less config.php
+			// would never receive the secret, and API/MCP token authentication would fail with `no_secret`.
+			self::$secret = AKEEBA_SECRET;
+
 			return;
 		}
 
 		// Create a new secret and save it into a temporary file.
-		$randomStringGenerator = function(int $length): string {
-			$allCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-			$baseLength    = \strlen($allCharacters);
-			$outString     = '';
-			$sourceBytes   = random_bytes($length + 1);
-			$baseShift     = \ord($sourceBytes[0]);
-
-			for ($i = 1; $i <= $length; ++$i)
-			{
-				$outString .= $allCharacters[($baseShift + \ord($sourceBytes[$i])) % $baseLength];
-				$baseShift += \ord($sourceBytes[$i]);
-			}
-
-			return $outString;
-		};
-
-		$secret       = $randomStringGenerator(64);
+		$secret       = self::generateRandomSecret(64);
 		self::$secret = $secret;
 
 		$fileContent = <<< PHP
@@ -415,6 +404,36 @@ if (!defined('AKEEBA_SECRET')) {
 PHP;
 
 		file_put_contents(APATH_TMP . '/secret.php', $fileContent);
+	}
+
+	/**
+	 * Generate a cryptographically strong, URL-safe random secret string.
+	 *
+	 * The output consists solely of the characters a-z, A-Z, and 0-9, making it safe to embed verbatim in a PHP
+	 * string literal (config.php) and in URLs. It is used both for the installation secret (see applySecret()) and by
+	 * the CLI configuration creation command.
+	 *
+	 * @param   int  $length  The number of characters to generate.
+	 *
+	 * @return  string
+	 * @throws  \Random\RandomException
+	 * @since   2.2.1
+	 */
+	public static function generateRandomSecret(int $length = 64): string
+	{
+		$allCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		$baseLength    = \strlen($allCharacters);
+		$outString     = '';
+		$sourceBytes   = random_bytes($length + 1);
+		$baseShift     = \ord($sourceBytes[0]);
+
+		for ($i = 1; $i <= $length; ++$i)
+		{
+			$outString .= $allCharacters[($baseShift + \ord($sourceBytes[$i])) % $baseLength];
+			$baseShift += \ord($sourceBytes[$i]);
+		}
+
+		return $outString;
 	}
 
 	/**
@@ -434,8 +453,13 @@ PHP;
 		$appConfig = Factory::getContainer()->appConfig;
 		$appConfig->loadConfiguration();
 
-		// Transfer the secret to the application configuration if necessary
-		$deleteOld = !empty(self::$secret);
+		// Transfer the secret to the application configuration if necessary.
+		//
+		// We only delete tmp/secret.php once the secret has been *successfully persisted* into config.php. On a
+		// read-only configuration (a .env file, or an environment-variable configured container) we cannot save, so we
+		// must keep tmp/secret.php: it is the only stable home of the secret, and deleting it would make applySecret()
+		// generate a brand-new secret on the next request, churning the secret and breaking existing sessions/tokens.
+		$deleteOld = false;
 
 		if (self::$secret && !$appConfig->get('secret'))
 		{
@@ -446,6 +470,8 @@ PHP;
 				try
 				{
 					$appConfig->saveConfiguration();
+
+					$deleteOld = true;
 				}
 				catch (\Exception)
 				{

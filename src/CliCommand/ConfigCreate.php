@@ -9,6 +9,7 @@ namespace Akeeba\Panopticon\CliCommand;
 
 defined('AKEEBA') || die;
 
+use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\CliCommand\Attribute\ConfigAssertion;
 use Akeeba\Panopticon\Factory;
 use Awf\Database\Driver;
@@ -47,6 +48,14 @@ class ConfigCreate extends AbstractCommand
 		foreach (array_merge($appConfig->getDefaultConfiguration(), $options) as $k => $v)
 		{
 			$appConfig->set($k, $v);
+		}
+
+		// Ensure the installation secret is persisted into config.php. Without it, API/MCP token authentication
+		// fails with `no_secret` (see gh-1010). The bootstrap's tmp/secret.php → config.php transcription is timing
+		// dependent, so we generate and persist the secret here to guarantee a self-contained configuration file.
+		if (empty(trim((string) $appConfig->get('secret', ''))))
+		{
+			$appConfig->set('secret', BootstrapUtilities::generateRandomSecret(64));
 		}
 
 		try
