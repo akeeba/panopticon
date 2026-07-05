@@ -229,7 +229,7 @@ class SendMail extends AbstractCallback
 	 * @param   mixed       $variables             Global template variables
 	 * @param   array       $variablesByLang       Per-language template variable overrides
 	 * @param   string|null $attachment            Absolute path to attach, or null
-	 * @param   int         $siteId                Site ID for log messages
+	 * @param   int|null    $siteId                Site ID for log messages (null for system-level emails)
 	 */
 	private function sendLanguageBatches(
 		array $recipientsByLanguage,
@@ -238,7 +238,7 @@ class SendMail extends AbstractCallback
 		mixed $variables,
 		array $variablesByLang,
 		?string $attachment,
-		int $siteId
+		?int $siteId
 	): void
 	{
 		$hasMultipleLanguages = count($recipientsByLanguage) > 1;
