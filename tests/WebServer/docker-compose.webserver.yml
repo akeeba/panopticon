@@ -1,0 +1,70 @@
+################################################################################
+## Akeeba Panopticon — web-server MCP integration test stack
+##
+## Boots a real Apache 2.4 + PHP (FPM by default, mod_php optionally) container with
+## the MCP server enabled, plus an ephemeral MySQL 8. Driven by tests/WebServer/run.sh;
+## not meant to be started by hand. Everything is disposable (no persistent volumes).
+##
+## Selectable via environment variables (see run.sh / README.md):
+##   PANOPTICON_TEST_DOCKERFILE   Dockerfile.fpm (default) | Dockerfile.modphp
+##   PANOPTICON_TEST_PHP_VERSION  PHP version tag (default 8.4)
+##   PANOPTICON_TEST_HTTP_PORT    Host port mapped to Apache :80 (default 4290)
+##   PANOPTICON_TEST_SECRET       Pinned app secret used to mint/validate tokens
+##   PANOPTICON_TEST_ADMIN_PASSWORD  Admin password (must pass complexity checks)
+################################################################################
+
+name: panopticon_webtest
+
+services:
+  php:
+    build:
+      context: ../..
+      dockerfile: ${PANOPTICON_TEST_DOCKERFILE:-tests/WebServer/docker/Dockerfile.fpm}
+      args:
+        PHP_VERSION: ${PANOPTICON_TEST_PHP_VERSION:-8.4}
+    container_name: panopticon_webtest_php
+    depends_on:
+      wait-for-db:
+        condition: service_completed_successfully
+    ports:
+      - "${PANOPTICON_TEST_HTTP_PORT:-4290}:80"
+    environment:
+      # Environment-variable configuration mode: no config.php, no setup wizard.
+      PANOPTICON_USING_ENV: "1"
+      # Pinned secret so tokens are deterministic and validation never hits `no_secret`.
+      PANOPTICON_SECRET: "${PANOPTICON_TEST_SECRET:-0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef}"
+      PANOPTICON_MCP_ENABLED: "true"
+      PANOPTICON_FINISHED_SETUP: "1"
+      # Avoid IP lockouts while the test hammers the endpoint.
+      PANOPTICON_LOGIN_FAILURE_ENABLE: "0"
+      PANOPTICON_DB_HOST: "mysql"
+      PANOPTICON_DB_PREFIX: "pnptc_"
+      MYSQL_DATABASE: "panopticon"
+      MYSQL_USER: "panopticon"
+      MYSQL_PASSWORD: "panopticon"
+      TZ: "UTC"
+      ADMIN_USERNAME: "admin"
+      ADMIN_PASSWORD: "${PANOPTICON_TEST_ADMIN_PASSWORD:-Adm1n-P@ssw0rd!}"
+      ADMIN_NAME: "Administrator"
+      ADMIN_EMAIL: "admin@example.com"
+      PANOPTICON_CRON_JOBS: "0"
+
+  mysql:
+    image: mysql:8.0
+    command:
+      - --default-authentication-plugin=mysql_native_password
+    container_name: panopticon_webtest_mysql
+    environment:
+      MYSQL_DATABASE: "panopticon"
+      MYSQL_USER: "panopticon"
+      MYSQL_PASSWORD: "panopticon"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    # Ephemeral data directory — nothing persists between runs.
+    tmpfs:
+      - /var/lib/mysql
+
+  wait-for-db:
+    image: atkrad/wait4x:latest
+    depends_on:
+      - mysql
+    command: tcp mysql:3306 -t 60s -i 250ms

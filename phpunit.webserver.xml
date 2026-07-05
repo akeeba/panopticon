@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Dedicated PHPUnit config for the web-server MCP integration test tier.
+
+    Deliberately separate from phpunit.xml so `composer test` / a bare `phpunit` never runs it:
+    this tier needs a live Dockerised Apache+PHP container (brought up by tests/WebServer/run.sh),
+    not the test database. Run it via `composer test:webserver`.
+-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="tests/WebServer/bootstrap.php"
+         colors="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         cacheDirectory=".phpunit.cache">
+    <testsuites>
+        <testsuite name="webserver">
+            <directory>tests/WebServer</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

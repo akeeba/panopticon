@@ -1,0 +1,35 @@
+# Apache 2.4 + PHP-FPM test image for the web-server MCP integration test.
+#
+# This is the DEFAULT SAPI for the test tier: Apache talks to PHP-FPM over FastCGI, which is
+# where the gh-1010 Authorization-header stripping actually happens. Build context is the repo
+# root; select the PHP version with the PHP_VERSION build arg (Apache 2.4 comes from the Debian
+# base of the php:*-fpm image).
+ARG PHP_VERSION="8.4"
+FROM php:${PHP_VERSION:+${PHP_VERSION}-}fpm
+
+# Apache 2.4 alongside PHP-FPM.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends apache2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# The MySQLi PHP extension (the app's preferred driver).
+RUN docker-php-ext-install -j"$(nproc)" mysqli
+
+# The app's custom php.ini.
+COPY assets/php.ini /usr/local/etc/php/conf.d/php.ini
+
+# Apache modules: FastCGI proxy to PHP-FPM, plus rewrite + setenvif for the .htaccess behaviour
+# under test. We do NOT enable CGIPassAuth — Authorization passing is left to the .htaccess.
+RUN a2enmod proxy proxy_fcgi rewrite setenvif \
+    && a2dissite 000-default
+
+COPY tests/WebServer/docker/panopticon-fpm.conf /etc/apache2/sites-available/panopticon.conf
+RUN a2ensite panopticon
+
+# The application files.
+COPY . /var/www/html
+
+COPY tests/WebServer/docker/docker-entrypoint-fpm.sh /usr/local/bin/docker-entrypoint-fpm.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint-fpm.sh
+
+ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint-fpm.sh"]

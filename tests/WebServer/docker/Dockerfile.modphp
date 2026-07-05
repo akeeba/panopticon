@@ -1,0 +1,32 @@
+# Apache 2.4 + mod_php test image for the web-server MCP integration test.
+#
+# This is the SECONDARY (non-default) SAPI, selected via PANOPTICON_TEST_SAPI=modphp. It exists
+# to cover the mod_php-only half of the gh-1010 fix: under mod_php, getallheaders() exposes the
+# Authorization header even without the .htaccess SetEnvIf trick, so the absent-.htaccess + Bearer
+# request authenticates (200) rather than being stripped (401) as it is under PHP-FPM.
+ARG PHP_VERSION="8.4"
+FROM php:${PHP_VERSION:+${PHP_VERSION}-}apache
+
+# The MySQLi PHP extension (the app's preferred driver).
+RUN docker-php-ext-install -j"$(nproc)" mysqli
+
+# The app's custom php.ini.
+COPY assets/php.ini /usr/local/etc/php/conf.d/php.ini
+
+# Enable mod_rewrite + mod_setenvif and allow .htaccess overrides in the docroot so the test can
+# toggle .htaccess behaviour at runtime (the Debian default is AllowOverride None).
+RUN a2enmod rewrite setenvif
+COPY tests/WebServer/docker/allow-override.conf /etc/apache2/conf-enabled/zz-panopticon-override.conf
+
+# The application files.
+COPY . /var/www/html
+
+# Apache runs under a dedicated non-root user (mirrors the production Dockerfile).
+RUN useradd panopticon
+ENV APACHE_RUN_USER="panopticon"
+ENV APACHE_RUN_GROUP="panopticon"
+
+COPY tests/WebServer/docker/docker-entrypoint-modphp.sh /usr/local/bin/docker-entrypoint-modphp.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint-modphp.sh
+
+ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint-modphp.sh"]

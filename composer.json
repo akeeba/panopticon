@@ -339,6 +339,7 @@
 		],
 		"test": "phpunit",
 		"test:unit": "phpunit --testsuite=unit",
-		"test:integration": "phpunit --testsuite=integration"
+		"test:integration": "phpunit --testsuite=integration",
+		"test:webserver": "tests/WebServer/run.sh"
 	}
 }

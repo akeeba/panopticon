@@ -1,6 +1,8 @@
 <?php die(); ?>
 Akeeba Panopticon 2.2.1
 ================================================================================
++ New `token:create` CLI command to mint an API token for a user
++ Web-server integration test tier: exercises the MCP endpoint through a real Dockerised Apache 2.4 + PHP (FPM/mod_php) server, covering the transport-layer behaviour behind gh-1010
 # [HIGH] MCP server (and JSON API) always returned 401 when the web server stripped the Authorization header [gh-1010]
 # [HIGH] MCP server and JSON API token authentication failed with "no_secret" when config.php had no persisted secret (CLI installs, and a web-installer timing race) [gh-1010]
 # The short /mcp endpoint returned a 404 because htaccess.txt lacked a rewrite rule for it
