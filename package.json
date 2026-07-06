@@ -21,6 +21,6 @@
 		"petite-vue": "^0.4.1",
 		"altcha": "^3.1.0",
 		"terser": "^5.0.0",
-		"tinymce": "^8.6.0"
+		"tinymce": "^8.7.0"
 	}
 }
