@@ -85,6 +85,11 @@ trait ACLTrait
 			'install' => ['*'],
 			'*'       => ['ø'],
 		],
+		'extensions'    => [
+			'default' => ['*'],
+			'main'    => ['*'],
+			'*'       => ['ø'],
+		],
 		'extupdates'    => [
 			'default' => ['*'],
 			'main'    => ['*'],

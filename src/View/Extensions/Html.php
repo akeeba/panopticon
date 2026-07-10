@@ -1,0 +1,110 @@
+<?php
+/**
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2026 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+namespace Akeeba\Panopticon\View\Extensions;
+
+
+use Akeeba\Panopticon\Model\Extensions;
+use Akeeba\Panopticon\Model\Site;
+use Akeeba\Panopticon\View\Trait\CrudTasksTrait;
+use Awf\Pagination\Pagination;
+
+defined('AKEEBA') || die;
+
+class Html extends \Awf\Mvc\DataView\Html
+{
+	use CrudTasksTrait;
+
+	public array $sites = [];
+
+	public array $scheduledPerSite = [];
+
+	public array $groupMap = [];
+
+	public function onBeforeMain()
+	{
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_EXTENSIONS_TITLE'));
+
+		// Groups map
+		$this->groupMap = $this->getModel('groups')->getGroupMap();
+
+		$this->lists = new \stdClass();
+
+		/** @var Extensions $model */
+		$model = $this->getModel();
+
+		$this->lists->order      = $model->getState('filter_order', 'id', 'cmd');
+		$this->lists->order_Dir  = $model->getState('filter_order_Dir', 'ASC', 'cmd');
+		$this->lists->limitStart = $model->getState('limitstart', 0, 'int');
+		$this->lists->limit      = $model->getState('limit', 50, 'int');
+
+		$this->items      = $model->getExtensions(false, $this->lists->limitStart, $this->lists->limit);
+		$this->itemsCount = $model->getTotalExtensions();
+
+		$displayedLinks   = 10;
+		$this->pagination = new Pagination(
+			$this->itemsCount, $this->lists->limitStart, $this->lists->limit, $displayedLinks, $this->container
+		);
+
+		$this->sites = array_map(
+			function ($site_id) {
+				/** @var Site $site */
+				$site = clone $this->getModel('site');
+				try
+				{
+					$site                             = $site->findOrFail($site_id);
+					$this->scheduledPerSite[$site_id] = $site->getExtensionsScheduledForUpdate();
+				}
+				catch (\Exception)
+				{
+					return null;
+				}
+
+				return $site;
+			},
+			$model->getSiteIds()
+		);
+
+		foreach ($this->items as $e)
+		{
+			$site_id = $e->site_id;
+
+			if (isset($this->sites[$site_id]))
+			{
+				continue;
+			}
+
+			/** @var Site $site */
+			$site = clone $this->getModel('site');
+			try
+			{
+				$this->sites[$site_id]            = $site->findOrFail($site_id);
+				$this->scheduledPerSite[$site_id] = $this->sites[$site_id]->getExtensionsScheduledForUpdate();
+			}
+			catch (\Exception)
+			{
+				continue;
+			}
+		}
+
+		$this->addTooltipJavaScript();
+
+		return true;
+	}
+
+	private function addTooltipJavaScript(): void
+	{
+		$js = <<< JS
+window.addEventListener('DOMContentLoaded', () => {
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"],[data-bs-tooltip="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    });
+
+JS;
+		$this->container->application->getDocument()->addScriptDeclaration($js);
+	}
+}

@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 2.2.1
 ================================================================================
++ New Extensions view: lists all installed extensions across all sites, not just ones with a pending update, with the same filters as Extension Updates [gh-1015]
 + Joomla Update Doctor: diagnose why a Joomla core update fails or gets stuck (probes the extraction endpoint, scans the latest update attempt's log, and corroborates against the core update report)
 + New `token:create` CLI command to mint an API token for a user
 + Web-server integration test tier: exercises the MCP endpoint through a real Dockerised Apache 2.4 + PHP (FPM/mod_php) server, covering the transport-layer behaviour behind gh-1010

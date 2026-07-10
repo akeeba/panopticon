@@ -58,6 +58,11 @@ class Application extends AWFApplication
 					'icon'        => 'fa fa-fw fa-cubes',
 				],
 				[
+					'view'        => 'extensions',
+					'permissions' => [],
+					'icon'        => 'fa fa-fw fa-boxes-stacked',
+				],
+				[
 					'view'        => 'coreupdates',
 					'permissions' => [],
 					'icon'        => 'fa fa-fw fa-atom',
