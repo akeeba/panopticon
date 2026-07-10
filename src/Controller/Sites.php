@@ -218,6 +218,105 @@ class Sites extends DataController
 		$view->display();
 	}
 
+	/**
+	 * Joomla Update Doctor: diagnose why a Joomla! core update fails or gets stuck.
+	 *
+	 * @return  void
+	 * @throws  Exception
+	 */
+	public function updateDoctor(): void
+	{
+		$this->csrfProtection();
+
+		$id = $this->input->get->getInt('id', 0);
+		/** @var SiteModel $site */
+		$site = $this
+			->getContainer()
+			->mvcFactory
+			->makeTempModel('Site')
+			->findOrFail($id);
+
+		if (!$this->canAddEditOrSave($site, false))
+		{
+			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
+		}
+
+		// The Update Doctor is Joomla-specific (WordPress has no extraction endpoint).
+		if ($site->cmsType() !== CMSType::JOOMLA)
+		{
+			$this->setRedirect(
+				$this->container->router->route(sprintf('index.php?view=site&task=read&id=%d', $id)),
+				$this->getLanguage()->text('PANOPTICON_SITES_ERR_UPDATE_DOCTOR_JOOMLA_ONLY'),
+				'warning'
+			);
+
+			return;
+		}
+
+		try
+		{
+			$results   = $site->runUpdateDoctor();
+			$doctorError = null;
+		}
+		catch (Throwable $e)
+		{
+			$results     = null;
+			$doctorError = $e;
+		}
+
+		/** @var Html $view */
+		$view = $this->getView();
+		$view->setTask($this->task);
+		$view->setDoTask($this->doTask);
+		$view->setDefaultModel($site);
+		$view->updateDoctorResults = $results;
+		$view->updateDoctorError   = $doctorError;
+
+		if (!is_null($this->layout))
+		{
+			$view->setLayout($this->layout);
+		}
+
+		$view->display();
+	}
+
+	/**
+	 * Enable global Debug logging, then return to the Update Doctor.
+	 *
+	 * This changes the GLOBAL `log_level` configuration key. It is deliberately restricted to Super Users
+	 * (see the `setdebuglogging` ACL entry) because it affects every task and site, not just this one.
+	 *
+	 * @return  void
+	 * @throws  Exception
+	 */
+	public function setDebugLogging(): void
+	{
+		$this->csrfProtection();
+
+		$id = $this->input->get->getInt('id', 0);
+
+		// Validate against the allowed log levels, mirroring Model\Sysconfig.
+		$this->container->appConfig->set('log_level', 'debug');
+		$this->container->appConfig->saveConfiguration();
+
+		if (function_exists('opcache_invalidate'))
+		{
+			opcache_invalidate($this->container->appConfig->getDefaultPath(), true);
+		}
+
+		$this->setRedirect(
+			$this->container->router->route(
+				sprintf(
+					'index.php?view=site&task=updateDoctor&id=%d&%s=1',
+					$id,
+					$this->container->session->getCsrfToken()->getValue()
+				)
+			),
+			$this->getLanguage()->text('PANOPTICON_SITES_LBL_UPDATE_DOCTOR_DEBUG_ENABLED'),
+			'info'
+		);
+	}
+
 	public function fixJoomlaCoreUpdateSite(): void
 	{
 		$this->csrfProtection();

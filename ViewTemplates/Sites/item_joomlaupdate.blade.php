@@ -306,6 +306,12 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
             <span class="fa fa-eraser" aria-hidden="true"></span>
             @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_CLEAR_ERROR')
         </a>
+        {{-- Button to diagnose the failure with the Joomla Update Doctor --}}
+        <a href="@route(sprintf('index.php?view=site&task=updateDoctor&id=%d&%s=1', $this->item->id, $token))"
+           class="btn btn-outline-info" role="button">
+            <span class="fa fa-screwdriver-wrench" aria-hidden="true"></span>
+            @lang('PANOPTICON_SITES_LBL_UPDATE_DOCTOR_RUN')
+        </a>
     @elseif($this->joomlaUpdateRunState != JoomlaUpdateRunState::CANNOT_UPGRADE)
         <p>
             @lang('PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED')
@@ -417,6 +423,12 @@ $isSecurity               = $versionFamilyInfo?->security ?? null;
                        class="btn btn-primary mt-3" role="button">
                         <span class="fa fa-eraser" aria-hidden="true"></span>
                         @lang('PANOPTICON_SITE_LBL_JUPDATE_SCHEDULE_CLEAR_ERROR')
+                    </a>
+                    {{-- Button to diagnose the failure with the Joomla Update Doctor --}}
+                    <a href="@route(sprintf('index.php?view=site&task=updateDoctor&id=%d&%s=1', $this->item->id, $token))"
+                       class="btn btn-outline-info mt-3" role="button">
+                        <span class="fa fa-screwdriver-wrench" aria-hidden="true"></span>
+                        @lang('PANOPTICON_SITES_LBL_UPDATE_DOCTOR_RUN')
                     </a>
                 </div>
             @endif

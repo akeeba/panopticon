@@ -62,6 +62,10 @@ class Html extends DataViewHtml
 
 	public Throwable|null $akeebaBackupConnectionError = null;
 
+	public object|null $updateDoctorResults = null;
+
+	public Throwable|null $updateDoctorError = null;
+
 	protected Site $item;
 
 	protected array $extUpdatePreferences = [];
@@ -198,6 +202,28 @@ class Html extends DataViewHtml
 		$this->httpCode        = $this->container->segment->getFlash('site_connection_http_code');
 		$this->curlError       = $this->container->segment->getFlash('site_connection_curl_error');
 		$this->guzzleError     = $this->container->segment->getFlash('site_connection_guzzle_error');
+
+		$this->addWikiHelpButton();
+
+		return true;
+	}
+
+	public function onBeforeUpdateDoctor(): bool
+	{
+		$this->setTitle($this->getLanguage()->text('PANOPTICON_SITES_LBL_UPDATE_DOCTOR_TITLE'));
+		$this->addButton(
+			'back', [
+				'url' => $this->container->router->route(
+					sprintf('index.php?view=site&task=read&id=%d', $this->getModel()->getId())
+				),
+			]
+		);
+
+		$this->setLayout('updatedoctor');
+
+		/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+		$this->item    = $this->getModel();
+		$this->canEdit = $this->item->canEdit();
 
 		$this->addWikiHelpButton();
 
@@ -627,6 +653,26 @@ class Html extends DataViewHtml
 					]
 				)
 			);
+
+			if ($this->item->cmsType() === CMSType::JOOMLA)
+			{
+				$troubleshootDropdown->addButton(
+					new Button(
+						[
+							'id'    => 'updateDoctor',
+							'icon'  => 'fa fa-fw fa-screwdriver-wrench',
+							'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_UPDATE_DOCTOR_TITLE'),
+							'url'   => $router->route(
+								sprintf(
+									"index.php?view=site&task=updateDoctor&id=%s&%s=1",
+									$this->item->getId(),
+									$this->getContainer()->session->getCsrfToken()->getValue()
+								)
+							),
+						]
+					)
+				);
+			}
 
 			if ($this->getContainer()->userManager->getUser()->getPrivilege('panopticon.super', false))
 			{

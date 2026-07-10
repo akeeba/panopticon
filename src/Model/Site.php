@@ -20,6 +20,7 @@ use Akeeba\Panopticon\Model\Trait\AkeebaBackupIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\CoreChecksumsIntegrationTrait;
 use Akeeba\Panopticon\Model\Trait\ApplyUserGroupsToSiteQueryTrait;
 use Akeeba\Panopticon\Model\Trait\CmsFamilyFilterSeparatorTrait;
+use Akeeba\Panopticon\Model\Trait\SiteJoomlaUpdateDoctorTrait;
 use Akeeba\Panopticon\Model\Trait\SiteTestConnectionJoomlaTrait;
 use Akeeba\Panopticon\Model\Trait\SiteTestConnectionWPTrait;
 use Akeeba\Panopticon\Task\RefreshSiteInfo;
@@ -74,6 +75,7 @@ class Site extends DataModel
 	use ApplyUserGroupsToSiteQueryTrait;
 	use JsonSanitizerTrait;
 	use CmsFamilyFilterSeparatorTrait;
+	use SiteJoomlaUpdateDoctorTrait;
 	use SiteTestConnectionJoomlaTrait;
 	use SiteTestConnectionWPTrait;
 	use SaveSiteTrait;

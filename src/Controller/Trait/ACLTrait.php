@@ -172,6 +172,11 @@ trait ACLTrait
 			// the '*' => ['admin'] default, defeating the finer read/run grants below.
 			// The connection doctor needs the same permissions as the `save` task.
 			'connectiondoctor'                   => ['*'],
+			// The Joomla Update Doctor is read-only diagnostics; same coarse gate as the connection doctor
+			// (the per-site privilege is enforced in the controller via canAddEditOrSave()).
+			'updatedoctor'                       => ['*'],
+			// Enabling global Debug logging changes site-wide configuration; restrict to Super Users.
+			'setdebuglogging'                    => ['super'],
 			// Reloading a site's information requires the read (i.e. `view`) privilege on it (site is the
 			// `id` param). NOTE: `view` is the actual assignable "read" privilege — there is no
 			// `panopticon.read` privilege, so the previous ['read'] value could never be granted to a
