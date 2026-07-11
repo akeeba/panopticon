@@ -16,6 +16,7 @@ use Akeeba\Panopticon\Library\Queue\QueueItem;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Task\Trait\EmailSendingTrait;
 use Akeeba\Panopticon\Tests\AbstractIntegrationTestCase;
+use Awf\Event\Observer;
 use Awf\Registry\Registry;
 
 /**
@@ -117,6 +118,50 @@ class EmailSendingTraitTest extends AbstractIntegrationTestCase
 
 		$this->assertInstanceOf(QueueItem::class, $item);
 		$this->assertSame(777, $item->getSiteId(), 'A site-scoped email must keep its integer siteId on the queue.');
+	}
+
+	public function testEnqueueEmailFiresOnNotificationSendEvent(): void
+	{
+		$observer = new class($this->container->eventDispatcher) extends Observer {
+			public array $calls = [];
+
+			public function getObservableEvents()
+			{
+				return ['onNotificationSend'];
+			}
+
+			public function onNotificationSend($data, $siteId, $userIds): void
+			{
+				$this->calls[] = [$data, $siteId, $userIds];
+			}
+		};
+
+		try
+		{
+			$data = $this->makeData();
+			$this->makeSut()->enqueue($data, 777);
+
+			$this->assertCount(1, $observer->calls, 'onNotificationSend must fire exactly once per enqueueEmail() call.');
+			$this->assertSame($data, $observer->calls[0][0]);
+			$this->assertSame(777, $observer->calls[0][1]);
+			$this->assertIsArray($observer->calls[0][2]);
+		}
+		finally
+		{
+			// The event dispatcher is a shared, container-scoped singleton — detach to avoid leaking
+			// this observer into other tests.
+			$this->container->eventDispatcher->detach($observer);
+		}
+	}
+
+	public function testEnqueueEmailWithNoNotificationPluginsDoesNotFail(): void
+	{
+		// No observer attached to onNotificationSend at all — must still complete normally.
+		$this->makeSut()->enqueue($this->makeData(), null);
+
+		$item = $this->poppedMailItem();
+
+		$this->assertInstanceOf(QueueItem::class, $item);
 	}
 
 	// ── Helpers ──────────────────────────────────────────────────────────────

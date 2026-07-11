@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\Task\Trait;
 
 use Akeeba\Panopticon\Factory;
+use Akeeba\Panopticon\Library\Notification\RecipientResolver;
 use Akeeba\Panopticon\Library\Queue\QueueItem;
 use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Library\Task\Status;
@@ -50,8 +51,14 @@ trait EmailSendingTrait
 			->makeQueue(QueueTypeEnum::MAIL->value)
 			->push($queueItem, $whence);
 
+		// Resolve the recipient user IDs once, for both Web Push and any notification plugins
+		$userIds = (new RecipientResolver())->resolveUserIds($data, $siteId);
+
 		// Enqueue Web Push notifications for the same recipients
-		$this->enqueueWebPush($data, $siteId);
+		$this->enqueueWebPush($data, $siteId, $userIds);
+
+		// Let any installed notification-channel plugins add their own fan-out (e.g. ntfy.sh, Slack, ...)
+		$container->eventDispatcher->trigger('onNotificationSend', [$data, $siteId, $userIds]);
 
 		// Do I need to send emails right away?
 		if (!$container->appConfig->get('immediate_email', 1))

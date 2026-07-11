@@ -15,7 +15,6 @@ use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Model\Pushsubscriptions;
 use Awf\Registry\Registry;
 use Awf\Uri\Uri;
-use Awf\Utils\ArrayHelper;
 
 /**
  * A trait for enqueuing Web Push notifications alongside emails.
@@ -47,11 +46,12 @@ trait WebPushSendingTrait
 	 *
 	 * @param   Registry  $data    The mail data registry (same as used for enqueueEmail)
 	 * @param   int|null  $siteId  The site ID this notification refers to
+	 * @param   int[]     $userIds Pre-resolved recipient user IDs (see RecipientResolver)
 	 *
 	 * @return  void
 	 * @since   1.3.0
 	 */
-	private function enqueueWebPush(Registry $data, ?int $siteId): void
+	private function enqueueWebPush(Registry $data, ?int $siteId, array $userIds): void
 	{
 		$container = Factory::getContainer();
 
@@ -61,27 +61,6 @@ trait WebPushSendingTrait
 		if (empty($template) || in_array($template, self::EXCLUDED_TEMPLATES, true))
 		{
 			return;
-		}
-
-		// Get the recipient user IDs
-		$recipientId = $data->get('recipient_id', null);
-		$userIds     = [];
-
-		if ($recipientId)
-		{
-			$userIds[] = (int) $recipientId;
-		}
-		else
-		{
-			$permissions    = $data->get('permissions', []) ?? [];
-			$permissions    = is_array($permissions) ? $permissions : [];
-			$mailGroups     = $data->get('email_groups', null);
-			$mailGroups     = empty($mailGroups) ? null : array_filter(ArrayHelper::toInteger($mailGroups));
-			$onlyMailGroups = (bool) $data->get('only_email_groups', false);
-
-			$userIds = $onlyMailGroups
-				? $this->getWebPushRecipientUserIds([], null, $mailGroups)
-				: $this->getWebPushRecipientUserIds($permissions, $siteId, $mailGroups);
 		}
 
 		if (empty($userIds))
@@ -171,86 +150,5 @@ trait WebPushSendingTrait
 
 			$queue->push($queueItem, 'now');
 		}
-	}
-
-	/**
-	 * Get the user IDs that match the given permissions, similar to SendMail::getRecipientsByPermissions
-	 * but returning just user IDs instead of [email, name, params].
-	 *
-	 * @param   array     $permissions  The permissions to check
-	 * @param   int|null  $siteId       The site ID for per-site permissions
-	 * @param   array|null $mailGroups  Additional mail groups
-	 *
-	 * @return  int[]  Array of user IDs
-	 * @since   1.3.0
-	 */
-	private function getWebPushRecipientUserIds(array $permissions, ?int $siteId = null, ?array $mailGroups = null): array
-	{
-		$container = Factory::getContainer();
-		$db        = $container->db;
-
-		// If we have a site we need to find which groups it belongs to
-		$groupIDs = [];
-
-		if ($siteId !== null)
-		{
-			try
-			{
-				$site     = $container->mvcFactory->makeTempModel('Site');
-				$site->findOrFail($siteId);
-				$groupIDs = $site->getConfig()->get('config.groups', []);
-				$groupIDs = is_array($groupIDs) ? $groupIDs : [];
-				$groupIDs = array_filter(ArrayHelper::toInteger($groupIDs));
-			}
-			catch (\Exception)
-			{
-				// Site not found; continue without group filtering
-			}
-		}
-
-		// If we have groups, find which fulfill the permissions
-		if ($groupIDs)
-		{
-			$query = $db->getQuery(true)
-				->select($db->quoteName('id'))
-				->from($db->quoteName('#__groups'))
-				->where($db->quoteName('id') . ' IN(' . implode(',', $groupIDs) . ')');
-
-			$query->andWhere(
-				array_map(
-					fn($permission) => 'JSON_SEARCH(' . $db->quoteName('privileges') . ', ' . $db->quote('one') . ',' . $db->quote($permission) . ')',
-					$permissions
-				)
-			);
-
-			$groupIDs = $db->setQuery($query)->loadColumn();
-		}
-
-		$groupIDs = array_unique(array_merge($groupIDs, $mailGroups ?? []));
-
-		$query = $db->getQuery(true)
-			->select($db->quoteName('id'))
-			->from($db->quoteName('#__users'));
-
-		foreach ($permissions as $permission)
-		{
-			$query->where(
-				$query->jsonExtract($db->quoteName('parameters'), '$.acl.' . $permission) . ' = TRUE',
-				'OR'
-			);
-		}
-
-		foreach ($groupIDs as $groupID)
-		{
-			$query->where(
-				$query->jsonContains(
-					$db->quoteName('parameters'),
-					$db->quote((string) $groupID),
-					$db->quote('$.usergroups')
-				), 'OR'
-			);
-		}
-
-		return array_map('intval', $db->setQuery($query)->loadColumn() ?: []);
 	}
 }
