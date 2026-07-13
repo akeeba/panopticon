@@ -157,7 +157,7 @@ $view          = $this->getContainer()->input->getCmd('view', 'main') ?: 'main';
 
 <?php // Toolbar / page title ?>
 <?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
-	<section class="navbar container-xl bg-secondary py-3 px-2 d-print-none" id="toolbar"
+	<section class="navbar container-xl bg-secondary py-3 px-2 d-print-none sticky-top-toolbar" id="toolbar"
 	         aria-label="<?= $text->text('PANOPTICON_APP_LBL_TOOLBAR') ?>">
 		<div class="ms-2 me-auto d-flex flex-row gap-2">
 			<?= TemplateHelper::getRenderedToolbarButtons() ?>
