@@ -889,7 +889,7 @@ This is an automated email. Please do not reply to it.');
 SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__groups` WHERE `title` = 'Users') x;
             ]]></condition>
             <query><![CDATA[
-INSERT INTO `#__groups` (`title`, `privileges`) VALUES ('Users', '{}');
+INSERT INTO `#__groups` (`title`, `privileges`) VALUES ('Users', '[]');
 ]]></query>
         </action>
 
@@ -917,6 +917,24 @@ ALTER TABLE `#__groups`
             <query><![CDATA[
 ALTER TABLE `#__groups`
     ADD COLUMN `colour` VARCHAR(7) NULL DEFAULT NULL;
+]]></query>
+        </action>
+
+        <!--
+            Groups: normalise `privileges` into a JSON array.
+
+            The default "Users" group used to be seeded with the JSON object `{}`, and saving a group could store an
+            object such as {"0": "panopticon.view", "2": "panopticon.admin"} because array_filter() preserves keys. Any
+            such row made the group edit page, and the group ACL checks, throw a TypeError.
+        -->
+        <action table="#__groups" canfail="1">
+            <condition type="equals" value="1"><![CDATA[
+SELECT IF(myCount >= 1, 1, 0) AS `condition` FROM (SELECT COUNT(*) AS `myCount` FROM `#__groups` WHERE `privileges` IS NULL OR TRIM(CAST(`privileges` AS CHAR)) NOT LIKE '[%') x;
+            ]]></condition>
+            <query><![CDATA[
+UPDATE `#__groups`
+SET `privileges` = COALESCE(JSON_EXTRACT(`privileges`, '$.*'), JSON_ARRAY())
+WHERE `privileges` IS NULL OR TRIM(CAST(`privileges` AS CHAR)) NOT LIKE '[%';
 ]]></query>
         </action>
 

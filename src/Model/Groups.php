@@ -71,9 +71,44 @@ class Groups extends DataModel
 
 	public function getPrivileges(): array
 	{
-		return is_array($this->privileges)
-			? $this->privileges
-			: (json_decode($this->privileges ?: '[]') ?: []);
+		return self::normalisePrivileges($this->privileges);
+	}
+
+	/**
+	 * Coerce a raw `privileges` value into a list of privilege names.
+	 *
+	 * The `privileges` column does not always hold a JSON array. The default "Users" group used to be seeded with the
+	 * JSON object `{}`, and `setPrivileges()` used to emit an object whenever it filtered out a privilege which was not
+	 * the last one in the list, since `array_filter()` preserves keys. Decoding those rows returns an object, not an
+	 * array, which used to be a fatal error in every consumer.
+	 *
+	 * @param   mixed  $raw  Raw column value: JSON string, decoded array or object, or NULL.
+	 *
+	 * @return  string[]  A (possibly empty) list of privilege names.
+	 * @since   2.2.1
+	 */
+	public static function normalisePrivileges(mixed $raw): array
+	{
+		if (is_string($raw))
+		{
+			$raw = json_decode($raw, true);
+		}
+
+		if (is_object($raw))
+		{
+			$raw = get_object_vars($raw);
+		}
+
+		if (!is_array($raw))
+		{
+			return [];
+		}
+
+		return array_values(
+			array_filter(
+				array_map(fn($x) => is_scalar($x) ? (string) $x : null, $raw)
+			)
+		);
 	}
 
 	public function getApiTokenLimit(): ?int
@@ -136,9 +171,12 @@ class Groups extends DataModel
 
 	public function setPrivileges(array $privileges): void
 	{
-		$privileges = array_values($privileges);
-		$privileges = array_filter(
-			$privileges, fn($x) => in_array($x, ['panopticon.view', 'panopticon.run', 'panopticon.admin'])
+		// array_filter() preserves keys, so array_values() has to come last, otherwise we'd store a JSON object.
+		$privileges = array_values(
+			array_filter(
+				$privileges,
+				fn($x) => in_array($x, ['panopticon.view', 'panopticon.run', 'panopticon.admin'])
+			)
 		);
 
 		$this->privileges = json_encode($privileges);

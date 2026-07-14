@@ -11,6 +11,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\Password\HIBPCheck;
+use Akeeba\Panopticon\Model\Groups;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Trait\UserAvatarTrait;
 use Awf\Container\ContainerAwareInterface;
@@ -147,7 +148,7 @@ class User extends \Awf\User\User implements ContainerAwareInterface
 			->where($db->quoteName('id') . ' IN(' . $groupIDs . ')');
 
 		return array_map(
-			fn(object $x) => json_decode($x->privileges),
+			fn(object $x) => Groups::normalisePrivileges($x->privileges),
 			$db->setQuery($query)->loadObjectList('id') ?: []
 		);
 	}
