@@ -64,3 +64,6 @@
 /.claude/settings.local.json
 /mempalace.yaml
 /.plans
+
+### JetBrains
+/.idea
