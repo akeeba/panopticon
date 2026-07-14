@@ -194,6 +194,40 @@ JS;
                         </div>
                     </div>
                 </div>
+
+                {{-- sticky_chrome --}}
+                <div class="row mb-3">
+                    <label for="sticky_chrome" class="col-sm-3 col-form-label">
+                        @lang('PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME')
+                    </label>
+                    <div class="col-sm-9">
+                        {{ $this->container->html->select->genericList(
+                                data: [
+									(object) [
+                                        'value' => '',
+                                        'text' => $this->getLanguage()->text('PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_DEFAULT')
+                                    ],
+									(object) [
+                                        'value' => '1',
+                                        'text' => $this->getLanguage()->text('PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_YES')
+                                    ],
+									(object) [
+                                        'value' => '0',
+                                        'text' => $this->getLanguage()->text('PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_NO')
+                                    ],
+                                ],
+                                name: 'sticky_chrome',
+                                attribs: [
+                                    'class' => 'form-select',
+                                ],
+                                selected: (string) $params->get('display.sticky_chrome', ''),
+                                idTag: 'sticky_chrome'
+                            ) }}
+                        <div class="form-text">
+                            @lang('PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_HELP')
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

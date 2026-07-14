@@ -1,0 +1,93 @@
+/*!*
+ * @package   panopticon
+ * @copyright Copyright (c)2023-2026 Nicholas K. Dionysopoulos / Akeeba Ltd
+ * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
+ */
+
+// Sticky page chrome and mobile-collapsible toolbar (GitHub #1025)
+//
+// The top navbar and the toolbar are wrapped in a single `#pnpChrome` container which carries
+// Bootstrap's `.sticky-top` (when the user has sticky chrome enabled). Sticking them as one unit
+// means the toolbar needs no `top` offset: the navbar's height is content-derived — it varies with
+// the user's base font size, with the pre-release version badge, and with the state of the mobile
+// menu collapse — so any hardcoded offset would be wrong.
+//
+// The toolbar itself is a `.navbar.navbar-expand-lg`, so below the `lg` breakpoint its buttons fold
+// away into a collapse panel behind a kebab toggler. That keeps the toolbar to exactly one line on
+// narrow displays: a multi-line toolbar pinned on top of a pinned navbar would eat most of the
+// viewport of a small phone in portrait.
+//
+// The `lg` breakpoint is the same one the main menu (`.navbar-expand-lg`) and the stacked tables
+// already use.
+//
+// Markup contract (see templates/default/index.php):
+//   - `#pnpChrome` wraps `#topNavbar` and `#toolbar`; it carries `.sticky-top` when sticky chrome is on.
+//   - `#toolbar` is a `.navbar.navbar-expand-lg` containing, in this DOM order: the `#toolbarTitle`
+//     heading, the `.navbar-toggler`, and the `#toolbarButtons` collapse (which wraps
+//     `#toolbarButtonsInner`, the flex container the toolbar buttons are rendered into).
+
+#toolbar {
+  // Below `lg` the title sits on the left and the toggler on the right, with the collapse panel
+  // wrapping onto its own line below them. At `lg` and up the source order is reversed: the buttons
+  // go back to the left and the title to the right, which is the layout Panopticon has always had.
+  @include media-breakpoint-up(lg) {
+    #toolbarButtons {
+      order: 1;
+    }
+
+    #toolbarTitle {
+      order: 2;
+    }
+  }
+
+  #toolbarTitle {
+    @include media-breakpoint-down(lg) {
+      // Take up the slack, pushing the toggler to the far right, and never wrap: a long page title
+      // (e.g. a site's name) must not turn the toolbar into a multi-line block.
+      //
+      // The flex basis has to be 0, not `auto`. The toolbar is a wrapping flex container, and a
+      // `white-space: nowrap` title has a huge max-content width — so with an `auto` basis the
+      // browser resolves the overflow by pushing the toggler onto a second line rather than by
+      // shrinking the title. A zero basis makes the title contribute nothing to that line-breaking
+      // decision, so it stays on the toggler's line and shrinks instead. `min-width: 0` then lets it
+      // shrink past its content's width, which is what makes the ellipsis possible.
+      flex: 1 1 0;
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  // The buttons stack vertically inside the collapse panel, and lie in a row once it's expanded out
+  // into the toolbar proper.
+  #toolbarButtonsInner {
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: .5rem;
+
+    // Stretching the flex items only widens a drop-down button's wrapping `.dropdown` element, not
+    // the `.btn` inside it — so widen that too, otherwise the stacked list is a ragged mix of
+    // full-width and shrink-to-fit buttons.
+    @include media-breakpoint-down(lg) {
+      > .dropdown > .btn {
+        width: 100%;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex-direction: row;
+      align-items: center;
+      padding-top: 0;
+    }
+  }
+}
+
+// Safety valve: on a viewport too short to spare the room — a phone in landscape, or a very short
+// desktop window — sticky chrome would cost more than it's worth, so let it scroll away instead.
+// The threshold matches the one the login page already uses to shed its header.
+@media only screen and (max-height: 30em) {
+  #pnpChrome.sticky-top {
+    position: static;
+  }
+}

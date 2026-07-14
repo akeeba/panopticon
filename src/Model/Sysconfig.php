@@ -72,6 +72,8 @@ class Sysconfig extends Model
 			// Display
 			'darkmode'              => filter_var($value, FILTER_VALIDATE_INT) && in_array($value, [1, 2, 3]),
 			'fontsize'              => filter_var($value, FILTER_VALIDATE_INT) && $value >= 8 && $value <= 48,
+			// NOTE: FILTER_NULL_ON_FAILURE, so that a falsy value validates as a legitimate "off" instead of "invalid".
+			'sticky_chrome'         => filter_var($value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE) !== null,
 
 			// Automation
 			'webcron_key'           => $complexify->evaluateSecurity($value)->valid,
@@ -452,7 +454,7 @@ class Sysconfig extends Model
 			'behind_load_balancer', 'stats_collection', 'phpwarnings', 'session_encrypt',
 			'session_use_default_path', 'accurate_php_cli',
 			// Display
-			'darkmode', 'fontsize',
+			'darkmode', 'fontsize', 'sticky_chrome',
 			// Automation
 			'webcron_key', 'cron_stuck_threshold', 'max_execution', 'execution_bias',
 			// Site operations

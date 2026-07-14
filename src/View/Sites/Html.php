@@ -58,6 +58,8 @@ class Html extends DataViewHtml
 
 	public array $groupMap = [];
 
+	public array $groupColours = [];
+
 	public string|Throwable|null $connectionError = null;
 
 	public Throwable|null $akeebaBackupConnectionError = null;
@@ -255,7 +257,8 @@ class Html extends DataViewHtml
 		$result = $this->onBeforeBrowseCrud();
 
 		// Groups map
-		$this->groupMap = $this->getModel('groups')->getGroupMap(false);
+		$this->groupMap     = $this->getModel('groups')->getGroupMap(false);
+		$this->groupColours = $this->getModel('groups')->getGroupColours(false);
 
 		$user      = $this->container->userManager->getUser();
 		$canAdd    = $user->getPrivilege('panopticon.admin') || $user->getPrivilege('panopticon.addown');

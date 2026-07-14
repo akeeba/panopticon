@@ -535,8 +535,15 @@ class Users extends DataController
 		$params = [
 			'language'                  => $this->input->post->getCmd('language', ''),
 			'main_layout'               => $this->input->post->getCmd('main_layout', 'default'),
+			'display.sticky_chrome'     => $this->input->post->getCmd('sticky_chrome', ''),
 			'passkey_login_no_password' => $this->input->post->getBool('passkey_login_no_password', false),
 		];
+
+		// Only '', '0' and '1' are meaningful for the sticky chrome preference; anything else means "use the default".
+		if (!in_array($params['display.sticky_chrome'], ['0', '1'], true))
+		{
+			$params['display.sticky_chrome'] = '';
+		}
 
 		// Only allow setting passkey_login_no_password if passkeys are enabled, and the user is allowed to decide.
 		$canDecide = $this->getContainer()->mvcFactory->makeTempModel('Passkeys')->isEnabled()

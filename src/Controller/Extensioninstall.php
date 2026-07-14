@@ -29,6 +29,17 @@ class Extensioninstall extends Controller
 
 	public function main()
 	{
+		// When no group filter is selected we are POSTed no value. In this case, we need to unset the filter.
+		if (strtoupper($this->input->getMethod() ?? '') === 'POST')
+		{
+			$groups = $this->input->post->getRaw('group');
+
+			if ($groups === null)
+			{
+				$this->input->set('group', []);
+			}
+		}
+
 		// Create the Site model directly so it retains full input access (needed for filter state).
 		// Using $this->getModel('site') would call clearInput() on the model, preventing filter states
 		// from being read from the current request and saved to the session.

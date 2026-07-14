@@ -19,6 +19,8 @@ class Html extends BaseHtmlView
 
 	public array $groupMap = [];
 
+	public array $groupColours = [];
+
 	public function onBeforeBrowse(): bool
 	{
 		$this->addButtonFromDefinition(
@@ -43,7 +45,8 @@ class Html extends BaseHtmlView
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_' . Inflector::pluralize($this->getName()) . '_TITLE'));
 
 		// Groups map
-		$this->groupMap = $this->getModel('groups')->getGroupMap();
+		$this->groupMap     = $this->getModel('groups')->getGroupMap();
+		$this->groupColours = $this->getModel('groups')->getGroupColours();
 
 		// If no list limit is set, use the Panopticon default (50) instead of All (AWF's default).
 		$limit = $this->getModel()->getState('limit', 50, 'int');

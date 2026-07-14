@@ -50,6 +50,25 @@ class Groups extends DataModel
 		return $query;
 	}
 
+	/**
+	 * Make sure the badge colour is always a sanitised `#rrggbb` string, or NULL.
+	 *
+	 * This is the choke point which guarantees no code path — CLI, API, or a future consumer which
+	 * echoes the raw column — can ever read back a colour which is unsafe to put in a `style`
+	 * attribute.
+	 *
+	 * @return  static
+	 * @since   2.2.1
+	 */
+	public function check()
+	{
+		parent::check();
+
+		$this->colour = $this->getContainer()->helper->colour->sanitise($this->colour);
+
+		return $this;
+	}
+
 	public function getPrivileges(): array
 	{
 		return is_array($this->privileges)
@@ -135,6 +154,94 @@ class Groups extends DataModel
 	{
 		$db = $this->getDbo();
 
+		$usedGroupIds = $this->getUsedGroupIds($forEnabledSitesOnly);
+
+		if (empty($usedGroupIds))
+		{
+			return [];
+		}
+
+		$query = $db->getQuery(true)
+			->select(
+				[
+					$db->quoteName('id'),
+					$db->quoteName('title'),
+				]
+			)
+			->from($db->quoteName('#__groups'))
+			->where($db->quoteName('id') . ' IN(' . implode(',', $usedGroupIds) . ')');
+
+		try
+		{
+			return $db->setQuery($query)->loadAssocList('id', 'title') ?: [];
+		}
+		catch (\Exception)
+		{
+			return [];
+		}
+	}
+
+	/**
+	 * Get the badge colour of every group currently used in sites.
+	 *
+	 * Returns exactly the same set of IDs as {@see getGroupMap()}, so the two arrays have
+	 * identical keys and a template can safely do `$this->groupColours[$gid] ?? null`.
+	 *
+	 * @param   bool  $forEnabledSitesOnly  Whether to only consider enabled sites.
+	 *
+	 * @return  array<int, string|null>  id => sanitised colour, or NULL.
+	 * @since   2.2.1
+	 */
+	public function getGroupColours(bool $forEnabledSitesOnly = true): array
+	{
+		$db = $this->getDbo();
+
+		$usedGroupIds = $this->getUsedGroupIds($forEnabledSitesOnly);
+
+		if (empty($usedGroupIds))
+		{
+			return [];
+		}
+
+		$query = $db->getQuery(true)
+			->select(
+				[
+					$db->quoteName('id'),
+					$db->quoteName('colour'),
+				]
+			)
+			->from($db->quoteName('#__groups'))
+			->where($db->quoteName('id') . ' IN(' . implode(',', $usedGroupIds) . ')');
+
+		try
+		{
+			$colours = $db->setQuery($query)->loadAssocList('id', 'colour') ?: [];
+		}
+		catch (\Exception)
+		{
+			return [];
+		}
+
+		$colourHelper = $this->getContainer()->helper->colour;
+
+		return array_map(
+			fn(?string $colour): ?string => $colourHelper->sanitise($colour),
+			$colours
+		);
+	}
+
+	/**
+	 * Collect the group IDs actually referenced by sites' `$.config.groups` JSON array.
+	 *
+	 * @param   bool  $forEnabledSitesOnly  Whether to only consider enabled sites.
+	 *
+	 * @return  int[]
+	 * @since   2.2.1
+	 */
+	private function getUsedGroupIds(bool $forEnabledSitesOnly): array
+	{
+		$db = $this->getDbo();
+
 		$query = $db->getQuery(true);
 		$query
 			->select(
@@ -196,34 +303,10 @@ class Groups extends DataModel
 			return [];
 		}
 
-		$rawItems = array_reduce(
+		return array_reduce(
 			$rawItems,
 			fn($carry, $items) => array_unique(array_merge($carry, $items)),
 			[]
 		);
-
-		if (empty($rawItems))
-		{
-			return [];
-		}
-
-		$query = $db->getQuery(true)
-			->select(
-				[
-					$db->quoteName('id'),
-					$db->quoteName('title'),
-				]
-			)
-			->from($db->quoteName('#__groups'))
-			->where($db->quoteName('id') . ' IN(' . implode(',', $rawItems) . ')');
-
-		try
-		{
-			return $db->setQuery($query)->loadAssocList('id', 'title') ?: [];
-		}
-		catch (\Exception)
-		{
-			return [];
-		}
 	}
 }

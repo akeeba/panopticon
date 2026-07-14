@@ -274,9 +274,7 @@ JS;
                         <div>
                             @foreach($groups as $gid)
                                 @if (isset($this->groupMap[$gid]))
-                                    <span class="badge bg-secondary">
-                                {{{ $this->groupMap[$gid] }}}
-                            </span>
+                                    @include('Common/groupbadge', ['title' => $this->groupMap[$gid], 'colour' => $this->groupColours[$gid] ?? null])
                                 @endif
                             @endforeach
                         </div>

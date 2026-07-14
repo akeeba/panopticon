@@ -35,6 +35,7 @@ TemplateHelper::applyFontSize();
 
 $isBareDisplay = $this->getContainer()->input->getCmd('tmpl', '') === 'component';
 $isMenuEnabled = $this->getMenu()->isEnabled('main');
+$stickyChrome  = TemplateHelper::isStickyChrome();
 $isDebug       = defined('AKEEBADEBUG') && AKEEBADEBUG;
 $themeColor    = TemplateHelper::getThemeColour();
 $importMap     = TemplateHelper::getImportMapAsJson();
@@ -83,9 +84,12 @@ $view          = $this->getContainer()->input->getCmd('view', 'main') ?: 'main';
 </head>
 <body data-bs-theme="<?= $darkModeValue ?: '' ?>" class="panopticon-view-<?= $view ?>">
 
+<?php // Page chrome: top header and toolbar. Sticky as a single unit, so the toolbar needs no top offset (GitHub #1025) ?>
+<div id="pnpChrome" class="<?= $stickyChrome ? 'sticky-top' : '' ?>">
+
 <?php // Top header ?>
 <?php if (!$isBareDisplay): ?>
-	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 sticky-top container-xl navbar-dark pt-2 pb-1 px-2 d-print-none"
+	<nav class="navbar navbar-expand-lg bg-primary border-bottom border-2 container-xl navbar-dark pt-2 pb-1 px-2 d-print-none"
 	     id="topNavbar">
 		<h1>
 			<?php if (!$isMenuEnabled): ?>
@@ -156,19 +160,35 @@ $view          = $this->getContainer()->input->getCmd('view', 'main') ?: 'main';
 <?php endif ?>
 
 <?php // Toolbar / page title ?>
-<?php if (!empty($this->getToolbar()->getTitle()) || count($this->getToolbar()->getButtons())): ?>
-	<section class="navbar container-xl bg-secondary py-3 px-2 d-print-none sticky-top-toolbar" id="toolbar"
+<?php
+$toolbarTitle   = $this->getToolbar()->getTitle();
+$toolbarButtons = $this->getToolbar()->getButtons();
+?>
+<?php if (!empty($toolbarTitle) || count($toolbarButtons)): ?>
+	<section class="navbar navbar-expand-lg navbar-dark container-xl bg-secondary py-2 px-2 d-print-none" id="toolbar"
 	         aria-label="<?= $text->text('PANOPTICON_APP_LBL_TOOLBAR') ?>">
-		<div class="ms-2 me-auto d-flex flex-row gap-2">
-			<?= TemplateHelper::getRenderedToolbarButtons() ?>
-		</div>
-		 <?php if (!empty($this->getToolbar()->getTitle())): ?>
-			<h2 class="navbar-text text-light ps-2 fs-5 py-0 my-0 me-2">
-				<?= $this->getToolbar()->getTitle() ?>
+		<?php if (!empty($toolbarTitle)): ?>
+			<h2 class="navbar-text text-light ps-2 fs-5 py-0 my-0" id="toolbarTitle">
+				<?= $toolbarTitle ?>
 			</h2>
+		<?php endif; ?>
+		<?php if (count($toolbarButtons)): ?>
+			<button class="navbar-toggler" type="button"
+			        data-bs-toggle="collapse" data-bs-target="#toolbarButtons"
+			        aria-controls="toolbarButtons" aria-expanded="false"
+			        aria-label="<?= $text->text('PANOPTICON_APP_LBL_TOGGLE_TOOLBAR') ?>">
+				<span class="fa fa-ellipsis-vertical fa-fw" aria-hidden="true"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="toolbarButtons">
+				<div class="d-flex gap-2 ms-2" id="toolbarButtonsInner">
+					<?= TemplateHelper::getRenderedToolbarButtons($toolbarButtons) ?>
+				</div>
+			</div>
 		<?php endif; ?>
 	</section>
 <?php endif; ?>
+
+</div>
 
 <?php // Main Content ?>
 <main class="container-xl py-2 min-vh-100">

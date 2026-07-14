@@ -50,6 +50,7 @@ trait DefaultConfigurationTrait
 			'theme'                    => 'theme',
 			'darkmode'                 => 1,
 			'fontsize'                 => '',
+			'sticky_chrome'            => true,
 			'phpwarnings'              => true,
 			'webcron_key'              => '',
 			'cron_stuck_threshold'     => 3,
@@ -130,7 +131,7 @@ trait DefaultConfigurationTrait
 			'accurate_php_cli', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto',
 			'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt',
 			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path',
-			'user_registration_block_usernames', 'mcp_enabled' => [
+			'user_registration_block_usernames', 'mcp_enabled', 'sticky_chrome' => [
 				'true',
 				'yes',
 				'1',
@@ -179,7 +180,7 @@ trait DefaultConfigurationTrait
 			'accurate_php_cli', 'log_rotate_compress', 'dbencryption', 'dbsslverifyservercert', 'dbbackup_auto',
 			'dbbackup_compress', 'mail_online', 'mail_inline_images', 'smtpauth', 'session_encrypt',
 			'login_lockout_extend', 'login_failure_enable', 'session_use_default_path',
-			'user_registration_block_usernames', 'mcp_enabled'
+			'user_registration_block_usernames', 'mcp_enabled', 'sticky_chrome'
 			=> [$this, 'validateBool'],
 			'mcp_disallowed_tools' => [$this, 'validateMcpToolList'],
 			'session_timeout' => fn($x) => $this->validateInteger($x, 1440, 3, 535600),
