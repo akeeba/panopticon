@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `#__sites`
         </action>
 
         <action table="#__sites" canfail="1">
-            <condition type="missing">notes</condition>
+            <condition type="missing" value="notes"/>
             <query><![CDATA[
 ALTER TABLE `#__sites` ADD COLUMN `notes` LONGTEXT NULL AFTER `config`;
 ]]></query>
@@ -895,7 +895,7 @@ INSERT INTO `#__groups` (`title`, `privileges`) VALUES ('Users', '{}');
 
         <!-- Groups: add per-group API token limit (NULL = use global default) -->
         <action table="#__groups" canfail="1">
-            <condition type="missing">api_token_limit</condition>
+            <condition type="missing" value="api_token_limit"/>
             <query><![CDATA[
 ALTER TABLE `#__groups`
     ADD COLUMN `api_token_limit` INT UNSIGNED NULL DEFAULT NULL;
