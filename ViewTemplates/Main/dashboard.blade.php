@@ -192,9 +192,11 @@ defined('AKEEBA') || die;
                 <div class="card-body">
                     <div v-if="site.groups.length > 0">
                         <div class="card-subtitle text-end mb-2">
-						<span v-for="group in site.groups" class="badge bg-secondary ms-1">
-							@{{ group }}
-						</span>
+						<span v-for="badge in site.groupBadges"
+							  class="badge ms-1"
+							  :class="badge.colour ? badge.class : 'bg-secondary'"
+							  :style="badge.colour ? {backgroundColor: badge.colour} : {}"
+							  v-text="badge.title"></span>
                         </div>
                     </div>
 

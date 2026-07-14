@@ -62,7 +62,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
             </td>
             <td data-label="@lang('PANOPTICON_GROUPS_TABLE_HEAD_TITLE')">
                 <a href="@route(sprintf('index.php?view=group&task=edit&id=%d', $group->id))">
-                    {{{ $group->title }}}
+                    @include('Common/groupbadge', ['title' => $group->title, 'colour' => $group->colour ?? null])
                 </a>
             </td>
             <td data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">

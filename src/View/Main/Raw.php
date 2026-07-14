@@ -26,12 +26,21 @@ class Raw extends \Awf\Mvc\DataView\Raw
 	 */
 	public array $groupMap = [];
 
+	/**
+	 * The badge colour of every group currently used in sites.
+	 *
+	 * @var   array
+	 * @since 2.2.1
+	 */
+	public array $groupColours = [];
+
 	protected function onBeforeTableBody(): bool
 	{
 		// Groups map
 		/** @var Groups $groupsModel */
-		$groupsModel    = $this->getModel('groups');
-		$this->groupMap = $groupsModel->getGroupMap();
+		$groupsModel        = $this->getModel('groups');
+		$this->groupMap     = $groupsModel->getGroupMap();
+		$this->groupColours = $groupsModel->getGroupColours();
 
 		// Create the lists object
 		$this->lists = new \stdClass();

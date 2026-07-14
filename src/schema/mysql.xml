@@ -911,6 +911,15 @@ ALTER TABLE `#__groups`
 ]]></query>
         </action>
 
+        <!-- Groups: add a badge colour (NULL = no colour, render as bg-secondary) -->
+        <action table="#__groups" canfail="1">
+            <condition type="missing" value="colour"/>
+            <query><![CDATA[
+ALTER TABLE `#__groups`
+    ADD COLUMN `colour` VARCHAR(7) NULL DEFAULT NULL;
+]]></query>
+        </action>
+
         <!-- Install mail template: registration_pending_admin -->
         <action table="#__mailtemplates" canfail="1">
             <condition type="equals" operator="not" value="1"><![CDATA[

@@ -48,5 +48,8 @@ class Groups extends DataController
 		// Handle the optional per-group list of disallowed MCP tools.
 		$this->getModel()->setMcpDisallowedTools((array) ($data['mcp_disallowed_tools'] ?? []));
 		unset($data['mcp_disallowed_tools']);
+
+		// Handle the optional per-group badge colour (junk values are persisted as NULL).
+		$data['colour'] = $this->getContainer()->helper->colour->sanitise($data['colour'] ?? null);
 	}
 }

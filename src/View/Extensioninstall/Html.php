@@ -24,6 +24,8 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public array $groupMap = [];
 
+	public array $groupColours = [];
+
 	public $lists;
 
 	public Pagination $pagination;
@@ -60,7 +62,8 @@ class Html extends \Awf\Mvc\DataView\Html
 		);
 
 		// Groups map
-		$this->groupMap = $this->getModel('groups')->getGroupMap();
+		$this->groupMap     = $this->getModel('groups')->getGroupMap();
+		$this->groupColours = $this->getModel('groups')->getGroupColours();
 
 		// Filter option data
 		/** @var \Akeeba\Panopticon\Model\Main $mainModel */

@@ -20,12 +20,34 @@ class Json extends BaseView
 {
 	use AkeebaBackupTooOldTrait;
 
+	/**
+	 * The groups currently used in sites.
+	 *
+	 * @var   array
+	 * @since 2.2.1
+	 */
+	public array $groupMap = [];
+
+	/**
+	 * The badge colour of every group currently used in sites.
+	 *
+	 * @var   array
+	 * @since 2.2.1
+	 */
+	public array $groupColours = [];
+
 	protected function onBeforeSites()
 	{
 		// Load the model
 		/** @var Site $model */
 		$model = $this->getModel();
 		$model->setState('enabled', 1);
+
+		// Groups map
+		/** @var \Akeeba\Panopticon\Model\Groups $groupsModel */
+		$groupsModel        = $this->getModel('groups');
+		$this->groupMap     = $groupsModel->getGroupMap();
+		$this->groupColours = $groupsModel->getGroupColours();
 
 		// We want to persist the state in the session
 		$model->savestate(1);
@@ -43,8 +65,10 @@ class Json extends BaseView
 		/** @var Collection<Site> $items */
 		$items = $model->get();
 
+		$colourHelper = $this->getContainer()->helper->colour;
+
 		$items = $items->map(
-			function (Site $site) {
+			function (Site $site) use ($colourHelper) {
 				$siteConfig      = $site->getConfig();
 				$cmsType         = $site->cmsType();
 				$extensionsList  = $siteConfig->get('extensions.list', new \stdClass());
@@ -114,6 +138,27 @@ class Json extends BaseView
 						sprintf('index.php?view=Site&task=read&id=%d', $site->getId())
 					),
 					'groups'            => $site->getGroups(true),
+					'groupBadges'       => array_values(
+						array_filter(
+							array_map(
+								function ($gid) use ($colourHelper) {
+									if (!isset($this->groupMap[$gid]))
+									{
+										return null;
+									}
+
+									$colour = $this->groupColours[$gid] ?? null;
+
+									return [
+										'title'  => $this->groupMap[$gid],
+										'colour' => $colour,
+										'class'  => $colour ? $colourHelper->foregroundClass($colour) : 'bg-secondary',
+									];
+								},
+								$site->getGroups(false)
+							)
+						)
+					),
 					'cms'               => $cmsType->value,
 					'version'           => $currentVersion,
 					'eol'               => $eol,

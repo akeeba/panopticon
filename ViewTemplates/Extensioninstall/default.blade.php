@@ -15,8 +15,18 @@ use Akeeba\Panopticon\Library\Enumerations\CMSType;
 
 $token = $this->container->session->getCsrfToken()->getValue();
 
+$js = <<< JS
+window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.js-choice').forEach((element) => {
+        new Choices(element, {allowHTML: false, removeItemButton: true, placeholder: true, placeholderValue: ""});
+    });
+});
+
+JS;
 ?>
 @js('media://js/extensioninstall.js', $this->getContainer()->application)
+@js('choices/choices.min.js', $this->getContainer()->application)
+@inlinejs($js)
 
 {{-- Warning Box --}}
 <div class="alert alert-danger my-3">
@@ -49,6 +59,34 @@ $token = $this->container->session->getCsrfToken()->getValue();
                     <span class="visually-hidden">@lang('PANOPTICON_LBL_FORM_SEARCH')</span>
                 </button>
             </div>
+
+            {{-- Groups --}}
+            @if (!empty($this->groupMap))
+                <div class="input-group choice-large">
+                    <label for="group"
+                           class="form-label visually-hidden">@lang('PANOPTICON_MAIN_LBL_FILTER_GROUPS')</label>
+                    {{ $this->container->html->select->genericList(
+                        data: array_combine(
+                            array_merge([''], array_keys($this->groupMap)),
+                            array_merge([$this->getLanguage()->text('PANOPTICON_MAIN_LBL_FILTER_GROUPS_PLACEHOLDER')], array_values($this->groupMap)),
+                        ),
+                        name: 'group[]',
+                        attribs: array_merge([
+                            'class' => 'form-select js-choice',
+                            'multiple' => 'multiple',
+                            'style' => 'min-width: min(20em, 50%)'
+                        ]),
+                        selected: array_filter($this->getModel('site')->getState('group', []) ?: [])
+                    ) }}
+                    <button type="submit"
+                            class="btn btn-primary">
+                        <span class="fa fa-search" aria-hidden="true"></span>
+                        <span class="visually-hidden">
+                    @lang('PANOPTICON_LBL_FORM_SEARCH')
+                </span>
+                    </button>
+                </div>
+            @endif
         </div>
         {{-- Site-level filters: CMS Version, PHP Version, Update Status --}}
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
@@ -193,9 +231,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                         <div>
                             @foreach($groups as $gid)
                                 @if (isset($this->groupMap[$gid]))
-                                    <span class="badge bg-secondary">
-                                        {{{ $this->groupMap[$gid] }}}
-                                    </span>
+                                    @include('Common/groupbadge', ['title' => $this->groupMap[$gid], 'colour' => $this->groupColours[$gid] ?? null])
                                 @endif
                             @endforeach
                         </div>

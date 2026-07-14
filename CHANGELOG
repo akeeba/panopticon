@@ -7,6 +7,7 @@ Akeeba Panopticon 2.2.1
 + Web-server integration test tier: exercises the MCP endpoint through a real Dockerised Apache 2.4 + PHP (FPM/mod_php) server, covering the transport-layer behaviour behind gh-1010
 + The page header and toolbar can stay pinned to the top of the page when scrolling, keeping the toolbar buttons reachable on long pages. Configurable application-wide, and per user. [gh-1025]
 + The toolbar buttons collapse into a menu on narrow displays, keeping the toolbar to a single line on phones
++ Groups can now be given a colour, shown on the site badges (gh-1023)
 # [HIGH] The per-group API token limit never worked: its `api_token_limit` column was never created, as the schema migration's condition named the column in the element's text instead of its `value` attribute, so the ALTER TABLE was silently skipped on every installation [gh-965]
 # [HIGH] System-level emails (extension install summary, self-update notifications, user account emails) crashed with a TypeError and were never sent [gh-1009]
 # [HIGH] MCP server (and JSON API) always returned 401 when the web server stripped the Authorization header [gh-1010]

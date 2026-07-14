@@ -25,12 +25,15 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public array $groupMap = [];
 
+	public array $groupColours = [];
+
 	public function onBeforeMain()
 	{
 		$this->setTitle($this->getLanguage()->text('PANOPTICON_EXTENSIONS_TITLE'));
 
 		// Groups map
-		$this->groupMap = $this->getModel('groups')->getGroupMap();
+		$this->groupMap     = $this->getModel('groups')->getGroupMap();
+		$this->groupColours = $this->getModel('groups')->getGroupColours();
 
 		$this->lists = new \stdClass();
 
