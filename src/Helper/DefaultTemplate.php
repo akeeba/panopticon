@@ -48,6 +48,28 @@ abstract class DefaultTemplate
 		$container->application->getDocument()->addStyleDeclaration("html{font-size: {$baseFontSize}pt}");
 	}
 
+	/**
+	 * Should the page chrome (top navbar and toolbar) stick to the top of the viewport when scrolling?
+	 *
+	 * The user's preference wins; an empty preference means "use whatever the application default is".
+	 *
+	 * @return  bool
+	 * @since   2.2.0
+	 */
+	public static function isStickyChrome(): bool
+	{
+		$container = Factory::getContainer();
+		$user      = $container->userManager->getUser();
+		$userPref  = $user->getParameters()->get('display.sticky_chrome', '');
+
+		if ($userPref !== '' && $userPref !== null)
+		{
+			return filter_var($userPref, FILTER_VALIDATE_BOOL);
+		}
+
+		return filter_var($container->appConfig->get('sticky_chrome', true), FILTER_VALIDATE_BOOL);
+	}
+
 	public static function getDarkMode(): DarkModeEnum
 	{
 		$container = Factory::getContainer();

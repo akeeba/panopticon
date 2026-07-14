@@ -98,6 +98,23 @@ $config = $this->container->appConfig;
             </div>
         </div>
 
+        {{--sticky_chrome--}}
+        <div class="row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="options[sticky_chrome]" id="sticky_chrome"
+                            {{ $config->get('sticky_chrome', true) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label" for="sticky_chrome">
+                        @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_STICKY_CHROME')
+                    </label>
+                </div>
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_STICKY_CHROME_HELP')
+                </div>
+            </div>
+        </div>
+
         {{--phpwarnings--}}
         <div class="row mb-3">
             <div class="col-sm-9 offset-sm-3">
