@@ -13,6 +13,7 @@ Akeeba Panopticon 2.2.1
 # [HIGH] System-level emails (extension install summary, self-update notifications, user account emails) crashed with a TypeError and were never sent [gh-1009]
 # [HIGH] MCP server (and JSON API) always returned 401 when the web server stripped the Authorization header [gh-1010]
 # [HIGH] MCP server and JSON API token authentication failed with "no_secret" when config.php had no persisted secret (CLI installs, and a web-installer timing race) [gh-1010]
+# Web Push notifications were sent in whatever language happened to be active when they were enqueued, instead of each recipient's own language [gh-1027]
 # The short /mcp endpoint returned a 404 because htaccess.txt lacked a rewrite rule for it
 # The _panopticon_token query parameter failed for Base64 tokens containing "+" (decoded to a space)
 
