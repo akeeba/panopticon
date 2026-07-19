@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Library\Cache\CallbackController;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
 use Akeeba\Panopticon\Library\Enumerations\WordPressUpdateRunState;
+use Akeeba\Panopticon\Library\Security\ForbiddenIpRanges;
 use Akeeba\Panopticon\Library\SiteInfo\Retriever;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Model\Trait\AdminToolsIntegrationTrait;
@@ -393,7 +394,50 @@ class Site extends DataModel
 
 		$this->url = $this->cleanUrl($this->url);
 
+		$this->checkUrlAgainstForbiddenIpRanges($this->url);
+
 		return $this;
+	}
+
+	/**
+	 * Ensure the site URL does not point into an operator-forbidden IP range.
+	 *
+	 * This runs after {@see self::cleanUrl()} so that the URL which is actually stored — and therefore the URL which
+	 * will actually be fetched — is the one being validated.
+	 *
+	 * The check is deliberately *not* part of the URI helper. That class is a pure URI structure validator and must
+	 * never make network calls; host resolution belongs here, in the model, at save time.
+	 *
+	 * Note this is a save-time check and is therefore subject to time-of-check/time-of-use: DNS may change after the
+	 * site is saved. It exists to give the operator a clear validation error at the point of data entry. The
+	 * authoritative enforcement happens at connection time, where every request and every redirect hop is re-checked.
+	 *
+	 * @param   string  $url  The cleaned site URL.
+	 *
+	 * @return  void
+	 * @throws  RuntimeException  If the URL's host resolves into a forbidden range.
+	 * @since   1.4.0
+	 */
+	private function checkUrlAgainstForbiddenIpRanges(string $url): void
+	{
+		$forbidden = ForbiddenIpRanges::fromConfig($this->getContainer());
+
+		// The policy is disabled by default. Do no work — and crucially, no DNS lookup — when there are no ranges.
+		if ($forbidden->isEmpty())
+		{
+			return;
+		}
+
+		$host = (new Uri($url))->getHost();
+
+		if (empty($host) || !$forbidden->isForbiddenHost($host))
+		{
+			return;
+		}
+
+		throw new RuntimeException(
+			$this->getLanguage()->sprintf('PANOPTICON_SITES_ERR_URL_FORBIDDEN_IP', htmlentities($host))
+		);
 	}
 
 	public function testConnection(bool $getWarnings = true): array
@@ -2193,7 +2237,7 @@ class Site extends DataModel
 
 		$uri->setQuery('');
 		$uri->setFragment('');
-		$path = rtrim($uri->getPath(), '/');
+		$path = rtrim($uri->getPath() ?? '', '/');
 
 		switch ($this->cmsType())
 		{

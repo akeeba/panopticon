@@ -83,6 +83,7 @@ $router = $this->getContainer()->router;
                 @include('Sysconfig/default_passwordsec')
                 @include('Sysconfig/default_registration')
                 @include('Sysconfig/default_loginfail')
+                @include('Sysconfig/default_sitelimits')
             </div>
         </div>
         <div class="tab-pane"

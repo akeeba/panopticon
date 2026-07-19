@@ -14,6 +14,7 @@ use Akeeba\Panopticon\Controller\Trait\ACLTrait;
 use Awf\Mvc\Controller;
 use Awf\Uri\Uri;
 use Awf\Utils\ArrayHelper;
+use Throwable;
 
 class Sysconfig extends Controller
 {
@@ -125,9 +126,27 @@ class Sysconfig extends Controller
 		// Apply the configuration to the appConfig object
 		$config = $this->container->appConfig;
 
-		foreach ($data as $k => $v)
+		/**
+		 * Option validators may reject the submitted value by throwing. Catch that and send the operator back to the
+		 * configuration page with a meaningful error, rather than letting it surface as an unhandled exception which
+		 * would discard every other edit they made on the page.
+		 */
+		try
 		{
-			$config->set($k, $v);
+			foreach ($data as $k => $v)
+			{
+				$config->set($k, $v);
+			}
+		}
+		catch (Throwable $e)
+		{
+			$this->setRedirect(
+				$this->container->router->route('index.php?view=sysconfig'),
+				$e->getMessage(),
+				'error'
+			);
+
+			return;
 		}
 
 		$config->set('fs', null);

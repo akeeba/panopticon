@@ -25,6 +25,7 @@ class Html extends \Awf\Mvc\DataView\Html
 
 		// Load JavaScript
 		Template::addJs('media://js/showon.js', $this->getContainer()->application, defer: true);
+		Template::addJs('media://js/repeatable.js', $this->getContainer()->application, defer: true);
 
 		// Create a save and apply button in the toolbar
 		$this->addButton('save');

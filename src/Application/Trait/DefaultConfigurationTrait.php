@@ -8,6 +8,7 @@
 namespace Akeeba\Panopticon\Application\Trait;
 
 
+use Akeeba\Panopticon\Library\Security\ForbiddenIpRanges;
 use DateTimeZone;
 use Exception;
 use OutOfBoundsException;
@@ -120,6 +121,7 @@ trait DefaultConfigurationTrait
 			'captcha_recaptcha_secret_key'               => '',
 			'captcha_hcaptcha_site_key'                  => '',
 			'captcha_hcaptcha_secret_key'                => '',
+			'forbidden_ip_ranges'                        => [],
 		];
 	}
 
@@ -183,6 +185,7 @@ trait DefaultConfigurationTrait
 			'user_registration_block_usernames', 'mcp_enabled', 'sticky_chrome'
 			=> [$this, 'validateBool'],
 			'mcp_disallowed_tools' => [$this, 'validateMcpToolList'],
+			'forbidden_ip_ranges' => [$this, 'validateIpRangeList'],
 			'session_timeout' => fn($x) => $this->validateInteger($x, 1440, 3, 535600),
 			'session_save_levels' => fn($x) => $this->validateInteger($x, 0, 0, 5),
 			'login_max_failures' => fn($x) => $this->validateInteger($x, 5, 1, PHP_INT_MAX),
@@ -351,6 +354,37 @@ trait DefaultConfigurationTrait
 		);
 
 		return implode(',', array_values(array_unique($parts)));
+	}
+
+	/**
+	 * Validate the forbidden IP ranges list.
+	 *
+	 * Accepts an array of rows (as posted by the repeatable form control in Global Configuration) or a newline /
+	 * comma separated string (as accepted by the CLI). Empty rows are discarded and duplicates removed.
+	 *
+	 * A syntactically invalid expression is rejected outright rather than silently dropped: a typo which quietly
+	 * disappeared would leave the operator believing they had a protection rule in place when they did not.
+	 *
+	 * @param   mixed  $x  The raw value.
+	 *
+	 * @return  array<string>  The normalised list of IP range expressions.
+	 * @since   1.4.0
+	 */
+	private function validateIpRangeList($x): array
+	{
+		$ranges = ForbiddenIpRanges::normaliseList(is_array($x) ? $x : (string) $x);
+
+		foreach ($ranges as $expression)
+		{
+			if (!ForbiddenIpRanges::isValidExpression($expression))
+			{
+				throw new RuntimeException(
+					sprintf('“%s” is not a valid IP address, IP range, netmask, or CIDR block.', $expression)
+				);
+			}
+		}
+
+		return $ranges;
 	}
 
 	private function validateOptionalUrl($x): string
