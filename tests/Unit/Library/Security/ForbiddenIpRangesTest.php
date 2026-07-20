@@ -58,6 +58,22 @@ class ForbiddenIpRangesTest extends AbstractUnitTestCase
 		$this->assertSame(['10.0.0.1', '192.168.1.0/24', '172.16.0.0/12'], $ranges->getRanges());
 	}
 
+	/**
+	 * The .env / CLI form is a single comma-separated string. This is the exact example documented in .env.dist, so
+	 * if the accepted syntax ever changes this test fails and the documentation gets fixed with it.
+	 */
+	public function testEnvStyleCommaSeparatedValueWorks(): void
+	{
+		$ranges = new ForbiddenIpRanges('127.0.0.0/8,169.254.0.0/16,::1');
+
+		$this->assertSame(['127.0.0.0/8', '169.254.0.0/16', '::1'], $ranges->getRanges());
+
+		$this->assertTrue($ranges->isForbiddenIp('127.0.0.1'));
+		$this->assertTrue($ranges->isForbiddenIp('169.254.169.254'));
+		$this->assertTrue($ranges->isForbiddenIp('::1'));
+		$this->assertFalse($ranges->isForbiddenIp('93.184.216.34'));
+	}
+
 	public function testNormaliseListFromNull(): void
 	{
 		$this->assertSame([], (new ForbiddenIpRanges(null))->getRanges());

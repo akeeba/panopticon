@@ -181,10 +181,7 @@ class HttpFactory
 					 * The detail the operator needs in order to diagnose a complaint goes to the log instead.
 					 */
 					$this->container->loggerFactory->get('panopticon')->notice(
-						sprintf(
-							'Refused an outbound request to %s: the host is inside a forbidden IP range.',
-							$host
-						)
+						'Refused outbound request: forbidden host.'
 					);
 
 					throw new ForbiddenHostException($host);
