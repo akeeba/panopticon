@@ -227,9 +227,12 @@ class SiteForbiddenIpRangesTest extends AbstractIntegrationTestCase
 	}
 
 	/**
-	 * The error message must name the offending host so the operator can act on it.
+	 * The error message must NOT name the rejected host or the matched range.
+	 *
+	 * In a multi-tenant installation the user triggering this is the one the policy exists to constrain. An error
+	 * naming the offending address would let them enumerate the operator's range list one save attempt at a time.
 	 */
-	public function testErrorMessageNamesTheHost(): void
+	public function testErrorMessageDoesNotLeakTheHost(): void
 	{
 		$this->setForbiddenRanges(['10.0.0.0/8']);
 
@@ -243,7 +246,9 @@ class SiteForbiddenIpRangesTest extends AbstractIntegrationTestCase
 		}
 		catch (RuntimeException $e)
 		{
-			$this->assertStringContainsString('10.1.2.3', $e->getMessage());
+			$this->assertStringNotContainsString('10.1.2.3', $e->getMessage());
+			$this->assertStringNotContainsString('10.0.0.0/8', $e->getMessage());
+			$this->assertNotEmpty($e->getMessage());
 		}
 	}
 

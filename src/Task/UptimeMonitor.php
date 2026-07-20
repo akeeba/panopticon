@@ -182,6 +182,15 @@ class UptimeMonitor extends AbstractCallback
 				];
 				$options[RequestOptions::TIMEOUT]         = 15;
 				$options[RequestOptions::CONNECT_TIMEOUT] = 5;
+				/**
+				 * Redirects are followed because a site legitimately redirecting (http to https, bare domain to www)
+				 * is up, not down.
+				 *
+				 * Following them is safe with respect to the forbidden IP ranges policy: the guard installed by
+				 * HttpFactory::makeClient() sits below Guzzle's redirect middleware and is therefore re-evaluated on
+				 * every hop, so a site cannot redirect its way into a forbidden range. Do not "fix" this by adding a
+				 * separate on_redirect callback — it would duplicate the check, not add one.
+				 */
 				$options[RequestOptions::ALLOW_REDIRECTS] = true;
 
 				$config = $site->getConfig();

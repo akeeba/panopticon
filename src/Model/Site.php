@@ -435,9 +435,26 @@ class Site extends DataModel
 			return;
 		}
 
-		throw new RuntimeException(
-			$this->getLanguage()->sprintf('PANOPTICON_SITES_ERR_URL_FORBIDDEN_IP', htmlentities($host))
+		/**
+		 * The operator needs to know what was rejected in order to diagnose a complaint. The user must not be told,
+		 * so the detail goes to the log and only a generic message is thrown.
+		 */
+		$this->getContainer()->loggerFactory->get('panopticon')->notice(
+			sprintf(
+				'Refused a site definition whose URL host (%s) is inside a forbidden IP range. User ID: %d',
+				$host,
+				$this->getContainer()->userManager->getUser()->getId()
+			)
 		);
+
+		/**
+		 * The error deliberately does not name the rejected host or the matched range.
+		 *
+		 * In the multi-tenant case the person triggering this is exactly the person the policy exists to constrain,
+		 * and a message naming the offending address would let them enumerate the operator's range list one save at a
+		 * time. The user only needs to know the URL is not usable.
+		 */
+		throw new RuntimeException($this->getLanguage()->text('PANOPTICON_SITES_ERR_URL_FORBIDDEN_IP'));
 	}
 
 	public function testConnection(bool $getWarnings = true): array

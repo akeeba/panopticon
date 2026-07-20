@@ -88,8 +88,10 @@ class AddForbiddenIpRangesTest extends AbstractApiIntegrationTestCase
 
 		$this->assertSame(422, $response['status']);
 		$this->assertSame('validation.unprocessable', $response['body']['code']);
-		// Assert on the offending host so the test cannot pass because of some unrelated validation failure.
-		$this->assertStringContainsString('169.254.169.254', $response['body']['message'] ?? '');
+
+		// The response must not disclose which address was rejected, or the range which matched it.
+		$this->assertStringNotContainsString('169.254.169.254', $response['body']['message'] ?? '');
+		$this->assertStringNotContainsString('169.254.0.0/16', $response['body']['message'] ?? '');
 	}
 
 	public function testAddOwnUserCannotCreateLoopbackSite(): void
@@ -104,7 +106,17 @@ class AddForbiddenIpRangesTest extends AbstractApiIntegrationTestCase
 		]);
 
 		$this->assertSame(422, $response['status']);
-		$this->assertStringContainsString('127.0.0.1', $response['body']['message'] ?? '');
+		$this->assertStringNotContainsString('127.0.0.1', $response['body']['message'] ?? '');
+
+		/**
+		 * Pin the rejection to the forbidden-ranges check specifically. Without this the test would still pass if the
+		 * payload started failing some unrelated validation, and would silently stop testing anything.
+		 */
+		$this->assertSame(
+			$this->container->language->text('PANOPTICON_SITES_ERR_URL_FORBIDDEN_IP'),
+			$response['body']['message'] ?? '',
+			'The rejection must come from the forbidden IP ranges check'
+		);
 	}
 
 	/**
