@@ -104,6 +104,27 @@ class Html extends DataViewHtml
 	 */
 	protected bool $canEdit = false;
 
+	/**
+	 * May the current user run the Connection Doctor?
+	 *
+	 * Mirrors the `connection_doctor_access` check enforced in {@see \Akeeba\Panopticon\Controller\Sites}. The
+	 * controller remains the authority; this only decides whether to offer the button.
+	 *
+	 * @return  bool
+	 * @since   1.4.0
+	 */
+	protected function canUseConnectionDoctor(): bool
+	{
+		$user = $this->getContainer()->userManager->getUser();
+
+		return match ($this->getContainer()->appConfig->get('connection_doctor_access', 'own'))
+		{
+			'super' => (bool) $user->getPrivilege('panopticon.super'),
+			'admin' => $user->getPrivilege('panopticon.super') || $user->getPrivilege('panopticon.admin'),
+			default => true,
+		};
+	}
+
 	protected ?DateTime $cronStuckTime = null;
 
 	/**
@@ -640,22 +661,31 @@ class Html extends DataViewHtml
 					'title' => $this->getContainer()->language->text('PANOPTICON_SITES_LBL_DROPDOWN_TROUBLESHOOT'),
 					'class' => 'btn btn-outline-warning ms-2',
 				]
-			))->addButton(
-				new Button(
-					[
-						'id'    => 'doctor',
-						'icon'  => 'fa fa-fw fa-stethoscope',
-						'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
-						'url'   => $router->route(
-							sprintf(
-								"index.php?view=site&task=connectionDoctor&id=%s&%s=1",
-								$this->item->getId(),
-								$this->getContainer()->session->getCsrfToken()->getValue()
-							)
-						),
-					]
-				)
-			);
+			));
+
+			/**
+			 * Only offer the Connection Doctor to users the operator allows to run it. The controller enforces this
+			 * regardless; hiding the button keeps a self-service user from being sent to a 403 they cannot act on.
+			 */
+			if ($this->canUseConnectionDoctor())
+			{
+				$troubleshootDropdown->addButton(
+					new Button(
+						[
+							'id'    => 'doctor',
+							'icon'  => 'fa fa-fw fa-stethoscope',
+							'title' => $this->getLanguage()->text('PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_TITLE'),
+							'url'   => $router->route(
+								sprintf(
+									"index.php?view=site&task=connectionDoctor&id=%s&%s=1",
+									$this->item->getId(),
+									$this->getContainer()->session->getCsrfToken()->getValue()
+								)
+							),
+						]
+					)
+				);
+			}
 
 			if ($this->item->cmsType() === CMSType::JOOMLA)
 			{
@@ -712,7 +742,14 @@ class Html extends DataViewHtml
 				);
 			}
 
-			$this->container->application->getDocument()->getToolbar()->addButton($troubleshootDropdown);
+			/**
+			 * Do not render an empty dropdown. A non-Joomla site belonging to a self-service user who is not allowed
+			 * to run the Connection Doctor would otherwise get a Troubleshoot button which opens onto nothing.
+			 */
+			if (!empty($troubleshootDropdown->getButtons()))
+			{
+				$this->container->application->getDocument()->getToolbar()->addButton($troubleshootDropdown);
+			}
 		}
 
 		$document = $this->container->application->getDocument();

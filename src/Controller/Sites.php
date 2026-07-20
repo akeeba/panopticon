@@ -148,6 +148,8 @@ class Sites extends DataController
 			throw new RuntimeException($this->getLanguage()->text('AWF_APPLICATION_ERROR_ACCESS_FORBIDDEN'), 403);
 		}
 
+		$this->assertConnectionDoctorAccess();
+
 		try
 		{
 			$warnings        = $site->testConnection(true);
@@ -224,6 +226,51 @@ class Sites extends DataController
 	 * @return  void
 	 * @throws  Exception
 	 */
+	/**
+	 * Enforce the configurable, secondary access control on the Connection Doctor.
+	 *
+	 * The Connection Doctor renders the raw response body and headers of the monitored site back to the user —
+	 * `ViewTemplates/Sites/doctor.blade.php` passes `forceDebug => true` unconditionally — which is exactly what makes
+	 * it useful for diagnosing a site whose API application has been broken by a third party plugin.
+	 *
+	 * In a multi-tenant installation that same property makes it a full read of anything the server can reach. The
+	 * Forbidden IP Ranges list bounds this, but only to the extent the operator enumerated their own network
+	 * correctly, and a hand-maintained list is eventually incomplete. This control is what limits the damage when the
+	 * list is wrong: it lets the operator decide who is trusted to point the Doctor at a URL of their choosing.
+	 *
+	 * This is deliberately NOT applied to the Update Doctor. That runs the connection test first and returns early
+	 * when it fails (see SiteJoomlaUpdateDoctorTrait::runUpdateDoctor()), so the raw-body branch of its template is
+	 * unreachable for a host which is not a working Joomla site. It leaks the same weak error string as everything
+	 * else, not a response body, and gating ordinary Joomla API diagnostics would hurt legitimate use for no gain.
+	 *
+	 * @return  void
+	 * @throws  RuntimeException  If the current user may not use the Connection Doctor.
+	 * @since   1.4.0
+	 */
+	private function assertConnectionDoctorAccess(): void
+	{
+		$mode = $this->container->appConfig->get('connection_doctor_access', 'own');
+		$user = $this->container->userManager->getUser();
+
+		// Note: the panopticon.super privilege implies every other privilege; the checks below are explicit anyway.
+		$allowed = match ($mode)
+		{
+			'super' => (bool) $user->getPrivilege('panopticon.super'),
+			'admin' => $user->getPrivilege('panopticon.super') || $user->getPrivilege('panopticon.admin'),
+			// 'own', the default: the canAddEditOrSave() check made by the caller is the entire gate, as before.
+			default => true,
+		};
+
+		if ($allowed)
+		{
+			return;
+		}
+
+		throw new RuntimeException(
+			$this->getLanguage()->text('PANOPTICON_SITES_ERR_CONNECTION_DOCTOR_FORBIDDEN'), 403
+		);
+	}
+
 	public function updateDoctor(): void
 	{
 		$this->csrfProtection();

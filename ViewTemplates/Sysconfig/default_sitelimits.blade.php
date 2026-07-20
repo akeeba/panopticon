@@ -77,5 +77,30 @@ if (empty($forbiddenRanges))
                 </div>
             </div>
         </div>
+
+        {{-- connection_doctor_access --}}
+        <div class="row mb-3">
+            <label for="connection_doctor_access" class="col-sm-3 col-form-label">
+                @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS')
+            </label>
+            <div class="col-sm-9">
+                {{ $this->container->html->select->genericList(
+                    data: [
+                        'own'   => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_OWN'),
+                        'admin' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_ADMIN'),
+                        'super' => $this->getLanguage()->text('PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_SUPER'),
+                    ],
+                    name: 'options[connection_doctor_access]',
+                    attribs: [
+                        'class' => 'form-select',
+                    ],
+                    selected: $config->get('connection_doctor_access', 'own')
+                ) }}
+
+                <div class="form-text">
+                    @lang('PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_HELP')
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -122,6 +122,7 @@ trait DefaultConfigurationTrait
 			'captcha_hcaptcha_site_key'                  => '',
 			'captcha_hcaptcha_secret_key'                => '',
 			'forbidden_ip_ranges'                        => [],
+			'connection_doctor_access'                   => 'own',
 		];
 	}
 
@@ -186,6 +187,9 @@ trait DefaultConfigurationTrait
 			=> [$this, 'validateBool'],
 			'mcp_disallowed_tools' => [$this, 'validateMcpToolList'],
 			'forbidden_ip_ranges' => [$this, 'validateIpRangeList'],
+			'connection_doctor_access' => fn($x) => $this->validatePresetValues(
+				$x, 'own', ['own', 'admin', 'super']
+			),
 			'session_timeout' => fn($x) => $this->validateInteger($x, 1440, 3, 535600),
 			'session_save_levels' => fn($x) => $this->validateInteger($x, 0, 0, 5),
 			'login_max_failures' => fn($x) => $this->validateInteger($x, 5, 1, PHP_INT_MAX),
