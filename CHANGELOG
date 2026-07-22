@@ -1,23 +1,22 @@
 <?php die(); ?>
 Akeeba Panopticon 2.2.1
 ================================================================================
-+ New Extensions view: lists all installed extensions across all sites, not just ones with a pending update, with the same filters as Extension Updates [gh-1015]
-+ Joomla Update Doctor: diagnose why a Joomla core update fails or gets stuck (probes the extraction endpoint, scans the latest update attempt's log, and corroborates against the core update report)
-+ New `token:create` CLI command to mint an API token for a user
-+ Web-server integration test tier: exercises the MCP endpoint through a real Dockerised Apache 2.4 + PHP (FPM/mod_php) server, covering the transport-layer behaviour behind gh-1010
-+ The page header and toolbar can stay pinned to the top of the page when scrolling, keeping the toolbar buttons reachable on long pages. Configurable application-wide, and per user. [gh-1025]
-+ The toolbar buttons collapse into a menu on narrow displays, keeping the toolbar to a single line on phones
-+ Groups can now be given a colour, shown on the site badges (gh-1023)
-~ Reports are now sorted by date descending, showing the most recent entries first [gh-1032]
-# [HIGH] Editing a group, and any per-site permissions check for its members, crashed with a TypeError when the group's privileges were stored as a JSON object instead of an array, which is how the default "Users" group was installed
-# [HIGH] The per-group API token limit never worked: its `api_token_limit` column was never created, as the schema migration's condition named the column in the element's text instead of its `value` attribute, so the ALTER TABLE was silently skipped on every installation [gh-965]
-# [HIGH] System-level emails (extension install summary, self-update notifications, user account emails) crashed with a TypeError and were never sent [gh-1009]
-# [HIGH] MCP server (and JSON API) always returned 401 when the web server stripped the Authorization header [gh-1010]
-# [HIGH] MCP server and JSON API token authentication failed with "no_secret" when config.php had no persisted secret (CLI installs, and a web-installer timing race) [gh-1010]
-# Web Push notifications were sent in whatever language happened to be active when they were enqueued, instead of each recipient's own language [gh-1027]
-# The short /mcp endpoint returned a 404 because htaccess.txt lacked a rewrite rule for it
-# The _panopticon_token query parameter failed for Base64 tokens containing "+" (decoded to a space)
-# Some server anti-malware scanners (e.g. Imunify360) false-flagged two files as a PHP "dropper": the error handler customisation no longer rewrites and executes PHP at runtime — it ships pre-modified copies of the Symfony classes instead — and the backup download client no longer disables TLS verification or sends a spoofed browser User-Agent
++ Extensions view: all extensions across all sites [gh-1015]
++ Joomla Update Doctor: diagnoses why a Joomla core update fails or gets stuck
++ `token:create` CLI command to mint an API token for a user
++ Optional sticky page header and toolbar, configurable application-wide and per user [gh-1025]
++ Toolbar buttons collapse into a menu on narrow displays
++ Groups can be given a colour, shown on the site badges [gh-1023]
+~ Reports are now sorted by date descending [gh-1032]
+# [HIGH] Occasional PHP error on group edit and permission checks
+# [HIGH] Per-group API token limit wasn't applied [gh-965]
+# [HIGH] System-level emails crashed with a TypeError and were never sent [gh-1009]
+# [HIGH] MCP server and JSON API returned 401 when server stripped HTTP Authorization header [gh-1010]
+# [HIGH] MCP server and JSON API token authentication failed with "no_secret" on config.php missing secret [gh-1010]
+# [HIGH] Short /mcp endpoint returned a 404 due to no rewrite rule in htaccess.txt
+# [HIGH] The _panopticon_token query parameter failed for Base64 tokens containing "+"
+# [HIGH] Refactored code to avoid false positives in some anti-malware scanners e.g. Immunify360
+# [MEDIUM] Web Push notifications were not sent in each recipient's own language as intended [gh-1027]
 
 Akeeba Panopticon 2.2.0
 ================================================================================
