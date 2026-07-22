@@ -17,6 +17,7 @@ Akeeba Panopticon 2.2.1
 # Web Push notifications were sent in whatever language happened to be active when they were enqueued, instead of each recipient's own language [gh-1027]
 # The short /mcp endpoint returned a 404 because htaccess.txt lacked a rewrite rule for it
 # The _panopticon_token query parameter failed for Base64 tokens containing "+" (decoded to a space)
+# Some server anti-malware scanners (e.g. Imunify360) false-flagged two files as a PHP "dropper": the error handler customisation no longer rewrites and executes PHP at runtime — it ships pre-modified copies of the Symfony classes instead — and the backup download client no longer disables TLS verification or sends a spoofed browser User-Agent
 
 Akeeba Panopticon 2.2.0
 ================================================================================

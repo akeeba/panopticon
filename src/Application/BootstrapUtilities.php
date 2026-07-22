@@ -12,7 +12,6 @@ use Akeeba\Panopticon\Factory;
 use Akeeba\Panopticon\Library\User\User;
 use Akeeba\Panopticon\Model\Loginfailures;
 use Awf\Registry\Registry;
-use Awf\Utils\Buffer;
 use Awf\Utils\Ip;
 use Composer\CaBundle\CaBundle;
 use Dotenv\Dotenv;
@@ -586,81 +585,36 @@ PHP;
 	}
 
 	/**
-	 * Overrides the Symfony HtmlErrorRenderer for customisation reasons.
+	 * Overrides the Symfony error-handler classes with our locally customised versions.
 	 *
-	 * Overrides the Symfony HtmlErrorRenderer:
-	 *  - Always give detailed information, even to the "simple" error page
-	 *  - Allow overriding the debug template
+	 * We ship modified copies of two Symfony error-handler classes under patches/symfony-error-handler/:
+	 *  - FlattenException: surface the real exception message as the status text.
+	 *  - HtmlErrorRenderer: give the non-debug "simple" error page the same rich template context as the debug page
+	 *    (our templates/system/fatal.php needs $exception), and let the active theme override error templates/assets.
 	 *
-	 * Why this in-memory patching trickery instead of overriding the class, you ask? There's a good reason!
+	 * Each copy declares the same namespace and class name as the upstream original, so require-ing it here — before
+	 * Composer's autoloader can define the upstream version — makes PHP use our version everywhere. The copies must be
+	 * loaded before anything references the upstream classes; this method is called very early, from
+	 * applyExceptionsHandler().
 	 *
-	 * We need to override two private methods. Overriding a private method in a descendant class doesn't work (the
-	 * parent class' code will still use the parent class' private member instead of the one we defined in the
-	 * descendant). This means that we'd have to copy the entire class instead of extending from it. While possible, it
-	 * makes it far harder to update the code several months or years later when the overridden class breaks. Using
-	 * in-memory patching we can readily see the handful of lines we changed, making it easy to update.
+	 * Why full copies rather than overriding the two private methods in a subclass? A subclass cannot override a
+	 * private method — the parent's own code keeps calling the parent's private version — so the whole class has to be
+	 * copied regardless.
 	 *
-	 * Kids, don't try this at home. We are trained professionals with over two decades of experience doing weird things
-	 * in PHP code.
+	 * Historical note: this used to patch the classes at runtime (read the upstream source, str_replace it, write the
+	 * result to an `awf://` stream-wrapper file, require it, then unlink it). That "read → rewrite → write → execute →
+	 * delete" sequence is textbook file-dropper behaviour and got both this file and the generated files flagged as
+	 * malware by heuristic scanners (e.g. Imunify360, SMW-INJ-CLOUDAV-php.dropper.file-*). Such scanners inspect files
+	 * at rest, so obfuscation cannot help; shipping the modified classes as ordinary files removes the pattern entirely.
+	 * See patches/README.md and tests/Unit/Application/ErrorHandlerPatchesTest.php (the drift detector).
 	 *
 	 * @return  void
 	 * @since   1.0.3
 	 */
 	private static function overrideHtmlErrorRenderer(): void
 	{
-		// Loads the buffer class and registers the `awf://` stream handler.
-		class_exists(Buffer::class);
-
-		// Override FlattenException
-		$sourceCode = @file_get_contents(APATH_BASE . '/vendor/symfony/error-handler/Exception/FlattenException.php');
-
-		$sourceCode = str_replace(
-			'$statusCode = 500;', <<< PHP
-\$statusCode = in_array(\$exception->getCode(), [400, 401, 403, 404, 406, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 425, 428, 429, 431, 451, 500, 501, 502, 503, 504, 505, 506, 510, 511]) ? \$exception->getCode() : 500;
-PHP, $sourceCode
-		);
-		$sourceCode = str_replace(
-			'$statusText = \'Whoops, looks like something went wrong.\';', '$statusText = $exception->getMessage();',
-			$sourceCode
-		);
-
-
-		$tempFile = 'awf://tmp/FlattenException.php';
-		file_put_contents($tempFile, $sourceCode);
-		require_once $tempFile;
-		@unlink($tempFile);
-
-		// Override HtmlErrorRenderer
-		$sourceCode = @file_get_contents(
-			APATH_BASE . '/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php'
-		);
-
-		//$sourceCode = str_replace('if (!$debug) {', 'if (true) {', $sourceCode);
-		$sourceCode = str_replace(
-			'return $this->include(self::$template, [', <<<PHP
-return \$this->include(self::\$template, [
-            'exception' => \$exception,
-            'exceptionMessage' => \$this->escape(\$exception->getMessage()),
-            'logger' => \$this->logger instanceof DebugLoggerInterface ? \$this->logger : null,
-            'currentContent' => \is_string(\$this->outputBuffer) ? \$this->outputBuffer : (\$this->outputBuffer)(),
-
-PHP, $sourceCode
-		);
-		$sourceCode = str_replace(
-			'include is_file(\dirname(__DIR__).\'/Resources/\'.$name) ? \dirname(__DIR__).\'/Resources/\'.$name : $name;', <<<PHP
-	include array_reduce([
-		APATH_THEMES . '/system/' . str_replace('views/', 'error/', \$name),
-		APATH_BASE . '/vendor/symfony/error-handler/Resources/' . \$name,
-		\$name
-	], fn(\$carry, \$path) => \$carry ?? (file_exists(\$path) ? \$path : null), null);
-
-PHP, $sourceCode
-		);
-
-		$tempFile = 'awf://tmp/HtmlErrorRenderer.php';
-		file_put_contents($tempFile, $sourceCode);
-		require_once $tempFile;
-		@unlink($tempFile);
+		require_once APATH_BASE . '/patches/symfony-error-handler/FlattenException.php';
+		require_once APATH_BASE . '/patches/symfony-error-handler/HtmlErrorRenderer.php';
 	}
 
 	/**

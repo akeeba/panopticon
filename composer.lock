@@ -78,12 +78,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/json-backup-api.git",
-                "reference": "70a0919bc39a9e396040bfe74e747b153d6fcc5f"
+                "reference": "447f7dfa7b3b52a4a8ff9ee51955da6c5f44879c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/json-backup-api/zipball/70a0919bc39a9e396040bfe74e747b153d6fcc5f",
-                "reference": "70a0919bc39a9e396040bfe74e747b153d6fcc5f",
+                "url": "https://api.github.com/repos/akeeba/json-backup-api/zipball/447f7dfa7b3b52a4a8ff9ee51955da6c5f44879c",
+                "reference": "447f7dfa7b3b52a4a8ff9ee51955da6c5f44879c",
                 "shasum": ""
             },
             "require": {
@@ -130,7 +130,7 @@
                 "issues": "https://github.com/akeeba/json-backup-api/issues",
                 "source": "https://github.com/akeeba/json-backup-api/tree/main"
             },
-            "time": "2026-05-29T07:50:57+00:00"
+            "time": "2026-07-22T17:25:43+00:00"
         },
         {
             "name": "akeeba/phpfinder",
