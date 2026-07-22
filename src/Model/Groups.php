@@ -253,7 +253,8 @@ class Groups extends DataModel
 
 		try
 		{
-			$colours = $db->setQuery($query)->loadAssocList('id', 'colour') ?: [];
+			// DO NOT use loadAssocList('id', 'colour'); it returns the entire row when the colour is NULL.
+			$rows = $db->setQuery($query)->loadAssocList('id') ?: [];
 		}
 		catch (\Exception)
 		{
@@ -263,8 +264,8 @@ class Groups extends DataModel
 		$colourHelper = $this->getContainer()->helper->colour;
 
 		return array_map(
-			fn(?string $colour): ?string => $colourHelper->sanitise($colour),
-			$colours
+			fn(array $row): ?string => $colourHelper->sanitise($row['colour'] ?? null),
+			$rows
 		);
 	}
 
