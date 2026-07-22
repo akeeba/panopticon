@@ -38,7 +38,7 @@ class Html extends BaseHtmlView
 		$this->lists->limit      = (int) $model->getState('limit', 20);
 
 		$model->setState('filter_order', 'created_on');
-		$model->setState('filter_order_Dir', 'ASC');
+		$model->setState('filter_order_Dir', 'DESC');
 		$model->setState('limitstart', $this->lists->limitStart);
 		$model->setState('limit', $this->lists->limit);
 
