@@ -62,7 +62,7 @@ $isLatest      = version_compare($php, $latestVersion, 'ge');
 		{
 			$eolDate = $this->container->dateFactory(
 				$phpVersion->getVersionInformation($php)?->dates?->eol?->format(DATE_RFC3339) ?? '2000-01-01 00:00:00'
-			)->format($this->getLanguage()->text('DATE_FORMAT_LC3'));
+			)->format($this->getLanguage()->text('DATE_FORMAT_LC3'), false, true);
 		}
 		catch (Throwable)
 		{
@@ -83,7 +83,7 @@ $isLatest      = version_compare($php, $latestVersion, 'ge');
 		{
 			$eolDate = $this->container->dateFactory(
 				$phpVersion->getVersionInformation($php)?->dates?->eol?->format(DATE_RFC3339) ?? '2000-01-01 00:00:00'
-			)->format($this->getLanguage()->text('DATE_FORMAT_LC3'));
+			)->format($this->getLanguage()->text('DATE_FORMAT_LC3'), false, true);
 		}
 		catch (Throwable)
 		{
