@@ -17,6 +17,8 @@ Akeeba Panopticon 2.2.1
 # [HIGH] The _panopticon_token query parameter failed for Base64 tokens containing "+"
 # [HIGH] Refactored code to avoid false positives in some anti-malware scanners e.g. Immunify360
 # [MEDIUM] Web Push notifications were not sent in each recipient's own language as intended [gh-1027]
+# [MEDIUM] Scheduled update summary emails re-sent duplicate notifications on every run
+# [LOW] Completed one-shot tasks (e.g. extension install) were never deleted [gh-1034]
 
 Akeeba Panopticon 2.2.0
 ================================================================================

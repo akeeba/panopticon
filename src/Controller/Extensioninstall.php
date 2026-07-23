@@ -233,7 +233,7 @@ class Extensioninstall extends Controller
 		$params = new Registry();
 		$params->set('sites', $siteIds);
 		$params->set('initiating_user', $user->getId());
-		$params->set('run_once', 'disable');
+		$params->set('run_once', 'delete');
 
 		if (!empty($url))
 		{
