@@ -47,14 +47,17 @@ class AkeebaBackup extends AbstractCallback
 		// Replace the variables in the description and comment
 		$now          = $this->container->dateFactory();
 		$replacements = [
-			'{DATE_FORMAT_LC}'  => $now->format($this->getLanguage()->text('DATE_FORMAT_LC')),
-			'{DATE_FORMAT_LC1}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC1')),
-			'{DATE_FORMAT_LC2}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC2')),
-			'{DATE_FORMAT_LC3}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC3')),
-			'{DATE_FORMAT_LC4}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC4')),
-			'{DATE_FORMAT_LC5}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC5')),
-			'{DATE_FORMAT_LC6}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC6')),
-			'{DATE_FORMAT_LC7}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC7')),
+			// The DATE_FORMAT_LCx strings are translatable, so any of them may contain localised day/month tokens
+			// in a given language. Pass $translate = true so these human-facing dates stay localised (AWF's
+			// Date::format() no longer translates by default).
+			'{DATE_FORMAT_LC}'  => $now->format($this->getLanguage()->text('DATE_FORMAT_LC'), false, true),
+			'{DATE_FORMAT_LC1}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC1'), false, true),
+			'{DATE_FORMAT_LC2}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC2'), false, true),
+			'{DATE_FORMAT_LC3}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC3'), false, true),
+			'{DATE_FORMAT_LC4}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC4'), false, true),
+			'{DATE_FORMAT_LC5}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC5'), false, true),
+			'{DATE_FORMAT_LC6}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC6'), false, true),
+			'{DATE_FORMAT_LC7}' => $now->format($this->getLanguage()->text('DATE_FORMAT_LC7'), false, true),
 		];
 		$description  = str_replace(array_keys($replacements), array_values($replacements), $description);
 		$comment      = str_replace(array_keys($replacements), array_values($replacements), $comment);
