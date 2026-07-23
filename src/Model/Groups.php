@@ -262,10 +262,10 @@ class Groups extends DataModel
 
 		$colourHelper = $this->getContainer()->helper->colour;
 
-		return array_map(
-			fn(?string $colour): ?string => $colourHelper->sanitise($colour),
-			$colours
-		);
+        return array_map(
+            fn(?array $colour): ?string => $colourHelper->sanitise($colour['colour']),
+            $colours
+        );
 	}
 
 	/**

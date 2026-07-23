@@ -95,8 +95,8 @@ $mcpDisallowedTools = $model->getMcpDisallowedTools();
                         </span>
                     </div>
                 </div>
+                <div class="form-text">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_HELP')</div>
             </div>
-            <div class="form-text">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_HELP')</div>
         </fieldset>
     </div>
 
