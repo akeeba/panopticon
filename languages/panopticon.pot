@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 2.0.0\n"
-"POT-Creation-Date: 2026-03-17 12:16:58\n"
+"Project-Id-Version: 2.2.1\n"
+"POT-Creation-Date: 2026-07-23 19:28:54\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 2.0.0\n"
+"X-Generator: Panopticon ini_to_po 2.2.1\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -673,6 +673,11 @@ msgid "Toolbar"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_APP_LBL_TOGGLE_TOOLBAR"
+msgid "Toggle toolbar actions"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_APP_LBL_MESSAGES"
 msgid "Messages"
 msgstr ""
@@ -1219,7 +1224,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_FAIL"
-msgid "Failed to take a backup before updating site %d (%s); update canceled"
+msgid "Failed to take a backup before updating site %d (%s); update cancelled"
 msgstr ""
 
 #, phpformat
@@ -3478,6 +3483,31 @@ msgid "The time expressed in the %s timezone. If updates are found <em>after</em
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_WHEN"
+msgid "When Should Updates Be Installed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_IMMEDIATELY"
+msgid "Immediately"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_TIME"
+msgid "Time of Day"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME"
+msgid "Time Of The Day to Install Extension Updates On (Hour:Minute)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
+msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_CC"
 msgid "CC the Following Email Addresses"
 msgstr ""
@@ -3495,6 +3525,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_AFTER"
 msgid "Send Email after Update Success"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS"
+msgid "Attach Log File for These Groups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS_HELP"
+msgid "Override the global setting: select which user groups receive the task log file as an email attachment on failure. Leave empty to use the global Panopticon setting."
 msgstr ""
 
 #, phpformat
@@ -3565,6 +3605,326 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY_MORE"
 msgid "The connection to your site was tested, and found to be working fine."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_TITLE"
+msgid "Joomla! Update Doctor"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_RUN"
+msgid "Run Update Doctor"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_ERR_UPDATE_DOCTOR_JOOMLA_ONLY"
+msgid "The Joomla! Update Doctor is only available for Joomla! sites."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_SELF_ERROR"
+msgid "The Update Doctor could not complete its checks because of an unexpected error."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_NO_RESULTS"
+msgid "The Update Doctor did not return any results."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_OKAY"
+msgid "All good!"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_OKAY_MORE"
+msgid "The Joomla! core update endpoints were tested and no problems were found. If updates are still failing, use the actions below to reschedule the update or inspect the log."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_API_DOWN_HEAD"
+msgid "The site\'s API is unreachable"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_API_DOWN_BODY"
+msgid "Panopticon cannot talk to your site over its JSON API. Core updates cannot work until that is fixed. Please run the Connection Doctor first to diagnose and resolve the API connection problem, then come back here."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_API_OK"
+msgid "Panopticon can talk to the site over its JSON API."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_OK"
+msgid "The Joomla! update extraction endpoint is reachable and responding normally."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_AUTH_HEAD"
+msgid "The site\'s administrator folder is password-protected"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_AUTH_BODY"
+msgid "The update extraction endpoint returned HTTP 401 (authentication required). Your site\'s <code>administrator</code> folder is protected with HTTP (web server) authentication. Edit this site and enter the Administrator Directory Username and Password in the Connection tab, then try again."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_HEAD"
+msgid "The update extraction endpoint is being blocked (HTTP %d)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_BODY"
+msgid "Panopticon reached your server, but the request to the Joomla! update extraction script was refused with an unexpected HTTP status. This almost always means something between Panopticon and your site\'s PHP is blocking the request — not Panopticon or Joomla! itself. Core updates cannot complete until this request is allowed through."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK1"
+msgid "A CDN or reverse proxy (e.g. Cloudflare): check its firewall/WAF events for a block on the <code>/administrator/</code> path and add an exception, or allow the Panopticon server\'s IP address."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK2"
+msgid "A hosting-level firewall or security system (mod_security, Imunify360, a GeoIP filter, or a bandwidth/rate limit): ask your host to allow requests to the extraction script, or to allow the Panopticon server\'s country/IP address."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK3"
+msgid "A security extension on the site restricting access to the administrator folder for requests that are not coming from a logged-in browser."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ENDPOINT"
+msgid "Endpoint tested: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ERROR_HEAD"
+msgid "Could not reach the update extraction endpoint"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ERROR_BODY"
+msgid "A network or TLS error occurred while contacting the update extraction script. See the details below and the debug information at the bottom of this page."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_MISSING_HEAD"
+msgid "No Joomla! update log is available yet"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_MISSING_BODY"
+msgid "There is no update task log for this site to analyse. Reschedule the update (button below) so a fresh attempt runs, then return here to review the log."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_NEED_DEBUG"
+msgid "For the most useful log, enable Debug logging first (button below), then reschedule the update and come back once it has failed again."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_LAST_ERROR"
+msgid "Most recent error line in the log:"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CLEAN"
+msgid "No recent errors were found in the site\'s Joomla! update log."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BLOCKED_HEAD"
+msgid "The last update was blocked while extracting (HTTP %d)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BLOCKED_BODY"
+msgid "The most recent update failed because the request to the extraction script was refused. This matches a CDN, host firewall, GeoIP filter, or rate/bandwidth limit blocking the request. See the extraction endpoint check above for what to do."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_AUTH_HEAD"
+msgid "The last update failed on administrator folder authentication"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_AUTH_BODY"
+msgid "The extraction script returned HTTP 401. Enter the Administrator Directory Username and Password for this site in the Connection tab, then try again."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_JSON_HEAD"
+msgid "The extraction script returned an invalid response"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_JSON_BODY"
+msgid "The extraction script did not return valid JSON. This usually means a PHP notice, warning, or error is being printed by the site. Check the site\'s error log and disable any output-producing plugins on the extraction script."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_EXTRACT_HEAD"
+msgid "The update extraction failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_EXTRACT_BODY"
+msgid "The extraction script reported a failure. The site may be in a half-updated state. Review the full log, and consider checking the site manually before retrying."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DOWNLOAD_HEAD"
+msgid "Downloading the update package failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DOWNLOAD_BODY"
+msgid "The update package could not be downloaded to the site. This can be a slow or blocked download from Joomla!\'s servers, or the site\'s temporary directory being cleared. Retry the update; if it recurs, check the site\'s connectivity to downloads.joomla.org."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CHECKSUM_HEAD"
+msgid "The downloaded update package was corrupt"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CHECKSUM_BODY"
+msgid "The downloaded package failed its checksum verification, meaning it was incomplete or altered in transit (often a proxy or an interrupted download). Retry the update."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BACKUP_HEAD"
+msgid "The pre-update backup failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BACKUP_BODY"
+msgid "The update was cancelled because the backup that runs before updating failed. Check Akeeba Backup on the site (its configuration and the selected backup profile), or disable the pre-update backup for this site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_ENABLE_HEAD"
+msgid "Could not enable the extraction script"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_ENABLE_BODY"
+msgid "Panopticon could not activate the Joomla! update extraction script on the site. Review the full log; the extraction endpoint check above may show the underlying cause."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DISAPPEARED_HEAD"
+msgid "The update package disappeared during the update"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DISAPPEARED_BODY"
+msgid "The downloaded update package vanished before it could be extracted. A plugin or your host may be clearing the site\'s temporary directory automatically. Check for aggressive temp-file cleanup and retry."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FINALISE_HEAD"
+msgid "Finalising the update failed"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FINALISE_BODY"
+msgid "The files were extracted but the post-update finalisation failed. Log into the site and check System, Maintenance, Database, and whether Joomla! reports itself as up-to-date."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_RELOAD_HEAD"
+msgid "Could not reload update information after updating"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_RELOAD_BODY"
+msgid "The update applied but Panopticon could not re-read the site\'s update status afterwards. Refresh the site information; if it keeps failing, run the Connection Doctor."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FACTORY_HEAD"
+msgid "The extraction lost its internal state"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FACTORY_BODY"
+msgid "An internal error interrupted the extraction (the script\'s state was lost between steps). This can be caused by the extraction request being terminated early. Retry the update and review the full log if it recurs."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_TIMEOUT_HEAD"
+msgid "The last update timed out"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_TIMEOUT_BODY"
+msgid "The update task was marked as timed out. This happens when the whole stepped update takes longer than the stuck-task threshold, or a worker was killed mid-step. Consider raising the stuck-task threshold in System Configuration, ensuring the CRON job runs frequently, and checking the site\'s PHP memory limit."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_UNKNOWN_HEAD"
+msgid "The last update ended with an error"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_UNKNOWN_BODY"
+msgid "The most recent update run recorded an error that the Doctor could not categorise automatically. The error line is shown below; open the full log for the complete context."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_HEAD"
+msgid "Latest core update report"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_STEP"
+msgid "The update failed during the “%s” step."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_HTTP"
+msgid "The recorded failure mentions HTTP status %d."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_BACKUP_ON"
+msgid "A backup was taken (or attempted) before this update."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_BACKUP_OFF"
+msgid "No pre-update backup was configured for this update."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_RESCHEDULE"
+msgid "Reschedule the update"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_VIEW_LOG"
+msgid "Open the full log"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_ENABLE_DEBUG"
+msgid "Enable Debug logging (global)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_ENABLE_DEBUG_WARN"
+msgid "This changes the global logging level to Debug for every task and site. Remember to set it back to a lower level in System Configuration once you have finished troubleshooting."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_DEBUG_ENABLED"
+msgid "Global Debug logging has been enabled. Reschedule the update, and once it fails again return here to review the detailed log."
 msgstr ""
 
 #, phpformat
@@ -4454,7 +4814,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P2"
-msgid "Please note that this typically requires an additional, often expensive, per-server license. Moreover, some security fixes which require changes in the internal PHP architecture cannot be applied in these old PHP versions. Finally, functional issues (‘bugs’) and compatibility with newer Internet standards and best practices are <em>never</em> addressed."
+msgid "Please note that this typically requires an additional, often expensive, per-server licence. Moreover, some security fixes which require changes in the internal PHP architecture cannot be applied in these old PHP versions. Finally, functional issues (‘bugs’) and compatibility with newer Internet standards and best practices are <em>never</em> addressed."
 msgstr ""
 
 #, phpformat
@@ -6199,7 +6559,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_ERR_USING_ENVIRONMENT"
-msgid "You cannot view or modify the System Configuration in Panopticon when it runs containerized and you have set the <code>PANOPTICON_USING_ENV</code> environment variable to 1. Please configure Panopticon by setting environment variables instead."
+msgid "You cannot view or modify the System Configuration in Panopticon when it runs containerised and you have set the <code>PANOPTICON_USING_ENV</code> environment variable to 1. Please configure Panopticon by setting environment variables instead."
 msgstr ""
 
 #, phpformat
@@ -6233,6 +6593,66 @@ msgid "Email"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
+msgid "API Tokens"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX"
+msgid "Maximum tokens per user"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX_HELP"
+msgid "The maximum number of enabled, non-expired API tokens a user may hold. User groups can override this on a per-group basis. Set to 0 to deny API access to all users by default (individual groups may still grant access via their own override)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_MCP"
+msgid "MCP Server"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_MCP_INTRO"
+msgid "The Model Context Protocol (MCP) server lets AI agents and chatbots — such as Claude Code, Claude Desktop, Codex, Cursor, or VS Code — drive Panopticon using the same capabilities as the JSON API. Each request authenticates with a Panopticon API token sent as a Bearer Authorization header, and an agent can only see and do what the token\'s owner could through the API."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED"
+msgid "Enable the MCP server"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENABLED_HELP"
+msgid "When disabled (the default) the MCP endpoint responds as if it does not exist."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT"
+msgid "MCP endpoint URL"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_ENDPOINT_HELP"
+msgid "Configure your AI tool to use this URL as a Streamable HTTP MCP server, with an <code>Authorization: Bearer &lt;your API token&gt;</code> header."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Globally disabled tools"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "A comma-separated list of MCP tool names that are never exposed to anyone, regardless of user, token, or group. This is the absolute kill-switch (for example, list <code>get_sysconfig</code> here to keep system configuration entirely out of MCP). Leave empty to allow all tools."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MCP_AVAILABLE_TOOLS"
+msgid "Available tools"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_AUTOMATION"
 msgid "Automatic Execution of Tasks"
 msgstr ""
@@ -6240,6 +6660,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_CACHING"
 msgid "Caching"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_CHECKSUMS"
+msgid "Core File Integrity"
 msgstr ""
 
 #, phpformat
@@ -6470,6 +6895,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FONTSIZE"
 msgid "Font size"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STICKY_CHROME"
+msgid "Sticky header and toolbar"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STICKY_CHROME_HELP"
+msgid "Keep the header and the toolbar pinned to the top of the page when scrolling, so that the toolbar buttons remain reachable on long pages. Each user can override this in their profile. On very short displays, such as a phone held sideways, the header and toolbar always scroll away regardless of this setting."
 msgstr ""
 
 #, phpformat
@@ -6723,6 +7158,16 @@ msgid "Inline Images in Email"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS"
+msgid "Attach Log File to These Groups"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS_HELP"
+msgid "Select which user groups receive the task log file as an email attachment when a core or extension update fails. Leave empty to send the attachment to all notification recipients."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_MAILER"
 msgid "Mail Handler"
 msgstr ""
@@ -6765,6 +7210,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SMTPPASS"
 msgid "SMTP Password"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL"
+msgid "Checksums source base URL"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CHECKSUMS_BASE_URL_HELP"
+msgid "Base URL Panopticon\'s connectors use to download the reference checksums for the Core File Integrity check. Leave empty to use the default <code>https://getpanopticon.com/checksums</code>. If you host your own mirror, it must serve the same layout: the connector appends <code>/joomla/&lt;version&gt;/sha256_squash.json.gz</code> or <code>/wordpress/&lt;version&gt;/sha256_squash.json.gz</code> to this base URL. Do not include a trailing slash or the CMS name."
 msgstr ""
 
 #, phpformat
@@ -7773,6 +8228,11 @@ msgid "Core File Integrity: Modified Files Found"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_FILESCANNER_FAILED"
+msgid "PHP File Change Scanner: Task Failure"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_SELFUPDATE_FOUND"
 msgid "Panopticon: Update found"
 msgstr ""
@@ -8023,6 +8483,106 @@ msgid "Group Name"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR"
+msgid "Colour"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_HELP"
+msgid "Colours the group\'s badge wherever it appears in the site lists. The text colour is chosen automatically for the best contrast against your chosen background. If you want an icon, add an emoji to the group\'s name instead — Panopticon deliberately does not support group icons."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_NONE"
+msgid "No colour"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM"
+msgid "Custom colour"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_BLUE"
+msgid "Blue"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_INDIGO"
+msgid "Indigo"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_PURPLE"
+msgid "Purple"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_PINK"
+msgid "Pink"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_RED"
+msgid "Red"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_ORANGE"
+msgid "Orange"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_YELLOW"
+msgid "Yellow"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_GREEN"
+msgid "Green"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_TEAL"
+msgid "Teal"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_CYAN"
+msgid "Cyan"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_GREY"
+msgid "Grey"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_SILVER"
+msgid "Silver"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_DARK"
+msgid "Dark"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_LIGHT"
+msgid "Light"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_BLACK"
+msgid "Black"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_WHITE"
+msgid "White"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS"
 msgid "Permissions"
 msgstr ""
@@ -8035,6 +8595,31 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS_HELP"
 msgid "These privileges will be given to a user belonging to this group for any site which belongs to this group. To let the user see a site\'s overview you need to give them the View privilege."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT"
+msgid "API Token Limit"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER"
+msgid "(Use global default)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP"
+msgid "Override the global API token limit for users in this group. Leave empty to use the global default. Set to 0 to deny API access to group members (unless another group they belong to grants a higher limit)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS"
+msgid "Disabled MCP tools"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
+msgid "MCP tools that members of this group may NOT use. Important: access is granted if ANY of a user\'s groups allows a tool. A tool is only blocked for a user when EVERY group they belong to disables it. This is the opposite of Joomla\'s “deny wins” logic. The globally disabled tools list in System Configuration always takes precedence."
 msgstr ""
 
 #, phpformat
@@ -8055,6 +8640,21 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_LBL_GROUP_DELETED"
 msgid "The group has been deleted."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_SAVED"
+msgid "The API token has been saved."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_COPIED"
+msgid "The API token has been copied."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_APITOKEN_DELETED"
+msgid "The selected API tokens have been deleted."
 msgstr ""
 
 #, phpformat
@@ -8278,6 +8878,31 @@ msgid "The Dashboard layout is simpler to understand, but uses more browser reso
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME"
+msgid "Sticky header and toolbar"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_DEFAULT"
+msgid "Use Default"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_YES"
+msgid "Yes"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_NO"
+msgid "No"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_HELP"
+msgid "Keep the header and the toolbar pinned to the top of the page when scrolling, so that the toolbar buttons remain reachable on long pages."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_NEEDED"
 msgid "You must set up Multi-factor Authentication to be allowed further access to this application."
 msgstr ""
@@ -8449,7 +9074,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_LICENSE"
-msgid "License"
+msgid "Licence"
 msgstr ""
 
 #, phpformat
@@ -8469,7 +9094,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_PLEASE_READ_LICENSE"
-msgid "For the complete text of the software license, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
+msgid "For the complete text of the software licence, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
 msgstr ""
 
 #, phpformat
@@ -8479,7 +9104,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_3PD_SOFTWARE_ABOUT"
-msgid "Software is not made in a vacuum, or by virgin birth. We build upon the work of other people and organisations who have kindly provided their software libraries under a permissive license. Below, you can find the third party software which is included in Akeeba Panopticon, its version numbers, and its integrity checksum - essentially a Software Bill Of Materials (SBOM) which you might need for compliance reasons."
+msgid "Software is not made in a vacuum, or by virgin birth. We build upon the work of other people and organisations who have kindly provided their software libraries under a permissive licence. Below, you can find the third party software which is included in Akeeba Panopticon, its version numbers, and its integrity checksum - essentially a Software Bill Of Materials (SBOM) which you might need for compliance reasons."
 msgstr ""
 
 #, phpformat
@@ -9324,7 +9949,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE"
-msgid "<p class=\"alert alert-info\">The messages appearing above and below the code area can be customized by overriding the language strings <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
+msgid "<p class=\"alert alert-info\">The messages appearing above and below the code area can be customised by overriding the language strings <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
 msgstr ""
 
 #, phpformat
@@ -9339,7 +9964,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE"
-msgid "<p class=\"alert alert-info\">The messages appearing above and below the setup area can be customized by overriding the language strings <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
+msgid "<p class=\"alert alert-info\">The messages appearing above and below the setup area can be customised by overriding the language strings <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
 msgstr ""
 
 #, phpformat
@@ -9878,6 +10503,96 @@ msgid "Invalid extensions selection."
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_TITLE"
+msgid "Extensions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_SITE"
+msgid "Site"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_SITE_SELECT"
+msgid "– Site –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_CMSVERSION_SELECT"
+msgid "– CMS Version –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_PHPVERSION_SELECT"
+msgid "– PHP Version –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_NAME"
+msgid "Extension Name"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_NAME_SELECT"
+msgid "– Extension Name –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR"
+msgid "Extension Author"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_SELECT"
+msgid "– Author –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_URL"
+msgid "Author URL"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_URL_SELECT"
+msgid "– Author URL –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_EMAIL"
+msgid "Author Email"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_EMAIL_SELECT"
+msgid "– Author Email –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_TABLE_COMMENT"
+msgid "Table of all installed extensions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_SITE"
+msgid "Site"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_EXTENSION"
+msgid "Extension"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_VERSION"
+msgid "Version"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_AUTHOR"
+msgid "Author"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TITLE"
 msgid "Install Extension"
 msgstr ""
@@ -10094,7 +10809,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_TOO_LARGE"
-msgid "The package file you selected is larger than this server's upload size limit. Please ask your host to increase the PHP <code>upload_max_filesize</code> and <code>post_max_size</code> settings, or install the extension from a download URL instead."
+msgid "The package file you selected is larger than this server\'s upload size limit. Please ask your host to increase the PHP <code>upload_max_filesize</code> and <code>post_max_size</code> settings, or install the extension from a download URL instead."
 msgstr ""
 
 #, phpformat
@@ -10109,7 +10824,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_POST_TOO_LARGE"
-msgid "The package file you selected is too large to submit. It exceeds this server's <code>post_max_size</code> limit, so it was rejected before it could be uploaded. Please ask your host to increase the PHP <code>post_max_size</code> and <code>upload_max_filesize</code> settings, or install the extension from a download URL instead."
+msgid "The package file you selected is too large to submit. It exceeds this server\'s <code>post_max_size</code> limit, so it was rejected before it could be uploaded. Please ask your host to increase the PHP <code>post_max_size</code> and <code>upload_max_filesize</code> settings, or install the extension from a download URL instead."
 msgstr ""
 
 #, phpformat
@@ -11973,6 +12688,276 @@ msgid "Failed to create API token."
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES"
+msgid "Expires"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_NEVER"
+msgid "Never"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED"
+msgid "Last Used"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED_IP"
+msgid "Last Used IP Address"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES"
+msgid "Scopes"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED"
+msgid "You have reached the maximum number of enabled API tokens. Please delete or disable an existing token before creating a new one."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
+msgid "%1\\$d of %2\\$d API tokens created"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED"
+msgid "API access is disabled for your account. Please contact a super administrator."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_EXCEEDED_HINT"
+msgid "You have reached your API token limit. Please delete or disable an existing token before creating or re-enabling one."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHHTACCESS"
+msgid "API endpoint URL (recommended, requires <code>.htaccess</code> or equivalent URL rewriting)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHOUTHTACCESS"
+msgid "API endpoint URL (fallback, works without URL rewriting)"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION"
+msgid "Description"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED"
+msgid "Last Used"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION"
+msgid "Search by description"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SELECT_ENABLED"
+msgid "— Select state —"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER"
+msgid "Created after"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE"
+msgid "Expires before"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE"
+msgid "Last used before"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_ON"
+msgid "Expires on %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE_NEW"
+msgid "New API Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_TITLE_EDIT"
+msgid "Edit API Token"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_COPY"
+msgid "Copy"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_BY"
+msgid "Created by"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_METADATA"
+msgid "Metadata"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_NEVER"
+msgid "Never"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES_DESC"
+msgid "Select the API operations this token is allowed to perform. Leave all unchecked to grant access to all scopes (default)."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SITES"
+msgid "Sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_TASKS"
+msgid "Tasks"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SYSCONFIG"
+msgid "System Configuration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SELFUPDATE"
+msgid "Self-Update"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ"
+msgid "Read sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ_DESC"
+msgid "List sites and read their details, configuration, and status."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE"
+msgid "Write sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE_DESC"
+msgid "Add new sites and modify existing site settings."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS"
+msgid "Manage extensions"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS_DESC"
+msgid "List extensions, refresh extension data, manage download keys, and schedule or cancel extension updates."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE"
+msgid "CMS updates"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE_DESC"
+msgid "Trigger, cancel, or clear CMS (Joomla/WordPress) core update operations."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH"
+msgid "Refresh sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH_DESC"
+msgid "Trigger a manual data refresh for a site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ"
+msgid "Read tasks"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ_DESC"
+msgid "List and read task details."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE"
+msgid "Write tasks"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE_DESC"
+msgid "Create and modify scheduled tasks."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ"
+msgid "Read configuration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ_DESC"
+msgid "Read non-sensitive system configuration parameters."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE"
+msgid "Write configuration"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE_DESC"
+msgid "Set system configuration parameters."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ"
+msgid "Read update info"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ_DESC"
+msgid "Read self-update status and available version information."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE"
+msgid "Perform updates"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE_DESC"
+msgid "Download, install, and finalise Panopticon self-updates."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_MODIFIED_ON"
+msgid "Modified on"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_LBL_MODIFIED_BY"
+msgid "Modified by"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_API_ERR_INVALID_TOKEN"
 msgid "Invalid or missing API token."
 msgstr ""
@@ -12007,368 +12992,3 @@ msgctxt "PANOPTICON_API_ERR_INVALID_JSON"
 msgid "Invalid JSON in request body."
 msgstr ""
 
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_ERR_LIMIT_EXCEEDED"
-msgid "You have reached the maximum number of enabled API tokens. Please delete or disable an existing token before creating a new one."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED"
-msgid "API access is disabled for your account. Please contact a super administrator."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_COPY"
-msgid "Copy"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_CREATED_BY"
-msgid "Created by"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHHTACCESS"
-msgid "API endpoint URL (recommended, requires <code>.htaccess</code> or equivalent URL rewriting)"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_ENDPOINT_WITHOUTHTACCESS"
-msgid "API endpoint URL (fallback, works without URL rewriting)"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES"
-msgid "Expires"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_NEVER"
-msgid "Never"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_EXPIRES_ON"
-msgid "Expires on %s"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_CREATED_AFTER"
-msgid "Created after"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_EXPIRES_BEFORE"
-msgid "Expires before"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_FILTER_LAST_USED_BEFORE"
-msgid "Last used before"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED"
-msgid "Last Used"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_LAST_USED_IP"
-msgid "Last Used IP Address"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_METADATA"
-msgid "Metadata"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_NEVER"
-msgid "Never"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_EXCEEDED_HINT"
-msgid "You have reached your API token limit. Please delete or disable an existing token before creating or re-enabling one."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
-msgid "%1\$d of %2\$d API tokens created"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES"
-msgid "Scopes"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES_DESC"
-msgid "Select the API operations this token is allowed to perform. Leave all unchecked to grant access to all scopes (default)."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_SEARCH_DESCRIPTION"
-msgid "Search by description"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_LBL_SELECT_ENABLED"
-msgid "— Select state —"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SELFUPDATE"
-msgid "Self-Update"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SITES"
-msgid "Sites"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_SYSCONFIG"
-msgid "System Configuration"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_GROUP_TASKS"
-msgid "Tasks"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ"
-msgid "Read update info"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_READ_DESC"
-msgid "Read self-update status and available version information."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE"
-msgid "Perform updates"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SELFUPDATE_WRITE_DESC"
-msgid "Download, install, and finalise Panopticon self-updates."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE"
-msgid "CMS updates"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_CMS_UPDATE_DESC"
-msgid "Trigger, cancel, or clear CMS (Joomla/WordPress) core update operations."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS"
-msgid "Manage extensions"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_EXTENSIONS_DESC"
-msgid "List extensions, refresh extension data, manage download keys, and schedule or cancel extension updates."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ"
-msgid "Read sites"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_READ_DESC"
-msgid "List sites and read their details, configuration, and status."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH"
-msgid "Refresh sites"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_REFRESH_DESC"
-msgid "Trigger a manual data refresh for a site."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE"
-msgid "Write sites"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SITES_WRITE_DESC"
-msgid "Add new sites and modify existing site settings."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ"
-msgid "Read configuration"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_READ_DESC"
-msgid "Read non-sensitive system configuration parameters."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE"
-msgid "Write configuration"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_SYSCONFIG_WRITE_DESC"
-msgid "Set system configuration parameters."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ"
-msgid "Read tasks"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_READ_DESC"
-msgid "List and read task details."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE"
-msgid "Write tasks"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_SCOPE_TASKS_WRITE_DESC"
-msgid "Create and modify scheduled tasks."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_DESCRIPTION"
-msgid "Description"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_TABLE_HEAD_LAST_USED"
-msgid "Last Used"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_TITLE_EDIT"
-msgid "Edit API Token"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_APITOKENS_TITLE_NEW"
-msgid "New API Token"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT"
-msgid "API Token Limit"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_HELP"
-msgid "Override the global API token limit for users in this group. Leave empty to use the global default. Set to 0 to deny API access to group members (unless another group they belong to grants a higher limit)."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_GROUPS_FIELD_API_TOKEN_LIMIT_PLACEHOLDER"
-msgid "(Use global default)"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_LBL_APITOKEN_COPIED"
-msgid "The API token has been copied."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_LBL_APITOKEN_DELETED"
-msgid "The selected API tokens have been deleted."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_LBL_APITOKEN_SAVED"
-msgid "The API token has been saved."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_LBL_MODIFIED_BY"
-msgid "Modified by"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_LBL_MODIFIED_ON"
-msgid "Modified on"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_MAILTEMPLATES_OPT_TYPE_FILESCANNER_FAILED"
-msgid "PHP File Change Scanner: Task Failure"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS"
-msgid "Attach Log File for These Groups"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_LOG_GROUPS_HELP"
-msgid "Override the global setting: select which user groups receive the task log file as an email attachment on failure. Leave empty to use the global Panopticon setting."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME"
-msgid "Time Of The Day to Install Extension Updates On (Hour:Minute)"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_TIME_HELP"
-msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover. Manually-triggered updates always run immediately, regardless of this setting."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_FIELD_CONFIG_EXTENSIONS_UPDATE_WHEN"
-msgid "When Should Updates Be Installed"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_IMMEDIATELY"
-msgid "Immediately"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SITES_OPT_CONFIG_EXTENSIONS_UPDATE_WHEN_TIME"
-msgid "Time of Day"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX"
-msgid "Maximum tokens per user"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_API_TOKENS_PER_USER_MAX_HELP"
-msgid "The maximum number of enabled, non-expired API tokens a user may hold. User groups can override this on a per-group basis. Set to 0 to deny API access to all users by default (individual groups may still grant access via their own override)."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS"
-msgid "Attach Log File to These Groups"
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_ATTACHMENT_GROUPS_HELP"
-msgid "Select which user groups receive the task log file as an email attachment when a core or extension update fails. Leave empty to send the attachment to all notification recipients."
-msgstr ""
-
-#, phpformat
-msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_APITOKENS"
-msgid "API Tokens"
-msgstr ""
