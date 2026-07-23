@@ -12201,6 +12201,11 @@ msgid "The package file could not be uploaded (PHP upload error code %d). Please
 msgstr "Δεν ήταν δυνατή η μεταφόρτωση του αρχείου πακέτου (κωδικός σφάλματος μεταφόρτωσης PHP %d). Παρακαλώ δοκιμάστε ξανά ή εγκαταστήστε την επέκταση από ένα URL λήψης."
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_POST_TOO_LARGE"
+msgid "The package file you selected is too large to submit. It exceeds this server's <code>post_max_size</code> limit, so it was rejected before it could be uploaded. Please ask your host to increase the PHP <code>post_max_size</code> and <code>upload_max_filesize</code> settings, or install the extension from a download URL instead."
+msgstr "Το αρχείο πακέτου που επιλέξατε είναι πολύ μεγάλο για υποβολή. Υπερβαίνει το όριο <code>post_max_size</code> αυτού του διακομιστή, γι' αυτό απορρίφθηκε προτού προλάβει να μεταφορτωθεί. Ζητήστε από τον πάροχο φιλοξενίας σας να αυξήσει τις ρυθμίσεις PHP <code>post_max_size</code> και <code>upload_max_filesize</code>, ή εγκαταστήστε την επέκταση από ένα URL λήψης."
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
 msgid "Table of selected sites for extension installation"
 msgstr "Πίνακας επιλεγμένων ιστοτόπων για εγκατάσταση επέκτασης"

@@ -12387,6 +12387,11 @@ msgid "The package file could not be uploaded (PHP upload error code %d). Please
 msgstr "Soubor balíčku se nepodařilo nahrát (kód chyby nahrávání PHP %d). Zkuste to prosím znovu nebo nainstalujte rozšíření z URL ke stažení."
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_POST_TOO_LARGE"
+msgid "The package file you selected is too large to submit. It exceeds this server's <code>post_max_size</code> limit, so it was rejected before it could be uploaded. Please ask your host to increase the PHP <code>post_max_size</code> and <code>upload_max_filesize</code> settings, or install the extension from a download URL instead."
+msgstr "Vybraný soubor balíčku je příliš velký k odeslání. Překračuje limit <code>post_max_size</code> tohoto serveru, a byl proto odmítnut dříve, než mohl být nahrán. Požádejte svého poskytovatele hostingu o zvýšení nastavení PHP <code>post_max_size</code> a <code>upload_max_filesize</code>, nebo nainstalujte rozšíření z URL ke stažení."
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
 msgid "Table of selected sites for extension installation"
 msgstr "Tabulka vybraných webů pro instalaci rozšíření"

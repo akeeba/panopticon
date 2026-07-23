@@ -10943,6 +10943,11 @@ msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_FAILED"
 msgid "The package file could not be uploaded (PHP upload error code %d). Please try again, or install the extension from a download URL instead."
 msgstr "Het pakketbestand kon niet worden geüpload (PHP-uploadfoutcode %d). Probeer het opnieuw of installeer de extensie vanaf een download-URL."
 
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_POST_TOO_LARGE"
+msgid "The package file you selected is too large to submit. It exceeds this server's <code>post_max_size</code> limit, so it was rejected before it could be uploaded. Please ask your host to increase the PHP <code>post_max_size</code> and <code>upload_max_filesize</code> settings, or install the extension from a download URL instead."
+msgstr "Het geselecteerde pakketbestand is te groot om te verzenden. Het overschrijdt de <code>post_max_size</code>-limiet van deze server en werd daarom geweigerd voordat het kon worden geüpload. Vraag uw hostingprovider om de PHP-instellingen <code>post_max_size</code> en <code>upload_max_filesize</code> te verhogen, of installeer de extensie in plaats daarvan vanaf een download-URL."
+
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
 msgid "Table of selected sites for extension installation"
 msgstr "Tabel van geselecteerde sites voor extensie-installatie"

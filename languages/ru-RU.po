@@ -11210,6 +11210,11 @@ msgid "The package file could not be uploaded (PHP upload error code %d). Please
 msgstr "Не удалось загрузить файл пакета (код ошибки загрузки PHP %d). Пожалуйста, попробуйте ещё раз или установите расширение по URL для скачивания."
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_POST_TOO_LARGE"
+msgid "The package file you selected is too large to submit. It exceeds this server's <code>post_max_size</code> limit, so it was rejected before it could be uploaded. Please ask your host to increase the PHP <code>post_max_size</code> and <code>upload_max_filesize</code> settings, or install the extension from a download URL instead."
+msgstr "Выбранный файл пакета слишком велик для отправки. Он превышает ограничение <code>post_max_size</code> этого сервера, поэтому был отклонён ещё до загрузки. Попросите вашего хостинг-провайдера увеличить настройки PHP <code>post_max_size</code> и <code>upload_max_filesize</code> или установите расширение по URL для скачивания."
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
 msgid "Table of selected sites for extension installation"
 msgstr "Таблица выбранных сайтов для установки расширения"
