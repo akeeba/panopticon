@@ -216,6 +216,29 @@ class Extensioninstall extends Controller
 				return;
 			}
 		}
+		elseif (!empty($file) && !empty($file['name']) && $file['error'] !== UPLOAD_ERR_OK)
+		{
+			// A file was submitted but PHP rejected the upload (e.g. it exceeded upload_max_filesize).
+			// Give a specific message instead of the misleading "no URL or file" error below.
+			$language = $this->getLanguage();
+			$message  = match ($file['error'])
+			{
+				UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE =>
+					$language->text('PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_TOO_LARGE'),
+				UPLOAD_ERR_PARTIAL =>
+					$language->text('PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_PARTIAL'),
+				default =>
+					$language->sprintf('PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_FAILED', $file['error']),
+			};
+
+			$this->setRedirect(
+				$this->container->router->route('index.php?view=extensioninstall'),
+				$message,
+				'error'
+			);
+
+			return;
+		}
 
 		if (empty($url) && empty($filePath))
 		{

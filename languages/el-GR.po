@@ -12186,6 +12186,21 @@ msgid "You must provide an extension download URL or upload a package file."
 msgstr "Πρέπει να δώσετε ένα URL λήψης επέκτασης ή να μεταφορτώσετε ένα αρχείο πακέτου."
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_TOO_LARGE"
+msgid "The package file you selected is larger than this server's upload size limit. Please ask your host to increase the PHP <code>upload_max_filesize</code> and <code>post_max_size</code> settings, or install the extension from a download URL instead."
+msgstr "Το αρχείο πακέτου που επιλέξατε είναι μεγαλύτερο από το όριο μεγέθους μεταφόρτωσης αυτού του διακομιστή. Ζητήστε από τον πάροχο φιλοξενίας σας να αυξήσει τις ρυθμίσεις PHP <code>upload_max_filesize</code> και <code>post_max_size</code>, ή εγκαταστήστε την επέκταση από ένα URL λήψης."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_PARTIAL"
+msgid "The package file was only partially uploaded. Please try again."
+msgstr "Το αρχείο πακέτου μεταφορτώθηκε μόνο εν μέρει. Παρακαλώ δοκιμάστε ξανά."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_FAILED"
+msgid "The package file could not be uploaded (PHP upload error code %d). Please try again, or install the extension from a download URL instead."
+msgstr "Δεν ήταν δυνατή η μεταφόρτωση του αρχείου πακέτου (κωδικός σφάλματος μεταφόρτωσης PHP %d). Παρακαλώ δοκιμάστε ξανά ή εγκαταστήστε την επέκταση από ένα URL λήψης."
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
 msgid "Table of selected sites for extension installation"
 msgstr "Πίνακας επιλεγμένων ιστοτόπων για εγκατάσταση επέκτασης"

@@ -10664,6 +10664,21 @@ msgstr ""
 "Bir eklenti indirme bağlantısı sağlamanız veya bir paket dosyası yüklemeniz "
 "gerekir."
 
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_TOO_LARGE"
+msgid "The package file you selected is larger than this server's upload size limit. Please ask your host to increase the PHP <code>upload_max_filesize</code> and <code>post_max_size</code> settings, or install the extension from a download URL instead."
+msgstr "Seçtiğiniz paket dosyası bu sunucunun yükleme boyutu sınırından daha büyük. Lütfen barındırma sağlayıcınızdan PHP <code>upload_max_filesize</code> ve <code>post_max_size</code> ayarlarını artırmasını isteyin veya bunun yerine eklentiyi bir indirme URL'sinden yükleyin."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_PARTIAL"
+msgid "The package file was only partially uploaded. Please try again."
+msgstr "Paket dosyası yalnızca kısmen yüklendi. Lütfen tekrar deneyin."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_FAILED"
+msgid "The package file could not be uploaded (PHP upload error code %d). Please try again, or install the extension from a download URL instead."
+msgstr "Paket dosyası yüklenemedi (PHP yükleme hata kodu %d). Lütfen tekrar deneyin veya eklentiyi bir indirme URL'sinden yükleyin."
+
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
 msgid "Table of selected sites for extension installation"
 msgstr "Genişletme kurulumuna yönelik seçilmiş sitelerin listesi"

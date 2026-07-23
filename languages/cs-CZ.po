@@ -12372,6 +12372,21 @@ msgid "You must provide an extension download URL or upload a package file."
 msgstr "Musíte zadat URL ke stažení rozšíření nebo nahrát soubor balíčku."
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_TOO_LARGE"
+msgid "The package file you selected is larger than this server's upload size limit. Please ask your host to increase the PHP <code>upload_max_filesize</code> and <code>post_max_size</code> settings, or install the extension from a download URL instead."
+msgstr "Vybraný soubor balíčku je větší než limit velikosti nahrávání tohoto serveru. Požádejte svého poskytovatele hostingu o zvýšení nastavení PHP <code>upload_max_filesize</code> a <code>post_max_size</code>, nebo nainstalujte rozšíření z URL ke stažení."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_PARTIAL"
+msgid "The package file was only partially uploaded. Please try again."
+msgstr "Soubor balíčku byl nahrán pouze částečně. Zkuste to prosím znovu."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_FAILED"
+msgid "The package file could not be uploaded (PHP upload error code %d). Please try again, or install the extension from a download URL instead."
+msgstr "Soubor balíčku se nepodařilo nahrát (kód chyby nahrávání PHP %d). Zkuste to prosím znovu nebo nainstalujte rozšíření z URL ke stažení."
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
 msgid "Table of selected sites for extension installation"
 msgstr "Tabulka vybraných webů pro instalaci rozšíření"

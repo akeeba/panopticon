@@ -11119,6 +11119,21 @@ msgid "You must provide an extension download URL or upload a package file."
 msgstr "Du måste ange en nedladdnings-URL för tillägget eller ladda upp en paketfil."
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_TOO_LARGE"
+msgid "The package file you selected is larger than this server's upload size limit. Please ask your host to increase the PHP <code>upload_max_filesize</code> and <code>post_max_size</code> settings, or install the extension from a download URL instead."
+msgstr "Paketfilen du valde är större än den här serverns gräns för uppladdningsstorlek. Be din webbhotellsleverantör att öka PHP-inställningarna <code>upload_max_filesize</code> och <code>post_max_size</code>, eller installera tillägget från en nedladdnings-URL i stället."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_PARTIAL"
+msgid "The package file was only partially uploaded. Please try again."
+msgstr "Paketfilen laddades bara upp delvis. Försök igen."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_FAILED"
+msgid "The package file could not be uploaded (PHP upload error code %d). Please try again, or install the extension from a download URL instead."
+msgstr "Paketfilen kunde inte laddas upp (PHP-uppladdningsfelkod %d). Försök igen eller installera tillägget från en nedladdnings-URL."
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONINSTALL_TABLE_COMMENT"
 msgid "Table of selected sites for extension installation"
 msgstr "Tabell över valda webbplatser för tilläggsinstallation"
