@@ -262,7 +262,8 @@ class Log extends Model
 			return [];
 		}
 
-		$walkBack = min($totalSize, $maxSize);
+		$walkBack       = min($totalSize, $maxSize);
+		$startedMidFile = $walkBack < $totalSize;
 
 		fseek($fp, -$walkBack, SEEK_CUR);
 
@@ -273,8 +274,11 @@ class Log extends Model
 		$lines = explode("\n", $data);
 		$lines = array_filter($lines);
 
-		// Throw away the first line, it might be incomplete
-		array_shift($lines);
+		if ($startedMidFile)
+		{
+			// Throw away the first line, it might be incomplete
+			array_shift($lines);
+		}
 
 		// Parse the log lines
 		$lines = array_map([$this, 'parseLogLine'], $lines);

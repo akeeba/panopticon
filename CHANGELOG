@@ -19,6 +19,7 @@ Akeeba Panopticon 2.2.1
 # [MEDIUM] Web Push notifications were not sent in each recipient's own language as intended [gh-1027]
 # [MEDIUM] Scheduled update summary emails re-sent duplicate notifications on every run
 # [LOW] Completed one-shot tasks (e.g. extension install) were never deleted [gh-1034]
+# [LOW] Log viewer dropped the first line of any log read in full, showing an empty table for a one-line log [gh-1036]
 
 Akeeba Panopticon 2.2.0
 ================================================================================
