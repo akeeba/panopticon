@@ -21,16 +21,29 @@ use Kevinrob\GuzzleCache\KeyValueHttpHeader;
 use Kevinrob\GuzzleCache\Storage\Psr6CacheStorage;
 use Kevinrob\GuzzleCache\Strategy\GreedyCacheStrategy;
 use Kevinrob\GuzzleCache\Strategy\PrivateCacheStrategy;
+use LogicException;
 use Psr\Http\Message\RequestInterface;
 
 class HttpFactory
 {
+	/**
+	 * Client option acknowledging that a caller-supplied `handler` bypasses the forbidden IP ranges guard.
+	 *
+	 * @see    self::guardAgainstHandlerOverride()
+	 * @since  1.4.0
+	 */
+	public const OPTION_HANDLER_OVERRIDE_ACKNOWLEDGED = 'handler_I_KNOW_WHAT_I_AM_DOING';
+
 	private static $instances = [];
 
 	public function __construct(private Container $container) {}
 
 	/**
 	 * Makes a new Guzzle HTTP client instance. All parameters are options.
+	 *
+	 * Supply a handler stack through `$stack`, never through a `handler` key in `$clientOptions`: the forbidden IP
+	 * ranges guard is pushed onto `$stack`, whereas a handler in the client options replaces the entire stack and
+	 * leaves the client unguarded. Doing the latter throws unless it is explicitly acknowledged.
 	 *
 	 * @param   HandlerStack|null  $stack          The handler stack to use.
 	 * @param   array              $clientOptions  The client options.
@@ -39,6 +52,8 @@ class HttpFactory
 	 * @param   bool               $singleton      Whether to return a Singleton instance.
 	 *
 	 * @return  Client  The client instance.
+	 * @throws  LogicException  If a handler is supplied through the client options without acknowledgement.
+	 * @see     self::guardAgainstHandlerOverride()  For the `handler` key and its acknowledgement flag.
 	 */
 	public function makeClient(
 		?HandlerStack $stack = null,
@@ -48,6 +63,8 @@ class HttpFactory
 		bool          $singleton = true
 	): Client
 	{
+		$clientOptions = $this->guardAgainstHandlerOverride($clientOptions);
+
 		/**
 		 * A HandlerStack always contains closures, and client options may too (e.g. an on_redirect callback), neither
 		 * of which can be serialised. Identify a supplied stack by object identity, and fall back to a non-memoisable
@@ -126,6 +143,63 @@ class HttpFactory
 		}
 
 		return $client;
+	}
+
+	/**
+	 * Refuse to build a client whose handler was smuggled in through the client options, bypassing the security guard.
+	 *
+	 * The `handler` key in the client options wins over the handler stack this factory assembles. A client built that
+	 * way therefore has **no** forbidden IP ranges middleware on it, which silently reopens GHSA-6234-p3mh-7j3x. The
+	 * `$stack` parameter is the supported way to supply a handler: this factory pushes the guard onto whatever stack it
+	 * is given, so `$stack` is safe and the client options are not.
+	 *
+	 * This throws rather than warning. A warning is trivially lost — suppressed by the error handler, buried in a log
+	 * nobody reads, or simply invisible in a CRON run — and the failure mode it would be reporting is a silently
+	 * unguarded HTTP client. Since there is an explicit way to say "yes, I mean it", the default can afford to be
+	 * absolute.
+	 *
+	 * A caller which genuinely needs an unguarded client says so by also passing
+	 * `self::OPTION_HANDLER_OVERRIDE_ACKNOWLEDGED => true`. That key is always removed from the returned options: it is
+	 * ours, not Guzzle's, and Guzzle would otherwise pass it down as a default request option to every request the
+	 * client makes.
+	 *
+	 * @param   array  $clientOptions  The client options as supplied by the caller.
+	 *
+	 * @return  array  The client options, with our own flag stripped out.
+	 * @throws  LogicException  If a handler is supplied through the client options without acknowledgement.
+	 * @since   1.4.0
+	 */
+	private function guardAgainstHandlerOverride(array $clientOptions): array
+	{
+		$acknowledged = ($clientOptions[self::OPTION_HANDLER_OVERRIDE_ACKNOWLEDGED] ?? false) === true;
+
+		/**
+		 * Unset unconditionally, and before the memoisation signature is calculated. Leaving it in would both leak a
+		 * non-Guzzle option into the client and needlessly split the memoisation cache between two otherwise identical
+		 * clients which differ only by the presence of the acknowledgement.
+		 */
+		unset($clientOptions[self::OPTION_HANDLER_OVERRIDE_ACKNOWLEDGED]);
+
+		if (!isset($clientOptions['handler']) || $acknowledged)
+		{
+			return $clientOptions;
+		}
+
+		/**
+		 * A LogicException, not a RuntimeException: this is a coding error which is true on every single execution of
+		 * the offending call site, not a condition which depends on the state of the world.
+		 */
+		throw new LogicException(
+			sprintf(
+				'Passing a "handler" in the client options to %s::makeClient() overrides the handler stack assembled '
+				. 'by this factory, therefore the resulting client would have no forbidden IP ranges guard on it and '
+				. 'would reopen GHSA-6234-p3mh-7j3x. Pass the handler stack in the $stack parameter instead — the '
+				. 'guard is pushed onto it. If an unguarded client is genuinely intended, also pass "%s" => true to '
+				. 'acknowledge that.',
+				self::class,
+				self::OPTION_HANDLER_OVERRIDE_ACKNOWLEDGED
+			)
+		);
 	}
 
 	/**

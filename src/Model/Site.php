@@ -1734,11 +1734,49 @@ class Site extends DataModel
 			return null;
 		}
 
+		/**
+		 * Enforce the forbidden IP ranges policy before opening the socket.
+		 *
+		 * This is the one outbound connection in the application which cannot go through HttpFactory: we need the peer
+		 * certificate itself, which means a raw TLS socket, which means the Guzzle middleware never sees it. The check
+		 * therefore has to be repeated here by hand.
+		 *
+		 * Strictly speaking this is outside GHSA-6234-p3mh-7j3x — no request is sent and no response body is returned,
+		 * so the exposure is limited to "something is listening, and here is its certificate". It is still an outbound
+		 * connection to an attacker-influenced host, and the save-time check in check() is subject to
+		 * time-of-check/time-of-use, so leaving it unguarded would leave a usable internal-service probe behind.
+		 *
+		 * Failing closed is safe here in a way it is not at save time: the only cost of a false negative is the site
+		 * showing no certificate information.
+		 */
+		$forbidden = ForbiddenIpRanges::fromConfig($this->getContainer());
+
+		// The policy is disabled by default. Do no work — and crucially, no DNS lookup — when there are no ranges.
+		if (!$forbidden->isEmpty() && $forbidden->isForbiddenHost($hostname))
+		{
+			$this->getContainer()->loggerFactory->get('panopticon')->notice(
+				sprintf(
+					'Refused to fetch TLS certificate information for site #%d: the URL host (%s) is inside a '
+					. 'forbidden IP range.',
+					$this->getId() ?: 0,
+					$hostname
+				)
+			);
+
+			return null;
+		}
+
 		// Open the raw SSL socket stream to fetch the remote server's certificate.
 
 		try
 		{
-			$socketResource = stream_socket_client(
+			/**
+			 * Errors are suppressed because a failure here is an expected, non-exceptional condition: the site is down,
+			 * its DNS has gone away, or it is not speaking TLS on that port. The try/catch below cannot swallow those —
+			 * stream_socket_client() reports failure as a PHP warning, not as a Throwable — so without the suppression
+			 * every unreachable site writes a warning into the operator's log on every check.
+			 */
+			$socketResource = @stream_socket_client(
 				sprintf('ssl://%s:%d', $hostname, $port),
 				$errorNumber,
 				$errorString,
