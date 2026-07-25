@@ -329,21 +329,36 @@ class UpdateSummaryEmail extends AbstractCallback
 	 */
 	private function updateTaskWithIdentifier(object $task, string $currentIdentifier): void
 	{
-		// Make sure I have a Task object
-		if (!$task instanceof Task)
+		// Inside a task callback $task is a plain stdClass, not a Model\Task, so we cannot save through
+		// it. Load the real task record by its ID and persist the identifier there instead.
+		$id = (int) ($task->id ?? 0);
+
+		if ($id <= 0)
 		{
 			return;
 		}
 
-		// Update the updates identifier with the task.
-		$params = ($task->params instanceof Registry) ? $task->params : new Registry($task->params);
+		try
+		{
+			/** @var Task $taskModel */
+			$taskModel = $this->container->mvcFactory->makeTempModel('Task')->findOrFail($id);
+			$params    = ($taskModel->params instanceof Registry)
+				? $taskModel->params
+				: new Registry($taskModel->params);
 
-		$params->set('updates_identifier', $currentIdentifier);
-		$task->save(
-			[
-				'params' => $params->toString('JSON'),
-			]
-		);
+			$params->set('updates_identifier', $currentIdentifier);
+			$taskModel->save(
+				[
+					'params' => $params->toString('JSON'),
+				]
+			);
+		}
+		catch (\Throwable $e)
+		{
+			$this->logger->warning(
+				sprintf('Could not persist updates identifier for task #%d: %s', $id, $e->getMessage())
+			);
+		}
 	}
 
 	/**

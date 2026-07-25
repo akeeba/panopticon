@@ -164,7 +164,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
         </tr>
         </thead>
         <tbody>
-        @foreach($this->items as $logName)
+        @foreach($this->items ?? [] as $logName)
             <tr>
                 <td>
                     @yieldRepeatable('actions', $logName)
@@ -195,7 +195,7 @@ $token = $this->container->session->getCsrfToken()->getValue();
                 </td>
             </tr>
         @endforeach
-        @if (!count($this->items))
+        @if (!count($this->items ?? []))
             <tr>
                 <td colspan="20" class="text-center text-body-tertiary">
                     @lang('AWF_PAGINATION_LBL_NO_RESULTS')

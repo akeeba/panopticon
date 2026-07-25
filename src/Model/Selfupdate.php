@@ -327,8 +327,9 @@ class Selfupdate extends Model
 			return $minVersion;
 		}
 
-		return defined('AKEEBA_PANOPTICON_MINPHP') ? AKEEBA_PANOPTICON_MINPHP
-			: (PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION);
+		return defined('AKEEBA_PANOPTICON_MINPHP')
+			? AKEEBA_PANOPTICON_MINPHP
+			: AKEEBA_PANOPTICON_MINPHP_FALLBACK;
 	}
 
 	public function download(): string

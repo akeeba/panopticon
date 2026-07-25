@@ -138,6 +138,25 @@ class Extensioninstall extends Controller
 
 	public function install()
 	{
+		// PHP discards the entire POST body when it exceeds post_max_size, leaving $_POST and $_FILES
+		// empty. Detect that here — before the CSRF check, which would otherwise fail with a misleading
+		// "Invalid security token" 500 error — and show a clear message instead. The request carries no
+		// actionable data, so skipping CSRF for this pure redirect is safe.
+		if (
+			strtoupper($_SERVER['REQUEST_METHOD'] ?? '') === 'POST'
+			&& empty($_POST) && empty($_FILES)
+			&& (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0
+		)
+		{
+			$this->setRedirect(
+				$this->container->router->route('index.php?view=extensioninstall'),
+				$this->getLanguage()->text('PANOPTICON_EXTENSIONINSTALL_ERR_POST_TOO_LARGE'),
+				'error'
+			);
+
+			return;
+		}
+
 		$this->csrfProtection();
 
 		$siteIds = $this->container->segment->get('extensioninstall.sites', []);
@@ -216,6 +235,29 @@ class Extensioninstall extends Controller
 				return;
 			}
 		}
+		elseif (!empty($file) && !empty($file['name']) && $file['error'] !== UPLOAD_ERR_OK)
+		{
+			// A file was submitted but PHP rejected the upload (e.g. it exceeded upload_max_filesize).
+			// Give a specific message instead of the misleading "no URL or file" error below.
+			$language = $this->getLanguage();
+			$message  = match ($file['error'])
+			{
+				UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE =>
+					$language->text('PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_TOO_LARGE'),
+				UPLOAD_ERR_PARTIAL =>
+					$language->text('PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_PARTIAL'),
+				default =>
+					$language->sprintf('PANOPTICON_EXTENSIONINSTALL_ERR_UPLOAD_FAILED', $file['error']),
+			};
+
+			$this->setRedirect(
+				$this->container->router->route('index.php?view=extensioninstall'),
+				$message,
+				'error'
+			);
+
+			return;
+		}
 
 		if (empty($url) && empty($filePath))
 		{
@@ -233,7 +275,7 @@ class Extensioninstall extends Controller
 		$params = new Registry();
 		$params->set('sites', $siteIds);
 		$params->set('initiating_user', $user->getId());
-		$params->set('run_once', 'disable');
+		$params->set('run_once', 'delete');
 
 		if (!empty($url))
 		{

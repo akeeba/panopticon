@@ -541,11 +541,10 @@ class ExtensionInstall extends AbstractCallback
 			$this->logger->info(sprintf('Cleaned up temp file: %s', $filePath));
 		}
 
-		// Delete the task to avoid accumulation
-		if ($task instanceof \Akeeba\Panopticon\Model\Task)
-		{
-			$task->delete();
-		}
+		// The completed one-shot task is deleted by the task runner via the `run_once => 'delete'`
+		// parameter (see Akeeba\Panopticon\Model\Task::runNextTask). We must NOT try to delete it here:
+		// inside a callback $task is a plain stdClass, not a Model\Task, and deleting mid-run would race
+		// the task runner's own bookkeeping save().
 
 		$this->logger->info(sprintf(
 			'Extension installation complete: %d succeeded, %d failed, %d disabled',

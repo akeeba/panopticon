@@ -41,10 +41,11 @@
         <include name="**" />
 
         <!-- Do not copy the configuration and internal repo files and folders -->
-        <exclude name=".idea/**" />
-        <exclude name=".editorconfig" />
+        <exclude name=".claude/**" />
         <exclude name=".github/**" />
-        <exclude name=".phpstorm.meta.php" />
+        <exclude name=".idea/**" />
+        <exclude name=".phpunit.cache/**" />
+        <exclude name=".plans/**" />
         <exclude name="assets/**" />
         <exclude name="build/**" />
         <exclude name="documentation/**" />
@@ -54,7 +55,10 @@
         <exclude name="tests/**" />
 
         <exclude name=".dockerignore" />
+        <exclude name=".editorconfig" />
         <exclude name=".env" />
+        <exclude name=".env.docker" />
+        <exclude name=".env.test" />
         <exclude name=".env.production" />
         <exclude name=".env.local" />
         <exclude name=".env.development" />
@@ -62,8 +66,9 @@
         <exclude name=".gitattributes" />
         <exclude name=".gitignore" />
         <exclude name=".htaccess" />
-        <exclude name="build.xml" />
+        <exclude name=".phpstorm.meta.php" />
         <exclude name="AGENTS.md" />
+        <exclude name="build.xml" />
         <exclude name="CHANGELOG" />
         <exclude name="CLAUDE.md" />
         <exclude name="composer.json" />
@@ -76,6 +81,8 @@
         <exclude name="Dockerfile" />
         <exclude name="*.Dockerfile" />
         <exclude name="*.md" />
+        <exclude name="mempalace.yaml" />
+        <exclude name="phpunit.webserver.xml" />
         <exclude name="phpunit.xml" />
         <exclude name="rector.php" />
 

@@ -699,6 +699,30 @@ class Task extends DataModel
 				$pendingTask->enabled = 0;
 			}
 
+			// A callback may have persisted param changes (e.g. dedup identifiers) through its own model
+			// instance. Refresh params from the database so the bookkeeping save() below does not clobber
+			// them with our stale, load-time in-memory copy. This is behaviour-neutral for callbacks that
+			// did not touch params: the refreshed value equals the value we already hold.
+			try
+			{
+				$db          = $this->getDbo();
+				$freshParams = $db->setQuery(
+					$db->getQuery(true)
+						->select($db->quoteName('params'))
+						->from($db->quoteName($this->tableName))
+						->where($db->quoteName($this->idFieldName) . ' = ' . (int) $pendingTask->getId())
+				)->loadResult();
+
+				if ($freshParams !== null)
+				{
+					$pendingTask->params = $freshParams;
+				}
+			}
+			catch (Throwable)
+			{
+				// If the refresh fails, fall back to the in-memory value.
+			}
+
 			$logger->debug('Updating the task\'s last execution information');
 
 			try
