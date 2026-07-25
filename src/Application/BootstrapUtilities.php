@@ -51,9 +51,12 @@ final class BootstrapUtilities
 	 */
 	public static function assertMinimumPHPVersion(): void
 	{
-		if (!version_compare(
-			PHP_VERSION, defined('AKEEBA_PANOPTICON_MINPHP') ? AKEEBA_PANOPTICON_MINPHP : '8.1.0', 'lt'
-		))
+		// version.php does not exist on a fresh Git checkout; fall back to the minimum version from defines.php.
+		$minPHPVersion = defined('AKEEBA_PANOPTICON_MINPHP')
+			? AKEEBA_PANOPTICON_MINPHP
+			: AKEEBA_PANOPTICON_MINPHP_FALLBACK;
+
+		if (!version_compare(PHP_VERSION, $minPHPVersion, 'lt'))
 		{
 			return;
 		}
@@ -62,7 +65,7 @@ final class BootstrapUtilities
 		{
 			echo sprintf(
 				"Akeeba Panopticon requires PHP %s or later. Your server is using PHP %s." . PHP_EOL,
-				AKEEBA_PANOPTICON_MINPHP, PHP_VERSION
+				$minPHPVersion, PHP_VERSION
 			);
 
 			exit(254);
@@ -70,7 +73,7 @@ final class BootstrapUtilities
 
 		die(
 		str_replace(
-			['{{minphpversion}}', '{{phpversion}}'], [AKEEBA_PANOPTICON_MINPHP, PHP_VERSION],
+			['{{minphpversion}}', '{{phpversion}}'], [$minPHPVersion, PHP_VERSION],
 			file_get_contents(APATH_THEMES . '/system/incompatible.html')
 		)
 		);

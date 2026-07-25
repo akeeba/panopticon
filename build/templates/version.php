@@ -8,4 +8,5 @@
 const AKEEBA_PANOPTICON_VERSION  = '##VERSION##';
 const AKEEBA_PANOPTICON_DATE     = '##DATE##';
 const AKEEBA_PANOPTICON_CODENAME = 'Daybreak';
+// Keep in sync with AKEEBA_PANOPTICON_MINPHP_FALLBACK in defines.php and the `php` requirement in composer.json.
 const AKEEBA_PANOPTICON_MINPHP   = '8.3.0';

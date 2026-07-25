@@ -7,6 +7,15 @@
 
 defined('AKEEBA') || die;
 
+/**
+ * The minimum PHP version required to run Panopticon.
+ *
+ * The authoritative value is AKEEBA_PANOPTICON_MINPHP in version.php, which is generated at build time. This constant
+ * is the fallback used before version.php has been generated (e.g. a fresh Git checkout, or during `composer install`).
+ * Keep it in sync with build/templates/version.php and with the `php` requirement in composer.json.
+ */
+const AKEEBA_PANOPTICON_MINPHP_FALLBACK = '8.3.0';
+
 // Are we running in Docker?
 define('APATH_IN_DOCKER', !file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . '.not_docker'));
 

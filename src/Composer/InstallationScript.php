@@ -369,7 +369,7 @@ abstract class InstallationScript
 		defined('AKEEBA_PANOPTICON_VERSION') || define('AKEEBA_PANOPTICON_VERSION', '0.0.0-dev-installing');
 		defined('AKEEBA_PANOPTICON_DATE') || define('AKEEBA_PANOPTICON_DATE', gmdate('Y-m-d'));
 		defined('AKEEBA_PANOPTICON_CODENAME') || define('AKEEBA_PANOPTICON_CODENAME', 'Aphelion');
-		defined('AKEEBA_PANOPTICON_MINPHP') || define('AKEEBA_PANOPTICON_MINPHP', PHP_VERSION);
+		defined('AKEEBA_PANOPTICON_MINPHP') || define('AKEEBA_PANOPTICON_MINPHP', AKEEBA_PANOPTICON_MINPHP_FALLBACK);
 
 		return Factory::getContainer();
 	}
