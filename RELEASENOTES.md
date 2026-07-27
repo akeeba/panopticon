@@ -42,19 +42,19 @@ The same issue applies to the Uptime Monitor, when only the second condition is 
 * ✨ Toolbar buttons collapse into a menu on narrow displays
 * ✨ Groups can be given a colour, shown on the site badges [gh-1023]
 * ✏️ Reports are now sorted by date descending [gh-1032]
-* ✨ 🐞 [HIGH] Occasional PHP error on group edit and permission checks
-* ✨ 🐞 [HIGH] Per-group API token limit wasn't applied [gh-965]
-* ✨ 🐞 [HIGH] System-level emails crashed with a TypeError and were never sent [gh-1009]
-* ✨ 🐞 [HIGH] MCP server and JSON API returned 401 when server stripped HTTP Authorization header [gh-1010]
-* ✨ 🐞 [HIGH] MCP server and JSON API token authentication failed with "no_secret" on config.php missing secret [gh-1010]
-* ✨ 🐞 [HIGH] Short /mcp endpoint returned a 404 due to no rewrite rule in htaccess.txt
-* ✨ 🐞 [HIGH] The _panopticon_token query parameter failed for Base64 tokens containing "+"
-* ✨ 🐞 [HIGH] Refactored code to avoid false positives in some anti-malware scanners e.g. Immunify360
-* ✨ 🐞 [MEDIUM] Web Push notifications were not sent in each recipient's own language as intended [gh-1027]
-* ✨ 🐞 [MEDIUM] Scheduled update summary emails re-sent duplicate notifications on every run
-* ✨ 🐞 [HIGH] Log viewer showed a blank or error page when the interface language was not English [gh-1035]
-* ✨ 🐞 [LOW] Completed one-shot tasks (e.g. extension install) were never deleted [gh-1034]
-* ✨ 🐞 [LOW] Log viewer dropped the first line of any log read in full, showing an empty table for a one-line log [gh-1036]
+* 🐞 [HIGH] Occasional PHP error on group edit and permission checks
+* 🐞 [HIGH] Per-group API token limit wasn't applied [gh-965]
+* 🐞 [HIGH] System-level emails crashed with a TypeError and were never sent [gh-1009]
+* 🐞 [HIGH] MCP server and JSON API returned 401 when server stripped HTTP Authorization header [gh-1010]
+* 🐞 [HIGH] MCP server and JSON API token authentication failed with "no_secret" on config.php missing secret [gh-1010]
+* 🐞 [HIGH] Short /mcp endpoint returned a 404 due to no rewrite rule in htaccess.txt
+* 🐞 [HIGH] The _panopticon_token query parameter failed for Base64 tokens containing "+"
+* 🐞 [HIGH] Refactored code to avoid false positives in some anti-malware scanners e.g. Immunify360
+* 🐞 [MEDIUM] Web Push notifications were not sent in each recipient's own language as intended [gh-1027]
+* 🐞 [MEDIUM] Scheduled update summary emails re-sent duplicate notifications on every run
+* 🐞 [HIGH] Log viewer showed a blank or error page when the interface language was not English [gh-1035]
+* 🐞 [LOW] Completed one-shot tasks (e.g. extension install) were never deleted [gh-1034]
+* 🐞 [LOW] Log viewer dropped the first line of any log read in full, showing an empty table for a one-line log [gh-1036]
 
 Legend:
 * 🚨 Security update
