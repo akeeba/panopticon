@@ -13,6 +13,7 @@ use Akeeba\Panopticon\Model\Groups;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Trait\AkeebaBackupTooOldTrait;
 use Awf\Registry\Registry;
+use Awf\Uri\Uri;
 
 class Raw extends \Awf\Mvc\DataView\Raw
 {
@@ -36,44 +37,107 @@ class Raw extends \Awf\Mvc\DataView\Raw
 
 	protected function onBeforeTableBody(): bool
 	{
-		// Groups map
-		/** @var Groups $groupsModel */
-		$groupsModel        = $this->getModel('groups');
-		$this->groupMap     = $groupsModel->getGroupMap();
-		$this->groupColours = $groupsModel->getGroupColours();
+		// [bug #1042] JavaScript polls this endpoint every 30 s and inlines the
+		// returned <tbody> into the main dashboard. Action links in the partial
+		// (e.g. "Reload Joomla update information") capture Uri::getInstance()
+		// for their `return` URL. If we let it point at this endpoint the user
+		// lands back on the raw AJAX fragment after clicking the button.
+		//
+		// The Dispatcher has already populated Uri::getInstance()'s singleton
+		// from $_SERVER['REQUEST_URI'], so we mutate the existing instance in
+		// place and restore the original query in a finally block so any
+		// post-render code (error handlers, hooks) still sees the real request
+		// URL.
+		//
+		// @see https://github.com/akeeba/panopticon/issues/1042
+		$uri      = Uri::getInstance();
+		$snapshot = $uri->getQuery(true);
 
-		// Create the lists object
-		$this->lists = new \stdClass();
+		try
+		{
+			self::rewriteUriForTableBodyFragment($uri);
 
-		// Load the model
-		/** @var Site $model */
-		$model = $this->getModel();
-		$model->setState('enabled', 1);
+			// Groups map
+			/** @var Groups $groupsModel */
+			$groupsModel        = $this->getModel('groups');
+			$this->groupMap     = $groupsModel->getGroupMap();
+			$this->groupColours = $groupsModel->getGroupColours();
 
-		// We want to persist the state in the session
-		$model->savestate(1);
+			// Create the lists object
+			$this->lists = new \stdClass();
 
-		// Ordering information
-		$this->lists->order     = $model->getState('filter_order', 'name', 'cmd');
-		$this->lists->order_Dir = $model->getState('filter_order_Dir', 'ASC', 'cmd');
+			// Load the model
+			/** @var Site $model */
+			$model = $this->getModel();
+			$model->setState('enabled', 1);
 
-		// Display limits
-		$this->lists->limitStart = $model->getState('limitstart', 0, 'int');
-		$this->lists->limit      = $model->getState('limit', 50, 'int');
+			// We want to persist the state in the session
+			$model->savestate(1);
 
-		$model->setState('filter_order', $this->lists->order);
-		$model->setState('filter_order_Dir', $this->lists->order_Dir);
-		$model->setState('limitstart', $this->lists->limitStart);
-		$model->setState('limit', $this->lists->limit);
+			// Ordering information
+			$this->lists->order     = $model->getState('filter_order', 'name', 'cmd');
+			$this->lists->order_Dir = $model->getState('filter_order_Dir', 'ASC', 'cmd');
 
-		// Assign items to the view
-		$this->items      = $model->get();
-		$this->itemsCount = $model->count();
+			// Display limits
+			$this->lists->limitStart = $model->getState('limitstart', 0, 'int');
+			$this->lists->limit      = $model->getState('limit', 50, 'int');
 
-		// Set the layout
-		$this->setLayout('default_tbody');
+			$model->setState('filter_order', $this->lists->order);
+			$model->setState('filter_order_Dir', $this->lists->order_Dir);
+			$model->setState('limitstart', $this->lists->limitStart);
+			$model->setState('limit', $this->lists->limit);
 
-		return true;
+			// Assign items to the view
+			$this->items      = $model->get();
+			$this->itemsCount = $model->count();
+
+			// Set the layout
+			$this->setLayout('default_tbody');
+
+			return true;
+		}
+		finally
+		{
+			// Restore the original query exactly as it was: remove anything we
+			// added and reapply anything we removed.
+			$current = $uri->getQuery(true);
+
+			foreach (array_diff(array_keys($current), array_keys($snapshot)) as $addedKey)
+			{
+				$uri->delVar($addedKey);
+			}
+
+			foreach ($snapshot as $key => $value)
+			{
+				$uri->setVar($key, $value);
+			}
+		}
+	}
+
+	/**
+	 * Mutate a Uri instance so it looks like the main dashboard URL. Used by
+	 * {@see self::onBeforeTableBody()} to fix the return URL captured by
+	 * action links rendered inside the tableBody AJAX fragment (gh-1042).
+	 *
+	 * Strips the AJAX-specific query parameters (`task`, `format`,
+	 * `_cacheBustingJunk`) and forces `view=main`. Other parameters (filter
+	 * state, search, pagination, CSRF token) are preserved so the user lands
+	 * back on the same filtered view after the action completes.
+	 *
+	 * The method is public and static so it can be unit-tested without
+	 * touching the global Uri singleton.
+	 *
+	 * @param   Uri  $uri  The Uri instance to mutate in place.
+	 *
+	 * @return  void
+	 * @since   2.3.1
+	 */
+	public static function rewriteUriForTableBodyFragment(Uri $uri): void
+	{
+		$uri->setVar('view', 'main');
+		$uri->delVar('task');
+		$uri->delVar('format');
+		$uri->delVar('_cacheBustingJunk');
 	}
 
 	/**

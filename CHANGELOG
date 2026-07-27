@@ -1,6 +1,7 @@
 <?php die(); ?>
 Akeeba Panopticon 2.3.1
 ================================================================================
+# [HIGH] Action links in the auto-refreshed dashboard table redirected to the raw AJAX endpoint [gh-1042]
 # [MEDIUM] WordPress sites showed generic fallback on connection errors due to variable typo [gh-1039]
 
 Akeeba Panopticon 2.3.0
