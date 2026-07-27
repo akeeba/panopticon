@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "a575cd320e589bcdc34da7cb29329537686ac19f"
+                "reference": "1a7d3489bc1d59f2f9d0adc77883d44c2c8ce3e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/a575cd320e589bcdc34da7cb29329537686ac19f",
-                "reference": "a575cd320e589bcdc34da7cb29329537686ac19f",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/1a7d3489bc1d59f2f9d0adc77883d44c2c8ce3e9",
+                "reference": "1a7d3489bc1d59f2f9d0adc77883d44c2c8ce3e9",
                 "shasum": ""
             },
             "require": {
@@ -70,7 +70,7 @@
                 "issues": "https://github.com/akeeba/awf/issues",
                 "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2026-07-23T18:57:12+00:00"
+            "time": "2026-07-25T05:29:25+00:00"
         },
         {
             "name": "akeeba/json-backup-api",
@@ -185,12 +185,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/stats_collector.git",
-                "reference": "a3dc39b61bfacbd2389094b09bc0307cbdb1f81a"
+                "reference": "1677202089fb8b81e4d633ef362727211b164b82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/a3dc39b61bfacbd2389094b09bc0307cbdb1f81a",
-                "reference": "a3dc39b61bfacbd2389094b09bc0307cbdb1f81a",
+                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/1677202089fb8b81e4d633ef362727211b164b82",
+                "reference": "1677202089fb8b81e4d633ef362727211b164b82",
                 "shasum": ""
             },
             "require": {
@@ -228,7 +228,7 @@
                 "source": "https://github.com/akeeba/stats_collector/tree/main",
                 "issues": "https://github.com/akeeba/stats_collector/issues"
             },
-            "time": "2026-01-26T13:23:28+00:00"
+            "time": "2026-07-15T07:11:36+00:00"
         },
         {
             "name": "brick/math",

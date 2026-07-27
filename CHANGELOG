@@ -1,6 +1,7 @@
 <?php die(); ?>
-Akeeba Panopticon 2.2.1
+Akeeba Panopticon 2.3.0
 ================================================================================
+! SSRF via Connection Doctor and Uptime Monitor [GHSA-6234-p3mh-7j3x]
 + Extensions view: all extensions across all sites [gh-1015]
 + Joomla Update Doctor: diagnoses why a Joomla core update fails or gets stuck
 + `token:create` CLI command to mint an API token for a user

@@ -13,6 +13,7 @@
         <item url="file://$PROJECT_DIR$/media/js/main.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/passkeys.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/remember-tab.min.js" />
+        <item url="file://$PROJECT_DIR$/media/js/repeatable.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/setup.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/showon.min.js" />
         <item url="file://$PROJECT_DIR$/media/js/site-browse.min.js" />
@@ -36,6 +37,7 @@
       <root url="file://$PROJECT_DIR$/media/js/main.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/passkeys.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/remember-tab.min.js" />
+      <root url="file://$PROJECT_DIR$/media/js/repeatable.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/setup.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/showon.min.js" />
       <root url="file://$PROJECT_DIR$/media/js/site-browse.min.js" />

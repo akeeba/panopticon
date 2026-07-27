@@ -170,7 +170,7 @@
         <exclude name="vendor/chillerlan/php-qrcode/phpunit.xml.dist" />
 
         <exclude name="vendor/chillerlan/php-settings-container/.github/**" />
-        <exclude name="vendor/chillerlan/php-settings-container/.phan/**" />
+        <exclude name="vendor/chillerlan/php-settings-container/.phpstan/**" />
         <exclude name="vendor/chillerlan/php-settings-container/docs/**" />
         <exclude name="vendor/chillerlan/php-settings-container/examples/**" />
         <exclude name="vendor/chillerlan/php-settings-container/tests/**" />
@@ -178,6 +178,9 @@
         <exclude name="vendor/chillerlan/php-settings-container/.scrutinizer.yml" />
         <exclude name="vendor/chillerlan/php-settings-container/phpdoc.xml" />
         <exclude name="vendor/chillerlan/php-settings-container/phpunit.xml" />
+        <exclude name="vendor/chillerlan/php-settings-container/rules-magic-access.neon" />
+
+        <!-- composer/ca-bundle: nothing to remove -->
 
         <exclude name="vendor/delight-im/alphabets/tests/**" />
         <exclude name="vendor/delight-im/alphabets/.editorconfig" />
@@ -191,8 +194,17 @@
 
         <exclude name="vendor/dflydev/dot-access-data/CHANGELOG*" />
 
+        <!-- doctrine/deprecations: nothing to remove -->
+
         <exclude name="vendor/dragonmantank/cron-expression/CHANGELOG*" />
         <exclude name="vendor/dragonmantank/cron-expression/phpstan*" />
+
+        <exclude name="vendor/evenement/evenement/.gitattributes" />
+
+        <exclude name="vendor/ezyang/htmlpurifier/VERSION" />
+
+        <exclude name="vendor/fig/http-message-util/.gitignore" />
+        <exclude name="vendor/fig/http-message-util/CHANGELOG.md" />
 
         <!-- graham-campbell/result-type: nothing to remove -->
 
@@ -200,8 +212,9 @@
         <exclude name="vendor/guzzlehttp/guzzle/UPGRADING.md" />
 
         <exclude name="vendor/guzzlehttp/promises/CHANGELOG.md" />
+        <exclude name="vendor/guzzlehttp/promises/UPGRADING.md" />
 
-        <exclude name="vendor/guzzlehttp/psr-7/CHANGELOG.md" />
+        <exclude name="vendor/guzzlehttp/psr7/CHANGELOG.md" />
 
         <exclude name="vendor/io-developer/php-whois/.devcontainer/**" />
         <exclude name="vendor/io-developer/php-whois/.github/**" />
@@ -214,6 +227,8 @@
         <exclude name="vendor/io-developer/php-whois/TESTS.md" />
 
         <exclude name="vendor/jfcherng/php-color-output/.php-cs-fixer.dist.php" />
+        <exclude name="vendor/jfcherng/php-color-output/CHANGELOG.md" />
+        <exclude name="vendor/jfcherng/php-color-output/composer.lock" />
         <exclude name="vendor/jfcherng/php-color-output/demo.php" />
         <exclude name="vendor/jfcherng/php-color-output/RMT" />
         <exclude name="vendor/jfcherng/php-color-output/UPGRADING_v2.md" />
@@ -229,6 +244,10 @@
         <exclude name="vendor/jfcherng/php-diff/php-mb-string/CHANGELOG" />
         <exclude name="vendor/jfcherng/php-diff/php-mb-string/composer.lock" />
 
+        <exclude name="vendor/jfcherng/php-mb-string/.php-cs-fixer.dist.php" />
+        <exclude name="vendor/jfcherng/php-mb-string/CHANGELOG" />
+        <exclude name="vendor/jfcherng/php-mb-string/composer.lock" />
+
         <exclude name="vendor/jfcherng/php-sequence-matcher/.php-cs-fixer.dist.php" />
         <exclude name="vendor/jfcherng/php-sequence-matcher/composer.lock" />
 
@@ -243,15 +262,44 @@
 
         <!-- mcrumley/php-complexify: nothing to remove -->
 
+        <!-- minishlink/web-push: nothing to remove -->
+
         <exclude name="vendor/monolog/monolog/CHANGELOG.md" />
         <exclude name="vendor/monolog/monolog/favicon.ico" />
         <exclude name="vendor/monolog/monolog/logo.jpg" />
+        <exclude name="vendor/monolog/monolog/src/Monolog/Test/**" />
 
         <exclude name="vendor/nette/schema/contributing.md" />
 
         <exclude name="vendor/nette/utils/.phpstorm.meta.php" />
 
+        <exclude name="vendor/opis/json-schema/SECURITY.md" />
+
+        <exclude name="vendor/opis/string/.editorconfig" />
+        <exclude name="vendor/opis/string/CHANGELOG.md" />
+
+        <!-- opis/uri: nothing to remove -->
+
         <!-- paragonie/constant_time_encoding: nothing to remove -->
+
+        <exclude name="vendor/php-mcp/schema/.github/**" />
+        <exclude name="vendor/php-mcp/schema/.gitignore" />
+
+        <exclude name="vendor/php-mcp/server/.github/**" />
+        <exclude name="vendor/php-mcp/server/examples/**" />
+        <exclude name="vendor/php-mcp/server/tests/**" />
+        <exclude name="vendor/php-mcp/server/.gitignore" />
+        <exclude name="vendor/php-mcp/server/CHANGELOG.md" />
+        <exclude name="vendor/php-mcp/server/CONTRIBUTING.md" />
+        <exclude name="vendor/php-mcp/server/phpunit.xml" />
+
+        <exclude name="vendor/phpdocumentor/reflection-common/.github/**" />
+
+        <!-- phpdocumentor/reflection-docblock: nothing to remove -->
+
+        <exclude name="vendor/phpdocumentor/type-resolver/.phpdoc/**" />
+        <exclude name="vendor/phpdocumentor/type-resolver/docs/**" />
+        <exclude name="vendor/phpdocumentor/type-resolver/phpdoc.dist.xml" />
 
         <exclude name="vendor/phpmailer/phpmailer/COMMITMENT" />
         <exclude name="vendor/phpmailer/phpmailer/get_*.php" />
@@ -260,9 +308,13 @@
 
         <!-- phpoption/phpoption: nothing to remove -->
 
+        <exclude name="vendor/phpstan/phpdoc-parser/UPGRADING.md" />
+
         <exclude name="vendor/psr/cache/CHANGELOG.md" />
 
         <exclude name="vendor/psr/clock/CHANGELOG.md" />
+
+        <exclude name="vendor/psr/container/.gitignore" />
 
         <exclude name="vendor/psr/event-dispatcher/.editorconfig" />
 
@@ -275,19 +327,47 @@
         <exclude name="vendor/psr/http-message/docs/CHANGELOG.md" />
 
         <!-- psr/log: nothing to remove -->
+
+        <exclude name="vendor/psr/simple-cache/.editorconfig" />
+
         <!-- ralouphie/getallheaders: nothing to remove -->
+
+        <exclude name="vendor/react/cache/CHANGELOG.md" />
+
+        <exclude name="vendor/react/dns/CHANGELOG.md" />
+
+        <exclude name="vendor/react/event-loop/CHANGELOG.md" />
+
+        <exclude name="vendor/react/http/CHANGELOG.md" />
+
+        <exclude name="vendor/react/promise/CHANGELOG.md" />
+
+        <exclude name="vendor/react/socket/CHANGELOG.md" />
+
+        <exclude name="vendor/react/stream/CHANGELOG.md" />
 
         <exclude name="vendor/scrivo/highlight.php/.php-cs-fixer.dist.php" />
         <exclude name="vendor/scrivo/highlight.php/AUTHORS.txt" />
         <exclude name="vendor/scrivo/highlight.php/CONTRIBUTING.md" />
 
-        <!-- spomky-laps/cbor-php: nothing to remove -->
-        <!-- spomky-laps/otphp: nothing to remove -->
-        <!-- spomky-laps/pki-framework: nothing to remove -->
+        <exclude name="vendor/spomky-labs/base64url/.github/**" />
+
+        <exclude name="vendor/spomky-labs/cbor-php/CODE_OF_CONDUCT.md" />
+        <exclude name="vendor/spomky-labs/cbor-php/RELEASES.md" />
+        <exclude name="vendor/spomky-labs/cbor-php/SECURITY.md" />
+
+        <exclude name="vendor/spomky-labs/otphp/CODE_OF_CONDUCT.md" />
+        <exclude name="vendor/spomky-labs/otphp/RELEASES.md" />
+        <exclude name="vendor/spomky-labs/otphp/SECURITY.md" />
+
+        <exclude name="vendor/spomky-labs/pki-framework/SECURITY.md" />
 
         <exclude name="vendor/symfony/cache/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/cache-contracts/CHANGELOG.md" />
+
+        <exclude name="vendor/symfony/clock/CHANGELOG.md" />
+        <exclude name="vendor/symfony/clock/Test/**" />
 
         <exclude name="vendor/symfony/console/CHANGELOG.md" />
 
@@ -299,7 +379,10 @@
 
         <exclude name="vendor/symfony/event-dispatcher-contracts/CHANGELOG.md" />
 
+        <exclude name="vendor/symfony/finder/CHANGELOG.md" />
+
         <exclude name="vendor/symfony/http-foundation/CHANGELOG.md" />
+        <exclude name="vendor/symfony/http-foundation/Test/**" />
 
         <exclude name="vendor/symfony/http-kernel/CHANGELOG.md" />
 
@@ -323,9 +406,12 @@
 
         <exclude name="vendor/symfony/string/CHANGELOG.md" />
 
+        <exclude name="vendor/symfony/type-info/CHANGELOG.md" />
+
         <exclude name="vendor/symfony/uid/CHANGELOG.md" />
 
         <exclude name="vendor/symfony/var-dumper/CHANGELOG.md" />
+        <exclude name="vendor/symfony/var-dumper/Test/**" />
 
         <exclude name="vendor/symfony/var-exporter/CHANGELOG.md" />
 
@@ -333,9 +419,15 @@
 
         <!-- vlucas/phpdotenv: nothing to remove -->
 
-        <!-- web-auth/cose-lib: nothing to remove -->
+        <exclude name="vendor/web-auth/cose-lib/.agents/**" />
+        <exclude name="vendor/web-auth/cose-lib/CODE_OF_CONDUCT.md" />
+        <exclude name="vendor/web-auth/cose-lib/RELEASES.md" />
+        <exclude name="vendor/web-auth/cose-lib/SECURITY.md" />
+
         <!-- web-auth/metadata-service: nothing to remove -->
         <!-- web-auth/webauthn-lib: nothing to remove -->
+
+        <exclude name="vendor/web-token/jwt-library/.github/**" />
 
         <exclude name="vendor/webmozart/assert/CHANGELOG.md" />
     </fileset>
