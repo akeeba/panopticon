@@ -210,7 +210,7 @@ $isWordPress        = str_ends_with(rtrim($site->url, '/'), '/wp-json');
                     @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_HUH_GENERIC')
                 </p>
             @endif
-        @elseif($isWordpress && $connectionError instanceof APIInvalidCredentials)
+        @elseif($isWordPress && $connectionError instanceof APIInvalidCredentials)
             <p class="fw-semibold">
                 @lang('PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_HEAD')
             </p>
