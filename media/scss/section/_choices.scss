@@ -14,10 +14,40 @@ $choices-icon-cross-inverse: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEi
     min-width: max(25em, 50%);
   }
 
+  // Choices.js replaces the <select> with a plain DIV, so Bootstrap's `.input-group > .form-control`
+  // flex rules never apply to it. We have to make it behave like a form control ourselves; a
+  // hard-coded width made the adjacent button wrap onto a second line whenever it rendered wider
+  // than the allowance we had guessed [gh-1047].
   &.input-group {
+    flex-wrap: nowrap;
+
     .choices {
-      min-width: unset;
-      width: calc(100% - 2.5em);
+      flex: 1 1 auto;
+      width: 1%;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+
+    // Match the height of the .form-control-lg search box these filters sit next to.
+    .choices__inner {
+      min-height: add(
+        $input-line-height * $input-font-size-lg,
+        add($input-padding-y-lg * 2, $input-height-border, false)
+      );
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding-bottom: 3.75px;
+    }
+
+    // Bootstrap squares off the trailing corners of `.choices`, but the visible border lives on
+    // `.choices__inner`, so it has to be squared off too.
+    &:not(.has-validation) > .choices:not(:last-child) .choices__inner {
+      @include border-end-radius(0);
+    }
+
+    > .choices:not(:first-child) .choices__inner {
+      @include border-start-radius(0);
     }
   }
 }

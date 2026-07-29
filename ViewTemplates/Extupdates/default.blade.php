@@ -67,7 +67,7 @@ JS;
     <div class="my-2 border rounded-1 p-2 bg-body-tertiary">
         <div class="d-flex flex-column flex-lg-row gap-2 gap-lg-3 justify-content-center align-items-center">
             {{-- Search --}}
-            <div class="input-group pnp-mw-50" @if(empty($this->groupMap)) @endif>
+            <div class="input-group pnp-mw-50">
                 <input type="search" class="form-control form-control-lg" id="search"
                        placeholder="@lang('PANOPTICON_LBL_FORM_SEARCH')"
                        name="search" value="{{{ $model->getState('search', '') }}}">
