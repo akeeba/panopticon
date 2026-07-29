@@ -2,7 +2,9 @@
 Akeeba Panopticon 2.3.1
 ================================================================================
 # [HIGH] Action links in the auto-refreshed dashboard table redirected to the raw AJAX endpoint [gh-1042]
+# [MEDIUM] Group edit: the colour swatches were invisible, and the selected colour was not indicated [gh-1046]
 # [MEDIUM] WordPress sites showed generic fallback on connection errors due to variable typo [gh-1039]
+# [LOW] Group edit: the custom colour field mangled what you typed, and the preview badge was empty on a new group [gh-1046]
 
 Akeeba Panopticon 2.3.0
 ================================================================================

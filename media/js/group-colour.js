@@ -187,7 +187,7 @@
 
         customRadio?.addEventListener("change", onCustomRadioChange);
 
-        const applyCustomHex = (hex) =>
+        const applyCustomHex = (hex, updateHexField) =>
         {
             if (hex === null)
             {
@@ -200,7 +200,9 @@
                 customRadio.checked = true;
             }
 
-            if (customHex)
+            // Never write back into the text field while the user is typing in it: sanitiseHex expands
+            // three digit values, so "#7a1" would become "#77aa11" mid-keystroke and mangle the input.
+            if (customHex && updateHexField)
             {
                 customHex.value = hex;
             }
@@ -214,8 +216,19 @@
             refreshPreview();
         };
 
-        customColour?.addEventListener("input", () => applyCustomHex(sanitiseHex(customColour.value)));
-        customHex?.addEventListener("input", () => applyCustomHex(sanitiseHex(customHex.value)));
+        customColour?.addEventListener("input", () => applyCustomHex(sanitiseHex(customColour.value), true));
+        customHex?.addEventListener("input", () => applyCustomHex(sanitiseHex(customHex.value), false));
+
+        // Normalise whatever the user typed, e.g. "#7A1" to "#77aa11", once they are done editing
+        customHex?.addEventListener("change", () =>
+        {
+            const sanitised = sanitiseHex(customHex.value);
+
+            if (sanitised !== null)
+            {
+                customHex.value = sanitised;
+            }
+        });
 
         if (customRadio && customRadio.checked)
         {

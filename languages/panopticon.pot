@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 2.2.1\n"
-"POT-Creation-Date: 2026-07-23 19:28:54\n"
+"Project-Id-Version: 2.3.1\n"
+"POT-Creation-Date: 2026-07-29 14:08:38\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 2.2.1\n"
+"X-Generator: Panopticon ini_to_po 2.3.1\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -3265,6 +3265,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITES_ERR_NO_URL"
 msgid "The site must have an endpoint URL e.g. <code>https://www.example.com/api</code>."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_ERR_CONNECTION_DOCTOR_FORBIDDEN"
+msgid "You are not allowed to use the Connection Doctor on this installation. Please contact the administrator of this Panopticon installation for help connecting your site."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_ERR_URL_FORBIDDEN_IP"
+msgid "The site URL is not allowed on this installation. Please check the URL. If you believe this is a mistake, contact the administrator of this Panopticon installation."
 msgstr ""
 
 #, phpformat
@@ -6738,6 +6748,61 @@ msgid "Automatic IP blocking"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SITELIMITS"
+msgid "Site and Tools Limits"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS"
+msgid "Connection Doctor access"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_OWN"
+msgid "Create / Edit Own Site"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_ADMIN"
+msgid "Global Create / Edit Sites"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_SUPER"
+msgid "Super Users only"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_HELP"
+msgid "Who is allowed to run the Connection Doctor? The Connection Doctor shows you the raw response received from the site, which is what makes it useful for diagnosing a site whose API has been broken by a third party plugin. It also means whoever runs it can read the response from any URL they are able to enter.<br><br><strong>Create / Edit Own Site</strong> is the default and how Panopticon has always worked: anyone who can add or edit a site can run the Connection Doctor on it.<br><br>Choose <strong>Global Create / Edit Sites</strong> or <strong>Super Users only</strong> if you let people you do not fully trust add their own sites. Self-service users will then be unable to diagnose their own connection problems, and you become responsible for supporting them."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES"
+msgid "Forbidden IP Ranges"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_HELP"
+msgid "If a site definition URL\'s domain part is an IP address, or resolves to an IP address, in any of these ranges the site will not be accepted; you will get a validation error instead. This should include the IP addresses of your internal network where monitored sites cannot possibly live.<br><br>This is meant for installations where you let people you do not fully trust add their own sites, e.g. when you offer monitoring as a paid service. Leave empty — the default — to allow any address, which is what you want when you are the only person adding sites.<br><br>Each row accepts a single IP address (<code>192.168.1.1</code>), an inclusive range (<code>192.168.1.1-192.168.1.255</code>), an IP address with a netmask (<code>192.168.1.1/255.255.255.0</code>), or a CIDR block (<code>192.168.1.1/24</code>). Both IPv4 and IPv6 are supported.<br><br>If you are hosting on a cloud platform you will most likely want to include its instance metadata address, e.g. <code>169.254.169.254</code> on Amazon Web Services and Google Cloud."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_PLACEHOLDER"
+msgid "e.g. 192.168.1.0/24"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_ADD"
+msgid "Add IP range"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_REMOVE"
+msgid "Remove this IP range"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSWORD_SECURITY"
 msgid "Password Security"
 msgstr ""
@@ -8500,6 +8565,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM"
 msgid "Custom colour"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_PREVIEW_PLACEHOLDER"
+msgid "YOUR GROUP NAME GOES HERE"
 msgstr ""
 
 #, phpformat

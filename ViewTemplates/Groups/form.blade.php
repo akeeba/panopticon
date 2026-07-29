@@ -21,6 +21,10 @@ $isPaletteColour = $currentColour !== null
 	&& array_key_exists($currentColour, \Akeeba\Panopticon\Helper\Colour::PALETTE);
 $customColour = ($currentColour !== null && !$isPaletteColour) ? $currentColour : null;
 
+// The preview badge would collapse to nothing on a new, untitled group (.badge:empty { display: none })
+$previewTitle = trim((string) ($model->title ?? '')) ?: $this->getLanguage()
+	->text('PANOPTICON_GROUPS_FIELD_COLOUR_PREVIEW_PLACEHOLDER');
+
 $mcpToolNames = array_map(
 	fn($tool) => $tool->getName(),
 	(new \Akeeba\Panopticon\Library\Mcp\ToolRegistry($this->container))->getAllTools()
@@ -51,40 +55,42 @@ $mcpDisallowedTools = $model->getMcpDisallowedTools();
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-3" role="radiogroup"
                      aria-label="@lang('PANOPTICON_GROUPS_FIELD_COLOUR')"
                 >
-                    <label class="d-flex flex-column align-items-center gap-1" style="width: 3rem"
-                           title="@lang('PANOPTICON_GROUPS_FIELD_COLOUR_NONE')"
+                    <input type="radio" class="btn-check js-group-colour-none" name="colour" value=""
+                           id="colour_none" autocomplete="off"
+                           {{ $currentColour === null ? 'checked' : '' }}
                     >
-                        <input type="radio" class="visually-hidden js-group-colour-none" name="colour" value=""
-                               {{ $currentColour === null ? 'checked' : '' }}
-                        >
-                        <span class="badge bg-secondary text-light rounded-circle p-3 border border-2"></span>
-                        <span class="small text-center">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_NONE')</span>
+                    <label class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-2"
+                           for="colour_none" title="@lang('PANOPTICON_GROUPS_FIELD_COLOUR_NONE')"
+                    >
+                        <span class="fa fa-fw fa-ban" aria-hidden="true"></span>
+                        <span>@lang('PANOPTICON_GROUPS_FIELD_COLOUR_NONE')</span>
                     </label>
                     @foreach (\Akeeba\Panopticon\Helper\Colour::PALETTE as $paletteHex => $paletteLangKey)
-                        <label class="d-flex flex-column align-items-center gap-1" style="width: 3rem"
-                               title="@lang($paletteLangKey)"
+                        <input type="radio" class="btn-check js-group-colour-swatch" name="colour"
+                               value="{{{ $paletteHex }}}" id="colour_{{{ substr($paletteHex, 1) }}}"
+                               autocomplete="off"
+                               {{ $currentColour === $paletteHex ? 'checked' : '' }}
                         >
-                            <input type="radio" class="visually-hidden js-group-colour-swatch" name="colour"
-                                   value="{{{ $paletteHex }}}" aria-label="@lang($paletteLangKey)"
-                                   {{ $currentColour === $paletteHex ? 'checked' : '' }}
-                            >
-                            <span class="badge rounded-circle p-3 border border-2"
-                                  style="background-color: {{{ $paletteHex }}}"
+                        <label class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-2"
+                               for="colour_{{{ substr($paletteHex, 1) }}}" title="@lang($paletteLangKey)"
+                        >
+                            {{-- Not a .badge: Bootstrap hides empty badges (.badge:empty { display: none }) --}}
+                            <span class="d-inline-block rounded-circle border border-1 border-dark-subtle flex-shrink-0"
+                                  style="width: 1rem; height: 1rem; background-color: {{{ $paletteHex }}}"
+                                  aria-hidden="true"
                             ></span>
-                            <span class="small text-center">@lang($paletteLangKey)</span>
+                            <span>@lang($paletteLangKey)</span>
                         </label>
                     @endforeach
-                    <label class="d-flex flex-column align-items-center gap-1" style="width: 3rem"
-                           title="@lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')"
+                    <input type="radio" class="btn-check js-group-colour-custom" name="colour"
+                           value="{{{ $customColour ?? '' }}}" id="colour_custom" autocomplete="off"
+                           {{ $customColour !== null ? 'checked' : '' }}
                     >
-                        <input type="radio" class="visually-hidden js-group-colour-custom" name="colour"
-                               value="{{{ $customColour ?? '' }}}"
-                               {{ $customColour !== null ? 'checked' : '' }}
-                        >
-                        <span class="badge rounded-circle p-3 border border-2"
-                              style="background-color: #f8f9fa"
-                        ></span>
-                        <span class="small text-center">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')</span>
+                    <label class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-2"
+                           for="colour_custom" title="@lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')"
+                    >
+                        <span class="fa fa-fw fa-magnifying-glass" aria-hidden="true"></span>
+                        <span>@lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')</span>
                     </label>
                 </div>
 
@@ -108,12 +114,12 @@ $mcpDisallowedTools = $model->getMcpDisallowedTools();
                     <div class="js-group-colour-preview-light border rounded p-2"
                          style="background-color: #f8f9fa"
                     >
-                        @include('Common/groupbadge', ['title' => $model->title ?? '', 'colour' => $currentColour])
+                        @include('Common/groupbadge', ['title' => $previewTitle, 'colour' => $currentColour])
                     </div>
                     <div class="js-group-colour-preview-dark border rounded p-2"
                          style="background-color: #212529"
                     >
-                        @include('Common/groupbadge', ['title' => $model->title ?? '', 'colour' => $currentColour])
+                        @include('Common/groupbadge', ['title' => $previewTitle, 'colour' => $currentColour])
                     </div>
                 </div>
 
