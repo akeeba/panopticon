@@ -47,41 +47,52 @@ $mcpDisallowedTools = $model->getMcpDisallowedTools();
             <legend class="col-sm-3 col-form-label">
                 @lang('PANOPTICON_GROUPS_FIELD_COLOUR')
             </legend>
-            <div class="col-sm-9 d-flex flex-wrap align-items-center gap-2">
-                <label class="d-flex flex-column align-items-center gap-1" style="width: 3rem"
-                       title="@lang('PANOPTICON_GROUPS_FIELD_COLOUR_NONE')"
+            <div class="col-sm-9">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-3" role="radiogroup"
+                     aria-label="@lang('PANOPTICON_GROUPS_FIELD_COLOUR')"
                 >
-                    <input type="radio" class="visually-hidden js-group-colour-none" name="colour" value=""
-                           {{ $currentColour === null ? 'checked' : '' }}
-                    >
-                    <span class="badge bg-secondary text-light rounded-circle p-3 border border-2"></span>
-                    <span class="small text-center">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_NONE')</span>
-                </label>
-                @foreach (\Akeeba\Panopticon\Helper\Colour::PALETTE as $paletteHex => $paletteLangKey)
                     <label class="d-flex flex-column align-items-center gap-1" style="width: 3rem"
-                           title="@lang($paletteLangKey)"
+                           title="@lang('PANOPTICON_GROUPS_FIELD_COLOUR_NONE')"
                     >
-                        <input type="radio" class="visually-hidden js-group-colour-swatch" name="colour"
-                               value="{{{ $paletteHex }}}" aria-label="@lang($paletteLangKey)"
-                               {{ $currentColour === $paletteHex ? 'checked' : '' }}
+                        <input type="radio" class="visually-hidden js-group-colour-none" name="colour" value=""
+                               {{ $currentColour === null ? 'checked' : '' }}
+                        >
+                        <span class="badge bg-secondary text-light rounded-circle p-3 border border-2"></span>
+                        <span class="small text-center">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_NONE')</span>
+                    </label>
+                    @foreach (\Akeeba\Panopticon\Helper\Colour::PALETTE as $paletteHex => $paletteLangKey)
+                        <label class="d-flex flex-column align-items-center gap-1" style="width: 3rem"
+                               title="@lang($paletteLangKey)"
+                        >
+                            <input type="radio" class="visually-hidden js-group-colour-swatch" name="colour"
+                                   value="{{{ $paletteHex }}}" aria-label="@lang($paletteLangKey)"
+                                   {{ $currentColour === $paletteHex ? 'checked' : '' }}
+                            >
+                            <span class="badge rounded-circle p-3 border border-2"
+                                  style="background-color: {{{ $paletteHex }}}"
+                            ></span>
+                            <span class="small text-center">@lang($paletteLangKey)</span>
+                        </label>
+                    @endforeach
+                    <label class="d-flex flex-column align-items-center gap-1" style="width: 3rem"
+                           title="@lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')"
+                    >
+                        <input type="radio" class="visually-hidden js-group-colour-custom" name="colour"
+                               value="{{{ $customColour ?? '' }}}"
+                               {{ $customColour !== null ? 'checked' : '' }}
                         >
                         <span class="badge rounded-circle p-3 border border-2"
-                              style="background-color: {{{ $paletteHex }}}"
+                              style="background-color: #f8f9fa"
                         ></span>
-                        <span class="small text-center">@lang($paletteLangKey)</span>
+                        <span class="small text-center">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')</span>
                     </label>
-                @endforeach
+                </div>
 
-                <input type="radio" class="visually-hidden" name="colour" id="colour_custom_radio"
-                       value="{{{ $customColour ?? '' }}}"
-                       {{ $customColour !== null ? 'checked' : '' }}
-                >
-
-                <div class="d-flex flex-column gap-1 ms-2">
-                    <label for="colour_custom_picker" class="form-label mb-0">
-                        @lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')
-                    </label>
-                    <div class="d-flex gap-2 align-items-center">
+                <div class="js-group-colour-custom-row {{ $customColour === null ? 'd-none' : '' }} mb-3">
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                        <label for="colour_custom_picker" class="form-label mb-0">
+                            @lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')
+                        </label>
                         <input type="color" class="form-control form-control-color js-group-colour-custom-picker"
                                id="colour_custom_picker" value="{{{ $customColour ?? '#000000' }}}"
                                title="@lang('PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM')"
@@ -90,13 +101,24 @@ $mcpDisallowedTools = $model->getMcpDisallowedTools();
                                value="{{{ $customColour ?? '' }}}" placeholder="#rrggbb" maxlength="7"
                                style="max-width: 8rem"
                         >
-                        <span class="js-group-colour-preview">
-                            @include('Common/groupbadge', ['title' => $model->title ?? '', 'colour' => $currentColour])
-                        </span>
                     </div>
                 </div>
+
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <div class="js-group-colour-preview-light border rounded p-2"
+                         style="background-color: #f8f9fa"
+                    >
+                        @include('Common/groupbadge', ['title' => $model->title ?? '', 'colour' => $currentColour])
+                    </div>
+                    <div class="js-group-colour-preview-dark border rounded p-2"
+                         style="background-color: #212529"
+                    >
+                        @include('Common/groupbadge', ['title' => $model->title ?? '', 'colour' => $currentColour])
+                    </div>
+                </div>
+
+                <div class="form-text">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_HELP')</div>
             </div>
-            <div class="form-text">@lang('PANOPTICON_GROUPS_FIELD_COLOUR_HELP')</div>
         </fieldset>
     </div>
 

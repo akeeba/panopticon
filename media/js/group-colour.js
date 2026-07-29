@@ -85,32 +85,37 @@
 
         const noneRadio     = container.querySelector(".js-group-colour-none");
         const paletteRadios = container.querySelectorAll("input[type=\"radio\"].js-group-colour-swatch");
-        const customRadio   = document.getElementById("colour_custom_radio");
+        const customRadio   = container.querySelector(".js-group-colour-custom");
+        const customRow     = container.querySelector(".js-group-colour-custom-row");
         const customColour  = container.querySelector(".js-group-colour-custom-picker");
         const customHex     = container.querySelector(".js-group-colour-custom-hex");
-        const preview       = container.querySelector(".js-group-colour-preview .badge");
+        const previewBadges = container.querySelectorAll(
+            ".js-group-colour-preview-light .badge, .js-group-colour-preview-dark .badge"
+        );
 
         const updatePreview = (hex) =>
         {
-            if (!preview)
+            previewBadges.forEach((preview) =>
             {
-                return;
-            }
+                if (!preview)
+                {
+                    return;
+                }
 
-            preview.classList.remove("text-light", "text-dark");
+                preview.classList.remove("text-light", "text-dark");
 
-            if (hex === null)
-            {
-                preview.classList.remove("border");
-                preview.style.backgroundColor = "";
-                preview.classList.add("bg-secondary", "text-light");
+                if (hex === null)
+                {
+                    preview.style.backgroundColor = "";
+                    preview.classList.add("bg-secondary", "text-light");
 
-                return;
-            }
+                    return;
+                }
 
-            preview.classList.remove("bg-secondary");
-            preview.style.backgroundColor = hex;
-            preview.classList.add(foregroundClass(hex));
+                preview.classList.remove("bg-secondary");
+                preview.style.backgroundColor = hex;
+                preview.classList.add(foregroundClass(hex));
+            });
         };
 
         const currentColour = () =>
@@ -121,6 +126,16 @@
         };
 
         const refreshPreview = () => updatePreview(currentColour());
+
+        const setCustomRowVisible = (visible) =>
+        {
+            if (!customRow)
+            {
+                return;
+            }
+
+            customRow.classList.toggle("d-none", !visible);
+        };
 
         const clearCustom = () =>
         {
@@ -138,22 +153,39 @@
             {
                 customRadio.value = "";
             }
+
+            setCustomRowVisible(false);
         };
 
-        noneRadio?.addEventListener("change", () =>
+        const onPresetChange = () =>
         {
             clearCustom();
             refreshPreview();
-        });
+        };
 
-        paletteRadios.forEach((radio) =>
+        noneRadio?.addEventListener("change", onPresetChange);
+        paletteRadios.forEach((radio) => radio.addEventListener("change", onPresetChange));
+
+        const onCustomRadioChange = () =>
         {
-            radio.addEventListener("change", () =>
+            if (!customRadio || !customRadio.checked)
             {
-                clearCustom();
-                refreshPreview();
-            });
-        });
+                return;
+            }
+
+            setCustomRowVisible(true);
+
+            const sanitised = sanitiseHex(customHex?.value);
+
+            if (sanitised !== null)
+            {
+                customRadio.value = sanitised;
+            }
+
+            refreshPreview();
+        };
+
+        customRadio?.addEventListener("change", onCustomRadioChange);
 
         const applyCustomHex = (hex) =>
         {
@@ -178,11 +210,21 @@
                 customColour.value = hex;
             }
 
+            setCustomRowVisible(true);
             refreshPreview();
         };
 
         customColour?.addEventListener("input", () => applyCustomHex(sanitiseHex(customColour.value)));
         customHex?.addEventListener("input", () => applyCustomHex(sanitiseHex(customHex.value)));
+
+        if (customRadio && customRadio.checked)
+        {
+            setCustomRowVisible(true);
+        }
+        else
+        {
+            setCustomRowVisible(false);
+        }
 
         refreshPreview();
     };
