@@ -68,9 +68,19 @@ $moreThanOne = count($updateStatus) > 1;
 
                 return htmlspecialchars(sprintf('[%s] %s', strtoupper($type), strip_tags($message)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             }, $info['messages']);
+
+            $oldVersion = is_scalar($info['oldVersion'] ?? null) ? trim((string) $info['oldVersion']) : '';
+            $newVersion = is_scalar($info['newVersion'] ?? null) ? trim((string) $info['newVersion']) : '';
             ?>
             <p>
                 <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_WP_' . $info['type']) “{{{ strip_tags($info['name']) }}}”</strong>.
+                @if ($oldVersion !== '' && $newVersion !== '')
+                    <br>
+                    &nbsp;&nbsp;Updated from version {{{ $oldVersion }}} to version {{{ $newVersion }}}.
+                @elseif ($newVersion !== '')
+                    <br>
+                    &nbsp;&nbsp;Updated to version {{{ $newVersion }}}.
+                @endif
                 @if (!empty($info['messages']))
                     <br>
                     &nbsp;&nbsp;Update messages:
@@ -91,14 +101,24 @@ $moreThanOne = count($updateStatus) > 1;
                 $message = is_string($message) ? $message : '';
                 $message = strip_tags($message);
 
-                $type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
+                $type = is_array($item) ? ($item['type'] ?? 'info') : 'info';
                 $type = is_string($type) ? $type : 'info';
 
                 return htmlspecialchars(sprintf('[%s] %s', strtoupper($type), strip_tags($message)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             }, $info['messages']);
+
+            $oldVersion = is_scalar($info['oldVersion'] ?? null) ? trim((string) $info['oldVersion']) : '';
+            $newVersion = is_scalar($info['newVersion'] ?? null) ? trim((string) $info['newVersion']) : '';
             ?>
             <p>
                 <strong>@lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_WP_' . $info['type']) “{{{ strip_tags($info['name']) }}}”</strong>.
+                @if ($oldVersion !== '' && $newVersion !== '')
+                    <br>
+                    &nbsp;&nbsp;The update from version {{{ $oldVersion }}} to version {{{ $newVersion }}} failed. Version {{{ $oldVersion }}} is presumably still installed.
+                @elseif ($newVersion !== '')
+                    <br>
+                    &nbsp;&nbsp;The update to version {{{ $newVersion }}} failed.
+                @endif
                 @if ($info['status'] === 'exception')
                     An application or network error occurred.
                 @elseif ($info['status'] === 'invalid_json')

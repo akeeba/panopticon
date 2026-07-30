@@ -62,14 +62,23 @@ The following extensions have been updated successfully:
 	    $message = is_string($message) ? $message : '';
 		$message = strip_tags($message);
 
-		$type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
+		$type = is_array($item) ? ($item['type'] ?? 'info') : 'info';
 		$type = is_string($type) ? $type : 'info';
 
 		return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
     }, $info['messages']);
+
+    $oldVersion = is_scalar($info['oldVersion'] ?? null) ? trim((string) $info['oldVersion']) : '';
+    $newVersion = is_scalar($info['newVersion'] ?? null) ? trim((string) $info['newVersion']) : '';
 ?>
 
 @lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ strip_tags($info['name']) }}}”.
+
+@if ($oldVersion !== '' && $newVersion !== '')
+  Updated from version {{{ $oldVersion }}} to version {{{ $newVersion }}}.
+@elseif ($newVersion !== '')
+  Updated to version {{{ $newVersion }}}.
+@endif
 
 @if (!empty($info['messages']))
   Update messages:
@@ -92,13 +101,23 @@ $messages = array_map(function($item) {
     $message = is_string($message) ? $message : '';
     $message = strip_tags($message);
 
-    $type = is_array($item) ? ($item['type'] ?? 'info') : $item['type'];
+    $type = is_array($item) ? ($item['type'] ?? 'info') : 'info';
     $type = is_string($type) ? $type : 'info';
 
     return sprintf('[%s] %s', strtoupper($type), strip_tags($message));
 }, $info['messages']);
+
+$oldVersion = is_scalar($info['oldVersion'] ?? null) ? trim((string) $info['oldVersion']) : '';
+$newVersion = is_scalar($info['newVersion'] ?? null) ? trim((string) $info['newVersion']) : '';
 ?>
 @lang('PANOPTICON_SYSCONFIG_LBL_EXTTYPE_' . $info['type']) “{{{ strip_tags($info['name']) }}}”.
+
+@if ($oldVersion !== '' && $newVersion !== '')
+  The update from version {{{ $oldVersion }}} to version {{{ $newVersion }}} failed.
+  Version {{{ $oldVersion }}} is presumably still installed.
+@elseif ($newVersion !== '')
+  The update to version {{{ $newVersion }}} failed.
+@endif
 
 @if ($info['status'] === 'exception')
   An application or network error occurred.

@@ -212,10 +212,12 @@ class ExtensionsUpdate extends AbstractCallback
 			);
 
 			$updateStatus[$extensionId] = [
-				'type'     => $extensions[$extensionId]->type,
-				'name'     => $extensions[$extensionId]->name,
-				'status'   => 'exception',
-				'messages' => [$e->getMessage()],
+				'type'       => $extensions[$extensionId]->type,
+				'name'       => $extensions[$extensionId]->name,
+				'oldVersion' => $oldVersion,
+				'newVersion' => $newVersion,
+				'status'     => 'exception',
+				'messages'   => [$e->getMessage()],
 			];
 			$storage->set('updateStatus', $updateStatus);
 
@@ -255,10 +257,12 @@ class ExtensionsUpdate extends AbstractCallback
 			);
 
 			$updateStatus[$extensionId] = [
-				'type'     => $extensions[$extensionId]->type,
-				'name'     => $extensions[$extensionId]->name,
-				'status'   => 'invalid_json',
-				'messages' => [$e->getMessage()],
+				'type'       => $extensions[$extensionId]->type,
+				'name'       => $extensions[$extensionId]->name,
+				'oldVersion' => $oldVersion,
+				'newVersion' => $newVersion,
+				'status'     => 'invalid_json',
+				'messages'   => [$e->getMessage()],
 			];
 			$storage->set('updateStatus', $updateStatus);
 
@@ -293,10 +297,12 @@ class ExtensionsUpdate extends AbstractCallback
 			);
 
 			$updateStatus[$extensionId] = [
-				'type'     => $extensions[$extensionId]->type,
-				'name'     => $extensions[$extensionId]->name,
-				'status'   => 'error',
-				'messages' => [$rawJSONData ?? ''],
+				'type'       => $extensions[$extensionId]->type,
+				'name'       => $extensions[$extensionId]->name,
+				'oldVersion' => $oldVersion,
+				'newVersion' => $newVersion,
+				'status'     => 'error',
+				'messages'   => [$rawJSONData ?? ''],
 			];
 			$storage->set('updateStatus', $updateStatus);
 
@@ -353,10 +359,12 @@ class ExtensionsUpdate extends AbstractCallback
 			);
 
 			$updateStatus[$extensionId] = [
-				'type'     => $extensions[$extensionId]->type,
-				'name'     => $extensions[$extensionId]->name,
-				'status'   => 'error',
-				'messages' => $messages,
+				'type'       => $extensions[$extensionId]->type,
+				'name'       => $extensions[$extensionId]->name,
+				'oldVersion' => $oldVersion,
+				'newVersion' => $newVersion,
+				'status'     => 'error',
+				'messages'   => $messages,
 			];
 			$storage->set('updateStatus', $updateStatus);
 
@@ -431,10 +439,12 @@ class ExtensionsUpdate extends AbstractCallback
 		);
 
 		$updateStatus[$extensionId] = [
-			'type'     => $extensions[$extensionId]->type,
-			'name'     => $extensions[$extensionId]->name,
-			'status'   => 'success',
-			'messages' => $returnedAttributes?->messages ?? [],
+			'type'       => $extensions[$extensionId]->type,
+			'name'       => $extensions[$extensionId]->name,
+			'oldVersion' => $oldVersion,
+			'newVersion' => $newVersion,
+			'status'     => 'success',
+			'messages'   => $returnedAttributes?->messages ?? [],
 		];
 		$storage->set('updateStatus', $updateStatus);
 
@@ -455,17 +465,19 @@ class ExtensionsUpdate extends AbstractCallback
 	/**
 	 * Log an extension update installation report entry
 	 *
-	 * @param   Site      $site            The site we are installing extension updates on
-	 * @param   object    $extension       The extension object being updated
-	 * @param   bool      $status          Did we succeed?
-	 * @param   mixed     $e               Additional context (on failure)
-	 * @param   int|null  $initiatingUser  The initiating user of this update installation
+	 * @param   Site         $site            The site we are installing extension updates on
+	 * @param   object       $extension       The extension object being updated
+	 * @param   string|null  $oldVersion      The version installed before the update
+	 * @param   string|null  $newVersion      The version we updated to, or tried to update to
+	 * @param   bool         $status          Did we succeed?
+	 * @param   mixed        $e               Additional context (on failure)
+	 * @param   int|null     $initiatingUser  The initiating user of this update installation
 	 *
 	 * @return  void
 	 * @since   1.0.4
 	 */
 	private function logReport(
-		Site $site, object $extension, string $oldVersion, string $newVersion, bool $status = true, mixed $e = null,
+		Site $site, object $extension, ?string $oldVersion, ?string $newVersion, bool $status = true, mixed $e = null,
 		?int $initiatingUser = null
 	): void
 	{
