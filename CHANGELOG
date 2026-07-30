@@ -2,7 +2,7 @@
 Akeeba Panopticon 2.3.1
 ================================================================================
 + Update result emails now state the old and the new version of each extension, plugin, and theme [gh-1049]
-# [HIGH] Update result emails had an empty body when an extension, plugin, or theme failed to update
+# [HIGH] Update result emails had an empty body whenever an extension, plugin, or theme failed to update (since 1.0.0 on Joomla!, since 1.2.0 on WordPress)
 # [HIGH] Action links in the auto-refreshed dashboard table redirected to the raw AJAX endpoint [gh-1042]
 # [MEDIUM] Group edit: the colour swatches were invisible, and the selected colour was not indicated [gh-1046]
 # [MEDIUM] WordPress sites showed generic fallback on connection errors due to variable typo [gh-1039]
