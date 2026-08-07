@@ -15,7 +15,7 @@
  * ---------------------------------------------------------------------------------------------------------------------
  *
  * This is a verbatim copy of Symfony\Component\ErrorHandler\Exception\FlattenException from symfony/error-handler
- * v6.4.36, with a single deliberate modification (see the `AKEEBA PANOPTICON CUSTOMISATION` marker below).
+ * v6.4.43, with a single deliberate modification (see the `AKEEBA PANOPTICON CUSTOMISATION` marker below).
  *
  * It is loaded, in place of the upstream class, by Akeeba\Panopticon\Application\BootstrapUtilities::
  * overrideHtmlErrorRenderer() BEFORE Composer's autoloader can define the upstream version. We used to perform this
@@ -25,7 +25,7 @@
  *
  * WHEN symfony/error-handler IS UPDATED: tests/Unit/Application/ErrorHandlerPatchesTest.php fails because the upstream
  * file hash changed. Re-copy the upstream class here, re-apply the marked modification, and update the hash in that
- * test. See patches/README.md.
+ * test. See patches/README.md. Or just run: phing fix-error-handling
  * ---------------------------------------------------------------------------------------------------------------------
  */
 
@@ -118,7 +118,7 @@ class FlattenException
         if (!$cloner ??= $defaultCloner) {
             $cloner = $defaultCloner = new VarCloner();
             $cloner->addCasters([
-                \Throwable::class => function (\Throwable $e, array $a, Stub $s, bool $isNested): array {
+                \Throwable::class => static function (\Throwable $e, array $a, Stub $s, bool $isNested): array {
                     if (!$isNested) {
                         unset($a[Caster::PREFIX_PROTECTED.'message']);
                         unset($a[Caster::PREFIX_PROTECTED.'code']);
@@ -252,7 +252,7 @@ class FlattenException
     public function setMessage(string $message): static
     {
         if (str_contains($message, "@anonymous\0")) {
-            $message = preg_replace_callback('/[a-zA-Z_\x7f-\xff][\\\\a-zA-Z0-9_\x7f-\xff]*+@anonymous\x00.*?\.php(?:0x?|:[0-9]++\$)?[0-9a-fA-F]++/', fn ($m) => class_exists($m[0], false) ? (get_parent_class($m[0]) ?: key(class_implements($m[0])) ?: 'class').'@anonymous' : $m[0], $message);
+            $message = preg_replace_callback('/[a-zA-Z_\x7f-\xff][\\\\a-zA-Z0-9_\x7f-\xff]*+@anonymous\x00.*?\.php(?:0x?|:[0-9]++\$)?[0-9a-fA-F]++/', static fn ($m) => class_exists($m[0], false) ? (get_parent_class($m[0]) ?: key(class_implements($m[0])) ?: 'class').'@anonymous' : $m[0], $message);
         }
 
         $this->message = $message;

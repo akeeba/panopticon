@@ -486,6 +486,12 @@
         </exec>
     </target>
 
+    <target name="fix-error-handling" description="Re-sync patches/symfony-error-handler/ after a symfony/error-handler update">
+        <exec executable="bash" dir="${dirs.root}" passthru="true" checkreturn="true">
+            <arg file="${dirs.root}/build/fix-error-handling.sh"/>
+        </exec>
+    </target>
+
 
     <!--
     ====================================================================================================

@@ -20,20 +20,20 @@ use Akeeba\Panopticon\Tests\AbstractUnitTestCase;
  * They are pinned to a specific symfony/error-handler release (see the hashes below). When Composer pulls a newer
  * release whose source differs, this test fails so the copies get re-synced instead of silently drifting out of date.
  *
- * To re-sync when this test fails, follow patches/README.md, then update the expected hash here.
+ * To re-sync when this test fails, run: phing fix-error-handling (see patches/README.md for details).
  *
  * @since  2.2.1
  */
 class ErrorHandlerPatchesTest extends AbstractUnitTestCase
 {
 	/**
-	 * SHA-256 of each pinned upstream file (symfony/error-handler v6.4.36).
+	 * SHA-256 of each pinned upstream file (symfony/error-handler v6.4.43).
 	 *
 	 * @var  array<string, string>
 	 */
 	private const UPSTREAM_HASHES = [
-		'/vendor/symfony/error-handler/Exception/FlattenException.php'         => '0fae6482af8f02a1485e2f3c94fd99b8e63f79e3986790760bae87eb11a3ae58',
-		'/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php'    => 'e510daee4b15fa94d2cadaabc702220b988a4ad54e21339d95b4c07c1214f7ad',
+		'/vendor/symfony/error-handler/Exception/FlattenException.php'         => '3e5f2ac08cd172492d7aaac6e932683eb1ca02a30c8000781175e6bd25e670ca',
+		'/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php'    => '4cd94c12f2385de11c691a45739fa1383c3b12e30d5120a35c02b55e80507d81',
 	];
 
 	/**
@@ -89,7 +89,8 @@ class ErrorHandlerPatchesTest extends AbstractUnitTestCase
 			hash_file('sha256', $path),
 			sprintf(
 				"Upstream %s has changed. Our locally modified copy in patches/symfony-error-handler/ may now be "
-				. "out of date.\nRe-sync it following patches/README.md, then update the expected hash in %s.",
+				. "out of date.\nRun: phing fix-error-handling\nThat re-syncs the copy and updates the expected "
+				. "hash in %s for you. See patches/README.md for what it does under the hood.",
 				$relativePath,
 				basename(__FILE__)
 			)

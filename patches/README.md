@@ -21,8 +21,8 @@ exact behaviour.
 
 | File                               | Upstream package / version        | Modifications |
 |------------------------------------|-----------------------------------|---------------|
-| `symfony-error-handler/FlattenException.php`  | `symfony/error-handler` v6.4.36 | Surface the real exception message as the status text (instead of the generic "Whoops…"). |
-| `symfony-error-handler/HtmlErrorRenderer.php` | `symfony/error-handler` v6.4.36 | (1) Give the non-debug "simple" error page the same rich template context as the debug page — our `templates/system/fatal.php` needs `$exception`. (2) Allow the active theme to override error templates/assets. |
+| `symfony-error-handler/FlattenException.php`  | `symfony/error-handler` v6.4.43 | Surface the real exception message as the status text (instead of the generic "Whoops…"). |
+| `symfony-error-handler/HtmlErrorRenderer.php` | `symfony/error-handler` v6.4.43 | (1) Give the non-debug "simple" error page the same rich template context as the debug page — our `templates/system/fatal.php` needs `$exception`. (2) Allow the active theme to override error templates/assets. |
 
 Each modification is wrapped in `AKEEBA PANOPTICON CUSTOMISATION` / `END AKEEBA PANOPTICON CUSTOMISATION` comment
 markers. Everything outside those markers is a verbatim copy of the upstream file.
@@ -32,7 +32,29 @@ Loaded by: `Akeeba\Panopticon\Application\BootstrapUtilities::overrideHtmlErrorR
 ## Keeping them in sync when the dependency updates
 
 `tests/Unit/Application/ErrorHandlerPatchesTest.php` pins the SHA-256 of each upstream file. When `composer update`
-pulls a new `symfony/error-handler`, that test **fails** if the upstream class changed. To re-sync:
+pulls a new `symfony/error-handler`, that test **fails** if the upstream class changed.
+
+### The easy way
+
+```bash
+phing fix-error-handling
+```
+
+This runs `build/fix-error-handling.sh`, which:
+
+1. Detects which of the two upstream files actually drifted (compares the current `vendor/symfony/error-handler/`
+   files against the hashes pinned in the test).
+2. If nothing drifted, it says so and exits — safe to run any time, e.g. right after `composer update`.
+3. Otherwise it hands the re-sync to a coding agent (`claude` by default; pass `--agent codex` or `--agent qwen` to
+   use a different one) with the exact steps below as its brief, including re-applying the
+   `AKEEBA PANOPTICON CUSTOMISATION` blocks, updating the pinned hash(es) and version references, and running
+   `php -l` on the result.
+4. Re-runs `vendor/bin/phpunit --filter=ErrorHandlerPatchesTest` to verify, and tells you if it's still red.
+
+Always review the diff (`git diff patches/ tests/Unit/Application/ErrorHandlerPatchesTest.php`) before committing —
+this re-applies deliberate behavioural changes to security-relevant error-rendering code.
+
+### The manual way
 
 1. Diff the new upstream file against the version these copies were based on.
 2. Copy the new upstream file here, verbatim.
