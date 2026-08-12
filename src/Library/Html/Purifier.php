@@ -67,6 +67,18 @@ abstract class Purifier
 		$config->set('HTML.Nofollow', true);
 		$config->set('URI.AllowedSchemes', ['http' => true, 'https' => true, 'mailto' => true]);
 
+		// The default doctype (XHTML 1.0 Transitional) has no notion of the HTML5 figure/figcaption
+		// elements. Without an explicit definition HTMLPurifier emits an "Element is not supported"
+		// warning for each of them on every request, even though they're allowed and purified fine.
+		$config->set('HTML.DefinitionID', 'panopticon-notes');
+		$config->set('HTML.DefinitionRev', 1);
+
+		if ($def = $config->maybeGetRawHTMLDefinition())
+		{
+			$def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
+			$def->addElement('figcaption', 'Inline', 'Flow', 'Common');
+		}
+
 		self::$instance = new \HTMLPurifier($config);
 
 		return self::$instance;

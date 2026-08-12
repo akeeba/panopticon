@@ -8,6 +8,7 @@ Akeeba Panopticon 2.3.1
 # [MEDIUM] WordPress sites showed generic fallback on connection errors due to variable typo [gh-1039]
 # [LOW] Group edit: the custom colour field mangled what you typed, and the preview badge was empty on a new group [gh-1046]
 # [LOW] Site Groups filter: the search button wrapped onto a second line, and the field was shorter than the search box [gh-1047]
+# [LOW] Viewing a site's Notes emitted spurious PHP warnings about unsupported figure/figcaption elements
 
 Akeeba Panopticon 2.3.0
 ================================================================================
