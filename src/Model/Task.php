@@ -910,8 +910,15 @@ class Task extends DataModel
 				]
 			)
 			->order(
+				// WILL_RESUME tasks must run before anything else regardless of priority. Without
+				// the leading CASE expression, a `priority = 1` WILL_RESUME task (e.g. an
+				// extensioninstall in progress) is perpetually queued behind routine `priority = 0`
+				// tasks created by the per-minute CRON — starving the in-progress batch. The
+				// `last_exit_code DESC` previously in this ORDER BY is subsumed by the CASE and
+				// has been removed.
+				'(CASE WHEN ' . $db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value
+				. ' THEN 0 ELSE 1 END) ASC, ' .
 				$db->quoteName('priority') . ' ASC, ' .
-				$db->quoteName('last_exit_code') . ' DESC, ' .
 				$db->quoteName('next_execution') . ' ASC'
 			);
 
