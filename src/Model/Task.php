@@ -530,6 +530,12 @@ class Task extends DataModel
 		// Mark the current task as running
 		$priorExitCode = $pendingTask->last_exit_code;
 
+		// Suppress the CRON recalculation in Task::check() for this save. Without this the
+		// narrow, controller-pinned one-shot CRON expression would be re-resolved against the
+		// current time and (per gh-1060 cause 1) strand the in-progress batch ~1 week out if
+		// the process dies between this save and the bookkeeping save 2 lines below.
+		$pendingTask->setState('disable_next_execution_recalculation', true);
+
 		try
 		{
 			$willResume = $priorExitCode == Status::WILL_RESUME->value;
@@ -576,6 +582,14 @@ class Task extends DataModel
 			@ob_end_clean();
 
 			return true;
+		}
+		finally
+		{
+			// Restore the state so the bookkeeping save 2 lines below can recompute next_execution
+			// against the (now broader) callback-derived status. If the process dies after this
+			// finally but before the bookkeeping save, next_execution is left at the previous
+			// value — which is the pre-existing behaviour we are not changing here.
+			$pendingTask->setState('disable_next_execution_recalculation', false);
 		}
 
 		try

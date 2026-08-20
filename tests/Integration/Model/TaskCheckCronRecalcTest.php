@@ -195,4 +195,50 @@ class TaskCheckCronRecalcTest extends AbstractIntegrationTestCase
 			'disable_next_execution_recalculation state must prevent any next_execution change'
 		);
 	}
+
+	/**
+	 * The mark-as-running save in runNextTask() must NOT recompute next_execution against the
+	 * controller-pinned one-shot CRON expression. This is the in-the-wild symptom of cause 4
+	 * hitting cause 1: a process dying between the mark-as-running save and the bookkeeping
+	 * save leaves a row with last_exit_code = RUNNING and next_execution = "next Tuesday 14:30".
+	 *
+	 * We drive the seam via a Task subclass that overrides saveMarkAsRunning to call the
+	 * parent's save with the willResume = true path (last_execution NOT updated, only
+	 * last_exit_code is).
+	 *
+	 * @since 2.3.2
+	 */
+	public function testMarkAsRunningSavePreservesNextExecution(): void
+	{
+		// A known bogus next_execution we expect to be preserved verbatim by the
+		// mark-as-running save.
+		$knownNext = '2099-12-31 23:59:59';
+
+		$task = $this->makeTask(
+			[
+				'last_exit_code' => Status::WILL_RESUME->value,
+				'next_execution' => $knownNext,
+				// Sanity: this CRON expression resolves to ~7 days out, NOT 2099-12-31.
+				'cron_expression' => '30 14 5 8 2',
+			]
+		);
+
+		// Drive just the mark-as-running save (the seam extracted in cause 2). The Task
+		// subclass does not call check() itself; we set the state explicitly to mirror what
+		// runNextTask() does after the cause 4 fix.
+		$task->setState('disable_next_execution_recalculation', true);
+		$task->save(
+			[
+				'last_exit_code' => Status::RUNNING->value,
+			]
+		);
+
+		$reloaded = $this->reload($task);
+
+		$this->assertSame(
+			$knownNext,
+			(string) $reloaded->next_execution,
+			'next_execution must NOT be recomputed by the mark-as-running save when the cause-4 guard is set'
+		);
+	}
 }
