@@ -47,6 +47,7 @@ defined('AKEEBA') || die;
  * @property int            $times_failed    How many times this task has failed
  * @property Date|null      $locked          Date and time the task was locked
  * @property int            $priority
+ * @property int            $stuck_retries   How many times cleanUpStuckTasks() has retried this task
  *
  * @noinspection PhpUnused
  */
@@ -55,6 +56,39 @@ class Task extends DataModel
 	private const DB_LOCK_NAME = 'PanopticonNextTask';
 
 	private const DB_LOCK_TIMEOUT = 5;
+
+	/**
+	 * Maximum number of times {@see cleanUpStuckTasks()} will restore a stuck task to
+	 * Status::WILL_RESUME before giving up and either marking the current item failed (for
+	 * multi-item batches) or transitioning the task to Status::TIMEOUT.
+	 *
+	 * @var  int
+	 * @since 2.3.2
+	 */
+	private const MAX_STUCK_RETRIES = 3;
+
+	/**
+	 * Tracks whether we are currently holding the named DB lock from {@see self::DB_LOCK_NAME}.
+	 *
+	 * Set to true after a successful {@see lockTables()}, cleared by {@see unlockTables()}.
+	 * The shutdown handler {@see releaseLockOnShutdown()} consults this flag so it is a no-op
+	 * when the lock has already been released by the regular code path.
+	 *
+	 * @var  bool
+	 * @since 2.3.2
+	 */
+	private bool $lockHeld = false;
+
+	/**
+	 * Tracks whether {@see releaseLockOnShutdown()} has been registered. PHP's
+	 * register_shutdown_function is sticky across calls — register it at most once per request
+	 * to avoid stacking duplicate shutdown handlers when runNextTask() is invoked more than
+	 * once in the same process (e.g. inside a long-running loop).
+	 *
+	 * @var  bool
+	 * @since 2.3.2
+	 */
+	private bool $lockShutdownRegistered = false;
 
 	public function __construct(?Container $container = null)
 	{
@@ -338,19 +372,34 @@ class Task extends DataModel
 			 * If the disable_next_execution_recalculation state is set to true we'll NOT override next_execution.
 			 *
 			 * This is used when scheduling tasks for the current date and time, having them run as soon as possible.
+			 *
+			 * For tasks returning Status::WILL_RESUME we deliberately do not resolve the CRON expression either. The
+			 * controller pins all five CRON fields to the creation moment (e.g. `30 14 5 8 2`) to make a one-shot
+			 * "run immediately" task. On the next save, getNextRunDate() resolves the NEXT occurrence matching all
+			 * five fields which, with dayofweek fixed to one weekday, lands ~1 week out — stranding an in-progress
+			 * batch. Setting next_execution to "now + 2 seconds" directly avoids the bad recalc against the narrow,
+			 * pinned CRON expression without bypassing the standard scheduler path. WILL_RESUME tasks resume on the
+			 * next cron tick (~1 minute for the --loop daemon).
 			 */
 			if (!$this->getState('disable_next_execution_recalculation', false, 'bool'))
 			{
-				try
+				if ($this->last_exit_code === Status::WILL_RESUME->value)
 				{
-					$nextExecDatetime = $this->container->dateFactory($nextRun, 'UTC');
+					$this->next_execution = $this->container->dateFactory('now + 2 seconds', 'UTC')->toSql();
 				}
-				catch (Throwable)
+				else
 				{
-					$nextExecDatetime = $this->container->dateFactory('now', 'UTC');
-				}
+					try
+					{
+						$nextExecDatetime = $this->container->dateFactory($nextRun, 'UTC');
+					}
+					catch (Throwable)
+					{
+						$nextExecDatetime = $this->container->dateFactory('now', 'UTC');
+					}
 
-				$this->next_execution = $nextExecDatetime->toSql();
+					$this->next_execution = $nextExecDatetime->toSql();
+				}
 			}
 		}
 		catch (Exception)
@@ -389,7 +438,12 @@ class Task extends DataModel
 
 			$this->cleanUpStuckTasks();
 
-			$this->unlockTables();
+			// NB: Do NOT release the named DB lock here. We must keep the lock held through
+			// getNextTask() and the mark-as-running save below. Releasing it here allows two
+			// concurrent processes to grab the same WILL_RESUME row, both attempt the
+			// mark-as-running save, and trip AWF's optimistic-locking "Record has changed
+			// since last read" or a real MySQL deadlock. The lock is released after the
+			// mark-as-running save completes (or its fallback path runs).
 		}
 		catch (Throwable $e)
 		{
@@ -485,9 +539,17 @@ class Task extends DataModel
 		}
 
 		// Mark the current task as running
+		$priorExitCode = $pendingTask->last_exit_code;
+
+		// Suppress the CRON recalculation in Task::check() for this save. Without this the
+		// narrow, controller-pinned one-shot CRON expression would be re-resolved against the
+		// current time and (per gh-1060 cause 1) strand the in-progress batch ~1 week out if
+		// the process dies between this save and the bookkeeping save 2 lines below.
+		$pendingTask->setState('disable_next_execution_recalculation', true);
+
 		try
 		{
-			$willResume = $pendingTask->last_exit_code == Status::WILL_RESUME->value;
+			$willResume = $priorExitCode == Status::WILL_RESUME->value;
 
 			$updates = [
 				'last_exit_code' => Status::RUNNING->value,
@@ -503,7 +565,7 @@ class Task extends DataModel
 				$updates['last_execution'] = $this->container->dateFactory('now', 'UTC')->toSql();
 			}
 
-			$pendingTask->save($updates);
+			$this->saveMarkAsRunning($pendingTask, $updates);
 		}
 		catch (Exception)
 		{
@@ -514,7 +576,9 @@ class Task extends DataModel
 			{
 				$pendingTask->save(
 					[
-						'last_exit_code' => Status::NO_LOCK->value,
+						'last_exit_code' => (int) $priorExitCode === Status::WILL_RESUME->value
+							? Status::WILL_RESUME->value
+							: Status::NO_LOCK->value,
 						'last_execution' => $this->container->dateFactory('now', 'UTC')->toSql(),
 					]
 				);
@@ -529,6 +593,14 @@ class Task extends DataModel
 			@ob_end_clean();
 
 			return true;
+		}
+		finally
+		{
+			// Restore the state so the bookkeeping save 2 lines below can recompute next_execution
+			// against the (now broader) callback-derived status. If the process dies after this
+			// finally but before the bookkeeping save, next_execution is left at the previous
+			// value — which is the pre-existing behaviour we are not changing here.
+			$pendingTask->setState('disable_next_execution_recalculation', false);
 		}
 
 		try
@@ -725,14 +797,12 @@ class Task extends DataModel
 
 			$logger->debug('Updating the task\'s last execution information');
 
+			$priorExitCode = $pendingTask->last_exit_code;
+
 			try
 			{
 				$this->lockTables();
-				$pendingTask->save(
-					[
-						'last_run_end' => $this->container->dateFactory('now', 'UTC')->toSql(),
-					]
-				);
+				$this->saveLastRunEnd($pendingTask);
 				$this->unlockTables();
 			}
 			catch (Exception)
@@ -742,7 +812,9 @@ class Task extends DataModel
 				$pendingTask->save(
 					[
 						'last_run_end'   => $this->container->dateFactory('now', 'UTC')->toSql(),
-						'last_exit_code' => Status::NO_RELEASE->value,
+						'last_exit_code' => (int) $priorExitCode === Status::WILL_RESUME->value
+							? Status::WILL_RESUME->value
+							: Status::NO_RELEASE->value,
 					]
 				);
 			}
@@ -774,23 +846,100 @@ class Task extends DataModel
 		$cutoffTime = $this->container->dateFactory('now', 'UTC')
 			->sub(new DateInterval('PT' . $threshold . 'M'));
 
-		$query = $db->getQuery(true)
-			->update($db->quoteName($this->tableName))
-			->set(
+		// Select stuck tasks. We use COALESCE(last_run_end, last_execution) so a healthy
+		// WILL_RESUME pickup (which deliberately does NOT update last_execution — see the
+		// comment block at runNextTask() ~lines 519-538) is not falsely flagged as stuck.
+		$stuckRows = $db->setQuery(
+			$db->getQuery(true)
+				->select('*')
+				->from($db->quoteName($this->tableName))
+				->where($db->quoteName('last_exit_code') . ' = ' . Status::RUNNING->value)
+				->andWhere(
+					'COALESCE(' . $db->quoteName('last_run_end') . ', ' . $db->quoteName('last_execution') . ') <= '
+					. $db->quote($cutoffTime->toSql())
+				)
+		)->loadObjectList();
+
+		if (empty($stuckRows))
+		{
+			return;
+		}
+
+		foreach ($stuckRows as $row)
+		{
+			$task      = $this->getClone()->bind($row);
+			$storage   = $task->getStorage();
+			$retries   = (int) ($row->stuck_retries ?? 0);
+			$nowSql    = $this->container->dateFactory('now', 'UTC')->toSql();
+
+			// Retry budget not yet exhausted: restore the task to WILL_RESUME so it is picked up
+			// on the next getNextTask() cycle (which orders WILL_RESUME first per cause 5). We
+			// preserve the existing storage so progress within the batch is retained.
+			if ($retries < self::MAX_STUCK_RETRIES)
+			{
+				$task->save(
+					[
+						'last_exit_code' => Status::WILL_RESUME->value,
+						'last_run_end'   => $nowSql,
+						'stuck_retries'  => $retries + 1,
+					]
+				);
+
+				continue;
+			}
+
+			// Retry budget exhausted. If the storage looks like a multi-item batch, mark just
+			// the current item as failed and advance the index instead of discarding the whole
+			// run. Otherwise fall back to the original TIMEOUT / null-storage behaviour.
+			$params       = $task->getParams();
+			$sites        = (array) $params->get('sites', []);
+			$currentIndex = (int) $storage->get('currentIndex', 0);
+			$results      = (array) $storage->get('results', []);
+
+			if (!empty($sites) && $currentIndex < count($sites))
+			{
+				$failedSiteId        = (int) $sites[$currentIndex];
+				$results[$failedSiteId] = [
+					'site_name' => 'Unknown (ID: ' . $failedSiteId . ')',
+					'status'    => 'failed',
+					'message'   => sprintf(
+						'Marked failed after %d stuck retries',
+						self::MAX_STUCK_RETRIES
+					),
+				];
+
+				$newIndex     = $currentIndex + 1;
+				$done         = $newIndex >= count($sites);
+				$storage->set('results', $results);
+				$storage->set('currentIndex', $newIndex);
+
+				// Assign storage directly. AWF's DataModel::bind() uses isset(), which treats a
+				// null entry as missing, so we cannot pass null in the bind array. Direct
+				// assignment updates $this->recordData and save() will then persist NULL.
+				$task->storage = $done ? null : $storage->toString();
+				$task->save(
+					[
+						'last_exit_code' => $done
+							? Status::TIMEOUT->value
+							: Status::WILL_RESUME->value,
+						'last_run_end'   => $nowSql,
+					]
+				);
+
+				continue;
+			}
+
+			// Not a multi-item batch (or all sites already processed): the original TIMEOUT
+			// behaviour — wipe the storage so the next attempt starts from scratch.
+			// Direct assignment is required; see the comment above on AWF's bind() behaviour.
+			$task->storage = null;
+			$task->save(
 				[
-					$db->quoteName('last_exit_code') . ' = ' . Status::TIMEOUT->value,
-					$db->quoteName('last_run_end') . ' = NOW()',
-					$db->quoteName('storage') . ' = NULL',
-				]
-			)
-			->where(
-				[
-					$db->quoteName('last_exit_code') . ' = ' . Status::RUNNING->value,
-					$db->quoteName('last_execution') . ' <= ' . $db->quote($cutoffTime->toSql()),
+					'last_exit_code' => Status::TIMEOUT->value,
+					'last_run_end'   => $nowSql,
 				]
 			);
-
-		$db->setQuery($query)->execute();
+		}
 	}
 
 	public function timeoutTrap(self $pendingTask): void
@@ -849,8 +998,15 @@ class Task extends DataModel
 				]
 			)
 			->order(
+				// WILL_RESUME tasks must run before anything else regardless of priority. Without
+				// the leading CASE expression, a `priority = 1` WILL_RESUME task (e.g. an
+				// extensioninstall in progress) is perpetually queued behind routine `priority = 0`
+				// tasks created by the per-minute CRON — starving the in-progress batch. The
+				// `last_exit_code DESC` previously in this ORDER BY is subsumed by the CASE and
+				// has been removed.
+				'(CASE WHEN ' . $db->quoteName('last_exit_code') . ' = ' . Status::WILL_RESUME->value
+				. ' THEN 0 ELSE 1 END) ASC, ' .
 				$db->quoteName('priority') . ' ASC, ' .
-				$db->quoteName('last_exit_code') . ' DESC, ' .
 				$db->quoteName('next_execution') . ' ASC'
 			);
 
@@ -888,6 +1044,19 @@ class Task extends DataModel
 				)
 			);
 
+			$this->lockHeld = true;
+
+			// Register a shutdown handler so the named lock is released even on fatal errors,
+			// SIGTERM, or other exits that bypass the regular unlockTables() call sites. The
+			// handler is idempotent (it checks the lockHeld flag) and registered at most once
+			// per process; subsequent lockTables() calls within the same request do not stack
+			// duplicate shutdown handlers.
+			if (!$this->lockShutdownRegistered)
+			{
+				register_shutdown_function([$this, 'releaseLockOnShutdown']);
+				$this->lockShutdownRegistered = true;
+			}
+
 			return true;
 		}
 
@@ -911,5 +1080,83 @@ class Task extends DataModel
 				break;
 			}
 		}
+
+		$this->lockHeld = false;
+	}
+
+	/**
+	 * Shutdown handler registered by {@see lockTables()} that releases the named DB lock if it
+	 * is still held when PHP shuts down.
+	 *
+	 * Without this trap, a fatal error, SIGTERM, or PHP timeout between the lock acquisition
+	 * and the explicit unlockTables() call would leave the lock orphaned until the underlying
+	 * DB connection's GET_LOCK timeout expires — during which time no other process can run
+	 * tasks.
+	 *
+	 * Idempotent: it only acts when {@see $lockHeld} is true. This means the regular
+	 * unlockTables() call sites are unaffected and we can register the handler once per
+	 * process without stacking duplicates across multiple runNextTask() invocations.
+	 *
+	 * @return  void
+	 * @since   2.3.2
+	 */
+	public function releaseLockOnShutdown(): void
+	{
+		if (!$this->lockHeld)
+		{
+			return;
+		}
+
+		try
+		{
+			$this->unlockTables();
+		}
+		catch (Throwable)
+		{
+			// The DB connection is likely already gone during a fatal shutdown. Swallow any
+			// failure rather than throwing from the shutdown handler (which would be ignored
+			// anyway and would prevent any other registered handlers from running).
+		}
+	}
+
+	/**
+	 * Persist the "mark as running" state transition for $pendingTask.
+	 *
+	 * Extracted from {@see runNextTask()} so that integration tests can override it to simulate
+	 * a save failure (and therefore drive the fallback path that preserves Status::WILL_RESUME).
+	 *
+	 * @param   Task    $pendingTask  The task being marked as running.
+	 * @param   array   $updates      The fields being written by the mark-as-running save.
+	 *
+	 * @return  void
+	 * @throws  \Exception  Propagates any save failure to the caller.
+	 *
+	 * @since   2.3.2
+	 */
+	protected function saveMarkAsRunning(self $pendingTask, array $updates): void
+	{
+		$pendingTask->save($updates);
+	}
+
+	/**
+	 * Persist the bookkeeping `last_run_end` timestamp for $pendingTask.
+	 *
+	 * Extracted from {@see runNextTask()} so that integration tests can override it to simulate
+	 * a save failure (and therefore drive the fallback path that preserves Status::WILL_RESUME).
+	 *
+	 * @param   Task  $pendingTask  The task whose last_run_end is being recorded.
+	 *
+	 * @return  void
+	 * @throws  \Exception  Propagates any save failure to the caller.
+	 *
+	 * @since   2.3.2
+	 */
+	protected function saveLastRunEnd(self $pendingTask): void
+	{
+		$pendingTask->save(
+			[
+				'last_run_end' => $this->container->dateFactory('now', 'UTC')->toSql(),
+			]
+		);
 	}
 }
