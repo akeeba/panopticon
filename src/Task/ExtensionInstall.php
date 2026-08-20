@@ -96,35 +96,52 @@ class ExtensionInstall extends AbstractCallback
 		$siteLogger = $this->container->loggerFactory->get($this->name . '.' . $site->id);
 		$this->logger->pushLogger($siteLogger);
 
-		// Perform the installation
 		try
 		{
-			$result = $this->installOnSite($site, $url, $filePath);
-
-			$results[$siteId] = [
-				'site_name' => $site->name,
-				'status'    => $result['status'],
-				'message'   => $result['message'],
-			];
-
-			// Refresh the installed extensions list after a successful install
-			if ($result['status'] === 'success')
+			// Perform the installation. The refresh step is intentionally wrapped in a separate
+			// try/catch below so a refresh failure can never overwrite the install result.
+			try
 			{
-				$this->refreshInstalledExtensions($site);
-			}
-		}
-		catch (\Throwable $e)
-		{
-			$this->logger->error(sprintf(
-				'Exception installing on site %d (%s): %s',
-				$siteId, $site->name, $e->getMessage()
-			));
+				$result = $this->installOnSite($site, $url, $filePath);
 
-			$results[$siteId] = [
-				'site_name' => $site->name,
-				'status'    => 'failed',
-				'message'   => $e->getMessage(),
-			];
+				$results[$siteId] = [
+					'site_name' => $site->name,
+					'status'    => $result['status'],
+					'message'   => $result['message'],
+				];
+			}
+			catch (\Throwable $e)
+			{
+				$this->logger->error(sprintf(
+					'Exception installing on site %d (%s): %s',
+					$siteId, $site->name, $e->getMessage()
+				));
+
+				$results[$siteId] = [
+					'site_name' => $site->name,
+					'status'    => 'failed',
+					'message'   => $e->getMessage(),
+				];
+			}
+
+			// Refresh the installed extensions list after a successful install.
+			// Isolated from the install try/catch so a refresh failure can never overwrite
+			// the install result. The inner try/catch in refreshInstalledExtensions() still
+			// remains, so this is defense in depth.
+			if (($results[$siteId]['status'] ?? null) === 'success')
+			{
+				try
+				{
+					$this->refreshInstalledExtensions($site);
+				}
+				catch (\Throwable $e)
+				{
+					$this->logger->warning(sprintf(
+						'Failed to refresh extensions for site #%d (%s): %s',
+						$site->id, $site->name, $e->getMessage()
+					));
+				}
+			}
 		}
 		finally
 		{
