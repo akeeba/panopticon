@@ -338,19 +338,34 @@ class Task extends DataModel
 			 * If the disable_next_execution_recalculation state is set to true we'll NOT override next_execution.
 			 *
 			 * This is used when scheduling tasks for the current date and time, having them run as soon as possible.
+			 *
+			 * For tasks returning Status::WILL_RESUME we deliberately do not resolve the CRON expression either. The
+			 * controller pins all five CRON fields to the creation moment (e.g. `30 14 5 8 2`) to make a one-shot
+			 * "run immediately" task. On the next save, getNextRunDate() resolves the NEXT occurrence matching all
+			 * five fields which, with dayofweek fixed to one weekday, lands ~1 week out — stranding an in-progress
+			 * batch. Setting next_execution to "now + 2 seconds" directly avoids the bad recalc against the narrow,
+			 * pinned CRON expression without bypassing the standard scheduler path. WILL_RESUME tasks resume on the
+			 * next cron tick (~1 minute for the --loop daemon).
 			 */
 			if (!$this->getState('disable_next_execution_recalculation', false, 'bool'))
 			{
-				try
+				if ($this->last_exit_code === Status::WILL_RESUME->value)
 				{
-					$nextExecDatetime = $this->container->dateFactory($nextRun, 'UTC');
+					$this->next_execution = $this->container->dateFactory('now + 2 seconds', 'UTC')->toSql();
 				}
-				catch (Throwable)
+				else
 				{
-					$nextExecDatetime = $this->container->dateFactory('now', 'UTC');
-				}
+					try
+					{
+						$nextExecDatetime = $this->container->dateFactory($nextRun, 'UTC');
+					}
+					catch (Throwable)
+					{
+						$nextExecDatetime = $this->container->dateFactory('now', 'UTC');
+					}
 
-				$this->next_execution = $nextExecDatetime->toSql();
+					$this->next_execution = $nextExecDatetime->toSql();
+				}
 			}
 		}
 		catch (Exception)
