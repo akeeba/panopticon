@@ -132,6 +132,14 @@ ALTER TABLE `#__tasks`
 ]]></query>
         </action>
 
+        <action table="#__tasks" canfail="1">
+            <condition type="missing" value="stuck_retries"/>
+            <query><![CDATA[
+ALTER TABLE `#__tasks`
+    ADD COLUMN `stuck_retries` INT NOT NULL DEFAULT 0 AFTER `priority`;
+]]></query>
+        </action>
+
         <action table="#__queue" canfail="0">
             <condition type="missing" value=""/>
             <query><![CDATA[

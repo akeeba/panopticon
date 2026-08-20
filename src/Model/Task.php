@@ -47,6 +47,7 @@ defined('AKEEBA') || die;
  * @property int            $times_failed    How many times this task has failed
  * @property Date|null      $locked          Date and time the task was locked
  * @property int            $priority
+ * @property int            $stuck_retries   How many times cleanUpStuckTasks() has retried this task
  *
  * @noinspection PhpUnused
  */
@@ -55,6 +56,16 @@ class Task extends DataModel
 	private const DB_LOCK_NAME = 'PanopticonNextTask';
 
 	private const DB_LOCK_TIMEOUT = 5;
+
+	/**
+	 * Maximum number of times {@see cleanUpStuckTasks()} will restore a stuck task to
+	 * Status::WILL_RESUME before giving up and either marking the current item failed (for
+	 * multi-item batches) or transitioning the task to Status::TIMEOUT.
+	 *
+	 * @var  int
+	 * @since 2.3.2
+	 */
+	private const MAX_STUCK_RETRIES = 3;
 
 	/**
 	 * Tracks whether we are currently holding the named DB lock from {@see self::DB_LOCK_NAME}.
@@ -835,23 +846,100 @@ class Task extends DataModel
 		$cutoffTime = $this->container->dateFactory('now', 'UTC')
 			->sub(new DateInterval('PT' . $threshold . 'M'));
 
-		$query = $db->getQuery(true)
-			->update($db->quoteName($this->tableName))
-			->set(
+		// Select stuck tasks. We use COALESCE(last_run_end, last_execution) so a healthy
+		// WILL_RESUME pickup (which deliberately does NOT update last_execution — see the
+		// comment block at runNextTask() ~lines 519-538) is not falsely flagged as stuck.
+		$stuckRows = $db->setQuery(
+			$db->getQuery(true)
+				->select('*')
+				->from($db->quoteName($this->tableName))
+				->where($db->quoteName('last_exit_code') . ' = ' . Status::RUNNING->value)
+				->andWhere(
+					'COALESCE(' . $db->quoteName('last_run_end') . ', ' . $db->quoteName('last_execution') . ') <= '
+					. $db->quote($cutoffTime->toSql())
+				)
+		)->loadObjectList();
+
+		if (empty($stuckRows))
+		{
+			return;
+		}
+
+		foreach ($stuckRows as $row)
+		{
+			$task      = $this->getClone()->bind($row);
+			$storage   = $task->getStorage();
+			$retries   = (int) ($row->stuck_retries ?? 0);
+			$nowSql    = $this->container->dateFactory('now', 'UTC')->toSql();
+
+			// Retry budget not yet exhausted: restore the task to WILL_RESUME so it is picked up
+			// on the next getNextTask() cycle (which orders WILL_RESUME first per cause 5). We
+			// preserve the existing storage so progress within the batch is retained.
+			if ($retries < self::MAX_STUCK_RETRIES)
+			{
+				$task->save(
+					[
+						'last_exit_code' => Status::WILL_RESUME->value,
+						'last_run_end'   => $nowSql,
+						'stuck_retries'  => $retries + 1,
+					]
+				);
+
+				continue;
+			}
+
+			// Retry budget exhausted. If the storage looks like a multi-item batch, mark just
+			// the current item as failed and advance the index instead of discarding the whole
+			// run. Otherwise fall back to the original TIMEOUT / null-storage behaviour.
+			$params       = $task->getParams();
+			$sites        = (array) $params->get('sites', []);
+			$currentIndex = (int) $storage->get('currentIndex', 0);
+			$results      = (array) $storage->get('results', []);
+
+			if (!empty($sites) && $currentIndex < count($sites))
+			{
+				$failedSiteId        = (int) $sites[$currentIndex];
+				$results[$failedSiteId] = [
+					'site_name' => 'Unknown (ID: ' . $failedSiteId . ')',
+					'status'    => 'failed',
+					'message'   => sprintf(
+						'Marked failed after %d stuck retries',
+						self::MAX_STUCK_RETRIES
+					),
+				];
+
+				$newIndex     = $currentIndex + 1;
+				$done         = $newIndex >= count($sites);
+				$storage->set('results', $results);
+				$storage->set('currentIndex', $newIndex);
+
+				// Assign storage directly. AWF's DataModel::bind() uses isset(), which treats a
+				// null entry as missing, so we cannot pass null in the bind array. Direct
+				// assignment updates $this->recordData and save() will then persist NULL.
+				$task->storage = $done ? null : $storage->toString();
+				$task->save(
+					[
+						'last_exit_code' => $done
+							? Status::TIMEOUT->value
+							: Status::WILL_RESUME->value,
+						'last_run_end'   => $nowSql,
+					]
+				);
+
+				continue;
+			}
+
+			// Not a multi-item batch (or all sites already processed): the original TIMEOUT
+			// behaviour — wipe the storage so the next attempt starts from scratch.
+			// Direct assignment is required; see the comment above on AWF's bind() behaviour.
+			$task->storage = null;
+			$task->save(
 				[
-					$db->quoteName('last_exit_code') . ' = ' . Status::TIMEOUT->value,
-					$db->quoteName('last_run_end') . ' = NOW()',
-					$db->quoteName('storage') . ' = NULL',
-				]
-			)
-			->where(
-				[
-					$db->quoteName('last_exit_code') . ' = ' . Status::RUNNING->value,
-					$db->quoteName('last_execution') . ' <= ' . $db->quote($cutoffTime->toSql()),
+					'last_exit_code' => Status::TIMEOUT->value,
+					'last_run_end'   => $nowSql,
 				]
 			);
-
-		$db->setQuery($query)->execute();
+		}
 	}
 
 	public function timeoutTrap(self $pendingTask): void
