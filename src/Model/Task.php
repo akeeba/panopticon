@@ -56,6 +56,29 @@ class Task extends DataModel
 
 	private const DB_LOCK_TIMEOUT = 5;
 
+	/**
+	 * Tracks whether we are currently holding the named DB lock from {@see self::DB_LOCK_NAME}.
+	 *
+	 * Set to true after a successful {@see lockTables()}, cleared by {@see unlockTables()}.
+	 * The shutdown handler {@see releaseLockOnShutdown()} consults this flag so it is a no-op
+	 * when the lock has already been released by the regular code path.
+	 *
+	 * @var  bool
+	 * @since 2.3.2
+	 */
+	private bool $lockHeld = false;
+
+	/**
+	 * Tracks whether {@see releaseLockOnShutdown()} has been registered. PHP's
+	 * register_shutdown_function is sticky across calls — register it at most once per request
+	 * to avoid stacking duplicate shutdown handlers when runNextTask() is invoked more than
+	 * once in the same process (e.g. inside a long-running loop).
+	 *
+	 * @var  bool
+	 * @since 2.3.2
+	 */
+	private bool $lockShutdownRegistered = false;
+
 	public function __construct(?Container $container = null)
 	{
 		$this->tableName   = '#__tasks';
@@ -404,7 +427,12 @@ class Task extends DataModel
 
 			$this->cleanUpStuckTasks();
 
-			$this->unlockTables();
+			// NB: Do NOT release the named DB lock here. We must keep the lock held through
+			// getNextTask() and the mark-as-running save below. Releasing it here allows two
+			// concurrent processes to grab the same WILL_RESUME row, both attempt the
+			// mark-as-running save, and trip AWF's optimistic-locking "Record has changed
+			// since last read" or a real MySQL deadlock. The lock is released after the
+			// mark-as-running save completes (or its fallback path runs).
 		}
 		catch (Throwable $e)
 		{
@@ -907,6 +935,19 @@ class Task extends DataModel
 				)
 			);
 
+			$this->lockHeld = true;
+
+			// Register a shutdown handler so the named lock is released even on fatal errors,
+			// SIGTERM, or other exits that bypass the regular unlockTables() call sites. The
+			// handler is idempotent (it checks the lockHeld flag) and registered at most once
+			// per process; subsequent lockTables() calls within the same request do not stack
+			// duplicate shutdown handlers.
+			if (!$this->lockShutdownRegistered)
+			{
+				register_shutdown_function([$this, 'releaseLockOnShutdown']);
+				$this->lockShutdownRegistered = true;
+			}
+
 			return true;
 		}
 
@@ -929,6 +970,43 @@ class Task extends DataModel
 			{
 				break;
 			}
+		}
+
+		$this->lockHeld = false;
+	}
+
+	/**
+	 * Shutdown handler registered by {@see lockTables()} that releases the named DB lock if it
+	 * is still held when PHP shuts down.
+	 *
+	 * Without this trap, a fatal error, SIGTERM, or PHP timeout between the lock acquisition
+	 * and the explicit unlockTables() call would leave the lock orphaned until the underlying
+	 * DB connection's GET_LOCK timeout expires — during which time no other process can run
+	 * tasks.
+	 *
+	 * Idempotent: it only acts when {@see $lockHeld} is true. This means the regular
+	 * unlockTables() call sites are unaffected and we can register the handler once per
+	 * process without stacking duplicates across multiple runNextTask() invocations.
+	 *
+	 * @return  void
+	 * @since   2.3.2
+	 */
+	public function releaseLockOnShutdown(): void
+	{
+		if (!$this->lockHeld)
+		{
+			return;
+		}
+
+		try
+		{
+			$this->unlockTables();
+		}
+		catch (Throwable)
+		{
+			// The DB connection is likely already gone during a fatal shutdown. Swallow any
+			// failure rather than throwing from the shutdown handler (which would be ignored
+			// anyway and would prevent any other registered handlers from running).
 		}
 	}
 
