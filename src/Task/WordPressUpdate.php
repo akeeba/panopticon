@@ -53,7 +53,8 @@ class WordPressUpdate extends AbstractCallback
 		$site               = $this->getSite($task);
 		$config             = $site->getConfig();
 
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+		$siteLogger = $this->container->loggerFactory->get($this->name . '.' . $site->id);
+		$this->logger->pushLogger($siteLogger);
 
 		try
 		{
@@ -164,6 +165,12 @@ class WordPressUpdate extends AbstractCallback
 
 			// Rethrow the exception so that the task gets the "knocked out" state
 			throw $e;
+		}
+		finally
+		{
+			// Pop the site-specific logger so the long-lived task:run --loop daemon
+			// does not leak an open log file handle per site processed (gh-1060 cause 6).
+			$this->logger->popLogger($siteLogger);
 		}
 
 		// If we are in a state other than "finish" we have more work to do.
@@ -369,96 +376,106 @@ class WordPressUpdate extends AbstractCallback
 		$storage->set('email_variables', $emailVariables);
 		$storage->set('site_id', $site->id);
 
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+		$siteLogger = $this->container->loggerFactory->get($this->name . '.' . $site->id);
+		$this->logger->pushLogger($siteLogger);
 
-		// Is the site enabled?
-		if (!$site->enabled)
-		{
-			throw new NonEmailedRuntimeException(
-				$this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED', $task->site_id)
-			);
-		}
-
-		$this->logger->info(
-			$this->getLanguage()->sprintf(
-				'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREPARING',
-				$site->id,
-				$site->name
-			)
-		);
-
-		// Does this site actually have an update available?
-		$config = $site->getFieldValue('config', '{}');
-		$config = ($config instanceof Registry) ? $config->toString() : $config;
 		try
 		{
-			$config = @json_decode((string) $config);
-		}
-		catch (Exception)
-		{
-			$config = null;
-		}
+			// Is the site enabled?
+			if (!$site->enabled)
+			{
+				throw new NonEmailedRuntimeException(
+					$this->getLanguage()->sprintf('PANOPTICON_TASK_JOOMLAUPDATE_ERR_SITE_DISABLED', $task->site_id)
+				);
+			}
 
-		$currentVersion = $config?->core?->current?->version;
-		$latestVersion  = $config?->core?->latest?->version;
-		$params         = (($task->params ?? null) instanceof Registry) ?
-			($task->params ?? null) : new Registry($task->params ?? null);
-		$force          = $params->get('force', false);
-
-		$storage->set('oldVersion', $currentVersion);
-		$storage->set('newVersion', $latestVersion);
-
-		$emailVariables = array_merge(
-			$emailVariables,
-			[
-				'NEW_VERSION' => $latestVersion,
-				'OLD_VERSION' => $currentVersion,
-			]
-		);
-		$storage->set('email_variables', $emailVariables);
-		$storage->set('email_cc', $this->getSiteNotificationEmails($config));
-		$storage->set('email_after', (bool) ($config?->config?->core_update?->email_after ?? true));
-		$storage->set('email_error', (bool) ($config?->config?->core_update?->email_error ?? true));
-
-
-		if (
-			!$force && !empty($currentVersion) && !empty($latestVersion)
-			&& version_compare($currentVersion, $latestVersion, 'ge')
-		)
-		{
-			throw new NonEmailedRuntimeException(
-				$this->getLanguage()->sprintf(
-					'PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NO_UPDATE_AVAILABLE', $site->id,
-					$site->name, $currentVersion, $latestVersion
-				)
-			);
-		}
-
-		if (!empty($currentVersion) && !empty($latestVersion))
-		{
 			$this->logger->info(
 				$this->getLanguage()->sprintf(
-					'PANOPTICON_TASK_WORDPRESSUPDATE_LOG_WILL_BE_UPDATED',
+					'PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREPARING',
 					$site->id,
-					$site->name,
-					$currentVersion,
-					$latestVersion
+					$site->name
 				)
 			);
-		}
-		else
-		{
-			throw new NonEmailedRuntimeException(
-				sprintf(
-					'The current or latest version is missing on site #%d (%s). Is the site already updated?',
-					$site->id,
-					$site->name,
-				)
-			);
-		}
 
-		// Finally, advance the state
-		$this->advanceState();
+			// Does this site actually have an update available?
+			$config = $site->getFieldValue('config', '{}');
+			$config = ($config instanceof Registry) ? $config->toString() : $config;
+			try
+			{
+				$config = @json_decode((string) $config);
+			}
+			catch (Exception)
+			{
+				$config = null;
+			}
+
+			$currentVersion = $config?->core?->current?->version;
+			$latestVersion  = $config?->core?->latest?->version;
+			$params         = (($task->params ?? null) instanceof Registry) ?
+				($task->params ?? null) : new Registry($task->params ?? null);
+			$force          = $params->get('force', false);
+
+			$storage->set('oldVersion', $currentVersion);
+			$storage->set('newVersion', $latestVersion);
+
+			$emailVariables = array_merge(
+				$emailVariables,
+				[
+					'NEW_VERSION' => $latestVersion,
+					'OLD_VERSION' => $currentVersion,
+				]
+			);
+			$storage->set('email_variables', $emailVariables);
+			$storage->set('email_cc', $this->getSiteNotificationEmails($config));
+			$storage->set('email_after', (bool) ($config?->config?->core_update?->email_after ?? true));
+			$storage->set('email_error', (bool) ($config?->config?->core_update?->email_error ?? true));
+
+
+			if (
+				!$force && !empty($currentVersion) && !empty($latestVersion)
+				&& version_compare($currentVersion, $latestVersion, 'ge')
+			)
+			{
+				throw new NonEmailedRuntimeException(
+					$this->getLanguage()->sprintf(
+						'PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NO_UPDATE_AVAILABLE', $site->id,
+						$site->name, $currentVersion, $latestVersion
+					)
+				);
+			}
+
+			if (!empty($currentVersion) && !empty($latestVersion))
+			{
+				$this->logger->info(
+					$this->getLanguage()->sprintf(
+						'PANOPTICON_TASK_WORDPRESSUPDATE_LOG_WILL_BE_UPDATED',
+						$site->id,
+						$site->name,
+						$currentVersion,
+						$latestVersion
+					)
+				);
+			}
+			else
+			{
+				throw new NonEmailedRuntimeException(
+					sprintf(
+						'The current or latest version is missing on site #%d (%s). Is the site already updated?',
+						$site->id,
+						$site->name,
+					)
+				);
+			}
+
+			// Finally, advance the state
+			$this->advanceState();
+		}
+		finally
+		{
+			// Pop the site-specific logger so the long-lived task:run --loop daemon
+			// does not leak an open log file handle per site processed (gh-1060 cause 6).
+			$this->logger->popLogger($siteLogger);
+		}
 	}
 
 	/**

@@ -37,6 +37,30 @@ class ForkedLogger extends AbstractLogger implements LoggerInterface
 		$this->loggers[] = $logger;
 	}
 
+	/**
+	 * Remove a logger previously pushed with pushLogger().
+	 *
+	 * @param   LoggerInterface  $logger  The logger to remove.
+	 *
+	 * @return  bool  True if the logger was found and removed, false otherwise.
+	 *
+	 * @since   2.3.2
+	 */
+	public function popLogger(LoggerInterface $logger): bool
+	{
+		$key = array_search($logger, $this->loggers, true);
+
+		if ($key === false)
+		{
+			return false;
+		}
+
+		unset($this->loggers[$key]);
+		$this->loggers = array_values($this->loggers);
+
+		return true;
+	}
+
 	public function hasLogger(LoggerInterface $logger): bool
 	{
 		return in_array($logger, $this->loggers, true);
