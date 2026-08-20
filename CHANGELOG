@@ -1,4 +1,10 @@
 <?php die(); ?>
+Akeeba Panopticon 2.3.2
+================================================================================
+# [HIGH] Task queue: mass extension install stalled after ~30 sites because of six interacting bugs in Model\Task — narrow-CRON recalculation in check() stranding WILL_RESUME tasks ~1 week out, named DB lock released between cleanUpStuckTasks() and getNextTask() allowing concurrent --loop processes to claim the same row, fallback paths downgrading WILL_RESUME to NO_LOCK/NO_RELEASE on any save exception, mark-as-running save triggering the same CRON recalc on process death, WILL_RESUME starvation behind the `priority = 0` backlog, and cleanUpStuckTasks() wiping storage with no retry on a single false-positive [gh-1060]
+# [MEDIUM] Tasks: per-site loggers pushed onto ForkedLogger were never popped, leaking an open log file handle per site processed into the long-lived task:run --loop daemon; ForkedLogger::popLogger() added and called from a finally block in every affected task [gh-1060]
+# [LOW] Mass extension install: a failure in the post-install extensions refresh could overwrite an already-successful install result with "failed"; the refresh step is now wrapped in its own try/catch so it cannot affect the install result [gh-1060]
+
 Akeeba Panopticon 2.3.1
 ================================================================================
 + Update result emails now state the old and the new version of each extension, plugin, and theme [gh-1049]
