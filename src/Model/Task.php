@@ -500,9 +500,11 @@ class Task extends DataModel
 		}
 
 		// Mark the current task as running
+		$priorExitCode = $pendingTask->last_exit_code;
+
 		try
 		{
-			$willResume = $pendingTask->last_exit_code == Status::WILL_RESUME->value;
+			$willResume = $priorExitCode == Status::WILL_RESUME->value;
 
 			$updates = [
 				'last_exit_code' => Status::RUNNING->value,
@@ -518,7 +520,7 @@ class Task extends DataModel
 				$updates['last_execution'] = $this->container->dateFactory('now', 'UTC')->toSql();
 			}
 
-			$pendingTask->save($updates);
+			$this->saveMarkAsRunning($pendingTask, $updates);
 		}
 		catch (Exception)
 		{
@@ -529,7 +531,9 @@ class Task extends DataModel
 			{
 				$pendingTask->save(
 					[
-						'last_exit_code' => Status::NO_LOCK->value,
+						'last_exit_code' => (int) $priorExitCode === Status::WILL_RESUME->value
+							? Status::WILL_RESUME->value
+							: Status::NO_LOCK->value,
 						'last_execution' => $this->container->dateFactory('now', 'UTC')->toSql(),
 					]
 				);
@@ -740,14 +744,12 @@ class Task extends DataModel
 
 			$logger->debug('Updating the task\'s last execution information');
 
+			$priorExitCode = $pendingTask->last_exit_code;
+
 			try
 			{
 				$this->lockTables();
-				$pendingTask->save(
-					[
-						'last_run_end' => $this->container->dateFactory('now', 'UTC')->toSql(),
-					]
-				);
+				$this->saveLastRunEnd($pendingTask);
 				$this->unlockTables();
 			}
 			catch (Exception)
@@ -757,7 +759,9 @@ class Task extends DataModel
 				$pendingTask->save(
 					[
 						'last_run_end'   => $this->container->dateFactory('now', 'UTC')->toSql(),
-						'last_exit_code' => Status::NO_RELEASE->value,
+						'last_exit_code' => (int) $priorExitCode === Status::WILL_RESUME->value
+							? Status::WILL_RESUME->value
+							: Status::NO_RELEASE->value,
 					]
 				);
 			}
@@ -926,5 +930,46 @@ class Task extends DataModel
 				break;
 			}
 		}
+	}
+
+	/**
+	 * Persist the "mark as running" state transition for $pendingTask.
+	 *
+	 * Extracted from {@see runNextTask()} so that integration tests can override it to simulate
+	 * a save failure (and therefore drive the fallback path that preserves Status::WILL_RESUME).
+	 *
+	 * @param   Task    $pendingTask  The task being marked as running.
+	 * @param   array   $updates      The fields being written by the mark-as-running save.
+	 *
+	 * @return  void
+	 * @throws  \Exception  Propagates any save failure to the caller.
+	 *
+	 * @since   2.3.2
+	 */
+	protected function saveMarkAsRunning(self $pendingTask, array $updates): void
+	{
+		$pendingTask->save($updates);
+	}
+
+	/**
+	 * Persist the bookkeeping `last_run_end` timestamp for $pendingTask.
+	 *
+	 * Extracted from {@see runNextTask()} so that integration tests can override it to simulate
+	 * a save failure (and therefore drive the fallback path that preserves Status::WILL_RESUME).
+	 *
+	 * @param   Task  $pendingTask  The task whose last_run_end is being recorded.
+	 *
+	 * @return  void
+	 * @throws  \Exception  Propagates any save failure to the caller.
+	 *
+	 * @since   2.3.2
+	 */
+	protected function saveLastRunEnd(self $pendingTask): void
+	{
+		$pendingTask->save(
+			[
+				'last_run_end' => $this->container->dateFactory('now', 'UTC')->toSql(),
+			]
+		);
 	}
 }
