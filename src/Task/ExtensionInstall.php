@@ -93,9 +93,8 @@ class ExtensionInstall extends AbstractCallback
 		}
 
 		// Push site-specific logger
-		$this->logger->pushLogger(
-			$this->container->loggerFactory->get($this->name . '.' . $site->id)
-		);
+		$siteLogger = $this->container->loggerFactory->get($this->name . '.' . $site->id);
+		$this->logger->pushLogger($siteLogger);
 
 		// Perform the installation
 		try
@@ -126,6 +125,12 @@ class ExtensionInstall extends AbstractCallback
 				'status'    => 'failed',
 				'message'   => $e->getMessage(),
 			];
+		}
+		finally
+		{
+			// Pop the site-specific logger so the long-lived task:run --loop daemon
+			// does not leak an open log file handle per site processed (gh-1060 cause 6).
+			$this->logger->popLogger($siteLogger);
 		}
 
 		$storage->set('results', $results);

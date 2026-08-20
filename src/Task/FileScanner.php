@@ -51,7 +51,8 @@ class FileScanner extends AbstractCallback
 		$initiatingUser = $params->get('initiatingUser', 0);
 
 		// Add a site-specific logger
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->site->id));
+		$siteLogger = $this->container->loggerFactory->get($this->name . '.' . $this->site->id);
+		$this->logger->pushLogger($siteLogger);
 
 		try
 		{
@@ -232,6 +233,12 @@ class FileScanner extends AbstractCallback
 		{
 			$this->sendFailureEmail($e);
 			throw $e;
+		}
+		finally
+		{
+			// Pop the site-specific logger so the long-lived task:run --loop daemon
+			// does not leak an open log file handle per site processed (gh-1060 cause 6).
+			$this->logger->popLogger($siteLogger);
 		}
 	}
 

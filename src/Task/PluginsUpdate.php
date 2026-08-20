@@ -54,55 +54,65 @@ class PluginsUpdate extends AbstractCallback
 			throw new RuntimeException('This is not a WordPress site!');
 		}
 
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $site->id));
+		$siteLogger = $this->container->loggerFactory->get($this->name . '.' . $site->id);
+		$this->logger->pushLogger($siteLogger);
 
-		// Get the queue
-		$queueKey = sprintf(QueueTypeEnum::PLUGINS->value, $task->site_id);
-		$queue    = $this->container->queueFactory->makeQueue($queueKey);
-		$item     = $queue->pop();
-
-		// It is possible for this to happen if another process snatched the last item of the queue before we did.
-		if ($item === null)
+		try
 		{
-			$this->logger->info(
-				sprintf(
-					'Plugin and themes updates for site #%d (%s): Queue empty, done installing updates',
-					$site->id, $site->name
-				)
-			);
+			// Get the queue
+			$queueKey = sprintf(QueueTypeEnum::PLUGINS->value, $task->site_id);
+			$queue    = $this->container->queueFactory->makeQueue($queueKey);
+			$item     = $queue->pop();
 
-			// Email say we are done
-			$this->enqueueResultsEmail($site, $storage);
-
-			// Reload the update information from the site (you never know…)
-			$this->reloadExtensionInformation($site);
-
-			/**
-			 * DO NOT REMOVE THIS CHECK - THIS IS A CONCURRENCY SANITY CHECK
-			 *
-			 * It is possible that there were no items in the queue when we tried to pop an item. However, between then
-			 * and now we've done a fair amount of work which gives enough time for another process to enqueue a new
-			 * item. In this case we don't want to return OK; we want to return WILL_RESUME instead.
-			 */
-			if ($queue->count() === 0)
+			// It is possible for this to happen if another process snatched the last item of the queue before we did.
+			if ($item === null)
 			{
-				return Status::OK->value;
+				$this->logger->info(
+					sprintf(
+						'Plugin and themes updates for site #%d (%s): Queue empty, done installing updates',
+						$site->id, $site->name
+					)
+				);
+
+				// Email say we are done
+				$this->enqueueResultsEmail($site, $storage);
+
+				// Reload the update information from the site (you never know…)
+				$this->reloadExtensionInformation($site);
+
+				/**
+				 * DO NOT REMOVE THIS CHECK - THIS IS A CONCURRENCY SANITY CHECK
+				 *
+				 * It is possible that there were no items in the queue when we tried to pop an item. However, between then
+				 * and now we've done a fair amount of work which gives enough time for another process to enqueue a new
+				 * item. In this case we don't want to return OK; we want to return WILL_RESUME instead.
+				 */
+				if ($queue->count() === 0)
+				{
+					return Status::OK->value;
+				}
+
+				$this->logger->info(
+					sprintf(
+						'Plugin and themes updates for site #%d (%s): Queue item added before marking ourselves done; will resume installing updates later.',
+						$site->id, $site->name
+					)
+				);
+
+				return Status::WILL_RESUME->value;
 			}
 
-			$this->logger->info(
-				sprintf(
-					'Plugin and themes updates for site #%d (%s): Queue item added before marking ourselves done; will resume installing updates later.',
-					$site->id, $site->name
-				)
-			);
+			// Tell the site to install the update.
+			$this->installUpdate($site, $item, $storage);
 
 			return Status::WILL_RESUME->value;
 		}
-
-		// Tell the site to install the update.
-		$this->installUpdate($site, $item, $storage);
-
-		return Status::WILL_RESUME->value;
+		finally
+		{
+			// Pop the site-specific logger so the long-lived task:run --loop daemon
+			// does not leak an open log file handle per site processed (gh-1060 cause 6).
+			$this->logger->popLogger($siteLogger);
+		}
 	}
 
 	private function installUpdate(Site $site, QueueItem $item, Registry $storage): void

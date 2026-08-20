@@ -50,143 +50,153 @@ class CoreChecksums extends AbstractCallback
 		$initiatingUser = $params->get('initiatingUser', 0);
 
 		// Add a site-specific logger
-		$this->logger->pushLogger($this->container->loggerFactory->get($this->name . '.' . $this->site->id));
+		$siteLogger = $this->container->loggerFactory->get($this->name . '.' . $this->site->id);
+		$this->logger->pushLogger($siteLogger);
 
-		// Only Joomla and WordPress sites are supported
-		if (!in_array($this->site->cmsType(), [CMSType::JOOMLA, CMSType::WORDPRESS]))
+		try
 		{
-			$this->logger->error(
-				sprintf(
-					'Site #%d (%s) is not a Joomla or WordPress site. Core file integrity checks are only supported for Joomla and WordPress sites.',
-					$this->site->getId(),
-					$this->site->name
-				)
-			);
+			// Only Joomla and WordPress sites are supported
+			if (!in_array($this->site->cmsType(), [CMSType::JOOMLA, CMSType::WORDPRESS]))
+			{
+				$this->logger->error(
+					sprintf(
+						'Site #%d (%s) is not a Joomla or WordPress site. Core file integrity checks are only supported for Joomla and WordPress sites.',
+						$this->site->getId(),
+						$this->site->name
+					)
+				);
 
-			throw new \RuntimeException('Core file integrity checks are only supported for Joomla and WordPress sites.');
-		}
+				throw new \RuntimeException('Core file integrity checks are only supported for Joomla and WordPress sites.');
+			}
 
-		// Load the temporary storage
-		$state        = $storage->get('state', 'init');
-		$lastId       = $storage->get('last_id', 0);
-		$invalidFiles = $storage->get('invalidFiles', []);
+			// Load the temporary storage
+			$state        = $storage->get('state', 'init');
+			$lastId       = $storage->get('last_id', 0);
+			$invalidFiles = $storage->get('invalidFiles', []);
 
-		if ($state === 'init')
-		{
+			if ($state === 'init')
+			{
+				$this->logger->info(
+					sprintf(
+						'Starting core file integrity check on site #%d (%s)',
+						$this->site->getId(),
+						$this->site->name,
+					)
+				);
+
+				$result = $this->prepareScan();
+
+				if ($result === null)
+				{
+					$this->logFailedReport($initiatingUser);
+
+					$this->logger->error('Invalid response from the remote server during prepare step.');
+
+					throw new \RuntimeException('Invalid response from the remote server during prepare step.');
+				}
+
+				$storage->set('state', 'step');
+				$storage->set('last_id', 0);
+				$storage->set('invalidFiles', []);
+
+				$this->logger->info('Prepare step complete, moving to file checking.');
+
+				return Status::WILL_RESUME->value;
+			}
+
+			// Step
 			$this->logger->info(
 				sprintf(
-					'Starting core file integrity check on site #%d (%s)',
+					'Continuing core file integrity check on site #%d (%s), last_id=%d',
 					$this->site->getId(),
 					$this->site->name,
+					$lastId,
 				)
 			);
 
-			$result = $this->prepareScan();
+			$result = $this->stepScan($lastId);
 
-			if ($result === null)
+			if ($result === null || !is_object($result))
 			{
 				$this->logFailedReport($initiatingUser);
 
-				$this->logger->error('Invalid response from the remote server during prepare step.');
+				$this->logger->error(
+					sprintf(
+						'Invalid response from the remote server (%s)',
+						empty($result) ? 'no data' : 'response is not an object'
+					)
+				);
 
-				throw new \RuntimeException('Invalid response from the remote server during prepare step.');
+				throw new \RuntimeException('Invalid response from the remote server.');
 			}
 
-			$storage->set('state', 'step');
-			$storage->set('last_id', 0);
-			$storage->set('invalidFiles', []);
+			// Accumulate invalid files
+			$newInvalid   = (array) ($result->invalidFiles ?? []);
+			$invalidFiles = array_merge($invalidFiles, $newInvalid);
 
-			$this->logger->info('Prepare step complete, moving to file checking.');
+			if (!empty($newInvalid))
+			{
+				$this->logger->warning(
+					sprintf('Found %d modified core files in this step.', count($newInvalid))
+				);
+			}
+
+			$storage->set('last_id', (int) ($result->last_id ?? 0));
+			$storage->set('invalidFiles', $invalidFiles);
+
+			if ($result->done ?? false)
+			{
+				$this->logger->info(
+					sprintf(
+						'Core file integrity check has finished on site #%d (%s). Modified files: %d',
+						$this->site->getId(),
+						$this->site->name,
+						count($invalidFiles),
+					)
+				);
+
+				// Save results to site config
+				$this->saveSite(
+					$this->site,
+					function (Site $site) use ($invalidFiles)
+					{
+						$config = $site->getConfig();
+						$config->set('core.coreChecksums.modifiedFiles', $invalidFiles);
+						$config->set('core.coreChecksums.modifiedCount', count($invalidFiles));
+						$config->set('core.coreChecksums.lastCheck', time());
+						$config->set('core.coreChecksums.lastStatus', empty($invalidFiles));
+						$site->config = $config;
+					}
+				);
+
+				// Log report
+				$this->logReport(empty($invalidFiles), $initiatingUser, $invalidFiles);
+
+				// Send email notification if modified files found
+				if (!empty($invalidFiles))
+				{
+					$this->sendNotificationEmail($this->site, $invalidFiles);
+				}
+
+				return Status::OK->value;
+			}
+
+			$this->logger->info(
+				sprintf(
+					'More work for core file integrity check on site #%d (%s).',
+					$this->site->getId(),
+					$this->site->name,
+				)
+			);
 
 			return Status::WILL_RESUME->value;
 		}
-
-		// Step
-		$this->logger->info(
-			sprintf(
-				'Continuing core file integrity check on site #%d (%s), last_id=%d',
-				$this->site->getId(),
-				$this->site->name,
-				$lastId,
-			)
-		);
-
-		$result = $this->stepScan($lastId);
-
-		if ($result === null || !is_object($result))
+		finally
 		{
-			$this->logFailedReport($initiatingUser);
-
-			$this->logger->error(
-				sprintf(
-					'Invalid response from the remote server (%s)',
-					empty($result) ? 'no data' : 'response is not an object'
-				)
-			);
-
-			throw new \RuntimeException('Invalid response from the remote server.');
+			// Pop the site-specific logger so the long-lived task:run --loop daemon
+			// does not leak an open log file handle per site processed (gh-1060 cause 6).
+			$this->logger->popLogger($siteLogger);
 		}
-
-		// Accumulate invalid files
-		$newInvalid   = (array) ($result->invalidFiles ?? []);
-		$invalidFiles = array_merge($invalidFiles, $newInvalid);
-
-		if (!empty($newInvalid))
-		{
-			$this->logger->warning(
-				sprintf('Found %d modified core files in this step.', count($newInvalid))
-			);
-		}
-
-		$storage->set('last_id', (int) ($result->last_id ?? 0));
-		$storage->set('invalidFiles', $invalidFiles);
-
-		if ($result->done ?? false)
-		{
-			$this->logger->info(
-				sprintf(
-					'Core file integrity check has finished on site #%d (%s). Modified files: %d',
-					$this->site->getId(),
-					$this->site->name,
-					count($invalidFiles),
-				)
-			);
-
-			// Save results to site config
-			$this->saveSite(
-				$this->site,
-				function (Site $site) use ($invalidFiles)
-				{
-					$config = $site->getConfig();
-					$config->set('core.coreChecksums.modifiedFiles', $invalidFiles);
-					$config->set('core.coreChecksums.modifiedCount', count($invalidFiles));
-					$config->set('core.coreChecksums.lastCheck', time());
-					$config->set('core.coreChecksums.lastStatus', empty($invalidFiles));
-					$site->config = $config;
-				}
-			);
-
-			// Log report
-			$this->logReport(empty($invalidFiles), $initiatingUser, $invalidFiles);
-
-			// Send email notification if modified files found
-			if (!empty($invalidFiles))
-			{
-				$this->sendNotificationEmail($this->site, $invalidFiles);
-			}
-
-			return Status::OK->value;
-		}
-
-		$this->logger->info(
-			sprintf(
-				'More work for core file integrity check on site #%d (%s).',
-				$this->site->getId(),
-				$this->site->name,
-			)
-		);
-
-		return Status::WILL_RESUME->value;
 	}
 
 	private function prepareScan(): mixed
