@@ -11,7 +11,6 @@ namespace Akeeba\Panopticon\Tests\Unit\Task;
 
 defined('AKEEBA') || die;
 
-use Akeeba\Panopticon\Library\Logger\ForkedLogger;
 use Akeeba\Panopticon\Library\Task\Status;
 use Akeeba\Panopticon\Task\ExtensionInstall;
 use Akeeba\Panopticon\Tests\AbstractUnitTestCase;
@@ -61,12 +60,13 @@ class ExtensionInstallTest extends AbstractUnitTestCase
 			public function __construct(array $installResult, bool $refreshThrows)
 			{
 				// We deliberately bypass the parent constructor because it requires a live
-				// container. We only need the readonly properties __invoke() reads.
+				// container. The stub's __invoke() only reads $this->installResult and
+				// $this->refreshThrows; we deliberately do NOT initialise the parent's
+				// readonly $name / $description / $logger here because PHP 8.3+ forbids a
+				// subclass from assigning a readonly property declared on its parent, and
+				// the stub never accesses any of them.
 				$this->installResult = $installResult;
 				$this->refreshThrows = $refreshThrows;
-				$this->name = 'extensioninstall';
-				$this->description = 'PANOPTICON_TASKTYPE_EXTENSIONINSTALL';
-				$this->logger = new ForkedLogger();
 			}
 
 			public function __invoke(object $task, Registry $storage): int
