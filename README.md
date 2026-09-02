@@ -18,6 +18,24 @@ Currently, it supports Joomla and WordPress sites. Each CMS requires a connector
 
 The recommended installation method for most users is the [public release ZIP file](https://github.com/akeeba/panopticon/releases) or the [official container image (Docker, Podman, etc)](https://github.com/akeeba/panopticon/wiki/Using-Docker).
 
+## Build instructions
+
+Check out this repository and Akeeba Build Tools — Public Packager using the following directory names:
+
+- `panopticon` This repository.
+- `buildfiles` [Akeeba Build Tools — Public Packager](https://github.com/akeeba/buildfiles-public)
+- `build.properties` A file created as per the instructions in `buildfiles/README.md`
+
+Then:
+
+```bash
+cd panopticon
+composer install
+phing git
+```
+
+The generated package is under `panopticon/release`.
+
 ## Security
 
 We take the security of Akeeba Panopticon seriously. Only the latest released version and the `development` branch receive security updates, so we strongly recommend always running the latest release. Releases that address security issues are noted in the [CHANGELOG](CHANGELOG) with a `!` prefix.
