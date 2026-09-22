@@ -27,7 +27,7 @@ services:
       wait-for-db:
         condition: service_completed_successfully
     ports:
-      - "${PANOPTICON_TEST_HTTP_PORT:-4290}:80"
+      - "127.0.0.1:${PANOPTICON_TEST_HTTP_PORT:-4290}:80"
     environment:
       # Environment-variable configuration mode: no config.php, no setup wizard.
       PANOPTICON_USING_ENV: "1"
