@@ -5656,7 +5656,7 @@ msgstr "Библиотека связи, используемая Panopticon (<a
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
 msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr "Это неожиданная ситуация, которая может указывать на ошибку связи, с которой мы не сталкивались ранее. Пожалуйста, сообщите об этой проблеме разработчикам Panopticon."
+msgstr "Это неожиданная ситуация, которая может указывать на ошибку связи, с которой мы ещё не сталкивались, проблему в самой библиотеке Guzzle, проблему на сервере, где установлен Panopticon, или проблему в самом Panopticon. Пожалуйста, поищите среди открытых <em>и закрытых</em> задач <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">в нашем репозитории на GitHub</a>. Если никто ещё не сообщал об этом, пожалуйста, создайте задачу, и мы посмотрим."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"
@@ -5751,7 +5751,7 @@ msgstr "Используйте обычный HTTP. Это наименее бе
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
 msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
-msgstr "Установите SSL/TLS-сертификат, подписанный коммерческим, общеизвестным центром сертификации (например, Let\'s Encrypt)."
+msgstr "Установите SSL/TLS-сертификат, подписанный коммерческим, общеизвестным центром сертификации. Большинство серверов позволяют использовать <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let's Encrypt</a>, который бесплатно выдаёт действительные, подписанные и полностью рабочие SSL/TLS-сертификаты."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
@@ -5776,7 +5776,7 @@ msgstr "Пожалуйста, проверьте следующее:"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
 msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
-msgstr "SSL/TLS-сертификат выдан для правильного доменного имени? Если вы используете URL по умолчанию, сертификат должен покрывать именно этот домен."
+msgstr "SSL/TLS-сертификат выдан для правильного доменного имени? Если вы используете сертификат по умолчанию, предоставленный вашим хостингом, он действителен только для временного доменного имени, которое вы использовали при создании сайта, а не для вашего настоящего доменного имени. Вам нужно будет установить SSL/TLS-сертификат, подписанный коммерческим, общеизвестным центром сертификации. Большинство серверов позволяют использовать <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let's Encrypt</a>, который бесплатно выдаёт действительные, подписанные и полностью рабочие SSL/TLS-сертификаты. Помните, что некоторые панели управления хостингом самообслуживания (такие как cPanel или Plesk) позволяют выбрать, какой SSL/TLS-сертификат активен для доменного имени. Обязательно проверьте, что действительно используется правильный сертификат."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
@@ -5826,7 +5826,7 @@ msgstr "Пожалуйста, перейдите в административн
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH3"
 msgid "If you have already enabled this plugin, please change the Endpoint URL below to <code>%s</code>"
-msgstr "Если этот плагин уже включён, пожалуйста, измените URL конечной точки ниже на URL, содержащий <code>/index.php</code>."
+msgstr "Если вы уже включили этот плагин, пожалуйста, измените URL конечной точки ниже на <code>%s</code>"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_HEAD"
@@ -5866,7 +5866,7 @@ msgstr "Как правило, мы можем определить причин
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
 msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
-msgstr "Вместо этого мы получили ошибку, по которой должны были бы предоставить сведения для устранения неполадок, однако не можем этого сделать."
+msgstr "Вместо этого мы получили ошибку, по которой должны были бы предоставить сведения для устранения неполадок (<span class=\"font-monospace\">%s</span>), но у нас нет для неё кода. Этого не должно было произойти."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
@@ -7426,7 +7426,7 @@ msgstr "Вы запускаете Panopticon в Docker"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
 msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
-msgstr "Panopticon не может быть обновлён непосредственно из своего интерфейса при работе в Docker."
+msgstr "Panopticon не может быть обновлён непосредственно из своего интерфейса при работе в Docker. Вместо этого следуйте <a href='%s'>инструкциям в документации</a>, чтобы обновить контейнер и базу данных."
 
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_TITLE"
@@ -7671,7 +7671,7 @@ msgstr "Использовать по умолчанию"
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_HELP"
 msgid "The language to display Panopticon and send you emails in. “Use Default” uses the language set in your browser preferences for the web interface, and the default language (<tt>%s</tt>) for emails."
-msgstr "Язык, на котором отображается Panopticon и отправляются письма. «Использовать по умолчанию» — использует язык из системной конфигурации."
+msgstr "Язык, на котором отображается Panopticon и отправляются вам письма. «Использовать по умолчанию» означает язык из настроек вашего браузера для веб-интерфейса и язык по умолчанию (<tt>%s</tt>) для писем."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT"
@@ -7731,7 +7731,7 @@ msgstr "Copyright &copy; %s Akeeba Ltd"
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_PLEASE_READ_LICENSE"
 msgid "For the complete text of the software license, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
-msgstr "Полный текст лицензии на программное обеспечение см. в <a class="text-body-emphasis">файле LICENSE</a>."
+msgstr "Полный текст лицензии на программное обеспечение см. в файле <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a>, поставляемом вместе с программой."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_3PD_SOFTWARE"
@@ -7946,7 +7946,7 @@ msgstr "⚠️ Выполнить однократно, затем УДАЛИТ�
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The backup schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Расписание резервного копирования является <a href='%s' target='_blank'>выражением CRON</a>. Оно интерпретируется в часовом поясе сервера."
+msgstr "Расписание резервного копирования задаётся <a href='%s' target='_blank'>выражением CRON</a>. Используется часовой пояс %s."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE"
@@ -8131,7 +8131,7 @@ msgstr "⚠️ Выполнить однократно, затем УДАЛИТ�
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The scan schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Расписание сканирования является <a href='%s' target='_blank'>выражением CRON</a>. Оно интерпретируется в часовом поясе сервера."
+msgstr "Расписание сканирования задаётся <a href='%s' target='_blank'>выражением CRON</a>. Используется часовой пояс %s."
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_SCANNERTASK_DELETED"
@@ -9566,7 +9566,7 @@ msgstr "Редактировать сводку запланированных �
 #, phpformat
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The schedule for update summary emails is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Расписание сводки обновлений является <a href='%s' target='_blank'>выражением CRON</a>. Оно интерпретируется в часовом поясе сервера."
+msgstr "Расписание писем со сводкой обновлений задаётся <a href='%s' target='_blank'>выражением CRON</a>. Используется часовой пояс %s."
 
 #, phpformat
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_OPTIONS"
@@ -9646,7 +9646,7 @@ msgstr "Сводка запланированных действий удале�
 #, phpformat
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The Site Action Summary schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Расписание сводки действий на сайте является <a href='%s' target='_blank'>выражением CRON</a>. Оно интерпретируется в часовом поясе сервера."
+msgstr "Расписание сводки действий на сайте задаётся <a href='%s' target='_blank'>выражением CRON</a>. Используется часовой пояс %s."
 
 #, phpformat
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_OPTIONS"
@@ -10922,7 +10922,7 @@ msgstr "⚠️ Выполнить однократно, затем УДАЛИТ�
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The check schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "Расписание проверки является <a href='%s' target='_blank'>выражением CRON</a>. Оно интерпретируется в часовом поясе сервера."
+msgstr "Расписание проверки задаётся <a href='%s' target='_blank'>выражением CRON</a>. Используется часовой пояс %s."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_ERR_CANNOT_EDIT_MANUAL"

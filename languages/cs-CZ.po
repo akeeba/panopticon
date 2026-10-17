@@ -245,11 +245,11 @@ msgstr "%d hodina"
 
 msgctxt "PANOPTICON_LBL_DAY"
 msgid "%d days"
-msgstr "dny"
+msgstr "%d dní"
 
 msgctxt "PANOPTICON_LBL_DAY_1"
 msgid "%d day"
-msgstr "den"
+msgstr "%d den"
 
 msgctxt "PANOPTICON_LBL_MONTH"
 msgid "%d months"
@@ -6572,10 +6572,7 @@ msgid ""
 "Instead, we got an error which we should be able to provide troubleshooting "
 "information for (<span class=\"font-monospace\">%s</span>), but we don't "
 "have the code for it. This should have not happened."
-msgstr ""
-"Místo toho jsme dostali chybu, pro kterou bychom měli být schopni poskytnout "
-"informace pro řešení problémů (<span class=\"font-monospace\">%s</span>), "
-"ale nemáme pro ni kód. To by se nemělo stát."
+msgstr "Místo toho jsme obdrželi chybu, pro kterou bychom měli být schopni poskytnout informace pro řešení potíží (<span class=\"font-monospace\">%s</span>), ale nemáme pro ni příslušný kód. To se nemělo stát."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
 msgid ""
@@ -8172,10 +8169,7 @@ msgid ""
 "Panopticon cannot be updated directly from its interface when it runs under "
 "Docker. Instead, you need to follow the <a href='%s'>documentation "
 "instructions</a> to update the container, and the database."
-msgstr ""
-"Panopticon nelze aktualizovat přímo z rozhraní, pokud běží v Dockeru. Místo "
-"toho musíte postupovat podle <a href='%s'>pokynů v dokumentaci</a> a "
-"aktualizovat kontejner a databázi."
+msgstr "Panopticon nelze aktualizovat přímo z jeho rozhraní, pokud běží v prostředí Docker. Místo toho musíte podle <a href='%s'>pokynů v dokumentaci</a> aktualizovat kontejner i databázi."
 
 msgctxt "PANOPTICON_GROUPS_TITLE"
 msgid "Groups"
@@ -11559,7 +11553,7 @@ msgstr "Přejděte do administrace wp-admin vašeho webu a klikněte na Pluginy.
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
 msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
-msgstr "Namísto toho jsme obdrželi chybu, pro kterou bychom vám měli poskytnout informace pro řešení potíží."
+msgstr "Místo toho jsme obdrželi chybu, pro kterou bychom měli být schopni poskytnout informace pro řešení potíží (<span class=\"font-monospace\">%s</span>), ale nemáme pro ni příslušný kód. To se nemělo stát."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
@@ -11809,7 +11803,7 @@ msgstr "Vzdálená instalace rozšíření: Souhrn"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
 msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
-msgstr "Panopticon nelze aktualizovat přímo z jeho rozhraní, pokud běží v prostředí Docker. Aktualizujte prosím Docker image, ze kterého váš kontejner vychází."
+msgstr "Panopticon nelze aktualizovat přímo z jeho rozhraní, pokud běží v prostředí Docker. Místo toho musíte podle <a href='%s'>pokynů v dokumentaci</a> aktualizovat kontejner i databázi."
 
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS_HELP"

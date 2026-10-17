@@ -1296,7 +1296,7 @@ msgstr "La instalación de la actualización de WordPress en el sitio #%d (%s) h
 #, phpformat
 msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_WORDPRESS"
 msgid "Installing WordPress update on site #%d (%s) has failed with WordPress error %d: %s"
-msgstr "La instalación de la actualización de WordPress en el sitio #%d (%s) ha fallado con el error de WordPress %d:"
+msgstr "La instalación de la actualización de WordPress en el sitio #%d (%s) ha fallado con el error de WordPress %d: %s"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_STATUS_FALSE"
@@ -2831,7 +2831,7 @@ msgstr "Esta versión de PHP ha llegado al fin de vida útil desde %s"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_PHP_SECURITY_MAINTENANCE"
 msgid "This PHP version is in Security Maintenance mode and will become End of Life at %s"
-msgstr "Esta versión de PHP está en modo de mantenimiento de seguridad y llegará al fin de vida útil el"
+msgstr "Esta versión de PHP está en modo de mantenimiento de seguridad y llegará al fin de su vida útil el %s"
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_EXT_STUCK_UPDATE"
@@ -2991,7 +2991,7 @@ msgstr "PHP %s ha llegado al fin de vida útil"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_EOL_BODY"
 msgid "You are currently using PHP %s to run Panopticon. This PHP version has been End of Life since %s. Please upgrade your version of PHP to at least %s (recommended: PHP %s)."
-msgstr "Actualmente está usando PHP %s para ejecutar Panopticon. Esta versión de PHP ha llegado al fin de vida útil y ya no recibe actualizaciones de seguridad. Se recomienda encarecidamente actualizar a una versión de PHP compatible."
+msgstr "Actualmente está usando PHP %s para ejecutar Panopticon. Esta versión de PHP ha llegado al fin de su vida útil desde el %s. Actualice su versión de PHP al menos a %s (recomendado: PHP %s)."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_SECURITY_HEAD"
@@ -3001,7 +3001,7 @@ msgstr "PHP %s se acerca a su fin de vida útil"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_SECURITY_BODY"
 msgid "You are currently using PHP %s to run Panopticon. This PHP version will become End of Life on %s. Please upgrade your version of PHP to at least %s."
-msgstr "Actualmente está usando PHP %s para ejecutar Panopticon. Esta versión de PHP llegará al fin de vida útil pronto. Se recomienda planificar la actualización a una versión de PHP más reciente."
+msgstr "Actualmente está usando PHP %s para ejecutar Panopticon. Esta versión de PHP llegará al fin de su vida útil el %s. Actualice su versión de PHP al menos a %s."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_UPDATE_HEAD"
@@ -3011,7 +3011,7 @@ msgstr "Su versión de PHP no está actualizada"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_UPDATE_BODY"
 msgid "You are currently using PHP %s to run Panopticon. The PHP project has released a newer version, PHP %s. Please upgrade."
-msgstr "Actualmente está usando PHP %s para ejecutar Panopticon. El proyecto PHP ha publicado una versión más reciente. Se recomienda actualizar PHP en su servidor."
+msgstr "Actualmente está usando PHP %s para ejecutar Panopticon. El proyecto PHP ha publicado una versión más reciente, PHP %s. Por favor, actualice."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_HEARTBEAT_HEAD"
@@ -3036,7 +3036,7 @@ msgstr "Las tareas automatizadas están retrasándose"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_MESSAGE"
 msgid "Your automated tasks have been falling behind their scheduled time for an average of %d seconds. This means there is more work to be done than they can handle. You need to increase the number of CRON jobs you have set up."
-msgstr "Sus tareas automatizadas se han retrasado respecto a su tiempo programado durante un promedio significativo. Considere optimizar su configuración de CRON."
+msgstr "Sus tareas automatizadas se han retrasado respecto a su hora programada una media de %d segundos. Esto significa que hay más trabajo por hacer del que pueden manejar. Debe aumentar el número de tareas CRON que tiene configuradas."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_READ_DOCS"
@@ -4071,7 +4071,7 @@ msgstr "La versión más nueva de Joomla! %s está disponible pero no se puede i
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION"
 msgid "Go to your site\'s administrator backend, System, Update, Joomla, click on Options, and change the update channel to Joomla Next. Please check Joomla\'s requirements, especially the database version and PHP version requirements. Note that your site is currently using PHP %s."
-msgstr "Vaya al backend de administración de su sitio, Sistema, Actualización, Joomla, haga clic en Opciones y ajuste la configuración de actualización."
+msgstr "Vaya al backend de administración de su sitio, Sistema, Actualización, Joomla, haga clic en Opciones y cambie el canal de actualización a Joomla Next. Compruebe los requisitos de Joomla, especialmente los de versión de la base de datos y de PHP. Tenga en cuenta que su sitio usa actualmente PHP %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED"
@@ -4081,7 +4081,7 @@ msgstr "La actualización <span class=\"text-danger fw-semibold\">no está progr
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED"
 msgid "The update is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically after %s."
-msgstr "La actualización está <span class=\"fw-semibold text-success\">programada</span> para ejecutarse automáticamente."
+msgstr "La actualización está <span class=\"fw-semibold text-success\">programada</span> para ejecutarse automáticamente después de %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP"
@@ -4156,7 +4156,7 @@ msgstr "Actualizar los archivos del núcleo de Joomla! es <em>siempre seguro</em
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED"
 msgid "The core files refresh is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically after %s."
-msgstr "La actualización de archivos del núcleo está <span class=\"fw-semibold text-success\">programada</span> para ejecutarse."
+msgstr "La actualización de los archivos del núcleo está <span class=\"fw-semibold text-success\">programada</span> para ejecutarse automáticamente después de %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED_ASAP"
@@ -4296,7 +4296,7 @@ msgstr "Recargar información de actualización de WordPress para el sitio \"%s\
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SOURCE_INFO"
 msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\"%s\" target=\"_blank\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
-msgstr "La información de disponibilidad de actualizaciones de WordPress es proporcionada por su sitio. WordPress.org es la fuente de esta información."
+msgstr "La información sobre la disponibilidad de actualizaciones de WordPress la proporciona su sitio. Las fechas de fin de vida de WordPress provienen de <a href=\"%s\" target=\"_blank\">%1$s</a>. El proyecto WordPress no publica con antelación las fechas de fin de las actualizaciones de seguridad y / o de fin de vida, por lo que esta información no se muestra en Panopticon."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_UPDATE"
@@ -4366,7 +4366,7 @@ msgstr "Las actualizaciones automáticas de extensiones pueden estar bloqueadas"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_EXTENSION_UPDATE_MAYBE_STUCK_HELP"
 msgid "Automatic extension updates are running, but the last time we detected any progress was at %s. If you have reasons to believe that this is not just because of a rather slow server, you can try resetting the updates by clicking the button below."
-msgstr "Las actualizaciones automáticas de extensiones están en ejecución, pero la última vez que detectamos algún progreso fue hace bastante tiempo."
+msgstr "Las actualizaciones automáticas de extensiones están en ejecución, pero la última vez que detectamos algún progreso fue a las %s. Si tiene motivos para creer que esto no se debe simplemente a un servidor bastante lento, puede intentar restablecer las actualizaciones haciendo clic en el botón de abajo."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_EXTENSION_UPDATE_RESCHEDULE"
@@ -4446,7 +4446,7 @@ msgstr "Tenga en cuenta que esto generalmente requiere un servicio adicional, a 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P3"
 msgid "While these Long Term Support distributions are useful for specific use cases - such as company intranets and extranets - they are ultimately not suitable for long term use on a publicly accessible website. We strongly recommend installing and using one of the actively supported PHP branches (currently, PHP versions %s and %s)."
-msgstr "Si bien estas distribuciones de soporte a largo plazo son útiles para casos de uso específicos, el mantenimiento de seguridad que ofrecen tiene un alcance limitado."
+msgstr "Aunque estas distribuciones de soporte a largo plazo son útiles para casos de uso específicos, como las intranets y extranets de empresas, en última instancia no son adecuadas para un uso a largo plazo en un sitio web de acceso público. Recomendamos encarecidamente instalar y usar una de las ramas de PHP con soporte activo (actualmente, las versiones de PHP %s y %s)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_PHP"
@@ -4481,7 +4481,7 @@ msgstr "Esta versión de PHP recibe actualizaciones de seguridad y correcciones 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_NEWER_BRANCH_AVAILABLE"
 msgid "There is a newer PHP version family available, PHP %s. It is strongly recommended that you update to this version before %s."
-msgstr "Hay disponible una familia de versiones de PHP más nueva, PHP %s. Se recomienda encarecidamente planificar una actualización."
+msgstr "Hay disponible una familia de versiones de PHP más reciente, PHP %s. Se recomienda encarecidamente actualizar a esta versión antes del %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_HEAD"
@@ -5451,12 +5451,12 @@ msgstr "La aplicación API de Joomla! está bloqueada (error HTTP 403)"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
 msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\"font-monospace\">%s</span>)."
-msgstr "Algo en su servidor, como la configuración del servidor controlada por su proveedor de alojamiento o por un archivo de configuración local, está bloqueando las solicitudes a la API de Joomla!."
+msgstr "Algo en su servidor, como la configuración del servidor controlada por su proveedor de alojamiento, un archivo de configuración del servidor como <code>.htaccess</code> o un plugin de su sitio, está impidiendo que Panopticon acceda a la aplicación de API de su sitio (<span class=\"font-monospace\">%s</span>)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS_J3"
 msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing the URL of the API plugin (<span class=\"font-monospace\">%s</span>) on your site."
-msgstr "Algo en su servidor, como la configuración del servidor controlada por su proveedor de alojamiento o por un archivo de configuración local, está bloqueando las solicitudes al plugin del conector para Joomla! 3."
+msgstr "Algo en su servidor, como la configuración del servidor controlada por su proveedor de alojamiento, un archivo de configuración del servidor como <code>.htaccess</code> o un plugin de su sitio, está impidiendo que Panopticon acceda a la URL del plugin de API (<span class=\"font-monospace\">%s</span>) de su sitio."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_TOCHECK"
@@ -5466,22 +5466,22 @@ msgstr "Cosas que comprobar:"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr "¿Su proveedor de alojamiento, o su archivo de configuración del servidor (p.ej. <code>.htaccess</code>), bloquea el acceso a determinadas rutas URL?"
+msgstr "¿Su proveedor de alojamiento, o su archivo de configuración del servidor (p. ej. <code>.htaccess</code>), bloquea por completo el acceso al punto de acceso de la aplicación de API de Joomla! (<span class=\"font-monospace\">%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1_J3"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the API plugin endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr "¿Su proveedor de alojamiento, o su archivo de configuración del servidor (p.ej. <code>.htaccess</code>), bloquea el acceso a determinadas rutas URL?"
+msgstr "¿Su proveedor de alojamiento, o su archivo de configuración del servidor (p. ej. <code>.htaccess</code>), bloquea por completo el acceso al punto de acceso del plugin de API (<span class=\"font-monospace\">%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "¿Su proveedor de alojamiento tiene una solución de protección a nivel de servidor (como mod_security de Apache) que puede estar bloqueando solicitudes de API?"
+msgstr "¿Su proveedor de alojamiento tiene una solución de protección a nivel de servidor (como mod_security2 de Apache) que pueda estar bloqueando el punto de acceso de la aplicación de API de Joomla! (<span class=\"font-monospace\">%s</span>), su token de API (<span class=\"font-monospace\">%s</span>) o el User-Agent de Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "¿Su proveedor de alojamiento tiene una solución de protección a nivel de servidor (como mod_security de Apache) que puede estar bloqueando solicitudes de API?"
+msgstr "¿Su proveedor de alojamiento tiene una solución de protección a nivel de servidor (como mod_security2 de Apache) que pueda estar bloqueando el punto de acceso del plugin de API (<span class=\"font-monospace\">%s</span>), su token de API (<span class=\"font-monospace\">%s</span>) o el User-Agent de Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK3"
@@ -5536,7 +5536,7 @@ msgstr "El código de estado HTTP %s significa que ha habido un error del servid
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them."
-msgstr "El código de estado HTTP 400 generalmente significa que solo se puede acceder a su sitio desde una IP o rango de IPs específico, y la IP de Panopticon está bloqueada."
+msgstr "El código de estado HTTP 400 suele significar que solo se puede acceder a su sitio mediante un número limitado de nombres de dominio; es posible que el que ha intentado usar (<span class=\"font-monospace\">%s</span>) no sea uno de ellos."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
@@ -5656,7 +5656,7 @@ msgstr "La biblioteca de comunicación usada por Panopticon (<a href=\"https://g
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
 msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr "Esta es una condición inesperada que puede indicar un error de comunicación que no hemos anticipado."
+msgstr "Esta es una condición inesperada que puede indicar un error de comunicación que aún no hemos visto, un problema en el propio Guzzle, un problema con el servidor en el que ha instalado Panopticon o un problema en el propio Panopticon. Busque entre las incidencias abiertas <em>y cerradas</em> <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">en nuestro repositorio de GitHub</a>. Si nadie más lo ha comunicado, abra una incidencia y le echaremos un vistazo."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"
@@ -5751,7 +5751,7 @@ msgstr "Use HTTP simple. Esta es la opción menos segura, por lo que no se recom
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
 msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
-msgstr "Instale un certificado SSL/TLS firmado por una Autoridad Certificadora (CA) comercial y conocida."
+msgstr "Instale un certificado SSL/TLS firmado por una Autoridad Certificadora comercial y bien conocida. La mayoría de los servidores le permiten usar <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let's Encrypt</a>, que emite certificados SSL/TLS válidos, firmados y totalmente funcionales de forma gratuita."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
@@ -5776,7 +5776,7 @@ msgstr "Por favor, compruebe lo siguiente:"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
 msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
-msgstr "¿Es el certificado SSL/TLS para el nombre de dominio correcto? Si está usando el dominio predeterminado de su servidor, puede que el certificado no coincida."
+msgstr "¿Es el certificado SSL/TLS el correspondiente al nombre de dominio correcto? Si está usando el certificado SSL/TLS predeterminado que proporciona su proveedor de alojamiento, está limitado al nombre de dominio temporal que usa para configurar su sitio, no a su nombre de dominio real. Necesitará instalar un certificado SSL/TLS firmado por una Autoridad Certificadora comercial y bien conocida. La mayoría de los servidores le permiten usar <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let's Encrypt</a>, que emite certificados SSL/TLS válidos, firmados y totalmente funcionales de forma gratuita. Recuerde que algunos paneles de control de alojamiento de autoservicio (como cPanel o Plesk) le permiten seleccionar cuál es el certificado SSL/TLS activo para un nombre de dominio. Compruebe que, efectivamente, se está usando el certificado correcto."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
@@ -5826,7 +5826,7 @@ msgstr "Por favor, vaya al backend de su sitio y haga clic en Extensiones, Plugi
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH3"
 msgid "If you have already enabled this plugin, please change the Endpoint URL below to <code>%s</code>"
-msgstr "Si ya ha activado este plugin, cambie la URL de punto de acceso a continuación."
+msgstr "Si ya ha activado este plugin, cambie la URL del punto de acceso que aparece más abajo a <code>%s</code>"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_HEAD"
@@ -5866,7 +5866,7 @@ msgstr "Normalmente podemos detectar la naturaleza del error de conexión y prop
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
 msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
-msgstr "En cambio, recibimos un error que deberíamos poder proporcionar información de solución de problemas, pero no podemos hacerlo. Esto es completamente inesperado."
+msgstr "En su lugar, recibimos un error para el que deberíamos poder proporcionar información de solución de problemas (<span class=\"font-monospace\">%s</span>), pero no tenemos el código para ello. Esto no debería haber ocurrido."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
@@ -7426,7 +7426,7 @@ msgstr "Está ejecutando Panopticon bajo Docker"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
 msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
-msgstr "Panopticon no puede actualizarse directamente desde su interfaz cuando se ejecuta bajo Docker. Consulte la documentación para actualizar la imagen Docker."
+msgstr "Panopticon no puede actualizarse directamente desde su interfaz cuando se ejecuta bajo Docker. En su lugar, debe seguir las <a href='%s'>instrucciones de la documentación</a> para actualizar el contenedor y la base de datos."
 
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_TITLE"
@@ -7671,7 +7671,7 @@ msgstr "Usar predeterminado"
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_FIELD_LANGUAGE_HELP"
 msgid "The language to display Panopticon and send you emails in. “Use Default” uses the language set in your browser preferences for the web interface, and the default language (<tt>%s</tt>) for emails."
-msgstr "El idioma en que se mostrará Panopticon y se le enviarán correos. \"Usar predeterminado\" usa el idioma predeterminado del sistema."
+msgstr "El idioma en el que se mostrará Panopticon y en el que se le enviarán los correos electrónicos. «Usar predeterminado» usa el idioma establecido en las preferencias de su navegador para la interfaz web y el idioma predeterminado (<tt>%s</tt>) para los correos electrónicos."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT"
@@ -7946,7 +7946,7 @@ msgstr "⚠️ Ejecutar una vez y luego ELIMINAR esta programación"
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The backup schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "La programación de copias de seguridad es una <a href='%s' target='_blank'>expresión CRON</a>. Los horarios se interpretan en la zona horaria del servidor."
+msgstr "La programación de copias de seguridad es una <a href='%s' target='_blank'>expresión CRON</a>. Usa la zona horaria %s."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_SELECT_PROFILE"
@@ -8131,7 +8131,7 @@ msgstr "⚠️ Ejecutar una vez y luego ELIMINAR esta programación de análisis
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The scan schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "La programación del análisis es una <a href='%s' target='_blank'>expresión CRON</a>. Los horarios se interpretan en la zona horaria del servidor."
+msgstr "La programación del análisis es una <a href='%s' target='_blank'>expresión CRON</a>. Usa la zona horaria %s."
 
 #, phpformat
 msgctxt "PANOPTICON_LBL_SCANNERTASK_DELETED"
@@ -10121,12 +10121,12 @@ msgstr "La aplicación API JSON de WordPress está bloqueada (error HTTP 403)"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK1"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr "¿Su proveedor de alojamiento, o su archivo de configuración del servidor (p.ej. <code>.htaccess</code>), bloquea el acceso a determinadas rutas URL?"
+msgstr "¿Su proveedor de alojamiento, o su archivo de configuración del servidor (p. ej. <code>.htaccess</code>), bloquea por completo el acceso al punto de acceso de la aplicación de API de WordPress (<span class=\"font-monospace\">%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "¿Su proveedor de alojamiento tiene una solución de protección a nivel de servidor (como mod_security de Apache) que puede estar bloqueando solicitudes de API?"
+msgstr "¿Su proveedor de alojamiento tiene una solución de protección a nivel de servidor (como mod_security2 de Apache) que pueda estar bloqueando el punto de acceso de la aplicación de API de WordPress (<span class=\"font-monospace\">%s</span>), su token de API (<span class=\"font-monospace\">%s</span>) o el User-Agent de Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK3"
@@ -10171,7 +10171,7 @@ msgstr "Por favor, asegúrese de que no haya código .htaccess, plugins de terce
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_HEAD"
 msgid "The WordPress JSON API Application responded with an unexpected HTTP status code (%s)"
-msgstr "La aplicación API JSON de WordPress respondió con un código de estado HTTP inesperado"
+msgstr "La aplicación de API JSON de WordPress respondió con un código de estado HTTP inesperado (%s)"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_5XX"
@@ -10181,7 +10181,7 @@ msgstr "El código de estado HTTP %s significa que ha habido un error del servid
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them. Please contact your host if you are unsure why you are receiving this message."
-msgstr "El código de estado HTTP 400 generalmente significa que solo se puede acceder a su sitio desde una IP o rango de IPs específico, y la IP de Panopticon está bloqueada."
+msgstr "El código de estado HTTP 400 suele significar que solo se puede acceder a su sitio mediante un número limitado de nombres de dominio; es posible que el que ha intentado usar (<span class=\"font-monospace\">%s</span>) no sea uno de ellos. Póngase en contacto con su proveedor de alojamiento si no está seguro de por qué recibe este mensaje."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_HEAD"
@@ -10891,7 +10891,7 @@ msgstr "⚠️ Ejecutar una vez y luego ELIMINAR esta programación de verificac
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_TIMEZONE_NOTICE"
 msgid "The check schedule is a <a href=\'%s\' target=\'_blank\'>CRON expression</a>. It uses the %s time zone."
-msgstr "La programación de la verificación es una <a href='%s' target='_blank'>expresión CRON</a>. Los horarios se interpretan en la zona horaria del servidor."
+msgstr "La programación de la verificación es una <a href='%s' target='_blank'>expresión CRON</a>. Usa la zona horaria %s."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_ERR_CANNOT_EDIT_MANUAL"

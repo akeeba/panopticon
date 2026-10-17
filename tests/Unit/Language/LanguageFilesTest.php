@@ -91,6 +91,83 @@ class LanguageFilesTest extends AbstractUnitTestCase
 	}
 
 	/**
+	 * A translation must use the same sprintf() placeholders as en-GB, though not necessarily in the same order. A
+	 * missing placeholder loses information; a malformed one (`% is`, `%$`) makes sprintf() throw, so the user sees
+	 * "BAD TRANSLATION" instead of the text.
+	 *
+	 * A plural form (`KEY_1`, `KEY_2`, …) may instead use the placeholders of the base key, as Slavic languages need
+	 * plural forms which en-GB does not have.
+	 *
+	 * @dataProvider languageProvider
+	 */
+	public function testPlaceholdersMatchEnglish(string $langCode): void
+	{
+		$english = self::getStrings('en-GB');
+		$bad     = [];
+
+		foreach (self::getStrings($langCode) as $key => $text)
+		{
+			$baseKey   = preg_replace('/_\d+$/', '', $key);
+			$allowed   = [];
+			$allowed[] = isset($english[$key]) ? self::getPlaceholders($english[$key]) : null;
+			$allowed[] = ($baseKey !== $key && isset($english[$baseKey]))
+				? self::getPlaceholders($english[$baseKey]) : null;
+			$allowed   = array_filter($allowed, fn($x) => $x !== null);
+
+			if (empty($allowed) || in_array(self::getPlaceholders($text), $allowed, true))
+			{
+				continue;
+			}
+
+			$bad[$key] = $text;
+		}
+
+		$this->assertSame([], $bad, 'These strings do not use the same sprintf() placeholders as en-GB.');
+	}
+
+	/**
+	 * Returns the sprintf() placeholders of a string, normalised and sorted, e.g. `%s from %s` and `%2$s from %1$s`
+	 * both give `['1:s', '2:s']`. A `%` which does not start a valid placeholder is returned verbatim with the
+	 * character after it.
+	 *
+	 * @param   string  $text  The string to examine
+	 *
+	 * @return  string[]
+	 */
+	private static function getPlaceholders(string $text): array
+	{
+		$ret  = [];
+		$next = 1;
+
+		preg_match_all(
+			'/%(?:%|(?:(\d+)\$)?[-+ 0]*(?:\'.)?\d*(?:\.\d+)?([bcdeEfFgGosuxX])|.?)/u', $text, $matches, PREG_SET_ORDER
+		);
+
+		foreach ($matches as $match)
+		{
+			if ($match[0] === '%%')
+			{
+				continue;
+			}
+
+			if (!isset($match[2]) || $match[2] === '')
+			{
+				$ret[] = $match[0];
+
+				continue;
+			}
+
+			$argument = $match[1] !== '' ? (int) $match[1] : $next++;
+			$ret[]    = $argument . ':' . $match[2];
+		}
+
+		$ret = array_unique($ret);
+		sort($ret);
+
+		return $ret;
+	}
+
+	/**
 	 * Returns the strings of a language file the way the application displays them.
 	 *
 	 * @param   string  $langCode  The language code, e.g. en-GB
@@ -105,10 +182,19 @@ class LanguageFilesTest extends AbstractUnitTestCase
 		}
 
 		$keys     = [];
-		$language = new Language(new Container(['application_name' => 'Panopticon']));
+		$language = new Language(
+			new Container(
+				[
+					'application_name'     => 'Panopticon',
+					'applicationNamespace' => 'Akeeba\\Panopticon',
+					'languagePath'         => APATH_ROOT . '/languages',
+					'session_segment_name' => 'panopticon_language_test',
+				]
+			)
+		);
 
 		$language->loadLanguage(
-			$langCode, APATH_ROOT . '/languages', true, false,
+			$langCode, null, true, false,
 			function (string $filename, array $strings) use (&$keys) {
 				$keys = array_keys($strings);
 			}

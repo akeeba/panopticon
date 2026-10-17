@@ -1111,7 +1111,7 @@ msgstr "Kon de Joomla update-informatie niet opnieuw laden na het toepassen van 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_UPDATE_AVAILABLE"
 msgid "The site %s (%s) is on Joomla %s. The latest available version is %s. Therefore, it cannot be updated."
-msgstr "De site is op Joomla %. De laatste beschikbare versie is %. Daarom kan het niet geüpdateerd worden."
+msgstr "De site %s (%s) draait op Joomla %s. De nieuwste beschikbare versie is %s. Daarom kan de site niet worden bijgewerkt."
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LBL_UNKNOWN_VERSION"
@@ -1136,12 +1136,12 @@ msgstr "(Onbekend)"
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_PREPARING"
 msgid "Preparing to update site %d (%s)"
-msgstr "Bereid je voor op update site %"
+msgstr "Voorbereiden op het bijwerken van site %d (%s)"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING"
 msgid "Downloading update package to site %d (%s)"
-msgstr "Downloading updatepakket naar site %"
+msgstr "Updatepakket downloaden naar site %d (%s)"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_START"
@@ -1186,7 +1186,7 @@ msgstr "Back-up gemaakt voordat site %d (%s) werd bijgewerkt"
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_DESCRIPTION"
 msgid "Automatic backup taken by Panopticon before upgrading to Joomla! %s"
-msgstr "Automatische back-up gemaakt door Panopticon vóór het upgraden naar Joomla! %S"
+msgstr "Automatische back-up gemaakt door Panopticon vóór het upgraden naar Joomla! %s"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_BACKUP_NOT"
@@ -1266,7 +1266,7 @@ msgstr "De site-informatie vernieuwen voor de zojuist bijgewerkte site %d (%s)"
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_WILL_BE_UPDATED"
 msgid "Site %d (%s) will be updated from Joomla! %s to Joomla! %s."
-msgstr "Site %d (%s) wordt bijgewerkt vanuit Joomla! %s naar Joomla! %S."
+msgstr "Site %d (%s) wordt bijgewerkt van Joomla! %s naar Joomla! %s."
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_ERR_NO_UPDATE_AVAILABLE"
@@ -1276,7 +1276,7 @@ msgstr "De site %s (%s) maakt gebruik van WordPress %s. De laatst beschikbare ve
 #, phpformat
 msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_LOG_WILL_BE_UPDATED"
 msgid "Site %d (%s) will be updated from WordPress %s to WordPress %s."
-msgstr "Site %d (%s) wordt bijgewerkt vanuit WorPress %s naar WordPress %S."
+msgstr "Site %d (%s) wordt bijgewerkt van WordPress %s naar WordPress %s."
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_WORDPRESSUPDATE_LOG_BACKUP_DESCRIPTION"
@@ -1566,7 +1566,7 @@ msgstr "Vereisten"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_REQ_PHP_VERSION"
 msgid "PHP version >= %s"
-msgstr "PHP versie %"
+msgstr "PHP-versie >= %s"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_REQ_REGGLOBALS"
@@ -3036,7 +3036,7 @@ msgstr "Automatische taken lopen achter"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_MESSAGE"
 msgid "Your automated tasks have been falling behind their scheduled time for an average of %d seconds. This means there is more work to be done than they can handle. You need to increase the number of CRON jobs you have set up."
-msgstr "Je automatische taken lopen achter hun geplande tijd voor een gemiddelde van %. Dit betekent dat er meer werk te doen is dan ze aankunnen. Je moet het aantal CRON banen verhogen die je hebt opgezet."
+msgstr "Je geautomatiseerde taken lopen gemiddeld %d seconden achter op hun geplande tijd. Dit betekent dat er meer werk te doen is dan ze aankunnen. Je moet het aantal CRON-jobs dat je hebt ingesteld verhogen."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_LBL_FALL_BEHIND_READ_DOCS"
@@ -3856,7 +3856,7 @@ msgstr "De site informatie is ververst."
 #, phpformat
 msgctxt "PANOPTICON_SITE_ERR_REFRESHED_FAILED"
 msgid "The site information refresh has failed: %s"
-msgstr "Het verversen van de site informatie is mislukt: %$"
+msgstr "Het verversen van de siteinformatie is mislukt: %s"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_ERR_COREUPDATESITEFIX_FAILED"
@@ -3991,12 +3991,12 @@ msgstr "Probeer een automatische fix"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_AVAILABLE_UPDATE"
 msgid "Joomla! %s is available"
-msgstr "Joomla! % is beschikbaar"
+msgstr "Joomla! %s is beschikbaar"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_CURRENT_VERSION"
 msgid "Your site is currently using Joomla! %s."
-msgstr "Je site gebruikt Joomla. %."
+msgstr "Je site gebruikt momenteel Joomla! %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_IS_PATCH_RELEASE"
@@ -4031,7 +4031,7 @@ msgstr "Joomla! %s is up-to-date"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_EOL"
 msgid "Joomla! %s is unsupported"
-msgstr "Joomla! % is niet ondersteund"
+msgstr "Joomla! %s wordt niet ondersteund"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_EOL_MAJOR"
@@ -4041,7 +4041,7 @@ msgstr "De Joomla! %s serie wordt niet meer ondersteund"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_EOL_MINOR"
 msgid "The Joomla! %s version family is End-of-Life"
-msgstr "De Joomla! % van de familie wordt niet meer ondersteund"
+msgstr "De Joomla! %s-versiefamilie heeft het einde van de levensduur bereikt"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_EOL_DATE"
@@ -4231,7 +4231,7 @@ msgstr "Uw site heeft de versie van WordPress waarop het draait niet gerapportee
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_AVAILABLE_UPDATE"
 msgid "WordPress %s is available"
-msgstr "WordPress % is beschikbaar"
+msgstr "WordPress %s is beschikbaar"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_CURRENT_VERSION"
@@ -4266,7 +4266,7 @@ msgstr "Het wordt ten zeerste aanbevolen dat u een back-up van uw site maakt en 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_EOL"
 msgid "WordPress %s is unsupported"
-msgstr "WordPress % is niet ondersteund"
+msgstr "WordPress %s wordt niet ondersteund"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_CANNOT_INSTALL"

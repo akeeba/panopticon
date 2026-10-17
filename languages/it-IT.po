@@ -7426,7 +7426,7 @@ msgstr "Panopticon è in esecuzione sotto Docker"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
 msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
-msgstr "Panopticon non può essere aggiornato direttamente dalla propria interfaccia quando è in esecuzione sotto Docker. È necessario aggiornare l'immagine Docker e riavviare il container."
+msgstr "Panopticon non può essere aggiornato direttamente dalla propria interfaccia quando è in esecuzione sotto Docker. È invece necessario seguire le <a href='%s'>istruzioni della documentazione</a> per aggiornare il container e il database."
 
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_TITLE"
@@ -10126,7 +10126,7 @@ msgstr "L'host o il file di configurazione del server (ad es. <code>.htaccess</c
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
 msgid "Does your host have a server–side protection solution (such as Apache\\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
-msgstr "L'host dispone di una soluzione di protezione lato server (come mod_security2 di Apache) che potrebbe bloccare le richieste API?"
+msgstr "L'host dispone di una soluzione di protezione lato server (come mod_security2 di Apache) che potrebbe bloccare l'endpoint dell'applicazione API di WordPress (<span class=\"font-monospace\">%s</span>), il token API (<span class=\"font-monospace\">%s</span>) o lo User-Agent di Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK3"
@@ -10181,7 +10181,7 @@ msgstr "Il codice di stato HTTP %s indica un errore del server. Verificare se vi
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\\\"font-monospace\\\">%s</span>) may not be one of them. Please contact your host if you are unsure why you are receiving this message."
-msgstr "Il codice di stato HTTP 400 indica solitamente che il sito è accessibile solo da un numero limitato di domini o indirizzi IP."
+msgstr "Il codice di stato HTTP 400 indica solitamente che il sito è accessibile solo da un numero limitato di nomi di dominio; quello che si è tentato di usare (<span class=\"font-monospace\">%s</span>) potrebbe non essere tra questi. Contattare l'host se non è chiaro il motivo per cui si riceve questo messaggio."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_HEAD"
@@ -12501,7 +12501,7 @@ msgstr "L'host o il file di configurazione del server (ad es. <code>.htaccess</c
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
 msgid "Does your host have a server–side protection solution (such as Apache\\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\\\"font-monospace\\\">%s</span>), your API token (<span class=\\\"font-monospace\\\">%s</span>), or the User-Agent of Panopticon (<span class=\\\"font-monospace\\\">panopticon/%s</span>)?"
-msgstr "L'host dispone di una soluzione di protezione lato server (come mod_security2 di Apache) che potrebbe bloccare le richieste API?"
+msgstr "L'host dispone di una soluzione di protezione lato server (come mod_security2 di Apache) che potrebbe bloccare l'endpoint dell'applicazione API di WordPress (<span class=\"font-monospace\">%s</span>), il token API (<span class=\"font-monospace\">%s</span>) o lo User-Agent di Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK3"
@@ -12556,7 +12556,7 @@ msgstr "Il codice di stato HTTP %s indica un errore del server. Verificare se vi
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\\\"font-monospace\\\">%s</span>) may not be one of them. Please contact your host if you are unsure why you are receiving this message."
-msgstr "Il codice di stato HTTP 400 indica solitamente che il sito è accessibile solo da un numero limitato di domini o indirizzi IP."
+msgstr "Il codice di stato HTTP 400 indica solitamente che il sito è accessibile solo da un numero limitato di nomi di dominio; quello che si è tentato di usare (<span class=\"font-monospace\">%s</span>) potrebbe non essere tra questi. Contattare l'host se non è chiaro il motivo per cui si riceve questo messaggio."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_HEAD"
@@ -14786,7 +14786,7 @@ msgstr "L'host o il file di configurazione del server (ad es. <code>.htaccess</c
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "L'host dispone di una soluzione di protezione lato server (come mod_security2 di Apache) che potrebbe bloccare le richieste API?"
+msgstr "L'host dispone di una soluzione di protezione lato server (come mod_security2 di Apache) che potrebbe bloccare l'endpoint dell'applicazione API di WordPress (<span class=\"font-monospace\">%s</span>), il token API (<span class=\"font-monospace\">%s</span>) o lo User-Agent di Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH1"
@@ -14806,7 +14806,7 @@ msgstr "Assicurarsi che non vi siano codice .htaccess, plugin di terze parti o c
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them. Please contact your host if you are unsure why you are receiving this message."
-msgstr "Il codice di stato HTTP 400 indica solitamente che il sito è accessibile solo da un numero limitato di domini o indirizzi IP."
+msgstr "Il codice di stato HTTP 400 indica solitamente che il sito è accessibile solo da un numero limitato di nomi di dominio; quello che si è tentato di usare (<span class=\"font-monospace\">%s</span>) potrebbe non essere tra questi. Contattare l'host se non è chiaro il motivo per cui si riceve questo messaggio."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"

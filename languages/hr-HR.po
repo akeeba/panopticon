@@ -2991,7 +2991,7 @@ msgstr "PHP %s je End of Life"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_EOL_BODY"
 msgid "You are currently using PHP %s to run Panopticon. This PHP version has been End of Life since %s. Please upgrade your version of PHP to at least %s (recommended: PHP %s)."
-msgstr "Trenutno koristite PHP %s za pokretanje Panopticona. Ova verzija PHP-a je End of Life od %s. Molimo nadogradite na podržanu verziju PHP-a."
+msgstr "Trenutno koristite PHP %s za pokretanje Panopticona. Ova verzija PHP-a je dosegnula kraj životnog vijeka (End of Life) od %s. Molimo nadogradite PHP na barem verziju %s (preporučeno: PHP %s)."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_SECURITY_HEAD"
@@ -3001,7 +3001,7 @@ msgstr "PHP %s se približava kraju životnog vijeka"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_SECURITY_BODY"
 msgid "You are currently using PHP %s to run Panopticon. This PHP version will become End of Life on %s. Please upgrade your version of PHP to at least %s."
-msgstr "Trenutno koristite PHP %s za pokretanje Panopticona. Ova verzija PHP-a će postati End of Life %s. Molimo planirajte nadogradnju na podržanu verziju PHP-a."
+msgstr "Trenutno koristite PHP %s za pokretanje Panopticona. Ova verzija PHP-a dosegnut će kraj životnog vijeka (End of Life) %s. Molimo nadogradite PHP na barem verziju %s."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_PHP_UPDATE_HEAD"
@@ -4056,7 +4056,7 @@ msgstr "Joomla! %s prima samo sigurnosna ažuriranja od %s i postat će End-of-L
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_STABLE_DATE"
 msgid "Joomla! %s receives security updates and bug fixes until %s. It will become End-of-Life and superseded by a new minor version on %s."
-msgstr "Joomla! %s prima sigurnosna ažuriranja i ispravke grešaka do %s. Postati će End-of-Life i zamijenjena je novijim verzijama."
+msgstr "Joomla! %s prima sigurnosna ažuriranja i ispravke grešaka do %s. Dosegnut će kraj životnog vijeka (End-of-Life) i zamijenit će je nova podverzija %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_LAST_STABLE_DATE"
@@ -4071,7 +4071,7 @@ msgstr "Novija verzija Joomla! %s je dostupna ali se ne može instalirati zbog p
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_FIX_TO_INSTALL_NEXT_VERSION"
 msgid "Go to your site\'s administrator backend, System, Update, Joomla, click on Options, and change the update channel to Joomla Next. Please check Joomla\'s requirements, especially the database version and PHP version requirements. Note that your site is currently using PHP %s."
-msgstr "Idite na administrator backend vašeg web-mjesta, Sustav, Ažuriranje, Joomla, kliknite na Opcije i promijenite postavku na prihvaćanje ažuriranja na novije verzije."
+msgstr "Idite na administratorski backend vašeg web-mjesta, Sustav, Ažuriranje, Joomla, kliknite na Opcije i promijenite kanal ažuriranja na Joomla Next. Provjerite zahtjeve Joomle, osobito zahtjeve za verziju baze podataka i verziju PHP-a. Imajte na umu da vaše web-mjesto trenutno koristi PHP %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED"
@@ -4081,7 +4081,7 @@ msgstr "Ažuriranje je <span class=\"text-danger fw-semibold\">nezakazano</span>
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED"
 msgid "The update is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically after %s."
-msgstr "Ažuriranje je <span class=\"fw-semibold text-success\">zakazano</span> za automatsko pokretanje."
+msgstr "Ažuriranje je <span class=\"fw-semibold text-success\">zakazano</span> za automatsko pokretanje nakon %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP"
@@ -4156,7 +4156,7 @@ msgstr "Osvježavanje datoteka Joomla! jezgre je <em>uvijek sigurno</em>. Sadrž
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED"
 msgid "The core files refresh is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically after %s."
-msgstr "Osvježavanje datoteka jezgre je <span class=\"fw-semibold text-success\">zakazano</span> za automatsko pokretanje."
+msgstr "Osvježavanje datoteka jezgre je <span class=\"fw-semibold text-success\">zakazano</span> za automatsko pokretanje nakon %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED_ASAP"
@@ -4296,7 +4296,7 @@ msgstr "Ponovo učitaj informacije o WordPress ažuriranju za web-mjesto \"%s\""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SOURCE_INFO"
 msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\"%s\" target=\"_blank\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
-msgstr "Informacije o dostupnosti WordPress ažuriranja pruža vaše web-mjesto. WordPress informacije o End-of-Life datumima pruža Panopticon."
+msgstr "Informacije o dostupnosti WordPress ažuriranja pruža vaše web-mjesto. Datumi završetka životnog vijeka (End-of-Life) za WordPress dolaze s adrese <a href=\"%s\" target=\"_blank\">%1$s</a>. Projekt WordPress ne objavljuje unaprijed datume završetka sigurnosnih ažuriranja i / ili završetka životnog vijeka, zbog čega se ta informacija ne prikazuje u Panopticonu."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_UPDATE"
@@ -4481,7 +4481,7 @@ msgstr "Ova verzija PHP-a prima sigurnosna ažuriranja i ispravke grešaka do %s
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_NEWER_BRANCH_AVAILABLE"
 msgid "There is a newer PHP version family available, PHP %s. It is strongly recommended that you update to this version before %s."
-msgstr "Dostupna je novija obitelj verzija PHP-a, PHP %s. Jako se preporučuje da ažurirate na tu verziju prije nego ova postane End of Life."
+msgstr "Dostupna je novija obitelj verzija PHP-a, PHP %s. Jako se preporučuje da ažurirate na tu verziju prije %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_SERVER_HEAD"
@@ -5451,12 +5451,12 @@ msgstr "Joomla! API aplikacija je blokirana (HTTP pogreška 403)"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS"
 msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing your site\'s API application (<span class=\"font-monospace\">%s</span>)."
-msgstr "Nešto na vašem poslužitelju - poput konfiguracije poslužitelja kontrolirane od hostera, konfiguracijske datoteke poslužitelja poput <code>.htaccess</code>, ili proširenje na vašem web-miestu - blokira Joomla! API aplikaciju."
+msgstr "Nešto na vašem poslužitelju - poput konfiguracije poslužitelja koju kontrolira vaš hoster, konfiguracijske datoteke poslužitelja poput <code>.htaccess</code> ili dodatka na vašem web-mjestu - sprječava Panopticon da pristupi API aplikaciji vašeg web-mjesta (<span class=\"font-monospace\">%s</span>)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS_J3"
 msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing the URL of the API plugin (<span class=\"font-monospace\">%s</span>) on your site."
-msgstr "Nešto na vašem poslužitelju - poput konfiguracije poslužitelja kontrolirane od hostera, konfiguracijske datoteke poslužitelja poput <code>.htaccess</code>, ili proširenje na vašem web-miestu - blokira API dodatak."
+msgstr "Nešto na vašem poslužitelju - poput konfiguracije poslužitelja koju kontrolira vaš hoster, konfiguracijske datoteke poslužitelja poput <code>.htaccess</code> ili dodatka na vašem web-mjestu - sprječava Panopticon da pristupi URL-u API dodatka (<span class=\"font-monospace\">%s</span>) na vašem web-mjestu."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_TOCHECK"
@@ -5466,22 +5466,22 @@ msgstr "Što provjeriti:"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr "Blokira li vaš hoster, ili konfiguracijska datoteka poslužitelja (npr. <code>.htaccess</code>), pristup krajnjoj točki Joomla! API aplikacije?"
+msgstr "Blokira li vaš hoster ili konfiguracijska datoteka vašeg poslužitelja (npr. <code>.htaccess</code>) potpuno pristup krajnjoj točki Joomla! API aplikacije (<span class=\"font-monospace\">%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1_J3"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the API plugin endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr "Blokira li vaš hoster, ili konfiguracijska datoteka poslužitelja (npr. <code>.htaccess</code>), pristup krajnjoj točki API dodatka?"
+msgstr "Blokira li vaš hoster ili konfiguracijska datoteka vašeg poslužitelja (npr. <code>.htaccess</code>) potpuno pristup krajnjoj točki API dodatka (<span class=\"font-monospace\">%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "Ima li vaš hoster zaštitno rješenje na strani poslužitelja (poput Apache mod_security2) koje može blokirati krajnju točku Joomla! API aplikacije?"
+msgstr "Ima li vaš hoster zaštitno rješenje na strani poslužitelja (poput Apache mod_security2) koje bi moglo blokirati krajnju točku Joomla! API aplikacije (<span class=\"font-monospace\">%s</span>), vaš API token (<span class=\"font-monospace\">%s</span>) ili korisnički agent (User-Agent) Panopticona (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2_J3"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the API plugin endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "Ima li vaš hoster zaštitno rješenje na strani poslužitelja (poput Apache mod_security2) koje može blokirati krajnju točku API dodatka?"
+msgstr "Ima li vaš hoster zaštitno rješenje na strani poslužitelja (poput Apache mod_security2) koje bi moglo blokirati krajnju točku API dodatka (<span class=\"font-monospace\">%s</span>), vaš API token (<span class=\"font-monospace\">%s</span>) ili korisnički agent (User-Agent) Panopticona (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK3"
@@ -5536,7 +5536,7 @@ msgstr "HTTP statusni kôd %s znači da je došlo do pogreške na poslužitelju.
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them."
-msgstr "HTTP statusni kôd 400 obično znači da vašem web-miestu može pristupiti samo ograničen broj naziva domena; onaj koji ste pokušali koristiti nije dopušten. Provjerite postavke vašeg web-mjesta."
+msgstr "HTTP statusni kôd 400 obično znači da vašem web-mjestu može pristupiti samo ograničen broj naziva domena; onaj koji ste pokušali koristiti (<span class=\"font-monospace\">%s</span>) možda nije među njima."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
@@ -5656,7 +5656,7 @@ msgstr "Komunikacijska knjižnica korištena od Panopticona (<a href=\"https://g
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
 msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr "Ovo je neočekivano stanje koje može ukazivati na pogrešku u komunikaciji koju još nismo vidjeli, problem unutar samog Guzzlea, problem s poslužiteljem ili neočekivanu situaciju."
+msgstr "Ovo je neočekivano stanje koje može upućivati na pogrešku u komunikaciji koju još nismo vidjeli, problem u samom Guzzleu, problem s poslužiteljem na kojem ste instalirali Panopticon ili problem u samom Panopticonu. Pretražite otvorene <em>i zatvorene</em> prijave problema <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">u našem GitHub repozitoriju</a>. Ako to nitko drugi nije prijavio, otvorite novu prijavu i pogledat ćemo je."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"
@@ -5751,7 +5751,7 @@ msgstr "Koristite plain HTTP. Ovo je najmanje sigurna opcija i stoga se jako ne 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK2"
 msgid "Install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge."
-msgstr "Instalirajte SSL/TLS certifikat potpisan od strane poznatog komercijalnog tijela za izdavanje certifikata. Većina poslužitelja vam omogućuje korištenje besplatnih certifikata putem Let's Encrypt."
+msgstr "Instalirajte SSL/TLS certifikat koji je potpisalo komercijalno, poznato tijelo za izdavanje certifikata (Certification Authority). Većina poslužitelja omogućuje vam korištenje usluge <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let's Encrypt</a>, koja besplatno izdaje valjane, potpisane i potpuno funkcionalne SSL/TLS certifikate."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
@@ -5776,7 +5776,7 @@ msgstr "Molimo provjerite sljedeće:"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK1"
 msgid "Is the SSL/TLS certificate for the right domain name? If you are using the default SSL/TLS certificate provided by your host it is limited to the temporary domain name you use to set up your site, not your real domain name. You will need to install an SSL/TLS certificate signed by a commercial, well-known Certification Authority. Most servers allow you to use <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let\'s Encrypt</a> which issues valid, signed, fully working SSL/TLS certificates free of charge. Remember that some self-service hosting control panels (such as cPanel, or Plesk) allow you to select which is the active SSL/TLS certificate for a domain name. Do check that the correct certificate is, indeed, being used."
-msgstr "Je li SSL/TLS certifikat za ispravni naziv domene? Ako koristite zadani SSL/TLS certifikat vašeg hostera, ograničen je na domenu hostinga i ne može se koristiti za vaše web-mjesto."
+msgstr "Je li SSL/TLS certifikat izdan za ispravan naziv domene? Ako koristite zadani SSL/TLS certifikat koji pruža vaš hoster, on je ograničen na privremeni naziv domene koji koristite za postavljanje web-mjesta, a ne na vaš stvarni naziv domene. Morat ćete instalirati SSL/TLS certifikat koji je potpisalo komercijalno, poznato tijelo za izdavanje certifikata (Certification Authority). Većina poslužitelja omogućuje vam korištenje usluge <a href=\"https://en.wikipedia.org/wiki/Let%27s_Encrypt\" target=\"_blank\">Let's Encrypt</a>, koja besplatno izdaje valjane, potpisane i potpuno funkcionalne SSL/TLS certifikate. Imajte na umu da neke upravljačke ploče za samoposlužni hosting (poput cPanela ili Plesk) omogućuju odabir aktivnog SSL/TLS certifikata za naziv domene. Provjerite koristi li se doista ispravan certifikat."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK2"
@@ -5866,7 +5866,7 @@ msgstr "Normalno možemo otkriti prirodu pogreške veze i pružiti neke korisne 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
 msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
-msgstr "Umjesto toga, dobili smo pogrešku za koju bismo trebali moći pružiti informacije za rješavanje problema, ali ne možemo."
+msgstr "Umjesto toga dobili smo pogrešku za koju bismo trebali moći pružiti informacije za rješavanje problema (<span class=\"font-monospace\">%s</span>), ali nemamo kôd za nju. To se nije smjelo dogoditi."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
@@ -6861,7 +6861,7 @@ msgstr "PDO MySQL"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_HOURS"
 msgid "hours"
-msgstr "%d sati"
+msgstr "sati"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_UOM_MINUTES"
@@ -10141,12 +10141,12 @@ msgstr "WordPress JSON API aplikacija je blokirana (HTTP pogreška 403)"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK1"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr "Blokira li vaš hoster, ili konfiguracijska datoteka poslužitelja (npr. <code>.htaccess</code>), pristup krajnjoj točki WordPress API aplikacije?"
+msgstr "Blokira li vaš hoster ili konfiguracijska datoteka vašeg poslužitelja (npr. <code>.htaccess</code>) potpuno pristup krajnjoj točki WordPress API aplikacije (<span class=\"font-monospace\">%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK2"
 msgid "Does your host have a server–side protection solution (such as Apache\'s mod_security2) which might be blocking the WordPress API Application endpoint (<span class=\"font-monospace\">%s</span>), your API token (<span class=\"font-monospace\">%s</span>), or the User-Agent of Panopticon (<span class=\"font-monospace\">panopticon/%s</span>)?"
-msgstr "Ima li vaš hoster zaštitno rješenje na strani poslužitelja (poput Apache mod_security2) koje može blokirati WordPress API aplikaciju?"
+msgstr "Ima li vaš hoster zaštitno rješenje na strani poslužitelja (poput Apache mod_security2) koje bi moglo blokirati krajnju točku WordPress API aplikacije (<span class=\"font-monospace\">%s</span>), vaš API token (<span class=\"font-monospace\">%s</span>) ili korisnički agent (User-Agent) Panopticona (<span class=\"font-monospace\">panopticon/%s</span>)?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPI403_CHECK3"
@@ -10201,7 +10201,7 @@ msgstr "HTTP statusni kôd %s znači da je došlo do pogreške na poslužitelju.
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them. Please contact your host if you are unsure why you are receiving this message."
-msgstr "HTTP statusni kôd 400 obično znači da vašem web-miestu može pristupiti samo ograničen broj naziva domena; onaj koji ste pokušali koristiti nije dopušten."
+msgstr "HTTP statusni kôd 400 obično znači da vašem web-mjestu može pristupiti samo ograničen broj naziva domena; onaj koji ste pokušali koristiti (<span class=\"font-monospace\">%s</span>) možda nije među njima. Obratite se svom hosteru ako niste sigurni zašto primate ovu poruku."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_HEAD"

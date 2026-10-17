@@ -5086,7 +5086,7 @@ msgstr "Total"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_NEW"
 msgid "Added"
-msgstr "Ajouté : %s"
+msgstr "Ajouté"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_ADMINTOOLS_MODIFIED"
@@ -8994,7 +8994,7 @@ msgstr "Table des extensions avec mises à jour disponibles"
 #, phpformat
 msgctxt "PANOPTICON_EXTUPDATES_LBL_SELECT_EXTENSION"
 msgid "Select extension %s for site %s"
-msgstr "Sélectionnez l\'extension % pour le site %s"
+msgstr "Sélectionner l'extension %s pour le site %s"
 
 #, phpformat
 msgctxt "PANOPTICON_EXTUPDATES_FIELD_SITE"
@@ -9364,7 +9364,7 @@ msgstr "Télécharger"
 #, phpformat
 msgctxt "PANOPTICON_DBTOOLS_LBL_DOWNLOAD_SR"
 msgid "Download %s"
-msgstr "Télécharger %"
+msgstr "Télécharger %s"
 
 #, phpformat
 msgctxt "PANOPTICON_DBTOOLS_LBL_DELETE"
@@ -9374,7 +9374,7 @@ msgstr "Supprimer"
 #, phpformat
 msgctxt "PANOPTICON_DBTOOLS_LBL_DELETE_SR"
 msgid "Delete %s"
-msgstr "Supprimer %"
+msgstr "Supprimer %s"
 
 #, phpformat
 msgctxt "PANOPTICON_DBTOOLS_LBL_FILES_N"
