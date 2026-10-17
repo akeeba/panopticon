@@ -42,6 +42,40 @@ class LanguageFilesTest extends AbstractUnitTestCase
 	}
 
 	/**
+	 * A double quote inside a value is always written `\"`. A bare `"` happens to work with AWF, which reads the file
+	 * in raw mode, but PHP's standard INI parser and translation tools choke on it.
+	 *
+	 * @dataProvider languageProvider
+	 */
+	public function testDoubleQuotesAreEscaped(string $langCode): void
+	{
+		$bad = [];
+
+		foreach (file(APATH_ROOT . '/languages/' . $langCode . '.ini') as $lineNumber => $line)
+		{
+			if (preg_match('/^([A-Z0-9_]+)="(.*)"\s*$/', $line, $matches) && preg_match('/(?<!\\\\)"/', $matches[2]))
+			{
+				$bad[$lineNumber + 1] = $matches[1];
+			}
+		}
+
+		$this->assertSame([], $bad, 'These lines have a double quote which is not escaped as \".');
+	}
+
+	/**
+	 * The file must also be readable by PHP's standard INI parser, not only by AWF's raw mode reading.
+	 *
+	 * @dataProvider languageProvider
+	 */
+	public function testStandardIniParserCanReadTheFile(string $langCode): void
+	{
+		$this->assertNotFalse(
+			@parse_ini_file(APATH_ROOT . '/languages/' . $langCode . '.ini'),
+			sprintf('PHP cannot parse %s.ini: %s', $langCode, error_get_last()['message'] ?? '')
+		);
+	}
+
+	/**
 	 * An apostrophe is a plain `'`. INI files do not escape it: `\'` is displayed with its backslash, and `''` as two
 	 * apostrophes.
 	 *

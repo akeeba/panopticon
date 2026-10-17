@@ -19,7 +19,8 @@ A string goes through two escaping layers, and each must be applied once, by the
 
 - In a PO file, `"` inside `msgid`/`msgstr` is written `\"`. That is PO syntax; `po_to_ini` turns it into the INI `\"`.
   So the PO file has `msgstr "<a href=\"%s\">…</a>"`, never `\\"` or `\\\"`.
-- In `en-GB.ini`, a `"` inside a value is written `\"` (older strings use bare `"`, which also loads).
+- In `en-GB.ini`, a `"` inside a value is always written `\"`. A bare `"` loads in AWF, which reads the file in raw
+  mode, but breaks PHP's standard INI parser and translation tools; `LanguageFilesTest` rejects it.
 - No other backslash is ever needed. AWF only interprets `\n`, `\t` and `\\`; anything else is displayed as-is: `\'`
   shows a backslash, `%1\$d` (a PHP double-quoted string habit) makes sprintf() throw, so the user sees
   "BAD TRANSLATION".

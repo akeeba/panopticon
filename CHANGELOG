@@ -12,6 +12,7 @@ Akeeba Panopticon 2.4.0
 # [LOW] French: the Multi-factor Authentication page had a garbled title, and "authentification" was misspelt
 # [LOW] API Tokens: the token quota read "BAD TRANSLATION" instead of how many tokens you have created
 # [LOW] Joomla! update log: the message about enabling Joomla Update's extraction script showed a stray backslash
+# [LOW] The English language file could not be read by standard INI parsers and translation tools
 # [LOW] Language tools: every INI to PO conversion added one more level of escaping to double quotes [gh-1081]
 
 Akeeba Panopticon 2.3.1
