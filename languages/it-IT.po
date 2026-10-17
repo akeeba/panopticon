@@ -1210,7 +1210,7 @@ msgstr "Impossibile eseguire un backup prima di aggiornare il sito %d (%s); aggi
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Abilitazione dello script di estrazione dell\'aggiornamento di Joomla!&reg; per il sito %d (%s)"
 
 #, phpformat

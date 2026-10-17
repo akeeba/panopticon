@@ -1210,7 +1210,7 @@ msgstr "Échec de la sauvegarde avant la mise à jour du site %d (%s) ; mise à
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Activation du script d\'extraction de la mise à jour de Joomla! pour le site %d (%s)"
 
 #, phpformat

@@ -1071,7 +1071,7 @@ msgstr ""
 "%d (%s) sitesi güncellenmeden önce yedekleme alınamadı; güncelleme iptal edildi"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "%d (%s) sitesi için Joomla Güncellemenin ayıklama betiği etkinleştiriliyor"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START"

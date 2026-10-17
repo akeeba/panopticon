@@ -1210,7 +1210,7 @@ msgstr "Misslyckades med att ta en backup före uppdatering av webbplatsen %d (%
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Aktiverar Joomla Updates extraheringsskript för webbplats %d (%s)"
 
 #, phpformat

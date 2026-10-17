@@ -1225,7 +1225,7 @@ msgstr "Sicherung vor der Aktualisierung von Website %d (%s) fehlgeschlagen; Akt
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Joomla Update-Extraktionsskript für Website %d (%s) wird aktiviert"
 
 #, phpformat

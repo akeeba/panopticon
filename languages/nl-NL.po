@@ -1210,7 +1210,7 @@ msgstr "Kan geen back-up maken voordat site %d (%s) wordt bijgewerkt; bijwerken 
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Joomla Update\'s extractie script inschakelen voor site %d (%s)"
 
 #, phpformat

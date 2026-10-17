@@ -1091,7 +1091,7 @@ msgstr ""
 "(%s)· η ενημέρωση ακυρώθηκε"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr ""
 "Ενεργοποίηση δέσμης ενεργειών εξαγωγής Joomla Update για τον ιστοχώρο %d (%s)"
 
@@ -13292,7 +13292,7 @@ msgstr "Κατάσταση HTTP 401 κατά την αποσυμπίεση τη�
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Ενεργοποίηση του σεναρίου αποσυμπίεσης του Joomla Update για τον ιστότοπο %d (%s)"
 
 #, phpformat

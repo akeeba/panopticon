@@ -1210,7 +1210,7 @@ msgstr "Sigurnosno kopiranje prije ažuriranja web-mjesta %d (%s) nije uspjelo; 
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Aktiviranje skripte za raspakiravanje Joomla Update-a za web-mjesto %d (%s)"
 
 #, phpformat
