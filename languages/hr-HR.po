@@ -2171,7 +2171,7 @@ msgstr "Idite na hosting kontrolnu ploču. Stvorite novi CRON zadatak. Postavite
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_REPLACE_PHP_CLI"
 msgid "Replace <i>/path/to/php</i> with the path to the PHP %s CLI executable. Make sure it\'s the PHP CLI executable, <strong>not</strong> the PHP CGI/FastCGI executable."
-msgstr "Zamijenite <i>/path/to/php</i> s putanjom do PHP %s CLI izvršne datoteke. Provjerite da je to PHP CLI izvršna datoteka, a ne PHP CGI ili FastCGI."
+msgstr "Zamijenite <i>/path/to/php</i> putanjom do PHP %s CLI izvršne datoteke. Provjerite da je to PHP CLI izvršna datoteka, <strong>a ne</strong> PHP CGI/FastCGI izvršna datoteka."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_IF_UNSURE"
@@ -2201,7 +2201,7 @@ msgstr "Dobivam \"Status: 403 Forbidden\" pri pokretanju CRON zadatka"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_1"
 msgid "You are using the PHP-CGI/FastCGI executable. As noted above, you need to replace <em>/path/to/php</em> with the path to the <strong>PHP CLI</strong> executable."
-msgstr "Koristite PHP-CGI/FastCGI izvršnu datoteku. Kao što je gore napomenuto, trebate zamijeniti <em>/path/to/php</em> s putanjom do PHP CLI izvršne datoteke."
+msgstr "Koristite PHP-CGI/FastCGI izvršnu datoteku. Kao što je gore napomenuto, <em>/path/to/php</em> morate zamijeniti putanjom do <strong>PHP CLI</strong> izvršne datoteke."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_2"
@@ -2246,12 +2246,12 @@ msgstr "<strong>Jako</strong> preporučujemo korištenje drugog hostera."
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_2"
 msgid "Panopticon is only useful when its automation features run consistently and reliably. This requires its CRON job executing every minute - <em>1440 times a day</em>. This can get expensive with a third party service; about $10 per day! You can instead spend as much money <em>per month</em> on a decent host which support real, command-line CRON jobs."
-msgstr "Panopticon je koristan samo kada se njegove automatizacijske funkcije izvode dosljedno i pouzdano. Za to je potrebno pouzdano pokretanje CRON zadataka svake minute."
+msgstr "Panopticon je koristan samo kada se njegove funkcije automatizacije izvode dosljedno i pouzdano. Za to je potrebno da se njegov CRON zadatak izvršava svake minute - <em>1440 puta dnevno</em>. S uslugom treće strane to može postati skupo; oko 10 USD dnevno! Isti iznos <em>mjesečno</em> možete radije potrošiti na pristojan hosting koji podržava prave CRON zadatke iz naredbenog retka."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_3"
 msgid "If you have a cheaper way executing CRON jobs remotely (e.g. another server under your control), please click on the <strong>Web</strong> tab to find out how to do it."
-msgstr "Ako imate jeftiniji način za izvođenje CRON zadataka na daljinu (npr. drugi poslužitelj pod vašom kontrolom), molimo ga koristite."
+msgstr "Ako imate jeftiniji način za daljinsko izvršavanje CRON zadataka (npr. drugi poslužitelj pod vašom kontrolom), kliknite na karticu <strong>Web</strong> da biste saznali kako to učiniti."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_4"
@@ -2371,7 +2371,7 @@ msgstr "Što dalje?"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
 msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "Nekoliko sekundi do jedne minute nakon postavljanja CRON zadatka, ova stranica će se promijeniti u benchmark. Nemojte se brinuti - benchmark je normalan dio instalacije i traje do dvije minute."
+msgstr "Nekoliko sekundi do minutu nakon postavljanja CRON zadatka ova će se stranica promijeniti u test performansi (benchmark). Nemojte zatvarati ovu karticu preglednika, nemojte prelaziti na drugu karticu / prozor preglednika ili aplikaciju, nemojte isključivati uređaj niti ga pustiti da zaspi, nemojte hraniti svog <em title=\"Ovo su gremlini prije nego što postanu gremlini. Odajemo li svoje godine ovom zastarjelim popularnim kulturnim referencama?\">mogwaija</em> nakon ponoći. Prilično jednostavno, zar ne?"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER"
@@ -2561,17 +2561,17 @@ msgstr "Puno ime ne može biti prazno"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_NOTICEMBLANGNOTDEFAULT"
 msgid "PHP mbstring language is not set to neutral. This can be set locally by entering <strong>php_value mbstring.language neutral</strong> in your <code>.htaccess</code> file."
-msgstr "PHP mbstring jezik nije postavljen na neutralno. To se može postaviti lokalno unosom <strong>php_value mbstring.language neutral</strong> u datoteku .htaccess."
+msgstr "PHP mbstring jezik nije postavljen na neutralno. To se može postaviti lokalno unosom <strong>php_value mbstring.language neutral</strong> u vašu datoteku <code>.htaccess</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_NOTICEMBSTRINGOVERLOAD"
 msgid "PHP mbstring function overload is set. This can be turned off locally by entering <strong>php_value mbstring.func_overload 0</strong> in your <code>.htaccess</code> file."
-msgstr "PHP mbstring preopterećenje funkcija je postavljeno. To se može isključiti lokalno unosom <strong>php_value mbstring.func_overload 0</strong> u datoteku .htaccess."
+msgstr "PHP mbstring preopterećenje funkcija je postavljeno. To se može isključiti lokalno unosom <strong>php_value mbstring.func_overload 0</strong> u vašu datoteku <code>.htaccess</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_CONFIGURATIONPHP"
 msgid "You can still continue the installation. The configuration settings will be displayed at the end. You will have to manually upload the code. At the end of the installation, click in the text area to highlight all of the code and then paste into a new text file. Name this file <code>config.php</code> and upload it to the folder where you\'ve installed Panopticon."
-msgstr "Možete nastaviti instalaciju. Postavke konfiguracije bit će prikazane na kraju. Morat ćete ručno stvoriti konfiguracijsku datoteku."
+msgstr "Instalaciju i dalje možete nastaviti. Postavke konfiguracije prikazat će se na kraju. Kôd ćete morati ručno prenijeti na poslužitelj. Na kraju instalacije kliknite u tekstualno polje da biste označili sav kôd, a zatim ga zalijepite u novu tekstualnu datoteku. Nazovite tu datoteku <code>config.php</code> i prenesite je u mapu u koju ste instalirali Panopticon."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_DONE"
@@ -3471,7 +3471,7 @@ msgstr "CC na sljedeće e-mail adrese"
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_CC_HELP"
 msgid "A comma-separated list of additional email addresses to Carbon Copy when sending emails about the site update. Addresses can be in the format <code>foo@example.com</code> (only email address) or <code>Mr. Foo Bar &lt;foo@example.com&gt;</code> (name and address)."
-msgstr "Popis e-mail adresa odvojenih zarezima za Carbon Copy pri slanju e-poruka o ažuriranjima web-mjesta."
+msgstr "Popis dodatnih e-mail adresa odvojenih zarezima koje će primiti kopiju (Carbon Copy) pri slanju e-poruka o ažuriranju web-mjesta. Adrese mogu biti u obliku <code>foo@example.com</code> (samo e-mail adresa) ili <code>Mr. Foo Bar &lt;foo@example.com&gt;</code> (ime i adresa)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_ERROR"
@@ -3726,7 +3726,7 @@ msgstr "Istekao"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
 msgid "The domain name has expired. You might still be able to access the domain due to your registrar\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
-msgstr "Naziv domene je istekao. Možda ga još uvijek možete pristupiti zbog perioda otkupa vašeg registrara, ali to ne traje dugo."
+msgstr "Naziv domene je istekao. Možda ćete i dalje moći pristupiti domeni zbog počeka (grace period) vašeg registrara, ali <strong>ovaj naziv domene morate odmah obnoviti kod svog registrara</strong> kako ga ne biste izgubili."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS_HEAD"
@@ -4441,7 +4441,7 @@ msgstr "Neke Linux distribucije, kao što su RedHat Enterprise Linux i Ubuntu Se
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P2"
 msgid "Please note that this typically requires an additional, often expensive, per-server license. Moreover, some security fixes which require changes in the internal PHP architecture cannot be applied in these old PHP versions. Finally, functional issues (‘bugs’) and compatibility with newer Internet standards and best practices are <em>never</em> addressed."
-msgstr "Napominjemo da to obično zahtijeva dodatnu, često skupu, licencu po poslužitelju. Nadalje, neke sigurnosne ispravke koje zahtijevaju promjene u internoj arhitekturi PHP-a ne mogu se primijeniti u ovim starim verzijama PHP-a. Konačno, funkcionalni problemi (\"greške\") i kompatibilnost s novijim internetskim standardima nikada se ne rješavaju."
+msgstr "Napominjemo da to obično zahtijeva dodatnu, često skupu, licencu po poslužitelju. Nadalje, neke sigurnosne ispravke koje zahtijevaju promjene u internoj arhitekturi PHP-a ne mogu se primijeniti u ovim starim verzijama PHP-a. Konačno, funkcionalni problemi („greške“) i kompatibilnost s novijim internetskim standardima i najboljim praksama <em>nikada</em> se ne rješavaju."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P3"
@@ -5541,7 +5541,7 @@ msgstr "HTTP statusni kôd 400 obično znači da vašem web-mjestu može pristup
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
 msgid "If you are using Admin Tools Professional please go to your site\'s backend and click on Components, Admin Tools for Joomla!, Web Application Firewall, Configure WAF, Request Filtering. Check the list of <em>Allowed Domains</em> towards the bottom of the page."
-msgstr "Ako koristite Admin Tools Professional, idite na backend vašeg web-mjesta i kliknite na Komponente, Admin Tools za Joomla!, Web Application Firewall i provjerite Dozvoljene domene."
+msgstr "Ako koristite Admin Tools Professional, idite u backend vašeg web-mjesta i kliknite na Komponente, Admin Tools za Joomla!, Web Application Firewall, Konfiguriraj WAF, Filtriranje zahtjeva. Pogledajte popis <em>Dopuštenih domena</em> pri dnu stranice."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_WHATEVER"
@@ -5676,7 +5676,7 @@ msgstr "Jeste li ispravno upisali URL? Pažljivo provjerite, pravopisne greške 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK2"
 msgid "Have you recently bought the domain, assigned the domain to a server, or transferred your site between hosts? Keep in mind that DNS propagation takes anywhere from 5 minutes to several days. Moreover, due to the distributed nature of DNS, it is possible that you can see your site <em>from your device</em> but the server you have installed Panopticon on can\'t."
-msgstr "Jeste li nedavno kupili domenu, dodijelili domenu poslužitelju ili premjestili web-mjesto između hostera? Imajte na umu da DNS propagacija traje od nekoliko minuta do 48 sati."
+msgstr "Jeste li nedavno kupili domenu, dodijelili domenu poslužitelju ili premjestili web-mjesto između hostera? Imajte na umu da DNS propagacija traje od 5 minuta do nekoliko dana. Štoviše, zbog distribuirane prirode DNS-a moguće je da vi vidite svoje web-mjesto <em>sa svog uređaja</em>, ali poslužitelj na kojem ste instalirali Panopticon ne može."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3"
@@ -5756,7 +5756,7 @@ msgstr "Instalirajte SSL/TLS certifikat koji je potpisalo komercijalno, poznato 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
 msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
-msgstr "Ako ste na intranetu, ekstranetu ili inače trebate upravljati vlastitim tijelom za izdavanje certifikata, možete reći Panopticonu da prepozna vaše prilagođene CA datoteke."
+msgstr "Ako ste na intranetu, ekstranetu ili inače trebate održavati vlastito tijelo za izdavanje certifikata (Certification Authority), možete reći Panopticonu da prepozna vaše prilagođeno tijelo. Izradite datoteku <code>cacert.pem</code> unutar mape <code>user_code</code> vaše instalacije Panopticona. Kopirajte i zalijepite javne certifikate vašeg tijela za izdavanje certifikata (CA) u <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> formatu. Ona se automatski učitava <em>povrh</em> standardnih CA datoteka, čime se Panopticonu omogućuje pristup vašem web-mjestu."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
@@ -5786,7 +5786,7 @@ msgstr "Je li SSL/TLS certifikat istekao? U tom slučaju ga trebate obnoviti. Na
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
 msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
-msgstr "Je li SSL/TLS certifikat opozvan? Ponekad tijela za izdavanje certifikata, ili vlasnici SSL/TLS certifikata, mogu odlučiti opozvati ga."
+msgstr "Je li SSL/TLS certifikat opozvan? Ponekad tijela za izdavanje certifikata ili vlasnici SSL/TLS certifikata mogu odlučiti opozvati ga. Na primjer, tijela za izdavanje certifikata učinit će to ako sumnjaju na prijevaru ili ako vjeruju da je njihova infrastruktura za izdavanje certifikata bila ugrožena. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Provjerite status opoziva svog certifikata</a>. Ako je opozvan, trebat će vam novi certifikat."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
@@ -5846,7 +5846,7 @@ msgstr "Molimo uklonite zaštitu lozinkom."
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3"
 msgid "Kindly note that the password protection may have been applied only to your site\'s <code>api</code> folder, or the root folder of your site. Look in both places, in this order."
-msgstr "Napominjemo da je zaštita lozinkom možda primijenjena samo na mapu <code>api</code> vašeg web-mjesta, ili na korijensku mapu. Potražite datoteke <code>.htpasswd</code> ili <code>.htaccess</code>."
+msgstr "Napominjemo da je zaštita lozinkom možda primijenjena samo na mapu <code>api</code> vašeg web-mjesta ili na korijensku mapu web-mjesta. Potražite na oba mjesta, tim redoslijedom."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3_J3"
@@ -5921,7 +5921,7 @@ msgstr "Slobodne bilješke o web-miestu koje se prikazuju samo korisnicima koji 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_NOTES_HELP_NO_PRIVILEGED"
 msgid "<strong>DO NOT INCLUDE PRIVILEGED INFORMATION</strong>, such as passwords, in Notes. The contents of this field are stored <em>unencrypted</em> in the database. If you want to store privileged information we strongly recommend using a password manager with the ability to store arbitrary information such as KeePassXC, Strongbox, 1Password, etc."
-msgstr "<strong>NE UKLJUČUJTE PRIVILEGIRANE INFORMACIJE</strong>, poput lozinki, u Bilješke. Sadržaj bilješki je vidljiv svim korisnicima koji imaju pristup za uređivanje web-mjesta."
+msgstr "<strong>NE UKLJUČUJTE POVJERLJIVE INFORMACIJE</strong>, poput lozinki, u Bilješke. Sadržaj ovog polja pohranjuje se <em>nešifriran</em> u bazi podataka. Ako želite pohraniti povjerljive informacije, snažno preporučujemo korištenje upravitelja lozinki koji može pohraniti proizvoljne informacije, poput KeePassXC, Strongbox, 1Password itd."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_NOTES_NONE"
@@ -6101,7 +6101,7 @@ msgstr "Usar ruta de guardado de sesión PHP predeterminada"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH_HELP"
 msgid "When enabled, Panopticon uses the <code>session.save_path</code> in your PHP configuration for saving PHP session data files. When disabled, Panopticon uses the <code>tmp/session</code> folder under your web root."
-msgstr "Cuando está habilitado, Panopticon usa <code>session.save_path</code> en su configuración PHP. De lo contrario, usa una carpeta personalizada."
+msgstr "Kada je omogućeno, Panopticon koristi <code>session.save_path</code> iz vaše PHP konfiguracije za pohranu datoteka PHP sesija. Kada je onemogućeno, Panopticon koristi mapu <code>tmp/session</code> unutar korijenske mape vašeg web-mjesta."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE"
@@ -6151,7 +6151,7 @@ msgstr "Prohibir el uso de contraseñas filtradas"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
 msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Evita que los usuarios usen contraseñas encontradas en filtraciones de contraseñas en línea. Funciona gracias al servicio Have I Been Pwned."
+msgstr "Sprječava korisnike da koriste lozinke koje se nalaze u javnim curenjima lozinki. Pokreće ga usluga treće strane <a href='https://haveibeenpwned.com/' _target='blank'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
@@ -6221,7 +6221,7 @@ msgstr "Broj prikazanih stavki"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS_HELP"
 msgid "Panopticon always loads up to 50 sites per HTTP request. This is the maximum number of sites to be displayed <em>in total</em>."
-msgstr "Panopticon siempre carga hasta 50 sitios por solicitud HTTP. Este es el número máximo de sitios que se muestran en el panel al mismo tiempo."
+msgstr "Panopticon uvijek učitava do 50 web-mjesta po HTTP zahtjevu. Ovo je najveći broj web-mjesta koji će se prikazati <em>ukupno</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PHPWARNINGS"
@@ -6236,7 +6236,7 @@ msgstr "Mostrar avatares de usuarios"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
 msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Mostrar avatares para los usuarios. Esta función se basa en el servicio de terceros Gravatar."
+msgstr "Prikaži avatare korisnika. Ovu značajku pokreće usluga treće strane <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
@@ -6281,7 +6281,7 @@ msgstr "Nombre de fuente de datos (DSN) de Redis"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_REDIS_DSN_HELP"
 msgid "How to connect to your Redis server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Redis adapter documentation</a> for information on the syntax."
-msgstr "Cómo conectarse a su servidor Redis. Consulte la documentación de Symfony para obtener el formato del DSN."
+msgstr "Kako se spojiti na vaš Redis poslužitelj. Informacije o sintaksi potražite u <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">dokumentaciji Symfony Cache Redis adaptera</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN"
@@ -6291,7 +6291,7 @@ msgstr "Nombre de fuente de datos (DSN) de Memcached"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN_HELP"
 msgid "How to connect to your Memcached server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Memcached adapter documentation</a> for information on the syntax."
-msgstr "Cómo conectarse a su servidor Memcached. Consulte la documentación de Symfony para obtener el formato del DSN."
+msgstr "Kako se spojiti na vaš Memcached poslužitelj. Informacije o sintaksi potražite u <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">dokumentaciji Symfony Cache Memcached adaptera</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_LEVEL"
@@ -6351,7 +6351,7 @@ msgstr "No cambie sin la preparación adecuada"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_DATABASE_WARNING_BODY"
 msgid "Always make a copy of your <code>config.php</code> file, e.g. by copying it as <code>config.bak.php</code> before changing anything here. Always prepare the new database, database user, and/or database tables before making changes here. Remember that Panopticon will <em>not</em> move or rename database tables for you. If things break, restore your old copy of your <code>config.php</code> file."
-msgstr "Siempre haga una copia de su archivo <code>config.php</code>, por ejemplo copiándolo como <code>config.php.bak</code>, antes de cambiar la configuración de la base de datos."
+msgstr "Uvijek napravite kopiju svoje datoteke <code>config.php</code>, npr. kopiranjem u <code>config.bak.php</code>, prije nego što ovdje bilo što promijenite. Uvijek pripremite novu bazu podataka, korisnika baze podataka i/ili tablice baze podataka prije izmjena ovdje. Imajte na umu da Panopticon <em>neće</em> premjestiti ni preimenovati tablice baze podataka umjesto vas. Ako nešto prestane raditi, vratite staru kopiju svoje datoteke <code>config.php</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBDRIVER"
@@ -6496,7 +6496,7 @@ msgstr "Cuando se encuentra una actualización"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_COREUPDATE_INSTALL_HELP"
 msgid "Do nothing: no action is taken. Send email: An email is sent, nothing is installed. Patch: Only patch versions (e.g. 1.2.<strong>3</strong> to 1.2.<strong>4</strong>) are installed; an email is sent otherwise. Minor: Only patch and minor versions (e.g. 1.<strong>2</strong>.x to 1.<strong>3</strong>.x) are installed; an email is sent otherwise. Any version: installs all updates, even if the major version changes (e.g. <strong>1</strong>.x to <strong>2</strong>.x)."
-msgstr "No hacer nada: no se toma ninguna acción. Enviar correo: se envía un correo electrónico, pero no se instala nada. Instalar: se instala la actualización automáticamente."
+msgstr "Ne radi ništa: ne poduzima se nikakva radnja. Pošalji e-poštu: šalje se e-poruka, ništa se ne instalira. Zakrpa: instaliraju se samo zakrpe (npr. 1.2.<strong>3</strong> na 1.2.<strong>4</strong>); inače se šalje e-poruka. Podverzija: instaliraju se samo zakrpe i podverzije (npr. 1.<strong>2</strong>.x na 1.<strong>3</strong>.x); inače se šalje e-poruka. Bilo koja verzija: instalira sva ažuriranja, čak i ako se promijeni glavna verzija (npr. <strong>1</strong>.x na <strong>2</strong>.x)."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL"
@@ -6571,7 +6571,7 @@ msgstr "Iza load balancera / reverse proxy-ja"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER_HELP"
 msgid "Only enable if your installation is behind a non-transparent proxy (e.g. Varnish), load balancer (e.g. HAProxy), CDN (e.g. CloudFlare), or security service (e.g. Sucuri) which conveys the real IP address of the visitor through the HTTP header <code>X-Forwarded-For</code>."
-msgstr "Omogućite samo ako je vaša instalacija iza netransparentnog proxy-ja (npr. Varnish), load balancera (npr. HAProxy), CDN-a (npr. CloudFlare) ili sigurnosnog filtera."
+msgstr "Omogućite samo ako je vaša instalacija iza neprozirnog proxyja (npr. Varnish), balansera opterećenja (npr. HAProxy), CDN-a (npr. CloudFlare) ili sigurnosne usluge (npr. Sucuri) koja stvarnu IP adresu posjetitelja prenosi putem HTTP zaglavlja <code>X-Forwarded-For</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT"
@@ -10082,12 +10082,12 @@ msgstr "Provjerite jeste li instalirali i omogućili Akeeba Backup Professional 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
 msgid "Log into your site's backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Prijavite se na backend vašeg web-mjesta. Idite na Komponente, Akeeba Backup, Kontrolna ploča. Kliknite na Opcije, Frontend sigurnosno kopiranje i postavite \"Omogući JSON API (udaljeno sigurnosno kopiranje)\" na Da. Unesite novu \"Tajnu riječ\"; možete stvoriti novu, nasumičnu, sigurnu tajnu riječ na <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Zatim kliknite na Spremi i zatvori u alatnoj traci."
+msgstr "Prijavite se u backend vašeg web-mjesta. Idite na Komponente, Akeeba Backup, Kontrolna ploča. Kliknite na Opcije, Frontend sigurnosno kopiranje i postavite „Omogući JSON API (udaljeno sigurnosno kopiranje)“ na Da. Unesite novu „Tajnu riječ“; novu, nasumičnu, sigurnu tajnu riječ možete izraditi na <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Zatim kliknite na Pohrani i zatvori u alatnoj traci."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
 msgid "Log into your site's backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Prijavite se na backend vašeg web-mjesta. Idite na Akeeba Backup, Konfiguracija sustava, Javni API i postavite \"Omogući JSON API (udaljeno sigurnosno kopiranje)\" na Da. Unesite novi \"Tajni ključ\"; možete stvoriti novi, nasumični, sigurni ključ na <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Zatim kliknite na Spremi i zatvori u alatnoj traci."
+msgstr "Prijavite se u backend vašeg web-mjesta. Idite na Akeeba Backup, Konfiguracija sustava, Javni API i postavite „Omogući JSON API (udaljeno sigurnosno kopiranje)“ na Da. Unesite novi „Tajni ključ“; novi, nasumični, sigurni ključ možete izraditi na <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Zatim kliknite na Pohrani i zatvori u alatnoj traci."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
@@ -10171,7 +10171,7 @@ msgstr "Provjerite da je PHP na vašem poslužitelju konfiguriran s onemogućeni
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH3"
 msgid "If this is not enough, it is possible that a third party plugin is causing an error in the API application. Check if there are any third party plugins, including any must-use plugins (<code>mu-plugins</code>), which may be accidentally breaking the API plugin and contact their author."
-msgstr "Ako to nije dovoljno, moguće je da dodatak treće strane uzrokuje pogrešku u API aplikaciji. Provjerite ima li kakvih dodataka treće strane koji mogu uzrokovati probleme."
+msgstr "Ako to nije dovoljno, moguće je da dodatak treće strane uzrokuje pogrešku u API aplikaciji. Provjerite postoje li dodaci trećih strana, uključujući obavezne dodatke (must-use plugins, <code>mu-plugins</code>), koji bi mogli slučajno kvariti API dodatak, i obratite se njihovu autoru."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_HEAD"
@@ -10305,7 +10305,7 @@ msgstr "Nije moguće komunicirati s dodatkom \"Akeeba Panopticon Connector for W
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
 msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
-msgstr "Panopticon koristi vlastiti dodatak \"Akeeba Panopticon Connector for WordPress\" za pružanje potrebnog API-ja putem WordPress JSON services API-ja."
+msgstr "Panopticon koristi vlastiti dodatak, „Akeeba Panopticon Connector for WordPress“, kako bi pružio potreban API putem WordPressova JSON API-ja usluga (<code>wp-json</code>)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"

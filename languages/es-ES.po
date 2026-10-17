@@ -2156,7 +2156,7 @@ msgstr "Audiencia objetivo"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_EVERY_MINUTE_ALERT_HEAD"
 msgid "Make sure the CRON job runs <em>every minute</em>."
-msgstr "Asegúrate de que la tarea CRON se ejecute cada minuto."
+msgstr "Asegúrate de que la tarea CRON se ejecute <em>cada minuto</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_LBL_EVERY_MINUTE_ALERT_BODY"
@@ -2166,12 +2166,12 @@ msgstr "Ejecutar la tarea CRON con menos frecuencia resulta en información desa
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_CREATE_A_JOB"
 msgid "Go to your hosting control panel. Create a new CRON job. Set it to run <strong>every minute</strong>. Use the following command line."
-msgstr "Ve a tu panel de control de hosting. Crea una nueva tarea CRON. Configúrala para que se ejecute cada minuto. Usa la siguiente línea de comando."
+msgstr "Ve al panel de control de tu hosting. Crea una nueva tarea CRON. Configúrala para que se ejecute <strong>cada minuto</strong>. Usa la siguiente línea de comandos."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_REPLACE_PHP_CLI"
 msgid "Replace <i>/path/to/php</i> with the path to the PHP %s CLI executable. Make sure it\'s the PHP CLI executable, <strong>not</strong> the PHP CGI/FastCGI executable."
-msgstr "Reemplaza /path/to/php con la ruta al ejecutable de PHP %s CLI. Asegúrate de que sea el ejecutable de PHP CLI, no el ejecutable de PHP CGI/FastCGI."
+msgstr "Reemplaza <i>/path/to/php</i> con la ruta al ejecutable de PHP %s CLI. Asegúrate de que sea el ejecutable de PHP CLI, <strong>no</strong> el ejecutable de PHP CGI/FastCGI."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_IF_UNSURE"
@@ -2186,7 +2186,7 @@ msgstr "La tarea CRON no se ejecuta"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NOT_RUN_INFO_1"
 msgid "Remove the <code>2>&1</code> from the CRON command line. When the CRON command executes again you will receive an email with an error (as long as your hosting account is configured to email you the output of CRON jobs). Using that, you can find out what is going on."
-msgstr "Elimina el 2>&1 de la línea de comando de CRON. Cuando el comando CRON se ejecute de nuevo, recibirás un correo electrónico con un error (siempre y cuando tu cuenta de hosting esté configurada para enviarte el resultado de las tareas CRON). Con eso, puedes averiguar qué está pasando."
+msgstr "Elimina el <code>2>&1</code> de la línea de comandos de CRON. Cuando el comando CRON se ejecute de nuevo, recibirás un correo electrónico con un error (siempre y cuando tu cuenta de hosting esté configurada para enviarte la salida de las tareas CRON). Con eso, puedes averiguar qué está pasando."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NOT_RUN_INFO_2"
@@ -2201,7 +2201,7 @@ msgstr "Recibo \"Status: 403 Forbidden\" al ejecutar la tarea CRON"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_1"
 msgid "You are using the PHP-CGI/FastCGI executable. As noted above, you need to replace <em>/path/to/php</em> with the path to the <strong>PHP CLI</strong> executable."
-msgstr "Estás usando el ejecutable PHP-CGI/FastCGI. Como se mencionó anteriormente, necesitas reemplazar /path/to/php con la ruta al ejecutable PHP CLI."
+msgstr "Estás usando el ejecutable PHP-CGI/FastCGI. Como se indicó anteriormente, necesitas reemplazar <em>/path/to/php</em> con la ruta al ejecutable de <strong>PHP CLI</strong>."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_2"
@@ -2231,7 +2231,7 @@ msgstr "El proveedor de hosting solo permite URLs en CRON"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_URL_CRON_INFO"
 msgid "Click on the <strong>Web</strong> tab above."
-msgstr "Haz clic en la pestaña Web arriba."
+msgstr "Haz clic en la pestaña <strong>Web</strong> de arriba."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_HEAD"
@@ -2241,22 +2241,22 @@ msgstr "El proveedor de hosting no tiene una función CRON"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_1"
 msgid "We <strong>very strongly</strong> recommend that you use a different host."
-msgstr "Te recomendamos muy encarecidamente que uses un proveedor de hosting diferente."
+msgstr "Te recomendamos <strong>muy encarecidamente</strong> que uses un proveedor de hosting diferente."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_2"
 msgid "Panopticon is only useful when its automation features run consistently and reliably. This requires its CRON job executing every minute - <em>1440 times a day</em>. This can get expensive with a third party service; about $10 per day! You can instead spend as much money <em>per month</em> on a decent host which support real, command-line CRON jobs."
-msgstr "Panopticon solo es útil cuando sus funciones de automatización se ejecutan de manera consistente y confiable. Esto requiere que su tarea CRON se ejecute cada minuto - 1440 veces al día. Esto puede resultar costoso con un servicio de terceros; ¡alrededor de $10 por día! En su lugar, puedes gastar la misma cantidad de dinero por mes en un proveedor de hosting decente que admita tareas CRON reales de línea de comando."
+msgstr "Panopticon solo es útil cuando sus funciones de automatización se ejecutan de manera constante y fiable. Esto requiere que su tarea CRON se ejecute cada minuto: <em>1440 veces al día</em>. Esto puede resultar costoso con un servicio de terceros: ¡unos 10 $ al día! En su lugar, puedes gastar la misma cantidad de dinero <em>al mes</em> en un proveedor de hosting decente que admita tareas CRON reales de línea de comandos."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_3"
 msgid "If you have a cheaper way executing CRON jobs remotely (e.g. another server under your control), please click on the <strong>Web</strong> tab to find out how to do it."
-msgstr "Si tienes una forma más económica de ejecutar tareas CRON de forma remota (por ejemplo, otro servidor bajo tu control), por favor haz clic en la pestaña Web para saber cómo hacerlo."
+msgstr "Si tienes una forma más económica de ejecutar tareas CRON de forma remota (por ejemplo, otro servidor bajo tu control), haz clic en la pestaña <strong>Web</strong> para saber cómo hacerlo."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_4"
 msgid "<strong>Do not “cheap out” on CRON job frequency!</strong> Running CRON jobs less frequently will make Panopticon unreliable and could even break your sites due to incomplete Joomla&reg; core updates."
-msgstr "¡No economices en la frecuencia de las tareas CRON! Ejecutar tareas CRON con menos frecuencia hará que Panopticon sea poco confiable e incluso podría romper tus sitios debido a actualizaciones incompletas del núcleo de Joomla®."
+msgstr "<strong>¡No escatimes en la frecuencia de las tareas CRON!</strong> Ejecutar las tareas CRON con menos frecuencia hará que Panopticon sea poco fiable e incluso podría romper tus sitios debido a actualizaciones incompletas del núcleo de Joomla&reg;."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_CLI_PROS_1"
@@ -2306,17 +2306,17 @@ msgstr "Si estás configurando una tarea CRON regular, usa una de las siguientes
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_WGET"
 msgid "<strong>wGET</strong> (most commercial hosts and Linux servers)"
-msgstr "wGET (la mayoría de los hosts comerciales y servidores Linux)"
+msgstr "<strong>wGET</strong> (la mayoría de los hosts comerciales y servidores Linux)"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_CURL"
 msgid "<strong>cURL</strong> (macOS, some Linux servers)"
-msgstr "cURL (macOS, algunos servidores Linux)"
+msgstr "<strong>cURL</strong> (macOS, algunos servidores Linux)"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_POWERSHELL"
 msgid "<strong>PowerShell</strong> (Windows)"
-msgstr "PowerShell (Windows)"
+msgstr "<strong>PowerShell</strong> (Windows)"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WEB_PROS_1"
@@ -2371,7 +2371,7 @@ msgstr "¿Qué sigue?"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
 msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "Unos segundos a un minuto después de configurar tu tarea CRON, esta página cambiará a un benchmark. No cierres esta pestaña del navegador, no cambies a una pestaña / ventana o aplicación diferente, no apagues ni dejes que tu dispositivo entre en modo de suspensión, no alimentes a tu <em title=\"Estos son los gremlins antes de convertirse en gremlins. ¿Estamos mostrando nuestra edad con esta referencia desactualizada de la cultura popular?\">mogwai después de la medianoche. Bastante sencillo, ¿verdad?"
+msgstr "Unos segundos a un minuto después de configurar tu tarea CRON, esta página cambiará a una prueba de rendimiento. No cierres esta pestaña del navegador, no cambies a otra pestaña / ventana o aplicación, no apagues ni dejes que tu dispositivo entre en modo de suspensión, no alimentes a tu <em title=\"Estos son los gremlins antes de convertirse en gremlins. ¿Estamos mostrando nuestra edad con esta referencia desfasada de la cultura popular?\">mogwai</em> después de medianoche. Bastante sencillo, ¿verdad?"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER"
@@ -2451,7 +2451,7 @@ msgstr "La solicitud AJAX ha expirado. Por favor, verifica tu conexión a Intern
 #, phpformat
 msgctxt "PANOPTICON_SETUP_CRON_ERR_AJAX_HEAD"
 msgid "<strong>AJAX Loading Error</strong>"
-msgstr "Error de carga AJAX"
+msgstr "<strong>Error de carga AJAX</strong>"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_CRON_ERR_AJAX_HTTP_STATUS"
@@ -2561,17 +2561,17 @@ msgstr "El nombre completo no puede estar vacío"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_NOTICEMBLANGNOTDEFAULT"
 msgid "PHP mbstring language is not set to neutral. This can be set locally by entering <strong>php_value mbstring.language neutral</strong> in your <code>.htaccess</code> file."
-msgstr "El idioma PHP mbstring no está configurado como neutro. Puede configurarse localmente añadiendo la directiva correspondiente a su archivo de configuración PHP."
+msgstr "El idioma de PHP mbstring no está configurado como neutro. Esto puede configurarse localmente introduciendo <strong>php_value mbstring.language neutral</strong> en su archivo <code>.htaccess</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_NOTICEMBSTRINGOVERLOAD"
 msgid "PHP mbstring function overload is set. This can be turned off locally by entering <strong>php_value mbstring.func_overload 0</strong> in your <code>.htaccess</code> file."
-msgstr "La sobrecarga de funciones PHP mbstring está activada. Puede desactivarse localmente añadiendo la directiva correspondiente a su archivo de configuración PHP."
+msgstr "La sobrecarga de funciones de PHP mbstring está activada. Esto puede desactivarse localmente introduciendo <strong>php_value mbstring.func_overload 0</strong> en su archivo <code>.htaccess</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_CONFIGURATIONPHP"
 msgid "You can still continue the installation. The configuration settings will be displayed at the end. You will have to manually upload the code. At the end of the installation, click in the text area to highlight all of the code and then paste into a new text file. Name this file <code>config.php</code> and upload it to the folder where you\'ve installed Panopticon."
-msgstr "Puede continuar la instalación. Los ajustes de configuración se mostrarán después de completar la instalación."
+msgstr "Aún puede continuar con la instalación. Los ajustes de configuración se mostrarán al final. Tendrá que subir el código manualmente. Al final de la instalación, haga clic en el área de texto para resaltar todo el código y péguelo en un nuevo archivo de texto. Llame a este archivo <code>config.php</code> y súbalo a la carpeta donde ha instalado Panopticon."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_MSG_DONE"
@@ -3471,7 +3471,7 @@ msgstr "CC a las siguientes direcciones de correo"
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_CC_HELP"
 msgid "A comma-separated list of additional email addresses to Carbon Copy when sending emails about the site update. Addresses can be in the format <code>foo@example.com</code> (only email address) or <code>Mr. Foo Bar &lt;foo@example.com&gt;</code> (name and address)."
-msgstr "Una lista de direcciones de correo electrónico adicionales separadas por comas para enviar en copia cuando se envíen notificaciones de actualización."
+msgstr "Una lista separada por comas de direcciones de correo electrónico adicionales a las que enviar copia al enviar correos sobre la actualización del sitio. Las direcciones pueden tener el formato <code>foo@example.com</code> (solo la dirección de correo electrónico) o <code>Mr. Foo Bar &lt;foo@example.com&gt;</code> (nombre y dirección)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_ERROR"
@@ -3726,7 +3726,7 @@ msgstr "Expirado"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_EXPIRED"
 msgid "The domain name has expired. You might still be able to access the domain due to your registrar\'s grace period, but <strong>you must renew this domain name immediately with your registrar</strong> to avoid losing it."
-msgstr "El nombre de dominio ha expirado. Es posible que aún pueda acceder al dominio debido al período de gracia del registrador."
+msgstr "El nombre de dominio ha expirado. Es posible que aún pueda acceder al dominio debido al período de gracia de su registrador, pero <strong>debe renovar este nombre de dominio inmediatamente con su registrador</strong> para evitar perderlo."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_WHOISINFO_NONAMESERVERS_HEAD"
@@ -4441,7 +4441,7 @@ msgstr "Algunas distribuciones Linux, como RedHat Enterprise Linux y Ubuntu Serv
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P2"
 msgid "Please note that this typically requires an additional, often expensive, per-server license. Moreover, some security fixes which require changes in the internal PHP architecture cannot be applied in these old PHP versions. Finally, functional issues (‘bugs’) and compatibility with newer Internet standards and best practices are <em>never</em> addressed."
-msgstr "Tenga en cuenta que esto generalmente requiere un servicio adicional, a menudo costoso, por servidor."
+msgstr "Tenga en cuenta que esto normalmente requiere una licencia adicional por servidor, a menudo costosa. Además, algunas correcciones de seguridad que exigen cambios en la arquitectura interna de PHP no pueden aplicarse en estas versiones antiguas de PHP. Por último, los problemas funcionales («bugs») y la compatibilidad con los estándares de Internet y las buenas prácticas más recientes <em>nunca</em> se abordan."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P3"
@@ -5541,7 +5541,7 @@ msgstr "El código de estado HTTP 400 suele significar que solo se puede acceder
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
 msgid "If you are using Admin Tools Professional please go to your site\'s backend and click on Components, Admin Tools for Joomla!, Web Application Firewall, Configure WAF, Request Filtering. Check the list of <em>Allowed Domains</em> towards the bottom of the page."
-msgstr "Si está usando Admin Tools Professional, vaya al backend de su sitio y compruebe la lista de bloqueo de IP."
+msgstr "Si está usando Admin Tools Professional, vaya al backend de su sitio y haga clic en Componentes, Admin Tools for Joomla!, Web Application Firewall, Configurar WAF, Filtrado de solicitudes. Compruebe la lista de <em>Dominios permitidos</em> hacia la parte inferior de la página."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_WHATEVER"
@@ -5576,12 +5576,12 @@ msgstr "También es posible que algo en su servidor, o un plugin en su sitio, es
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH4"
 msgid "Please check your installed Joomla! plugins. Kindly note that no, Admin Tools Professional for Joomla! <em>does not</em> interfere with the Joomla! API Token. If this does not help please contact your host."
-msgstr "Por favor, revise sus plugins de Joomla! instalados. Cabe señalar que Admin Tools Professional no bloquea la API de Joomla."
+msgstr "Por favor, revise sus plugins de Joomla! instalados. Tenga en cuenta que no, Admin Tools Professional for Joomla! <em>no</em> interfiere con el token de API de Joomla!. Si esto no ayuda, póngase en contacto con su proveedor de alojamiento."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_406_BLAH1"
 msgid "The HTTP status code 406 (Not Acceptable) means that Joomla! does not see our HTTP <code>Accept</code> header, or a plugin on your site modified it in a way which resulted in an error."
-msgstr "El código de estado HTTP 406 (No aceptable) significa que Joomla! no ve nuestra cabecera HTTP de aceptación. Esto puede ser causado por reglas mod_rewrite o un WAF."
+msgstr "El código de estado HTTP 406 (No aceptable) significa que Joomla! no ve nuestra cabecera HTTP <code>Accept</code>, o que un plugin de su sitio la ha modificado de una forma que ha provocado un error."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_406_BLAH2"
@@ -5591,7 +5591,7 @@ msgstr "Por favor, compruebe que no haya plugins de <code>sistema</code> o <code
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_406_BLAH3"
 msgid "If this does not help, please contact your host and ask them to check if the Accept header is forwarded correctly to PHP. It should be <code>Accept: application/vnd.api+json</code>."
-msgstr "Si eso no ayuda, contacte a su proveedor de alojamiento y pídales que comprueben si la cabecera Accept está siendo modificada o eliminada."
+msgstr "Si esto no ayuda, póngase en contacto con su proveedor de alojamiento y pídale que compruebe si la cabecera Accept se reenvía correctamente a PHP. Debería ser <code>Accept: application/vnd.api+json</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HUH_GENERIC"
@@ -5626,7 +5626,7 @@ msgstr "También es posible que algo en su servidor, o un plugin en su sitio, es
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH4"
 msgid "Please check your installed Joomla! plugins. Kindly note that no, Admin Tools Professional for Joomla! <em>does not</em> interfere with the Joomla! API Token. If this does not help please contact your host."
-msgstr "Por favor, revise sus plugins de Joomla! instalados. Cabe señalar que Admin Tools Professional no bloquea la API de Joomla."
+msgstr "Por favor, revise sus plugins de Joomla! instalados. Tenga en cuenta que no, Admin Tools Professional for Joomla! <em>no</em> interfiere con el token de API de Joomla!. Si esto no ayuda, póngase en contacto con su proveedor de alojamiento."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_HEAD"
@@ -5676,7 +5676,7 @@ msgstr "¿Ha escrito la URL correctamente? Compruebe cuidadosamente, los errores
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK2"
 msgid "Have you recently bought the domain, assigned the domain to a server, or transferred your site between hosts? Keep in mind that DNS propagation takes anywhere from 5 minutes to several days. Moreover, due to the distributed nature of DNS, it is possible that you can see your site <em>from your device</em> but the server you have installed Panopticon on can\'t."
-msgstr "¿Ha comprado recientemente el dominio, asignado el dominio a un servidor, o transferido el dominio? Los cambios de DNS pueden tardar hasta 48 horas en propagarse."
+msgstr "¿Ha comprado recientemente el dominio, lo ha asignado a un servidor o ha transferido su sitio entre proveedores de alojamiento? Tenga en cuenta que la propagación del DNS tarda entre 5 minutos y varios días. Además, debido a la naturaleza distribuida del DNS, es posible que usted pueda ver su sitio <em>desde su dispositivo</em> pero que el servidor en el que ha instalado Panopticon no pueda."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK3"
@@ -5756,7 +5756,7 @@ msgstr "Instale un certificado SSL/TLS firmado por una Autoridad Certificadora c
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK3"
 msgid "If you are on an Intranet, extranet, or otherwise need to maintain your own Certification Authority you can tell Panopticon to recognise your custom Certification Authority. Create the file <code>cacert.pem</code> inside the <code>user_code</code> folder of your Panopticon installation. Copy and paste your Certification Authority\'s (CA) public certificate(s) in <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a> format. This is loaded <em>on top of</em> the standard CA files automatically, allowing Panopticon to access your site."
-msgstr "Si está en una intranet, extranet, o necesita mantener su propia Autoridad Certificadora, puede añadir su CA al almacén de certificados de confianza del servidor de Panopticon."
+msgstr "Si está en una intranet o extranet, o necesita mantener su propia Autoridad Certificadora, puede indicar a Panopticon que reconozca su Autoridad Certificadora personalizada. Cree el archivo <code>cacert.pem</code> dentro de la carpeta <code>user_code</code> de su instalación de Panopticon. Copie y pegue el certificado o certificados públicos de su Autoridad Certificadora (CA) en formato <a href=\"https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail\" target=\"_blank\">PEM</a>. Este archivo se carga automáticamente <em>además de</em> los archivos de CA estándar, lo que permite a Panopticon acceder a su sitio."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_HEAD"
@@ -5786,7 +5786,7 @@ msgstr "¿Ha expirado el certificado SSL/TLS? En ese caso necesita renovarlo. Te
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK3"
 msgid "Has the SSL/TLS certificate been revoked? Sometimes Certification Authorities, or the owners of an SSL/TLS certificate, may choose to revoke it. For example, Certification Authorities will do that if they suspect fraud, or if they believe their infrastructure used to issue a certificate was compromised. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Check your certificate\'s revocation status</a>. If it\'s been revoked you will need a new certificate."
-msgstr "¿Ha sido revocado el certificado SSL/TLS? A veces las Autoridades Certificadoras revocan certificados por motivos de seguridad."
+msgstr "¿Ha sido revocado el certificado SSL/TLS? A veces las Autoridades Certificadoras, o los propietarios de un certificado SSL/TLS, pueden decidir revocarlo. Por ejemplo, las Autoridades Certificadoras lo hacen si sospechan fraude o si creen que la infraestructura que usaron para emitir un certificado se vio comprometida. <a href=\"https://www.namecheap.com/support/knowledgebase/article.aspx/9968/38/how-to-check-the-certificate-revocation-status/\" target=\"_blank\">Compruebe el estado de revocación de su certificado</a>. Si ha sido revocado, necesitará un certificado nuevo."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLSBORKED_CHECK4"
@@ -5846,7 +5846,7 @@ msgstr "Por favor, elimine la protección con contraseña."
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3"
 msgid "Kindly note that the password protection may have been applied only to your site\'s <code>api</code> folder, or the root folder of your site. Look in both places, in this order."
-msgstr "Tenga en cuenta que la protección con contraseña puede haberse aplicado solo a la carpeta de administración de su sitio. En ese caso, puede usar las credenciales de autenticación en la configuración del sitio."
+msgstr "Tenga en cuenta que la protección con contraseña puede haberse aplicado solo a la carpeta <code>api</code> de su sitio o a la carpeta raíz de su sitio. Busque en ambos lugares, en este orden."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PWPROTECT_BLAH3_J3"
@@ -5921,7 +5921,7 @@ msgstr "Notas en texto libre sobre el sitio, visibles solo para los usuarios que
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_NOTES_HELP_NO_PRIVILEGED"
 msgid "<strong>DO NOT INCLUDE PRIVILEGED INFORMATION</strong>, such as passwords, in Notes. The contents of this field are stored <em>unencrypted</em> in the database. If you want to store privileged information we strongly recommend using a password manager with the ability to store arbitrary information such as KeePassXC, Strongbox, 1Password, etc."
-msgstr "<strong>NO INCLUYA INFORMACIÓN PRIVILEGIADA</strong>, como contraseñas, en las notas."
+msgstr "<strong>NO INCLUYA INFORMACIÓN PRIVILEGIADA</strong>, como contraseñas, en las notas. El contenido de este campo se almacena <em>sin cifrar</em> en la base de datos. Si desea almacenar información privilegiada, le recomendamos encarecidamente usar un gestor de contraseñas con capacidad para almacenar información arbitraria, como KeePassXC, Strongbox, 1Password, etc."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_NOTES_NONE"
@@ -5946,7 +5946,7 @@ msgstr "No puede ver ni modificar la Configuración del sistema en Panopticon cu
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_ERR_USING_ENVIRONMENT"
 msgid "You cannot view or modify the System Configuration in Panopticon when it runs containerized and you have set the <code>PANOPTICON_USING_ENV</code> environment variable to 1. Please configure Panopticon by setting environment variables instead."
-msgstr "No puede ver ni modificar la Configuración del sistema en Panopticon cuando se ejecuta completamente a través de variables de entorno."
+msgstr "No puede ver ni modificar la Configuración del sistema en Panopticon cuando se ejecuta en un contenedor y ha establecido la variable de entorno <code>PANOPTICON_USING_ENV</code> en 1. Configure Panopticon estableciendo variables de entorno en su lugar."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_BTN_PHPINFO"
@@ -6101,7 +6101,7 @@ msgstr "Usar ruta de guardado de sesión PHP predeterminada"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_USE_DEFAULT_PATH_HELP"
 msgid "When enabled, Panopticon uses the <code>session.save_path</code> in your PHP configuration for saving PHP session data files. When disabled, Panopticon uses the <code>tmp/session</code> folder under your web root."
-msgstr "Cuando está habilitado, Panopticon usa <code>session.save_path</code> en su configuración PHP. De lo contrario, usa una carpeta personalizada."
+msgstr "Cuando está habilitado, Panopticon usa <code>session.save_path</code> de su configuración de PHP para guardar los archivos de datos de sesión de PHP. Cuando está deshabilitado, Panopticon usa la carpeta <code>tmp/session</code> bajo la raíz de su web."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TIMEZONE"
@@ -6151,7 +6151,7 @@ msgstr "Prohibir el uso de contraseñas filtradas"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
 msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Evita que los usuarios usen contraseñas encontradas en filtraciones de contraseñas en línea. Funciona gracias al servicio Have I Been Pwned."
+msgstr "Evita que los usuarios usen contraseñas que se encuentren en filtraciones de contraseñas en línea. Funciona gracias al servicio de terceros <a href='https://haveibeenpwned.com/' _target='blank'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
@@ -6221,7 +6221,7 @@ msgstr "Número máximo de elementos mostrados"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_MAX_ITEMS_HELP"
 msgid "Panopticon always loads up to 50 sites per HTTP request. This is the maximum number of sites to be displayed <em>in total</em>."
-msgstr "Panopticon siempre carga hasta 50 sitios por solicitud HTTP. Este es el número máximo de sitios que se muestran en el panel al mismo tiempo."
+msgstr "Panopticon siempre carga hasta 50 sitios por solicitud HTTP. Este es el número máximo de sitios que se mostrarán <em>en total</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PHPWARNINGS"
@@ -6236,7 +6236,7 @@ msgstr "Mostrar avatares de usuarios"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
 msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Mostrar avatares para los usuarios. Esta función se basa en el servicio de terceros Gravatar."
+msgstr "Mostrar avatares de los usuarios. Esta función funciona gracias al servicio de terceros <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
@@ -6281,7 +6281,7 @@ msgstr "Nombre de fuente de datos (DSN) de Redis"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_REDIS_DSN_HELP"
 msgid "How to connect to your Redis server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Redis adapter documentation</a> for information on the syntax."
-msgstr "Cómo conectarse a su servidor Redis. Consulte la documentación de Symfony para obtener el formato del DSN."
+msgstr "Cómo conectarse a su servidor Redis. Lea <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">la documentación del adaptador Redis de Symfony Cache</a> para obtener información sobre la sintaxis."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN"
@@ -6291,7 +6291,7 @@ msgstr "Nombre de fuente de datos (DSN) de Memcached"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN_HELP"
 msgid "How to connect to your Memcached server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Memcached adapter documentation</a> for information on the syntax."
-msgstr "Cómo conectarse a su servidor Memcached. Consulte la documentación de Symfony para obtener el formato del DSN."
+msgstr "Cómo conectarse a su servidor Memcached. Lea <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">la documentación del adaptador Memcached de Symfony Cache</a> para obtener información sobre la sintaxis."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_LEVEL"
@@ -6351,7 +6351,7 @@ msgstr "No cambie sin la preparación adecuada"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_DATABASE_WARNING_BODY"
 msgid "Always make a copy of your <code>config.php</code> file, e.g. by copying it as <code>config.bak.php</code> before changing anything here. Always prepare the new database, database user, and/or database tables before making changes here. Remember that Panopticon will <em>not</em> move or rename database tables for you. If things break, restore your old copy of your <code>config.php</code> file."
-msgstr "Siempre haga una copia de su archivo <code>config.php</code>, por ejemplo copiándolo como <code>config.php.bak</code>, antes de cambiar la configuración de la base de datos."
+msgstr "Haga siempre una copia de su archivo <code>config.php</code>, por ejemplo copiándolo como <code>config.bak.php</code>, antes de cambiar nada aquí. Prepare siempre la nueva base de datos, el usuario de la base de datos y/o las tablas de la base de datos antes de hacer cambios aquí. Recuerde que Panopticon <em>no</em> moverá ni renombrará las tablas de la base de datos por usted. Si algo se rompe, restaure su copia antigua del archivo <code>config.php</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBDRIVER"
@@ -6496,7 +6496,7 @@ msgstr "Cuando se encuentra una actualización"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_COREUPDATE_INSTALL_HELP"
 msgid "Do nothing: no action is taken. Send email: An email is sent, nothing is installed. Patch: Only patch versions (e.g. 1.2.<strong>3</strong> to 1.2.<strong>4</strong>) are installed; an email is sent otherwise. Minor: Only patch and minor versions (e.g. 1.<strong>2</strong>.x to 1.<strong>3</strong>.x) are installed; an email is sent otherwise. Any version: installs all updates, even if the major version changes (e.g. <strong>1</strong>.x to <strong>2</strong>.x)."
-msgstr "No hacer nada: no se toma ninguna acción. Enviar correo: se envía un correo electrónico, pero no se instala nada. Instalar: se instala la actualización automáticamente."
+msgstr "No hacer nada: no se realiza ninguna acción. Enviar correo: se envía un correo electrónico, pero no se instala nada. Parche: solo se instalan las versiones de parche (p. ej. 1.2.<strong>3</strong> a 1.2.<strong>4</strong>); en caso contrario se envía un correo electrónico. Menor: solo se instalan las versiones de parche y menores (p. ej. 1.<strong>2</strong>.x a 1.<strong>3</strong>.x); en caso contrario se envía un correo electrónico. Cualquier versión: instala todas las actualizaciones, incluso si cambia la versión mayor (p. ej. <strong>1</strong>.x a <strong>2</strong>.x)."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL"
@@ -6556,7 +6556,7 @@ msgstr "No usar proxy para estos dominios"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PROXY_NO_HELP"
 msgid "Enter a comma–separated list of full, or partial domain names which should not go through the proxy, e.g. <code>www.example.com, .mit.edu, .dev</code>."
-msgstr "Introduzca una lista separada por comas de nombres de dominio completos o parciales que no deberían ir a través del proxy."
+msgstr "Introduzca una lista separada por comas de nombres de dominio completos o parciales que no deberían pasar por el proxy, p. ej. <code>www.example.com, .mit.edu, .dev</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FINISHED_SETUP"
@@ -6571,7 +6571,7 @@ msgstr "Detrás de balanceador de carga / proxy inverso"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_BEHIND_LOAD_BALANCER_HELP"
 msgid "Only enable if your installation is behind a non-transparent proxy (e.g. Varnish), load balancer (e.g. HAProxy), CDN (e.g. CloudFlare), or security service (e.g. Sucuri) which conveys the real IP address of the visitor through the HTTP header <code>X-Forwarded-For</code>."
-msgstr "Active solo si su instalación está detrás de un proxy no transparente (p.ej. Varnish, nginx, HAProxy)."
+msgstr "Actívelo solo si su instalación está detrás de un proxy no transparente (p. ej. Varnish), un balanceador de carga (p. ej. HAProxy), una CDN (p. ej. CloudFlare) o un servicio de seguridad (p. ej. Sucuri) que transmita la dirección IP real del visitante mediante la cabecera HTTP <code>X-Forwarded-For</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_SESSION_ENCRYPT"
@@ -7131,7 +7131,7 @@ msgstr "Contenido en texto plano"
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATE_LBL_REMINDER_URLS"
 msgid "Use <em>absolute</em> URLs for any images, media files, etc. Absolute URLs include the domain name e.g. <code>https://www.example.com/something.png</code>."
-msgstr "Use URLs <em>absolutas</em> para cualquier imagen, archivo multimedia, etc. Las URLs absolutas incluyen el nombre de dominio completo."
+msgstr "Use URL <em>absolutas</em> para cualquier imagen, archivo multimedia, etc. Las URL absolutas incluyen el nombre de dominio, p. ej. <code>https://www.example.com/something.png</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_MAILTEMPLATE_ERR_TYPE_EMPTY"
@@ -7611,7 +7611,7 @@ msgstr "Correo electrónico"
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
 msgid "The email address is used to email the user, as well as displaying the user\'s picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
-msgstr "La dirección de correo electrónico se usa para enviar correos al usuario, así como para mostrar el avatar del usuario a través de Gravatar."
+msgstr "La dirección de correo electrónico se usa para enviar correos al usuario, así como para mostrar la imagen del usuario mediante el servicio de terceros <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD"
@@ -7731,7 +7731,7 @@ msgstr "Copyright &copy; %s Akeeba Ltd"
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_PLEASE_READ_LICENSE"
 msgid "For the complete text of the software license, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
-msgstr "Para el texto completo de la licencia del software, por favor lea el <a class=\"text-body\" href=\"%s\">archivo LICENSE</a>."
+msgstr "Para consultar el texto completo de la licencia del software, lea el archivo <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> suministrado con el software."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_3PD_SOFTWARE"
@@ -7811,7 +7811,7 @@ msgstr "Para una lista completa de los colaboradores de Panopticon, por favor vi
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
 msgid "We would like to acknowledge and recognise the work of each and every person who has contributed to Akeeba Panopticon, no matter how small or big their contribution is; even the smallest of details are important. If you have contributed outside of GitHub and would like to be publicly acknowledged, please drop us a line and we\'ll rectify the omission; <em>every person matters</em>."
-msgstr "Nos gustaría reconocer y valorar el trabajo de cada persona que contribuye a Panopticon."
+msgstr "Nos gustaría reconocer y valorar el trabajo de todas y cada una de las personas que han contribuido a Akeeba Panopticon, sin importar lo pequeña o grande que sea su contribución; hasta el más mínimo detalle es importante. Si ha contribuido fuera de GitHub y le gustaría recibir un reconocimiento público, escríbanos unas líneas y rectificaremos la omisión; <em>cada persona importa</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_TITLE"
@@ -7851,7 +7851,7 @@ msgstr "Descripción"
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
 msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site\'s server where Akeeba Backup runs."
-msgstr "Puede usar variables de Akeeba Backup como <code>[DATE]</code>, <code>[SITE]</code>, etc."
+msgstr "Puede usar variables de Akeeba Backup como <code>[DATE]</code>, <code>[SITE]</code>, etc. Akeeba Backup las reemplazará en el momento de la copia de seguridad. También puede usar las variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code>, que Panopticon reemplazará por una versión con formato de la hora de la copia de seguridad. Tenga en cuenta que las variables de Panopticon pueden diferir en unos segundos de las variables de Akeeba Backup, ya que se procesan en el servidor que ejecuta Panopticon, no en el servidor del sitio donde se ejecuta Akeeba Backup."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT"
@@ -7871,7 +7871,7 @@ msgstr "Minutos"
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MINUTES_HELP"
 msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
-msgstr "Número del <code>0</code> al <code>59</code>, rango contiguo p.ej. <code>5-15</code>, lista p.ej. <code>5,15,30</code>, o <code>*</code> para todos."
+msgstr "Número del <code>0</code> al <code>59</code>, rango contiguo p. ej. <code>5-15</code>, lista de valores separados por comas p. ej. <code>1,15,30,45</code>, cada minuto como <code>*</code>, cada X minutos mediante barra p. ej. <code>*/5</code> (cada 5 minutos)."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_HOURS"
@@ -7881,7 +7881,7 @@ msgstr "Horas"
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_HOURS_HELP"
 msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
-msgstr "Número del <code>0</code> al <code>23</code> (0-11 es a.m., 12-23 es p.m.), rango contiguo, lista o <code>*</code> para todas."
+msgstr "Número del <code>0</code> al <code>23</code> (0–11 es a.m., 12–23 es p.m.), rango contiguo p. ej. <code>5-15</code>, lista de valores separados por comas p. ej. <code>0,6,12,18</code>, cada hora como <code>*</code>, cada X horas mediante barra p. ej. <code>*/2</code> (cada 2 horas)."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM"
@@ -7891,7 +7891,7 @@ msgstr "Día del mes"
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Número del <code>1</code> al <code>31</code>, <code>L</code> para el último día del mes, rango contiguo, lista o <code>*</code> para todos."
+msgstr "Número del <code>1</code> al <code>31</code>, <code>L</code> para el último día del mes (¡no puede usarse en listas de valores!), rango contiguo p. ej. <code>1-15</code>, lista de valores separados por comas p. ej. <code>1,7,14,21,28</code>, cada día como <code>*</code>, cada X días mediante barra p. ej. <code>*/3</code> (cada 3 días).<br>Use un número con <code>W</code> para el día más cercano dentro del mismo mes que no sea sábado ni domingo, p. ej. <code>15W</code> es el día más cercano (del 13 al 17) que no es sábado ni domingo."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH"
@@ -7901,7 +7901,7 @@ msgstr "Mes"
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH_HELP"
 msgid "Number <code>1</code> (January) to <code>12</code> (December), contiguous range e.g. <code>3-7</code>, comma–separated list of values e.g. <code>3,6,9,12</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/2</code> (every 2 months).<br>Instead of numbers you may use the abbreviated, three–letter, English names of the months: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
-msgstr "Número del <code>1</code> (enero) al <code>12</code> (diciembre), rango contiguo, lista o <code>*</code> para todos."
+msgstr "Número del <code>1</code> (enero) al <code>12</code> (diciembre), rango contiguo p. ej. <code>3-7</code>, lista de valores separados por comas p. ej. <code>3,6,9,12</code>, cada mes como <code>*</code>, cada X meses mediante barra p. ej. <code>*/2</code> (cada 2 meses).<br>En lugar de números puede usar los nombres ingleses abreviados de tres letras de los meses: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOW"
@@ -7911,7 +7911,7 @@ msgstr "Día de la semana"
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOW_HELP"
 msgid "Number <code>0</code> (Sunday) to <code>6</code> (Saturday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>.<br> Instead of numbers you may use the abbreviated, three–letter, English names of the days of the week: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br>A number followed by <code>L</code> for the last day of the week in the month, e.g. <code>5L</code> is the last Friday of the month.<br>Two numbers separated by <code>#</code> for n-th day of the week in the month, e.g. <code>5#3</code> is the 3rd Friday of the month."
-msgstr "Número del <code>0</code> (domingo) al <code>6</code> (sábado), rango contiguo, lista o <code>*</code> para todos."
+msgstr "Número del <code>0</code> (domingo) al <code>6</code> (sábado), rango contiguo p. ej. <code>1-5</code>, lista de valores separados por comas p. ej. <code>1,3,5</code>, cada día como <code>*</code>.<br> En lugar de números puede usar los nombres ingleses abreviados de tres letras de los días de la semana: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br>Un número seguido de <code>L</code> para el último día de la semana del mes, p. ej. <code>5L</code> es el último viernes del mes.<br>Dos números separados por <code>#</code> para el n-ésimo día de la semana del mes, p. ej. <code>5#3</code> es el tercer viernes del mes."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_FIELD_PROFILE"
@@ -8061,7 +8061,7 @@ msgstr "Minutos"
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MINUTES_HELP"
 msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
-msgstr "Número del <code>0</code> al <code>59</code>, rango contiguo p.ej. <code>5-15</code>, lista p.ej. <code>5,15,30</code>, o <code>*</code> para todos."
+msgstr "Número del <code>0</code> al <code>59</code>, rango contiguo p. ej. <code>5-15</code>, lista de valores separados por comas p. ej. <code>1,15,30,45</code>, cada minuto como <code>*</code>, cada X minutos mediante barra p. ej. <code>*/5</code> (cada 5 minutos)."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_HOURS"
@@ -8071,7 +8071,7 @@ msgstr "Horas"
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_HOURS_HELP"
 msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
-msgstr "Número del <code>0</code> al <code>23</code> (0-11 es a.m., 12-23 es p.m.), rango contiguo, lista o <code>*</code> para todas."
+msgstr "Número del <code>0</code> al <code>23</code> (0–11 es a.m., 12–23 es p.m.), rango contiguo p. ej. <code>5-15</code>, lista de valores separados por comas p. ej. <code>0,6,12,18</code>, cada hora como <code>*</code>, cada X horas mediante barra p. ej. <code>*/2</code> (cada 2 horas)."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM"
@@ -8081,7 +8081,7 @@ msgstr "Día del mes"
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Número del <code>1</code> al <code>31</code>, <code>L</code> para el último día del mes, rango contiguo, lista o <code>*</code> para todos."
+msgstr "Número del <code>1</code> al <code>31</code>, <code>L</code> para el último día del mes (¡no puede usarse en listas de valores!), rango contiguo p. ej. <code>1-15</code>, lista de valores separados por comas p. ej. <code>1,7,14,21,28</code>, cada día como <code>*</code>, cada X días mediante barra p. ej. <code>*/3</code> (cada 3 días).<br>Use un número con <code>W</code> para el día más cercano dentro del mismo mes que no sea sábado ni domingo, p. ej. <code>15W</code> es el día más cercano (del 13 al 17) que no es sábado ni domingo."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MONTH"
@@ -8091,7 +8091,7 @@ msgstr "Mes"
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MONTH_HELP"
 msgid "Number <code>1</code> (January) to <code>12</code> (December), contiguous range e.g. <code>3-7</code>, comma–separated list of values e.g. <code>3,6,9,12</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/2</code> (every 2 months).<br>Instead of numbers you may use the abbreviated, three–letter, English names of the months: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
-msgstr "Número del <code>1</code> (enero) al <code>12</code> (diciembre), rango contiguo, lista o <code>*</code> para todos."
+msgstr "Número del <code>1</code> (enero) al <code>12</code> (diciembre), rango contiguo p. ej. <code>3-7</code>, lista de valores separados por comas p. ej. <code>3,6,9,12</code>, cada mes como <code>*</code>, cada X meses mediante barra p. ej. <code>*/2</code> (cada 2 meses).<br>En lugar de números puede usar los nombres ingleses abreviados de tres letras de los meses: <code>JAN</code> <code>FEB</code>, <code>MAR</code>, <code>APR</code>, <code>MAY</code>, <code>JUN</code>, <code>JUL</code>, <code>AUG</code>, <code>SEP</code>, <code>OCT</code>, <code>NOV</code>, <code>DEC</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOW"
@@ -8101,7 +8101,7 @@ msgstr "Día de la semana"
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOW_HELP"
 msgid "Number <code>0</code> (Sunday) to <code>6</code> (Saturday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>.<br> Instead of numbers you may use the abbreviated, three–letter, English names of the days of the week: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br>A number followed by <code>L</code> for the last day of the week in the month, e.g. <code>5L</code> is the last Friday of the month.<br>Two numbers separated by <code>#</code> for n-th day of the week in the month, e.g. <code>5#3</code> is the 3rd Friday of the month."
-msgstr "Número del <code>0</code> (domingo) al <code>6</code> (sábado), rango contiguo, lista o <code>*</code> para todos."
+msgstr "Número del <code>0</code> (domingo) al <code>6</code> (sábado), rango contiguo p. ej. <code>1-5</code>, lista de valores separados por comas p. ej. <code>1,3,5</code>, cada día como <code>*</code>.<br> En lugar de números puede usar los nombres ingleses abreviados de tres letras de los días de la semana: <code>SUN</code>, <code>MON</code>, <code>TUE</code>, <code>WED</code>, <code>THU</code>, <code>FRI</code>, <code>SAT</code><br>Un número seguido de <code>L</code> para el último día de la semana del mes, p. ej. <code>5L</code> es el último viernes del mes.<br>Dos números separados por <code>#</code> para el n-ésimo día de la semana del mes, p. ej. <code>5#3</code> es el tercer viernes del mes."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_FIELD_SCHEDULE"
@@ -8381,7 +8381,7 @@ msgstr "Códigos de un solo uso para permitirle iniciar sesión en el sitio si n
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_PRINT_PROMPT"
 msgid "<strong><a href=\"%s\">Print these codes</a> and keep them in your wallet</strong>. <span class=\"text-muted\">Backup codes let you log into the site if your regular Multi-factor Authentication method does not work or you no longer have access to it. Each code can be used <em>only once</em>.</span>"
-msgstr "<strong><a href=\"%s\">Imprima estos códigos</a> y guárdelos en su cartera</strong>"
+msgstr "<strong><a href=\"%s\">Imprima estos códigos</a> y guárdelos en su cartera</strong>. <span class=\"text-muted\">Los códigos de respaldo le permiten iniciar sesión en el sitio si su método habitual de autenticación multifactor no funciona o ya no tiene acceso a él. Cada código puede usarse <em>una sola vez</em>.</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_INSTRUCTIONS"
@@ -10051,32 +10051,32 @@ msgstr "Consejos para conectar Akeeba Panopticon a Akeeba Backup Professional"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1"
 msgid "Make sure that you have installed and enabled the Akeeba Backup Professional component, and the Web Services - Akeeba Backup plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
-msgstr "Asegúrese de haber instalado y activado el componente Akeeba Backup Professional en su sitio Joomla!."
+msgstr "Asegúrese de haber instalado y activado el componente Akeeba Backup Professional y el plugin Web Services - Akeeba Backup en su sitio. Akeeba Backup Core <em>no es</em> compatible con Akeeba Panopticon."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_1_WP"
 msgid "Make sure that you have installed and enabled the Akeeba Backup Professional plugin on your site. Akeeba Backup Core <em>is not</em> compatible with Akeeba Panopticon."
-msgstr "Asegúrese de haber instalado y activado el plugin Akeeba Backup Professional en su sitio WordPress."
+msgstr "Asegúrese de haber instalado y activado el plugin Akeeba Backup Professional en su sitio. Akeeba Backup Core <em>no es</em> compatible con Akeeba Panopticon."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
 msgid "Log into your site's backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Inicie sesión en el backend de su sitio. Vaya a Componentes, Akeeba Backup, Panel de control. Configure la clave de API JSON para que Panopticon pueda conectarse."
+msgstr "Inicie sesión en el backend de su sitio. Vaya a Componentes, Akeeba Backup, Panel de control. Haga clic en Opciones, Copia de seguridad desde el front-end y establezca «Habilitar API JSON (copia de seguridad remota)» en Sí. Introduzca una nueva «Palabra secreta»; puede crear una palabra secreta nueva, aleatoria y segura en <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Después, haga clic en Guardar y cerrar en la barra de herramientas."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
 msgid "Log into your site's backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Inicie sesión en el backend de su sitio. Vaya a Akeeba Backup, Configuración del sistema, API pública para que Panopticon pueda conectarse."
+msgstr "Inicie sesión en el backend de su sitio. Vaya a Akeeba Backup, Configuración del sistema, API pública y establezca «Habilitar API JSON (copia de seguridad remota)» en Sí. Introduzca una nueva «Clave secreta»; puede crear una clave nueva, aleatoria y segura en <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Después, haga clic en Guardar y cerrar en la barra de herramientas."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
 msgid "Make sure that no third party extensions (especially security extensions) and/or server configuration settings prevent access to your site\'s <code>api</code> folder. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
-msgstr "Asegúrese de que ninguna extensión de terceros (especialmente extensiones de seguridad) y/o configuración del servidor bloquee las solicitudes de la API."
+msgstr "Asegúrese de que ninguna extensión de terceros (especialmente extensiones de seguridad) y/o ajuste de configuración del servidor impida el acceso a la carpeta <code>api</code> de su sitio. Compruebe también que las respuestas de ese archivo <em>no</em> estén almacenadas en caché por ningún plugin de terceros de su sitio, su servidor web o cualquier CDN / proxy de caché que pueda estar configurado delante de su sitio."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3_WP"
 msgid "Make sure that no third party plugins (especially security plugins) and/or server configuration settings prevent access to your site\'s <code>wp-admin/admin-ajax.php</code> file. Also check that the responses from that file are <em>not</em> cached by any third party plugins on your site, your web server, or any CDN / caching proxy which may be configured to be in front of your site."
-msgstr "Asegúrese de que ningún plugin de terceros (especialmente plugins de seguridad) y/o configuración del servidor bloquee las solicitudes de la API."
+msgstr "Asegúrese de que ningún plugin de terceros (especialmente plugins de seguridad) y/o ajuste de configuración del servidor impida el acceso al archivo <code>wp-admin/admin-ajax.php</code> de su sitio. Compruebe también que las respuestas de ese archivo <em>no</em> estén almacenadas en caché por ningún plugin de terceros de su sitio, su servidor web o cualquier CDN / proxy de caché que pueda estar configurado delante de su sitio."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_HEAD"
@@ -10146,12 +10146,12 @@ msgstr "La respuesta de la API está precedida y/o seguida por otro contenido de
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH2"
 msgid "Make sure PHP on your server is configured with <code>display_errors</code> disabled, and that you have not enabled <code>WP_DEBUG</code> in your site\'s <code>wp-config.php</code> file. This prevents PHP from printing messages which pollute the API response."
-msgstr "Asegúrese de que PHP en su servidor esté configurado con <code>display_errors</code> desactivado."
+msgstr "Asegúrese de que PHP en su servidor esté configurado con <code>display_errors</code> desactivado y de que no haya habilitado <code>WP_DEBUG</code> en el archivo <code>wp-config.php</code> de su sitio. Esto evita que PHP imprima mensajes que contaminan la respuesta de la API."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUTWP_BLAH3"
 msgid "If this is not enough, it is possible that a third party plugin is causing an error in the API application. Check if there are any third party plugins, including any must-use plugins (<code>mu-plugins</code>), which may be accidentally breaking the API plugin and contact their author."
-msgstr "Si eso no es suficiente, es posible que un plugin de terceros esté causando un error que produzca salida adicional. Deshabilite los plugins de terceros temporalmente para diagnosticar el problema."
+msgstr "Si esto no es suficiente, es posible que un plugin de terceros esté causando un error en la aplicación de API. Compruebe si hay plugins de terceros, incluidos los plugins de uso obligatorio (<code>mu-plugins</code>), que puedan estar rompiendo accidentalmente el plugin de API y póngase en contacto con su autor."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_HEAD"
@@ -10166,7 +10166,7 @@ msgstr "Se supone que la aplicación API JSON de WordPress debe responder con da
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPNOTJSON_BLAH2"
 msgid "Please make sure that there is no .htaccess code, third party plugins, or custom code (including in your theme\'s <code>functions.php</code> file) which block or otherwise limit WordPress\' JSON API – either at all, or for unauthenticated (guest) access."
-msgstr "Por favor, asegúrese de que no haya código .htaccess, plugins de terceros o código personalizado que intercepte las solicitudes de la API y devuelva una respuesta no JSON."
+msgstr "Asegúrese de que no haya código .htaccess, plugins de terceros o código personalizado (incluido el del archivo <code>functions.php</code> de su tema) que bloquee o limite de algún otro modo la API JSON de WordPress, ya sea por completo o para el acceso no autenticado (de invitados)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_HTTPERROR_HEAD"
@@ -10206,7 +10206,7 @@ msgstr "También es posible que algo en su servidor, o un plugin en su sitio, es
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WP_401_BLAH4"
 msgid "Please check your installed plugins. Kindly note that no, Admin Tools Professional for WordPress <em>does not</em> interfere with the Panopticon API Token. If this does not help please contact your host."
-msgstr "Por favor, revise sus plugins instalados. Cabe señalar que Admin Tools Professional no bloquea la API de WordPress."
+msgstr "Por favor, revise sus plugins instalados. Tenga en cuenta que no, Admin Tools Professional for WordPress <em>no</em> interfiere con el token de API de Panopticon. Si esto no ayuda, póngase en contacto con su proveedor de alojamiento."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HUH_WPGENERIC"
@@ -10236,7 +10236,7 @@ msgstr "También es posible que algo en su servidor, o un plugin en su sitio, es
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPAPITOKEN_BLAH4"
 msgid "Please check your installed plugins. Kindly note that no, Admin Tools Professional for WordPress <em>does not</em> interfere with the Panopticon API Token. If this does not help please contact your host."
-msgstr "Por favor, revise sus plugins instalados. Cabe señalar que Admin Tools Professional no bloquea la API de WordPress."
+msgstr "Por favor, revise sus plugins instalados. Tenga en cuenta que no, Admin Tools Professional for WordPress <em>no</em> interfiere con el token de API de Panopticon. Si esto no ayuda, póngase en contacto con su proveedor de alojamiento."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"
@@ -10271,7 +10271,7 @@ msgstr "¿Ha instalado el plugin Akeeba Panopticon Connector para WordPress en s
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WPCONNECTOR_CHECK2"
 msgid "Go to wp-admin, Plugins. Is the “Akeeba Panopticon Connector for WordPress” plugin installed <em>and</em> activated?"
-msgstr "Vaya a wp-admin, Plugins. ¿Está el plugin \"Akeeba Panopticon Connector para WordPress\" habilitado?"
+msgstr "Vaya a wp-admin, Plugins. ¿Está el plugin «Akeeba Panopticon Connector for WordPress» instalado <em>y</em> activado?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
@@ -10286,7 +10286,7 @@ msgstr "No se puede comunicar con el plugin \"Akeeba Panopticon Connector para W
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
 msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
-msgstr "Panopticon usa su propio plugin, \"Akeeba Panopticon Connector para WordPress\", para comunicarse con su sitio WordPress."
+msgstr "Panopticon usa su propio plugin, «Akeeba Panopticon Connector for WordPress», para proporcionar la API necesaria a través de la API de servicios JSON de WordPress (<code>wp-json</code>)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
@@ -10826,7 +10826,7 @@ msgstr "Minutos"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES_HELP"
 msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
-msgstr "Número del <code>0</code> al <code>59</code>, rango contiguo p.ej. <code>5-15</code>, lista p.ej. <code>5,15,30</code>, o <code>*</code> para todos."
+msgstr "Número del <code>0</code> al <code>59</code>, rango contiguo p. ej. <code>5-15</code>, lista de valores separados por comas p. ej. <code>1,15,30,45</code>, cada minuto como <code>*</code>, cada X minutos mediante barra p. ej. <code>*/5</code> (cada 5 minutos)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS"
@@ -10836,7 +10836,7 @@ msgstr "Horas"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS_HELP"
 msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
-msgstr "Número del <code>0</code> al <code>23</code> (0-11 es a.m., 12-23 es p.m.), rango contiguo, lista o <code>*</code> para todas."
+msgstr "Número del <code>0</code> al <code>23</code> (0–11 es a.m., 12–23 es p.m.), rango contiguo p. ej. <code>5-15</code>, lista de valores separados por comas p. ej. <code>0,6,12,18</code>, cada hora como <code>*</code>, cada X horas mediante barra p. ej. <code>*/2</code> (cada 2 horas)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM"
@@ -10846,7 +10846,7 @@ msgstr "Día del mes"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15</code>, every day as <code>*</code>, every X days using slash e.g. <code>*/2</code> (every 2 days)."
-msgstr "Número del <code>1</code> al <code>31</code>, rango contiguo p.ej. <code>5-15</code>, lista p.ej. <code>5,15,30</code>, o <code>*</code> para todos."
+msgstr "Número del <code>1</code> al <code>31</code>, rango contiguo p. ej. <code>5-15</code>, lista de valores separados por comas p. ej. <code>1,15</code>, cada día como <code>*</code>, cada X días mediante barra p. ej. <code>*/2</code> (cada 2 días)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH"
@@ -10856,7 +10856,7 @@ msgstr "Mes"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH_HELP"
 msgid "Number <code>1</code> to <code>12</code>, contiguous range e.g. <code>1-6</code>, comma–separated list of values e.g. <code>1,4,7,10</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/3</code> (every 3 months)."
-msgstr "Número del <code>1</code> al <code>12</code>, rango contiguo p.ej. <code>1-6</code>, lista p.ej. <code>1,6,12</code>, o <code>*</code> para todos."
+msgstr "Número del <code>1</code> al <code>12</code>, rango contiguo p. ej. <code>1-6</code>, lista de valores separados por comas p. ej. <code>1,4,7,10</code>, cada mes como <code>*</code>, cada X meses mediante barra p. ej. <code>*/3</code> (cada 3 meses)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW"
@@ -10866,7 +10866,7 @@ msgstr "Día de la semana"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW_HELP"
 msgid "Number <code>0</code> to <code>7</code> (0 or 7 is Sunday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>."
-msgstr "Número del <code>0</code> al <code>7</code> (0 o 7 es domingo), rango contiguo, lista o <code>*</code> para todos."
+msgstr "Número del <code>0</code> al <code>7</code> (0 o 7 es domingo), rango contiguo p. ej. <code>1-5</code>, lista de valores separados por comas p. ej. <code>1,3,5</code>, cada día como <code>*</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE"

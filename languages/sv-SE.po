@@ -1431,7 +1431,7 @@ msgstr "(S)FTP-servervärdnamn"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_HOST_HELP"
 msgid "The hostname or IP address of your (S)FTP server, e.g. <code>ftp.example.com</code> or <code>127.0.0.1</code>. You MUST enter this <em>without</em> the <code>ftp://</code>, <code>sftp://</code> or <code>ssh://</code> prefix. If unsure about this and the other FTP settings please ask your host."
-msgstr "Värdnamnet eller IP-adressen till din (S)FTP-server, t.ex. <code>ftp.example.com</code> eller <code>127.0.0.1</code>. Du MÅSTE ange detta utan <code>ftp://</code>, <code>sftp://</code> eller <code>ssh://</code>-prefix. Om du är osäker på detta och de andra FTP-inställningarna, fråga din värd."
+msgstr "Värdnamnet eller IP-adressen till din (S)FTP-server, t.ex. <code>ftp.example.com</code> eller <code>127.0.0.1</code>. Du MÅSTE ange detta <em>utan</em> prefixet <code>ftp://</code>, <code>sftp://</code> eller <code>ssh://</code>. Om du är osäker på detta och de andra FTP-inställningarna, fråga din webbhotell."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_FS_FTP_PASSIVE"
@@ -2201,7 +2201,7 @@ msgstr "Jag får “Status: 403 Forbidden” när jag kör CRON-uppgiften"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_1"
 msgid "You are using the PHP-CGI/FastCGI executable. As noted above, you need to replace <em>/path/to/php</em> with the path to the <strong>PHP CLI</strong> executable."
-msgstr "Du använder PHP-CGI/FastCGI-körbar fil. Som nämnt ovan måste du ersätta <em>/path/to/php</em> med sökvägen till PHP CLI-körbar fil."
+msgstr "Du använder den körbara filen för PHP-CGI/FastCGI. Som nämnts ovan måste du ersätta <em>/path/to/php</em> med sökvägen till den körbara filen för <strong>PHP CLI</strong>."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_2"
@@ -4441,7 +4441,7 @@ msgstr "Vissa Linux-distributioner, som RedHat Enterprise Linux och Ubuntu Serve
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P2"
 msgid "Please note that this typically requires an additional, often expensive, per-server license. Moreover, some security fixes which require changes in the internal PHP architecture cannot be applied in these old PHP versions. Finally, functional issues (‘bugs’) and compatibility with newer Internet standards and best practices are <em>never</em> addressed."
-msgstr "Observera att detta vanligtvis kräver en ytterligare, ofta dyr, per-serverlicens. Dessutom kan vissa säkerhetsfixar som kräver ändringar i den interna PHP-arkitekturen inte tillämpas i dessa gamla PHP-versioner. Slutligen hanteras aldrig funktionsproblem (‘buggar’) och kompatibilitet med nyare Internet-standarder och bästa praxis."
+msgstr "Observera att detta vanligtvis kräver en ytterligare, ofta dyr, licens per server. Dessutom kan vissa säkerhetsfixar som kräver ändringar i den interna PHP-arkitekturen inte tillämpas i dessa gamla PHP-versioner. Slutligen åtgärdas funktionella problem (”buggar”) och kompatibilitet med nyare internetstandarder och bästa praxis <em>aldrig</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P3"
@@ -5706,12 +5706,12 @@ msgstr "Har du installerat Akeeba Panopticon Connector-paketet på din webbplats
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK2"
 msgid "Go to System, Manage, Extensions. Is the “Akeeba Panopticon Connector” <em>component</em> installed and enabled?"
-msgstr "Gå till System, Hantera, Tillägg. Är “Akeeba Panopticon Connector”-komponenten installerad och aktiverad?"
+msgstr "Gå till System, Hantera, Tillägg. Är <em>komponenten</em> ”Akeeba Panopticon Connector” installerad och aktiverad?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK3"
 msgid "Go to System, Manage, Extensions. Is the “Akeeba Panopticon Connector” <em>package</em> installed and enabled?"
-msgstr "Gå till System, Hantera, Tillägg. Är “Akeeba Panopticon Connector”-paketet installerat och aktiverat?"
+msgstr "Gå till System, Hantera, Tillägg. Är <em>paketet</em> ”Akeeba Panopticon Connector” installerat och aktiverat?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_CHECK4"
@@ -6351,7 +6351,7 @@ msgstr "Ändra inte utan tillräcklig förberedelse"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_DATABASE_WARNING_BODY"
 msgid "Always make a copy of your <code>config.php</code> file, e.g. by copying it as <code>config.bak.php</code> before changing anything here. Always prepare the new database, database user, and/or database tables before making changes here. Remember that Panopticon will <em>not</em> move or rename database tables for you. If things break, restore your old copy of your <code>config.php</code> file."
-msgstr "Gör alltid en kopia av din <code>config.php</code>-fil, t.ex. genom att kopiera den som <code>config.bak.php</code> innan du ändrar något här. Förbered alltid den nya databasen, databasanvändaren och/eller databastabellerna innan du gör ändringar här. Kom ihåg att Panopticon inte kommer att flytta eller döpa om databastabeller åt dig. Om något går sönder, återställ din gamla kopia av din <code>config.php</code>-fil."
+msgstr "Gör alltid en kopia av din <code>config.php</code>-fil, t.ex. genom att kopiera den som <code>config.bak.php</code>, innan du ändrar något här. Förbered alltid den nya databasen, databasanvändaren och/eller databastabellerna innan du gör ändringar här. Kom ihåg att Panopticon <em>inte</em> kommer att flytta eller döpa om databastabeller åt dig. Om något går sönder, återställ din gamla kopia av din <code>config.php</code>-fil."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DBDRIVER"

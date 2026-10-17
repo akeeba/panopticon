@@ -2230,7 +2230,7 @@ msgstr "Hostitel nemá funkci CRON"
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_1"
 msgid ""
 "We <strong>very strongly</strong> recommend that you use a different host."
-msgstr "Důrazně doporučujeme, abyste použili jiného hostitele."
+msgstr "<strong>Velmi důrazně</strong> doporučujeme, abyste použili jiného hostitele."
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_2"
 msgid ""
@@ -2371,13 +2371,7 @@ msgid ""
 "device sleep, don't feed your <em title=\"These are the gremlins before they "
 "become gremlins. Are we showing our age with this outdated popular culture "
 "reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr ""
-"Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na "
-"benchmark. Nezavírejte tuto kartu prohlížeče, nepřepínejte na jinou kartu / "
-"okno nebo aplikaci, nevypínejte ani nedávejte zařízení do režimu spánku, "
-"nekrmte svého <em title=\"These are the gremlins before they become "
-"gremlins. Are we showing our age with this outdated popular culture "
-"reference?\">mogwai</em> po půlnoci. Docela jasné, že?"
+msgstr "Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na benchmark. Nezavírejte tuto záložku prohlížeče, nepřepínejte na jinou záložku / okno nebo aplikaci, nevypínejte zařízení ani ho nenechte přejít do režimu spánku a po půlnoci nekrmte své <em title=\"Toto jsou gremlini předtím, než se z nich stanou gremlini. Prozrazujeme tímto svůj věk zastaralým odkazem na popkulturu?\">mogwaie</em>. Celkem jednoduché, že?"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER"
 msgid ""
@@ -3849,11 +3843,7 @@ msgid ""
 "em> use HTML; all tags and multiple whitespaces are removed before "
 "evaluating this string. Leave blank to consider any HTTP 2xx response as "
 "adequate proof the site is up."
-msgstr ""
-"Stránka bude považována za dostupnou, pokud stránka obsahuje tento řetězec. "
-"Nepoužívejte HTML; všechny značky a vícenásobné mezery jsou odstraněny před "
-"vyhodnocením tohoto řetězce. Nechte prázdné, aby byl jakýkoli HTTP 2xx "
-"odpověď považována za dostatečný důkaz, že stránka je dostupná."
+msgstr "Web bude považován za dostupný, pokud stránka obsahuje tento řetězec. <em>NEPOUŽÍVEJTE</em> HTML; všechny značky a vícenásobné mezery jsou před vyhodnocením tohoto řetězce odstraněny. Nechte prázdné, pokud má být za dostatečný důkaz dostupnosti webu považována jakákoli odpověď HTTP 2xx."
 
 msgctxt "PANOPTICON_SITES_BATCH_TITLE"
 msgid "Batch process the selected sites"
@@ -6294,7 +6284,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK"
 msgid "You can address this issue by doing <em>one</em> of the following:"
-msgstr "Tento problém můžete vyřešit jedním z následujících způsobů:"
+msgstr "Tento problém můžete vyřešit provedením <em>jednoho</em> z následujících kroků:"
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK1"
 msgid ""
@@ -6536,10 +6526,7 @@ msgid ""
 "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, "
 "to provide the necessary API through WordPress' JSON services API (<code>wp-"
 "json</code>)."
-msgstr ""
-"Panopticon používá svůj vlastní plugin \"Akeeba Panopticon Connector for "
-"WordPress\", který poskytuje potřebné API prostřednictvím API služeb JSON "
-"WordPress (<code>wp-json</code>)."
+msgstr "Panopticon používá vlastní plugin „Akeeba Panopticon Connector for WordPress“, který poskytuje potřebné API prostřednictvím JSON API služeb WordPressu (<code>wp-json</code>)."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
 msgid ""
@@ -6877,10 +6864,7 @@ msgid ""
 "Prevent users from using passwords which are found in online password leaks. "
 "Powered by the third party service <a href='https://haveibeenpwned.com/' "
 "_target='blank'>Have I Been Pwned</a>."
-msgstr ""
-"Zabránit uživatelům v používání hesel, která se objevila v únicích na "
-"internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' "
-"_target='blank'>Have I Been Pwned</a>."
+msgstr "Zabraňte uživatelům v používání hesel, která byla nalezena v únicích hesel na internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' _target='blank'>Have I Been Pwned</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
 msgid "Anonymous Usage Statistics Collection"
@@ -6966,9 +6950,7 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
 msgid ""
 "Display avatars for users. This feature is powered by the third party "
 "service <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
-msgstr ""
-"Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a "
-"href='https://gravatar.com' _target='_blank'>Gravatar</a>."
+msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
 msgid "Web CRON Key"
@@ -8334,10 +8316,7 @@ msgid ""
 "The email address is used to email the user, as well as displaying the "
 "user's picture using the third party <a href=\"https://en.gravatar.com\" "
 "target=\"_blank\">Gravatar</a> service."
-msgstr ""
-"Emailová adresa se používá k zasílání emailů uživateli a také k zobrazení "
-"obrázku uživatele pomocí služby třetí strany <a href=\"https://"
-"en.gravatar.com\" target=\"_blank\">Gravatar</a>."
+msgstr "E-mailová adresa se používá k zasílání e-mailů uživateli a také k zobrazení obrázku uživatele pomocí služby třetí strany <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>."
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD"
 msgid "Password"
@@ -8610,11 +8589,7 @@ msgid ""
 "contributed outside of GitHub and would like to be publicly acknowledged, "
 "please drop us a line and we'll rectify the omission; <em>every person "
 "matters</em>."
-msgstr ""
-"Chtěli bychom uznat a ocenit práci každého, kdo přispěl k Akeeba Panopticon, "
-"bez ohledu na velikost jejich příspěvku; i ty nejmenší detaily jsou "
-"důležité. Pokud jste přispěli mimo GitHub a chcete být veřejně uznáni, dejte "
-"nám prosím vědět a napravíme opomenutí; <em>každý člověk je důležitý</em>."
+msgstr "Rádi bychom ocenili a uznali práci každého jednotlivce, který přispěl k projektu Akeeba Panopticon, ať je jeho příspěvek malý, nebo velký; důležité jsou i ty nejmenší detaily. Pokud jste přispěli mimo GitHub a chtěli byste být veřejně uvedeni, napište nám a my toto opomenutí napravíme; <em>záleží na každém člověku</em>."
 
 msgctxt "PANOPTICON_BACKUPTASKS_TITLE"
 msgid "Backup Tasks"
@@ -8654,15 +8629,7 @@ msgid ""
 "note that the Panopticon variables may differ by a few seconds compared to "
 "the Akeeba Backup variables as they are processed on the server running "
 "Panopticon, not the site's server where Akeeba Backup runs."
-msgstr ""
-"Můžete použít proměnné Akeeba Backup, jako <code>[DATE]</code>, "
-"<code>[SITE]</code> atd. Tyto proměnné budou nahrazeny Akeeba Backup při "
-"zálohování. Můžete také použít proměnné <code>{DATE_FORMAT_LC}</code>, "
-"<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code>, které budou "
-"nahrazeny Panopticonem formátovanou verzí času zálohování. Upozorňujeme, že "
-"proměnné Panopticonu se mohou lišit o několik sekund od proměnných Akeeba "
-"Backup, protože jsou zpracovávány na serveru, kde běží Panopticon, nikoliv "
-"na serveru webu, kde běží Akeeba Backup."
+msgstr "Můžete použít proměnné Akeeba Backup, například <code>[DATE]</code>, <code>[SITE]</code> atd. Akeeba Backup je nahradí v okamžiku zálohování. Můžete také použít proměnné <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code>, které Panopticon nahradí formátovanou podobou času zálohy. Upozorňujeme, že proměnné Panopticonu se mohou od proměnných Akeeba Backup lišit o několik sekund, protože se zpracovávají na serveru, na kterém běží Panopticon, nikoli na serveru webu, kde běží Akeeba Backup."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT"
 msgid "Scheduled remote backup with Panopticon taken on {DATE_FORMAT_LC7}"
@@ -8718,14 +8685,7 @@ msgid ""
 "day within the same month that's not a Saturday or Sunday, e.g. <code>15W</"
 "code> is the closest day (from the 13th to the 17th) which is not a Saturday "
 "or Sunday."
-msgstr ""
-"Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v "
-"měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</"
-"code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý "
-"den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> "
-"(každé 3 dny).<br>Použijte číslo s <code>W</code> pro nejbližší den v témže "
-"měsíci, který není sobota nebo neděle, např. <code>15W</code> je nejbližší "
-"den (od 13. do 17.), který není sobota nebo neděle."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> (každé 3 dny).<br>Číslo s <code>W</code> označuje nejbližší den ve stejném měsíci, který není sobota ani neděle, např. <code>15W</code> je nejbližší den (od 13. do 17.), který není sobota ani neděle."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH"
 msgid "Month"
@@ -8940,14 +8900,7 @@ msgid ""
 "day within the same month that's not a Saturday or Sunday, e.g. <code>15W</"
 "code> is the closest day (from the 13th to the 17th) which is not a Saturday "
 "or Sunday."
-msgstr ""
-"Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v "
-"měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</"
-"code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý "
-"den jako <code>*</code>, každých X dní pomocí lomítka např.<code>*/3</code> "
-"(každé 3 dny).<br>Použijte číslo s <code>W</code> pro nejbližší den v témže "
-"měsíci, který není sobota nebo neděle, např. <code>15W</code> je nejbližší "
-"den (od 13. do 17.), který není sobota nebo neděle."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> (každé 3 dny).<br>Číslo s <code>W</code> označuje nejbližší den ve stejném měsíci, který není sobota ani neděle, např. <code>15W</code> je nejbližší den (od 13. do 17.), který není sobota ani neděle."
 
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MONTH"
 msgid "Month"
@@ -10033,9 +9986,7 @@ msgid ""
 "Randomly generated installation ID. Used for data deduplication. It "
 "<strong>cannot</strong> be traced back to a particular installation or "
 "person."
-msgstr ""
-"Náhodně generované ID instalace. Používá se pro deduplikaci dat. Nelze jej "
-"zpětně vysledovat na konkrétní instalaci nebo osobu."
+msgstr "Náhodně generované ID instalace. Používá se pro deduplikaci dat. <strong>Nelze</strong> jej zpětně vysledovat k žádné konkrétní instalaci ani osobě."
 
 msgctxt "PANOPTICON_USAGESTATS_LBL_DATAINFO_SW"
 msgid "Software identifier. 17 is Akeeba Panopticon."
@@ -10433,11 +10384,7 @@ msgid ""
 "to the site. When any groups are selected: emails are sent to all users who "
 "are assigned to the selected group, <em>even if they can't even view the "
 "site in the Sites Overview page</em>."
-msgstr ""
-"Pokud nejsou vybrány žádné skupiny: e-maily jsou odesílány všem uživatelům, "
-"kteří mohou provádět změny na webu. Když jsou vybrány nějaké skupiny: e-"
-"maily jsou odesílány všem uživatelům přiřazeným k vybrané skupině, <em>i "
-"když nemohou ani vidět web na stránce Přehled webů</em>."
+msgstr "Pokud nejsou vybrány žádné skupiny: e-maily se odesílají všem uživatelům, kteří mohou provádět změny na webu. Pokud jsou vybrány nějaké skupiny: e-maily se odesílají všem uživatelům přiřazeným k vybrané skupině, <em>i když nemohou web ani zobrazit na stránce Přehled webů</em>."
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE"
 msgid "Scheduled Action Summary"
@@ -11208,7 +11155,7 @@ msgstr "Pokud váš poskytovatel hostingu používá CRON úlohy na bázi URL ne
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
 msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na benchmark. Nezavírejte tuto záložku prohlížeče, nepřepínejte na jinou záložku / okno nebo aplikaci, nevypínejte zařízení ani ho nenechte přejít do režimu spánku. Celkem jednoduché, že?"
+msgstr "Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na benchmark. Nezavírejte tuto záložku prohlížeče, nepřepínejte na jinou záložku / okno nebo aplikaci, nevypínejte zařízení ani ho nenechte přejít do režimu spánku a po půlnoci nekrmte své <em title=\"Toto jsou gremlini předtím, než se z nich stanou gremlini. Prozrazujeme tímto svůj věk zastaralým odkazem na popkulturu?\">mogwaie</em>. Celkem jednoduché, že?"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER"
@@ -11543,7 +11490,7 @@ msgstr "Vezměte prosím na vědomí, že ochrana heslem mohla být použita pou
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
 msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
-msgstr "Panopticon používá vlastní plugin "Akeeba Panopticon Connector for WordPress" pro komunikaci s vaším webem WordPress. Ujistěte se prosím, že máte tento plugin nainstalovaný a povolený."
+msgstr "Panopticon používá vlastní plugin „Akeeba Panopticon Connector for WordPress“, který poskytuje potřebné API prostřednictvím JSON API služeb WordPressu (<code>wp-json</code>)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
@@ -11568,12 +11515,12 @@ msgstr "Registrace uživatelů"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
 msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Zabraňte uživatelům v používání hesel, která jsou nalezena v online únicích hesel. Tato funkce využívá službu třetí strany <a href="https://haveibeenpwned.com" target="_blank">Have I Been Pwned</a>."
+msgstr "Zabraňte uživatelům v používání hesel, která byla nalezena v únicích hesel na internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' _target='blank'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
 msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href="https://gravatar.com" target="_blank">Gravatar</a>. Pokud si přejete zachovat soukromí, tuto funkci vypněte."
+msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI"
@@ -11833,7 +11780,7 @@ msgstr "Celé jméno"
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
 msgid "The email address is used to email the user, as well as displaying the user\'s picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
-msgstr "E-mailová adresa se používá k zasílání e-mailů uživateli, a také k zobrazení avatara uživatele (pokud jsou avatary povoleny)."
+msgstr "E-mailová adresa se používá k zasílání e-mailů uživateli a také k zobrazení obrázku uživatele pomocí služby třetí strany <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
@@ -11943,17 +11890,17 @@ msgstr "Úplný seznam přispěvatelů Panopticon naleznete na <a href="%s">str�
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
 msgid "We would like to acknowledge and recognise the work of each and every person who has contributed to Akeeba Panopticon, no matter how small or big their contribution is; even the smallest of details are important. If you have contributed outside of GitHub and would like to be publicly acknowledged, please drop us a line and we\'ll rectify the omission; <em>every person matters</em>."
-msgstr "Rádi bychom ocenili a uznali práci každého jednotlivce, který přispěl k tomuto projektu. Pokud vás v seznamu postrádáme, dejte nám prosím vědět."
+msgstr "Rádi bychom ocenili a uznali práci každého jednotlivce, který přispěl k projektu Akeeba Panopticon, ať je jeho příspěvek malý, nebo velký; důležité jsou i ty nejmenší detaily. Pokud jste přispěli mimo GitHub a chtěli byste být veřejně uvedeni, napište nám a my toto opomenutí napravíme; <em>záleží na každém člověku</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
 msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site\'s server where Akeeba Backup runs."
-msgstr "Můžete použít proměnné Akeeba Backup jako <code>[DATE]</code>, <code>[SITE]</code> atd."
+msgstr "Můžete použít proměnné Akeeba Backup, například <code>[DATE]</code>, <code>[SITE]</code> atd. Akeeba Backup je nahradí v okamžiku zálohování. Můžete také použít proměnné <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code>, které Panopticon nahradí formátovanou podobou času zálohy. Upozorňujeme, že proměnné Panopticonu se mohou od proměnných Akeeba Backup lišit o několik sekund, protože se zpracovávají na serveru, na kterém běží Panopticon, nikoli na serveru webu, kde běží Akeeba Backup."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci, nebo <code>*</code> pro každý den. Oddělte čárkami pro více hodnot nebo použijte pomlčku pro rozsah."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> (každé 3 dny).<br>Číslo s <code>W</code> označuje nejbližší den ve stejném měsíci, který není sobota ani neděle, např. <code>15W</code> je nejbližší den (od 13. do 17.), který není sobota ani neděle."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
@@ -11963,7 +11910,7 @@ msgstr "Plán zálohy je <a href='%s' target='_blank'>výraz CRON</a>. Časy jso
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci, nebo <code>*</code> pro každý den. Oddělte čárkami pro více hodnot nebo použijte pomlčku pro rozsah."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> (každé 3 dny).<br>Číslo s <code>W</code> označuje nejbližší den ve stejném měsíci, který není sobota ani neděle, např. <code>15W</code> je nejbližší den (od 13. do 17.), který není sobota ani neděle."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
@@ -11998,7 +11945,7 @@ msgstr "Minuty"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES_HELP"
 msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
-msgstr "Číslo <code>0</code> až <code>59</code>, souvislý rozsah např. <code>5-15</code>, seznam oddělený čárkami např. <code>0,15,30,45</code>, nebo <code>*</code> pro každou minutu."
+msgstr "Číslo <code>0</code> až <code>59</code>, souvislý rozsah např. <code>5-15</code>, seznam hodnot oddělený čárkami např. <code>1,15,30,45</code>, každá minuta jako <code>*</code>, každých X minut pomocí lomítka např. <code>*/5</code> (každých 5 minut)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS"
@@ -12008,7 +11955,7 @@ msgstr "Hodiny"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS_HELP"
 msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
-msgstr "Číslo <code>0</code> až <code>23</code> (0–11 je dopoledne, 12–23 je odpoledne), souvislý rozsah např. <code>8-17</code>, seznam oddělený čárkami nebo <code>*</code> pro každou hodinu."
+msgstr "Číslo <code>0</code> až <code>23</code> (0–11 je dopoledne, 12–23 je odpoledne), souvislý rozsah např. <code>5-15</code>, seznam hodnot oddělený čárkami např. <code>0,6,12,18</code>, každá hodina jako <code>*</code>, každých X hodin pomocí lomítka např. <code>*/2</code> (každé 2 hodiny)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM"
@@ -12018,7 +11965,7 @@ msgstr "Den v měsíci"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15</code>, every day as <code>*</code>, every X days using slash e.g. <code>*/2</code> (every 2 days)."
-msgstr "Číslo <code>1</code> až <code>31</code>, souvislý rozsah např. <code>1-15</code>, seznam oddělený čárkami nebo <code>*</code> pro každý den."
+msgstr "Číslo <code>1</code> až <code>31</code>, souvislý rozsah např. <code>5-15</code>, seznam hodnot oddělený čárkami např. <code>1,15</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/2</code> (každé 2 dny)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH"
@@ -12028,7 +11975,7 @@ msgstr "Měsíc"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH_HELP"
 msgid "Number <code>1</code> to <code>12</code>, contiguous range e.g. <code>1-6</code>, comma–separated list of values e.g. <code>1,4,7,10</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/3</code> (every 3 months)."
-msgstr "Číslo <code>1</code> až <code>12</code>, souvislý rozsah např. <code>1-6</code>, seznam oddělený čárkami nebo <code>*</code> pro každý měsíc."
+msgstr "Číslo <code>1</code> až <code>12</code>, souvislý rozsah např. <code>1-6</code>, seznam hodnot oddělený čárkami např. <code>1,4,7,10</code>, každý měsíc jako <code>*</code>, každých X měsíců pomocí lomítka např. <code>*/3</code> (každé 3 měsíce)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW"
@@ -12038,7 +11985,7 @@ msgstr "Den v týdnu"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW_HELP"
 msgid "Number <code>0</code> to <code>7</code> (0 or 7 is Sunday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>."
-msgstr "Číslo <code>0</code> až <code>7</code> (0 nebo 7 je neděle), souvislý rozsah např. <code>1-5</code>, seznam oddělený čárkami nebo <code>*</code> pro každý den."
+msgstr "Číslo <code>0</code> až <code>7</code> (0 nebo 7 je neděle), souvislý rozsah např. <code>1-5</code>, seznam hodnot oddělený čárkami např. <code>1,3,5</code>, každý den jako <code>*</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE"
@@ -12413,7 +12360,7 @@ msgstr "Plán souhrnných e-mailů aktualizací je <a href='%s' target='_blank'>
 #, phpformat
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
 msgid "If no groups are selected: emails are sent to all users who can make changes to the site. When any groups are selected: emails are sent to all users who are assigned to the selected group, <em>even if they can\'t even view the site in the Sites Overview page</em>."
-msgstr "Pokud nejsou vybrány žádné skupiny: e-maily jsou odesílány všem uživatelům, kteří mohou provádět změny na webech zahrnutých v souhrnu. Vyberte skupiny pro omezení příjemců."
+msgstr "Pokud nejsou vybrány žádné skupiny: e-maily se odesílají všem uživatelům, kteří mohou provádět změny na webu. Pokud jsou vybrány nějaké skupiny: e-maily se odesílají všem uživatelům přiřazeným k vybrané skupině, <em>i když nemohou web ani zobrazit na stránce Přehled webů</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"

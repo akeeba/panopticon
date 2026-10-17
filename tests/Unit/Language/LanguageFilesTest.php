@@ -126,6 +126,51 @@ class LanguageFilesTest extends AbstractUnitTestCase
 	}
 
 	/**
+	 * A translation must use the same HTML tags as en-GB, attributes included, though not necessarily in the same
+	 * order. Different markup means a lost link or formatting, or a translation of an older or shortened text.
+	 *
+	 * The values of the title, alt, aria-label and placeholder attributes are text, and translated.
+	 *
+	 * @dataProvider languageProvider
+	 */
+	public function testHtmlTagsMatchEnglish(string $langCode): void
+	{
+		$english = self::getStrings('en-GB');
+		$bad     = [];
+
+		foreach (self::getStrings($langCode) as $key => $text)
+		{
+			if (isset($english[$key]) && self::getHtmlTags($text) !== self::getHtmlTags($english[$key]))
+			{
+				$bad[$key] = $text;
+			}
+		}
+
+		$this->assertSame([], $bad, 'These strings do not use the same HTML tags as en-GB.');
+	}
+
+	/**
+	 * Returns the HTML tags of a string, sorted, with the values of translatable attributes blanked out.
+	 *
+	 * @param   string  $text  The string to examine
+	 *
+	 * @return  string[]
+	 */
+	private static function getHtmlTags(string $text): array
+	{
+		preg_match_all('#<[a-z/][^<>]*>#i', $text, $matches);
+
+		$ret = array_map(
+			fn(string $tag) => preg_replace('/\b(title|alt|aria-label|placeholder)="[^"]*"/', '$1=""', $tag),
+			$matches[0]
+		);
+
+		sort($ret);
+
+		return $ret;
+	}
+
+	/**
 	 * Returns the sprintf() placeholders of a string, normalised and sorted, e.g. `%s from %s` and `%2$s from %1$s`
 	 * both give `['1:s', '2:s']`. A `%` which does not start a valid placeholder is returned verbatim with the
 	 * character after it.
