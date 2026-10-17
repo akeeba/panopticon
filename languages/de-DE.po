@@ -2386,7 +2386,7 @@ msgstr "Was kommt als Nächstes?"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
 msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "Einige Sekunden bis zu einer Minute nachdem Sie Ihren CRON-Auftrag eingerichtet haben, wird sich diese Seite zu einem Benchmark ändern. Schließen Sie diesen Browser-Tab nicht, wechseln Sie nicht zu einem anderen Browser-Tab/Fenster oder einer anderen Anwendung, schalten Sie Ihr Gerät nicht aus und lassen Sie es nicht in den Ruhemodus wechseln, füttern Sie Ihren <em title=\\\"Das sind die Gremlins, bevor sie zu Gremlins werden. Verraten wir damit unser Alter mit diesem veralteten Popkulturreferenz?\\\">Mogwai</em> nicht nach Mitternacht. Ziemlich einfach, oder?"
+msgstr "Einige Sekunden bis zu einer Minute nachdem Sie Ihren CRON-Auftrag eingerichtet haben, wird sich diese Seite zu einem Benchmark ändern. Schließen Sie diesen Browser-Tab nicht, wechseln Sie nicht zu einem anderen Browser-Tab/Fenster oder einer anderen Anwendung, schalten Sie Ihr Gerät nicht aus und lassen Sie es nicht in den Ruhemodus wechseln, füttern Sie Ihren <em title=\"Das sind die Gremlins, bevor sie zu Gremlins werden. Verraten wir damit unser Alter mit diesem veralteten Popkulturreferenz?\">Mogwai</em> nicht nach Mitternacht. Ziemlich einfach, oder?"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER"
@@ -2911,7 +2911,7 @@ msgstr "Haben Sie Verbindungsprobleme?"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_ALERT_BODY"
 msgid "Use the information below to explicitly allow (“whitelist”) requests originating from Panopticon through any Web Application Firewall (WAF), Content Delivery Network (CDN), or security product installed on, or in front of, your site. Please consult with the author or operator of the respective product to determine how to do that."
-msgstr "Verwenden Sie die folgenden Informationen, um Anfragen, die von Panopticon stammen, explizit zu erlauben (\\\"Whitelist\\\") durch eine Web Application Firewall (WAF), ein Content Delivery Network (CDN) oder ein Sicherheitsprodukt, das auf Ihrer Website oder davor installiert ist. Bitte konsultieren Sie den Autor oder Betreiber des jeweiligen Produkts, um herauszufinden, wie das geht."
+msgstr "Verwenden Sie die folgenden Informationen, um Anfragen, die von Panopticon stammen, explizit zu erlauben (\"Whitelist\") durch eine Web Application Firewall (WAF), ein Content Delivery Network (CDN) oder ein Sicherheitsprodukt, das auf Ihrer Website oder davor installiert ist. Bitte konsultieren Sie den Autor oder Betreiber des jeweiligen Produkts, um herauszufinden, wie das geht."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_HOSTNAME"
@@ -4346,7 +4346,7 @@ msgstr "WordPress-Aktualisierungsinformationen für Website „%s\" neu laden"
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SOURCE_INFO"
 msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\"%s\" target=\"_blank\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
-msgstr "Die Informationen zur Verfügbarkeit von WordPress-Aktualisierungen werden von Ihrer Website bereitgestellt. WordPress-End-of-Life-Daten stammen von <a href=\\\"%s\\\" target=\\\"_blank\\\">%1$s</a>. Das WordPress-Projekt veröffentlicht keine End-of-Security-Updates- und/oder End-of-Life-Daten im Voraus, weshalb diese Informationen in Panopticon nicht angezeigt werden."
+msgstr "Die Informationen zur Verfügbarkeit von WordPress-Aktualisierungen werden von Ihrer Website bereitgestellt. WordPress-End-of-Life-Daten stammen von <a href=\"%s\" target=\"_blank\">%1$s</a>. Das WordPress-Projekt veröffentlicht keine End-of-Security-Updates- und/oder End-of-Life-Daten im Voraus, weshalb diese Informationen in Panopticon nicht angezeigt werden."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SCHEDULE_UPDATE"
@@ -4936,12 +4936,12 @@ msgstr "Stellen Sie sicher, dass Sie das Akeeba Backup Professional-Plugin auf I
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
 msgid "Log into your site's backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Melden Sie sich im Backend Ihrer Website an. Gehen Sie zu Komponenten, Akeeba Backup, Kontrollzentrum. Klicken Sie auf Optionen, Frontend-Sicherung und setzen Sie „JSON API aktivieren (Remote-Sicherung)\" auf Ja. Geben Sie ein neues „Geheimes Wort\" ein; Sie können ein neues, zufälliges, sicheres geheimes Wort unter <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a> erstellen. Klicken Sie dann in der Symbolleiste auf Speichern &amp; Schließen."
+msgstr "Melden Sie sich im Backend Ihrer Website an. Gehen Sie zu Komponenten, Akeeba Backup, Kontrollzentrum. Klicken Sie auf Optionen, Frontend-Sicherung und setzen Sie „JSON API aktivieren (Remote-Sicherung)\" auf Ja. Geben Sie ein neues „Geheimes Wort\" ein; Sie können ein neues, zufälliges, sicheres geheimes Wort unter <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a> erstellen. Klicken Sie dann in der Symbolleiste auf Speichern &amp; Schließen."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
 msgid "Log into your site's backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
-msgstr "Melden Sie sich im Backend Ihrer Website an. Gehen Sie zu Akeeba Backup, Systemkonfiguration, Öffentliche API und setzen Sie „JSON API aktivieren (Remote-Sicherung)\" auf Ja. Geben Sie einen neuen „Geheimen Schlüssel\" ein; Sie können einen neuen, zufälligen, sicheren Schlüssel unter <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a> erstellen. Klicken Sie dann in der Symbolleiste auf Speichern &amp; Schließen."
+msgstr "Melden Sie sich im Backend Ihrer Website an. Gehen Sie zu Akeeba Backup, Systemkonfiguration, Öffentliche API und setzen Sie „JSON API aktivieren (Remote-Sicherung)\" auf Ja. Geben Sie einen neuen „Geheimen Schlüssel\" ein; Sie können einen neuen, zufälligen, sicheren Schlüssel unter <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a> erstellen. Klicken Sie dann in der Symbolleiste auf Speichern &amp; Schließen."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_3"
@@ -12116,7 +12116,7 @@ msgstr "Sie haben die maximale Anzahl aktivierter API-Token erreicht. Bitte lös
 #, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
 msgid "%1$d of %2$d API tokens created"
-msgstr "%1\\$d von %2\\$d API-Token erstellt"
+msgstr "%1$d von %2$d API-Token erstellt"
 
 #, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_API_ACCESS_DENIED"

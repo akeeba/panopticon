@@ -4431,12 +4431,12 @@ msgstr "PHP %s a atteint sa fin de vie le %s. Vous devez mettre à niveau votre 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_HEAD"
 msgid "Note about “long term support” Linux distributions"
-msgstr "Remarque sur le « support à long terme\\\" des distributions Linux"
+msgstr "Remarque sur le « support à long terme\" des distributions Linux"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P1"
 msgid "Some Linux Distributions, such as RedHat Enterprise Linux and Ubuntu Server, may offer “long term support” for certain PHP versions past their End of Life date."
-msgstr "Certaines distributions Linux, telles que RedHat Enterprise Linux et Ubuntu Server, peuvent offrir un « support à long terme\\\" pour certaines versions de PHP après leur date de fin de vie."
+msgstr "Certaines distributions Linux, telles que RedHat Enterprise Linux et Ubuntu Server, peuvent offrir un « support à long terme\" pour certaines versions de PHP après leur date de fin de vie."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_PHP_LTS_P2"
@@ -5506,7 +5506,7 @@ msgstr "La réponse de l’API est précédée et/ou suivie d’autres contenus 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH2"
 msgid "Make sure “Error Reporting” is set to None, and “Debug Site” is set to No in your site\'s Global Configuration page. This prevents PHP from printing messages which pollute the API response."
-msgstr "Assurez-vous que \\\"Rapport d\'erreur\\\" est défini sur Aucn et que \\\"Débogage système\\\" est défini sur Non dans la page de configuration globale de votre site. Cela empêche PHP d’afficher des messages qui polluent la réponse de l’API."
+msgstr "Assurez-vous que \"Rapport d'erreur\" est défini sur Aucn et que \"Débogage système\" est défini sur Non dans la page de configuration globale de votre site. Cela empêche PHP d’afficher des messages qui polluent la réponse de l’API."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DIRTYOUTPUT_BLAH3"
@@ -5561,12 +5561,12 @@ msgstr "Assurez-vous que le jeton API que vous utilisez appartient à un compte 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH2"
 msgid "Make sure that the plugins “API Authentication - Web Services Joomla Token” and “User - Joomla API Token” are enabled on your site."
-msgstr "Assurez-vous que les plugins « Authentification API - Jeton Joomla! des services Web\\\" et « Utilisateur - Jeton API Joomla\\\" sont activés sur votre site."
+msgstr "Assurez-vous que les plugins « Authentification API - Jeton Joomla! des services Web\" et « Utilisateur - Jeton API Joomla\" sont activés sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH2_J3"
 msgid "Make sure that the plugin “System - Panopticon Connector for Joomla 3” is enabled on your site."
-msgstr "Assurez-vous que le plugin « Système - Panopticon Connector for Joomla! 3\\\" est activé sur votre site."
+msgstr "Assurez-vous que le plugin « Système - Panopticon Connector for Joomla! 3\" est activé sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_401_BLAH3"
@@ -5611,12 +5611,12 @@ msgstr "Assurez-vous que le jeton API que vous utilisez appartient à un compte 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH2"
 msgid "Make sure that the plugins “API Authentication - Web Services Joomla Token” and “User - Joomla API Token” are enabled on your site."
-msgstr "Assurez-vous que les plugins « Authentification API - Jeton Joomla! des services Web\\\" et « Utilisateur - Jeton API Joomla\\\" sont activés sur votre site."
+msgstr "Assurez-vous que les plugins « Authentification API - Jeton Joomla! des services Web\" et « Utilisateur - Jeton API Joomla\" sont activés sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH2_J3"
 msgid "Make sure that the plugin “System - Panopticon Connector for Joomla 3” is enabled on your site."
-msgstr "Assurez-vous que le plugin « Système - Panopticon Connector pour Joomla! 3\\\" est activé sur votre site."
+msgstr "Assurez-vous que le plugin « Système - Panopticon Connector pour Joomla! 3\" est activé sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_APITOKEN_BLAH3"
@@ -5726,7 +5726,7 @@ msgstr "Le plugin “System - Panopticon Connector pour Joomla! 3” n’est pas
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CONNECTOR_J3_BLAH"
 msgid "Your Joomla! site needs to have the “System - Panopticon Connector for Joomla 3” plugin installed and enabled for Akeeba Panopticon to work with it."
-msgstr "Votre site Joomla! doit avoir le plugin « Système - Panopticon Connector pour Joomla! 3\\\" installé et activé pour qu\'Akeeba Panopticon puisse fonctionner avec lui."
+msgstr "Votre site Joomla! doit avoir le plugin « Système - Panopticon Connector pour Joomla! 3\" installé et activé pour qu'Akeeba Panopticon puisse fonctionner avec lui."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_HEAD"
@@ -5801,27 +5801,27 @@ msgstr "Le plugin “Web Services - Installer” est désactivé sur votre site"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH1"
 msgid "Panopticon uses the Joomla! API Application services provided by the “Web Services - Installer” plugin to ensure that all necessary extensions are installed and published on your site."
-msgstr "Panopticon utilise les services d\'application API Joomla! fournis par le plugin « Web Services - Installer\\\" pour garantir que toutes les extensions nécessaires sont installées et publiées sur votre site."
+msgstr "Panopticon utilise les services d'application API Joomla! fournis par le plugin « Web Services - Installer\" pour garantir que toutes les extensions nécessaires sont installées et publiées sur votre site."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_WEBSERVICES_BLAH2"
 msgid "Please go to your site\'s backend and click on System, Manage, Extensions. Search for the “Web Services - Installer” plugin and enable it."
-msgstr "Veuillez accéder au backend de votre site et cliquer sur Système, Gérer, Extensions. Recherchez le plugin « Web Services - Installer\\\" et activez-le."
+msgstr "Veuillez accéder au backend de votre site et cliquer sur Système, Gérer, Extensions. Recherchez le plugin « Web Services - Installer\" et activez-le."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_HEAD"
 msgid "Cannot communicate to the “System - Panopticon Connector for Joomla 3” plugin on your site"
-msgstr "Impossible de communiquer avec le plugin « Système - Panopticon Connector pour Joomla! 3\\\" sur votre site"
+msgstr "Impossible de communiquer avec le plugin « Système - Panopticon Connector pour Joomla! 3\" sur votre site"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH1"
 msgid "Panopticon uses its own plugin, “System - Panopticon Connector for Joomla 3”, to provide the necessary API"
-msgstr "Panopticon utilise son propre plugin, « System - Panopticon Connector pour Joomla! 3\\\", pour fournir l\'API nécessaire"
+msgstr "Panopticon utilise son propre plugin, « System - Panopticon Connector pour Joomla! 3\", pour fournir l'API nécessaire"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH2"
 msgid "Please go to your site\'s backend and click on Extensions, Plugins. Search for the “System - Panopticon Connector for Joomla 3” plugin and enable it."
-msgstr "Veuillez accéder au backend de votre site et cliquer sur Extensions, Plugins. Recherchez le plugin « Système - Panopticon Connector pour Joomla! 3\\\" et activez-le."
+msgstr "Veuillez accéder au backend de votre site et cliquer sur Extensions, Plugins. Recherchez le plugin « Système - Panopticon Connector pour Joomla! 3\" et activez-le."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_J3_BLAH3"
@@ -7326,7 +7326,7 @@ msgstr "Les mises à jour ne peuvent pas être chargées"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_NOT_LOADED_BODY"
 msgid "The update information source URL, <span class=\"font-monospace\">%s</span>, does not seem to contain update information for this application."
-msgstr "L’URL source d’informations de mise à jour, <span class=\\\"font-monospace\\\">%s</span>, ne semble pas contenir d’informations de mise à jour pour cette application."
+msgstr "L’URL source d’informations de mise à jour, <span class=\"font-monospace\">%s</span>, ne semble pas contenir d’informations de mise à jour pour cette application."
 
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_UPTODATE_HEAD"
@@ -7611,7 +7611,7 @@ msgstr "Adresse électronique"
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
 msgid "The email address is used to email the user, as well as displaying the user\'s picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
-msgstr "L’adresse électronique est utilisée pour envoyer un courriel à l’utilisateur, ainsi que pour afficher l’image de l’utilisateur à l’aide du service tiers <a href=\\\"https://en.gravatar.com\\\" target=\\\"_blank\\\">Gravatar</a>."
+msgstr "L’adresse électronique est utilisée pour envoyer un courriel à l’utilisateur, ainsi que pour afficher l’image de l’utilisateur à l’aide du service tiers <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD"
@@ -7779,7 +7779,7 @@ msgstr "Copyright &copy; %s Akeeba Ltd"
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_PLEASE_READ_LICENSE"
 msgid "For the complete text of the software license, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
-msgstr "Pour obtenir le texte complet de la licence logicielle, veuillez lire le fichier <a class=\\\"text-body-tertiary\\\" href=\\\"%sLICENSE.txt\\\">LICENSE.txt</a> fourni avec le logiciel."
+msgstr "Pour obtenir le texte complet de la licence logicielle, veuillez lire le fichier <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> fourni avec le logiciel."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_3PD_SOFTWARE"
@@ -7839,7 +7839,7 @@ msgstr "Avatar de l’utilisateur %s"
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_CONTRIBUTIONS"
 msgid "Contributions: <span class=\"font-monospace text-success\">%d</span>"
-msgstr "Contributions : <span class=\\\"font-monospace text-success\\\">%d</span>"
+msgstr "Contributions : <span class=\"font-monospace text-success\">%d</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_GITHUB_PROFILE"
@@ -7854,7 +7854,7 @@ msgstr "Profil GitHub de l’utilisateur %s"
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_VISIT_GITHUB"
 msgid "For a complete list of Panopticon\'s contributors please visit <a href=\"%s\">its GitHub repository</a>."
-msgstr "Pour obtenir la liste complète des contributeurs de Panopticon, veuillez visiter <a href=\\\"%s\\\">son dépôt GitHub</a>."
+msgstr "Pour obtenir la liste complète des contributeurs de Panopticon, veuillez visiter <a href=\"%s\">son dépôt GitHub</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
@@ -8294,7 +8294,7 @@ msgstr "Dépannage"
 #, phpformat
 msgctxt "PANOPTICON_MFA_HEAD_MFA_PAGE"
 msgid "Multi-factor Authentication"
-msgstr "Authentication de votre nom d’utilisateur et de votre mot de passe, pour qu’il soit beaucoup plus difficile pour les pirates d’obtenir un accès non autorisé.\\\" "
+msgstr "Authentication de votre nom d’utilisateur et de votre mot de passe, pour qu’il soit beaucoup plus difficile pour les pirates d’obtenir un accès non autorisé.\" "
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_HEAD_SELECT_PAGE"
@@ -8314,7 +8314,7 @@ msgstr "Les méthodes d\'authentication multifactorielle sont utilisées <em>en 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_IS_ACTIVE"
 msgid "Multi-factor Authentication is <span class=\"%s\">enabled</span> on your account."
-msgstr "L\'authentication multifacteur est <span class=\\\"%s\\\">activée</span> pour votre compte."
+msgstr "L'authentication multifacteur est <span class=\"%s\">activée</span> pour votre compte."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_TURN_OFF"
@@ -8324,7 +8324,7 @@ msgstr "Désactiver"
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_IS_DISABLED"
 msgid "Multi-factor Authentication is <span class=\"%s\">disabled</span> on your account."
-msgstr "L\'authentication multifacteur est <span class=\\\"%s\\\">désactivée</span> pour votre compte."
+msgstr "L'authentication multifacteur est <span class=\"%s\">désactivée</span> pour votre compte."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_LIST_DEFAULTTAG"
@@ -8414,7 +8414,7 @@ msgstr "Veuillez sélectionner la façon dont vous souhaitez vérifier votre con
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES"
 msgid "Backup Codes (Emergency Access)<br><small class=\"text-muted\">Use these if you get locked out.</small>"
-msgstr "Codes de sauvegarde (accès d’urgence)<br><small class=\\\"text-muted\\\">Utilisez-les en cas de verrouillage.</small>"
+msgstr "Codes de sauvegarde (accès d’urgence)<br><small class=\"text-muted\">Utilisez-les en cas de verrouillage.</small>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_METHOD_NAME"
@@ -8429,7 +8429,7 @@ msgstr "Single-use codes to let you login to the site if none of the other metho
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_PRINT_PROMPT"
 msgid "<strong><a href=\"%s\">Print these codes</a> and keep them in your wallet</strong>. <span class=\"text-muted\">Backup codes let you log into the site if your regular Multi-factor Authentication method does not work or you no longer have access to it. Each code can be used <em>only once</em>.</span>"
-msgstr "<strong><a href=\\\"%s\\\">Imprimez ces codes</a> et conservez-les dans votre portefeuille</strong>. <span class=\\\"text-muted\\\">Les codes de sauvegarde vous permettent de vous connecter au site si votre méthode d’authentification multifacteur habituelle ne fonctionne pas ou si vous n’y avez plus accès. Chaque code ne peut être utilisé <em>qu’une seule fois</em>.</span>"
+msgstr "<strong><a href=\"%s\">Imprimez ces codes</a> et conservez-les dans votre portefeuille</strong>. <span class=\"text-muted\">Les codes de sauvegarde vous permettent de vous connecter au site si votre méthode d’authentification multifacteur habituelle ne fonctionne pas ou si vous n’y avez plus accès. Chaque code ne peut être utilisé <em>qu’une seule fois</em>.</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_INSTRUCTIONS"
@@ -8444,7 +8444,7 @@ msgstr "Regénérer les codes de sauvegarde"
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_RESET_INFO"
 msgid "Use the “Regenerate Backup Codes” toolbar button to generate a new set of backup codes. You should do that if you have misplaced your backup codes, believe they may have been compromised, or are running out of available backup codes."
-msgstr "Utilisez le bouton de la barre d’outils « Regenerate Backup Codes\\\" pour générer un nouvel ensemble de codes de sauvegarde. Vous devriez le faire si vous avez égaré vos codes de sauvegarde, si vous croyez qu’ils ont été compromis ou si vous manquez de codes de sauvegarde disponibles."
+msgstr "Utilisez le bouton de la barre d’outils « Regenerate Backup Codes\" pour générer un nouvel ensemble de codes de sauvegarde. Vous devriez le faire si vous avez égaré vos codes de sauvegarde, si vous croyez qu’ils ont été compromis ou si vous manquez de codes de sauvegarde disponibles."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_ENTRY_LABEL"
@@ -8484,7 +8484,7 @@ msgstr "<p>Il s’agit d’un plugin d’authentification multifacteur de démon
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE"
 msgid "<p class=\"alert alert-info\">The messages appearing above and below the code area can be customized by overriding the language strings <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
-msgstr "<p class=\\\"alert alert-info\\\">Les messages apparaissant au-dessus et au-dessous de la zone de code peuvent être personnalisés en remplaçant les chaînes de langue <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> et <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
+msgstr "<p class=\"alert alert-info\">Les messages apparaissant au-dessus et au-dessous de la zone de code peuvent être personnalisés en remplaçant les chaînes de langue <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> et <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_DEFAULTTITLE"
@@ -8499,7 +8499,7 @@ msgstr "<p>Entrez un mot de passe ci-dessous. Vous devrez saisir ce mot de passe
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE"
 msgid "<p class=\"alert alert-info\">The messages appearing above and below the setup area can be customized by overriding the language strings <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
-msgstr "<p class=\\\"alert alert-info\\\">Les messages apparaissant au-dessus et en dessous de la zone de configuration peuvent être personnalisés en remplaçant les chaînes de langue <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> et <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
+msgstr "<p class=\"alert alert-info\">Les messages apparaissant au-dessus et en dessous de la zone de configuration peuvent être personnalisés en remplaçant les chaînes de langue <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> et <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_ERR_EMPTYCODE"

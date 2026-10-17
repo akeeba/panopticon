@@ -726,7 +726,7 @@ msgstr "МБ"
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_COPYRIGHT"
 msgid "Copyright © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. All legal rights reserved."
-msgstr "© 2023–%s <a href=\\\"https://www.akeeba.com\\\" target=\\\"_blank\\\">Akeeba Ltd</a>. Все права защищены."
+msgstr "© 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. Все права защищены."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_LICENSE"
@@ -3961,7 +3961,7 @@ msgstr "Запись расширения Joomla! отсутствует на в
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SEEK_HELP_JFORUM"
 msgid "Try asking for help on the <a href=\"https://forum.joomla.org\" target=\"_blank\">Joomla! Forum</a>."
-msgstr "Попробуйте обратиться за помощью на <a href=\\\"https://forum.joomla.org\\\" target=\\\"_blank\\\">форум Joomla! </a>."
+msgstr "Попробуйте обратиться за помощью на <a href=\"https://forum.joomla.org\" target=\"_blank\">форум Joomla! </a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_ALT_FIX"

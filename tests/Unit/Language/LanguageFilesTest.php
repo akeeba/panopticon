@@ -30,9 +30,15 @@ class LanguageFilesTest extends AbstractUnitTestCase
 
 	public static function languageProvider(): array
 	{
-		return [
-			'en-GB' => ['en-GB'],
-		];
+		$ret = [];
+
+		foreach (glob(APATH_ROOT . '/languages/*.ini') as $file)
+		{
+			$langCode       = basename($file, '.ini');
+			$ret[$langCode] = [$langCode];
+		}
+
+		return $ret;
 	}
 
 	/**
@@ -66,6 +72,22 @@ class LanguageFilesTest extends AbstractUnitTestCase
 		);
 
 		$this->assertSame([], $bad, 'These strings display a stray backslash.');
+	}
+
+	/**
+	 * Typographic quotes are fine in the text, but HTML only accepts straight quotes around attribute values:
+	 * `<a href=“%s”>` makes the link point to `“https://…”`.
+	 *
+	 * @dataProvider languageProvider
+	 */
+	public function testNoTypographicQuotesInsideHtmlTags(string $langCode): void
+	{
+		$bad = array_filter(
+			self::getStrings($langCode),
+			fn(string $text) => preg_match('#<[a-z/][^<>]*[“”„‟«»‘’‚‛″]#iu', $text)
+		);
+
+		$this->assertSame([], $bad, 'These strings use typographic quotes inside an HTML tag.');
 	}
 
 	/**

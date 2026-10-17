@@ -731,7 +731,7 @@ msgstr "Copyright © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blan
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_LICENSE"
 msgid "%s is Free Software distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\">GNU Affero GPL version 3</a> or any later version published by the Free Software Foundation."
-msgstr "%s es Software Libre distribuido bajo la <a href=\\\"https://www.gnu.org/licenses/agpl-3.0.html\\\" target=\\\"_blank\\\">GNU Affero GPL versión 3</a> o cualquier versión posterior publicada por la Free Software Foundation."
+msgstr "%s es Software Libre distribuido bajo la <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\">GNU Affero GPL versión 3</a> o cualquier versión posterior publicada por la Free Software Foundation."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_SOURCE_CODE"
@@ -1091,7 +1091,7 @@ msgstr "Respuesta JSON inválida del script de extracción de actualización; el
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_EXTRACTION_FAILED"
 msgid "The update extraction has failed; the site may be broken. Returned error message: “%s”"
-msgstr "La extracción de la actualización ha fallado; el sitio puede estar roto. Mensaje de error devuelto: \\\"%s\\"
+msgstr "La extracción de la actualización ha fallado; el sitio puede estar roto. Mensaje de error devuelto: \"%s\\"
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_ERR_NO_FACTORY"
@@ -1671,7 +1671,7 @@ msgstr "Tipo de base de datos"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_HELP"
 msgid "This is usually MySQLi (<em>with</em> the trailing \"i\")"
-msgstr "Normalmente es MySQLi (<em>con</em> la \\\"i\\\" al final)"
+msgstr "Normalmente es MySQLi (<em>con</em> la \"i\" al final)"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_MYSQL"
@@ -1861,7 +1861,7 @@ msgstr "Usar FTP sobre SSL (FTPS)"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_FTPS_DESCRIPTION"
 msgid "Connect to your FTP server using an SSL-encrypted connection. <strong>This is not the same as SFTP, SCP or \"Secure FTP\"</strong>. If your server doesn\'t support this method you will get connection errors."
-msgstr "Conéctate a tu servidor FTP usando una conexión cifrada con SSL. <strong>Esto no es lo mismo que SFTP, SCP o \\\"Secure FTP\\\"</strong>. Si tu servidor no admite este método, obtendrás errores de conexión."
+msgstr "Conéctate a tu servidor FTP usando una conexión cifrada con SSL. <strong>Esto no es lo mismo que SFTP, SCP o \"Secure FTP\"</strong>. Si tu servidor no admite este método, obtendrás errores de conexión."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_DIRECTFTP_INITDIR_TITLE"
@@ -2066,7 +2066,7 @@ msgstr "Usa un editor de texto simple como Notepad en Windows, BBEdit en macOS, 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP2"
 msgid "Come back to this window and click on the “Copy to Clipboard” button."
-msgstr "Vuelve a esta ventana y haz clic en el botón \\\"Copiar al portapapeles\\\"."
+msgstr "Vuelve a esta ventana y haz clic en el botón \"Copiar al portapapeles\"."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP3"
@@ -2086,7 +2086,7 @@ msgstr "Súbelo a la carpeta donde estás instalando Panopticon. Esa es la carpe
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_NOCONF_INSTRUCTIONS_STEP5"
 msgid "Come back to this window and click on the “Continue” button."
-msgstr "Vuelve a esta ventana y haz clic en el botón \\\"Continuar\\\"."
+msgstr "Vuelve a esta ventana y haz clic en el botón \"Continuar\"."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_BTN_COPY_TO_CLIPBOARD"
@@ -2196,7 +2196,7 @@ msgstr "Si incluso entonces no parece que ocurra nada, por favor contacta a tu p
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_HEAD"
 msgid "I get “Status: 403 Forbidden” running the CRON job"
-msgstr "Recibo \\\"Status: 403 Forbidden\\\" al ejecutar la tarea CRON"
+msgstr "Recibo \"Status: 403 Forbidden\" al ejecutar la tarea CRON"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_FORBIDDEN_INFO_1"
@@ -2211,7 +2211,7 @@ msgstr "Por favor, pregunta a tu proveedor de hosting por la ruta correcta. Si t
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_WRONG_PHP_HEAD"
 msgid "I get “Akeeba Panopticon requires PHP %s or later”."
-msgstr "Recibo \\\"Akeeba Panopticon requiere PHP %s o posterior\\\"."
+msgstr "Recibo \"Akeeba Panopticon requiere PHP %s o posterior\"."
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_WRONG_PHP_INFO_1"
@@ -2371,7 +2371,7 @@ msgstr "¿Qué sigue?"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
 msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "Unos segundos a un minuto después de configurar tu tarea CRON, esta página cambiará a un benchmark. No cierres esta pestaña del navegador, no cambies a una pestaña / ventana o aplicación diferente, no apagues ni dejes que tu dispositivo entre en modo de suspensión, no alimentes a tu <em title=\\\"Estos son los gremlins antes de convertirse en gremlins. ¿Estamos mostrando nuestra edad con esta referencia desactualizada de la cultura popular?\\\">mogwai después de la medianoche. Bastante sencillo, ¿verdad?"
+msgstr "Unos segundos a un minuto después de configurar tu tarea CRON, esta página cambiará a un benchmark. No cierres esta pestaña del navegador, no cambies a una pestaña / ventana o aplicación diferente, no apagues ni dejes que tu dispositivo entre en modo de suspensión, no alimentes a tu <em title=\"Estos son los gremlins antes de convertirse en gremlins. ¿Estamos mostrando nuestra edad con esta referencia desactualizada de la cultura popular?\">mogwai después de la medianoche. Bastante sencillo, ¿verdad?"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER"

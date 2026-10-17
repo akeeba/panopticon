@@ -726,12 +726,12 @@ msgstr "Megabyte"
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_COPYRIGHT"
 msgid "Copyright © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. All legal rights reserved."
-msgstr "Upphovsrätt © 2023–%s <a href=\\\"https://www.akeeba.com\\\" target=\\\"_blank\\\">Akeeba Ltd</a>. Alla rättigheter förbehållna."
+msgstr "Upphovsrätt © 2023–%s <a href=\"https://www.akeeba.com\" target=\"_blank\">Akeeba Ltd</a>. Alla rättigheter förbehållna."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_LICENSE"
 msgid "%s is Free Software distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\">GNU Affero GPL version 3</a> or any later version published by the Free Software Foundation."
-msgstr "%s är fri programvara som distribueras under <a href=\\\"https://www.gnu.org/licenses/agpl-3.0.html\\\" target=\\\"_blank\\\">GNU Affero GPL version 3</a> eller senare version som publicerats av Free Software Foundation."
+msgstr "%s är fri programvara som distribueras under <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\">GNU Affero GPL version 3</a> eller senare version som publicerats av Free Software Foundation."
 
 #, phpformat
 msgctxt "PANOPTICON_APP_LBL_SOURCE_CODE"
@@ -1671,7 +1671,7 @@ msgstr "Databastyp"
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_HELP"
 msgid "This is usually MySQLi (<em>with</em> the trailing \"i\")"
-msgstr "Detta är vanligtvis MySQLi (<em>med</em> efterföljande \\\"i\\\")"
+msgstr "Detta är vanligtvis MySQLi (<em>med</em> efterföljande \"i\")"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_DATABASE_DRIVER_MYSQL"
@@ -2896,7 +2896,7 @@ msgstr "Har du problem med anslutningen?"
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_ALERT_BODY"
 msgid "Use the information below to explicitly allow (“whitelist”) requests originating from Panopticon through any Web Application Firewall (WAF), Content Delivery Network (CDN), or security product installed on, or in front of, your site. Please consult with the author or operator of the respective product to determine how to do that."
-msgstr "Använd informationen nedan för att explicit tillåta (\\\"vitlista\\\") förfrågningar som kommer från Panopticon genom en Web Application Firewall (WAF), Content Delivery Network (CDN) eller säkerhetsprodukt som är installerad på eller framför din webbplats. Vänligen rådfråga författaren eller operatören av den relevanta produkten för att avgöra hur man gör detta."
+msgstr "Använd informationen nedan för att explicit tillåta (\"vitlista\") förfrågningar som kommer från Panopticon genom en Web Application Firewall (WAF), Content Delivery Network (CDN) eller säkerhetsprodukt som är installerad på eller framför din webbplats. Vänligen rådfråga författaren eller operatören av den relevanta produkten för att avgöra hur man gör detta."
 
 #, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_IDENTITY_PUB_HOSTNAME"
@@ -3461,7 +3461,7 @@ msgstr "Minuter"
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_TIME_HELP"
 msgid "The time expressed in the %s timezone. If updates are found <em>after</em> this time of the day the update installation will take place on the next calendar day. Avoid using the Daylight Savings Time changeover time of the day (usually: between 2am and 4am); otherwise, update scheduling will act in what you perceive to be a “weird” or “wrong” way if an update is found on the day of the Daylight Savings Time changeover."
-msgstr "Tiden uttryckt i tidszonen %s. Om uppdateringar hittas <em>efter</em> denna tid på dagen kommer uppdateringsinstallationen att äga rum nästa kalenderdag. Undvik att använda tiden för övergången till sommartid (vanligtvis mellan kl 02.00 och 04.00); annars kommer uppdateringsschemaläggningen att agera på ett sätt som du uppfattar som \\\"konstigt\\\" eller \\\"felaktigt\\\" om en uppdatering hittas på dagen för övergången till sommartid."
+msgstr "Tiden uttryckt i tidszonen %s. Om uppdateringar hittas <em>efter</em> denna tid på dagen kommer uppdateringsinstallationen att äga rum nästa kalenderdag. Undvik att använda tiden för övergången till sommartid (vanligtvis mellan kl 02.00 och 04.00); annars kommer uppdateringsschemaläggningen att agera på ett sätt som du uppfattar som \"konstigt\" eller \"felaktigt\" om en uppdatering hittas på dagen för övergången till sommartid."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_CORE_UPDATE_EMAIL_CC"
@@ -3946,7 +3946,7 @@ msgstr "Uppdatera information om Joomla!&reg; Uppdatering"
 #, phpformat
 msgctxt "PANOPTICON_SITE_BTN_JUPDATE_RELOAD_SR"
 msgid "Reload Joomla!&reg; Update information for site “%s”"
-msgstr "Uppdatera information om Joomla!&reg; Uppdatering för webbplatsen \\\"%s\\"
+msgstr "Uppdatera information om Joomla!&reg; Uppdatering för webbplatsen \"%s\\"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_LAST_CHECKED"
@@ -3961,7 +3961,7 @@ msgstr "Joomla!-tilläggsinformationen saknas på din webbplats. Joomla! kan int
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SEEK_HELP_JFORUM"
 msgid "Try asking for help on the <a href=\"https://forum.joomla.org\" target=\"_blank\">Joomla! Forum</a>."
-msgstr "Försök att be om hjälp på <a href=\\\"https://forum.joomla.org\\\" target=\\\"_blank\\\">Joomla! Forum</a>."
+msgstr "Försök att be om hjälp på <a href=\"https://forum.joomla.org\" target=\"_blank\">Joomla! Forum</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_ALT_FIX"
@@ -4076,22 +4076,22 @@ msgstr "Gå till webbplatsens administratörsbackend, System, Uppdatera, Joomla,
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_NOT_SCHEDULED"
 msgid "The update is <span class=\"text-danger fw-semibold\">not scheduled</span> to run automatically. You can run the update manually on your site, or click on the button below."
-msgstr "Uppdateringen är <span class=\\\"text-danger fw-semibold\\\">inte schemalagd</span> att köras automatiskt. Du kan köra uppdateringen manuellt på din webbplats, eller klicka på knappen nedan."
+msgstr "Uppdateringen är <span class=\"text-danger fw-semibold\">inte schemalagd</span> att köras automatiskt. Du kan köra uppdateringen manuellt på din webbplats, eller klicka på knappen nedan."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED"
 msgid "The update is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically after %s."
-msgstr "Uppdateringen är <span class=\\\"fw-semibold text-success\\\">schemalagd</span> att köras automatiskt efter %s."
+msgstr "Uppdateringen är <span class=\"fw-semibold text-success\">schemalagd</span> att köras automatiskt efter %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_SCHEDULED_ASAP"
 msgid "The update is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically as soon as possible."
-msgstr "Uppdateringen är <span class=\\\"fw-semibold text-success\\\">schemalagd</span> att köras automatiskt så snart som möjligt."
+msgstr "Uppdateringen är <span class=\"fw-semibold text-success\">schemalagd</span> att köras automatiskt så snart som möjligt."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_RUNNING"
 msgid "The update is <span class=\"fw-semibold text-success\">currently taking place</span>"
-msgstr "Uppdateringen pågår <span class=\\\"fw-semibold text-success\\\">just nu</span>"
+msgstr "Uppdateringen pågår <span class=\"fw-semibold text-success\">just nu</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_ERRORED"
@@ -4156,17 +4156,17 @@ msgstr "Uppdatering av Joomla!-kärnfilerna är <em>alltid säkert</em>. Ditt we
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED"
 msgid "The core files refresh is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically after %s."
-msgstr "Uppdateringen av kärnfilerna är <span class=\\\"fw-semibold text-success\\\">schemalagd</span> att köras automatiskt efter %s."
+msgstr "Uppdateringen av kärnfilerna är <span class=\"fw-semibold text-success\">schemalagd</span> att köras automatiskt efter %s."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_SCHEDULED_ASAP"
 msgid "The core files refresh is <span class=\"fw-semibold text-success\">scheduled</span> to run automatically as soon as possible."
-msgstr "Uppdateringen av kärnfilerna är <span class=\\\"fw-semibold text-success\\\">schemalagd</span> att köras automatiskt så snart som möjligt."
+msgstr "Uppdateringen av kärnfilerna är <span class=\"fw-semibold text-success\">schemalagd</span> att köras automatiskt så snart som möjligt."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_RUNNING"
 msgid "The core files refresh is <span class=\"fw-semibold text-success\">currently taking place</span>"
-msgstr "Uppdateringen av kärnfilerna pågår <span class=\\\"fw-semibold text-success\\\">just nu</span>"
+msgstr "Uppdateringen av kärnfilerna pågår <span class=\"fw-semibold text-success\">just nu</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_JUPDATE_REFRESH_ERRORED"
@@ -5456,7 +5456,7 @@ msgstr "Något på din server – exempelvis serverkonfigurationen som kontrolle
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_WHATIS_J3"
 msgid "Something on your server - such as the server configuration controlled by your host, a server configuration file such as <code>.htaccess</code>, or a plugin of your site - is blocking Panopticon from accessing the URL of the API plugin (<span class=\"font-monospace\">%s</span>) on your site."
-msgstr "Något på din server - som serverkonfigurationen som kontrolleras av din värd, en serverkonfigurationsfil som <code>.htaccess</code>, eller en plugin på din webbplats - blockerar Panopticon från att komma åt URL: en för API-tillägget (<span class=\\\"font-monospace\\\">%s</span>) på din webbplats."
+msgstr "Något på din server - som serverkonfigurationen som kontrolleras av din värd, en serverkonfigurationsfil som <code>.htaccess</code>, eller en plugin på din webbplats - blockerar Panopticon från att komma åt URL: en för API-tillägget (<span class=\"font-monospace\">%s</span>) på din webbplats."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_TOCHECK"
@@ -5466,12 +5466,12 @@ msgstr "Saker att kontrollera:"
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the Joomla! API Application endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr "Blockerar din värd, eller din serverkonfigurationsfil (till exempel <code>.htaccess</code>), åtkomst till slutpunkten för Joomla! API-applikationen (<span class=\\\"font-monospace\\\">%s</span>) helt och hållet?"
+msgstr "Blockerar din värd, eller din serverkonfigurationsfil (till exempel <code>.htaccess</code>), åtkomst till slutpunkten för Joomla! API-applikationen (<span class=\"font-monospace\">%s</span>) helt och hållet?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK1_J3"
 msgid "Does your host, or your server configuration file (e.g. <code>.htaccess</code>), block access to the API plugin endpoint (<span class=\"font-monospace\">%s</span>) altogether?"
-msgstr "Blockerar din värd, eller din serverkonfigurationsfil (till exempel <code>.htaccess</code>), åtkomst till slutpunkten för API-tillägget (<span class=\\\"font-monospace\\\">%s</span>) helt och hållet?"
+msgstr "Blockerar din värd, eller din serverkonfigurationsfil (till exempel <code>.htaccess</code>), åtkomst till slutpunkten för API-tillägget (<span class=\"font-monospace\">%s</span>) helt och hållet?"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_API403_CHECK2"
@@ -5536,7 +5536,7 @@ msgstr "HTTP-statuskoden %s innebär att det har uppstått ett serverfel. Kontro
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400"
 msgid "The HTTP status code 400 usually means that your site can only be accessed by a limited number of domain names; the one you tried using (<span class=\"font-monospace\">%s</span>) may not be one of them."
-msgstr "HTTP-statuskoden 400 betyder vanligtvis att din webbplats endast kan nås av ett begränsat antal domännamn; den du försökte använda (<span class=\\\"font-monospace\\\">%s</span>) kanske inte är en av dem."
+msgstr "HTTP-statuskoden 400 betyder vanligtvis att din webbplats endast kan nås av ett begränsat antal domännamn; den du försökte använda (<span class=\"font-monospace\">%s</span>) kanske inte är en av dem."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_HTTPERROR_400_ATPRO"
@@ -5641,7 +5641,7 @@ msgstr "Kommunikationsbiblioteket som används av PHP (cURL) har rapporterat fö
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_CURL_BLAH2"
 msgid "Please consult the <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">cURL library error code reference</a> for more information about the error. In most cases the problem is a network or server configuration issue - either the server you have installed Panopticon on, or the server your Joomla! site is on - which requires contacting the respective host to help you address."
-msgstr "Konsultera <a href=\\\"https://curl.se/libcurl/c/libcurl-errors.html\\\" target=\\\"_blank\\\">referenssidan för felkoder för cURL-biblioteket</a> för mer information om felet. I de flesta fall är problemet en nätverks- eller serverkonfigurationsfråga - antingen servern där du har installerat Panopticon, eller servern din Joomla!-webbplats är på - vilket kräver att du kontaktar respektive värd för att hjälpa dig att lösa det."
+msgstr "Konsultera <a href=\"https://curl.se/libcurl/c/libcurl-errors.html\" target=\"_blank\">referenssidan för felkoder för cURL-biblioteket</a> för mer information om felet. I de flesta fall är problemet en nätverks- eller serverkonfigurationsfråga - antingen servern där du har installerat Panopticon, eller servern din Joomla!-webbplats är på - vilket kräver att du kontaktar respektive värd för att hjälpa dig att lösa det."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_HEAD"
@@ -5651,17 +5651,17 @@ msgstr "Det uppstod en kommunikationsfel med din webbplats."
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH1"
 msgid "The communication library used by Panopticon (<a href=\"https://github.com/guzzle/guzzle\" target=\"_blank\">Guzzle HTTP</a>) has reported the following error:"
-msgstr "Kommunikationsbiblioteket som används av Panopticon (<a href=\\\"https://github.com/guzzle/guzzle\\\" target=\\\"_blank\\\">Guzzle HTTP</a>) har rapporterat följande fel:"
+msgstr "Kommunikationsbiblioteket som används av Panopticon (<a href=\"https://github.com/guzzle/guzzle\" target=\"_blank\">Guzzle HTTP</a>) har rapporterat följande fel:"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
 msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr "Detta är ett oväntat tillstånd som kan indikera en kommunikationsfel vi ännu inte har sett, ett problem inom Guzzle självt, ett problem med servern där du har installerat Panopticon, eller ett problem i Panopticon självt. Sök igenom öppna <em>och stängda</em> ärenden <a href=\\\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\\\" target=\\\"_blank\\\">i vårt GitHub-repositorium</a>. Om ingen annan har rapporterat detta, öppna gärna ett ärende så tittar vi på det."
+msgstr "Detta är ett oväntat tillstånd som kan indikera en kommunikationsfel vi ännu inte har sett, ett problem inom Guzzle självt, ett problem med servern där du har installerat Panopticon, eller ett problem i Panopticon självt. Sök igenom öppna <em>och stängda</em> ärenden <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">i vårt GitHub-repositorium</a>. Om ingen annan har rapporterat detta, öppna gärna ett ärende så tittar vi på det."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"
 msgid "The host name of your site (<span class=\"font-monospace\">%s</span>) cannot be resolved to an IP address."
-msgstr "Värdnamnet för din webbplats (<span class=\\\"font-monospace\\\">%s</span>) kan inte lösas till en IP-adress."
+msgstr "Värdnamnet för din webbplats (<span class=\"font-monospace\">%s</span>) kan inte lösas till en IP-adress."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_CHECK"
@@ -6281,7 +6281,7 @@ msgstr "Redis datakällans namn (DSN)"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_REDIS_DSN_HELP"
 msgid "How to connect to your Redis server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Redis adapter documentation</a> for information on the syntax."
-msgstr "Hur man ansluter till din Redis-server. Läs <a href=\\\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\\\" target=\\\"_blank\\\">Symfony Cache Redis adapter-dokumentationen</a> för information om syntaxen."
+msgstr "Hur man ansluter till din Redis-server. Läs <a href=\"https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html#configure-the-connection\" target=\"_blank\">Symfony Cache Redis adapter-dokumentationen</a> för information om syntaxen."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN"
@@ -6291,7 +6291,7 @@ msgstr "Memcached datakällans namn (DSN)"
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CACHING_MEMCACHED_DSN_HELP"
 msgid "How to connect to your Memcached server. Please read <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">the Symfony Cache Memcached adapter documentation</a> for information on the syntax."
-msgstr "Hur man ansluter till din Memcached-server. Läs <a href=\\\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\\\" target=\\\"_blank\\\">Symfony Cache Memcached adapter-dokumentationen</a> för information om syntaxen."
+msgstr "Hur man ansluter till din Memcached-server. Läs <a href=\"https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html#configure-the-connection\" target=\"_blank\">Symfony Cache Memcached adapter-dokumentationen</a> för information om syntaxen."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_LOG_LEVEL"
@@ -7326,7 +7326,7 @@ msgstr "Uppdateringarna kan inte laddas"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_NOT_LOADED_BODY"
 msgid "The update information source URL, <span class=\"font-monospace\">%s</span>, does not seem to contain update information for this application."
-msgstr "Uppdateringsinformationskällans URL, <span class=\\\"font-monospace\\\">%s</span>, verkar inte innehålla uppdateringsinformation för denna applikation."
+msgstr "Uppdateringsinformationskällans URL, <span class=\"font-monospace\">%s</span>, verkar inte innehålla uppdateringsinformation för denna applikation."
 
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_UPTODATE_HEAD"
@@ -7731,7 +7731,7 @@ msgstr "Upphovsrätt &copy; %s Akeeba Ltd"
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_PLEASE_READ_LICENSE"
 msgid "For the complete text of the software license, please read the <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a> file supplied with the software."
-msgstr "För fullständig text i programvarulicensen, läs <a class=\\\"text-body-tertiary\\\" href=\\\"%sLICENSE.txt\\\">LICENSE.txt</a>-filen som medföljer programvaran."
+msgstr "För fullständig text i programvarulicensen, läs <a class=\"text-body-tertiary\" href=\"%sLICENSE.txt\">LICENSE.txt</a>-filen som medföljer programvaran."
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_3PD_SOFTWARE"
@@ -7791,7 +7791,7 @@ msgstr "Avatar för användare %s"
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_CONTRIBUTIONS"
 msgid "Contributions: <span class=\"font-monospace text-success\">%d</span>"
-msgstr "Bidrag: <span class=\\\"font-monospace text-success\\\">%d</span>"
+msgstr "Bidrag: <span class=\"font-monospace text-success\">%d</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_GITHUB_PROFILE"
@@ -8266,7 +8266,7 @@ msgstr "Tvåfaktorsautentiseringsmetoder används <em>utöver</em> ditt använda
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_IS_ACTIVE"
 msgid "Multi-factor Authentication is <span class=\"%s\">enabled</span> on your account."
-msgstr "Tvåfaktorsautentisering är <span class=\\\"%s\\\">aktiverad</span> på ditt konto."
+msgstr "Tvåfaktorsautentisering är <span class=\"%s\">aktiverad</span> på ditt konto."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_TURN_OFF"
@@ -8276,7 +8276,7 @@ msgstr "Stäng av"
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_IS_DISABLED"
 msgid "Multi-factor Authentication is <span class=\"%s\">disabled</span> on your account."
-msgstr "Tvåfaktorsautentisering är <span class=\\\"%s\\\">inaktiverad</span> på ditt konto."
+msgstr "Tvåfaktorsautentisering är <span class=\"%s\">inaktiverad</span> på ditt konto."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_LIST_DEFAULTTAG"
@@ -8366,7 +8366,7 @@ msgstr "Vänligen välj hur du vill verifiera din inloggning på denna webbplats
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES"
 msgid "Backup Codes (Emergency Access)<br><small class=\"text-muted\">Use these if you get locked out.</small>"
-msgstr "Reservkoder (nödåtkomst)<br><small class=\\\"text-muted\\\">Använd dessa om du blir utelåst.</small>"
+msgstr "Reservkoder (nödåtkomst)<br><small class=\"text-muted\">Använd dessa om du blir utelåst.</small>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_METHOD_NAME"
@@ -8381,7 +8381,7 @@ msgstr "Engångskoder som låter dig logga in på webbplatsen om ingen av de and
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_PRINT_PROMPT"
 msgid "<strong><a href=\"%s\">Print these codes</a> and keep them in your wallet</strong>. <span class=\"text-muted\">Backup codes let you log into the site if your regular Multi-factor Authentication method does not work or you no longer have access to it. Each code can be used <em>only once</em>.</span>"
-msgstr "<strong><a href=\\\"%s\\\">Skriv ut dessa koder</a> och förvara dem i din plånbok</strong>. <span class=\\\"text-muted\\\">Reservkoder låter dig logga in på webbplatsen om din vanliga tvåfaktorsautentiseringsmetod inte fungerar eller om du inte längre har åtkomst till den. Varje kod kan användas <em>endast en gång</em>.</span>"
+msgstr "<strong><a href=\"%s\">Skriv ut dessa koder</a> och förvara dem i din plånbok</strong>. <span class=\"text-muted\">Reservkoder låter dig logga in på webbplatsen om din vanliga tvåfaktorsautentiseringsmetod inte fungerar eller om du inte längre har åtkomst till den. Varje kod kan användas <em>endast en gång</em>.</span>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_BACKUPCODES_INSTRUCTIONS"
@@ -8436,7 +8436,7 @@ msgstr "<p>Detta är en demonstrationsplugin för tvåfaktorsautentisering för 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE"
 msgid "<p class=\"alert alert-info\">The messages appearing above and below the code area can be customized by overriding the language strings <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
-msgstr "<p class=\\\"alert alert-info\\\">Meddelandena som visas ovanför och under kodområdet kan anpassas genom att skriva över språksträngarna <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> och <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
+msgstr "<p class=\"alert alert-info\">Meddelandena som visas ovanför och under kodområdet kan anpassas genom att skriva över språksträngarna <code>PANOPTICON_MFA_LBL_PREMESSAGE</code> och <code>PANOPTICON_MFA_FIXED_LBL_POSTMESSAGE</code>.</p>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_DEFAULTTITLE"
@@ -8451,7 +8451,7 @@ msgstr "<p>Ange ett lösenord nedan. Det här lösenordet måste anges efter inl
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE"
 msgid "<p class=\"alert alert-info\">The messages appearing above and below the setup area can be customized by overriding the language strings <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> and <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
-msgstr "<p class=\\\"alert alert-info\\\">Meddelandena som visas ovanför och under installationsområdet kan anpassas genom att skriva över språksträngarna <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> och <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
+msgstr "<p class=\"alert alert-info\">Meddelandena som visas ovanför och under installationsområdet kan anpassas genom att skriva över språksträngarna <code>PANOPTICON_MFA_FIXED_LBL_SETUP_PREMESSAGE</code> och <code>PANOPTICON_MFA_FIXED_LBL_SETUP_POSTMESSAGE</code></p>"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_FIXED_ERR_EMPTYCODE"
@@ -8566,7 +8566,7 @@ msgstr "Skanna denna QR-kod&trade;."
 #, phpformat
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT2"
 msgid "Use this <a href=\"%s\">link</a>."
-msgstr "Använd denna <a href=\\\"%s\\\">länk</a>."
+msgstr "Använd denna <a href=\"%s\">länk</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_INSTRUCTIONS_OPT3"
@@ -8581,7 +8581,7 @@ msgstr "Ange den genererade sexsiffriga koden i fältet nedan och klicka på \'S
 #, phpformat
 msgctxt "PANOPTICON_MFA_TOTP_QR_LBL_SOFTWARE"
 msgid "Looking for compatible authenticator software? We have tested with <a href=\"https://keepassxc.org/\">KeePassXC</a>, <a href=\"https://strongboxsafe.com/\">Strongbox</a>, <a href=\"https://1password.com/\">1Password</a>, <a href=\"https://en.wikipedia.org/wiki/Google_Authenticator\">Google Authenticator</a>, <a href=\"https://authy.com/\">Twilio Authy</a>, and the built-in feature in macOS / iOS / iPadOS."
-msgstr "Letar du efter kompatibel autentiseringsmjukvara? Vi har testat med <a href=\\\"https://keepassxc.org/\\\">KeePassXC</a>, <a href=\\\"https://strongboxsafe.com/\\\">Strongbox</a>, <a href=\\\"https://1password.com/\\\">1Password</a>, <a href=\\\"https://en.wikipedia.org/wiki/Google_Authenticator\\\">Google Authenticator</a>, <a href=\\\"https://authy.com/\\\">Twilio Authy</a> och den inbyggda funktionen i macOS / iOS / iPadOS."
+msgstr "Letar du efter kompatibel autentiseringsmjukvara? Vi har testat med <a href=\"https://keepassxc.org/\">KeePassXC</a>, <a href=\"https://strongboxsafe.com/\">Strongbox</a>, <a href=\"https://1password.com/\">1Password</a>, <a href=\"https://en.wikipedia.org/wiki/Google_Authenticator\">Google Authenticator</a>, <a href=\"https://authy.com/\">Twilio Authy</a> och den inbyggda funktionen i macOS / iOS / iPadOS."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_HELP"
