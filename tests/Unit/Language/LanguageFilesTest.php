@@ -125,6 +125,19 @@ class LanguageFilesTest extends AbstractUnitTestCase
 	}
 
 	/**
+	 * Every en-GB string must be translated. A missing one is shown in English, and adding en-GB strings without
+	 * translating them is how 128 strings once went untranslated in every language.
+	 *
+	 * @dataProvider languageProvider
+	 */
+	public function testEveryEnglishStringIsTranslated(string $langCode): void
+	{
+		$missing = array_keys(array_diff_key(self::getStrings('en-GB'), self::getStrings($langCode)));
+
+		$this->assertSame([], $missing, 'These en-GB strings are not translated.');
+	}
+
+	/**
 	 * A translation must use the same sprintf() placeholders as en-GB, though not necessarily in the same order. A
 	 * missing placeholder loses information; a malformed one (`% is`, `%$`) makes sprintf() throw, so the user sees
 	 * "BAD TRANSLATION" instead of the text.

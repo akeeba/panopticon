@@ -294,3 +294,14 @@ CDN | — | Technical term
 XML | — | Technical term
 FIDO2 | — | Technical term
 MFA | — | Technical term
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Connection Doctor | Feature name, not translated
+Update Doctor | Update Doctor | Feature name, not translated
+Secret Word | Hemligt ord | Akeeba Backup
+Sticky header and toolbar | Fast sidhuvud och verktygsfält | 
+Forbidden IP Ranges | Förbjudna IP-intervall | 
+Colour | Färg | 
+Debug logging | Felsökningsloggning | 
+Author | Upphovsperson | Extension author
+Teal | Blågrön | Colour

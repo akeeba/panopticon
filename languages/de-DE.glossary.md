@@ -277,3 +277,12 @@ MySQL | — | Technical term
 MariaDB | — | Technical term
 Redis | — | Technical term
 Memcached | — | Technical term
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Verbindungsdiagnose | 
+Update Doctor | Aktualisierungsdiagnose | 
+Sticky header and toolbar | Fixierte Kopfzeile und Werkzeugleiste | 
+Forbidden IP Ranges | Verbotene IP-Bereiche | 
+Colour | Farbe | 
+Toolbar | Werkzeugleiste | 
+Secret Word | Secret Word | Akeeba Backup term, not translated

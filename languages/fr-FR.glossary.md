@@ -293,3 +293,14 @@ CDN | — | Technical term
 XML | — | Technical term
 FIDO2 | — | Technical term
 MFA | — | Technical term (kept as acronym, spelled out as AMF in French context)
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Diagnostic de connexion | 
+Update Doctor | Diagnostic de mise à jour | 
+Forbidden IP Ranges | Plages d'adresses IP interdites | 
+Sticky header and toolbar | En-tête et barre d'outils fixes | 
+Endpoint | point d'accès | 
+Secret Word | mot secret | Akeeba Backup
+Debug logging | journalisation de débogage | 
+Teal | Sarcelle | Colour
+Authentication | Authentification | Never “authentication”

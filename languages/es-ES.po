@@ -674,6 +674,11 @@ msgid "Toolbar"
 msgstr "Barra de herramientas"
 
 #, phpformat
+msgctxt "PANOPTICON_APP_LBL_TOGGLE_TOOLBAR"
+msgid "Toggle toolbar actions"
+msgstr "Alternar las acciones de la barra de herramientas"
+
+#, phpformat
 msgctxt "PANOPTICON_APP_LBL_MESSAGES"
 msgid "Messages"
 msgstr "Mensajes"
@@ -3249,6 +3254,16 @@ msgid "The site must have an endpoint URL e.g. <code>https://www.example.com/api
 msgstr "El sitio debe tener una URL de punto de acceso, por ejemplo <code>https://www.ejemplo.com/api</code>"
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_ERR_CONNECTION_DOCTOR_FORBIDDEN"
+msgid "You are not allowed to use the Connection Doctor on this installation. Please contact the administrator of this Panopticon installation for help connecting your site."
+msgstr "No tiene permiso para usar el Doctor de conexión en esta instalación. Póngase en contacto con el administrador de esta instalación de Panopticon para obtener ayuda para conectar su sitio."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_ERR_URL_FORBIDDEN_IP"
+msgid "The site URL is not allowed on this installation. Please check the URL. If you believe this is a mistake, contact the administrator of this Panopticon installation."
+msgstr "La URL del sitio no está permitida en esta instalación. Compruebe la URL. Si cree que se trata de un error, póngase en contacto con el administrador de esta instalación de Panopticon."
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_ERR_NO_TOKEN"
 msgid "You must fill in the API Token."
 msgstr "Debe introducir el token de API."
@@ -3552,6 +3567,326 @@ msgstr "¡Todo bien!"
 msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY_MORE"
 msgid "The connection to your site was tested, and found to be working fine."
 msgstr "Se ha comprobado la conexión con su sitio y funciona correctamente."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_TITLE"
+msgid "Joomla! Update Doctor"
+msgstr "Doctor de actualización de Joomla!"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_RUN"
+msgid "Run Update Doctor"
+msgstr "Ejecutar el Doctor de actualización"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_ERR_UPDATE_DOCTOR_JOOMLA_ONLY"
+msgid "The Joomla! Update Doctor is only available for Joomla! sites."
+msgstr "El Doctor de actualización de Joomla! solo está disponible para sitios Joomla!."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_SELF_ERROR"
+msgid "The Update Doctor could not complete its checks because of an unexpected error."
+msgstr "El Doctor de actualización no pudo completar sus comprobaciones debido a un error inesperado."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_NO_RESULTS"
+msgid "The Update Doctor did not return any results."
+msgstr "El Doctor de actualización no devolvió ningún resultado."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_OKAY"
+msgid "All good!"
+msgstr "¡Todo bien!"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_OKAY_MORE"
+msgid "The Joomla! core update endpoints were tested and no problems were found. If updates are still failing, use the actions below to reschedule the update or inspect the log."
+msgstr "Se probaron los puntos de acceso de actualización del núcleo de Joomla! y no se encontraron problemas. Si las actualizaciones siguen fallando, utilice las acciones siguientes para reprogramar la actualización o inspeccionar el registro."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_API_DOWN_HEAD"
+msgid "The site's API is unreachable"
+msgstr "La API del sitio no es accesible"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_API_DOWN_BODY"
+msgid "Panopticon cannot talk to your site over its JSON API. Core updates cannot work until that is fixed. Please run the Connection Doctor first to diagnose and resolve the API connection problem, then come back here."
+msgstr "Panopticon no puede comunicarse con su sitio a través de su API JSON. Las actualizaciones del núcleo no pueden funcionar hasta que se solucione. Ejecute primero el Doctor de conexión para diagnosticar y resolver el problema de conexión con la API y, después, vuelva aquí."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_API_OK"
+msgid "Panopticon can talk to the site over its JSON API."
+msgstr "Panopticon puede comunicarse con el sitio a través de su API JSON."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_OK"
+msgid "The Joomla! update extraction endpoint is reachable and responding normally."
+msgstr "El punto de acceso de extracción de la actualización de Joomla! es accesible y responde con normalidad."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_AUTH_HEAD"
+msgid "The site's administrator folder is password-protected"
+msgstr "La carpeta de administración del sitio está protegida con contraseña"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_AUTH_BODY"
+msgid "The update extraction endpoint returned HTTP 401 (authentication required). Your site's <code>administrator</code> folder is protected with HTTP (web server) authentication. Edit this site and enter the Administrator Directory Username and Password in the Connection tab, then try again."
+msgstr "El punto de acceso de extracción de la actualización devolvió HTTP 401 (se requiere autenticación). La carpeta <code>administrator</code> de su sitio está protegida con autenticación HTTP (del servidor web). Edite este sitio e introduzca el nombre de usuario y la contraseña del directorio de administración en la pestaña Conexión y, después, inténtelo de nuevo."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_HEAD"
+msgid "The update extraction endpoint is being blocked (HTTP %d)"
+msgstr "El punto de acceso de extracción de la actualización está siendo bloqueado (HTTP %d)"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_BODY"
+msgid "Panopticon reached your server, but the request to the Joomla! update extraction script was refused with an unexpected HTTP status. This almost always means something between Panopticon and your site's PHP is blocking the request — not Panopticon or Joomla! itself. Core updates cannot complete until this request is allowed through."
+msgstr "Panopticon llegó a su servidor, pero la solicitud al script de extracción de actualizaciones de Joomla! fue rechazada con un estado HTTP inesperado. Casi siempre significa que algo entre Panopticon y el PHP de su sitio está bloqueando la solicitud, no Panopticon ni Joomla! en sí. Las actualizaciones del núcleo no pueden completarse hasta que se permita el paso de esta solicitud."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK1"
+msgid "A CDN or reverse proxy (e.g. Cloudflare): check its firewall/WAF events for a block on the <code>/administrator/</code> path and add an exception, or allow the Panopticon server's IP address."
+msgstr "Una CDN o proxy inverso (p. ej., Cloudflare): compruebe en sus eventos de cortafuegos/WAF si hay un bloqueo de la ruta <code>/administrator/</code> y añada una excepción, o permita la dirección IP del servidor de Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK2"
+msgid "A hosting-level firewall or security system (mod_security, Imunify360, a GeoIP filter, or a bandwidth/rate limit): ask your host to allow requests to the extraction script, or to allow the Panopticon server's country/IP address."
+msgstr "Un cortafuegos o sistema de seguridad a nivel de alojamiento (mod_security, Imunify360, un filtro GeoIP o un límite de ancho de banda/frecuencia): pida a su proveedor de alojamiento que permita las solicitudes al script de extracción, o que permita el país o la dirección IP del servidor de Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK3"
+msgid "A security extension on the site restricting access to the administrator folder for requests that are not coming from a logged-in browser."
+msgstr "Una extensión de seguridad del sitio que restringe el acceso a la carpeta de administración para las solicitudes que no provienen de un navegador con sesión iniciada."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ENDPOINT"
+msgid "Endpoint tested: %s"
+msgstr "Punto de acceso probado: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ERROR_HEAD"
+msgid "Could not reach the update extraction endpoint"
+msgstr "No se pudo acceder al punto de acceso de extracción de la actualización"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ERROR_BODY"
+msgid "A network or TLS error occurred while contacting the update extraction script. See the details below and the debug information at the bottom of this page."
+msgstr "Se produjo un error de red o TLS al contactar con el script de extracción de la actualización. Consulte los detalles a continuación y la información de depuración al final de esta página."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_MISSING_HEAD"
+msgid "No Joomla! update log is available yet"
+msgstr "Todavía no hay ningún registro de actualización de Joomla! disponible"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_MISSING_BODY"
+msgid "There is no update task log for this site to analyse. Reschedule the update (button below) so a fresh attempt runs, then return here to review the log."
+msgstr "No hay ningún registro de la tarea de actualización de este sitio que analizar. Reprograme la actualización (botón de abajo) para que se ejecute un nuevo intento y, después, vuelva aquí para revisar el registro."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_NEED_DEBUG"
+msgid "For the most useful log, enable Debug logging first (button below), then reschedule the update and come back once it has failed again."
+msgstr "Para obtener el registro más útil, active primero el registro de depuración (botón de abajo), reprograme la actualización y vuelva cuando haya fallado de nuevo."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_LAST_ERROR"
+msgid "Most recent error line in the log:"
+msgstr "Línea de error más reciente del registro:"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CLEAN"
+msgid "No recent errors were found in the site's Joomla! update log."
+msgstr "No se encontraron errores recientes en el registro de actualización de Joomla! del sitio."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BLOCKED_HEAD"
+msgid "The last update was blocked while extracting (HTTP %d)"
+msgstr "La última actualización fue bloqueada durante la extracción (HTTP %d)"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BLOCKED_BODY"
+msgid "The most recent update failed because the request to the extraction script was refused. This matches a CDN, host firewall, GeoIP filter, or rate/bandwidth limit blocking the request. See the extraction endpoint check above for what to do."
+msgstr "La actualización más reciente falló porque la solicitud al script de extracción fue rechazada. Esto coincide con una CDN, un cortafuegos del alojamiento, un filtro GeoIP o un límite de frecuencia/ancho de banda que bloquea la solicitud. Consulte la comprobación del punto de acceso de extracción anterior para saber qué hacer."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_AUTH_HEAD"
+msgid "The last update failed on administrator folder authentication"
+msgstr "La última actualización falló en la autenticación de la carpeta de administración"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_AUTH_BODY"
+msgid "The extraction script returned HTTP 401. Enter the Administrator Directory Username and Password for this site in the Connection tab, then try again."
+msgstr "El script de extracción devolvió HTTP 401. Introduzca el nombre de usuario y la contraseña del directorio de administración de este sitio en la pestaña Conexión y, después, inténtelo de nuevo."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_JSON_HEAD"
+msgid "The extraction script returned an invalid response"
+msgstr "El script de extracción devolvió una respuesta no válida"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_JSON_BODY"
+msgid "The extraction script did not return valid JSON. This usually means a PHP notice, warning, or error is being printed by the site. Check the site's error log and disable any output-producing plugins on the extraction script."
+msgstr "El script de extracción no devolvió JSON válido. Normalmente significa que el sitio está mostrando un aviso, una advertencia o un error de PHP. Revise el registro de errores del sitio y desactive los plugins que generen salida en el script de extracción."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_EXTRACT_HEAD"
+msgid "The update extraction failed"
+msgstr "La extracción de la actualización falló"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_EXTRACT_BODY"
+msgid "The extraction script reported a failure. The site may be in a half-updated state. Review the full log, and consider checking the site manually before retrying."
+msgstr "El script de extracción informó de un fallo. Es posible que el sitio se encuentre en un estado de actualización a medias. Revise el registro completo y considere comprobar el sitio manualmente antes de volver a intentarlo."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DOWNLOAD_HEAD"
+msgid "Downloading the update package failed"
+msgstr "Falló la descarga del paquete de actualización"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DOWNLOAD_BODY"
+msgid "The update package could not be downloaded to the site. This can be a slow or blocked download from Joomla!'s servers, or the site's temporary directory being cleared. Retry the update; if it recurs, check the site's connectivity to downloads.joomla.org."
+msgstr "No se pudo descargar el paquete de actualización en el sitio. Puede deberse a una descarga lenta o bloqueada desde los servidores de Joomla! o a que se haya vaciado el directorio temporal del sitio. Vuelva a intentar la actualización; si se repite, compruebe la conectividad del sitio con downloads.joomla.org."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CHECKSUM_HEAD"
+msgid "The downloaded update package was corrupt"
+msgstr "El paquete de actualización descargado estaba dañado"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CHECKSUM_BODY"
+msgid "The downloaded package failed its checksum verification, meaning it was incomplete or altered in transit (often a proxy or an interrupted download). Retry the update."
+msgstr "El paquete descargado no superó la verificación de suma de comprobación, lo que significa que estaba incompleto o fue alterado en tránsito (a menudo por un proxy o una descarga interrumpida). Vuelva a intentar la actualización."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BACKUP_HEAD"
+msgid "The pre-update backup failed"
+msgstr "Falló la copia de seguridad previa a la actualización"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BACKUP_BODY"
+msgid "The update was cancelled because the backup that runs before updating failed. Check Akeeba Backup on the site (its configuration and the selected backup profile), or disable the pre-update backup for this site."
+msgstr "La actualización se canceló porque falló la copia de seguridad que se ejecuta antes de actualizar. Revise Akeeba Backup en el sitio (su configuración y el perfil de copia de seguridad seleccionado) o desactive la copia de seguridad previa a la actualización para este sitio."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_ENABLE_HEAD"
+msgid "Could not enable the extraction script"
+msgstr "No se pudo activar el script de extracción"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_ENABLE_BODY"
+msgid "Panopticon could not activate the Joomla! update extraction script on the site. Review the full log; the extraction endpoint check above may show the underlying cause."
+msgstr "Panopticon no pudo activar el script de extracción de actualizaciones de Joomla! en el sitio. Revise el registro completo; la comprobación del punto de acceso de extracción anterior puede mostrar la causa subyacente."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DISAPPEARED_HEAD"
+msgid "The update package disappeared during the update"
+msgstr "El paquete de actualización desapareció durante la actualización"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DISAPPEARED_BODY"
+msgid "The downloaded update package vanished before it could be extracted. A plugin or your host may be clearing the site's temporary directory automatically. Check for aggressive temp-file cleanup and retry."
+msgstr "El paquete de actualización descargado desapareció antes de poder extraerse. Es posible que un plugin o su proveedor de alojamiento esté vaciando automáticamente el directorio temporal del sitio. Compruebe si hay una limpieza agresiva de archivos temporales y vuelva a intentarlo."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FINALISE_HEAD"
+msgid "Finalising the update failed"
+msgstr "Falló la finalización de la actualización"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FINALISE_BODY"
+msgid "The files were extracted but the post-update finalisation failed. Log into the site and check System, Maintenance, Database, and whether Joomla! reports itself as up-to-date."
+msgstr "Los archivos se extrajeron, pero falló la finalización posterior a la actualización. Inicie sesión en el sitio y compruebe Sistema, Mantenimiento, Base de datos, y si Joomla! indica que está actualizado."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_RELOAD_HEAD"
+msgid "Could not reload update information after updating"
+msgstr "No se pudo recargar la información de actualización tras actualizar"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_RELOAD_BODY"
+msgid "The update applied but Panopticon could not re-read the site's update status afterwards. Refresh the site information; if it keeps failing, run the Connection Doctor."
+msgstr "La actualización se aplicó, pero Panopticon no pudo volver a leer después el estado de actualización del sitio. Actualice la información del sitio; si sigue fallando, ejecute el Doctor de conexión."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FACTORY_HEAD"
+msgid "The extraction lost its internal state"
+msgstr "La extracción perdió su estado interno"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FACTORY_BODY"
+msgid "An internal error interrupted the extraction (the script's state was lost between steps). This can be caused by the extraction request being terminated early. Retry the update and review the full log if it recurs."
+msgstr "Un error interno interrumpió la extracción (se perdió el estado del script entre pasos). Puede deberse a que la solicitud de extracción se haya terminado antes de tiempo. Vuelva a intentar la actualización y revise el registro completo si se repite."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_TIMEOUT_HEAD"
+msgid "The last update timed out"
+msgstr "La última actualización agotó el tiempo de espera"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_TIMEOUT_BODY"
+msgid "The update task was marked as timed out. This happens when the whole stepped update takes longer than the stuck-task threshold, or a worker was killed mid-step. Consider raising the stuck-task threshold in System Configuration, ensuring the CRON job runs frequently, and checking the site's PHP memory limit."
+msgstr "La tarea de actualización se marcó como agotada por tiempo de espera. Esto ocurre cuando toda la actualización por pasos tarda más que el umbral de tareas atascadas, o cuando un proceso de trabajo fue terminado a mitad de un paso. Considere aumentar el umbral de tareas atascadas en la Configuración del sistema, asegurarse de que el trabajo CRON se ejecute con frecuencia y comprobar el límite de memoria de PHP del sitio."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_UNKNOWN_HEAD"
+msgid "The last update ended with an error"
+msgstr "La última actualización terminó con un error"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_UNKNOWN_BODY"
+msgid "The most recent update run recorded an error that the Doctor could not categorise automatically. The error line is shown below; open the full log for the complete context."
+msgstr "La ejecución de actualización más reciente registró un error que el Doctor no pudo categorizar automáticamente. La línea del error se muestra a continuación; abra el registro completo para ver el contexto completo."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_HEAD"
+msgid "Latest core update report"
+msgstr "Último informe de actualización del núcleo"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_STEP"
+msgid "The update failed during the “%s” step."
+msgstr "La actualización falló durante el paso «%s»."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_HTTP"
+msgid "The recorded failure mentions HTTP status %d."
+msgstr "El fallo registrado menciona el estado HTTP %d."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_BACKUP_ON"
+msgid "A backup was taken (or attempted) before this update."
+msgstr "Se realizó (o se intentó realizar) una copia de seguridad antes de esta actualización."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_BACKUP_OFF"
+msgid "No pre-update backup was configured for this update."
+msgstr "No se configuró ninguna copia de seguridad previa a la actualización para esta actualización."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_RESCHEDULE"
+msgid "Reschedule the update"
+msgstr "Reprogramar la actualización"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_VIEW_LOG"
+msgid "Open the full log"
+msgstr "Abrir el registro completo"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_ENABLE_DEBUG"
+msgid "Enable Debug logging (global)"
+msgstr "Activar el registro de depuración (global)"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_ENABLE_DEBUG_WARN"
+msgid "This changes the global logging level to Debug for every task and site. Remember to set it back to a lower level in System Configuration once you have finished troubleshooting."
+msgstr "Esto cambia el nivel de registro global a Depuración para todas las tareas y sitios. Recuerde volver a establecerlo en un nivel inferior en la Configuración del sistema cuando termine de solucionar el problema."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_DEBUG_ENABLED"
+msgid "Global Debug logging has been enabled. Reschedule the update, and once it fails again return here to review the detailed log."
+msgstr "Se ha activado el registro de depuración global. Reprograme la actualización y, cuando vuelva a fallar, regrese aquí para revisar el registro detallado."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING"
@@ -4864,6 +5199,26 @@ msgid "Cannot find a way to connect to Akeeba Backup."
 msgstr "No se puede encontrar una forma de conectar con Akeeba Backup."
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_HEAD"
+msgid "No way to authenticate to Akeeba Backup."
+msgstr "No hay forma de autenticarse en Akeeba Backup."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_BODY"
+msgid "Your site gave Panopticon neither an Akeeba Backup Secret Word nor a Joomla! API token, so there is nothing to authenticate the Akeeba Backup JSON API with."
+msgstr "Su sitio no proporcionó a Panopticon ni una palabra secreta de Akeeba Backup ni un token de API de Joomla!, por lo que no hay nada con lo que autenticar la API JSON de Akeeba Backup."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_TIP_1"
+msgid "Connect Panopticon to this site with a Joomla! API Token instead of a username and password. Akeeba Backup 10.4.0 and later accept that same token, and it lets you grant Panopticon only the privileges it needs."
+msgstr "Conecte Panopticon a este sitio con un token de API de Joomla! en lugar de un nombre de usuario y una contraseña. Akeeba Backup 10.4.0 y posteriores aceptan ese mismo token, y le permite conceder a Panopticon únicamente los privilegios que necesita."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_TIP_2"
+msgid "Alternatively, log into your site's backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”, then click on Save &amp; Close in the toolbar. Note that the Secret Word is deprecated; it will stop working in Akeeba Backup 11.0, in October 2027."
+msgstr "Como alternativa, inicie sesión en el backend de su sitio. Vaya a Componentes, Akeeba Backup, Panel de control. Haga clic en Opciones, Copia de seguridad desde el frontend y establezca «Activar API JSON (copia de seguridad remota)» en Sí. Introduzca una nueva «Palabra secreta» y haga clic en Guardar &amp; Cerrar en la barra de herramientas. Tenga en cuenta que la palabra secreta está obsoleta; dejará de funcionar en Akeeba Backup 11.0, en octubre de 2027."
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY"
 msgid "Panopticon cannot find a way to connect to your site\'s Akeeba Backup JSON API."
 msgstr "Panopticon no puede encontrar una forma de conectarse a la API JSON de Akeeba Backup de su sitio."
@@ -6059,6 +6414,61 @@ msgid "Automatic IP blocking"
 msgstr "Bloqueo automático de IP"
 
 #, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SITELIMITS"
+msgid "Site and Tools Limits"
+msgstr "Límites de sitios y herramientas"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS"
+msgid "Connection Doctor access"
+msgstr "Acceso al Doctor de conexión"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_OWN"
+msgid "Create / Edit Own Site"
+msgstr "Crear / editar sitio propio"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_ADMIN"
+msgid "Global Create / Edit Sites"
+msgstr "Crear / editar sitios globalmente"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_SUPER"
+msgid "Super Users only"
+msgstr "Solo superusuarios"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_HELP"
+msgid "Who is allowed to run the Connection Doctor? The Connection Doctor shows you the raw response received from the site, which is what makes it useful for diagnosing a site whose API has been broken by a third party plugin. It also means whoever runs it can read the response from any URL they are able to enter.<br><br><strong>Create / Edit Own Site</strong> is the default and how Panopticon has always worked: anyone who can add or edit a site can run the Connection Doctor on it.<br><br>Choose <strong>Global Create / Edit Sites</strong> or <strong>Super Users only</strong> if you let people you do not fully trust add their own sites. Self-service users will then be unable to diagnose their own connection problems, and you become responsible for supporting them."
+msgstr "¿Quién puede ejecutar el Doctor de conexión? El Doctor de conexión le muestra la respuesta sin procesar recibida del sitio, lo que lo hace útil para diagnosticar un sitio cuya API ha sido dañada por un plugin de terceros. También significa que quien lo ejecute puede leer la respuesta de cualquier URL que pueda introducir.<br><br><strong>Crear / editar sitio propio</strong> es la opción predeterminada y la forma en que Panopticon siempre ha funcionado: cualquiera que pueda añadir o editar un sitio puede ejecutar el Doctor de conexión en él.<br><br>Elija <strong>Crear / editar sitios globalmente</strong> o <strong>Solo superusuarios</strong> si permite que personas en las que no confía plenamente añadan sus propios sitios. Los usuarios de autoservicio no podrán entonces diagnosticar sus propios problemas de conexión, y usted será responsable de darles soporte."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES"
+msgid "Forbidden IP Ranges"
+msgstr "Rangos de IP prohibidos"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_HELP"
+msgid "If a site definition URL's domain part is an IP address, or resolves to an IP address, in any of these ranges the site will not be accepted; you will get a validation error instead. This should include the IP addresses of your internal network where monitored sites cannot possibly live.<br><br>This is meant for installations where you let people you do not fully trust add their own sites, e.g. when you offer monitoring as a paid service. Leave empty — the default — to allow any address, which is what you want when you are the only person adding sites.<br><br>Each row accepts a single IP address (<code>192.168.1.1</code>), an inclusive range (<code>192.168.1.1-192.168.1.255</code>), an IP address with a netmask (<code>192.168.1.1/255.255.255.0</code>), or a CIDR block (<code>192.168.1.1/24</code>). Both IPv4 and IPv6 are supported.<br><br>If you are hosting on a cloud platform you will most likely want to include its instance metadata address, e.g. <code>169.254.169.254</code> on Amazon Web Services and Google Cloud."
+msgstr "Si la parte de dominio de la URL de la definición de un sitio es una dirección IP, o se resuelve en una dirección IP, que esté en cualquiera de estos rangos, el sitio no será aceptado; en su lugar obtendrá un error de validación. Debería incluir las direcciones IP de su red interna, donde los sitios monitorizados no pueden estar alojados.<br><br>Esto está pensado para instalaciones en las que permite que personas en las que no confía plenamente añadan sus propios sitios, p. ej., cuando ofrece la monitorización como servicio de pago. Déjelo vacío (el valor predeterminado) para permitir cualquier dirección, que es lo que desea cuando usted es la única persona que añade sitios.<br><br>Cada fila acepta una única dirección IP (<code>192.168.1.1</code>), un rango inclusivo (<code>192.168.1.1-192.168.1.255</code>), una dirección IP con máscara de red (<code>192.168.1.1/255.255.255.0</code>) o un bloque CIDR (<code>192.168.1.1/24</code>). Se admiten tanto IPv4 como IPv6.<br><br>Si el alojamiento está en una plataforma en la nube, lo más probable es que desee incluir la dirección de los metadatos de la instancia, p. ej., <code>169.254.169.254</code> en Amazon Web Services y Google Cloud."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_PLACEHOLDER"
+msgid "e.g. 192.168.1.0/24"
+msgstr "p. ej., 192.168.1.0/24"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_ADD"
+msgid "Add IP range"
+msgstr "Añadir rango de IP"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_REMOVE"
+msgid "Remove this IP range"
+msgstr "Quitar este rango de IP"
+
+#, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSWORD_SECURITY"
 msgid "Password Security"
 msgstr "Seguridad de contraseña"
@@ -6202,6 +6612,16 @@ msgstr "Modo oscuro"
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FONTSIZE"
 msgid "Font size"
 msgstr "Tamaño de fuente"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STICKY_CHROME"
+msgid "Sticky header and toolbar"
+msgstr "Encabezado y barra de herramientas fijos"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STICKY_CHROME_HELP"
+msgid "Keep the header and the toolbar pinned to the top of the page when scrolling, so that the toolbar buttons remain reachable on long pages. Each user can override this in their profile. On very short displays, such as a phone held sideways, the header and toolbar always scroll away regardless of this setting."
+msgstr "Mantiene el encabezado y la barra de herramientas fijados en la parte superior de la página al desplazarse, de modo que los botones de la barra de herramientas sigan al alcance en páginas largas. Cada usuario puede cambiar este valor en su perfil. En pantallas muy bajas, como un teléfono sostenido en horizontal, el encabezado y la barra de herramientas siempre se desplazan fuera de la vista, independientemente de este ajuste."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER"
@@ -7459,6 +7879,111 @@ msgid "Group Name"
 msgstr "Nombre del grupo"
 
 #, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR"
+msgid "Colour"
+msgstr "Color"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_HELP"
+msgid "Colours the group's badge wherever it appears in the site lists. The text colour is chosen automatically for the best contrast against your chosen background. If you want an icon, add an emoji to the group's name instead — Panopticon deliberately does not support group icons."
+msgstr "Colorea la insignia del grupo dondequiera que aparezca en las listas de sitios. El color del texto se elige automáticamente para lograr el mejor contraste con el fondo que elija. Si desea un icono, añada un emoji al nombre del grupo; Panopticon deliberadamente no admite iconos de grupo."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_NONE"
+msgid "No colour"
+msgstr "Sin color"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM"
+msgid "Custom colour"
+msgstr "Color personalizado"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_PREVIEW_PLACEHOLDER"
+msgid "YOUR GROUP NAME GOES HERE"
+msgstr "AQUÍ VA EL NOMBRE DE SU GRUPO"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_BLUE"
+msgid "Blue"
+msgstr "Azul"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_INDIGO"
+msgid "Indigo"
+msgstr "Índigo"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_PURPLE"
+msgid "Purple"
+msgstr "Morado"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_PINK"
+msgid "Pink"
+msgstr "Rosa"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_RED"
+msgid "Red"
+msgstr "Rojo"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_ORANGE"
+msgid "Orange"
+msgstr "Naranja"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_YELLOW"
+msgid "Yellow"
+msgstr "Amarillo"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_GREEN"
+msgid "Green"
+msgstr "Verde"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_TEAL"
+msgid "Teal"
+msgstr "Verde azulado"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_CYAN"
+msgid "Cyan"
+msgstr "Cian"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_GREY"
+msgid "Grey"
+msgstr "Gris"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_SILVER"
+msgid "Silver"
+msgstr "Plateado"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_DARK"
+msgid "Dark"
+msgstr "Oscuro"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_LIGHT"
+msgid "Light"
+msgstr "Claro"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_BLACK"
+msgid "Black"
+msgstr "Negro"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_WHITE"
+msgid "White"
+msgstr "Blanco"
+
+#, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS"
 msgid "Permissions"
 msgstr "Permisos"
@@ -7692,6 +8217,31 @@ msgstr "Panel"
 msgctxt "PANOPTICON_USERS_LBL_FIELD_MAIN_LAYOUT_HELP"
 msgid "The Dashboard layout is simpler to understand, but uses more browser resources."
 msgstr "El diseño de panel es más sencillo de entender, pero usa más recursos del navegador."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME"
+msgid "Sticky header and toolbar"
+msgstr "Encabezado y barra de herramientas fijos"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_DEFAULT"
+msgid "Use Default"
+msgstr "Usar el valor predeterminado"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_YES"
+msgid "Yes"
+msgstr "Sí"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_NO"
+msgid "No"
+msgstr "No"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_HELP"
+msgid "Keep the header and the toolbar pinned to the top of the page when scrolling, so that the toolbar buttons remain reachable on long pages."
+msgstr "Mantiene el encabezado y la barra de herramientas fijados en la parte superior de la página al desplazarse, de modo que los botones de la barra de herramientas sigan al alcance en páginas largas."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_NEEDED"
@@ -8987,6 +9537,96 @@ msgstr "La extensión seleccionada ha sido programada para actualización."
 msgctxt "PANOPTICON_EXTUPDATES_ERR_INVALID_SELECTION"
 msgid "Invalid extensions selection."
 msgstr "Selección de extensiones no válida."
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_TITLE"
+msgid "Extensions"
+msgstr "Extensiones"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_SITE"
+msgid "Site"
+msgstr "Sitio"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_SITE_SELECT"
+msgid "– Site –"
+msgstr "– Sitio –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_CMSVERSION_SELECT"
+msgid "– CMS Version –"
+msgstr "– Versión del CMS –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_PHPVERSION_SELECT"
+msgid "– PHP Version –"
+msgstr "– Versión de PHP –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_NAME"
+msgid "Extension Name"
+msgstr "Nombre de extensión"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_NAME_SELECT"
+msgid "– Extension Name –"
+msgstr "– Nombre de extensión –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR"
+msgid "Extension Author"
+msgstr "Autor de la extensión"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_SELECT"
+msgid "– Author –"
+msgstr "– Autor –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_URL"
+msgid "Author URL"
+msgstr "URL del autor"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_URL_SELECT"
+msgid "– Author URL –"
+msgstr "– URL del autor –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_EMAIL"
+msgid "Author Email"
+msgstr "Correo electrónico del autor"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_EMAIL_SELECT"
+msgid "– Author Email –"
+msgstr "– Correo electrónico del autor –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_TABLE_COMMENT"
+msgid "Table of all installed extensions"
+msgstr "Tabla de todas las extensiones instaladas"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_SITE"
+msgid "Site"
+msgstr "Sitio"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_EXTENSION"
+msgid "Extension"
+msgstr "Extensión"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_VERSION"
+msgid "Version"
+msgstr "Versión"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_AUTHOR"
+msgid "Author"
+msgstr "Autor"
 
 #, phpformat
 msgctxt "PANOPTICON_COREUPDATES_TITLE"

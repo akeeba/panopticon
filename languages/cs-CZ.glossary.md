@@ -268,3 +268,12 @@ CDN | — | Technical term
 XML | — | Technical term
 FIDO2 | — | Technical term
 MFA | — | Technical term
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Doktor připojení | 
+Update Doctor | Doktor aktualizací | 
+Sticky header and toolbar | Přichycená hlavička a panel nástrojů | 
+Forbidden IP Ranges | Zakázané rozsahy IP | 
+Secret Word | Tajné slovo | Akeeba Backup
+Debug logging | protokolování úrovně Ladění | 
+Colour | Barva | 

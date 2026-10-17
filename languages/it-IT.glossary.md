@@ -300,3 +300,13 @@ XML | — | Technical term
 FIDO2 | — | Technical term
 MFA | — | Technical term
 Batch | — | Technical UI term (kept in English)
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Connection Doctor | Feature name, not translated
+Update Doctor | Update Doctor | Feature name, not translated
+Forbidden IP Ranges | Intervalli IP vietati | 
+Sticky header and toolbar | Intestazione e barra degli strumenti fisse | 
+Colour | Colore | 
+Secret Word | Secret Word | Akeeba Backup term, not translated
+Teal | Verde acqua | Colour
+Stuck-task threshold | soglia delle attività bloccate | 
