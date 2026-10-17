@@ -85,6 +85,14 @@ MySQL 5.7+ or MariaDB 10.3+. Schema defined in `src/schema/mysql.xml` (Phing for
 ### Translation
 `languages/en-GB.ini` is the English source of truth (`panopticon.pot` is generated from it). All other languages are `.po` sources compiled to `.ini` by `phing language` — never hand-edit a non-English `.ini`. English (GB) is the only officially maintained language.
 
+## Project memory
+
+Topic files in `.claude/memory/`. Read the matching file before starting that kind of work.
+
+| File | Read it… |
+|------|----------|
+| [`language-files.md`](.claude/memory/language-files.md) | Before adding, changing or translating any language string, or touching `LanguageTools`. |
+
 ## Coding Conventions
 
 - **PHP**: Tabs for indentation, Allman brace style (opening braces on new line), `else`/`catch`/`finally` on new line
