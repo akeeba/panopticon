@@ -8294,27 +8294,27 @@ msgstr "Dépannage"
 #, phpformat
 msgctxt "PANOPTICON_MFA_HEAD_MFA_PAGE"
 msgid "Multi-factor Authentication"
-msgstr "Authentication de votre nom d’utilisateur et de votre mot de passe, pour qu’il soit beaucoup plus difficile pour les pirates d’obtenir un accès non autorisé.\" "
+msgstr "Authentification multifacteur"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_HEAD_SELECT_PAGE"
 msgid "Select an Authentication Method"
-msgstr "Sélectionner une méthode d\'authentication"
+msgstr "Sélectionner une méthode d'authentification"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_GUI_HEAD"
 msgid "Multi-factor Authentication"
-msgstr "Authentication multifacteur"
+msgstr "Authentification multifacteur"
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_DESCRIPTION"
 msgid "Multi-factor Authentication methods are used <em>in addition to</em> your username and password, to make it much harder for hackers to gain unauthorised access."
-msgstr "Les méthodes d\'authentication multifactorielle sont utilisées <em>en plus de</em> de votre nom d’utilisateur et de votre mot de passe, pour qu’il soit beaucoup plus difficile pour les pirates d’obtenir un accès non autorisé."
+msgstr "Les méthodes d'authentification multifacteur sont utilisées <em>en plus de</em> votre nom d’utilisateur et de votre mot de passe, pour qu’il soit beaucoup plus difficile pour les pirates d’obtenir un accès non autorisé."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_IS_ACTIVE"
 msgid "Multi-factor Authentication is <span class=\"%s\">enabled</span> on your account."
-msgstr "L'authentication multifacteur est <span class=\"%s\">activée</span> pour votre compte."
+msgstr "L'authentification multifacteur est <span class=\"%s\">activée</span> pour votre compte."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_TURN_OFF"
@@ -8324,7 +8324,7 @@ msgstr "Désactiver"
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_IS_DISABLED"
 msgid "Multi-factor Authentication is <span class=\"%s\">disabled</span> on your account."
-msgstr "L'authentication multifacteur est <span class=\"%s\">désactivée</span> pour votre compte."
+msgstr "L'authentification multifacteur est <span class=\"%s\">désactivée</span> pour votre compte."
 
 #, phpformat
 msgctxt "PANOPTICON_MFA_LBL_LIST_DEFAULTTAG"
