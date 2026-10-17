@@ -150,6 +150,41 @@ class LanguageFilesTest extends AbstractUnitTestCase
 	}
 
 	/**
+	 * Every HTML attribute in en-GB must be one the browser understands. A misspelt one, such as `_target`, is silently
+	 * ignored. The translations must use the same tags as en-GB, so this is only checked in en-GB.
+	 */
+	public function testEnglishHtmlAttributesAreValid(): void
+	{
+		$known = [
+			'alt', 'aria-label', 'class', 'href', 'id', 'lang', 'placeholder', 'rel', 'role', 'style', 'target', 'title',
+		];
+		$bad   = [];
+
+		foreach (self::getStrings('en-GB') as $key => $text)
+		{
+			preg_match_all('#<[a-z][^<>]*>#i', $text, $tags);
+
+			foreach ($tags[0] as $tag)
+			{
+				preg_match_all('/\s([^\s=<>"\']+)\s*=/', $tag, $attributes);
+
+				$unknown = array_filter(
+					$attributes[1],
+					fn(string $attribute) => !in_array(strtolower($attribute), $known, true)
+						&& !str_starts_with($attribute, 'data-')
+				);
+
+				if (!empty($unknown))
+				{
+					$bad[$key] = $text;
+				}
+			}
+		}
+
+		$this->assertSame([], $bad, 'These strings use an unknown HTML attribute.');
+	}
+
+	/**
 	 * Returns the HTML tags of a string, sorted, with the values of translatable attributes blanked out.
 	 *
 	 * @param   string  $text  The string to examine

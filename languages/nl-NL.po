@@ -6150,8 +6150,8 @@ msgstr "Verbied het gebruik van gelekte wachtwoorden"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Voorkom dat gebruikers wachtwoorden gebruiken die gevonden worden in online wachtwoordlekken. Mogelijk gemaakt door de externe service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
+msgstr "Voorkom dat gebruikers wachtwoorden gebruiken die gevonden worden in online wachtwoordlekken. Mogelijk gemaakt door de externe service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
@@ -6235,8 +6235,8 @@ msgstr "Toon avatar voor gebruikers"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Geef avatars weer voor gebruikers. Deze functie wordt mogelijk gemaakt door de externe service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
+msgstr "Geef avatars weer voor gebruikers. Deze functie wordt mogelijk gemaakt door de externe service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"

@@ -6860,11 +6860,8 @@ msgid "Forbid using leaked passwords"
 msgstr "Zakázat používání uniklých hesel"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid ""
-"Prevent users from using passwords which are found in online password leaks. "
-"Powered by the third party service <a href='https://haveibeenpwned.com/' "
-"_target='blank'>Have I Been Pwned</a>."
-msgstr "Zabraňte uživatelům v používání hesel, která byla nalezena v únicích hesel na internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' _target='blank'>Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
+msgstr "Zabraňte uživatelům v používání hesel, která byla nalezena v únicích hesel na internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
 msgid "Anonymous Usage Statistics Collection"
@@ -6947,10 +6944,8 @@ msgid "Show avatars for users"
 msgstr "Zobrazovat uživatelské avatary"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid ""
-"Display avatars for users. This feature is powered by the third party "
-"service <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
-msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
+msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
 msgid "Web CRON Key"
@@ -11514,13 +11509,13 @@ msgstr "Registrace uživatelů"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Zabraňte uživatelům v používání hesel, která byla nalezena v únicích hesel na internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' _target='blank'>Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
+msgstr "Zabraňte uživatelům v používání hesel, která byla nalezena v únicích hesel na internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
+msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI"

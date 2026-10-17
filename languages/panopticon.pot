@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.4.0\n"
-"POT-Creation-Date: 2026-10-17 14:48:27\n"
+"POT-Creation-Date: 2026-10-17 14:58:22\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -6929,7 +6929,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' target=\'_blank\'>Have I Been Pwned</a>."
 msgstr ""
 
 #, phpformat
@@ -7024,7 +7024,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
+msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' target=\'_blank\'>Gravatar</a>."
 msgstr ""
 
 #, phpformat

@@ -7,6 +7,7 @@ Akeeba Panopticon 2.4.0
 # [MEDIUM] Translations: broken links and stray backslashes, e.g. MFA "Print these codes" led to a 404 page [gh-1081]
 # [MEDIUM] Translations: many messages left out their values or read "BAD TRANSLATION", e.g. Joomla! versions in Dutch
 # [LOW] Mass extension install: a failure in the post-install extensions refresh could overwrite an already-successful install result with "failed"; the refresh step is now wrapped in its own try/catch so it cannot affect the install result [gh-1060]
+# [LOW] System Configuration: the Have I Been Pwned and Gravatar links did not open in a new tab
 # [LOW] Translations: some help texts were shortened, or lost their links and formatting, compared to English
 # [LOW] API Tokens: the token quota read "BAD TRANSLATION" instead of how many tokens you have created
 # [LOW] Joomla! update log: the message about enabling Joomla Update's extraction script showed a stray backslash

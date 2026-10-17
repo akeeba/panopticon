@@ -6150,8 +6150,8 @@ msgstr "Prohibir el uso de contraseñas filtradas"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Sprječava korisnike da koriste lozinke koje se nalaze u javnim curenjima lozinki. Pokreće ga usluga treće strane <a href='https://haveibeenpwned.com/' _target='blank'>Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
+msgstr "Sprječava korisnike da koriste lozinke koje se nalaze u javnim curenjima lozinki. Pokreće ga usluga treće strane <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
@@ -6235,8 +6235,8 @@ msgstr "Mostrar avatares de usuarios"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Prikaži avatare korisnika. Ovu značajku pokreće usluga treće strane <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
+msgstr "Prikaži avatare korisnika. Ovu značajku pokreće usluga treće strane <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"

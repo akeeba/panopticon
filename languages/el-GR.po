@@ -7014,15 +7014,8 @@ msgid "Forbid using leaked passwords"
 msgstr "Απαγορεύστε τη χρήση κωδικών πρόσβασης που διέρρευσαν"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid ""
-"Prevent users from using passwords which are found in online password leaks. "
-"Powered by the third party service <a href='https://haveibeenpwned.com/' "
-"_target='blank'>Have I Been Pwned</a>."
-msgstr ""
-"Αποτρέψτε τους χρήστες από το να χρησιμοποιήσουν κωδικούς πρόσβασης που "
-"βρίσκονται σε διαδικτυακές διαρροές κωδικών πρόσβασης. Υποστηρίζεται από την "
-"υπηρεσία τρίτου μέρους <a href='https://haveibeenpwned.com/' "
-"_target='blank'>Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
+msgstr "Αποτρέψτε τους χρήστες από το να χρησιμοποιήσουν κωδικούς πρόσβασης που βρίσκονται σε διαδικτυακές διαρροές κωδικών πρόσβασης. Υποστηρίζεται από την υπηρεσία τρίτου μέρους <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
 msgid "Anonymous Usage Statistics Collection"
@@ -7108,12 +7101,8 @@ msgid "Show avatars for users"
 msgstr "Εμφάνιση avatar χρηστών"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid ""
-"Display avatars for users. This feature is powered by the third party "
-"service <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
-msgstr ""
-"Εμφάνιση avatar χρηστών. Αυτή η λειτουργία υποστηρίζεται από την υπηρεσία "
-"τρίτου μέρους <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
+msgstr "Εμφάνιση avatar χρηστών. Αυτή η λειτουργία υποστηρίζεται από την υπηρεσία τρίτου μέρους <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
 msgid "Web CRON Key"
@@ -13504,13 +13493,13 @@ msgstr "Διαγράψτε όλα τα αρχεία και τους φακέλο
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Αποτρέπει τους χρήστες από τη χρήση κωδικών πρόσβασης που βρίσκονται σε διαδικτυακές διαρροές κωδικών. Υλοποιείται μέσω της υπηρεσίας τρίτου μέρους <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
+msgstr "Αποτρέπει τους χρήστες από τη χρήση κωδικών πρόσβασης που βρίσκονται σε διαδικτυακές διαρροές κωδικών. Υλοποιείται μέσω της υπηρεσίας τρίτου μέρους <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Εμφάνιση avatar για τους χρήστες. Αυτή η λειτουργία υλοποιείται μέσω της υπηρεσίας τρίτου μέρους <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
+msgstr "Εμφάνιση avatar για τους χρήστες. Αυτή η λειτουργία υλοποιείται μέσω της υπηρεσίας τρίτου μέρους <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_TASKS_EXTUPDATE_INSTALL_HELP"
