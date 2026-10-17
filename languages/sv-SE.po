@@ -4295,7 +4295,7 @@ msgstr "Ladda om WordPress-uppdateringsinformation för webbplatsen "%s""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SOURCE_INFO"
-msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\\\"%s\\\" target=\\\"_blank\\\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
+msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\"%s\" target=\"_blank\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
 msgstr "Information om tillgänglighet för WordPress-uppdateringar tillhandahålls av din webbplats. WordPress End-of-Life-datum kommer från <a href="%s" target="_blank">%1$s</a>. WordPress-projektet publicerar inte datum för slut på säkerhetsuppdateringar och/eller End of Life i förväg, varför denna information inte visas i Panopticon."
 
 #, phpformat
@@ -12360,12 +12360,12 @@ msgstr "API-token"
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
-msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgid "Log into your site's backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
 msgstr "Logga in i webbplatsens backend. Gå till Komponenter, Akeeba Backup, Kontrollpanel. Klicka på Alternativ, Frontend-säkerhetskopiering och ange "Aktivera JSON-API (fjärrsäkerhetskopiering)" till Ja. Ange ett nytt "Hemligt ord"; du kan skapa ett slumpmässigt, säkert hemligt ord på <a href="https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new">random.org</a>. Klicka sedan på Spara &amp; Stäng."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
-msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgid "Log into your site's backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
 msgstr "Logga in i webbplatsens backend. Gå till Akeeba Backup, Systemkonfiguration, Offentligt API och ange "Aktivera JSON-API (fjärrsäkerhetskopiering)" till Ja. Ange en ny "Hemlig nyckel"; du kan skapa en slumpmässig, säker nyckel på <a href="https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new">random.org</a>. Klicka sedan på Spara &amp; Stäng."
 
 #, phpformat

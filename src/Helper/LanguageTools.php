@@ -154,7 +154,14 @@ class LanguageTools
 		}
 
 		$potFile  = self::getSourceFolder() . DIRECTORY_SEPARATOR . 'panopticon.pot';
-		$filePath = $asPot ? $potFile : self::getSourceFolder() . DIRECTORY_SEPARATOR . $langOrFile . '.po';
+		$filePath = self::getSourceFolder() . DIRECTORY_SEPARATOR . $langOrFile . '.po';
+
+		if (file_exists($langOrFile) && str_ends_with($langOrFile, '.ini'))
+		{
+			$filePath = dirname($langOrFile) . DIRECTORY_SEPARATOR . basename($langOrFile, '.ini') . '.po';
+		}
+
+		$filePath = $asPot ? $potFile : $filePath;
 
 		if (!defined('AKEEBA_PANOPTICON_VERSION'))
 		{
@@ -320,8 +327,16 @@ TEXT;
 			$sourceContent
 		);
 
+		/**
+		 * Undo the INI escaping of double quotes, like AWF's Language class does when loading the file. Otherwise the
+		 * escaping backslash ends up in the PO file, and convertToIni() escapes the double quote yet again, adding one
+		 * more level of backslashes on every INI → PO → INI round trip (gh-1081).
+		 */
 		return array_filter(
-			parse_ini_string($sourceContent, false, INI_SCANNER_RAW),
+			array_map(
+				fn($x) => str_replace('\\"', '"', $x),
+				parse_ini_string($sourceContent, false, INI_SCANNER_RAW)
+			),
 			fn($x) => !empty($x) || !empty(trim($x))
 		);
 	}

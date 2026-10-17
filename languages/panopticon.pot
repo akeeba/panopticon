@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 2.3.1\n"
-"POT-Creation-Date: 2026-07-29 14:08:38\n"
+"Project-Id-Version: 2.4.0\n"
+"POT-Creation-Date: 2026-10-17 14:46:03\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 2.3.1\n"
+"X-Generator: Panopticon ini_to_po 2.4.0\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -4679,7 +4679,7 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SOURCE_INFO"
-msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\\\"%s\\\" target=\\\"_blank\\\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
+msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\"%s\" target=\"_blank\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
 msgstr ""
 
 #, phpformat
@@ -5248,6 +5248,26 @@ msgid "Cannot find a way to connect to Akeeba Backup."
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_HEAD"
+msgid "No way to authenticate to Akeeba Backup."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_BODY"
+msgid "Your site gave Panopticon neither an Akeeba Backup Secret Word nor a Joomla! API token, so there is nothing to authenticate the Akeeba Backup JSON API with."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_TIP_1"
+msgid "Connect Panopticon to this site with a Joomla! API Token instead of a username and password. Akeeba Backup 10.4.0 and later accept that same token, and it lets you grant Panopticon only the privileges it needs."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_TIP_2"
+msgid "Alternatively, log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”, then click on Save &amp; Close in the toolbar. Note that the Secret Word is deprecated; it will stop working in Akeeba Backup 11.0, in October 2027."
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY"
 msgid "Panopticon cannot find a way to connect to your site\'s Akeeba Backup JSON API."
 msgstr ""
@@ -5269,12 +5289,12 @@ msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
-msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
 msgstr ""
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
-msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
 msgstr ""
 
 #, phpformat
