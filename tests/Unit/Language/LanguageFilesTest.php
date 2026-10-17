@@ -52,6 +52,23 @@ class LanguageFilesTest extends AbstractUnitTestCase
 	}
 
 	/**
+	 * AWF only interprets the `\n`, `\t` and `\\` escape sequences, and `\"` while loading the file. Any other
+	 * backslash is displayed as-is, and inside an HTML attribute it breaks the markup, e.g. `<a href=\"%s\">` makes the
+	 * link point to `\"https://…\"` (gh-1081). Before a sprintf() placeholder such as `%1\$d` it makes sprintf() throw.
+	 *
+	 * @dataProvider languageProvider
+	 */
+	public function testNoStrayBackslashes(string $langCode): void
+	{
+		$bad = array_filter(
+			self::getStrings($langCode),
+			fn(string $text) => str_contains($text, '\\')
+		);
+
+		$this->assertSame([], $bad, 'These strings display a stray backslash.');
+	}
+
+	/**
 	 * Returns the strings of a language file the way the application displays them.
 	 *
 	 * @param   string  $langCode  The language code, e.g. en-GB

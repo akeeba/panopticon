@@ -12115,7 +12115,7 @@ msgstr "Sie haben die maximale Anzahl aktivierter API-Token erreicht. Bitte lös
 
 #, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
-msgid "%1\\$d of %2\\$d API tokens created"
+msgid "%1$d of %2$d API tokens created"
 msgstr "%1\\$d von %2\\$d API-Token erstellt"
 
 #, phpformat

@@ -12488,8 +12488,8 @@ msgstr ""
 "silin veya devre dışı bırakın."
 
 msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
-msgid "%1\\$d of %2\\$d API tokens created"
-msgstr "%2\\$d API belirtecinden %1\\$d tanesi oluşturuldu"
+msgid "%1$d of %2$d API tokens created"
+msgstr "%2$d API belirtecinden %1$d tanesi oluşturuldu"
 
 msgctxt "PANOPTICON_APITOKENS_LBL_SCOPES"
 msgid "Scopes"

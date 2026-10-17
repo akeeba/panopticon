@@ -12125,7 +12125,7 @@ msgstr "È stato raggiunto il limite di token API. Eliminare o disabilitare un t
 
 #, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
-msgid "%1\\$d of %2\\$d API tokens created"
+msgid "%1$d of %2$d API tokens created"
 msgstr "%1$d di %2$d token API creati"
 
 #, phpformat
@@ -14480,7 +14480,7 @@ msgstr "È stato raggiunto il limite di token API. Eliminare o disabilitare un t
 
 #, phpformat
 msgctxt "PANOPTICON_APITOKENS_LBL_QUOTA_STATUS"
-msgid "%1\\$d of %2\\$d API tokens created"
+msgid "%1$d of %2$d API tokens created"
 msgstr "%1$d di %2$d token API creati"
 
 #, phpformat
