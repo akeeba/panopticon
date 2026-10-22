@@ -253,6 +253,9 @@ mkdir -p "$RESULTS_DIR"
 # --- Run --------------------------------------------------------------------------------------
 INFRA_FAILURES=()
 STACK_KEY=""
+# One "slug|planned test count" per combination we got as far as running Playwright for.
+ATTEMPTED=()
+PARTIAL_WARNINGS=()
 
 # The languages the installer offers, read from the welcome page of the fresh install.
 discover_languages() {
@@ -265,11 +268,11 @@ discover_languages() {
 		| grep -v '^$' || true
 }
 
+# The container's stdout/stderr for the whole stack so far. NOT the per-install PHP and Apache logs: lab-reset.php
+# empties those before every install, so the spec attaches them to each failing test instead (see
+# specs/install.spec.mjs; they land in artifacts/<test>/ and in report/).
 copy_logs() {
 	local dir="$1"
-	compose exec -T php cat /var/log/php/error.log > "$dir/php-error.log" 2>/dev/null || true
-	compose exec -T php cat /var/log/apache2/error.log > "$dir/apache-error.log" 2>/dev/null || true
-	compose exec -T php cat /var/log/apache2/access.log > "$dir/apache-access.log" 2>/dev/null || true
 	compose logs --no-color > "$dir/container-output.log" 2>&1 || true
 }
 
@@ -317,7 +320,8 @@ for entry in "${COMBOS[@]}"; do
 		STACK_KEY="$key"
 	fi
 
-	if ! compose exec -T php php /lab/lab-reset.php | grep -q 'RESET OK'; then
+	reset_output="$(compose exec -T php php /lab/lab-reset.php 2>&1 || true)"
+	if [[ "$reset_output" != *"RESET OK"* ]]; then
 		echo "!! The lab did not reset for $label." >&2
 		INFRA_FAILURES+=("$label: lab-reset.php did not report RESET OK")
 		copy_logs "$out_dir"
@@ -338,7 +342,7 @@ for entry in "${COMBOS[@]}"; do
 
 	case "$c_langs" in
 		all)           langs="$discovered" ;;
-		all-but-en-GB) langs="$(echo "$discovered" | tr ',' '\n' | grep -vx 'en-GB' | paste -sd, -)" ;;
+		all-but-en-GB) langs="$(echo "$discovered" | tr ',' '\n' | { grep -vx 'en-GB' || true; } | paste -sd, -)" ;;
 		*)             langs="$c_langs" ;;
 	esac
 
@@ -362,6 +366,7 @@ for entry in "${COMBOS[@]}"; do
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
 			echo "!! PARTIAL RUN: --lang left out ${skipped_langs}" >&2
 			echo "!! These languages are NOT tested. A green result does not cover them." >&2
+			PARTIAL_WARNINGS+=("$label: --lang left out $skipped_langs. A green result does not cover them.")
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
 		fi
 	fi
@@ -383,6 +388,9 @@ for entry in "${COMBOS[@]}"; do
 	)
 	pw_status=$?
 	set -e
+
+	planned=$(( $(echo "$langs" | tr ',' '\n' | wc -l) * $(echo "$c_paths" | tr ',' '\n' | wc -l) ))
+	ATTEMPTED+=("$slug|$planned|$pw_status|$label")
 
 	[[ "$pw_status" -ne 0 ]] && echo "!! Playwright exited with status $pw_status for $label."
 
@@ -407,10 +415,39 @@ if [[ "${#INFRA_FAILURES[@]}" -gt 0 ]]; then
 	done
 fi
 
+# Every combination we attempted must have produced a report, with every planned test in it. A crashed Playwright run
+# must not look like a combination that was never asked for.
 reports=()
-for report in "$RESULTS_DIR"/*/report.json; do
-	[[ -f "$report" ]] && reports+=("$report")
+for item in "${ATTEMPTED[@]+"${ATTEMPTED[@]}"}"; do
+	IFS='|' read -r a_slug a_planned a_status a_label <<< "$item"
+	report="$RESULTS_DIR/$a_slug/report.json"
+
+	if [[ ! -f "$report" ]]; then
+		STATUS=1
+		echo "MISSING REPORT: $a_label produced no report.json (Playwright exit status $a_status)."
+		continue
+	fi
+
+	reports+=("$report")
+	ran="$(node -e '
+		const s = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")).stats ?? {};
+		console.log((s.expected ?? 0) + (s.unexpected ?? 0) + (s.flaky ?? 0));
+	' "$report" 2>/dev/null || echo 0)"
+
+	if [[ "$ran" -ne "$a_planned" ]]; then
+		STATUS=1
+		echo "INCOMPLETE: $a_label ran $ran of $a_planned planned tests."
+	elif [[ "$a_status" -ne 0 ]]; then
+		STATUS=1
+		echo "Playwright exited with status $a_status for $a_label (details below)."
+	fi
 done
+
+if [[ "${#PARTIAL_WARNINGS[@]}" -gt 0 ]]; then
+	for warning in "${PARTIAL_WARNINGS[@]}"; do
+		echo "!! PARTIAL RUN: $warning"
+	done
+fi
 
 if [[ "${#reports[@]}" -gt 0 ]]; then
 	( cd "$SCRIPT_DIR" && node summary.mjs "${reports[@]#"$SCRIPT_DIR"/}" ) || STATUS=1

@@ -14,9 +14,10 @@
  * @copyright Copyright (c)2023-2026 Nicholas K. Dionysopoulos / Akeeba Ltd
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
+import {writeFileSync} from "node:fs";
 import {test} from "../../../../../buildfiles/playwright/lib/index.mjs";
 import {watchPage} from "../lib/checks.mjs";
-import {resetLab} from "../lib/lab.mjs";
+import {readRawServerLogs, resetLab} from "../lib/lab.mjs";
 import {
     checkSessionPage, chooseLanguage, createAdmin, fillDatabase, logOutAndBackIn, makeAdmin, passPrecheck, skipCron,
 } from "../lib/wizard.mjs";
@@ -78,3 +79,23 @@ for (const lang of langs)
         });
     }
 }
+
+// lab-reset.php empties the server logs before every install, so a failed test must keep its own copy now.
+test.afterEach(async ({}, testInfo) =>
+{
+    if (testInfo.status === testInfo.expectedStatus)
+    {
+        return;
+    }
+
+    const logs = readRawServerLogs();
+
+    // As files in the test's own output directory, next to its trace and screenshot, and attached to the HTML report.
+    for (const [name, body] of [["php-error.log", logs.php], ["apache-error.log", logs.apache]])
+    {
+        const file = testInfo.outputPath(name);
+
+        writeFileSync(file, body);
+        await testInfo.attach(name, {path: file, contentType: "text/plain"});
+    }
+});

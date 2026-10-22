@@ -77,6 +77,28 @@ export function readServerProblems()
 }
 
 /**
+ * The complete PHP error log and Apache error log of the current install, for attaching to a failed test.
+ *
+ * @returns {{php: string, apache: string}}
+ */
+export function readRawServerLogs()
+{
+    const read = (file) =>
+    {
+        try
+        {
+            return exec(["cat", file]);
+        }
+        catch (error)
+        {
+            return `(could not read ${file}: ${error.message})`;
+        }
+    };
+
+    return {php: read(PHP_LOG), apache: read(APACHE_LOG)};
+}
+
+/**
  * Write /var/www/html/config.php as root with mode 0644, the way a user uploads it by FTP when PHP cannot write it.
  *
  * @param {string} phpSource  The file's contents
