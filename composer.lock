@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
-                "reference": "76ad7984fad2e1f4807e16631b75177b4415c334"
+                "reference": "8019fd2a32e77442a6694c92f0bb509b5d42eb5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/awf/zipball/76ad7984fad2e1f4807e16631b75177b4415c334",
-                "reference": "76ad7984fad2e1f4807e16631b75177b4415c334",
+                "url": "https://api.github.com/repos/akeeba/awf/zipball/8019fd2a32e77442a6694c92f0bb509b5d42eb5b",
+                "reference": "8019fd2a32e77442a6694c92f0bb509b5d42eb5b",
                 "shasum": ""
             },
             "require": {
@@ -70,7 +70,7 @@
                 "issues": "https://github.com/akeeba/awf/issues",
                 "source": "https://github.com/akeeba/awf/tree/development"
             },
-            "time": "2026-10-02T11:31:23+00:00"
+            "time": "2026-10-22T09:12:06+00:00"
         },
         {
             "name": "akeeba/json-backup-api",

@@ -3,6 +3,7 @@ Akeeba Panopticon 2.4.0
 ================================================================================
 + Akeeba Backup JSON API v3 support, authenticating with the site's Joomla! API Token instead of the deprecated Secret Word
 # [HIGH] Task queue: mass extension install stalled after ~30 sites because of six interacting bugs in Model\Task — narrow-CRON recalculation in check() stranding WILL_RESUME tasks ~1 week out, named DB lock released between cleanUpStuckTasks() and getNextTask() allowing concurrent --loop processes to claim the same row, fallback paths downgrading WILL_RESUME to NO_LOCK/NO_RELEASE on any save exception, mark-as-running save triggering the same CRON recalc on process death, WILL_RESUME starvation behind the `priority = 0` backlog, and cleanUpStuckTasks() wiping storage with no retry on a single false-positive [gh-1060]
+# [HIGH] Sites: Joomla site pages could fail with "Error calling repeatable" after viewing a WordPress site
 # [MEDIUM] Tasks: per-site loggers pushed onto ForkedLogger were never popped, leaking an open log file handle per site processed into the long-lived task:run --loop daemon; ForkedLogger::popLogger() added and called from a finally block in every affected task [gh-1060]
 # [MEDIUM] Translations: broken links and stray backslashes, e.g. MFA "Print these codes" led to a 404 page [gh-1081]
 # [MEDIUM] Translations: many messages left out their values or read "BAD TRANSLATION", e.g. Joomla! versions in Dutch
@@ -15,6 +16,9 @@ Akeeba Panopticon 2.4.0
 # [LOW] Joomla! update log: the message about enabling Joomla Update's extraction script showed a stray backslash
 # [LOW] The English language file could not be read by standard INI parsers and translation tools
 # [LOW] Language tools: every INI to PO conversion added one more level of escaping to double quotes [gh-1081]
+# [LOW] Sites: WordPress themes were labelled "Template" instead of "Theme" in the plugins and themes list
+# [LOW] CLI: user:create and user:set reported "Could not save user" even though the user was saved
+# [LOW] Updated view templates could keep running stale code on servers with OPcache timestamp checks disabled
 
 Akeeba Panopticon 2.3.1
 ================================================================================

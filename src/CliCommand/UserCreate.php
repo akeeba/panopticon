@@ -177,21 +177,27 @@ class UserCreate extends AbstractCommand
 		$user->setPassword($password);
 		$user->setPrivilege('panopticon.super', true);
 
-		if ($manager->saveUser($user))
+		try
 		{
-			$this->ioStyle->success(
-				sprintf('Successfully saved user %s.', $username)
+			$manager->saveUser($user);
+		}
+		catch (\Exception $e)
+		{
+			$this->ioStyle->error(
+				[
+					sprintf('Could not save user %s.', $username),
+					$e->getMessage(),
+				]
 			);
 
-			return Command::SUCCESS;
+			return Command::FAILURE;
 		}
 
-		$this->ioStyle->error(
-			sprintf('Could not save user %s.', $username)
+		$this->ioStyle->success(
+			sprintf('Successfully saved user %s.', $username)
 		);
 
-		return Command::FAILURE;
-
+		return Command::SUCCESS;
 	}
 
 	protected function configure()

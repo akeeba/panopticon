@@ -107,20 +107,27 @@ class UserSet extends AbstractCommand
 			$user->setName($name);
 		}
 
-		if ($manager->saveUser($user))
+		try
 		{
-			$this->ioStyle->success(
-				sprintf('Successfully saved user %s.', $username)
+			$manager->saveUser($user);
+		}
+		catch (\Exception $e)
+		{
+			$this->ioStyle->error(
+				[
+					sprintf('Could not save user %s.', $user->getUsername()),
+					$e->getMessage(),
+				]
 			);
 
-			return Command::SUCCESS;
+			return Command::FAILURE;
 		}
 
-		$this->ioStyle->error(
-			sprintf('Could not save user %s.', $username)
+		$this->ioStyle->success(
+			sprintf('Successfully saved user %s.', $user->getUsername())
 		);
 
-		return Command::FAILURE;
+		return Command::SUCCESS;
 	}
 
 	protected function configure()
