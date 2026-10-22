@@ -44,6 +44,14 @@ final class BootstrapUtilities
 	private static $secret = null;
 
 	/**
+	 * Is the secret in self::$secret different on every request, because tmp/secret.php could not be written?
+	 *
+	 * @var   bool
+	 * @since 2.4.0
+	 */
+	private static bool $secretIsVolatile = false;
+
+	/**
 	 * Asserts that the server meets the minimum PHP version requirement
 	 *
 	 * @return  void
@@ -405,7 +413,7 @@ if (!defined('AKEEBA_SECRET')) {
 
 PHP;
 
-		file_put_contents(APATH_TMP . '/secret.php', $fileContent);
+		self::$secretIsVolatile = file_put_contents(APATH_TMP . '/secret.php', $fileContent) === false;
 	}
 
 	/**
@@ -441,18 +449,30 @@ PHP;
 	/**
 	 * Loads the application configuration, if it exists.
 	 *
+	 * @param   bool|null  $hasConfiguration  Is there a configuration? NULL to check with hasConfiguration().
+	 *
 	 * @return  void
 	 * @since   1.0.5
 	 */
-	public static function loadConfiguration(): void
+	public static function loadConfiguration(?bool $hasConfiguration = null): void
 	{
+		$appConfig = Factory::getContainer()->appConfig;
+
 		// Only try to load the configuration file if we have one to begin with.
-		if (!self::hasConfiguration())
+		if (!($hasConfiguration ?? self::hasConfiguration()))
 		{
+			// Setup runs before config.php exists. Use the secret from tmp/secret.php, which is the one setup will write
+			// into config.php. Otherwise the session segment name, derived from the secret, changes as soon as
+			// config.php is written, and the administrator just created by setup is logged out. A volatile secret
+			// (tmp/secret.php could not be written) would change the segment on every request instead, so skip it.
+			if (self::$secret && !self::$secretIsVolatile)
+			{
+				$appConfig->set('secret', self::$secret);
+			}
+
 			return;
 		}
 
-		$appConfig = Factory::getContainer()->appConfig;
 		$appConfig->loadConfiguration();
 
 		// Transfer the secret to the application configuration if necessary.
@@ -461,7 +481,10 @@ PHP;
 		// read-only configuration (a .env file, or an environment-variable configured container) we cannot save, so we
 		// must keep tmp/secret.php: it is the only stable home of the secret, and deleting it would make applySecret()
 		// generate a brand-new secret on the next request, churning the secret and breaking existing sessions/tokens.
-		$deleteOld = false;
+		//
+		// A secret which came with the configuration makes tmp/secret.php redundant: applySecret() never reads it. This
+		// is the normal case after setup, which writes the secret from tmp/secret.php straight into config.php.
+		$deleteOld = !empty($appConfig->get('secret'));
 
 		if (self::$secret && !$appConfig->get('secret'))
 		{
