@@ -9,6 +9,8 @@ namespace Akeeba\Panopticon\Exception;
 
 use JetBrains\PhpStorm\Pure;
 
+defined('AKEEBA') || die;
+
 class InvalidTaskType extends \OutOfRangeException
 {
 	#[Pure] public function __construct(string $type = "", int $code = 500, ?\Throwable $previous = null)

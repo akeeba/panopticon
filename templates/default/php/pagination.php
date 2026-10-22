@@ -9,6 +9,8 @@ use Akeeba\Panopticon\Factory;
 use Awf\Pagination\Pagination;
 use Awf\Pagination\PaginationObject;
 
+defined('AKEEBA') || die;
+
 /**
  * Method to create an active pagination link to the item
  *

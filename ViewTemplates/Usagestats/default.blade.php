@@ -8,6 +8,8 @@
 use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Awf\Uri\Uri;
 
+defined('AKEEBA') || die;
+
 /**
  * @var \Akeeba\Panopticon\View\Usagestats\Html $this
  */

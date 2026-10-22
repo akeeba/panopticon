@@ -21,6 +21,7 @@ Akeeba Panopticon 2.4.0
 # [LOW] Updated view templates could keep running stale code on servers with OPcache timestamp checks disabled
 # [LOW] Emails: translated templates, e.g. German, were ignored for plain-text emails and the update summary email
 # [LOW] CLI: user:add showed a PHP stack trace instead of an error message when the user could not be saved
+# [LOW] Some view templates could be requested directly, revealing the server path when PHP errors are shown
 
 Akeeba Panopticon 2.3.1
 ================================================================================

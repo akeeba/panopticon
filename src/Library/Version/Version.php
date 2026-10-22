@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Akeeba\Panopticon\Library\Version;
 
+defined('AKEEBA') || die;
+
 /**
  * Panopticon version library
  *
