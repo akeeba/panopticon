@@ -6,6 +6,7 @@ Akeeba Panopticon 2.4.0
 ~ Docker images now use PHP 8.5.12, which includes a critical security update from the PHP project
 # [HIGH] Task queue: mass extension install stalled after about 30 sites, and tasks could run twice [gh-1060]
 # [HIGH] Sites: Joomla site pages could fail with "Error calling repeatable" after viewing a WordPress site
+# [HIGH] Setup could never finish when config.php was not writable after uploading it by hand
 # [MEDIUM] Tasks: per-site log files were never closed, leaking file handles in task:run --loop [gh-1060]
 # [MEDIUM] Translations: broken links and stray backslashes, e.g. MFA "Print these codes" led to a 404 page [gh-1081]
 # [MEDIUM] Translations: many messages left out their values or read "BAD TRANSLATION", e.g. Joomla! versions in Dutch

@@ -80,7 +80,7 @@ $this->container->application->getDocument()->addScriptDeclaration($js);
 				<?= $this->getLanguage()->text('PANOPTICON_SETUP_BTN_COPY_TO_CLIPBOARD') ?>
 			</button>
 
-			<a href="<?= $this->container->router->route('index.php?view=setup&task=cron') ?>"
+			<a href="<?= $this->saveConfigNextUrl ?? $this->container->router->route('index.php?view=setup&task=cron') ?>"
 			   class="btn btn-outline-primary" role="button">
 				<span class="fa fa-chevron-right" aria-hidden="true"></span>
 				<?= $this->getLanguage()->text('PANOPTICON_BTN_NEXT') ?>

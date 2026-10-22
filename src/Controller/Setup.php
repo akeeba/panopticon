@@ -243,14 +243,16 @@ class Setup extends Controller
 		$appConfig->set('max_execution', 60);
 		$appConfig->set('cron_stuck_threshold', 3);
 		$appConfig->set('execution_bias', 75);
-		$this->container->appConfig->saveConfiguration();
-
-		if (function_exists('opcache_invalidate'))
-		{
-			opcache_invalidate(APATH_CONFIGURATION . '/config.php', true);
-		}
+		$saved = $this->saveFinalConfiguration();
 
 		$model->installDefaultTasks();
+
+		if (!$saved)
+		{
+			$this->showFinalConfiguration();
+
+			return true;
+		}
 
 		$this->setRedirect(
 			$this->container->router->route('index.php?view=main')
@@ -284,18 +286,55 @@ class Setup extends Controller
 		$appConfig->set('cron_stuck_threshold', $maxMinutes);
 		$appConfig->set('execution_bias', 75);
 
-		$appConfig->saveConfiguration();
+		$saved = $this->saveFinalConfiguration();
+
+		$model->installDefaultTasks();
+
+		if (!$saved)
+		{
+			$this->showFinalConfiguration();
+
+			return;
+		}
+
+		$this->getView()->setLayout('finish');
+
+		$this->getView()->maxExec = $maxExec;
+
+		$this->display();
+	}
+
+	/**
+	 * Saves the final configuration, i.e. with the setup marked as finished.
+	 *
+	 * @return  bool  False if config.php could not be saved, e.g. it was uploaded by hand and is read-only to PHP.
+	 */
+	private function saveFinalConfiguration(): bool
+	{
+		try
+		{
+			$this->container->appConfig->saveConfiguration();
+		}
+		catch (Exception)
+		{
+			return false;
+		}
 
 		if (function_exists('opcache_invalidate'))
 		{
 			opcache_invalidate(APATH_CONFIGURATION . '/config.php', true);
 		}
 
-		$model->installDefaultTasks();
+		return true;
+	}
 
-		$this->getView()->setLayout('finish');
-
-		$this->getView()->maxExec = $maxExec;
+	/**
+	 * Shows the final configuration for the user to upload by hand, then continue to the main page.
+	 */
+	private function showFinalConfiguration(): void
+	{
+		$this->getView()->setLayout('saveconfig');
+		$this->getView()->saveConfigNextUrl = $this->container->router->route('index.php?view=main');
 
 		$this->display();
 	}
