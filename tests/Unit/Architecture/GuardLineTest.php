@@ -63,7 +63,7 @@ class GuardLineTest extends AbstractUnitTestCase
 	 * They are a second layer on Apache (with AllowOverride) and IIS. Nothing in them is ever served directly.
 	 */
 	private const DENIED_DIRECTORIES = [
-		'cache', 'includes', 'languages', 'log', 'src', 'templates', 'tmp', 'ViewTemplates',
+		'cache', 'includes', 'languages', 'log', 'patches', 'src', 'templates', 'tmp', 'ViewTemplates',
 	];
 
 	/**
