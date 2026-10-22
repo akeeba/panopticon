@@ -343,6 +343,13 @@
 		"test": "phpunit",
 		"test:unit": "phpunit --testsuite=unit",
 		"test:integration": "phpunit --testsuite=integration",
-		"test:webserver": "tests/WebServer/run.sh"
+		"test:webserver": "tests/WebServer/run.sh",
+		"test:install": [
+			"Composer\\Config::disableProcessTimeout",
+			"tests/Installation/run.sh"
+		]
+	},
+	"scripts-descriptions": {
+		"test:install": "New-installation release gate: unzips the release ZIP in Docker and runs the setup wizard in a browser (slow; options after --)"
 	}
 }
