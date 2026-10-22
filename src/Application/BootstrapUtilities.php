@@ -505,6 +505,10 @@ PHP;
 	 * secret, changes as soon as config.php is written, and the administrator just created by setup is logged out. A
 	 * volatile secret (tmp/secret.php could not be written) would change the segment on every request instead.
 	 *
+	 * Accepted risk: when config.php is not writable, setup shows this secret on the manual upload page. Anyone who runs
+	 * setup against their own database before the real installer finishes sees the secret that installer's config.php
+	 * will also get. That needs a race during setup on a server where config.php is read-only.
+	 *
 	 * @param   Registry  $appConfig  The application configuration.
 	 *
 	 * @return  void
