@@ -27,6 +27,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      # Healthy only once Apache answers HTTP (any status) and PHP-FPM accepts connections on its port.
+      test: ["CMD", "bash", "-c", "curl -s -o /dev/null http://localhost/ && exec 3<>/dev/tcp/127.0.0.1/9000"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
     ports:
       - "127.0.0.1:${INSTALLTEST_PORT:-4291}:80"
     volumes:

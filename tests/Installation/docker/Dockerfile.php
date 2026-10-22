@@ -11,8 +11,10 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends apache2 unzip libzip-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-# opcache is already built into the base image (PHP 8.5 refuses to install it again).
 RUN docker-php-ext-install -j"$(nproc)" mysqli pdo_mysql zip
+
+# OPcache: PHP 8.5 has it built in and enabled; earlier versions ship it disabled; assets/php.ini keeps it commented out.
+RUN php -m | grep -qi 'Zend OPcache' || docker-php-ext-install opcache
 
 COPY --from=assets php.ini /usr/local/etc/php/conf.d/php.ini
 COPY zz-installtest.ini /usr/local/etc/php/conf.d/zz-installtest.ini
