@@ -19,7 +19,7 @@ composer test:install
 phing all release update -Dversion=X.Y.Z
 ```
 
-Use `git-app`, not plain `phing git`, in step 1: `git` skips the language compilation and would ship whatever `.ini` files are committed, so a broken `.po` could pass step 2 and still ship. Step 2 tests the newest `release/panopticon-*.zip`; see `tests/Installation/README.md`. Building the ZIP rewrites `vendor/` without dev dependencies: run `composer dump-autoload --dev` before `composer test`. `all` in step 3 rebuilds the ZIP and is kept because it may grow other release-only work.
+Use `git-app`, not plain `phing git`, in step 1: `git` skips the language compilation and would ship whatever `.ini` files are committed, so a broken `.po` could pass step 2 and still ship. Step 2 tests the newest `release/panopticon-*.zip`; see `tests/Installation/README.md`. Building the ZIP rewrites `vendor/` without dev dependencies: run `composer dump-autoload --dev` before `composer test`. `all` in step 3 rebuilds the ZIP and is kept because it may grow other release-only work; run step 3 from the same commit as the ZIP tested in step 2, with no edits in between.
 
 **Not** `phing all release docsdeploy` (the generic recipe) and **not** `phing all -Dversion=X.Y.Z` with `release`/`update` folded into `all`'s dependency chain — both are broken here.
 

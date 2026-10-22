@@ -28,8 +28,10 @@ On every page, in every language, these are failures:
 Text that is still English in a non-English run is **not** a failure. The static unit test enforces translation
 completeness, and many strings are legitimately identical.
 
-It has already caught three real setup bugs, all fixed: problems when `config.php` cannot be written (the CRON and
-finish steps crashed instead of finishing setup), and a web CRON key that was lost on that path.
+It has already caught three real setup bugs, all fixed: (1) with a read-only `config.php`, the skip-CRON and finish
+steps crashed; (2) after creating the administrator account, a new installation went to the login page, because the
+session was lost when `config.php` was first written; (3) with a read-only `config.php`, the CRON page crashed because
+the web CRON key was generated and saved there.
 
 ## Requirements
 

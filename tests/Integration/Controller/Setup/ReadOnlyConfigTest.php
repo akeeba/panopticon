@@ -77,7 +77,7 @@ class ReadOnlyConfigTest extends AbstractControllerIntegrationTestCase
 		}
 
 		$this->assertSame('saveconfig', $controller->getView()->getLayout());
-		$this->assertStringContainsString('finished_setup', $output);
+		$this->assertMatchesRegularExpression('/\$finished_setup\s*=\s*(?:\'1\'|true|1)\s*;/', $output);
 		$this->assertStringContainsString('view=main', $output);
 		$this->assertStringNotContainsString('task=cron', $output);
 	}
@@ -96,7 +96,7 @@ class ReadOnlyConfigTest extends AbstractControllerIntegrationTestCase
 		}
 
 		$this->assertSame('saveconfig', $controller->getView()->getLayout());
-		$this->assertStringContainsString('finished_setup', $output);
+		$this->assertMatchesRegularExpression('/\$finished_setup\s*=\s*(?:\'1\'|true|1)\s*;/', $output);
 		$this->assertStringContainsString('max_execution', $output);
 		$this->assertStringContainsString('view=main', $output);
 		$this->assertStringNotContainsString('task=cron', $output);

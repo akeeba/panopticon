@@ -12,6 +12,8 @@ defined('AKEEBA') || die;
 $config = $this->getContainer()->appConfig->toString('Php', ['class' => 'AConfig', 'closingtag' => false]);
 $config = substr($config, 5);
 
+$nextUrl = $this->saveConfigNextUrl ?? $this->container->router->route('index.php?view=setup&task=cron');
+
 $js = <<< JS
 window.addEventListener('DOMContentLoaded', () => {
    [...document.querySelectorAll('.copyButton')].forEach(elButton => {
@@ -80,7 +82,7 @@ $this->container->application->getDocument()->addScriptDeclaration($js);
 				<?= $this->getLanguage()->text('PANOPTICON_SETUP_BTN_COPY_TO_CLIPBOARD') ?>
 			</button>
 
-			<a href="<?= $this->saveConfigNextUrl ?? $this->container->router->route('index.php?view=setup&task=cron') ?>"
+			<a href="<?= $nextUrl ?>"
 			   class="btn btn-outline-primary" role="button">
 				<span class="fa fa-chevron-right" aria-hidden="true"></span>
 				<?= $this->getLanguage()->text('PANOPTICON_BTN_NEXT') ?>

@@ -246,10 +246,32 @@ export async function runCronBenchmark(page, ctx)
     }
 
     await assertUrl(page, step, {view: "setup", task: "finish"});
+    assertBenchmarkRan(page.url(), step);
     await assertPageClean(page, {step: `${step}: finish page`, watcher: ctx.watcher});
     await navigate(page, () => page.locator("a.btn-primary[href*='view=main']").click());
     await assertUrl(page, step, {view: "main"});
     await checkDashboard(page, ctx, step);
+}
+
+/**
+ * setup.js also goes to task=finish when the benchmark is stuck or hits 180 s, so reaching it proves little. The
+ * maxexec it passes is the benchmark task's elapsed seconds, which Setup::finish() saves as max_execution; the CRON
+ * job runs the task for real, so a MaxExec task that never ran or died at once gives 0, and a real run gives >= 5.
+ */
+export function assertBenchmarkRan(urlString, step)
+{
+    const raw = new URL(urlString).searchParams.get("maxexec");
+
+    if (!/^[1-9][0-9]*$/.test(raw ?? ""))
+    {
+        throw new Error(`[${step}] The finish page URL has maxexec=${raw}, not a positive integer: `
+            + "the benchmark task did not run.");
+    }
+
+    if (Number(raw) < 5)
+    {
+        throw new Error(`[${step}] The benchmark ran for only ${raw} s (maxexec); expected at least 5 s.`);
+    }
 }
 
 /**
@@ -283,10 +305,11 @@ export async function skipCronUploadingConfig(page, ctx)
 
     const source = await uploadShownConfiguration(page, ctx, step);
 
-    if (!source.includes("finished_setup"))
+    // AWF's PHP serializer writes true as '1': `public $finished_setup = '1';`. The default (false) is also in there.
+    if (!/\$finished_setup\s*=\s*(?:'1'|true|1)\s*;/.test(source))
     {
         throw new Error(`[${step}] The configuration to upload does not mark the setup as finished `
-            + "(no finished_setup).");
+            + "(finished_setup is not true).");
     }
 
     // OPcache revalidates config.php every 2 seconds (opcache.revalidate_freq, assets/php.ini); let it see the upload.

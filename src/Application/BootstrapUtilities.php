@@ -468,10 +468,9 @@ PHP;
 
 		// Transfer the secret to the application configuration if necessary.
 		//
-		// We only delete tmp/secret.php once the secret has been *successfully persisted* into config.php. On a
-		// read-only configuration (a .env file, or an environment-variable configured container) we cannot save, so we
-		// must keep tmp/secret.php: it is the only stable home of the secret, and deleting it would make applySecret()
-		// generate a brand-new secret on the next request, churning the secret and breaking existing sessions/tokens.
+		// tmp/secret.php is deleted when the configuration files already carry a secret (applySecret() will never
+		// read or recreate it), or after a successful transcription into config.php. It is kept when the secret only
+		// comes from the server environment (env-var/Docker mode), to avoid a write and unlink on every request.
 		$deleteOld = self::isSecretFileRedundant(self::getInitialConfiguration());
 
 		if (self::$secret && !$appConfig->get('secret'))
