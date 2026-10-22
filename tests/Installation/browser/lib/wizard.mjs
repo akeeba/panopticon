@@ -12,11 +12,18 @@
  */
 import {randomBytes} from "node:crypto";
 import {assertPageClean, assertServerClean, watchPage} from "./checks.mjs";
+import {startCronJob, stopCronJob, writeConfig} from "./lab.mjs";
 
 /**
  * Database settings of the lab (tests/Installation/docker/compose.yml).
  */
 const DATABASE = {host: "db", user: "panopticon", pass: "panopticon", name: "panopticon", prefix: "pnptc_"};
+
+/**
+ * How long the CRON page may take to finish the benchmark. src/Task/MaxExec.php burns CPU for up to about 185 seconds,
+ * and the CRON job emulation starts a task:run at once, then once a minute.
+ */
+const BENCHMARK_TIMEOUT = 5 * 60 * 1000;
 
 /**
  * A new admin account. The password is random per call so it can never be in a breach list (the setup checks it
@@ -52,9 +59,10 @@ export async function chooseLanguage(page, ctx)
         throw new Error(`[${step}] The first page is not the welcome page with the language selector: ${page.url()}`);
     }
 
+    // `<html lang>` proves the switch; the en-GB heading is the fallback for another English variant only.
     let englishHeading = null;
 
-    if (ctx.lang !== "en-GB")
+    if (needsHeadingCheck(ctx.lang))
     {
         await page.goto("/index.php?view=setup&language=en-GB");
         englishHeading = await welcomeHeading(page);
@@ -183,11 +191,133 @@ export async function skipCron(page, ctx)
 {
     const step = "skip CRON";
 
-    await page.locator("a[href*='task=skipcron']").waitFor();
+    // Checked first: a CRON page which failed (e.g. HTTP 500) is reported as such, not as a missing link.
     await assertPageClean(page, {step, watcher: ctx.watcher});
+    await page.locator("a[href*='task=skipcron']").waitFor();
     await navigate(page, () => page.locator("a[href*='task=skipcron']").click());
     await assertUrl(page, step, {view: "main"});
     await checkDashboard(page, ctx, step);
+}
+
+/**
+ * CRON page, benchmark run: do what the page tells a real user, i.e. set up a CRON job running task:run, and let the
+ * page's own script move to the finish page once the benchmark task has run. Then continue to the dashboard.
+ */
+export async function runCronBenchmark(page, ctx)
+{
+    const step  = "CRON benchmark";
+    const error = page.locator("#error:not(.d-none)");
+
+    await assertPageClean(page, {step, watcher: ctx.watcher});
+    await page.locator("a[href*='task=skipcron']").waitFor();
+
+    startCronJob();
+
+    try
+    {
+        /**
+         * The page polls cronHeartbeat every 5 seconds and either moves to task=finish by itself or shows #error.
+         * Whichever comes first decides; the loser is only ever settled, never left to reject unobserved.
+         */
+        const settle = (promise, outcome) =>
+            promise.then(() => ({outcome}), (reason) => ({outcome: "gave up", reason}));
+        const result = await Promise.race([
+            settle(page.waitForURL((url) => url.searchParams.get("task") === "finish", {timeout: BENCHMARK_TIMEOUT}),
+                "finished"),
+            settle(error.waitFor({timeout: BENCHMARK_TIMEOUT}), "error"),
+        ]);
+
+        if (result.outcome === "error")
+        {
+            const message = (await page.locator("#errorMessage").innerText().catch(() => "(not found)")).trim();
+
+            throw new Error(`[${step}] The CRON page reported an error: ${message}`);
+        }
+
+        if (result.outcome !== "finished")
+        {
+            throw new Error(`[${step}] The CRON page neither finished nor reported an error within `
+                + `${BENCHMARK_TIMEOUT / 1000} s: ${result.reason?.message ?? result.reason}`);
+        }
+    }
+    finally
+    {
+        stopCronJob();
+    }
+
+    await assertUrl(page, step, {view: "setup", task: "finish"});
+    await assertPageClean(page, {step: `${step}: finish page`, watcher: ctx.watcher});
+    await navigate(page, () => page.locator("a.btn-primary[href*='view=main']").click());
+    await assertUrl(page, step, {view: "main"});
+    await checkDashboard(page, ctx, step);
+}
+
+/**
+ * Manual "save configuration" page, reached because PHP cannot write config.php: upload the configuration it shows,
+ * the way a user does by FTP, and follow its Next button to the CRON page.
+ */
+export async function uploadConfigManually(page, ctx)
+{
+    const step = "upload config.php";
+
+    await assertUrl(page, step, {view: "setup", task: "saveconfig"});
+    await uploadShownConfiguration(page, ctx, step);
+    await navigate(page, () => page.locator("a.btn-outline-primary[href*='task=cron']").click());
+    await assertUrl(page, step, {view: "setup", task: "cron"});
+    assertServerClean(step);
+}
+
+/**
+ * CRON page with a read-only config.php: skip the CRON setup. PHP cannot save the final configuration (setup finished,
+ * CRON settings), so the page with the configuration to upload comes back; upload it again and go to the dashboard.
+ */
+export async function skipCronUploadingConfig(page, ctx)
+{
+    const step = "skip CRON, upload config.php again";
+
+    await assertPageClean(page, {step: `${step}: CRON page`, watcher: ctx.watcher});
+    await page.locator("a[href*='task=skipcron']").waitFor();
+    await navigate(page, () => page.locator("a[href*='task=skipcron']").click());
+    // No redirect: the skipcron task renders the saveconfig layout itself.
+    await assertUrl(page, step, {view: "setup", task: "skipcron"});
+
+    const source = await uploadShownConfiguration(page, ctx, step);
+
+    if (!source.includes("finished_setup"))
+    {
+        throw new Error(`[${step}] The configuration to upload does not mark the setup as finished `
+            + "(no finished_setup).");
+    }
+
+    // OPcache revalidates config.php every 2 seconds (opcache.revalidate_freq, assets/php.ini); let it see the upload.
+    await page.waitForTimeout(3000);
+    await navigate(page, () => page.locator("a.btn-outline-primary[href*='view=main']").click());
+    await assertUrl(page, step, {view: "main"});
+    await checkDashboard(page, ctx, step);
+}
+
+/**
+ * Check the "save configuration" page, then write the configuration it shows as config.php (read-only to PHP).
+ *
+ * @returns {Promise<string>}  The configuration written
+ */
+async function uploadShownConfiguration(page, ctx, step)
+{
+    const configSource = page.locator("#configSource");
+
+    // Checked first, so that an error page is reported as such, not only as a missing #configSource.
+    await assertPageClean(page, {step, watcher: ctx.watcher});
+
+    if (!await configSource.isVisible())
+    {
+        throw new Error(`[${step}] The page does not show the configuration to upload (#configSource): ${page.url()}`);
+    }
+
+    const source = await configSource.innerText();
+
+    writeConfig(source);
+
+    return source;
 }
 
 /**
@@ -217,7 +347,7 @@ export async function logOutAndBackIn(page, ctx)
 
     await assertLanguage(page, step, ctx.lang);
 
-    if (ctx.lang !== "en-GB")
+    if (needsHeadingCheck(ctx.lang))
     {
         const englishHeading = await englishLoginHeading(page);
         const heading        = (await page.locator("#loginForm h3").innerText()).trim();
@@ -306,6 +436,15 @@ async function htmlLang(page)
 function primaryTag(lang)
 {
     return lang.split("-")[0];
+}
+
+/**
+ * Whether `<html lang>` alone cannot prove the switch away from en-GB (another English variant), so a heading still
+ * equal to the en-GB one is the only evidence. Otherwise text left in English is no failure: `<html lang>` decides.
+ */
+function needsHeadingCheck(lang)
+{
+    return lang !== "en-GB" && primaryTag(lang) === primaryTag("en-GB");
 }
 
 async function welcomeHeading(page)

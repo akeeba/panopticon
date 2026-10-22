@@ -18,7 +18,11 @@ import {readServerProblems} from "./lab.mjs";
  */
 export const RAW_KEY_ALLOWLIST = [];
 
-const RAW_KEY = /\bPANOPTICON_[A-Z0-9_]+\b/g;
+/**
+ * Case-insensitive: innerText follows CSS `text-transform`, so a raw key inside e.g. a `.text-lowercase` element reads
+ * as `panopticon_…`. Matches are reported (and compared with the allowlist) in upper case.
+ */
+const RAW_KEY = /\bpanopticon_[a-z0-9_]+\b/gi;
 
 /**
  * Unlike the Joomla smoke tests, warnings, notices and deprecations count: this is Panopticon's own code.
@@ -100,7 +104,8 @@ export async function assertPageClean(page, {step, watcher})
             problems.push(`BAD TRANSLATION in the ${label}: ${excerpt(content, "BAD TRANSLATION")}`);
         }
 
-        const rawKeys = [...new Set(content.match(RAW_KEY) ?? [])].filter((key) => !RAW_KEY_ALLOWLIST.includes(key));
+        const rawKeys = [...new Set((content.match(RAW_KEY) ?? []).map((key) => key.toUpperCase()))]
+            .filter((key) => !RAW_KEY_ALLOWLIST.includes(key));
 
         if (rawKeys.length)
         {
@@ -118,8 +123,18 @@ export async function assertPageClean(page, {step, watcher})
         }
     }
 
-    problems.push(...watcher.take());
+    const watched = watcher.take();
+
+    problems.push(...watched);
     problems.push(...readServerProblems());
+
+    // An error page logs nothing (the exception is handled), so its headings are the only account of what failed.
+    if (watched.some((problem) => problem.includes("(document)")))
+    {
+        const headings = (await page.locator("h1").allInnerTexts()).map((heading) => heading.trim()).filter(Boolean);
+
+        problems.push(`Headings on the page: ${headings.join(" | ") || "(none)"}`);
+    }
 
     if (problems.length)
     {

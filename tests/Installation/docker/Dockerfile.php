@@ -11,7 +11,8 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends apache2 unzip libzip-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install -j"$(nproc)" mysqli pdo_mysql zip
+# bcmath: without it (or GMP) every `task:run` logs a PHP Notice from vendor/minishlink/web-push; most hosts have it.
+RUN docker-php-ext-install -j"$(nproc)" mysqli pdo_mysql zip bcmath
 
 # OPcache: PHP 8.5 has it built in and enabled; earlier versions ship it disabled; assets/php.ini keeps it commented out.
 RUN php -m | grep -qi 'Zend OPcache' || docker-php-ext-install opcache

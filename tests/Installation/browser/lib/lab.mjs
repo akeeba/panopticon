@@ -52,6 +52,9 @@ export function exec(args)
  */
 export function resetLab({readonly = false} = {})
 {
+    // A CRON loop left behind by a failed test would run task:run against the new install. A no-op if none runs.
+    stopCronJob();
+
     const output = exec(["php", "/lab/lab-reset.php", ...(readonly ? ["--readonly"] : [])]);
 
     if (!output.includes("RESET OK"))
