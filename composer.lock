@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13e79cf0bef5a94102bf3447d3be2445",
+    "content-hash": "d010ff90413fa04a59a8c01a67b40722",
     "packages": [
         {
             "name": "akeeba/awf",
-            "version": "dev-development",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/awf.git",
@@ -37,7 +37,6 @@
                 "ext-pgsql": "*",
                 "ext-simplexml": "*"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -68,7 +67,7 @@
             ],
             "support": {
                 "issues": "https://github.com/akeeba/awf/issues",
-                "source": "https://github.com/akeeba/awf/tree/development"
+                "source": "https://github.com/akeeba/awf/tree/1.3.1"
             },
             "time": "2026-10-22T09:12:06+00:00"
         },
@@ -185,16 +184,16 @@
         },
         {
             "name": "akeeba/stats_collector",
-            "version": "dev-main",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeeba/stats_collector.git",
-                "reference": "cda4cffb21932bfc07a7006f9f7696f300d7b55b"
+                "reference": "d9362fdf6ba46f2eb78f06548bc13885fe0d8161"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/cda4cffb21932bfc07a7006f9f7696f300d7b55b",
-                "reference": "cda4cffb21932bfc07a7006f9f7696f300d7b55b",
+                "url": "https://api.github.com/repos/akeeba/stats_collector/zipball/d9362fdf6ba46f2eb78f06548bc13885fe0d8161",
+                "reference": "d9362fdf6ba46f2eb78f06548bc13885fe0d8161",
                 "shasum": ""
             },
             "require": {
@@ -204,7 +203,6 @@
                 "ext-curl": "For sending the usage stats to the server",
                 "ext-openssl": "Fallback when random_bytes is not available"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -215,9 +213,7 @@
                 "exclude": [
                     ".idea/**",
                     ".gitignore",
-                    "composer.lock",
-                    "AGENTS.md",
-                    ".claude/**"
+                    "composer.lock"
                 ]
             },
             "license": [
@@ -231,10 +227,10 @@
             ],
             "description": "Usage Statistic collector",
             "support": {
-                "source": "https://github.com/akeeba/stats_collector/tree/main",
+                "source": "https://github.com/akeeba/stats_collector/tree/1.0.0",
                 "issues": "https://github.com/akeeba/stats_collector/issues"
             },
-            "time": "2026-09-25T19:53:14+00:00"
+            "time": "2026-08-02T09:06:05+00:00"
         },
         {
             "name": "brick/math",
@@ -9374,10 +9370,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "akeeba/awf": 20,
-        "akeeba/stats_collector": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
