@@ -13,6 +13,7 @@ defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Application;
 use Akeeba\Panopticon\Controller\Setup;
+use Akeeba\Panopticon\Model\Setup as SetupModel;
 use Akeeba\Panopticon\Tests\Integration\Controller\AbstractControllerIntegrationTestCase;
 use Awf\Application\ApplicationServiceProvider;
 
@@ -99,5 +100,85 @@ class ReadOnlyConfigTest extends AbstractControllerIntegrationTestCase
 		$this->assertStringContainsString('max_execution', $output);
 		$this->assertStringContainsString('view=main', $output);
 		$this->assertStringNotContainsString('task=cron', $output);
+	}
+
+	public function testCronWithReadOnlyConfigAndNoWebCronKeyRenders(): void
+	{
+		$originalKey = $this->container->appConfig->get('webcron_key', '');
+		$this->container->appConfig->set('webcron_key', '');
+
+		ob_start();
+
+		try
+		{
+			$controller = $this->dispatch(Setup::class, 'cron', ['task' => 'cron']);
+		}
+		finally
+		{
+			$output = ob_get_clean();
+			$key    = $this->container->appConfig->get('webcron_key', '');
+			$this->container->appConfig->set('webcron_key', $originalKey);
+		}
+
+		$this->assertSame('cron', $controller->getView()->getLayout());
+		$this->assertNotEmpty($key);
+		$this->assertNotEmpty($output);
+	}
+
+	public function testSaveconfigWithReadOnlyConfigShowsWebCronKey(): void
+	{
+		$originalKey = $this->container->appConfig->get('webcron_key', '');
+		$this->container->appConfig->set('webcron_key', '');
+
+		ob_start();
+
+		try
+		{
+			// Call the task directly. With a config.php present, execute() would redirect it to the CRON page, which is
+			// not the situation of a new installation.
+			$controller = new StubbedSaveconfigSetup($this->container);
+			$controller->saveconfig();
+		}
+		finally
+		{
+			$output = ob_get_clean();
+			$key    = $this->container->appConfig->get('webcron_key', '');
+			$this->container->appConfig->set('webcron_key', $originalKey);
+		}
+
+		$this->assertSame('saveconfig', $controller->getView()->getLayout());
+		$this->assertNotEmpty($key);
+		$this->assertStringContainsString($key, $output);
+	}
+}
+
+/**
+ * Setup controller whose model does not touch the database connection or create users.
+ *
+ * Reconnecting the database and creating the administrator are not possible inside the test transaction. The
+ * configuration steps which follow them are what the test is about.
+ */
+class StubbedSaveconfigSetup extends Setup
+{
+	public function getName()
+	{
+		return 'Setup';
+	}
+
+	public function getModel($name = null, $config = [])
+	{
+		return new class($this->container) extends SetupModel {
+			public function applyDatabaseParameters(): void
+			{
+			}
+
+			public function setSetupParameters(): void
+			{
+			}
+
+			public function createAdminUser(): void
+			{
+			}
+		};
 	}
 }

@@ -433,14 +433,22 @@ class Setup extends Model
 		$manager->loginUser($params['user.username'], $params['user.password']);
 	}
 
-	public function conditionallyCreateWebCronKey(): void
+	/**
+	 * Generates a strong web CRON key into the in-memory configuration, unless there already is one.
+	 *
+	 * This does not save the configuration.
+	 *
+	 * @return  bool  True if a new key was generated.
+	 * @since   2.4.0
+	 */
+	public function ensureWebCronKey(): bool
 	{
 		$currentKey = $this->container->appConfig->get('webcron_key', '');
 		$complexify = new Complexify();
 
 		if (!empty($currentKey) && $complexify->evaluateSecurity($currentKey)->valid)
 		{
-			return;
+			return false;
 		}
 
 		do
@@ -454,7 +462,26 @@ class Setup extends Model
 		} while (empty($newPassword));
 
 		$this->container->appConfig->set('webcron_key', $newPassword);
-		$this->container->appConfig->saveConfiguration();
+
+		return true;
+	}
+
+	public function conditionallyCreateWebCronKey(): void
+	{
+		if (!$this->ensureWebCronKey())
+		{
+			return;
+		}
+
+		try
+		{
+			$this->container->appConfig->saveConfiguration();
+		}
+		catch (Exception)
+		{
+			// Read-only config.php. The key stays in memory; the final configuration page shows it for upload.
+			return;
+		}
 
 		if (function_exists('opcache_invalidate'))
 		{

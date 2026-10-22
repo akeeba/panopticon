@@ -165,6 +165,10 @@ class Setup extends Controller
 		{
 			// Save the configuration
 			$this->container->appConfig->set('live_site', Uri::base());
+
+			// The key must be in the configuration we write, or show for upload when config.php is read-only.
+			$model->ensureWebCronKey();
+
 			$this->container->appConfig->saveConfiguration();
 
 			if (function_exists('opcache_invalidate'))
