@@ -6,7 +6,7 @@ Dawn [1.1]
 Twilight [1.2]
 Aurora [2.0]
 Daybreak [2.1 / 2.2 / 2.3]
-Sunrise
+Sunrise [2.4]
 Cockcrow
 Sunup
 Morning
