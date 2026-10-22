@@ -92,7 +92,21 @@ class UserSet extends AbstractCommand
 		// Should I change the password?
 		if (!empty($password))
 		{
-			$user->setPassword($password);
+			try
+			{
+				$user->setPassword($password);
+			}
+			catch (\Exception $e)
+			{
+				$this->ioStyle->error(
+					[
+						sprintf('Could not set the password of user %s.', $user->getUsername()),
+						$e->getMessage(),
+					]
+				);
+
+				return Command::FAILURE;
+			}
 		}
 
 		// Should I change the email?

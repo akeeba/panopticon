@@ -173,7 +173,22 @@ class UserAdd extends AbstractCommand
 		];
 
 		$user->bind($data);
-		$user->setPassword($password);
+
+		try
+		{
+			$user->setPassword($password);
+		}
+		catch (\Exception $e)
+		{
+			$this->ioStyle->error(
+				[
+					sprintf('Could not set the password of user %s.', $username),
+					$e->getMessage(),
+				]
+			);
+
+			return Command::FAILURE;
+		}
 
 		$privileges = $input->getOption('permission');
 		$privileges = $privileges ?: [];
