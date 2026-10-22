@@ -40,6 +40,8 @@ php cli/panopticon.php list
 
 PHPUnit suite in `tests/` — `composer test`, `composer test:unit`, `composer test:integration`.
 
+New-installation release gate (setup wizard in a browser, all languages, PHP/DB edges): `composer test:install`, see `tests/Installation/README.md`.
+
 Writing or debugging tests: see `tests/CLAUDE.md` for the test database setup and the transaction constraints.
 
 ## Architecture

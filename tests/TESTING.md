@@ -100,6 +100,9 @@ vendor/bin/phpunit --display-warnings             # show suppressed warnings
 
 Expect the full suite to finish in under 10 seconds on a modern laptop.
 
+The new-installation release gate (the setup wizard driven in a real browser, in every language, at the PHP and database
+edges of the supported range) is separate and slow: `composer test:install`. See `tests/Installation/README.md`.
+
 ## What the bootstrap does
 
 When PHPUnit fires `tests/bootstrap.php`:
