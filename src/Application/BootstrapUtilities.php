@@ -449,26 +449,17 @@ PHP;
 	/**
 	 * Loads the application configuration, if it exists.
 	 *
-	 * @param   bool|null  $hasConfiguration  Is there a configuration? NULL to check with hasConfiguration().
-	 *
 	 * @return  void
 	 * @since   1.0.5
 	 */
-	public static function loadConfiguration(?bool $hasConfiguration = null): void
+	public static function loadConfiguration(): void
 	{
 		$appConfig = Factory::getContainer()->appConfig;
 
 		// Only try to load the configuration file if we have one to begin with.
-		if (!($hasConfiguration ?? self::hasConfiguration()))
+		if (!self::hasConfiguration())
 		{
-			// Setup runs before config.php exists. Use the secret from tmp/secret.php, which is the one setup will write
-			// into config.php. Otherwise the session segment name, derived from the secret, changes as soon as
-			// config.php is written, and the administrator just created by setup is logged out. A volatile secret
-			// (tmp/secret.php could not be written) would change the segment on every request instead, so skip it.
-			if (self::$secret && !self::$secretIsVolatile)
-			{
-				$appConfig->set('secret', self::$secret);
-			}
+			self::adoptPendingSecret($appConfig);
 
 			return;
 		}
@@ -481,10 +472,7 @@ PHP;
 		// read-only configuration (a .env file, or an environment-variable configured container) we cannot save, so we
 		// must keep tmp/secret.php: it is the only stable home of the secret, and deleting it would make applySecret()
 		// generate a brand-new secret on the next request, churning the secret and breaking existing sessions/tokens.
-		//
-		// A secret which came with the configuration makes tmp/secret.php redundant: applySecret() never reads it. This
-		// is the normal case after setup, which writes the secret from tmp/secret.php straight into config.php.
-		$deleteOld = !empty($appConfig->get('secret'));
+		$deleteOld = self::isSecretFileRedundant(self::getInitialConfiguration());
 
 		if (self::$secret && !$appConfig->get('secret'))
 		{
@@ -509,6 +497,44 @@ PHP;
 		{
 			@unlink(APATH_TMP . '/secret.php');
 		}
+	}
+
+	/**
+	 * Use the pending secret from tmp/secret.php while there is no configuration yet, i.e. during setup.
+	 *
+	 * Setup writes this same secret into config.php. Without it, the session segment name, which is derived from the
+	 * secret, changes as soon as config.php is written, and the administrator just created by setup is logged out. A
+	 * volatile secret (tmp/secret.php could not be written) would change the segment on every request instead.
+	 *
+	 * @param   Registry  $appConfig  The application configuration.
+	 *
+	 * @return  void
+	 * @since   2.4.0
+	 */
+	private static function adoptPendingSecret(Registry $appConfig): void
+	{
+		if (self::$secret && !self::$secretIsVolatile)
+		{
+			$appConfig->set('secret', self::$secret);
+		}
+	}
+
+	/**
+	 * Is tmp/secret.php redundant, because the configuration files already have a secret?
+	 *
+	 * This is the normal case after setup, which writes the secret straight into config.php. It mirrors applySecret(),
+	 * which only reads tmp/secret.php when the initial configuration has no secret. A secret which only comes from the
+	 * server environment (a container's PANOPTICON_SECRET) does not count: applySecret() cannot see it, so deleting the
+	 * file would make it write a new one on the next request, and so on for every request.
+	 *
+	 * @param   Registry  $initialConfiguration  The configuration applySecret() decides with.
+	 *
+	 * @return  bool
+	 * @since   2.4.0
+	 */
+	private static function isSecretFileRedundant(Registry $initialConfiguration): bool
+	{
+		return trim((string) $initialConfiguration->get('secret', '')) !== '';
 	}
 
 	/**
