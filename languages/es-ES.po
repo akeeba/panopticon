@@ -9624,6 +9624,41 @@ msgid "Version"
 msgstr "Versión"
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION"
+msgid "Installed Version"
+msgstr "Versión instalada"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION_SELECT"
+msgid "– Installed Version –"
+msgstr "– Versión instalada –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS"
+msgid "Version Status"
+msgstr "Estado de la versión"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_SELECT"
+msgid "– Version Status –"
+msgstr "– Estado de la versión –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_OUTDATED"
+msgid "Update available"
+msgstr "Actualización disponible"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_NOT_HIGHEST"
+msgid "Not the highest installed version"
+msgstr "No es la versión instalada más alta"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_BTN_RESET"
+msgid "Reset filters and sorting"
+msgstr "Restablecer filtros y orden"
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONS_FIELD_AUTHOR"
 msgid "Author"
 msgstr "Autor"

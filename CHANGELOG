@@ -1,4 +1,10 @@
 <?php die(); ?>
+Akeeba Panopticon 2.5.0
+================================================================================
++ Extensions: sort by site, extension or version, and filter by installed version or outdated / not-highest version
++ Extensions: new button to reset all filters and sorting to the default
+# [LOW] Extensions: sorting by Site did nothing
+
 Akeeba Panopticon 2.4.0
 ================================================================================
 ! Security hardening: CSRF token checks, TOTP secret generation, JSONP in JSON views, IIS web.config rules (AWF 1.3.1)

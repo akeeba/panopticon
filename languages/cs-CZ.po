@@ -10444,6 +10444,41 @@ msgid "Version"
 msgstr "Verze"
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION"
+msgid "Installed Version"
+msgstr "Nainstalovaná verze"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION_SELECT"
+msgid "– Installed Version –"
+msgstr "– Nainstalovaná verze –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS"
+msgid "Version Status"
+msgstr "Stav verze"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_SELECT"
+msgid "– Version Status –"
+msgstr "– Stav verze –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_OUTDATED"
+msgid "Update available"
+msgstr "K dispozici je aktualizace"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_NOT_HIGHEST"
+msgid "Not the highest installed version"
+msgstr "Není nejvyšší nainstalovanou verzí"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_BTN_RESET"
+msgid "Reset filters and sorting"
+msgstr "Obnovit filtry a řazení"
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONS_FIELD_AUTHOR"
 msgid "Author"
 msgstr "Autor"

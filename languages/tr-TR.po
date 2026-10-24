@@ -10973,6 +10973,41 @@ msgid "Version"
 msgstr "Sürüm"
 
 #, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION"
+msgid "Installed Version"
+msgstr "Yüklü sürüm"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION_SELECT"
+msgid "– Installed Version –"
+msgstr "– Yüklü sürüm –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS"
+msgid "Version Status"
+msgstr "Sürüm durumu"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_SELECT"
+msgid "– Version Status –"
+msgstr "– Sürüm durumu –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_OUTDATED"
+msgid "Update available"
+msgstr "Güncelleme mevcut"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_NOT_HIGHEST"
+msgid "Not the highest installed version"
+msgstr "Yüklü en yüksek sürüm değil"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_BTN_RESET"
+msgid "Reset filters and sorting"
+msgstr "Filtreleri ve sıralamayı sıfırla"
+
+#, phpformat
 msgctxt "PANOPTICON_EXTENSIONS_FIELD_AUTHOR"
 msgid "Author"
 msgstr "Yazar"

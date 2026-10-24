@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.4.0\n"
-"POT-Creation-Date: 2026-10-22 16:57:56\n"
+"POT-Creation-Date: 2026-10-24 09:40:18\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10655,6 +10655,41 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_EMAIL_SELECT"
 msgid "– Author Email –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION"
+msgid "Installed Version"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION_SELECT"
+msgid "– Installed Version –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS"
+msgid "Version Status"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_SELECT"
+msgid "– Version Status –"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_OUTDATED"
+msgid "Update available"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_NOT_HIGHEST"
+msgid "Not the highest installed version"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_BTN_RESET"
+msgid "Reset filters and sorting"
 msgstr ""
 
 #, phpformat

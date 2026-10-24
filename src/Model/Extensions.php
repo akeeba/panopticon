@@ -32,6 +32,24 @@ class Extensions extends Model
 
 	private array $siteIds = [];
 
+	/** @var array<int, string> Site names, keyed by site ID. Used for sorting. */
+	private array $siteNames = [];
+
+	/** @var string[] Installed versions of the selected extension, for the version filter dropdown. */
+	private array $installedVersions = [];
+
+	/**
+	 * The sort fields the Extensions view supports. Anything else means "no sorting", i.e. the natural order.
+	 */
+	public const SORT_FIELDS = ['site', 'extension', 'version'];
+
+	/**
+	 * The values of the version status filter. An empty value means "no filtering".
+	 */
+	public const VERSION_STATUS_OUTDATED = 'outdated';
+
+	public const VERSION_STATUS_NOT_HIGHEST = 'not_highest';
+
 	public function getExtensions(bool $ignoreLimits = false, int $from = 0, int $limit = 50)
 	{
 		$db    = $this->getContainer()->db;
@@ -40,6 +58,7 @@ class Extensions extends Model
 			->select(
 				[
 					$db->quoteName('id'),
+					$db->quoteName('name'),
 					$query->jsonExtract($db->quoteName('config'), '$.extensions.list') . ' AS ' . $db->quoteName(
 						'extensions'
 					),
@@ -131,63 +150,37 @@ class Extensions extends Model
 		$this->applyUserGroupsToQuery($query);
 
 		// Get an iterator
-		$iterator   = $db->setQuery($query)->getIterator();
-		$extensions = [];
+		$iterator = $db->setQuery($query)->getIterator();
+
+		$this->totalExtensions   = 0;
+		$this->installedVersions = [];
 
 		if (!count($iterator))
 		{
 			return [];
 		}
 
+		$extensions = [];
+
 		foreach ($iterator as $item)
 		{
-			$incomingExtensions    = $this->extractFilteredExtensions($item);
-			$this->totalExtensions += count($incomingExtensions);
+			$this->siteNames[(int) $item->id] = (string) $item->name;
 
-			if (!$ignoreLimits && count($extensions) < $limit)
-			{
-				$extensions = array_merge($extensions, $incomingExtensions);
-			}
-
-			unset($incomingExtensions);
-
-			if ($ignoreLimits)
-			{
-				continue;
-			}
-
-			// Do I need to apply the FROM limit?
-			if ($from > 0)
-			{
-				if ($from >= count($extensions))
-				{
-					/**
-					 * $from is more than or exactly equal to how many I have, e.g. from=10, and I have 8 extensions.
-					 *
-					 * Reduce $from by the number of extensions I currently have, and empty the array.
-					 */
-					$from       -= count($extensions);
-					$extensions = [];
-				}
-				else
-				{
-					/**
-					 * $from is lower than what I have. Use array_slice.
-					 */
-					$extensions = array_slice($extensions, $from, preserve_keys: true);
-					$from       = 0;
-				}
-			}
-
-			// Do I need to apply the $limit?
-			if ($limit > 0 && count($extensions) > $limit)
-			{
-				// Since I have reached my limit I can return a clamped array slice
-				$extensions = array_slice($extensions, 0, $limit);
-			}
+			$extensions = array_merge($extensions, $this->extractFilteredExtensions($item));
 		}
 
-		return $extensions;
+		// The version filters need to know about every row which passed the other filters, hence they run last.
+		$extensions = $this->applyVersionFilters($extensions);
+		$extensions = $this->sortExtensions($extensions);
+
+		$this->totalExtensions = count($extensions);
+
+		if ($ignoreLimits)
+		{
+			return $extensions;
+		}
+
+		return array_slice($extensions, max(0, $from), $limit > 0 ? $limit : null);
 	}
 
 	public function getTotalExtensions(): int
@@ -247,9 +240,171 @@ class Extensions extends Model
 		return $ret;
 	}
 
+	/**
+	 * Get the installed versions of the selected extension. Empty unless an extension name filter is applied.
+	 *
+	 * @param   bool  $forSelect  Return a version => label array, with a placeholder first option?
+	 *
+	 * @return  array
+	 */
+	public function getInstalledVersions(bool $forSelect = false): array
+	{
+		if (!$forSelect)
+		{
+			return $this->installedVersions;
+		}
+
+		$ret = ['' => $this->getLanguage()->text('PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION_SELECT')];
+
+		return $ret + array_combine($this->installedVersions, $this->installedVersions);
+	}
+
 	public function getSiteIds(): array
 	{
 		return $this->siteIds;
+	}
+
+	/**
+	 * Applies the installed version and version status filters.
+	 *
+	 * "Highest installed version" is the highest version of the same extension on any site which passed all other
+	 * filters. It is therefore relative to what you are currently looking at, e.g. the selected group of sites.
+	 *
+	 * @param   object[]  $extensions  Extensions which passed all other filters
+	 *
+	 * @return  object[]
+	 */
+	private function applyVersionFilters(array $extensions): array
+	{
+		$fltVersion = (string) $this->getState('installed_version', '', 'raw');
+		$fltStatus  = (string) $this->getState('version_status', '', 'raw');
+
+		// Populate the dropdown, but only when it can be meaningful: a single extension is selected.
+		if (!empty($this->getState('extension_name', null, 'raw')))
+		{
+			$versions = array_unique(
+				array_filter(array_map(fn(object $e) => (string) ($e->version?->current ?? ''), $extensions))
+			);
+			usort($versions, fn($a, $b) => version_compare($b, $a));
+
+			$this->installedVersions = $versions;
+		}
+
+		// A stale value (no extension selected, or another extension was selected since) must not filter silently.
+		if ($fltVersion !== '' && in_array($fltVersion, $this->installedVersions, true))
+		{
+			$extensions = array_filter(
+				$extensions,
+				fn(object $e) => (string) ($e->version?->current ?? '') === $fltVersion
+			);
+		}
+
+		if ($fltStatus === self::VERSION_STATUS_OUTDATED)
+		{
+			$extensions = array_filter(
+				$extensions,
+				function (object $e): bool {
+					$current = (string) ($e->version?->current ?? '');
+					$new     = (string) ($e->version?->new ?? '');
+
+					return $current !== '' && $new !== '' && version_compare($current, $new, 'lt');
+				}
+			);
+		}
+		elseif ($fltStatus === self::VERSION_STATUS_NOT_HIGHEST)
+		{
+			$highest = [];
+
+			foreach ($extensions as $e)
+			{
+				$key     = $this->getExtensionKey($e);
+				$current = (string) ($e->version?->current ?? '');
+
+				if ($current !== '' && (!isset($highest[$key]) || version_compare($current, $highest[$key], 'gt')))
+				{
+					$highest[$key] = $current;
+				}
+			}
+
+			$extensions = array_filter(
+				$extensions,
+				function (object $e) use ($highest): bool {
+					$current = (string) ($e->version?->current ?? '');
+
+					return $current !== '' && version_compare($current, $highest[$this->getExtensionKey($e)], 'lt');
+				}
+			);
+		}
+
+		// The version filter was applied after the dropdown was populated, so the dropdown shows all versions.
+		return array_values($extensions);
+	}
+
+	/**
+	 * Sorts the extensions per the filter_order / filter_order_Dir state. Unknown or empty = natural order.
+	 *
+	 * @param   object[]  $extensions
+	 *
+	 * @return  object[]
+	 */
+	private function sortExtensions(array $extensions): array
+	{
+		$order = (string) $this->getState('filter_order', '', 'cmd');
+
+		if (!in_array($order, self::SORT_FIELDS, true))
+		{
+			return $extensions;
+		}
+
+		$factor = strtolower((string) $this->getState('filter_order_Dir', 'asc', 'cmd')) === 'desc' ? -1 : 1;
+		$bySite = fn(object $a, object $b): int => strcasecmp(
+			$this->siteNames[(int) $a->site_id] ?? '', $this->siteNames[(int) $b->site_id] ?? ''
+		);
+		$byName = fn(object $a, object $b): int => strcasecmp((string) ($a->name ?? ''), (string) ($b->name ?? ''));
+		$byVer  = fn(object $a, object $b): int => version_compare(
+			(string) ($a->version?->current ?? ''), (string) ($b->version?->current ?? '')
+		);
+
+		// Secondary sort keys make the order predictable; only the primary key follows the sort direction.
+		$comparators = match ($order)
+		{
+			'site' => [$bySite, $byName],
+			'extension' => [$byName, $bySite],
+			'version' => [$byVer, $bySite, $byName],
+		};
+
+		usort(
+			$extensions,
+			function (object $a, object $b) use ($comparators, $factor): int {
+				foreach ($comparators as $i => $comparator)
+				{
+					$result = $comparator($a, $b);
+
+					if ($result !== 0)
+					{
+						return $i === 0 ? $result * $factor : $result;
+					}
+				}
+
+				return 0;
+			}
+		);
+
+		return $extensions;
+	}
+
+	/**
+	 * A key which identifies "the same extension" across different sites.
+	 */
+	private function getExtensionKey(object $extension): string
+	{
+		return implode(
+			'|',
+			[
+				$extension->type ?? '', $extension->element ?? '', $extension->folder ?? '',
+				$extension->client_id ?? '',
+			]
+		);
 	}
 
 	private function extractFilteredExtensions(object $item): array

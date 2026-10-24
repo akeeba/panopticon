@@ -40,7 +40,7 @@ class Html extends \Awf\Mvc\DataView\Html
 		/** @var Extensions $model */
 		$model = $this->getModel();
 
-		$this->lists->order      = $model->getState('filter_order', 'id', 'cmd');
+		$this->lists->order      = $model->getState('filter_order', '', 'cmd');
 		$this->lists->order_Dir  = $model->getState('filter_order_Dir', 'ASC', 'cmd');
 		$this->lists->limitStart = $model->getState('limitstart', 0, 'int');
 		$this->lists->limit      = $model->getState('limit', 50, 'int');

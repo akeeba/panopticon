@@ -203,6 +203,50 @@ JS;
                 }}
             </div>
         </div>
+        <!-- Version Filters and Reset -->
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-center gap-2 mt-2">
+            <div>
+                <label class="visually-hidden"
+                       for="installed_version">@lang('PANOPTICON_EXTENSIONS_LBL_INSTALLED_VERSION')</label>
+                {{  $this->container->html->select->genericList(
+                        $model->getInstalledVersions(true),
+                        'installed_version',
+                        array_merge([
+                            'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+                        ], empty($model->getInstalledVersions()) ? ['disabled' => 'disabled'] : []),
+                        selected: $model->getState('installed_version'),
+                        idTag: 'installed_version',
+                        translate: false
+                    )
+                }}
+            </div>
+            <div>
+                <label class="visually-hidden"
+                       for="version_status">@lang('PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS')</label>
+                {{  $this->container->html->select->genericList(
+                        [
+                            '' => $this->getLanguage()->text('PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_SELECT'),
+                            \Akeeba\Panopticon\Model\Extensions::VERSION_STATUS_OUTDATED => $this->getLanguage()->text('PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_OUTDATED'),
+                            \Akeeba\Panopticon\Model\Extensions::VERSION_STATUS_NOT_HIGHEST => $this->getLanguage()->text('PANOPTICON_EXTENSIONS_LBL_VERSION_STATUS_NOT_HIGHEST'),
+                        ],
+                        'version_status',
+                        [
+                            'class' => 'form-select akeebaGridViewAutoSubmitOnChange',
+                        ],
+                        selected: $model->getState('version_status'),
+                        idTag: 'version_status',
+                        translate: false
+                    )
+                }}
+            </div>
+            <div>
+                <a href="@route('index.php?view=extensions&task=main&search=&group=&site_id=&cmsFamily=&phpFamily=&extension_name=&extension_author=&extension_author_url=&installed_version=&version_status=&filter_order=&filter_order_Dir=&limitstart=0')"
+                   class="btn btn-outline-secondary" role="button">
+                    <span class="fa fa-undo" aria-hidden="true"></span>
+                    @lang('PANOPTICON_EXTENSIONS_BTN_RESET')
+                </a>
+            </div>
+        </div>
     </div>
 
     <table class="table table-striped align-middle pnp-stacked" id="adminList" role="table">
@@ -212,13 +256,13 @@ JS;
         <thead>
         <tr>
             <th>
-                {{ $this->getContainer()->html->grid->sort('PANOPTICON_EXTENSIONS_FIELD_SITE', 'id', $this->lists->order_Dir, $this->lists->order, 'main') }}
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_EXTENSIONS_FIELD_SITE', 'site', $this->lists->order_Dir, $this->lists->order, 'main') }}
             </th>
             <th>
-                @lang('PANOPTICON_EXTENSIONS_FIELD_EXTENSION')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_EXTENSIONS_FIELD_EXTENSION', 'extension', $this->lists->order_Dir, $this->lists->order, 'main') }}
             </th>
             <th>
-                @lang('PANOPTICON_EXTENSIONS_FIELD_VERSION')
+                {{ $this->getContainer()->html->grid->sort('PANOPTICON_EXTENSIONS_FIELD_VERSION', 'version', $this->lists->order_Dir, $this->lists->order, 'main') }}
             </th>
             <th>
                 @lang('PANOPTICON_EXTENSIONS_FIELD_AUTHOR')
