@@ -387,7 +387,6 @@ class TokenAuthentication
 		{
 			$ref      = new \ReflectionObject($manager);
 			$property = $ref->getProperty('currentUser');
-			$property->setAccessible(true);
 			$property->setValue($manager, $user);
 		}
 		catch (\Throwable)

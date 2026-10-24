@@ -1,4 +1,4 @@
-ARG PHP_VERSION="8.4"
+ARG PHP_VERSION="8.5"
 FROM php:${PHP_VERSION:+${PHP_VERSION}-}apache
 
 # Update the image and install CRON

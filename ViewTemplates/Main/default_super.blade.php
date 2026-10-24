@@ -7,6 +7,8 @@
 
 /** @var \Akeeba\Panopticon\View\Main\Html $this */
 
+defined('AKEEBA') || die;
+
 if (!$this->container->userManager->getUser()->getPrivilege('panopticon.super'))
 {
     return;

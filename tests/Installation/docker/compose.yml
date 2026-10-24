@@ -1,0 +1,57 @@
+################################################################################
+## Akeeba Panopticon -- new-installation browser test lab
+##
+## A BARE Apache 2.4 + PHP-FPM host and a database. The test unzips the release ZIP
+## into /var/www/html and runs the setup wizard over HTTP. Driven by
+## tests/Installation/run.sh; everything is disposable.
+##
+## Environment variables:
+##   INSTALLTEST_PHP          PHP version (e.g. 8.3, 8.5)
+##   INSTALLTEST_DB_IMAGE     Database image (e.g. mysql:5.7, mariadb:10.3)
+##   INSTALLTEST_DB_PLATFORM  Set to linux/amd64 for mysql:5.7 only (no arm64 image); empty otherwise
+##   INSTALLTEST_ZIP          Absolute host path of the release ZIP
+##   INSTALLTEST_PORT         Host port mapped to Apache :80 (default 4291)
+################################################################################
+
+name: panopticon_installtest
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+      additional_contexts:
+        assets: ../../../assets
+      args:
+        PHP_VERSION: ${INSTALLTEST_PHP:?Set INSTALLTEST_PHP}
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      # Healthy only once Apache answers HTTP (any status) and PHP-FPM accepts connections on its port.
+      test: ["CMD", "bash", "-c", "curl -s -o /dev/null http://localhost/ && exec 3<>/dev/tcp/127.0.0.1/9000"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+    ports:
+      - "127.0.0.1:${INSTALLTEST_PORT:-4291}:80"
+    volumes:
+      - ${INSTALLTEST_ZIP:?Set INSTALLTEST_ZIP}:/lab/panopticon.zip:ro
+
+  db:
+    image: ${INSTALLTEST_DB_IMAGE:?Set INSTALLTEST_DB_IMAGE}
+    platform: ${INSTALLTEST_DB_PLATFORM:-}
+    environment:
+      MYSQL_ROOT_PASSWORD: installtest
+      MYSQL_DATABASE: panopticon
+      MYSQL_USER: panopticon
+      MYSQL_PASSWORD: panopticon
+    # Ephemeral data directory -- nothing persists between runs.
+    tmpfs:
+      - /var/lib/mysql
+    healthcheck:
+      # Over TCP, so the init-time socket-only server does not count as ready. MariaDB 11+ may lack mysqladmin.
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -pinstalltest --silent || mariadb-admin ping -h 127.0.0.1 -uroot -pinstalltest --silent"]
+      interval: 2s
+      timeout: 5s
+      retries: 60

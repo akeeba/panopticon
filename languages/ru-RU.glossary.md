@@ -302,3 +302,16 @@ Scopes | Области доступа | API token access scopes
 Push Notification | Push-уведомление |
 Action Summary | Сводка действий |
 Period | Период | Report period (daily/weekly/monthly)
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Connection Doctor | Feature name, not translated
+Update Doctor | Update Doctor | Feature name, not translated
+Forbidden IP Ranges | Запрещённые диапазоны IP-адресов | 
+Sticky header and toolbar | Закреплённые шапка и панель инструментов | 
+Colour | Цвет | 
+Custom colour | Свой цвет | 
+Reschedule | Перепланировать | 
+Secret Word | Секретное слово | Akeeba Backup
+Stuck task threshold | Порог зависшей задачи | 
+Reverse proxy | Обратный прокси | 
+Extraction | Распаковка | Script/endpoint

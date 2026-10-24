@@ -9,6 +9,8 @@
  * @var \Awf\Mvc\DataView\Html $this
  * @var string                 $preMessage
  */
+
+defined('AKEEBA') || die;
 ?>
 <div class="col-sm-9 offset-sm-3">
     <div class="alert alert-info">

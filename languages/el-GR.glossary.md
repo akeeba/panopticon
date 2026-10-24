@@ -301,3 +301,19 @@ CRON expression | Έκφραση CRON |
 Full Name | Πλήρες Όνομα | User field
 Confirm Password | Επιβεβαίωση Κωδικού Πρόσβασης |
 Remove | Αφαίρεση | Button/action label
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Έλεγχος Σύνδεσης | 
+Update Doctor | Update Doctor | Feature name, not translated
+Secret Word | Μυστική Λέξη | Akeeba Backup
+Sticky header and toolbar | Σταθερή κεφαλίδα και γραμμή εργαλείων | 
+Toolbar | Γραμμή εργαλείων | 
+Forbidden IP Ranges | Απαγορευμένες Περιοχές IP | 
+Colour | Χρώμα | 
+Stuck-task threshold | όριο κολλημένων εργασιών | 
+Endpoint | τελικό σημείο | 
+Checksum | άθροισμα ελέγχου (checksum) | 
+Badge | σήμα | 
+Indigo | Λουλακί | Colour
+Teal | Τιρκουάζ | Colour
+Cyan | Κυανό | Colour

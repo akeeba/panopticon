@@ -36,6 +36,11 @@ class Html extends \Awf\Mvc\DataView\Html
 
 	public int $maxExec;
 
+	/**
+	 * Where the Next button of the "save configuration" page goes. Null means the CRON setup page.
+	 */
+	public ?string $saveConfigNextUrl = null;
+
 	public function onBeforePrecheck(): bool
 	{
 		$this->setupPageHeader(subTitle: $this->getLanguage()->text('PANOPTICON_SETUP_SUBTITLE_PRECHECK'));

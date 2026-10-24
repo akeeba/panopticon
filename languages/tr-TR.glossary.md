@@ -333,3 +333,15 @@ kill-switch | acil kapatma anahtarı | Figurative "absolute kill-switch" for a h
 mirror (self-hosted download mirror) | ayna sunucu | "If you host your own mirror" → "Kendi ayna sunucunuzu barındırıyorsanız"
 Connector (Panopticon connector extension) | Connector | Kept in English/capitalized as the product component name, per existing usage at PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_HERE
 Core File Integrity (base URL context) | Çekirdek Dosya Bütünlüğü | Reused verbatim from the existing Security/Integrity glossary entry
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Update Doctor | Güncelleme Doktoru | 
+Connection Doctor | Bağlantı Doktoru | 
+Forbidden IP Ranges | Yasaklı IP Aralıkları | 
+Sticky header and toolbar | sabit başlık ve araç çubuğu | 
+Secret Word | Gizli Sözcük | Akeeba Backup
+Checksum | sağlama toplamı | 
+Reverse proxy | ters vekil sunucu | 
+Debug logging | hata ayıklama günlüğü | 
+Stuck-task threshold | takılı görev eşiği | 
+Colour | Renk | 

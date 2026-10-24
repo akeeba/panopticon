@@ -744,7 +744,7 @@ class ExtensionsUpdate extends AbstractCallback
 
 		// Render the messages as plain text
 		$possibleTemplates = [
-			'Mailtemplates/mail_extensions_update_done.' . $language . 'text',
+			'Mailtemplates/mail_extensions_update_done.' . $language . '.text',
 			'Mailtemplates/mail_extensions_update_done.text',
 		];
 		$renderedText      = '';

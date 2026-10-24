@@ -5,8 +5,10 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
+defined('AKEEBA') || die;
+
 const AKEEBA_PANOPTICON_VERSION  = '##VERSION##';
 const AKEEBA_PANOPTICON_DATE     = '##DATE##';
-const AKEEBA_PANOPTICON_CODENAME = 'Daybreak';
+const AKEEBA_PANOPTICON_CODENAME = 'Sunrise';
 // Keep in sync with AKEEBA_PANOPTICON_MINPHP_FALLBACK in defines.php and the `php` requirement in composer.json.
 const AKEEBA_PANOPTICON_MINPHP   = '8.3.0';

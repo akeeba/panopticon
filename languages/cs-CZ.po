@@ -245,11 +245,11 @@ msgstr "%d hodina"
 
 msgctxt "PANOPTICON_LBL_DAY"
 msgid "%d days"
-msgstr "dny"
+msgstr "%d dní"
 
 msgctxt "PANOPTICON_LBL_DAY_1"
 msgid "%d day"
-msgstr "den"
+msgstr "%d den"
 
 msgctxt "PANOPTICON_LBL_MONTH"
 msgid "%d months"
@@ -556,6 +556,11 @@ msgstr "Zobrazit/Skrýt Nápovědu"
 msgctxt "PANOPTICON_APP_LBL_TOOLBAR"
 msgid "Toolbar"
 msgstr "Panel"
+
+#, phpformat
+msgctxt "PANOPTICON_APP_LBL_TOGGLE_TOOLBAR"
+msgid "Toggle toolbar actions"
+msgstr "Přepnout akce panelu nástrojů"
 
 msgctxt "PANOPTICON_APP_LBL_MESSAGES"
 msgid "Messages"
@@ -1062,7 +1067,7 @@ msgstr ""
 "zrušena"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Povolení extrakčního skriptu Joomla Update pro stránku %d (%s)"
 
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_EXTRACT_START"
@@ -2230,7 +2235,7 @@ msgstr "Hostitel nemá funkci CRON"
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_1"
 msgid ""
 "We <strong>very strongly</strong> recommend that you use a different host."
-msgstr "Důrazně doporučujeme, abyste použili jiného hostitele."
+msgstr "<strong>Velmi důrazně</strong> doporučujeme, abyste použili jiného hostitele."
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_TROUBLE_NO_CRON_INFO_2"
 msgid ""
@@ -2371,13 +2376,7 @@ msgid ""
 "device sleep, don't feed your <em title=\"These are the gremlins before they "
 "become gremlins. Are we showing our age with this outdated popular culture "
 "reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr ""
-"Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na "
-"benchmark. Nezavírejte tuto kartu prohlížeče, nepřepínejte na jinou kartu / "
-"okno nebo aplikaci, nevypínejte ani nedávejte zařízení do režimu spánku, "
-"nekrmte svého <em title=\"These are the gremlins before they become "
-"gremlins. Are we showing our age with this outdated popular culture "
-"reference?\">mogwai</em> po půlnoci. Docela jasné, že?"
+msgstr "Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na benchmark. Nezavírejte tuto záložku prohlížeče, nepřepínejte na jinou záložku / okno nebo aplikaci, nevypínejte zařízení ani ho nenechte přejít do režimu spánku a po půlnoci nekrmte své <em title=\"Toto jsou gremlini předtím, než se z nich stanou gremlini. Prozrazujeme tímto svůj věk zastaralým odkazem na popkulturu?\">mogwaie</em>. Celkem jednoduché, že?"
 
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_YOU_CAN_COME_BACK_LATER"
 msgid ""
@@ -3220,6 +3219,16 @@ msgid ""
 msgstr ""
 "Stránka musí mít koncový URL např. <code>https://www.example.com/api</code>."
 
+#, phpformat
+msgctxt "PANOPTICON_SITES_ERR_CONNECTION_DOCTOR_FORBIDDEN"
+msgid "You are not allowed to use the Connection Doctor on this installation. Please contact the administrator of this Panopticon installation for help connecting your site."
+msgstr "Na této instalaci nemáte povoleno používat Doktora připojení. Požádejte o pomoc s připojením vašeho webu správce této instalace Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_ERR_URL_FORBIDDEN_IP"
+msgid "The site URL is not allowed on this installation. Please check the URL. If you believe this is a mistake, contact the administrator of this Panopticon installation."
+msgstr "URL webu není na této instalaci povolena. Zkontrolujte prosím URL. Pokud se domníváte, že jde o chybu, obraťte se na správce této instalace Panopticon."
+
 msgctxt "PANOPTICON_SITES_ERR_NO_TOKEN"
 msgid "You must fill in the API Token."
 msgstr "Musíte vyplnit API Token."
@@ -3555,6 +3564,326 @@ msgctxt "PANOPTICON_SITES_LBL_CONNECTION_DOCTOR_OKAY_MORE"
 msgid "The connection to your site was tested, and found to be working fine."
 msgstr "Připojení k vaší stránce bylo testováno a bylo shledáno funkčním."
 
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_TITLE"
+msgid "Joomla! Update Doctor"
+msgstr "Doktor aktualizací Joomla!"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_RUN"
+msgid "Run Update Doctor"
+msgstr "Spustit Doktora aktualizací"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_ERR_UPDATE_DOCTOR_JOOMLA_ONLY"
+msgid "The Joomla! Update Doctor is only available for Joomla! sites."
+msgstr "Doktor aktualizací Joomla! je k dispozici pouze pro weby Joomla!."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_SELF_ERROR"
+msgid "The Update Doctor could not complete its checks because of an unexpected error."
+msgstr "Doktor aktualizací nemohl dokončit své kontroly kvůli neočekávané chybě."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_NO_RESULTS"
+msgid "The Update Doctor did not return any results."
+msgstr "Doktor aktualizací nevrátil žádné výsledky."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_OKAY"
+msgid "All good!"
+msgstr "Vše v pořádku!"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_OKAY_MORE"
+msgid "The Joomla! core update endpoints were tested and no problems were found. If updates are still failing, use the actions below to reschedule the update or inspect the log."
+msgstr "Koncové body aktualizace jádra Joomla! byly otestovány a nebyly nalezeny žádné problémy. Pokud aktualizace stále selhávají, použijte níže uvedené akce k opětovnému naplánování aktualizace nebo k prohlédnutí protokolu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_API_DOWN_HEAD"
+msgid "The site's API is unreachable"
+msgstr "API webu je nedostupné"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_API_DOWN_BODY"
+msgid "Panopticon cannot talk to your site over its JSON API. Core updates cannot work until that is fixed. Please run the Connection Doctor first to diagnose and resolve the API connection problem, then come back here."
+msgstr "Panopticon nemůže komunikovat s vaším webem přes jeho JSON API. Dokud to nebude opraveno, aktualizace jádra nemohou fungovat. Nejprve prosím spusťte Doktora připojení, který diagnostikuje a vyřeší problém s připojením k API, a poté se sem vraťte."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_API_OK"
+msgid "Panopticon can talk to the site over its JSON API."
+msgstr "Panopticon může s webem komunikovat přes jeho JSON API."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_OK"
+msgid "The Joomla! update extraction endpoint is reachable and responding normally."
+msgstr "Koncový bod rozbalení aktualizace Joomla! je dostupný a odpovídá normálně."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_AUTH_HEAD"
+msgid "The site's administrator folder is password-protected"
+msgstr "Složka administrator webu je chráněna heslem"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_AUTH_BODY"
+msgid "The update extraction endpoint returned HTTP 401 (authentication required). Your site's <code>administrator</code> folder is protected with HTTP (web server) authentication. Edit this site and enter the Administrator Directory Username and Password in the Connection tab, then try again."
+msgstr "Koncový bod rozbalení aktualizace vrátil HTTP 401 (vyžadováno ověření). Složka <code>administrator</code> vašeho webu je chráněna ověřením HTTP (webového serveru). Upravte tento web, na kartě Připojení zadejte uživatelské jméno a heslo adresáře administrátora a zkuste to znovu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_HEAD"
+msgid "The update extraction endpoint is being blocked (HTTP %d)"
+msgstr "Koncový bod rozbalení aktualizace je blokován (HTTP %d)"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_BODY"
+msgid "Panopticon reached your server, but the request to the Joomla! update extraction script was refused with an unexpected HTTP status. This almost always means something between Panopticon and your site's PHP is blocking the request — not Panopticon or Joomla! itself. Core updates cannot complete until this request is allowed through."
+msgstr "Panopticon se k vašemu serveru dostal, ale požadavek na skript rozbalení aktualizace Joomla! byl odmítnut s neočekávaným stavem HTTP. To téměř vždy znamená, že požadavek blokuje něco mezi Panopticon a PHP vašeho webu, nikoli Panopticon či samotná Joomla!. Aktualizace jádra nelze dokončit, dokud tento požadavek nebude propuštěn."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK1"
+msgid "A CDN or reverse proxy (e.g. Cloudflare): check its firewall/WAF events for a block on the <code>/administrator/</code> path and add an exception, or allow the Panopticon server's IP address."
+msgstr "CDN nebo reverzní proxy (např. Cloudflare): zkontrolujte události jeho firewallu/WAF, zda neblokují cestu <code>/administrator/</code>, a přidejte výjimku, nebo povolte IP adresu serveru Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK2"
+msgid "A hosting-level firewall or security system (mod_security, Imunify360, a GeoIP filter, or a bandwidth/rate limit): ask your host to allow requests to the extraction script, or to allow the Panopticon server's country/IP address."
+msgstr "Firewall nebo bezpečnostní systém na úrovni hostingu (mod_security, Imunify360, filtr GeoIP nebo limit přenosu/četnosti požadavků): požádejte svého poskytovatele hostingu, aby povolil požadavky na skript rozbalení nebo povolil zemi/IP adresu serveru Panopticon."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_BLOCKED_CHECK3"
+msgid "A security extension on the site restricting access to the administrator folder for requests that are not coming from a logged-in browser."
+msgstr "Bezpečnostní rozšíření na webu, které omezuje přístup do složky administrator pro požadavky, jež nepocházejí z přihlášeného prohlížeče."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ENDPOINT"
+msgid "Endpoint tested: %s"
+msgstr "Testovaný koncový bod: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ERROR_HEAD"
+msgid "Could not reach the update extraction endpoint"
+msgstr "Nelze se spojit s koncovým bodem rozbalení aktualizace"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_CHECK_EXTRACT_ERROR_BODY"
+msgid "A network or TLS error occurred while contacting the update extraction script. See the details below and the debug information at the bottom of this page."
+msgstr "Při kontaktování skriptu rozbalení aktualizace došlo k síťové chybě nebo chybě TLS. Viz podrobnosti níže a ladicí informace v dolní části této stránky."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_MISSING_HEAD"
+msgid "No Joomla! update log is available yet"
+msgstr "Zatím není k dispozici žádný protokol aktualizace Joomla!"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_MISSING_BODY"
+msgid "There is no update task log for this site to analyse. Reschedule the update (button below) so a fresh attempt runs, then return here to review the log."
+msgstr "Pro tento web neexistuje žádný protokol úlohy aktualizace, který by bylo možné analyzovat. Znovu naplánujte aktualizaci (tlačítko níže), aby proběhl nový pokus, a poté se sem vraťte a protokol si prohlédněte."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_NEED_DEBUG"
+msgid "For the most useful log, enable Debug logging first (button below), then reschedule the update and come back once it has failed again."
+msgstr "Pro nejužitečnější protokol nejprve povolte protokolování úrovně Ladění (tlačítko níže), poté znovu naplánujte aktualizaci a vraťte se, až znovu selže."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_LAST_ERROR"
+msgid "Most recent error line in the log:"
+msgstr "Nejnovější řádek s chybou v protokolu:"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CLEAN"
+msgid "No recent errors were found in the site's Joomla! update log."
+msgstr "V protokolu aktualizace Joomla! tohoto webu nebyly nalezeny žádné nedávné chyby."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BLOCKED_HEAD"
+msgid "The last update was blocked while extracting (HTTP %d)"
+msgstr "Poslední aktualizace byla zablokována při rozbalování (HTTP %d)"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BLOCKED_BODY"
+msgid "The most recent update failed because the request to the extraction script was refused. This matches a CDN, host firewall, GeoIP filter, or rate/bandwidth limit blocking the request. See the extraction endpoint check above for what to do."
+msgstr "Poslední aktualizace selhala, protože požadavek na skript rozbalení byl odmítnut. To odpovídá situaci, kdy požadavek blokuje CDN, firewall hostingu, filtr GeoIP nebo limit přenosu/četnosti požadavků. Co dělat, najdete ve výše uvedené kontrole koncového bodu rozbalení."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_AUTH_HEAD"
+msgid "The last update failed on administrator folder authentication"
+msgstr "Poslední aktualizace selhala na ověření složky administrator"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_AUTH_BODY"
+msgid "The extraction script returned HTTP 401. Enter the Administrator Directory Username and Password for this site in the Connection tab, then try again."
+msgstr "Skript rozbalení vrátil HTTP 401. Na kartě Připojení zadejte uživatelské jméno a heslo adresáře administrátora tohoto webu a zkuste to znovu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_JSON_HEAD"
+msgid "The extraction script returned an invalid response"
+msgstr "Skript rozbalení vrátil neplatnou odpověď"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_JSON_BODY"
+msgid "The extraction script did not return valid JSON. This usually means a PHP notice, warning, or error is being printed by the site. Check the site's error log and disable any output-producing plugins on the extraction script."
+msgstr "Skript rozbalení nevrátil platný JSON. Obvykle to znamená, že web vypisuje oznámení, upozornění nebo chybu PHP. Zkontrolujte chybový protokol webu a zakažte pluginy, které produkují výstup, na skriptu rozbalení."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_EXTRACT_HEAD"
+msgid "The update extraction failed"
+msgstr "Rozbalení aktualizace selhalo"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_EXTRACT_BODY"
+msgid "The extraction script reported a failure. The site may be in a half-updated state. Review the full log, and consider checking the site manually before retrying."
+msgstr "Skript rozbalení ohlásil selhání. Web může být v napůl aktualizovaném stavu. Prohlédněte si celý protokol a před dalším pokusem zvažte ruční kontrolu webu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DOWNLOAD_HEAD"
+msgid "Downloading the update package failed"
+msgstr "Stažení balíčku aktualizace selhalo"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DOWNLOAD_BODY"
+msgid "The update package could not be downloaded to the site. This can be a slow or blocked download from Joomla!'s servers, or the site's temporary directory being cleared. Retry the update; if it recurs, check the site's connectivity to downloads.joomla.org."
+msgstr "Balíček aktualizace se nepodařilo stáhnout na web. Příčinou může být pomalé či blokované stahování ze serverů Joomla! nebo vymazání dočasného adresáře webu. Zkuste aktualizaci zopakovat; pokud se problém vrátí, zkontrolujte připojení webu k downloads.joomla.org."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CHECKSUM_HEAD"
+msgid "The downloaded update package was corrupt"
+msgstr "Stažený balíček aktualizace byl poškozený"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_CHECKSUM_BODY"
+msgid "The downloaded package failed its checksum verification, meaning it was incomplete or altered in transit (often a proxy or an interrupted download). Retry the update."
+msgstr "Stažený balíček neprošel ověřením kontrolního součtu, což znamená, že byl neúplný nebo byl při přenosu změněn (často kvůli proxy nebo přerušenému stahování). Zkuste aktualizaci zopakovat."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BACKUP_HEAD"
+msgid "The pre-update backup failed"
+msgstr "Záloha před aktualizací selhala"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_BACKUP_BODY"
+msgid "The update was cancelled because the backup that runs before updating failed. Check Akeeba Backup on the site (its configuration and the selected backup profile), or disable the pre-update backup for this site."
+msgstr "Aktualizace byla zrušena, protože selhala záloha provedená před aktualizací. Zkontrolujte Akeeba Backup na webu (jeho konfiguraci a vybraný profil zálohy) nebo pro tento web zakažte zálohu před aktualizací."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_ENABLE_HEAD"
+msgid "Could not enable the extraction script"
+msgstr "Skript rozbalení se nepodařilo povolit"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_ENABLE_BODY"
+msgid "Panopticon could not activate the Joomla! update extraction script on the site. Review the full log; the extraction endpoint check above may show the underlying cause."
+msgstr "Panopticon nemohl na webu aktivovat skript rozbalení aktualizace Joomla!. Prohlédněte si celý protokol; skutečnou příčinu může odhalit výše uvedená kontrola koncového bodu rozbalení."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DISAPPEARED_HEAD"
+msgid "The update package disappeared during the update"
+msgstr "Balíček aktualizace zmizel během aktualizace"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_DISAPPEARED_BODY"
+msgid "The downloaded update package vanished before it could be extracted. A plugin or your host may be clearing the site's temporary directory automatically. Check for aggressive temp-file cleanup and retry."
+msgstr "Stažený balíček aktualizace zmizel dříve, než mohl být rozbalen. Dočasný adresář webu může automaticky mazat plugin nebo váš hosting. Zkontrolujte, zda nedochází k agresivnímu čištění dočasných souborů, a zkuste to znovu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FINALISE_HEAD"
+msgid "Finalising the update failed"
+msgstr "Dokončení aktualizace selhalo"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FINALISE_BODY"
+msgid "The files were extracted but the post-update finalisation failed. Log into the site and check System, Maintenance, Database, and whether Joomla! reports itself as up-to-date."
+msgstr "Soubory byly rozbaleny, ale dokončení po aktualizaci selhalo. Přihlaste se na web a zkontrolujte Systém, Údržba, Databáze a zda Joomla! hlásí, že je aktuální."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_RELOAD_HEAD"
+msgid "Could not reload update information after updating"
+msgstr "Po aktualizaci se nepodařilo znovu načíst informace o aktualizaci"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_RELOAD_BODY"
+msgid "The update applied but Panopticon could not re-read the site's update status afterwards. Refresh the site information; if it keeps failing, run the Connection Doctor."
+msgstr "Aktualizace byla provedena, ale Panopticon poté nemohl znovu přečíst stav aktualizací webu. Obnovte informace o webu; pokud to stále selhává, spusťte Doktora připojení."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FACTORY_HEAD"
+msgid "The extraction lost its internal state"
+msgstr "Rozbalení ztratilo svůj vnitřní stav"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_FACTORY_BODY"
+msgid "An internal error interrupted the extraction (the script's state was lost between steps). This can be caused by the extraction request being terminated early. Retry the update and review the full log if it recurs."
+msgstr "Rozbalení přerušila vnitřní chyba (stav skriptu se mezi kroky ztratil). Příčinou může být předčasné ukončení požadavku na rozbalení. Zkuste aktualizaci zopakovat a pokud se problém vrátí, prohlédněte si celý protokol."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_TIMEOUT_HEAD"
+msgid "The last update timed out"
+msgstr "Poslední aktualizace vypršela"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_TIMEOUT_BODY"
+msgid "The update task was marked as timed out. This happens when the whole stepped update takes longer than the stuck-task threshold, or a worker was killed mid-step. Consider raising the stuck-task threshold in System Configuration, ensuring the CRON job runs frequently, and checking the site's PHP memory limit."
+msgstr "Úloha aktualizace byla označena jako vypršelá. Stává se to, když celá postupná aktualizace trvá déle než práh zaseknuté úlohy, nebo když byl pracovní proces uprostřed kroku ukončen. Zvažte zvýšení prahu zaseknuté úlohy v Systémové konfiguraci, zajištění častého spouštění úlohy CRON a kontrolu limitu paměti PHP webu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_UNKNOWN_HEAD"
+msgid "The last update ended with an error"
+msgstr "Poslední aktualizace skončila chybou"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_LOG_UNKNOWN_BODY"
+msgid "The most recent update run recorded an error that the Doctor could not categorise automatically. The error line is shown below; open the full log for the complete context."
+msgstr "Poslední běh aktualizace zaznamenal chybu, kterou Doktor nedokázal automaticky zařadit do kategorie. Řádek s chybou je zobrazen níže; úplný kontext najdete v celém protokolu."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_HEAD"
+msgid "Latest core update report"
+msgstr "Nejnovější zpráva o aktualizaci jádra"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_STEP"
+msgid "The update failed during the “%s” step."
+msgstr "Aktualizace selhala během kroku „%s“."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_HTTP"
+msgid "The recorded failure mentions HTTP status %d."
+msgstr "Zaznamenané selhání zmiňuje stav HTTP %d."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_BACKUP_ON"
+msgid "A backup was taken (or attempted) before this update."
+msgstr "Před touto aktualizací byla provedena (nebo zkoušena) záloha."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_REPORT_BACKUP_OFF"
+msgid "No pre-update backup was configured for this update."
+msgstr "Pro tuto aktualizaci nebyla nakonfigurována žádná záloha před aktualizací."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_RESCHEDULE"
+msgid "Reschedule the update"
+msgstr "Znovu naplánovat aktualizaci"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_VIEW_LOG"
+msgid "Open the full log"
+msgstr "Otevřít celý protokol"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_ENABLE_DEBUG"
+msgid "Enable Debug logging (global)"
+msgstr "Povolit protokolování úrovně Ladění (globálně)"
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_ENABLE_DEBUG_WARN"
+msgid "This changes the global logging level to Debug for every task and site. Remember to set it back to a lower level in System Configuration once you have finished troubleshooting."
+msgstr "Tím se globální úroveň protokolování změní na Ladění pro všechny úlohy a weby. Po dokončení řešení potíží nezapomeňte v Systémové konfiguraci nastavit nižší úroveň."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_UPDATE_DOCTOR_DEBUG_ENABLED"
+msgid "Global Debug logging has been enabled. Reschedule the update, and once it fails again return here to review the detailed log."
+msgstr "Globální protokolování úrovně Ladění bylo povoleno. Znovu naplánujte aktualizaci a jakmile znovu selže, vraťte se sem a prohlédněte si podrobný protokol."
+
 msgctxt "PANOPTICON_SITES_FIELD_CONFIG_SSL_WARNING"
 msgid "SSL/TLS Expiration First Warning"
 msgstr "První varování o vypršení platnosti SSL/TLS"
@@ -3849,11 +4178,7 @@ msgid ""
 "em> use HTML; all tags and multiple whitespaces are removed before "
 "evaluating this string. Leave blank to consider any HTTP 2xx response as "
 "adequate proof the site is up."
-msgstr ""
-"Stránka bude považována za dostupnou, pokud stránka obsahuje tento řetězec. "
-"Nepoužívejte HTML; všechny značky a vícenásobné mezery jsou odstraněny před "
-"vyhodnocením tohoto řetězce. Nechte prázdné, aby byl jakýkoli HTTP 2xx "
-"odpověď považována za dostatečný důkaz, že stránka je dostupná."
+msgstr "Web bude považován za dostupný, pokud stránka obsahuje tento řetězec. <em>NEPOUŽÍVEJTE</em> HTML; všechny značky a vícenásobné mezery jsou před vyhodnocením tohoto řetězce odstraněny. Nechte prázdné, pokud má být za dostatečný důkaz dostupnosti webu považována jakákoli odpověď HTTP 2xx."
 
 msgctxt "PANOPTICON_SITES_BATCH_TITLE"
 msgid "Batch process the selected sites"
@@ -4369,12 +4694,7 @@ msgid "Reload WordPress update information for site “%s”"
 msgstr "Načíst znovu informace o aktualizaci WordPress pro web „%s“"
 
 msgctxt "PANOPTICON_SITE_LBL_WPUPDATE_SOURCE_INFO"
-msgid ""
-"The WordPress update availability information is provided by your site. "
-"WordPress End-of-Life dates come from <a href=\\\"%s\\\" target=\\\"_blank\\"
-"\">%1$s</a>. The WordPress project does not publish end of security updates "
-"and / or end of life dates ahead of time, which is why this information is "
-"not displayed in Panopticon."
+msgid "The WordPress update availability information is provided by your site. WordPress End-of-Life dates come from <a href=\"%s\" target=\"_blank\">%1$s</a>. The WordPress project does not publish end of security updates and / or end of life dates ahead of time, which is why this information is not displayed in Panopticon."
 msgstr ""
 "Informace o dostupnosti aktualizací WordPress poskytuje váš web. Data "
 "ukončení podpory WordPress jsou z <a href=\"%s\" target=\"_blank\">%1$s</a>. "
@@ -4945,6 +5265,26 @@ msgstr ""
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_HEAD"
 msgid "Cannot find a way to connect to Akeeba Backup."
 msgstr "Nelze najít způsob připojení k Akeeba Backup."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_HEAD"
+msgid "No way to authenticate to Akeeba Backup."
+msgstr "Není možné se ověřit v Akeeba Backup."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_BODY"
+msgid "Your site gave Panopticon neither an Akeeba Backup Secret Word nor a Joomla! API token, so there is nothing to authenticate the Akeeba Backup JSON API with."
+msgstr "Váš web nepředal Panopticon ani Tajné slovo Akeeba Backup, ani API token Joomla!, takže není čím ověřit JSON API Akeeba Backup."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_TIP_1"
+msgid "Connect Panopticon to this site with a Joomla! API Token instead of a username and password. Akeeba Backup 10.4.0 and later accept that same token, and it lets you grant Panopticon only the privileges it needs."
+msgstr "Připojte Panopticon k tomuto webu pomocí API tokenu Joomla! namísto uživatelského jména a hesla. Akeeba Backup 10.4.0 a novější tentýž token akceptují a umožňuje vám udělit Panopticon pouze oprávnění, která potřebuje."
+
+#, phpformat
+msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_NOCREDENTIALS_TIP_2"
+msgid "Alternatively, log into your site's backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”, then click on Save &amp; Close in the toolbar. Note that the Secret Word is deprecated; it will stop working in Akeeba Backup 11.0, in October 2027."
+msgstr "Případně se přihlaste do backendu svého webu. Přejděte na Komponenty, Akeeba Backup, Ovládací panel. Klikněte na Možnosti, Front-end záloha a nastavte „Enable JSON API (remote backup)“ na Ano. Zadejte nové „Secret Word“ a poté na panelu nástrojů klikněte na Save &amp; Close. Upozorňujeme, že Tajné slovo je zastaralé; v Akeeba Backup 11.0 v říjnu 2027 přestane fungovat."
 
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_BODY"
 msgid ""
@@ -6299,7 +6639,7 @@ msgstr ""
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK"
 msgid "You can address this issue by doing <em>one</em> of the following:"
-msgstr "Tento problém můžete vyřešit jedním z následujících způsobů:"
+msgstr "Tento problém můžete vyřešit provedením <em>jednoho</em> z následujících kroků:"
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_TLS_SELFSIGNED_CHECK1"
 msgid ""
@@ -6541,10 +6881,7 @@ msgid ""
 "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, "
 "to provide the necessary API through WordPress' JSON services API (<code>wp-"
 "json</code>)."
-msgstr ""
-"Panopticon používá svůj vlastní plugin \"Akeeba Panopticon Connector for "
-"WordPress\", který poskytuje potřebné API prostřednictvím API služeb JSON "
-"WordPress (<code>wp-json</code>)."
+msgstr "Panopticon používá vlastní plugin „Akeeba Panopticon Connector for WordPress“, který poskytuje potřebné API prostřednictvím JSON API služeb WordPressu (<code>wp-json</code>)."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
 msgid ""
@@ -6577,10 +6914,7 @@ msgid ""
 "Instead, we got an error which we should be able to provide troubleshooting "
 "information for (<span class=\"font-monospace\">%s</span>), but we don't "
 "have the code for it. This should have not happened."
-msgstr ""
-"Místo toho jsme dostali chybu, pro kterou bychom měli být schopni poskytnout "
-"informace pro řešení problémů (<span class=\"font-monospace\">%s</span>), "
-"ale nemáme pro ni kód. To by se nemělo stát."
+msgstr "Místo toho jsme obdrželi chybu, pro kterou bychom měli být schopni poskytnout informace pro řešení potíží (<span class=\"font-monospace\">%s</span>), ale nemáme pro ni příslušný kód. To se nemělo stát."
 
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
 msgid ""
@@ -6775,6 +7109,61 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_LOGINFAIL"
 msgid "Automatic IP blocking"
 msgstr "Automatické blokování IP"
 
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_SITELIMITS"
+msgid "Site and Tools Limits"
+msgstr "Limity webů a nástrojů"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS"
+msgid "Connection Doctor access"
+msgstr "Přístup k Doktoru připojení"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_OWN"
+msgid "Create / Edit Own Site"
+msgstr "Vytvářet / upravovat vlastní web"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_ADMIN"
+msgid "Global Create / Edit Sites"
+msgstr "Globálně vytvářet / upravovat weby"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_SUPER"
+msgid "Super Users only"
+msgstr "Pouze superuživatelé"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_CONNECTION_DOCTOR_ACCESS_HELP"
+msgid "Who is allowed to run the Connection Doctor? The Connection Doctor shows you the raw response received from the site, which is what makes it useful for diagnosing a site whose API has been broken by a third party plugin. It also means whoever runs it can read the response from any URL they are able to enter.<br><br><strong>Create / Edit Own Site</strong> is the default and how Panopticon has always worked: anyone who can add or edit a site can run the Connection Doctor on it.<br><br>Choose <strong>Global Create / Edit Sites</strong> or <strong>Super Users only</strong> if you let people you do not fully trust add their own sites. Self-service users will then be unable to diagnose their own connection problems, and you become responsible for supporting them."
+msgstr "Kdo smí spouštět Doktora připojení? Doktor připojení zobrazuje nezpracovanou odpověď přijatou z webu, čímž je užitečný pro diagnostiku webu, jehož API poškodil plugin třetí strany. Znamená to ale také, že kdokoli, kdo jej spustí, může číst odpověď z libovolné URL, kterou je schopen zadat.<br><br><strong>Vytvářet / upravovat vlastní web</strong> je výchozí volba a způsob, jakým Panopticon vždy fungoval: kdokoli, kdo může přidat nebo upravit web, může na něm spustit Doktora připojení.<br><br>Zvolte <strong>Globálně vytvářet / upravovat weby</strong> nebo <strong>Pouze superuživatelé</strong>, pokud dovolíte lidem, kterým plně nedůvěřujete, přidávat vlastní weby. Uživatelé v samoobslužném režimu pak nebudou moci diagnostikovat vlastní problémy s připojením a podporu jim budete poskytovat vy."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES"
+msgid "Forbidden IP Ranges"
+msgstr "Zakázané rozsahy IP"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_HELP"
+msgid "If a site definition URL's domain part is an IP address, or resolves to an IP address, in any of these ranges the site will not be accepted; you will get a validation error instead. This should include the IP addresses of your internal network where monitored sites cannot possibly live.<br><br>This is meant for installations where you let people you do not fully trust add their own sites, e.g. when you offer monitoring as a paid service. Leave empty — the default — to allow any address, which is what you want when you are the only person adding sites.<br><br>Each row accepts a single IP address (<code>192.168.1.1</code>), an inclusive range (<code>192.168.1.1-192.168.1.255</code>), an IP address with a netmask (<code>192.168.1.1/255.255.255.0</code>), or a CIDR block (<code>192.168.1.1/24</code>). Both IPv4 and IPv6 are supported.<br><br>If you are hosting on a cloud platform you will most likely want to include its instance metadata address, e.g. <code>169.254.169.254</code> on Amazon Web Services and Google Cloud."
+msgstr "Pokud je doménová část URL definice webu IP adresa nebo se překládá na IP adresu v některém z těchto rozsahů, web nebude přijat; místo toho se zobrazí chyba ověření. Měly by zde být zahrnuty IP adresy vaší vnitřní sítě, kde monitorované weby nemohou existovat.<br><br>Je to určeno pro instalace, kde dovolujete lidem, kterým plně nedůvěřujete, přidávat vlastní weby, např. když nabízíte monitoring jako placenou službu. Ponecháte-li pole prázdné (výchozí stav), bude povolena jakákoli adresa, což je to, co chcete, pokud weby přidáváte pouze vy.<br><br>Každý řádek přijímá jednu IP adresu (<code>192.168.1.1</code>), souvislý rozsah (<code>192.168.1.1-192.168.1.255</code>), IP adresu s maskou sítě (<code>192.168.1.1/255.255.255.0</code>) nebo blok CIDR (<code>192.168.1.1/24</code>). Podporovány jsou IPv4 i IPv6.<br><br>Pokud hostujete na cloudové platformě, pravděpodobně budete chtít zahrnout adresu jejích metadat instance, např. <code>169.254.169.254</code> na Amazon Web Services a Google Cloud."
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_PLACEHOLDER"
+msgid "e.g. 192.168.1.0/24"
+msgstr "např. 192.168.1.0/24"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_ADD"
+msgid "Add IP range"
+msgstr "Přidat rozsah IP"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FORBIDDEN_IP_RANGES_REMOVE"
+msgid "Remove this IP range"
+msgstr "Odebrat tento rozsah IP"
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_SUBHEAD_PASSWORD_SECURITY"
 msgid "Password Security"
 msgstr "Zabezpečení hesel"
@@ -6881,14 +7270,8 @@ msgid "Forbid using leaked passwords"
 msgstr "Zakázat používání uniklých hesel"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid ""
-"Prevent users from using passwords which are found in online password leaks. "
-"Powered by the third party service <a href='https://haveibeenpwned.com/' "
-"_target='blank'>Have I Been Pwned</a>."
-msgstr ""
-"Zabránit uživatelům v používání hesel, která se objevila v únicích na "
-"internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' "
-"_target='blank'>Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
+msgstr "Zabraňte uživatelům v používání hesel, která byla nalezena v únicích hesel na internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STATS_COLLECTION"
 msgid "Anonymous Usage Statistics Collection"
@@ -6939,6 +7322,16 @@ msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_FONTSIZE"
 msgid "Font size"
 msgstr "Velikost písma"
 
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STICKY_CHROME"
+msgid "Sticky header and toolbar"
+msgstr "Přichycená hlavička a panel nástrojů"
+
+#, phpformat
+msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_STICKY_CHROME_HELP"
+msgid "Keep the header and the toolbar pinned to the top of the page when scrolling, so that the toolbar buttons remain reachable on long pages. Each user can override this in their profile. On very short displays, such as a phone held sideways, the header and toolbar always scroll away regardless of this setting."
+msgstr "Při posouvání ponechá hlavičku a panel nástrojů připnuté k hornímu okraji stránky, aby tlačítka panelu nástrojů zůstala dostupná i na dlouhých stránkách. Každý uživatel to může přepsat ve svém profilu. Na velmi nízkých displejích, například u telefonu drženého na šířku, hlavička a panel nástrojů při posouvání vždy odjedou bez ohledu na toto nastavení."
+
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_DASHBOARD_RELOAD_TIMER"
 msgid "Dashboard Reload Timer"
 msgstr "Časovač obnovení panelu"
@@ -6971,12 +7364,8 @@ msgid "Show avatars for users"
 msgstr "Zobrazovat uživatelské avatary"
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid ""
-"Display avatars for users. This feature is powered by the third party "
-"service <a href='https://gravatar.com' _target='_blank'>Gravatar</a>."
-msgstr ""
-"Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a "
-"href='https://gravatar.com' _target='_blank'>Gravatar</a>."
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
+msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
 
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_WEBCRON_KEY"
 msgid "Web CRON Key"
@@ -8177,10 +8566,7 @@ msgid ""
 "Panopticon cannot be updated directly from its interface when it runs under "
 "Docker. Instead, you need to follow the <a href='%s'>documentation "
 "instructions</a> to update the container, and the database."
-msgstr ""
-"Panopticon nelze aktualizovat přímo z rozhraní, pokud běží v Dockeru. Místo "
-"toho musíte postupovat podle <a href='%s'>pokynů v dokumentaci</a> a "
-"aktualizovat kontejner a databázi."
+msgstr "Panopticon nelze aktualizovat přímo z jeho rozhraní, pokud běží v prostředí Docker. Místo toho musíte podle <a href='%s'>pokynů v dokumentaci</a> aktualizovat kontejner i databázi."
 
 msgctxt "PANOPTICON_GROUPS_TITLE"
 msgid "Groups"
@@ -8205,6 +8591,111 @@ msgstr "Název skupiny"
 msgctxt "PANOPTICON_GROUPS_FIELD_TITLE"
 msgid "Group Name"
 msgstr "Název skupiny"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR"
+msgid "Colour"
+msgstr "Barva"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_HELP"
+msgid "Colours the group's badge wherever it appears in the site lists. The text colour is chosen automatically for the best contrast against your chosen background. If you want an icon, add an emoji to the group's name instead — Panopticon deliberately does not support group icons."
+msgstr "Obarví odznak skupiny všude, kde se objevuje v seznamech webů. Barva textu je vybrána automaticky tak, aby byl kontrast s vámi zvoleným pozadím co nejlepší. Pokud chcete ikonu, přidejte emoji do názvu skupiny – Panopticon záměrně nepodporuje ikony skupin."
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_NONE"
+msgid "No colour"
+msgstr "Žádná barva"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_CUSTOM"
+msgid "Custom colour"
+msgstr "Vlastní barva"
+
+#, phpformat
+msgctxt "PANOPTICON_GROUPS_FIELD_COLOUR_PREVIEW_PLACEHOLDER"
+msgid "YOUR GROUP NAME GOES HERE"
+msgstr "ZDE BUDE NÁZEV VAŠÍ SKUPINY"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_BLUE"
+msgid "Blue"
+msgstr "Modrá"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_INDIGO"
+msgid "Indigo"
+msgstr "Indigová"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_PURPLE"
+msgid "Purple"
+msgstr "Purpurová"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_PINK"
+msgid "Pink"
+msgstr "Růžová"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_RED"
+msgid "Red"
+msgstr "Červená"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_ORANGE"
+msgid "Orange"
+msgstr "Oranžová"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_YELLOW"
+msgid "Yellow"
+msgstr "Žlutá"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_GREEN"
+msgid "Green"
+msgstr "Zelená"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_TEAL"
+msgid "Teal"
+msgstr "Modrozelená"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_CYAN"
+msgid "Cyan"
+msgstr "Azurová"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_GREY"
+msgid "Grey"
+msgstr "Šedá"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_SILVER"
+msgid "Silver"
+msgstr "Stříbrná"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_DARK"
+msgid "Dark"
+msgstr "Tmavá"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_LIGHT"
+msgid "Light"
+msgstr "Světlá"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_BLACK"
+msgid "Black"
+msgstr "Černá"
+
+#, phpformat
+msgctxt "PANOPTICON_COLOUR_WHITE"
+msgid "White"
+msgstr "Bílá"
 
 msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS"
 msgid "Permissions"
@@ -8345,10 +8836,7 @@ msgid ""
 "The email address is used to email the user, as well as displaying the "
 "user's picture using the third party <a href=\"https://en.gravatar.com\" "
 "target=\"_blank\">Gravatar</a> service."
-msgstr ""
-"Emailová adresa se používá k zasílání emailů uživateli a také k zobrazení "
-"obrázku uživatele pomocí služby třetí strany <a href=\"https://"
-"en.gravatar.com\" target=\"_blank\">Gravatar</a>."
+msgstr "E-mailová adresa se používá k zasílání e-mailů uživateli a také k zobrazení obrázku uživatele pomocí služby třetí strany <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>."
 
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD"
 msgid "Password"
@@ -8428,6 +8916,31 @@ msgid ""
 msgstr ""
 "Rozvržení Přístrojové desky je jednodušší na pochopení, ale používá více "
 "prostředků prohlížeče."
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME"
+msgid "Sticky header and toolbar"
+msgstr "Přichycená hlavička a panel nástrojů"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_DEFAULT"
+msgid "Use Default"
+msgstr "Použít výchozí"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_YES"
+msgid "Yes"
+msgstr "Ano"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_OPT_NO"
+msgid "No"
+msgstr "Ne"
+
+#, phpformat
+msgctxt "PANOPTICON_USERS_LBL_FIELD_STICKY_CHROME_HELP"
+msgid "Keep the header and the toolbar pinned to the top of the page when scrolling, so that the toolbar buttons remain reachable on long pages."
+msgstr "Při posouvání ponechá hlavičku a panel nástrojů připnuté k hornímu okraji stránky, aby tlačítka panelu nástrojů zůstala dostupná i na dlouhých stránkách."
 
 msgctxt "PANOPTICON_USERS_LBL_FORCED_MFA_NEEDED"
 msgid ""
@@ -8621,11 +9134,7 @@ msgid ""
 "contributed outside of GitHub and would like to be publicly acknowledged, "
 "please drop us a line and we'll rectify the omission; <em>every person "
 "matters</em>."
-msgstr ""
-"Chtěli bychom uznat a ocenit práci každého, kdo přispěl k Akeeba Panopticon, "
-"bez ohledu na velikost jejich příspěvku; i ty nejmenší detaily jsou "
-"důležité. Pokud jste přispěli mimo GitHub a chcete být veřejně uznáni, dejte "
-"nám prosím vědět a napravíme opomenutí; <em>každý člověk je důležitý</em>."
+msgstr "Rádi bychom ocenili a uznali práci každého jednotlivce, který přispěl k projektu Akeeba Panopticon, ať je jeho příspěvek malý, nebo velký; důležité jsou i ty nejmenší detaily. Pokud jste přispěli mimo GitHub a chtěli byste být veřejně uvedeni, napište nám a my toto opomenutí napravíme; <em>záleží na každém člověku</em>."
 
 msgctxt "PANOPTICON_BACKUPTASKS_TITLE"
 msgid "Backup Tasks"
@@ -8665,15 +9174,7 @@ msgid ""
 "note that the Panopticon variables may differ by a few seconds compared to "
 "the Akeeba Backup variables as they are processed on the server running "
 "Panopticon, not the site's server where Akeeba Backup runs."
-msgstr ""
-"Můžete použít proměnné Akeeba Backup, jako <code>[DATE]</code>, "
-"<code>[SITE]</code> atd. Tyto proměnné budou nahrazeny Akeeba Backup při "
-"zálohování. Můžete také použít proměnné <code>{DATE_FORMAT_LC}</code>, "
-"<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code>, které budou "
-"nahrazeny Panopticonem formátovanou verzí času zálohování. Upozorňujeme, že "
-"proměnné Panopticonu se mohou lišit o několik sekund od proměnných Akeeba "
-"Backup, protože jsou zpracovávány na serveru, kde běží Panopticon, nikoliv "
-"na serveru webu, kde běží Akeeba Backup."
+msgstr "Můžete použít proměnné Akeeba Backup, například <code>[DATE]</code>, <code>[SITE]</code> atd. Akeeba Backup je nahradí v okamžiku zálohování. Můžete také použít proměnné <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code>, které Panopticon nahradí formátovanou podobou času zálohy. Upozorňujeme, že proměnné Panopticonu se mohou od proměnných Akeeba Backup lišit o několik sekund, protože se zpracovávají na serveru, na kterém běží Panopticon, nikoli na serveru webu, kde běží Akeeba Backup."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_DEFAULT"
 msgid "Scheduled remote backup with Panopticon taken on {DATE_FORMAT_LC7}"
@@ -8729,14 +9230,7 @@ msgid ""
 "day within the same month that's not a Saturday or Sunday, e.g. <code>15W</"
 "code> is the closest day (from the 13th to the 17th) which is not a Saturday "
 "or Sunday."
-msgstr ""
-"Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v "
-"měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</"
-"code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý "
-"den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> "
-"(každé 3 dny).<br>Použijte číslo s <code>W</code> pro nejbližší den v témže "
-"měsíci, který není sobota nebo neděle, např. <code>15W</code> je nejbližší "
-"den (od 13. do 17.), který není sobota nebo neděle."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> (každé 3 dny).<br>Číslo s <code>W</code> označuje nejbližší den ve stejném měsíci, který není sobota ani neděle, např. <code>15W</code> je nejbližší den (od 13. do 17.), který není sobota ani neděle."
 
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_MONTH"
 msgid "Month"
@@ -8951,14 +9445,7 @@ msgid ""
 "day within the same month that's not a Saturday or Sunday, e.g. <code>15W</"
 "code> is the closest day (from the 13th to the 17th) which is not a Saturday "
 "or Sunday."
-msgstr ""
-"Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v "
-"měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</"
-"code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý "
-"den jako <code>*</code>, každých X dní pomocí lomítka např.<code>*/3</code> "
-"(každé 3 dny).<br>Použijte číslo s <code>W</code> pro nejbližší den v témže "
-"měsíci, který není sobota nebo neděle, např. <code>15W</code> je nejbližší "
-"den (od 13. do 17.), který není sobota nebo neděle."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> (každé 3 dny).<br>Číslo s <code>W</code> označuje nejbližší den ve stejném měsíci, který není sobota ani neděle, např. <code>15W</code> je nejbližší den (od 13. do 17.), který není sobota ani neděle."
 
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_MONTH"
 msgid "Month"
@@ -9871,6 +10358,96 @@ msgctxt "PANOPTICON_EXTUPDATES_ERR_INVALID_SELECTION"
 msgid "Invalid extensions selection."
 msgstr "Neplatný výběr rozšíření."
 
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_TITLE"
+msgid "Extensions"
+msgstr "Rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_SITE"
+msgid "Site"
+msgstr "Web"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_SITE_SELECT"
+msgid "– Site –"
+msgstr "– Web –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_CMSVERSION_SELECT"
+msgid "– CMS Version –"
+msgstr "– Verze CMS –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_PHPVERSION_SELECT"
+msgid "– PHP Version –"
+msgstr "– Verze PHP –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_NAME"
+msgid "Extension Name"
+msgstr "Název rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_NAME_SELECT"
+msgid "– Extension Name –"
+msgstr "– Název rozšíření –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR"
+msgid "Extension Author"
+msgstr "Autor rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_SELECT"
+msgid "– Author –"
+msgstr "– Autor –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_URL"
+msgid "Author URL"
+msgstr "URL autora"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_URL_SELECT"
+msgid "– Author URL –"
+msgstr "– URL autora –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_EMAIL"
+msgid "Author Email"
+msgstr "E-mail autora"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_LBL_EXT_AUTHOR_EMAIL_SELECT"
+msgid "– Author Email –"
+msgstr "– E-mail autora –"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_TABLE_COMMENT"
+msgid "Table of all installed extensions"
+msgstr "Tabulka všech nainstalovaných rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_SITE"
+msgid "Site"
+msgstr "Web"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_EXTENSION"
+msgid "Extension"
+msgstr "Rozšíření"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_VERSION"
+msgid "Version"
+msgstr "Verze"
+
+#, phpformat
+msgctxt "PANOPTICON_EXTENSIONS_FIELD_AUTHOR"
+msgid "Author"
+msgstr "Autor"
+
 msgctxt "PANOPTICON_COREUPDATES_TITLE"
 msgid "Core Updates"
 msgstr "Aktualizace jádra"
@@ -10044,9 +10621,7 @@ msgid ""
 "Randomly generated installation ID. Used for data deduplication. It "
 "<strong>cannot</strong> be traced back to a particular installation or "
 "person."
-msgstr ""
-"Náhodně generované ID instalace. Používá se pro deduplikaci dat. Nelze jej "
-"zpětně vysledovat na konkrétní instalaci nebo osobu."
+msgstr "Náhodně generované ID instalace. Používá se pro deduplikaci dat. <strong>Nelze</strong> jej zpětně vysledovat k žádné konkrétní instalaci ani osobě."
 
 msgctxt "PANOPTICON_USAGESTATS_LBL_DATAINFO_SW"
 msgid "Software identifier. 17 is Akeeba Panopticon."
@@ -10444,11 +11019,7 @@ msgid ""
 "to the site. When any groups are selected: emails are sent to all users who "
 "are assigned to the selected group, <em>even if they can't even view the "
 "site in the Sites Overview page</em>."
-msgstr ""
-"Pokud nejsou vybrány žádné skupiny: e-maily jsou odesílány všem uživatelům, "
-"kteří mohou provádět změny na webu. Když jsou vybrány nějaké skupiny: e-"
-"maily jsou odesílány všem uživatelům přiřazeným k vybrané skupině, <em>i "
-"když nemohou ani vidět web na stránce Přehled webů</em>."
+msgstr "Pokud nejsou vybrány žádné skupiny: e-maily se odesílají všem uživatelům, kteří mohou provádět změny na webu. Pokud jsou vybrány nějaké skupiny: e-maily se odesílají všem uživatelům přiřazeným k vybrané skupině, <em>i když nemohou web ani zobrazit na stránce Přehled webů</em>."
 
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_TITLE"
 msgid "Scheduled Action Summary"
@@ -11078,7 +11649,7 @@ msgstr "Stav HTTP 401 při extrakci aktualizace. Adresář správce vašeho webu
 
 #, phpformat
 msgctxt "PANOPTICON_TASK_JOOMLAUPDATE_LOG_ENABLE_EXTRACT"
-msgid "Enabling Joomla Update\\\'s extraction script for site %d (%s)"
+msgid "Enabling Joomla Update's extraction script for site %d (%s)"
 msgstr "Povolování extrakčního skriptu Joomla Update pro web %d (%s)"
 
 #, phpformat
@@ -11219,7 +11790,7 @@ msgstr "Pokud váš poskytovatel hostingu používá CRON úlohy na bázi URL ne
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_BENCHMARK_INFO"
 msgid "A few seconds to a minute after you set up your CRON job this page will change to a benchmark. Don\'t close this browser tab, don\'t change to a different browser tab / window or application, don\'t turn off or let your device sleep, don\'t feed your <em title=\"These are the gremlins before they become gremlins. Are we showing our age with this outdated popular culture reference?\">mogwai</em> after midnight. Pretty straightforward, right?"
-msgstr "Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na benchmark. Nezavírejte tuto záložku prohlížeče, nepřepínejte na jinou záložku / okno nebo aplikaci, nevypínejte zařízení ani ho nenechte přejít do režimu spánku. Celkem jednoduché, že?"
+msgstr "Několik sekund až minutu po nastavení CRON úlohy se tato stránka změní na benchmark. Nezavírejte tuto záložku prohlížeče, nepřepínejte na jinou záložku / okno nebo aplikaci, nevypínejte zařízení ani ho nenechte přejít do režimu spánku a po půlnoci nekrmte své <em title=\"Toto jsou gremlini předtím, než se z nich stanou gremlini. Prozrazujeme tímto svůj věk zastaralým odkazem na popkulturu?\">mogwaie</em>. Celkem jednoduché, že?"
 
 #, phpformat
 msgctxt "PANOPTICON_SETUP_LBL_CRON_WHAT_NEXT_EXPERT_USER"
@@ -11363,12 +11934,12 @@ msgstr "Ujistěte se, že máte nainstalovaný a povolený plugin Akeeba Backup 
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2"
-msgid "Log into your site\'s backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgid "Log into your site's backend. Go to Components, Akeeba Backup, Control Panel. Click on Options, Front-end Backup and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Word”; you can create a new, random, secure secret word at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
 msgstr "Přihlaste se do administrace webu. Přejděte na Komponenty, Akeeba Backup, Ovládací panel. Klikněte na Možnosti, Záloha z prohlížeče a nastavte "Povolit JSON API (vzdálená záloha)" na Ano. Zadejte nové "Tajné slovo"; nové náhodné bezpečné tajné slovo lze vygenerovat na <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Poté klikněte na Uložit &amp; Zavřít na panelu nástrojů."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_AKEEBABACKUP_CANNOTCONNECT_TIP_2_WP"
-msgid "Log into your site\'s backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\\\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\\\">random.org</a>. Then, click on Save &amp Close in the toolbar."
+msgid "Log into your site's backend. Go to Akeeba Backup, System Configuration, Public API and set “Enable JSON API (remote backup)” to Yes. Enter a new “Secret Key”; you can create a new, random, secure key at <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Then, click on Save &amp Close in the toolbar."
 msgstr "Přihlaste se do administrace webu. Přejděte na Akeeba Backup, Konfigurace systému, Veřejné API a nastavte "Povolit JSON API (vzdálená záloha)" na Ano. Zadejte nový "Tajný klíč"; nový náhodný bezpečný klíč lze vygenerovat na <a href=\"https://www.random.org/passwords/?num=1&len=32&format=html&rnd=new\">random.org</a>. Poté klikněte na Uložit &amp; Zavřít na panelu nástrojů."
 
 #, phpformat
@@ -11554,7 +12125,7 @@ msgstr "Vezměte prosím na vědomí, že ochrana heslem mohla být použita pou
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH1"
 msgid "Panopticon uses its own plugin, “Akeeba Panopticon Connector for WordPress”, to provide the necessary API through WordPress\' JSON services API (<code>wp-json</code>)."
-msgstr "Panopticon používá vlastní plugin "Akeeba Panopticon Connector for WordPress" pro komunikaci s vaším webem WordPress. Ujistěte se prosím, že máte tento plugin nainstalovaný a povolený."
+msgstr "Panopticon používá vlastní plugin „Akeeba Panopticon Connector for WordPress“, který poskytuje potřebné API prostřednictvím JSON API služeb WordPressu (<code>wp-json</code>)."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_PLUGIN_WP_BLAH2"
@@ -11564,7 +12135,7 @@ msgstr "Přejděte do administrace wp-admin vašeho webu a klikněte na Pluginy.
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH2"
 msgid "Instead, we got an error which we should be able to provide troubleshooting information for (<span class=\"font-monospace\">%s</span>), but we don\'t have the code for it. This should have not happened."
-msgstr "Namísto toho jsme obdrželi chybu, pro kterou bychom vám měli poskytnout informace pro řešení potíží."
+msgstr "Místo toho jsme obdrželi chybu, pro kterou bychom měli být schopni poskytnout informace pro řešení potíží (<span class=\"font-monospace\">%s</span>), ale nemáme pro ni příslušný kód. To se nemělo stát."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_FUBAR_BLAH3"
@@ -11578,13 +12149,13 @@ msgstr "Registrace uživatelů"
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_PASSWORD_HIBP_HELP"
-msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href=\'https://haveibeenpwned.com/\' _target=\'blank\'>Have I Been Pwned</a>."
-msgstr "Zabraňte uživatelům v používání hesel, která jsou nalezena v online únicích hesel. Tato funkce využívá službu třetí strany <a href="https://haveibeenpwned.com" target="_blank">Have I Been Pwned</a>."
+msgid "Prevent users from using passwords which are found in online password leaks. Powered by the third party service <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
+msgstr "Zabraňte uživatelům v používání hesel, která byla nalezena v únicích hesel na internetu. Využívá službu třetí strany <a href='https://haveibeenpwned.com/' target='_blank'>Have I Been Pwned</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_AVATARS_HELP"
-msgid "Display avatars for users. This feature is powered by the third party service <a href=\'https://gravatar.com\' _target=\'_blank\'>Gravatar</a>."
-msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href="https://gravatar.com" target="_blank">Gravatar</a>. Pokud si přejete zachovat soukromí, tuto funkci vypněte."
+msgid "Display avatars for users. This feature is powered by the third party service <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
+msgstr "Zobrazovat avatary uživatelů. Tato funkce využívá službu třetí strany <a href='https://gravatar.com' target='_blank'>Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_SYSCONFIG_LBL_FIELD_ACCURATE_PHP_CLI"
@@ -11814,7 +12385,7 @@ msgstr "Vzdálená instalace rozšíření: Souhrn"
 #, phpformat
 msgctxt "PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY"
 msgid "Panopticon cannot be updated directly from its interface when it runs under Docker. Instead, you need to follow the <a href=\'%s\'>documentation instructions</a> to update the container, and the database."
-msgstr "Panopticon nelze aktualizovat přímo z jeho rozhraní, pokud běží v prostředí Docker. Aktualizujte prosím Docker image, ze kterého váš kontejner vychází."
+msgstr "Panopticon nelze aktualizovat přímo z jeho rozhraní, pokud běží v prostředí Docker. Místo toho musíte podle <a href='%s'>pokynů v dokumentaci</a> aktualizovat kontejner i databázi."
 
 #, phpformat
 msgctxt "PANOPTICON_GROUPS_FIELD_PERMISSIONS_HELP"
@@ -11844,7 +12415,7 @@ msgstr "Celé jméno"
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_EMAIL_HELP"
 msgid "The email address is used to email the user, as well as displaying the user\'s picture using the third party <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a> service."
-msgstr "E-mailová adresa se používá k zasílání e-mailů uživateli, a také k zobrazení avatara uživatele (pokud jsou avatary povoleny)."
+msgstr "E-mailová adresa se používá k zasílání e-mailů uživateli a také k zobrazení obrázku uživatele pomocí služby třetí strany <a href=\"https://en.gravatar.com\" target=\"_blank\">Gravatar</a>."
 
 #, phpformat
 msgctxt "PANOPTICON_USERS_LBL_FIELD_PASSWORD2"
@@ -11954,17 +12525,17 @@ msgstr "Úplný seznam přispěvatelů Panopticon naleznete na <a href="%s">str�
 #, phpformat
 msgctxt "PANOPTICON_ABOUT_LBL_ARE_YOU_MISSING"
 msgid "We would like to acknowledge and recognise the work of each and every person who has contributed to Akeeba Panopticon, no matter how small or big their contribution is; even the smallest of details are important. If you have contributed outside of GitHub and would like to be publicly acknowledged, please drop us a line and we\'ll rectify the omission; <em>every person matters</em>."
-msgstr "Rádi bychom ocenili a uznali práci každého jednotlivce, který přispěl k tomuto projektu. Pokud vás v seznamu postrádáme, dejte nám prosím vědět."
+msgstr "Rádi bychom ocenili a uznali práci každého jednotlivce, který přispěl k projektu Akeeba Panopticon, ať je jeho příspěvek malý, nebo velký; důležité jsou i ty nejmenší detaily. Pokud jste přispěli mimo GitHub a chtěli byste být veřejně uvedeni, napište nám a my toto opomenutí napravíme; <em>záleží na každém člověku</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DESCRIPTION_HELP"
 msgid "You can use Akeeba Backup variables such as <code>[DATE]</code>, <code>[SITE]</code>, etc. They will be replaced by Akeeba Backup at backup time. You can also use the variables <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code> which will be replaced by Panopticon with a formatted version of the backup time. Please note that the Panopticon variables may differ by a few seconds compared to the Akeeba Backup variables as they are processed on the server running Panopticon, not the site\'s server where Akeeba Backup runs."
-msgstr "Můžete použít proměnné Akeeba Backup jako <code>[DATE]</code>, <code>[SITE]</code> atd."
+msgstr "Můžete použít proměnné Akeeba Backup, například <code>[DATE]</code>, <code>[SITE]</code> atd. Akeeba Backup je nahradí v okamžiku zálohování. Můžete také použít proměnné <code>{DATE_FORMAT_LC}</code>,<code>{DATE_FORMAT_LC1}</code>…<code>{DATE_FORMAT_LC7}</code>, které Panopticon nahradí formátovanou podobou času zálohy. Upozorňujeme, že proměnné Panopticonu se mohou od proměnných Akeeba Backup lišit o několik sekund, protože se zpracovávají na serveru, na kterém běží Panopticon, nikoli na serveru webu, kde běží Akeeba Backup."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci, nebo <code>*</code> pro každý den. Oddělte čárkami pro více hodnot nebo použijte pomlčku pro rozsah."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> (každé 3 dny).<br>Číslo s <code>W</code> označuje nejbližší den ve stejném měsíci, který není sobota ani neděle, např. <code>15W</code> je nejbližší den (od 13. do 17.), který není sobota ani neděle."
 
 #, phpformat
 msgctxt "PANOPTICON_BACKUPTASKS_LBL_TIMEZONE_NOTICE"
@@ -11974,7 +12545,7 @@ msgstr "Plán zálohy je <a href='%s' target='_blank'>výraz CRON</a>. Časy jso
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, <code>L</code> for the last day of the month (cannot be used in lists of values!), contiguous range e.g. <code>1-15</code>, comma–separated list of values e.g. <code>1,7,14,21,28</code>, every day as <code>*</code>, every X days using slash e.g.<code>*/3</code> (every 3 days).<br>Use a number with <code>W</code> for the closest day within the same month that\'s not a Saturday or Sunday, e.g. <code>15W</code> is the closest day (from the 13th to the 17th) which is not a Saturday or Sunday."
-msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci, nebo <code>*</code> pro každý den. Oddělte čárkami pro více hodnot nebo použijte pomlčku pro rozsah."
+msgstr "Číslo <code>1</code> až <code>31</code>, <code>L</code> pro poslední den v měsíci (nelze použít v seznamech hodnot!), souvislý rozsah např. <code>1-15</code>, seznam hodnot oddělený čárkami např. <code>1,7,14,21,28</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/3</code> (každé 3 dny).<br>Číslo s <code>W</code> označuje nejbližší den ve stejném měsíci, který není sobota ani neděle, např. <code>15W</code> je nejbližší den (od 13. do 17.), který není sobota ani neděle."
 
 #, phpformat
 msgctxt "PANOPTICON_SCANNERTASKS_LBL_TIMEZONE_NOTICE"
@@ -12009,7 +12580,7 @@ msgstr "Minuty"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MINUTES_HELP"
 msgid "Number <code>0</code> to <code>59</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15,30,45</code>, every minute as <code>*</code>, every X minutes using slash e.g. <code>*/5</code> (every 5 minutes)."
-msgstr "Číslo <code>0</code> až <code>59</code>, souvislý rozsah např. <code>5-15</code>, seznam oddělený čárkami např. <code>0,15,30,45</code>, nebo <code>*</code> pro každou minutu."
+msgstr "Číslo <code>0</code> až <code>59</code>, souvislý rozsah např. <code>5-15</code>, seznam hodnot oddělený čárkami např. <code>1,15,30,45</code>, každá minuta jako <code>*</code>, každých X minut pomocí lomítka např. <code>*/5</code> (každých 5 minut)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS"
@@ -12019,7 +12590,7 @@ msgstr "Hodiny"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_HOURS_HELP"
 msgid "Number <code>0</code> to <code>23</code> (0–11 is a.m., 12–23 is p.m.), contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>0,6,12,18</code>, every hour as <code>*</code>, every X hours using slash e.g. <code>*/2</code> (every 2 hours)."
-msgstr "Číslo <code>0</code> až <code>23</code> (0–11 je dopoledne, 12–23 je odpoledne), souvislý rozsah např. <code>8-17</code>, seznam oddělený čárkami nebo <code>*</code> pro každou hodinu."
+msgstr "Číslo <code>0</code> až <code>23</code> (0–11 je dopoledne, 12–23 je odpoledne), souvislý rozsah např. <code>5-15</code>, seznam hodnot oddělený čárkami např. <code>0,6,12,18</code>, každá hodina jako <code>*</code>, každých X hodin pomocí lomítka např. <code>*/2</code> (každé 2 hodiny)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM"
@@ -12029,7 +12600,7 @@ msgstr "Den v měsíci"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOM_HELP"
 msgid "Number <code>1</code> to <code>31</code>, contiguous range e.g. <code>5-15</code>, comma–separated list of values e.g. <code>1,15</code>, every day as <code>*</code>, every X days using slash e.g. <code>*/2</code> (every 2 days)."
-msgstr "Číslo <code>1</code> až <code>31</code>, souvislý rozsah např. <code>1-15</code>, seznam oddělený čárkami nebo <code>*</code> pro každý den."
+msgstr "Číslo <code>1</code> až <code>31</code>, souvislý rozsah např. <code>5-15</code>, seznam hodnot oddělený čárkami např. <code>1,15</code>, každý den jako <code>*</code>, každých X dní pomocí lomítka např. <code>*/2</code> (každé 2 dny)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH"
@@ -12039,7 +12610,7 @@ msgstr "Měsíc"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_MONTH_HELP"
 msgid "Number <code>1</code> to <code>12</code>, contiguous range e.g. <code>1-6</code>, comma–separated list of values e.g. <code>1,4,7,10</code>, every month as <code>*</code>, every X months using slash e.g. <code>*/3</code> (every 3 months)."
-msgstr "Číslo <code>1</code> až <code>12</code>, souvislý rozsah např. <code>1-6</code>, seznam oddělený čárkami nebo <code>*</code> pro každý měsíc."
+msgstr "Číslo <code>1</code> až <code>12</code>, souvislý rozsah např. <code>1-6</code>, seznam hodnot oddělený čárkami např. <code>1,4,7,10</code>, každý měsíc jako <code>*</code>, každých X měsíců pomocí lomítka např. <code>*/3</code> (každé 3 měsíce)."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW"
@@ -12049,7 +12620,7 @@ msgstr "Den v týdnu"
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_DOW_HELP"
 msgid "Number <code>0</code> to <code>7</code> (0 or 7 is Sunday), contiguous range e.g. <code>1-5</code>, comma–separated list of values e.g. <code>1,3,5</code>, every day as <code>*</code>."
-msgstr "Číslo <code>0</code> až <code>7</code> (0 nebo 7 je neděle), souvislý rozsah např. <code>1-5</code>, seznam oddělený čárkami nebo <code>*</code> pro každý den."
+msgstr "Číslo <code>0</code> až <code>7</code> (0 nebo 7 je neděle), souvislý rozsah např. <code>1-5</code>, seznam hodnot oddělený čárkami např. <code>1,3,5</code>, každý den jako <code>*</code>."
 
 #, phpformat
 msgctxt "PANOPTICON_CHECKSUMTASKS_LBL_FIELD_RUN_ONCE"
@@ -12424,7 +12995,7 @@ msgstr "Plán souhrnných e-mailů aktualizací je <a href='%s' target='_blank'>
 #, phpformat
 msgctxt "PANOPTICON_UPDATESUMMARYTASKS_LBL_EMAIL_GROUPS_HELP"
 msgid "If no groups are selected: emails are sent to all users who can make changes to the site. When any groups are selected: emails are sent to all users who are assigned to the selected group, <em>even if they can\'t even view the site in the Sites Overview page</em>."
-msgstr "Pokud nejsou vybrány žádné skupiny: e-maily jsou odesílány všem uživatelům, kteří mohou provádět změny na webech zahrnutých v souhrnu. Vyberte skupiny pro omezení příjemců."
+msgstr "Pokud nejsou vybrány žádné skupiny: e-maily se odesílají všem uživatelům, kteří mohou provádět změny na webu. Pokud jsou vybrány nějaké skupiny: e-maily se odesílají všem uživatelům přiřazeným k vybrané skupině, <em>i když nemohou web ani zobrazit na stránce Přehled webů</em>."
 
 #, phpformat
 msgctxt "PANOPTICON_ACTIONSUMMARYTASKS_LBL_TIMEZONE_NOTICE"

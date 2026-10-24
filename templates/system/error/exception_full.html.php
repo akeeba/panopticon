@@ -5,6 +5,8 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
+defined('AKEEBA') || die;
+
 ?>
 <!-- <?= $_message = sprintf('%s (%d %s)', $exceptionMessage, $statusCode, $statusText); ?> -->
 <!DOCTYPE html>

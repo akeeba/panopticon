@@ -391,7 +391,7 @@ class UpdateSummaryEmail extends AbstractCallback
 		{
 			try
 			{
-				$rendered = $fakeView->loadAnyTemplate(
+				$rendered = $rendered ?: $fakeView->loadAnyTemplate(
 					$template,
 					[
 						'reportCoreUpdates'      => $this->reportCoreUpdates,
@@ -410,7 +410,7 @@ class UpdateSummaryEmail extends AbstractCallback
 
 		// Render the messages as plain text
 		$possibleTemplates = [
-			'Mailtemplates/mail_scheduled_update_summary.' . $language . 'text',
+			'Mailtemplates/mail_scheduled_update_summary.' . $language . '.text',
 			'Mailtemplates/mail_scheduled_update_summary.text',
 		];
 		$renderedText      = '';
@@ -419,7 +419,7 @@ class UpdateSummaryEmail extends AbstractCallback
 		{
 			try
 			{
-				$renderedText = $fakeView->loadAnyTemplate(
+				$renderedText = $renderedText ?: $fakeView->loadAnyTemplate(
 					$template,
 					[
 						'reportCoreUpdates'      => $this->reportCoreUpdates,

@@ -173,7 +173,22 @@ class UserAdd extends AbstractCommand
 		];
 
 		$user->bind($data);
-		$user->setPassword($password);
+
+		try
+		{
+			$user->setPassword($password);
+		}
+		catch (\Exception $e)
+		{
+			$this->ioStyle->error(
+				[
+					sprintf('Could not set the password of user %s.', $username),
+					$e->getMessage(),
+				]
+			);
+
+			return Command::FAILURE;
+		}
 
 		$privileges = $input->getOption('permission');
 		$privileges = $privileges ?: [];
@@ -184,7 +199,21 @@ class UserAdd extends AbstractCommand
 			$user->setPrivilege($privilege, true);
 		}
 
-		$manager->saveUser($user);
+		try
+		{
+			$manager->saveUser($user);
+		}
+		catch (\Exception $e)
+		{
+			$this->ioStyle->error(
+				[
+					sprintf('Could not save user %s.', $username),
+					$e->getMessage(),
+				]
+			);
+
+			return Command::FAILURE;
+		}
 
 		$this->ioStyle->success(
 			sprintf('Successfully saved user %s.', $username)

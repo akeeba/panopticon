@@ -11,6 +11,8 @@
  * @var DateTime                           $start
  * @var DateTime                           $end
  */
+
+defined('AKEEBA') || die;
 ?>
 @section('renderErrorCell')
     <?php

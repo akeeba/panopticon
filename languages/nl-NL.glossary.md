@@ -281,3 +281,10 @@ XML | — | Technical term
 FIDO2 | — | Technical term
 MFA | — | Technical term
 passkey | passkey | Keep in English as a technical term
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Connectie dokter | 
+Update Doctor | Updatedokter | 
+Sticky header and toolbar | Vastgezette koptekst en werkbalk | 
+Forbidden IP Ranges | Verboden IP-bereiken | 
+Secret Word | Secret Word | Akeeba Backup term, not translated

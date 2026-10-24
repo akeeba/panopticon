@@ -8,6 +8,8 @@
 use Akeeba\Panopticon\Application\BootstrapUtilities;
 use Akeeba\Panopticon\Library\Plugin\PluginHelper;
 
+defined('AKEEBA') || die;
+
 // I must include the file since the autoloader is not yet set up.
 require_once APATH_ROOT . '/src/Application/BootstrapUtilities.php';
 

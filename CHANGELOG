@@ -1,10 +1,33 @@
 <?php die(); ?>
 Akeeba Panopticon 2.4.0
 ================================================================================
-+ Akeeba Backup JSON API v3 support, authenticating with the site's Joomla! API Token instead of the deprecated Secret Word
-# [HIGH] Task queue: mass extension install stalled after ~30 sites because of six interacting bugs in Model\Task — narrow-CRON recalculation in check() stranding WILL_RESUME tasks ~1 week out, named DB lock released between cleanUpStuckTasks() and getNextTask() allowing concurrent --loop processes to claim the same row, fallback paths downgrading WILL_RESUME to NO_LOCK/NO_RELEASE on any save exception, mark-as-running save triggering the same CRON recalc on process death, WILL_RESUME starvation behind the `priority = 0` backlog, and cleanUpStuckTasks() wiping storage with no retry on a single false-positive [gh-1060]
-# [MEDIUM] Tasks: per-site loggers pushed onto ForkedLogger were never popped, leaking an open log file handle per site processed into the long-lived task:run --loop daemon; ForkedLogger::popLogger() added and called from a finally block in every affected task [gh-1060]
-# [LOW] Mass extension install: a failure in the post-install extensions refresh could overwrite an already-successful install result with "failed"; the refresh step is now wrapped in its own try/catch so it cannot affect the install result [gh-1060]
+! Security hardening: CSRF token checks, TOTP secret generation, JSONP in JSON views, IIS web.config rules (AWF 1.3.1)
++ Akeeba Backup JSON API v3 support, using the site's existing Joomla! API Token instead of the Secret Word
+~ Docker images now use PHP 8.5.12, which includes a critical security update from the PHP project
+# [HIGH] Task queue: mass extension install stalled after about 30 sites, and tasks could run twice [gh-1060]
+# [HIGH] Sites: Joomla site pages could fail with "Error calling repeatable" after viewing a WordPress site
+# [HIGH] Setup: could never finish when config.php was not writable and had to be uploaded by hand
+# [HIGH] Setup: new installations went to the login page after creating the administrator account
+# [MEDIUM] Tasks: per-site log files were never closed, leaking file handles in task:run --loop [gh-1060]
+# [MEDIUM] Translations: broken links and stray backslashes, e.g. MFA "Print these codes" led to a 404 page [gh-1081]
+# [MEDIUM] Translations: many messages left out their values or read "BAD TRANSLATION", e.g. Joomla! versions in Dutch
+# [LOW] API token authentication triggered a PHP 8.5 deprecation notice
+# [LOW] Mass extension install: a failed extensions refresh could mark a successful install as failed [gh-1060]
+# [LOW] System Configuration: the Have I Been Pwned and Gravatar links did not open in a new tab
+# [LOW] Translations: 128 newer messages, e.g. the Connection Doctor and Extensions view, were shown in English
+# [LOW] Translations: some help texts were shortened, or lost their links and formatting, compared to English
+# [LOW] French: the Multi-factor Authentication page had a garbled title, and "authentification" was misspelt
+# [LOW] API Tokens: the token quota read "BAD TRANSLATION" instead of how many tokens you have created
+# [LOW] Joomla! update log: the message about enabling Joomla Update's extraction script showed a stray backslash
+# [LOW] The English language file could not be read by standard INI parsers and translation tools
+# [LOW] Language tools: every INI to PO conversion added one more level of escaping to double quotes [gh-1081]
+# [LOW] Sites: WordPress themes were labelled "Template" instead of "Theme" in the plugins and themes list
+# [LOW] CLI: user:create and user:set reported "Could not save user" even though the user was saved
+# [LOW] Updated view templates could keep running stale code on servers with OPcache timestamp checks disabled
+# [LOW] Emails: translated templates, e.g. German, were ignored for plain-text emails and the update summary email
+# [LOW] CLI: user:add showed a PHP stack trace instead of an error message when the user could not be saved
+# [LOW] Some view templates could be requested directly, revealing the server path when PHP errors are shown
+# [LOW] CLI: user commands showed a raw exception instead of an error message for passwords found in data breaches
 
 Akeeba Panopticon 2.3.1
 ================================================================================

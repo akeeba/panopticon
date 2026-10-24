@@ -59,6 +59,7 @@
 
 ### Test artefacts
 /.phpunit.cache
+/tests/Installation/results/
 
 ### AI agents
 /.claude/settings.local.json

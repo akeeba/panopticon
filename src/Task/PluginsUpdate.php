@@ -749,7 +749,7 @@ class PluginsUpdate extends AbstractCallback
 
 		// Render the messages as plain text
 		$possibleTemplates = [
-			'Mailtemplates/mail_plugins_update_done.' . $language . 'text',
+			'Mailtemplates/mail_plugins_update_done.' . $language . '.text',
 			'Mailtemplates/mail_plugins_update_done.text',
 		];
 		$renderedText      = '';

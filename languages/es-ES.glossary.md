@@ -266,3 +266,13 @@ CDN | — | Technical term
 XML | — | Technical term
 FIDO2 | — | Technical term
 MFA | — | Technical term
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Doctor de conexión | 
+Update Doctor | Doctor de actualización | 
+Endpoint | punto de acceso | Update extraction
+Sticky header and toolbar | Encabezado y barra de herramientas fijos | 
+Forbidden IP Ranges | Rangos de IP prohibidos | 
+Secret Word | palabra secreta | Akeeba Backup
+Colour | Color | 
+Teal | Verde azulado | Colour

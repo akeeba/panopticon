@@ -311,3 +311,13 @@ XML | — | Technical term
 FIDO2 | — | Technical term
 MFA | — | Technical term
 Admin Tools | — | Product name
+
+## Connection Doctor, Forbidden IP Ranges, Extensions, Appearance
+Connection Doctor | Doktor veze | 
+Update Doctor | Doktor ažuriranja | 
+Sticky header and toolbar | Fiksno zaglavlje i alatna traka | 
+Forbidden IP Ranges | Zabranjeni rasponi IP adresa | 
+Super Users | Superkorisnici | 
+Colour | Boja | 
+Secret Word | Tajna riječ | Akeeba Backup
+Debug logging | zapisivanje za otklanjanje pogrešaka | 

@@ -5,6 +5,8 @@
  * @license   https://www.gnu.org/licenses/agpl-3.0.txt GNU Affero General Public License, version 3 or later
  */
 
+defined('AKEEBA') || die;
+
 $lang = \Akeeba\Panopticon\Factory::getContainer()->language;
 $appConfig   = \Akeeba\Panopticon\Factory::getContainer()->appConfig;
 $extend      = (bool) $appConfig->get('login_lockout_extend', 0);

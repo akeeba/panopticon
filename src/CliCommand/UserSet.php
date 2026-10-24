@@ -92,7 +92,21 @@ class UserSet extends AbstractCommand
 		// Should I change the password?
 		if (!empty($password))
 		{
-			$user->setPassword($password);
+			try
+			{
+				$user->setPassword($password);
+			}
+			catch (\Exception $e)
+			{
+				$this->ioStyle->error(
+					[
+						sprintf('Could not set the password of user %s.', $user->getUsername()),
+						$e->getMessage(),
+					]
+				);
+
+				return Command::FAILURE;
+			}
 		}
 
 		// Should I change the email?
@@ -107,20 +121,27 @@ class UserSet extends AbstractCommand
 			$user->setName($name);
 		}
 
-		if ($manager->saveUser($user))
+		try
 		{
-			$this->ioStyle->success(
-				sprintf('Successfully saved user %s.', $username)
+			$manager->saveUser($user);
+		}
+		catch (\Exception $e)
+		{
+			$this->ioStyle->error(
+				[
+					sprintf('Could not save user %s.', $user->getUsername()),
+					$e->getMessage(),
+				]
 			);
 
-			return Command::SUCCESS;
+			return Command::FAILURE;
 		}
 
-		$this->ioStyle->error(
-			sprintf('Could not save user %s.', $username)
+		$this->ioStyle->success(
+			sprintf('Successfully saved user %s.', $user->getUsername())
 		);
 
-		return Command::FAILURE;
+		return Command::SUCCESS;
 	}
 
 	protected function configure()

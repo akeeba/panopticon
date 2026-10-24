@@ -16,6 +16,8 @@
 
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 
+defined('AKEEBA') || die;
+
 $config       = $site->getConfig();
 $cmsTypeHuman = match ($site->cmsType())
 {

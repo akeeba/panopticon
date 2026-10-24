@@ -356,8 +356,7 @@ class ActionSummaryEmail extends AbstractCallback
 		}
 
 		// Render the messages as plain text
-		$template     = 'Mailtemplates/mail_action_summary' . (empty($language) ? '' : '.') . $language
-		                            . 'text';
+		$template     = 'Mailtemplates/mail_action_summary' . (empty($language) ? '' : '.' . $language) . '.text';
 		$renderedText = '';
 
 		try
