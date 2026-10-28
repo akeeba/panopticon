@@ -126,7 +126,7 @@ expected to pass:
   (`node ../buildfiles/playwright/run.mjs test`), with its cached Chromium. Specs import from
   `../buildfiles/playwright/lib/index.mjs`, never `@playwright/test` directly, and the config uses
   `defineAkeebaConfig()`. This is required, not a convenience: the operator standardises all projects on `buildfiles`
-  so changes there reach every dependent project. `j4-akeeba/akeebabackup/tests/browser/` (relative to the common
+  so changes there reach every dependent project. `j5-akeeba/akeebabackup/tests/browser/` (relative to the common
   projects root) is the reference implementation; follow its layout and its `run.sh` → `run_browser_tests()` pattern.
   Use `collectPageProblems()` from the shared lib. Panopticon-specific checks (translation errors, raw keys, PHP
   warnings) live in this project's spec helpers. A helper that is generic (not Panopticon-specific) may be proposed for

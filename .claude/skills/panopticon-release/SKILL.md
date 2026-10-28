@@ -27,7 +27,7 @@ Why: `build.xml`'s `all` target used to `depend` on `release,update`. `release` 
 
 Also, `docsdeploy` is a no-op in this repo (`common.xml`'s default "not set up" stub) — `update` is what actually matters, since it generates `release/update.json` and uploads it to getpanopticon.com via `updatejson`.
 
-This is a **panopticon-specific** fix, not a shared-`buildfiles`/`common.xml` issue: an audit of every `build.xml` under `~/Projects/akeeba`, `~/Projects/j4-akeeba`, and `~/Projects/dionysopoulos` found panopticon was the only repo whose `all` target depended on `release`/`update`, and the only repo with a local `update` target override. Don't port this fix to `common.xml` or other repos.
+This is a **panopticon-specific** fix, not a shared-`buildfiles`/`common.xml` issue: an audit of every `build.xml` under `~/Projects/akeeba`, `~/Projects/j5-akeeba`, and `~/Projects/dionysopoulos` found panopticon was the only repo whose `all` target depended on `release`/`update`, and the only repo with a local `update` target override. Don't port this fix to `common.xml` or other repos.
 
 ## Docker
 
