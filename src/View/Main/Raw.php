@@ -35,6 +35,14 @@ class Raw extends \Awf\Mvc\DataView\Raw
 	 */
 	public array $groupColours = [];
 
+	/**
+	 * The request URI's query before onBeforeTableBody() rewrote it; restored by onAfterTableBody().
+	 *
+	 * @var   array|null
+	 * @since 2.5.0
+	 */
+	private ?array $tableBodyQuery = null;
+
 	protected function onBeforeTableBody(): bool
 	{
 		// [bug #1042] JavaScript polls this endpoint every 30 s and inlines the
@@ -45,73 +53,69 @@ class Raw extends \Awf\Mvc\DataView\Raw
 		//
 		// The Dispatcher has already populated Uri::getInstance()'s singleton
 		// from $_SERVER['REQUEST_URI'], so we mutate the existing instance in
-		// place and restore the original query in a finally block so any
-		// post-render code (error handlers, hooks) still sees the real request
-		// URL.
+		// place. It must stay rewritten while the template renders, which
+		// View::display() does AFTER this method returns; onAfterTableBody()
+		// restores it so any post-render code still sees the real request URL.
 		//
 		// @see https://github.com/akeeba/panopticon/issues/1042
-		$uri      = Uri::getInstance();
-		$snapshot = $uri->getQuery(true);
+		// @see https://github.com/akeeba/panopticon/issues/1088
+		$uri                  = Uri::getInstance();
+		$this->tableBodyQuery = $uri->getQuery(true);
 
-		try
+		self::rewriteUriForTableBodyFragment($uri);
+
+		// Groups map
+		/** @var Groups $groupsModel */
+		$groupsModel        = $this->getModel('groups');
+		$this->groupMap     = $groupsModel->getGroupMap();
+		$this->groupColours = $groupsModel->getGroupColours();
+
+		// Create the lists object
+		$this->lists = new \stdClass();
+
+		// Load the model
+		/** @var Site $model */
+		$model = $this->getModel();
+		$model->setState('enabled', 1);
+
+		// We want to persist the state in the session
+		$model->savestate(1);
+
+		// Ordering information
+		$this->lists->order     = $model->getState('filter_order', 'name', 'cmd');
+		$this->lists->order_Dir = $model->getState('filter_order_Dir', 'ASC', 'cmd');
+
+		// Display limits
+		$this->lists->limitStart = $model->getState('limitstart', 0, 'int');
+		$this->lists->limit      = $model->getState('limit', 50, 'int');
+
+		$model->setState('filter_order', $this->lists->order);
+		$model->setState('filter_order_Dir', $this->lists->order_Dir);
+		$model->setState('limitstart', $this->lists->limitStart);
+		$model->setState('limit', $this->lists->limit);
+
+		// Assign items to the view
+		$this->items      = $model->get();
+		$this->itemsCount = $model->count();
+
+		// Set the layout
+		$this->setLayout('default_tbody');
+
+		return true;
+	}
+
+	protected function onAfterTableBody(): bool
+	{
+		// Undo the gh-1042 rewrite from onBeforeTableBody() now that the template has rendered,
+		// putting the original query back exactly as it was, parameter order included.
+		if ($this->tableBodyQuery !== null)
 		{
-			self::rewriteUriForTableBodyFragment($uri);
+			Uri::getInstance()->setQuery($this->tableBodyQuery);
 
-			// Groups map
-			/** @var Groups $groupsModel */
-			$groupsModel        = $this->getModel('groups');
-			$this->groupMap     = $groupsModel->getGroupMap();
-			$this->groupColours = $groupsModel->getGroupColours();
-
-			// Create the lists object
-			$this->lists = new \stdClass();
-
-			// Load the model
-			/** @var Site $model */
-			$model = $this->getModel();
-			$model->setState('enabled', 1);
-
-			// We want to persist the state in the session
-			$model->savestate(1);
-
-			// Ordering information
-			$this->lists->order     = $model->getState('filter_order', 'name', 'cmd');
-			$this->lists->order_Dir = $model->getState('filter_order_Dir', 'ASC', 'cmd');
-
-			// Display limits
-			$this->lists->limitStart = $model->getState('limitstart', 0, 'int');
-			$this->lists->limit      = $model->getState('limit', 50, 'int');
-
-			$model->setState('filter_order', $this->lists->order);
-			$model->setState('filter_order_Dir', $this->lists->order_Dir);
-			$model->setState('limitstart', $this->lists->limitStart);
-			$model->setState('limit', $this->lists->limit);
-
-			// Assign items to the view
-			$this->items      = $model->get();
-			$this->itemsCount = $model->count();
-
-			// Set the layout
-			$this->setLayout('default_tbody');
-
-			return true;
+			$this->tableBodyQuery = null;
 		}
-		finally
-		{
-			// Restore the original query exactly as it was: remove anything we
-			// added and reapply anything we removed.
-			$current = $uri->getQuery(true);
 
-			foreach (array_diff(array_keys($current), array_keys($snapshot)) as $addedKey)
-			{
-				$uri->delVar($addedKey);
-			}
-
-			foreach ($snapshot as $key => $value)
-			{
-				$uri->setVar($key, $value);
-			}
-		}
+		return true;
 	}
 
 	/**
