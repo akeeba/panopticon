@@ -46,9 +46,12 @@
         <exclude name=".idea/**" />
         <exclude name=".phpunit.cache/**" />
         <exclude name=".plans/**" />
+        <exclude name=".qwen/**" />
+        <exclude name=".superpowers/**" />
         <exclude name="assets/**" />
         <exclude name="build/**" />
         <exclude name="documentation/**" />
+        <exclude name="docs/**" />
         <exclude name="docker-testing/**" />
         <exclude name="node_modules/**" />
         <exclude name="release/**" />
@@ -58,7 +61,9 @@
         <exclude name=".editorconfig" />
         <exclude name=".env" />
         <exclude name=".env.docker" />
+        <exclude name=".env.docker.dist" />
         <exclude name=".env.test" />
+        <exclude name=".env.test.example" />
         <exclude name=".env.production" />
         <exclude name=".env.local" />
         <exclude name=".env.development" />
@@ -89,20 +94,20 @@
         <!-- Exclude translation sources (PO / POT files) -->
         <exclude name="languages/*.po" />
         <exclude name="languages/*.pot" />
+        <exclude name="languages/*.glossary.md" />
 
-        <!-- Exclude map files -->
-        <exclude name="media/css/*.map" />
-        <exclude name="media/js/*.map" />
-
-        <!-- .gitkeep file in webfonts -->
-        <exclude name="media/webfonts/.gitkeep" />
+        <!-- Placeholder and OS files. The (empty) user_code directory itself is still packaged. -->
+        <exclude name="**/.gitkeep" />
+        <exclude name="**/.DS_Store" />
 
         <!-- Exclude cache, log, tmp files -->
         <exclude name="cache/admintools/**" />
         <exclude name="cache/akeebabackup/**" />
         <exclude name="cache/db_backups/**" />
+        <exclude name="cache/extension_install/**" />
         <exclude name="cache/extensions/**" />
         <exclude name="cache/favicon/**" />
+        <exclude name="cache/htmlpurifier/**" />
         <exclude name="cache/http/**" />
         <exclude name="cache/system/**" />
         <exclude name="cache/whois/**" />
@@ -119,7 +124,59 @@
         <exclude name="user_code/*.pem" />
         <exclude name="user_code/*.json" />
 
-        <!-- Clean up Composer vendor folder -->
+        <!--
+        Clean up Composer vendor folder: generic rules for every package. LICENSE* and README* files are
+        deliberately kept. Package-specific rules follow below.
+        -->
+        <exclude name="vendor/*/*/tests/**" />
+        <exclude name="vendor/*/*/Tests/**" />
+        <exclude name="vendor/*/*/examples/**" />
+        <exclude name="vendor/*/*/example/**" />
+        <exclude name="vendor/*/*/bin/**" />
+        <exclude name="vendor/symfony/*/Test/**" />
+        <exclude name="vendor/symfony/*/Resources/bin/**" />
+        <exclude name="vendor/symfony/yaml/Resources/**" />
+        <exclude name="vendor/*/*/.github/**" />
+        <exclude name="vendor/*/*/.idea/**" />
+        <exclude name="vendor/*/*/.devcontainer/**" />
+        <exclude name="vendor/*/*/.phpstan/**" />
+        <exclude name="vendor/*/*/.phan/**" />
+        <exclude name="vendor/*/*/.agents/**" />
+        <exclude name="vendor/*/*/.git*" />
+        <exclude name="vendor/*/*/.editorconfig" />
+        <exclude name="vendor/*/*/.php-cs-fixer*" />
+        <exclude name="vendor/*/*/.phpstorm.meta.php" />
+        <exclude name="vendor/*/*/.scrutinizer.yml" />
+        <exclude name="vendor/*/*/.yamllint.yaml" />
+        <exclude name="vendor/*/*/.pullapprove.yml" />
+        <exclude name="vendor/*/*/composer.lock" />
+        <exclude name="vendor/*/*/phpunit*" />
+        <exclude name="vendor/*/*/phpstan*" />
+        <exclude name="vendor/*/*/phpcs*" />
+        <exclude name="vendor/*/*/phpdoc*" />
+        <exclude name="vendor/*/*/phpmd*" />
+        <exclude name="vendor/*/*/rector.php" />
+        <exclude name="vendor/*/*/*.neon" />
+        <exclude name="vendor/*/*/*.neon.dist" />
+        <exclude name="vendor/*/*/Dockerfile" />
+        <exclude name="vendor/*/*/docker-compose.yml" />
+        <exclude name="vendor/*/*/CHANGELOG*" />
+        <exclude name="vendor/*/*/UPGRAD*" />
+        <exclude name="vendor/*/*/CONTRIBUTING*" />
+        <exclude name="vendor/*/*/SECURITY.md" />
+        <exclude name="vendor/*/*/CODE_OF_CONDUCT.md" />
+        <exclude name="vendor/*/*/RELEASES.md" />
+        <exclude name="vendor/*/*/TESTS.md" />
+        <exclude name="vendor/*/*/SMTPUTF8.md" />
+        <exclude name="vendor/*/*/AGENTS.md" />
+        <exclude name="vendor/*/*/CLAUDE.md" />
+        <exclude name="vendor/*/*/GEMINI.md" />
+        <exclude name="vendor/*/*/docs/**" />
+        <exclude name="vendor/phpdocumentor/type-resolver/.phpdoc/**" />
+        <exclude name="vendor/jfcherng/php-diff/CHANGELOG/**" />
+        <exclude name="vendor/jfcherng/php-diff/UPGRADING/**" />
+
+        <!-- Clean up Composer vendor folder: package-specific rules -->
         <exclude name="vendor/akeeba/awf/src/Database/Driver/None.php" />
         <exclude name="vendor/akeeba/awf/src/Database/Driver/Pgsql.php" />
         <exclude name="vendor/akeeba/awf/src/Database/Driver/Postgresql.php" />
