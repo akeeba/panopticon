@@ -3,6 +3,8 @@ Akeeba Panopticon 2.5.0
 ================================================================================
 + Extensions: sort by site, extension or version, and filter by installed version or outdated / not-highest version
 + Extensions: new button to reset all filters and sorting to the default
+~ Core updates: a package downloaded in chunks is verified against its size and hashes (connector 1.2.0+); on failure, retried in one part
+# [MEDIUM] `selfupdate:cleanup` left all tasks paused instead of resuming them
 # [LOW] Extensions: sorting by Site did nothing
 
 Akeeba Panopticon 2.4.0

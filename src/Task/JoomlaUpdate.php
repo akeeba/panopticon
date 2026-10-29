@@ -690,6 +690,33 @@ class JoomlaUpdate extends AbstractCallback
 
 				if ($done)
 				{
+					/**
+					 * Connector 1.2.0 and later verify the finished package against the size and hashes of the update
+					 * source. Older connectors send no `check`; we can't verify anything in that case.
+					 *
+					 * A failed check is treated like a failed chunked download: start over with a single part download,
+					 * which replaces the package and does its own check.
+					 */
+					$check = $raw->data?->attributes?->check ?? null;
+
+					if ($check === false)
+					{
+						$this->logger->notice(
+							$this->getLanguage()->text('PANOPTICON_TASK_JOOMLAUPDATE_ERR_INVALID_CHECKSUM')
+						);
+						$this->logger->notice(
+							$this->getLanguage()->sprintf(
+								'PANOPTICON_TASK_JOOMLAUPDATE_LOG_DOWNLOADING_CHUNK_FAILED',
+								$site->id,
+								$site->name
+							)
+						);
+
+						$storage->set('update.mode', 'single');
+
+						return;
+					}
+
 					$this->logger->debug('Done with the download');
 
 					$this->advanceState();

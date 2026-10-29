@@ -41,7 +41,7 @@ class SelfUpdateCleanup extends AbstractCommand
 
 		$model->postUpdate();
 
-		$this->setTasksPausedFlag(true);
+		$this->setTasksPausedFlag(false);
 
 		$this->ioStyle->success('The post-update clean-up is now complete');
 
