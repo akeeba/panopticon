@@ -76,8 +76,8 @@
         <exclude name="build.xml" />
         <exclude name="CHANGELOG" />
         <exclude name="CLAUDE.md" />
-        <exclude name="composer.json" />
-        <exclude name="composer.lock" />
+        <exclude name="package.json" />
+        <exclude name="package-lock.json" />
         <exclude name="config.php" />
         <exclude name="config.php.*" />
         <exclude name="config.bak*" />
