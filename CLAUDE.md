@@ -94,6 +94,7 @@ Topic files in `.claude/memory/`. Read the matching file before starting that ki
 | File | Read it… |
 |------|----------|
 | [`language-files.md`](.claude/memory/language-files.md) | Before adding, changing or translating any language string, or touching `LanguageTools`. |
+| [`task-params-authority.md`](.claude/memory/task-params-authority.md) | Before adding a task type that targets sites or users from its params, or changing the task API's `params` handling. |
 
 ## Coding Conventions
 
