@@ -232,15 +232,23 @@ class Task extends DataModel
 			}
 		}
 
-		// Coerce params / storage to Registry as the model expects.
-		if (array_key_exists('params', $data) && !$data['params'] instanceof Registry)
+		// Normalise params / storage to JSON strings. The DataModel writes them as-is; a Registry object would
+		// be stored as NULL (gh-1089).
+		foreach (['params', 'storage'] as $jsonField)
 		{
-			$data['params'] = new Registry($data['params'] ?? []);
-		}
+			if (!array_key_exists($jsonField, $data))
+			{
+				continue;
+			}
 
-		if (array_key_exists('storage', $data) && !$data['storage'] instanceof Registry)
-		{
-			$data['storage'] = new Registry($data['storage'] ?? []);
+			$value = $data[$jsonField];
+
+			if (!$value instanceof Registry)
+			{
+				$value = new Registry($value ?? []);
+			}
+
+			$data[$jsonField] = $value->toString();
 		}
 
 		if (array_key_exists('enabled', $data))
