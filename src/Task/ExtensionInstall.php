@@ -92,6 +92,26 @@ class ExtensionInstall extends AbstractCallback
 			return Status::WILL_RESUME->value;
 		}
 
+		// Task parameters are stored data, so re-check that the initiating user may install on this site, using the
+		// same privileges as the web UI. A task with no initiating user is a system task and is trusted.
+		if ((int) $initiatingUser > 0 && !$this->userMayInstallOnSite((int) $initiatingUser, $site))
+		{
+			$this->logger->warning(sprintf(
+				'User %d may not install extensions on site %d; skipping.', (int) $initiatingUser, $siteId
+			));
+
+			$results[$siteId] = [
+				'site_name' => $site->name,
+				'status'    => 'failed',
+				'message'   => 'The initiating user is not allowed to install extensions on this site.',
+			];
+
+			$storage->set('results', $results);
+			$storage->set('currentIndex', $currentIndex + 1);
+
+			return Status::WILL_RESUME->value;
+		}
+
 		// Push site-specific logger
 		$siteLogger = $this->container->loggerFactory->get($this->name . '.' . $site->id);
 		$this->logger->pushLogger($siteLogger);
@@ -154,6 +174,33 @@ class ExtensionInstall extends AbstractCallback
 		$storage->set('currentIndex', $currentIndex + 1);
 
 		return Status::WILL_RESUME->value;
+	}
+
+	/**
+	 * Can the given user install extensions on the site? Mirrors the check in Controller\Extensioninstall.
+	 *
+	 * @param   int   $userId  The initiating user's ID
+	 * @param   Site  $site    The target site
+	 *
+	 * @return  bool
+	 */
+	private function userMayInstallOnSite(int $userId, Site $site): bool
+	{
+		try
+		{
+			$user = $this->container->userManager->getUser($userId);
+
+			if ((int) $user->getId() !== $userId)
+			{
+				return false;
+			}
+
+			return $user->authorise('panopticon.admin', $site) || $user->authorise('panopticon.run', $site);
+		}
+		catch (\Throwable)
+		{
+			return false;
+		}
 	}
 
 	/**
