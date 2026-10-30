@@ -6,6 +6,7 @@ Akeeba Panopticon 2.5.0
 ~ Chunked core update downloads are verified against size and hashes (connector 1.2.0+); retried in one part on failure
 # [HIGH] Dashboard: action buttons still led to a raw HTML fragment after the table auto-refreshed [gh-1088]
 # [HIGH] JSON API: tasks created or modified with `params` or `storage` were saved with NULL parameters [gh-1089]
+# [HIGH] JSON API: task `params.sites` is limited to sites the user administers; `initiating_user` is forced to the caller [gh-1089]
 # [MEDIUM] `selfupdate:cleanup` left all tasks paused instead of resuming them
 # [LOW] Extensions: sorting by Site did nothing
 

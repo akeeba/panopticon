@@ -242,6 +242,79 @@ abstract class AbstractApiHandler implements ApiHandlerInterface
 	}
 
 	/**
+	 * Constrain client-supplied task parameters to what the current user may act upon.
+	 *
+	 * Task parameters such as `sites` and `initiating_user` are trusted by the task implementations. Super users may
+	 * set them freely. Everyone else may only target sites they hold `panopticon.admin` on, and cannot act as another
+	 * user: `initiating_user` is overwritten with the current user's ID.
+	 *
+	 * @param   mixed  $params  The `params` value from the request body (array or JSON string).
+	 *
+	 * @return  array  The parameters, safe to store.
+	 * @since   2.5.0
+	 */
+	protected function guardTaskParams(mixed $params): array
+	{
+		if (is_string($params))
+		{
+			$params = json_decode($params, true);
+		}
+
+		if ($params === null || $params === '')
+		{
+			return [];
+		}
+
+		if (!is_array($params))
+		{
+			$this->sendJsonError(400, 'The params field must be a JSON object.', 'validation.bad_request');
+		}
+
+		$user = $this->container->userManager->getUser();
+
+		if ($user->getPrivilege('panopticon.super'))
+		{
+			return $params;
+		}
+
+		if (array_key_exists('sites', $params))
+		{
+			$sites = $params['sites'];
+
+			if (is_string($sites))
+			{
+				$sites = json_decode($sites, true);
+			}
+
+			if (!is_array($sites))
+			{
+				$this->sendJsonError(400, 'params.sites must be an array of site IDs.', 'validation.bad_request');
+			}
+
+			foreach ($sites as $siteId)
+			{
+				if (!is_numeric($siteId) || !$user->authorise('panopticon.admin', (int) $siteId))
+				{
+					$this->sendJsonError(
+						403,
+						'You do not have admin permission on every site listed in params.sites.',
+						'auth.forbidden'
+					);
+				}
+			}
+
+			$params['sites'] = array_map('intval', array_values($sites));
+		}
+
+		if (array_key_exists('sites', $params) || array_key_exists('initiating_user', $params))
+		{
+			$params['initiating_user'] = (int) $user->getId();
+		}
+
+		return $params;
+	}
+
+	/**
 	 * Load a site by ID, checking per-site ACL privileges.
 	 *
 	 * @param   int     $id         The site ID.

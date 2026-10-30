@@ -70,7 +70,7 @@ class Modify extends AbstractApiHandler
 
 		if (array_key_exists('params', $body))
 		{
-			$updateData['params'] = $body['params'];
+			$updateData['params'] = $this->guardTaskParams($body['params']);
 		}
 
 		if (array_key_exists('cron_expression', $body))

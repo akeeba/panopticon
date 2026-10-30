@@ -87,7 +87,7 @@ class Add extends AbstractApiHandler
 			'type'            => (string) $body['type'],
 			'cron_expression' => (string) $body['cron_expression'],
 			'enabled'         => (int) (bool) ($body['enabled'] ?? 1),
-			'params'          => $body['params'] ?? [],
+			'params'          => $this->guardTaskParams($body['params'] ?? []),
 			'storage'         => '{}',
 		];
 
