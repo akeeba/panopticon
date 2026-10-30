@@ -3214,6 +3214,46 @@ msgid "The last backup was taken a long time ago"
 msgstr "Последняя резервная копия была создана давно"
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD"
+msgid "Core file integrity status"
+msgstr "Состояние целостности основных файлов"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD_SHORT"
+msgid "Core Integrity"
+msgstr "Целостность ядра"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_NEVER_RUN"
+msgid "The core files have not been checked yet"
+msgstr "Основные файлы ещё не проверялись"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_OK"
+msgid "No modified core files were found"
+msgstr "Изменённых основных файлов не найдено"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N"
+msgid "%d core files have been modified"
+msgstr "Изменённых основных файлов: %d"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N_1"
+msgid "One core file has been modified"
+msgstr "Изменён один основной файл"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_LATEST_FAILED"
+msgid "The most recent check attempt failed, so this information may be out of date."
+msgstr "Последняя попытка проверки не удалась, поэтому эта информация может быть устаревшей."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_FAILED"
+msgid "The last core file integrity check failed"
+msgstr "Последняя проверка целостности основных файлов не выполнена"
+
+#, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
 msgid "The site is up and running."
 msgstr "Сайт работает."
@@ -10763,6 +10803,16 @@ msgstr "Все файлы ядра в порядке. Последняя про�
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
 msgid "%d modified core file(s) detected. Last checked: %s"
 msgstr "Обнаружено изменённых файлов ядра: %d. Последняя проверка: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_FAILED"
+msgid "The latest core file integrity check failed. Last attempt: %s"
+msgstr "Последняя проверка целостности основных файлов не выполнена. Последняя попытка: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_LATEST_FAILED"
+msgid "The most recent check attempt failed (%s); the results above are from an earlier check."
+msgstr "Последняя попытка проверки не удалась (%s); приведённые выше результаты получены при предыдущей проверке."
 
 ##, ,,  , p, h, p, f, o, r, m, a, t
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"

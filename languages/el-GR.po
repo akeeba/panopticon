@@ -3312,6 +3312,46 @@ msgid "The last backup was taken a long time ago"
 msgstr ""
 "Το τελευταίο αντίγραφο ασφαλείας λήφθηκε πριν ένα μεγάλο χρονικό διάστημα"
 
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD"
+msgid "Core file integrity status"
+msgstr "Κατάσταση ακεραιότητας αρχείων πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD_SHORT"
+msgid "Core Integrity"
+msgstr "Ακεραιότητα πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_NEVER_RUN"
+msgid "The core files have not been checked yet"
+msgstr "Τα αρχεία πυρήνα δεν έχουν ελεγχθεί ακόμη"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_OK"
+msgid "No modified core files were found"
+msgstr "Δεν βρέθηκαν τροποποιημένα αρχεία πυρήνα"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N"
+msgid "%d core files have been modified"
+msgstr "%d αρχεία πυρήνα έχουν τροποποιηθεί"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N_1"
+msgid "One core file has been modified"
+msgstr "Ένα αρχείο πυρήνα έχει τροποποιηθεί"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_LATEST_FAILED"
+msgid "The most recent check attempt failed, so this information may be out of date."
+msgstr "Η πιο πρόσφατη προσπάθεια ελέγχου απέτυχε, επομένως αυτές οι πληροφορίες ίσως δεν είναι ενημερωμένες."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_FAILED"
+msgid "The last core file integrity check failed"
+msgstr "Ο τελευταίος έλεγχος ακεραιότητας αρχείων πυρήνα απέτυχε"
+
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
 msgid "The site is up and running."
 msgstr "Ο ιστότοπος λειτουργεί."
@@ -11985,6 +12025,16 @@ msgstr "Όλα τα αρχεία πυρήνα είναι ακέραια. Τελ�
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
 msgid "%d modified core file(s) detected. Last checked: %s"
 msgstr "Εντοπίστηκαν %d τροποποιημένα αρχεία πυρήνα. Τελευταίος έλεγχος: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_FAILED"
+msgid "The latest core file integrity check failed. Last attempt: %s"
+msgstr "Ο τελευταίος έλεγχος ακεραιότητας αρχείων πυρήνα απέτυχε. Τελευταία προσπάθεια: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_LATEST_FAILED"
+msgid "The most recent check attempt failed (%s); the results above are from an earlier check."
+msgstr "Η πιο πρόσφατη προσπάθεια ελέγχου απέτυχε (%s)· τα παραπάνω αποτελέσματα προέρχονται από προηγούμενο έλεγχο."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"

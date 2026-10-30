@@ -10,8 +10,10 @@ namespace Akeeba\Panopticon\View\Sites;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
+use Akeeba\Panopticon\Library\Enumerations\IntegrityState;
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
 use Akeeba\Panopticon\Library\Enumerations\WordPressUpdateRunState;
+use Akeeba\Panopticon\Library\SiteInfo\CoreChecksumsState;
 use Akeeba\Panopticon\Library\Toolbar\DropdownButton;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\Model\Sysconfig;
@@ -87,6 +89,14 @@ class Html extends DataViewHtml
 	protected ?int $coreChecksumsLastCheck = null;
 
 	protected ?bool $coreChecksumsLastStatus = null;
+
+	protected IntegrityState $coreChecksumsState = IntegrityState::NeverRun;
+
+	protected bool $coreChecksumsLatestAttemptFailed = false;
+
+	protected ?string $coreChecksumsFailureReason = null;
+
+	protected ?int $coreChecksumsLastFailure = null;
 
 	protected array $extensionFilters = [
 		'filter-updatesite'  => 'fa-globe',
@@ -501,6 +511,16 @@ class Html extends DataViewHtml
 			$this->coreChecksumsLastCheck     = $this->siteConfig->get('core.coreChecksums.lastCheck', null);
 			$lastStatus                       = $this->siteConfig->get('core.coreChecksums.lastStatus', null);
 			$this->coreChecksumsLastStatus    = $lastStatus === null ? null : (bool) $lastStatus;
+
+			$integrity = CoreChecksumsState::fromConfig($this->siteConfig, $this->item->cmsType());
+
+			if ($integrity !== null)
+			{
+				$this->coreChecksumsState               = $integrity['state'];
+				$this->coreChecksumsLatestAttemptFailed = $integrity['latestAttemptFailed'];
+				$this->coreChecksumsFailureReason       = $integrity['failureReason'];
+				$this->coreChecksumsLastFailure         = $integrity['lastFailure'];
+			}
 		}
 
 		$this->cronStuckTime = $this->getCronStuckTime();

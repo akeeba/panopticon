@@ -135,6 +135,12 @@ defined('AKEEBA') || die;
                             'config' => $config,
                         ])
                     </td>
+                    <td class="d-none d-md-table-cell" data-label="@lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD')">
+                        @include('Main/site_integrity', [
+                            'item' => $item,
+                            'config' => $config,
+                        ])
+                    </td>
                     <td class="d-none d-md-table-cell font-monospace text-body-tertiary small px-2" data-label="@lang('PANOPTICON_LBL_TABLE_HEAD_NUM')">
                         {{{ $item->id }}}
                     </td>

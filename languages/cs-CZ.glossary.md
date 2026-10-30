@@ -277,3 +277,5 @@ Forbidden IP Ranges | Zakázané rozsahy IP |
 Secret Word | Tajné slovo | Akeeba Backup
 Debug logging | protokolování úrovně Ladění | 
 Colour | Barva | 
+Core Integrity (column) | Integrita jádra | 
+Core file integrity status | Stav integrity základních souborů | 

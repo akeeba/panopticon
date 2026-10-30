@@ -13,6 +13,10 @@ $token         = $this->container->session->getCsrfToken()->getValue();
 $lastCheck     = $this->coreChecksumsLastCheck;
 $lastStatus    = $this->coreChecksumsLastStatus;
 $modifiedCount = $this->coreChecksumsModifiedCount;
+$state         = $this->coreChecksumsState;
+$latestFailed  = $this->coreChecksumsLatestAttemptFailed;
+$failureReason = $this->coreChecksumsFailureReason;
+$lastFailure   = $this->coreChecksumsLastFailure;
 ?>
 
 <div class="card">
@@ -32,7 +36,16 @@ $modifiedCount = $this->coreChecksumsModifiedCount;
         </button>
     </h3>
     <div class="card-body collapse show" id="cardCoreChecksumsBody">
-        @if ($lastCheck === null)
+        @if ($state === \Akeeba\Panopticon\Library\Enumerations\IntegrityState::Failed)
+            {{-- The latest check attempt failed, and there is no problem report --}}
+            <div class="alert alert-danger">
+                <span class="fa fa-times-circle" aria-hidden="true"></span>
+                @sprintf('PANOPTICON_SITE_LBL_CORECHECKSUMS_FAILED', $this->getContainer()->html->basic->date('@' . $lastFailure))
+                @if (!empty($failureReason))
+                    <div class="small mt-1">{{{ $failureReason }}}</div>
+                @endif
+            </div>
+        @elseif ($lastCheck === null)
             {{-- No check has been run yet --}}
             <div class="alert alert-info">
                 <span class="fa fa-info-circle" aria-hidden="true"></span>
@@ -50,6 +63,15 @@ $modifiedCount = $this->coreChecksumsModifiedCount;
                 <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
                 @sprintf('PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED', $modifiedCount, $this->getContainer()->html->basic->date('@' . $lastCheck))
             </div>
+            @if ($latestFailed)
+                <div class="alert alert-danger small py-1">
+                    <span class="fa fa-times-circle" aria-hidden="true"></span>
+                    @sprintf('PANOPTICON_SITE_LBL_CORECHECKSUMS_LATEST_FAILED', $this->getContainer()->html->basic->date('@' . $lastFailure))
+                    @if (!empty($failureReason))
+                        <div class="mt-1">{{{ $failureReason }}}</div>
+                    @endif
+                </div>
+            @endif
             <div class="mb-3">
                 <a href="@route(sprintf('index.php?view=corechecksums&site_id=%d', $this->item->getId()))"
                    class="btn btn-outline-warning btn-sm" role="button">

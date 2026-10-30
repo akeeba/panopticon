@@ -10,6 +10,7 @@ namespace Akeeba\Panopticon\View\Main;
 defined('AKEEBA') || die;
 
 use Akeeba\Panopticon\Library\Enumerations\JoomlaUpdateRunState;
+use Akeeba\Panopticon\Library\SiteInfo\CoreChecksumsState;
 use Akeeba\Panopticon\Library\SoftwareVersions\JoomlaVersion;
 use Akeeba\Panopticon\Model\Site;
 use Akeeba\Panopticon\View\Trait\AkeebaBackupTooOldTrait;
@@ -129,6 +130,8 @@ class Json extends BaseView
 						break;
 				}
 
+				$integrity = CoreChecksumsState::fromConfig($siteConfig, $cmsType);
+
 				return [
 					'id'                => $site->getId(),
 					'name'              => $site->name,
@@ -184,6 +187,15 @@ class Json extends BaseView
 						'noRecord'    => empty($siteConfig->get('akeebabackup.latest')),
 						'meta'        => $siteConfig->get('akeebabackup.latest')?->meta ?? null,
 						'tooOld'      => $this->isTooOldBackup($siteConfig->get('akeebabackup.latest'), $siteConfig),
+					],
+					'integrity'         => $integrity === null ? null : [
+						'state'               => $integrity['state']->value,
+						'lastCheck'           => $integrity['lastCheck'],
+						'modifiedCount'       => $integrity['modifiedCount'],
+						'latestAttemptFailed' => $integrity['latestAttemptFailed'],
+						'url'                 => $this->getContainer()->router->route(
+							sprintf('index.php?view=corechecksums&site_id=%d', $site->getId())
+						),
 					],
 					'uptime'            => $this->getContainer()->helper->uptime->status($site)->asArray(),
 				];

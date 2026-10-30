@@ -165,6 +165,8 @@ class CoreChecksums extends AbstractCallback
 						$config->set('core.coreChecksums.modifiedCount', count($invalidFiles));
 						$config->set('core.coreChecksums.lastCheck', time());
 						$config->set('core.coreChecksums.lastStatus', empty($invalidFiles));
+						$config->set('core.coreChecksums.lastFailure', null);
+						$config->set('core.coreChecksums.lastFailureReason', null);
 						$site->config = $config;
 					}
 				);
@@ -190,6 +192,19 @@ class CoreChecksums extends AbstractCallback
 			);
 
 			return Status::WILL_RESUME->value;
+		}
+		catch (\Throwable $e)
+		{
+			// Record the failure exactly once, except for unsupported CMS types (no indicator for them)
+			if (in_array($this->site->cmsType(), [CMSType::JOOMLA, CMSType::WORDPRESS]))
+			{
+				$reason = trim((string) preg_replace('#[a-z][a-z0-9+.\-]*://\S+#i', '[URL]', $e->getMessage()));
+				$reason = mb_substr($reason === '' ? get_class($e) : $reason, 0, 200);
+
+				$this->recordFailure($reason);
+			}
+
+			throw $e;
 		}
 		finally
 		{
@@ -301,6 +316,34 @@ class CoreChecksums extends AbstractCallback
 		catch (\Exception)
 		{
 			// Whatever
+		}
+	}
+
+	/**
+	 * Records a failed check attempt in the site configuration. Never throws.
+	 *
+	 * @param   string  $reason  Short, plain-text reason. Must not contain secrets or URLs.
+	 */
+	private function recordFailure(string $reason): void
+	{
+		try
+		{
+			$this->saveSite(
+				$this->site,
+				function (Site $site) use ($reason)
+				{
+					$config = $site->getConfig();
+					$config->set('core.coreChecksums.lastFailure', time());
+					$config->set('core.coreChecksums.lastFailureReason', $reason);
+					$site->config = $config;
+				}
+			);
+		}
+		catch (\Throwable $e)
+		{
+			$this->logger->warning(
+				sprintf('Could not record the core file integrity check failure: %s', $e->getMessage())
+			);
 		}
 	}
 

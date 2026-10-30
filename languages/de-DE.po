@@ -3229,6 +3229,46 @@ msgid "The last backup was taken a long time ago"
 msgstr "Die letzte Sicherung wurde vor langer Zeit durchgeführt"
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD"
+msgid "Core file integrity status"
+msgstr "Status der Kerndatei-Integrität"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD_SHORT"
+msgid "Core Integrity"
+msgstr "Kern-Integrität"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_NEVER_RUN"
+msgid "The core files have not been checked yet"
+msgstr "Die Kerndateien wurden noch nicht geprüft"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_OK"
+msgid "No modified core files were found"
+msgstr "Es wurden keine geänderten Kerndateien gefunden"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N"
+msgid "%d core files have been modified"
+msgstr "%d Kerndateien wurden geändert"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N_1"
+msgid "One core file has been modified"
+msgstr "Eine Kerndatei wurde geändert"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_LATEST_FAILED"
+msgid "The most recent check attempt failed, so this information may be out of date."
+msgstr "Der letzte Prüfversuch ist fehlgeschlagen, daher sind diese Informationen möglicherweise veraltet."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_FAILED"
+msgid "The last core file integrity check failed"
+msgstr "Die letzte Kern-Dateiintegritätsprüfung ist fehlgeschlagen"
+
+#, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
 msgid "The site is up and running."
 msgstr "Die Website ist erreichbar und in Betrieb."
@@ -5612,6 +5652,16 @@ msgstr "Alle Kerndateien sind intakt. Zuletzt geprüft: %s"
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
 msgid "%d modified core file(s) detected. Last checked: %s"
 msgstr "%d geänderte Kerndatei(en) erkannt. Zuletzt geprüft: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_FAILED"
+msgid "The latest core file integrity check failed. Last attempt: %s"
+msgstr "Die letzte Kern-Dateiintegritätsprüfung ist fehlgeschlagen. Letzter Versuch: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_LATEST_FAILED"
+msgid "The most recent check attempt failed (%s); the results above are from an earlier check."
+msgstr "Der letzte Prüfversuch ist fehlgeschlagen (%s); die obigen Ergebnisse stammen von einer früheren Prüfung."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"

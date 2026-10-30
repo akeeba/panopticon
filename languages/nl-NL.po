@@ -3214,6 +3214,46 @@ msgid "The last backup was taken a long time ago"
 msgstr "De laatste back-up is lang geleden gemaakt"
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD"
+msgid "Core file integrity status"
+msgstr "Integriteitsstatus van kernbestanden"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD_SHORT"
+msgid "Core Integrity"
+msgstr "Kernintegriteit"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_NEVER_RUN"
+msgid "The core files have not been checked yet"
+msgstr "De kernbestanden zijn nog niet gecontroleerd"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_OK"
+msgid "No modified core files were found"
+msgstr "Er zijn geen gewijzigde kernbestanden gevonden"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N"
+msgid "%d core files have been modified"
+msgstr "%d kernbestanden zijn gewijzigd"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N_1"
+msgid "One core file has been modified"
+msgstr "Eén kernbestand is gewijzigd"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_LATEST_FAILED"
+msgid "The most recent check attempt failed, so this information may be out of date."
+msgstr "De meest recente controlepoging is mislukt, dus deze informatie is mogelijk verouderd."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_FAILED"
+msgid "The last core file integrity check failed"
+msgstr "De laatste integriteitscontrole van kernbestanden is mislukt"
+
+#, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
 msgid "The site is up and running."
 msgstr "De website is online."
@@ -10750,6 +10790,16 @@ msgstr "Alle kernbestanden zijn intact. Laatste controle: %s"
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
 msgid "%d modified core file(s) detected. Last checked: %s"
 msgstr "%d gewijzigd(e) kernbestand(en) gedetecteerd. Laatste controle: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_FAILED"
+msgid "The latest core file integrity check failed. Last attempt: %s"
+msgstr "De laatste integriteitscontrole van kernbestanden is mislukt. Laatste poging: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_LATEST_FAILED"
+msgid "The most recent check attempt failed (%s); the results above are from an earlier check."
+msgstr "De meest recente controlepoging is mislukt (%s); de resultaten hierboven zijn afkomstig van een eerdere controle."
 
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"
 msgid "View Modified Files"

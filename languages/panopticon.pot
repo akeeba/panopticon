@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 2.4.0\n"
-"POT-Creation-Date: 2026-10-24 09:40:18\n"
+"Project-Id-Version: 2.5.0-dev202610292114\n"
+"POT-Creation-Date: 2026-10-30 11:24:56\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 2.4.0\n"
+"X-Generator: Panopticon ini_to_po 2.5.0-dev202610292114\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -3228,6 +3228,46 @@ msgid "The last backup was taken a long time ago"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD"
+msgid "Core file integrity status"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD_SHORT"
+msgid "Core Integrity"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_NEVER_RUN"
+msgid "The core files have not been checked yet"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_OK"
+msgid "No modified core files were found"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N"
+msgid "%d core files have been modified"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N_1"
+msgid "One core file has been modified"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_LATEST_FAILED"
+msgid "The most recent check attempt failed, so this information may be out of date."
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_FAILED"
+msgid "The last core file integrity check failed"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
 msgid "The site is up and running."
 msgstr ""
@@ -5610,6 +5650,16 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
 msgid "%d modified core file(s) detected. Last checked: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_FAILED"
+msgid "The latest core file integrity check failed. Last attempt: %s"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_LATEST_FAILED"
+msgid "The most recent check attempt failed (%s); the results above are from an earlier check."
 msgstr ""
 
 #, phpformat

@@ -315,3 +315,6 @@ Secret Word | Секретное слово | Akeeba Backup
 Stuck task threshold | Порог зависшей задачи | 
 Reverse proxy | Обратный прокси | 
 Extraction | Распаковка | Script/endpoint
+Core Integrity (column) | Целостность ядра | 
+Core file integrity status | Состояние целостности основных файлов | 
+N modified core files (generic) | Изменённых основных файлов: %d | Count-after-colon avoids declension

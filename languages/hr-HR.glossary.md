@@ -321,3 +321,5 @@ Super Users | Superkorisnici |
 Colour | Boja | 
 Secret Word | Tajna riječ | Akeeba Backup
 Debug logging | zapisivanje za otklanjanje pogrešaka | 
+Core Integrity (column) | Integritet jezgre | 
+Core file integrity status | Status integriteta datoteka jezgre | 

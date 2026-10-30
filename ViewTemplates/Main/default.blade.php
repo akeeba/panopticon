@@ -75,6 +75,14 @@ $mainModel = $this->getModel('main');
                     @lang('PANOPTICON_MAIN_SITES_LBL_BACKUP_HEAD')
                 </span>
                 </th>
+                <th class="d-none d-md-table-cell">
+                <span class="fa fa-fingerprint fs-3" aria-hidden="true"
+                      data-bs-toggle="tooltip" data-bs-title="@lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD')"
+                ></span>
+                    <span class="visually-hidden">
+                    @lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD')
+                </span>
+                </th>
                 <th class="d-none d-md-table-cell pnp-w-2">
                     {{ $this->getContainer()->html->grid->sort('PANOPTICON_LBL_TABLE_HEAD_NUM', 'id', $this->lists->order_Dir, $this->lists->order, 'browse', attribs: [
                         'aria-label' => $this->getLanguage()->text('PANOPTICON_LBL_TABLE_HEAD_NUM_SR')

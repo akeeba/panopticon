@@ -305,3 +305,7 @@ Colour | Färg |
 Debug logging | Felsökningsloggning | 
 Author | Upphovsperson | Extension author
 Teal | Blågrön | Colour
+
+## Core file integrity status pass
+Core Integrity | Kärnintegritet | Short column heading
+most recent check attempt | senaste kontrollförsöket | 

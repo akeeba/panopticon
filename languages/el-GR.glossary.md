@@ -317,3 +317,7 @@ Badge | σήμα |
 Indigo | Λουλακί | Colour
 Teal | Τιρκουάζ | Colour
 Cyan | Κυανό | Colour
+
+## Core file integrity status pass
+Core Integrity | Ακεραιότητα πυρήνα | Short column heading
+most recent check attempt | πιο πρόσφατη προσπάθεια ελέγχου | 

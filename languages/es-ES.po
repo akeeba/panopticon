@@ -3214,6 +3214,46 @@ msgid "The last backup was taken a long time ago"
 msgstr "La última copia de seguridad fue realizada hace mucho tiempo"
 
 #, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD"
+msgid "Core file integrity status"
+msgstr "Estado de integridad de archivos del núcleo"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD_SHORT"
+msgid "Core Integrity"
+msgstr "Integridad del núcleo"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_NEVER_RUN"
+msgid "The core files have not been checked yet"
+msgstr "Los archivos del núcleo aún no se han comprobado"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_OK"
+msgid "No modified core files were found"
+msgstr "No se encontraron archivos del núcleo modificados"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N"
+msgid "%d core files have been modified"
+msgstr "Se han modificado %d archivos del núcleo"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N_1"
+msgid "One core file has been modified"
+msgstr "Se ha modificado un archivo del núcleo"
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_LATEST_FAILED"
+msgid "The most recent check attempt failed, so this information may be out of date."
+msgstr "El último intento de comprobación falló, por lo que esta información puede estar desactualizada."
+
+#, phpformat
+msgctxt "PANOPTICON_MAIN_SITES_LBL_INTEGRITY_FAILED"
+msgid "The last core file integrity check failed"
+msgstr "La última verificación de integridad de archivos del núcleo falló"
+
+#, phpformat
 msgctxt "PANOPTICON_MAIN_SITES_LBL_UPTIME_UP"
 msgid "The site is up and running."
 msgstr "El sitio está en línea y funcionando."
@@ -10772,6 +10812,16 @@ msgstr "Todos los archivos del núcleo están intactos. Última comprobación: %
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_MODIFIED"
 msgid "%d modified core file(s) detected. Last checked: %s"
 msgstr "%d archivo(s) del núcleo modificado(s) detectado(s). Última comprobación: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_FAILED"
+msgid "The latest core file integrity check failed. Last attempt: %s"
+msgstr "La última verificación de integridad de archivos del núcleo falló. Último intento: %s"
+
+#, phpformat
+msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_LATEST_FAILED"
+msgid "The most recent check attempt failed (%s); the results above are from an earlier check."
+msgstr "El último intento de comprobación falló (%s); los resultados anteriores proceden de una comprobación previa."
 
 #, phpformat
 msgctxt "PANOPTICON_SITE_LBL_CORECHECKSUMS_BTN_DETAILS"

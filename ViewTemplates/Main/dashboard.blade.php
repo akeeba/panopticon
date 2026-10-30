@@ -76,6 +76,38 @@ defined('AKEEBA') || die;
     </div>
 @stop
 
+@section('dashIntegrityIcon')
+    <div v-if="site.integrity.state === 'never_run'">
+        <span class="fa fa-fw fa-fingerprint text-secondary" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_NEVER_RUN')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_NEVER_RUN')</span>
+    </div>
+    <div v-else-if="site.integrity.state === 'ok'">
+        <span class="fa fa-fw fa-check-circle text-success" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_OK')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_OK')</span>
+    </div>
+    <div v-else-if="site.integrity.state === 'problems'">
+        <a :href="site.integrity.url" class="text-decoration-none">
+            <span class="fa fa-fw fa-triangle-exclamation text-warning" aria-hidden="true"
+                  v-bs:tooltip="akeeba.System.Text.plural('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N', site.integrity.modifiedCount) + (site.integrity.latestAttemptFailed ? ' ' + akeeba.System.Text._('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_LATEST_FAILED') : '')"
+            ></span>
+            <span class="visually-hidden">
+                @{{ akeeba.System.Text.plural('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_PROBLEMS_N', site.integrity.modifiedCount) }}
+                <template v-if="site.integrity.latestAttemptFailed">@{{ akeeba.System.Text._('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_LATEST_FAILED') }}</template>
+            </span>
+        </a>
+    </div>
+    <div v-else="">
+        <span class="fa fa-fw fa-circle-xmark text-danger" aria-hidden="true"
+              v-bs:tooltip.raw="@lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_FAILED')"
+        ></span>
+        <span class="visually-hidden">@lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_FAILED')</span>
+    </div>
+@stop
+
 @section('main-default-sites')
     <template id="sitesListTemplate">
         <div v-if="error !== null"
@@ -333,6 +365,13 @@ defined('AKEEBA') || die;
                                 </dt>
                                 <dd v-if="site.backup.isInstalled && site.backup.isPro">
                                     @yield('dashBackupIcon')
+                                </dd>
+
+                                <dt v-if="site.integrity">
+                                    @lang('PANOPTICON_MAIN_SITES_LBL_INTEGRITY_HEAD_SHORT')
+                                </dt>
+                                <dd v-if="site.integrity">
+                                    @yield('dashIntegrityIcon')
                                 </dd>
                             </dl>
                         </div>

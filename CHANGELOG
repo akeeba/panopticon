@@ -3,6 +3,7 @@ Akeeba Panopticon 2.5.0
 ================================================================================
 + Extensions: sort by site, extension or version, and filter by installed version or outdated / not-highest version
 + Extensions: new button to reset all filters and sorting to the default
++ Dashboard: core file integrity status indicator (never checked / OK / modified files / check failed) [gh-1079]
 ~ Chunked core update downloads are verified against size and hashes (connector 1.2.0+); retried in one part on failure
 # [HIGH] Dashboard: action buttons still led to a raw HTML fragment after the table auto-refreshed [gh-1088]
 # [HIGH] JSON API: tasks created or modified with `params` or `storage` were saved with NULL parameters [gh-1089]

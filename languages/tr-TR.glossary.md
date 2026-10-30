@@ -345,3 +345,7 @@ Reverse proxy | ters vekil sunucu |
 Debug logging | hata ayıklama günlüğü | 
 Stuck-task threshold | takılı görev eşiği | 
 Colour | Renk | 
+
+## Core file integrity status pass
+Core Integrity | Çekirdek Bütünlüğü | Short column heading
+most recent check attempt | son denetim girişimi | 

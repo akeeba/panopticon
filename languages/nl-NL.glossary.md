@@ -288,3 +288,7 @@ Update Doctor | Updatedokter |
 Sticky header and toolbar | Vastgezette koptekst en werkbalk | 
 Forbidden IP Ranges | Verboden IP-bereiken | 
 Secret Word | Secret Word | Akeeba Backup term, not translated
+
+## Core file integrity status pass
+Core Integrity | Kernintegriteit | Short column heading
+most recent check attempt | meest recente controlepoging | 

@@ -13,6 +13,8 @@ use Akeeba\Panopticon\Controller\Api\AbstractApiHandler;
 use Akeeba\Panopticon\Library\Enumerations\ApiScope;
 use Akeeba\Panopticon\Library\Enumerations\CMSType;
 use Akeeba\Panopticon\Library\Enumerations\HealthStatus;
+use Akeeba\Panopticon\Library\Enumerations\IntegrityState;
+use Akeeba\Panopticon\Library\SiteInfo\CoreChecksumsState;
 use Akeeba\Panopticon\Library\SoftwareVersions\JoomlaVersion;
 use Akeeba\Panopticon\Library\SoftwareVersions\PhpVersion;
 use Akeeba\Panopticon\Library\SoftwareVersions\WordPressVersion;
@@ -465,48 +467,57 @@ class Status extends AbstractApiHandler
 	}
 
 	/**
-	 * Core-file checksums status (Joomla only).
+	 * Core-file checksums status (Joomla and WordPress).
 	 *
 	 * | Status  | Condition |
 	 * |---------|-----------|
-	 * | ok      | Last check ran and all checksums matched |
-	 * | warning | Last check found modified core files |
-	 * | unknown | Not a Joomla site, or the check has never run |
+	 * | ok      | Last check ran and all checksums matched, and no newer attempt failed |
+	 * | warning | Last check found modified core files (even if the latest attempt failed afterwards) |
+	 * | error   | The latest check attempt failed, and no modified files were reported |
+	 * | unknown | Not a Joomla or WordPress site, or the check has never run |
+	 *
+	 * The detail also contains `last_failure` (?int, time of the last failed attempt) and
+	 * `latest_attempt_failed` (bool, whether the latest attempt failed, even if the status is `warning`).
 	 *
 	 * @since  1.6.2
 	 */
 	private function getCoreChecksumsStatus(Registry $config, CMSType $cmsType): array
 	{
-		if (!in_array($cmsType, [CMSType::JOOMLA, CMSType::WORDPRESS]))
+		$info = CoreChecksumsState::fromConfig($config, $cmsType);
+
+		if ($info === null)
 		{
 			return $this->area(HealthStatus::Unknown, [
 				'reason' => 'not_applicable',
 			]);
 		}
 
-		$lastCheck     = $config->get('core.coreChecksums.lastCheck');
-		$lastStatus    = $config->get('core.coreChecksums.lastStatus');
-		$modifiedCount = (int) $config->get('core.coreChecksums.modifiedCount', 0);
-
-		if ($lastCheck === null)
-		{
-			return $this->area(HealthStatus::Unknown, [
-				'reason'    => 'never_run',
-				'last_check' => null,
-			]);
-		}
-
-		$detail = [
-			'last_check'     => (int) $lastCheck,
-			'last_status'    => $lastStatus !== null ? (bool) $lastStatus : null,
-			'modified_count' => $modifiedCount,
+		$failureDetail = [
+			'last_failure'          => $info['lastFailure'],
+			'latest_attempt_failed' => $info['latestAttemptFailed'],
 		];
 
-		if ($lastStatus === null || (bool) $lastStatus === true)
+		if ($info['state'] === IntegrityState::NeverRun)
 		{
-			return $this->area(HealthStatus::Ok, $detail);
+			return $this->area(HealthStatus::Unknown, array_merge([
+				'reason'     => 'never_run',
+				'last_check' => null,
+			], $failureDetail));
 		}
 
-		return $this->area(HealthStatus::Warning, $detail);
+		$lastStatus = $config->get('core.coreChecksums.lastStatus');
+
+		$detail = array_merge([
+			'last_check'     => $info['lastCheck'],
+			'last_status'    => $lastStatus !== null ? (bool) $lastStatus : null,
+			'modified_count' => $info['modifiedCount'],
+		], $failureDetail);
+
+		return match ($info['state'])
+		{
+			IntegrityState::Problems => $this->area(HealthStatus::Warning, $detail),
+			IntegrityState::Failed => $this->area(HealthStatus::Error, $detail),
+			default => $this->area(HealthStatus::Ok, $detail),
+		};
 	}
 }
