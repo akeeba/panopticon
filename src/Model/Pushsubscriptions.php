@@ -47,12 +47,23 @@ class Pushsubscriptions extends DataModel
 	 * over HTTPS, so anything else is refused. The Forbidden IP Ranges policy applies too, as it does for site URLs;
 	 * SendWebPush enforces it again at send time, through the HTTP factory's client.
 	 *
+	 * The content encoding defaults to aes128gcm (RFC 8291), the one every browser must support. The legacy aesgcm is
+	 * kept when the browser asks for it; anything else cannot be sent, so it is refused.
+	 *
 	 * @return  static
-	 * @throws  RuntimeException  When the endpoint is not an https: URL, or its host is in a forbidden IP range
+	 * @throws  RuntimeException  When the endpoint is not an https: URL, its host is in a forbidden IP range, or the
+	 *                            content encoding is not supported
 	 * @since   2.5.0
 	 */
 	public function check()
 	{
+		$this->encoding = (string) $this->encoding ?: 'aes128gcm';
+
+		if (!in_array($this->encoding, ['aes128gcm', 'aesgcm'], true))
+		{
+			throw new RuntimeException('Unsupported push content encoding');
+		}
+
 		parent::check();
 
 		$endpoint = (string) $this->endpoint;

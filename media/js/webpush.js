@@ -36,6 +36,26 @@ window.akeeba.WebPush  = window.akeeba.WebPush || {};
     };
 
     /**
+     * The content encoding to ask the server to use for this browser.
+     *
+     * aes128gcm (RFC 8291) is the one every browser must support, so it is used whenever the browser lists it, and
+     * when the browser does not list its encodings at all (e.g. Firefox before 134).
+     *
+     * @returns {string}
+     */
+    const preferredContentEncoding = () =>
+    {
+        const supported = PushManager.supportedContentEncodings || [];
+
+        if (supported.length === 0 || supported.includes("aes128gcm"))
+        {
+            return "aes128gcm";
+        }
+
+        return supported[0];
+    };
+
+    /**
      * Subscribe the browser to Web Push notifications.
      */
     WebPush.subscribe = async () =>
@@ -63,7 +83,7 @@ window.akeeba.WebPush  = window.akeeba.WebPush || {};
                 endpoint:   subscription.endpoint,
                 key_p256dh: btoa(String.fromCharCode.apply(null, new Uint8Array(key))),
                 key_auth:   btoa(String.fromCharCode.apply(null, new Uint8Array(auth))),
-                encoding:   (PushManager.supportedContentEncodings || ["aesgcm"])[0],
+                encoding:   preferredContentEncoding(),
                 user_agent: navigator.userAgent,
             };
 

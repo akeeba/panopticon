@@ -66,7 +66,7 @@ class SendWebPush extends AbstractCallback
 			$endpoint = $itemData->get('endpoint', '');
 			$p256dh   = $itemData->get('key_p256dh', '');
 			$authKey  = $itemData->get('key_auth', '');
-			$encoding = $itemData->get('encoding', 'aesgcm');
+			$encoding = $itemData->get('encoding', '') ?: 'aes128gcm';
 			$payload  = $itemData->get('payload', '');
 			$retries  = (int) $itemData->get('retries', 0);
 
@@ -76,15 +76,17 @@ class SendWebPush extends AbstractCallback
 				continue;
 			}
 
-			$subscription = Subscription::create([
-				'endpoint'        => $endpoint,
-				'publicKey'       => $p256dh,
-				'authToken'       => $authKey,
-				'contentEncoding' => $encoding,
-			]);
-
 			try
 			{
+				// Inside the try: an invalid subscription (e.g. an unknown encoding) is a failed send for that
+				// subscription alone, not the end of the whole run.
+				$subscription = Subscription::create([
+					'endpoint'        => $endpoint,
+					'publicKey'       => $p256dh,
+					'authToken'       => $authKey,
+					'contentEncoding' => $encoding,
+				]);
+
 				$report = $webPush->sendOneNotification($subscription, $payload);
 			}
 			catch (\Throwable $e)

@@ -74,7 +74,7 @@ class SendWebPushTest extends AbstractIntegrationTestCase
 		$this->container->appConfig->set('forbidden_ip_ranges', ['127.0.0.0/8']);
 
 		// Port 9 (discard) is closed: an unguarded client gets "connection refused" instead of the guard's refusal.
-		$this->seedQueue('https://127.0.0.1:9/push/abc');
+		$this->seedQueue(['https://127.0.0.1:9/push/abc' => 'aes128gcm']);
 
 		$log  = new \ArrayObject();
 		$task = new SendWebPush($this->container);
@@ -99,13 +99,46 @@ class SendWebPushTest extends AbstractIntegrationTestCase
 	public function testVapidSubjectIsTheConfiguredMailFromAddress(): void
 	{
 		$this->container->appConfig->set('mailfrom', 'monitoring@example.test');
-		$this->seedQueue('https://push.example.test/push/abc');
+		$this->seedQueue(['https://push.example.test/push/abc' => 'aes128gcm']);
 		$requests = $this->captureRequests();
 
 		(new SendWebPush($this->container))->__invoke((object) [], new Registry());
 
 		$this->assertCount(1, $requests);
 		$this->assertSame('mailto:monitoring@example.test', $this->vapidClaims($requests[0])['sub'] ?? null);
+	}
+
+	/**
+	 * A queue item without an encoding is sent with aes128gcm, the one every browser must support (gh-1095).
+	 */
+	public function testItemWithoutEncodingIsSentAsAes128gcm(): void
+	{
+		$this->seedQueue(['https://push.example.test/push/abc' => null]);
+		$requests = $this->captureRequests();
+
+		(new SendWebPush($this->container))->__invoke((object) [], new Registry());
+
+		$this->assertCount(1, $requests);
+		$this->assertSame('aes128gcm', $requests[0]->getHeaderLine('Content-Encoding'));
+	}
+
+	/**
+	 * A subscription with an unknown encoding is a failed send, not the end of the run (gh-1095).
+	 */
+	public function testUnknownEncodingDoesNotAbortTheRun(): void
+	{
+		$this->seedQueue(
+			[
+				'https://push.example.test/push/bad'  => 'bogus',
+				'https://push.example.test/push/good' => 'aes128gcm',
+			]
+		);
+		$requests = $this->captureRequests();
+
+		(new SendWebPush($this->container))->__invoke((object) [], new Registry());
+
+		$this->assertCount(1, $requests);
+		$this->assertSame('/push/good', $requests[0]->getUri()->getPath());
 	}
 
 	/**
@@ -166,25 +199,39 @@ class SendWebPushTest extends AbstractIntegrationTestCase
 		return json_decode(base64_decode(strtr($payload, '-_', '+/')), true) ?: [];
 	}
 
-	private function seedQueue(string $endpoint): void
+	/**
+	 * Replace the push queue with an in-memory one holding one item per endpoint.
+	 *
+	 * @param   array<string, string|null>  $items  endpoint => content encoding; null leaves the encoding out
+	 */
+	private function seedQueue(array $items): void
 	{
-		$key = openssl_pkey_new(['curve_name' => 'prime256v1', 'private_key_type' => OPENSSL_KEYTYPE_EC]);
-		$ec  = openssl_pkey_get_details($key)['ec'];
-		$b64 = fn(string $raw) => rtrim(strtr(base64_encode($raw), '+/', '-_'), '=');
-
-		$itemData = new Registry();
-		$itemData->set('endpoint', $endpoint);
-		$itemData->set(
-			'key_p256dh',
-			$b64("\x04" . str_pad($ec['x'], 32, "\0", STR_PAD_LEFT) . str_pad($ec['y'], 32, "\0", STR_PAD_LEFT))
-		);
-		$itemData->set('key_auth', $b64(random_bytes(16)));
-		$itemData->set('encoding', 'aes128gcm');
-		$itemData->set('payload', '{"title":"Test"}');
-		$itemData->set('retries', 0);
-
+		$b64   = fn(string $raw) => rtrim(strtr(base64_encode($raw), '+/', '-_'), '=');
 		$queue = $this->makeInMemoryQueue();
-		$queue->push(new QueueItem($itemData->toString(), QueueTypeEnum::WEBPUSH->value, null));
+
+		foreach ($items as $endpoint => $encoding)
+		{
+			$key = openssl_pkey_new(['curve_name' => 'prime256v1', 'private_key_type' => OPENSSL_KEYTYPE_EC]);
+			$ec  = openssl_pkey_get_details($key)['ec'];
+
+			$itemData = new Registry();
+			$itemData->set('endpoint', $endpoint);
+			$itemData->set(
+				'key_p256dh',
+				$b64("\x04" . str_pad($ec['x'], 32, "\0", STR_PAD_LEFT) . str_pad($ec['y'], 32, "\0", STR_PAD_LEFT))
+			);
+			$itemData->set('key_auth', $b64(random_bytes(16)));
+
+			if ($encoding !== null)
+			{
+				$itemData->set('encoding', $encoding);
+			}
+
+			$itemData->set('payload', '{"title":"Test"}');
+			$itemData->set('retries', 0);
+
+			$queue->push(new QueueItem($itemData->toString(), QueueTypeEnum::WEBPUSH->value, null));
+		}
 
 		$this->originalQueueFactory = $this->container->queueFactory;
 		unset($this->container['queueFactory']);

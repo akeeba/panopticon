@@ -44,7 +44,8 @@ class Pushsubscriptions extends Controller
 		$endpoint  = $this->input->getString('endpoint', '');
 		$keyP256dh = $this->input->getString('key_p256dh', '');
 		$keyAuth   = $this->input->getString('key_auth', '');
-		$encoding  = $this->input->getString('encoding', 'aesgcm');
+		// The model defaults an empty encoding to aes128gcm, and refuses one it does not support.
+		$encoding  = $this->input->getString('encoding', '');
 		$userAgent = $this->input->getString('user_agent', '');
 
 		if (empty($endpoint) || empty($keyP256dh) || empty($keyAuth))

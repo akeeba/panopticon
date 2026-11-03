@@ -5,6 +5,7 @@ Akeeba Panopticon 2.5.0
 + Extensions: new button to reset all filters and sorting to the default
 + Dashboard: core file integrity status indicator (never checked / OK / modified files / check failed) [gh-1079]
 ~ Chunked core update downloads are verified against size and hashes (connector 1.2.0+); retried in one part on failure
+~ Push notifications: subscriptions use the standard aes128gcm encryption, not the legacy aesgcm [gh-1095]
 # [HIGH] Dashboard: action buttons still led to a raw HTML fragment after the table auto-refreshed [gh-1088]
 # [HIGH] JSON API: tasks created or modified with `params` or `storage` were saved with NULL parameters [gh-1089]
 # [HIGH] JSON API: task `params.sites` is limited to sites the user administers; `initiating_user` is forced to the caller [gh-1089]
@@ -12,6 +13,7 @@ Akeeba Panopticon 2.5.0
 # [MEDIUM] `selfupdate:cleanup` left all tasks paused instead of resuming them
 # [LOW] Extensions: sorting by Site did nothing
 # [LOW] Push notifications: the VAPID contact was always noreply@example.com, not the Mail From address [gh-1094]
+# [LOW] Push notifications: one subscription with an unknown encoding held up every other pending notification [gh-1095]
 
 Akeeba Panopticon 2.4.0
 ================================================================================

@@ -1053,7 +1053,7 @@ CREATE TABLE IF NOT EXISTS `#__push_subscriptions`
     `endpoint`   VARCHAR(2048)       NOT NULL,
     `key_p256dh` VARCHAR(255)        NOT NULL,
     `key_auth`   VARCHAR(255)        NOT NULL,
-    `encoding`   VARCHAR(50)         NOT NULL DEFAULT 'aesgcm',
+    `encoding`   VARCHAR(50)         NOT NULL DEFAULT 'aes128gcm',
     `user_agent` VARCHAR(512)        NULL,
     `created_on` DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
@@ -1064,6 +1064,14 @@ CREATE TABLE IF NOT EXISTS `#__push_subscriptions`
     DEFAULT COLLATE utf8mb4_unicode_ci
     ENGINE = InnoDB;
             ]]></query>
+        </action>
+
+        <!-- Push subscriptions: default to aes128gcm (RFC 8291), not the legacy aesgcm [gh-1095]. Naturally idempotent. -->
+        <action table="#__push_subscriptions" canfail="1">
+            <query><![CDATA[
+ALTER TABLE `#__push_subscriptions`
+    ALTER COLUMN `encoding` SET DEFAULT 'aes128gcm';
+]]></query>
         </action>
 
         <!-- Update the #__reports table to add core_checksums action -->
