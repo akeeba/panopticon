@@ -17,6 +17,12 @@ use Akeeba\Panopticon\Library\Queue\QueueTypeEnum;
 use Akeeba\Panopticon\Task\SendWebPush;
 use Akeeba\Panopticon\Tests\AbstractIntegrationTestCase;
 use Awf\Registry\Registry;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 use Psr\Log\AbstractLogger;
 
 /**
@@ -29,16 +35,29 @@ class SendWebPushTest extends AbstractIntegrationTestCase
 
 	private mixed $originalQueueFactory = null;
 
+	private mixed $originalHttpFactory = null;
+
+	private mixed $originalMailFrom = null;
+
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->originalRanges = $this->container->appConfig->get('forbidden_ip_ranges', []);
+		$this->originalRanges   = $this->container->appConfig->get('forbidden_ip_ranges', []);
+		$this->originalMailFrom = $this->container->appConfig->get('mailfrom', '');
 	}
 
 	protected function tearDown(): void
 	{
 		$this->container->appConfig->set('forbidden_ip_ranges', $this->originalRanges);
+		$this->container->appConfig->set('mailfrom', $this->originalMailFrom);
+
+		if ($this->originalHttpFactory !== null)
+		{
+			unset($this->container['httpFactory']);
+			$this->container['httpFactory'] = $this->originalHttpFactory;
+			$this->originalHttpFactory      = null;
+		}
 
 		if ($this->originalQueueFactory !== null)
 		{
@@ -72,6 +91,79 @@ class SendWebPushTest extends AbstractIntegrationTestCase
 			"The push request did not go through the Forbidden IP Ranges guard. Log:\n"
 			. implode("\n", array_column($log->getArrayCopy(), 'message'))
 		);
+	}
+
+	/**
+	 * The VAPID contact is the configured "mail from" address, not a placeholder (gh-1094).
+	 */
+	public function testVapidSubjectIsTheConfiguredMailFromAddress(): void
+	{
+		$this->container->appConfig->set('mailfrom', 'monitoring@example.test');
+		$this->seedQueue('https://push.example.test/push/abc');
+		$requests = $this->captureRequests();
+
+		(new SendWebPush($this->container))->__invoke((object) [], new Registry());
+
+		$this->assertCount(1, $requests);
+		$this->assertSame('mailto:monitoring@example.test', $this->vapidClaims($requests[0])['sub'] ?? null);
+	}
+
+	/**
+	 * Swap the HTTP factory for one whose client records every request and answers 201, without any network access.
+	 *
+	 * @return  \ArrayObject<int, RequestInterface>
+	 */
+	private function captureRequests(): \ArrayObject
+	{
+		$requests = new \ArrayObject();
+
+		$this->originalHttpFactory = $this->container->httpFactory;
+		unset($this->container['httpFactory']);
+		$this->container['httpFactory'] = new class($requests) {
+			public function __construct(private readonly \ArrayObject $requests) {}
+
+			public function makeClient(...$args): Client
+			{
+				$requests = $this->requests;
+
+				return new Client(
+					[
+						'handler' => (function () use ($requests) {
+							$stack = HandlerStack::create(new MockHandler(array_fill(0, 10, new Response(201))));
+							$stack->push(
+								Middleware::mapRequest(
+									function (RequestInterface $request) use ($requests) {
+										$requests[] = $request;
+
+										return $request;
+									}
+								)
+							);
+
+							return $stack;
+						})(),
+					]
+				);
+			}
+		};
+
+		return $requests;
+	}
+
+	/**
+	 * The claims of the VAPID JWT in a push request's Authorization header (either scheme).
+	 */
+	private function vapidClaims(RequestInterface $request): array
+	{
+		$authorization = $request->getHeaderLine('Authorization');
+
+		$found = preg_match('/^(?:vapid t=|WebPush )([\w-]+\.[\w-]+\.[\w-]+)/', $authorization, $m);
+
+		$this->assertSame(1, $found, $authorization);
+
+		$payload = explode('.', $m[1])[1];
+
+		return json_decode(base64_decode(strtr($payload, '-_', '+/')), true) ?: [];
 	}
 
 	private function seedQueue(string $endpoint): void

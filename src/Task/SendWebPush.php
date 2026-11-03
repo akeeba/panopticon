@@ -39,9 +39,12 @@ class SendWebPush extends AbstractCallback
 		$timer = new Timer($timeLimit, $bias);
 
 		$vapidHelper = $this->container->vapidHelper;
+		// The VAPID contact address. The configuration key is "mailfrom", as in the Mailer; the placeholder is only
+		// for an installation which has not set one.
+		$mailFrom    = trim((string) $this->container->appConfig->get('mailfrom', '')) ?: 'noreply@example.com';
 		$auth        = [
 			'VAPID' => [
-				'subject'    => 'mailto:' . ($this->container->appConfig->get('mail_from', 'noreply@example.com')),
+				'subject'    => 'mailto:' . $mailFrom,
 				'publicKey'  => $vapidHelper->getPublicKey(),
 				'privateKey' => $vapidHelper->getPrivateKey(),
 			],

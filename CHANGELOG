@@ -11,6 +11,7 @@ Akeeba Panopticon 2.5.0
 # [HIGH] Extension installation tasks re-check that the initiating user may install on each site before running [gh-1089]
 # [MEDIUM] `selfupdate:cleanup` left all tasks paused instead of resuming them
 # [LOW] Extensions: sorting by Site did nothing
+# [LOW] Push notifications: the VAPID contact was always noreply@example.com, not the Mail From address [gh-1094]
 
 Akeeba Panopticon 2.4.0
 ================================================================================
