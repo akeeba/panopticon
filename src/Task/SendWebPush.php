@@ -47,7 +47,12 @@ class SendWebPush extends AbstractCallback
 			],
 		];
 
-		$webPush = new WebPush($auth);
+		/**
+		 * The push endpoint comes from the user's browser. The HTTP factory's client applies the Forbidden IP Ranges
+		 * policy to it, like every other outbound request (GHSA-6234-p3mh-7j3x). Without a client, the library would
+		 * discover a bare Guzzle client of its own, which has no such guard.
+		 */
+		$webPush = new WebPush($auth, client: $this->container->httpFactory->makeClient(cache: false));
 
 		/** @var Pushsubscriptions $pushModel */
 		$pushModel = $this->container->mvcFactory->makeTempModel('Pushsubscriptions');
