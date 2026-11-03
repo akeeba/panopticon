@@ -112,7 +112,7 @@ class Pushsubscriptions extends Controller
 
 		/** @var PushModel $model */
 		$model = $this->getModel();
-		$model->removeByEndpoint($endpoint);
+		$model->removeByEndpoint($endpoint, (int) $user->getId());
 
 		$this->sendJsonResponse(true);
 	}

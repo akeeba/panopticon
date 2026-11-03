@@ -141,17 +141,27 @@ class Pushsubscriptions extends DataModel
 	/**
 	 * Remove a subscription by its endpoint URL.
 	 *
-	 * @param   string  $endpoint  The push service endpoint URL.
+	 * Pass the user ID whenever a user removes their own subscription, so nobody can remove anyone else's. Without it,
+	 * the endpoint is removed whoever it belongs to: subscribe() moves a browser's endpoint to the user now
+	 * subscribing, and SendWebPush drops endpoints the push service says are gone.
+	 *
+	 * @param   string    $endpoint  The push service endpoint URL.
+	 * @param   int|null  $userId    Only remove the subscription if it belongs to this user.
 	 *
 	 * @return  void
 	 * @since   1.3.0
 	 */
-	public function removeByEndpoint(string $endpoint): void
+	public function removeByEndpoint(string $endpoint, ?int $userId = null): void
 	{
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true)
 			->delete($db->quoteName('#__push_subscriptions'))
 			->where($db->quoteName('endpoint') . ' = ' . $db->quote($endpoint));
+
+		if ($userId !== null)
+		{
+			$query->where($db->quoteName('user_id') . ' = ' . $db->quote($userId));
+		}
 
 		$db->setQuery($query)->execute();
 	}

@@ -14,6 +14,7 @@ Akeeba Panopticon 2.5.0
 # [LOW] Extensions: sorting by Site did nothing
 # [LOW] Push notifications: the VAPID contact was always noreply@example.com, not the Mail From address [gh-1094]
 # [LOW] Push notifications: one subscription with an unknown encoding held up every other pending notification [gh-1095]
+# [LOW] Push notifications: a user who knew another user's push endpoint could unsubscribe them [gh-1096]
 
 Akeeba Panopticon 2.4.0
 ================================================================================
