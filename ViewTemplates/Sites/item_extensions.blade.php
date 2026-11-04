@@ -455,7 +455,7 @@ $hasError            = !empty($lastError);
                             @if ($error)
                                 <div>
                                     @if ($naughtyUpdates)
-                                    <a href="https://github.com/akeeba/panopticon/wiki/Extension-With-Problematic-Updates" target="_blank">
+                                    <a href="https://github.com/getpanopticon/panopticon/wiki/Extension-With-Problematic-Updates" target="_blank">
                                         <span class="badge bg-danger">
                                             <span class="fa fa-bug" aria-hidden="true"
                                                   data-bs-toggle="tooltip" data-bs-placement="right"
@@ -467,7 +467,7 @@ $hasError            = !empty($lastError);
                                     @endif
 
                                     @if ($noUpdateSite)
-                                        <a href="https://github.com/akeeba/panopticon/wiki/Extensions-Without-Update-Sites" target="_blank">
+                                        <a href="https://github.com/getpanopticon/panopticon/wiki/Extensions-Without-Update-Sites" target="_blank">
                                             <span class="badge text-bg-warning">
                                                 <span class="fa fa-globe" aria-hidden="true"></span>
                                                 @lang('PANOPTICON_SITE_LBL_EXTENSIONS_UPDATESITE_MISSING')

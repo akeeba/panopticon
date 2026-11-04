@@ -33,7 +33,7 @@ class FixedCodeDemo
 
 	private const METHOD_NAME = 'fixed';
 
-	private const HELP_URL = 'https://github.com/akeeba/panopticon/wiki/MFA-Fixed-Code';
+	private const HELP_URL = 'https://github.com/getpanopticon/panopticon/wiki/MFA-Fixed-Code';
 
 	public function __construct(Observable &$subject, ?Container $container = null, ?Language $language = null)
 	{

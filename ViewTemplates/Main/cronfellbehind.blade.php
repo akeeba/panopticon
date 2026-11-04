@@ -20,7 +20,7 @@ if (empty($this->cronSecondsBehind)) return;
         @sprintf('PANOPTICON_MAIN_LBL_FALL_BEHIND_MESSAGE', $this->cronSecondsBehind)
     </div>
     <div>
-        <a href="https://github.com/akeeba/panopticon/wiki/CRON-Jobs#busy-installations-will-need-more-than-one-cron-job"
+        <a href="https://github.com/getpanopticon/panopticon/wiki/CRON-Jobs#busy-installations-will-need-more-than-one-cron-job"
            class="btn btn-info mt-2">
             <span class="fa fa-fw fa-book-open me-2" aria-hidden="true"></span>
             @lang('PANOPTICON_MAIN_LBL_FALL_BEHIND_READ_DOCS')

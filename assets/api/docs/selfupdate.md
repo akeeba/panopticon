@@ -56,7 +56,7 @@ Response:
     "release_date":       "2026-05-01T10:00:00Z",
     "release_notes_url":  null,
     "release_notes":      "* Lots of bug fixes\n* PHP 8.1 minimum",
-    "download_url":       "https://github.com/akeeba/panopticon/releases/download/1.4.0/panopticon-1.4.0.zip",
+    "download_url":       "https://github.com/getpanopticon/panopticon/releases/download/1.4.0/panopticon-1.4.0.zip",
     "loaded_update":      true,
     "stuck":              false,
     "error":              null

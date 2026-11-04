@@ -67,7 +67,7 @@ class SelfUpdateRun extends AbstractCommand
 			$this->ioStyle->error([
 				'You are running Panopticon inside Docker.',
 				'You must NOT use Panopticon\'s self-update for this configuration. Please read',
-				'https://github.com/akeeba/panopticon/wiki/Using-Docker#updates'
+				'https://github.com/getpanopticon/panopticon/wiki/Using-Docker#updates'
 			]);
 
 			return Command::FAILURE;

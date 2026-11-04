@@ -6050,8 +6050,8 @@ msgstr "De communicatiebibliotheek die door Panopticon wordt gebruikt (<a href=\
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
-msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
+msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/getpanopticon/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
+msgstr "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/getpanopticon/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"

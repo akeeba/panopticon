@@ -2,7 +2,7 @@
 
 Self-hosted site monitoring and management
 
-[![Documentation](https://img.shields.io/badge/documentation-wiki-ffffff?labelColor=514f50&color=40b5b8)](https://github.com/akeeba/panopticon/wiki) &nbsp; [![Downloads](https://img.shields.io/github/downloads/akeeba/panopticon/total?labelColor=514f50&color=40b5b8)](https://github.com/akeeba/panopticon/releases)`
+[![Documentation](https://img.shields.io/badge/documentation-wiki-ffffff?labelColor=514f50&color=40b5b8)](https://github.com/getpanopticon/panopticon/wiki) &nbsp; [![Downloads](https://img.shields.io/github/downloads/getpanopticon/panopticon/total?labelColor=514f50&color=40b5b8)](https://github.com/getpanopticon/panopticon/releases)`
 
 > [!IMPORTANT]
 > Developing and maintaining world-class software is neither easy nor free. The development of this software is subsidised by sales of our commercial offerings. If you like this software and would like to see it maintained in the future, please consider [purchasing a subscription](https://www.akeeba.com/subscribe.html) to one of our commercial offerings. _Thank you!_
@@ -13,13 +13,13 @@ Akeeba Panopticon is a standalone PHP application. You install on a domain or su
 
 Currently, it supports Joomla and WordPress sites. Each CMS requires a connector extension to be installed on the monitored site:
 
-* [Panopticon Connector for Joomla 3](https://github.com/akeeba/panopticon_connector_j3) — Joomla 3.9 and 3.10 only
-* [Panopticon Connector for Joomla](https://github.com/akeeba/panopticon-connector) — Joomla 4.x, 5.x, and 6.x
-* [Panopticon Connector for WordPress](https://github.com/akeeba/panopticon-connector-wordpress) — WordPress 5.x and 6.x
+* [Panopticon Connector for Joomla 3](https://github.com/getpanopticon/panopticon_connector_j3) — Joomla 3.9 and 3.10 only
+* [Panopticon Connector for Joomla](https://github.com/getpanopticon/panopticon-connector) — Joomla 4.x, 5.x, and 6.x
+* [Panopticon Connector for WordPress](https://github.com/getpanopticon/panopticon-connector-wordpress) — WordPress 5.x and 6.x
 
 ## Quick start
 
-The recommended installation method for most users is the [public release ZIP file](https://github.com/akeeba/panopticon/releases) or the [official container image (Docker, Podman, etc)](https://github.com/akeeba/panopticon/wiki/Using-Docker).
+The recommended installation method for most users is the [public release ZIP file](https://github.com/getpanopticon/panopticon/releases) or the [official container image (Docker, Podman, etc)](https://github.com/getpanopticon/panopticon/wiki/Using-Docker).
 
 ## Build instructions
 
@@ -53,7 +53,7 @@ Consequently, **single-user installations, and installations where every account
 
 ## Running from source
 
-If you want to contribute to Panopticon or would rather install it by cloning the Git repository, we have detailed instructions [in the documentation](https://github.com/akeeba/panopticon/wiki/Install-from-Git). If you're in a hurry, there's a short version below:
+If you want to contribute to Panopticon or would rather install it by cloning the Git repository, we have detailed instructions [in the documentation](https://github.com/getpanopticon/panopticon/wiki/Install-from-Git). If you're in a hurry, there's a short version below:
 
 Make sure you have `git`, `composer`, and `npm` (Node.js 16 or later) in your path.
 
@@ -61,7 +61,7 @@ Clone the repository.
 
 Go into the folder where you cloned the repository and run `composer install`. This is important! This step installs PHP dependencies, runs `npm install`, compiles SCSS files into CSS, minifies JavaScript files, puts all external static resources in the folder Panopticon expects them to be, and generates a few necessary files (such as `version.php`).
 
-You can now either use the [web installer](https://github.com/akeeba/panopticon/wiki/Install-Panopticon) or the [CLI installation](https://github.com/akeeba/panopticon/wiki/CLI-setup) method.
+You can now either use the [web installer](https://github.com/getpanopticon/panopticon/wiki/Install-Panopticon) or the [CLI installation](https://github.com/getpanopticon/panopticon/wiki/CLI-setup) method.
 
 ## Translations
 
@@ -69,7 +69,7 @@ Translations are _community–led_ and licensed under the GNU Affero General Pub
 
 Community–led translations mean that we have no responsibility for the contents of the offered translations, including the terminology used, spelling and grammar errors, and accuracy. The only officially supported language of Akeeba Panopticon is English (Great Britain).
 
-If you are interested in translating Panopticon, please check out the [translator resources page](https://github.com/akeeba/panopticon/wiki/Translator-Resources).
+If you are interested in translating Panopticon, please check out the [translator resources page](https://github.com/getpanopticon/panopticon/wiki/Translator-Resources).
 
 ## License Notice
 

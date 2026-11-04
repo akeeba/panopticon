@@ -37,7 +37,7 @@ if ($releaseDate instanceof DateTime)
 
 	<div class="card-body">
 		<p>
-			@sprintf('PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY', 'https://github.com/akeeba/panopticon/wiki/Using-Docker#updates')
+			@sprintf('PANOPTICON_SELFUPDATE_LBL_DOCKER_BODY', 'https://github.com/getpanopticon/panopticon/wiki/Using-Docker#updates')
 		</p>
 	</div>
 </div>

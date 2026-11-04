@@ -1123,7 +1123,7 @@ JS;
 			'id'    => 'help',
 			'title' => $this->getLanguage()->text('PANOPTICON_MFA_LBL_HELP'),
 			'class' => 'btn btn-info target-blank',
-			'url'   => 'https://github.com/akeeba/panopticon/wiki/Connection-Troubleshooting',
+			'url'   => 'https://github.com/getpanopticon/panopticon/wiki/Connection-Troubleshooting',
 			'icon'  => 'fa fa-life-ring',
 		]);
 	}

@@ -48,7 +48,7 @@ defined('AKEEBA') || die;
 @endif
 
 <p>
-    @sprintf('PANOPTICON_ABOUT_LBL_VISIT_GITHUB', 'https://github.com/akeeba/panopticon/graphs/contributors')
+    @sprintf('PANOPTICON_ABOUT_LBL_VISIT_GITHUB', 'https://github.com/getpanopticon/panopticon/graphs/contributors')
 </p>
 
 <div class="alert alert-info">

@@ -41,7 +41,7 @@ If not logged in: `gh auth login`.
 
 This step is only necessary if we are doing a manual GHCR release.
 
-Your GitHub account (or token) needs `write:packages` scope on `akeeba/panopticon`.
+Your GitHub account (or token) needs `write:packages` scope on `getpanopticon/panopticon`.
 
 ```bash
 gh auth status --show-token 2>&1 | grep -i packages
@@ -292,6 +292,6 @@ docker run --rm ghcr.io/akeeba/panopticon:latest php --version
 
 GHCR packages are private by default. To make it publicly pullable:
 
-1. Go to `https://github.com/akeeba/panopticon/pkgs/container/panopticon`
+1. Go to `https://github.com/getpanopticon/panopticon/pkgs/container/panopticon`
 2. Click **Package settings**
 3. Under **Danger Zone**, change visibility to **Public**

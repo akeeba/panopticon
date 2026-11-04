@@ -5,7 +5,7 @@ server, and makes **real HTTP requests** to its endpoint. It exists to cover the
 the seam between the web server and PHP — which the in-process tests in `tests/Integration/Mcp/`
 cannot reach because they set `$_SERVER['HTTP_AUTHORIZATION']` directly and mock `php://input`.
 
-That gap is exactly what let [gh-1010](https://github.com/akeeba/panopticon/issues/1010) ship past
+That gap is exactly what let [gh-1010](https://github.com/getpanopticon/panopticon/issues/1010) ship past
 a green suite: a web server that strips the `Authorization` header, and a missing `.htaccess`
 rewrite for the short `/mcp` URL.
 

@@ -6050,8 +6050,8 @@ msgstr "Библиотека связи, используемая Panopticon (<a
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
-msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr "Это неожиданная ситуация, которая может указывать на ошибку связи, с которой мы ещё не сталкивались, проблему в самой библиотеке Guzzle, проблему на сервере, где установлен Panopticon, или проблему в самом Panopticon. Пожалуйста, поищите среди открытых <em>и закрытых</em> задач <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">в нашем репозитории на GitHub</a>. Если никто ещё не сообщал об этом, пожалуйста, создайте задачу, и мы посмотрим."
+msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/getpanopticon/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
+msgstr "Это неожиданная ситуация, которая может указывать на ошибку связи, с которой мы ещё не сталкивались, проблему в самой библиотеке Guzzle, проблему на сервере, где установлен Panopticon, или проблему в самом Panopticon. Пожалуйста, поищите среди открытых <em>и закрытых</em> задач <a href=\"https://github.com/getpanopticon/panopticon/issues?q=is%3Aissue\" target=\"_blank\">в нашем репозитории на GitHub</a>. Если никто ещё не сообщал об этом, пожалуйста, создайте задачу, и мы посмотрим."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"

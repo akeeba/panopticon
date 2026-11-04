@@ -57,8 +57,8 @@ class Raw extends \Awf\Mvc\DataView\Raw
 		// View::display() does AFTER this method returns; onAfterTableBody()
 		// restores it so any post-render code still sees the real request URL.
 		//
-		// @see https://github.com/akeeba/panopticon/issues/1042
-		// @see https://github.com/akeeba/panopticon/issues/1088
+		// @see https://github.com/getpanopticon/panopticon/issues/1042
+		// @see https://github.com/getpanopticon/panopticon/issues/1088
 		$uri                  = Uri::getInstance();
 		$this->tableBodyQuery = $uri->getQuery(true);
 

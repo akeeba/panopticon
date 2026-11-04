@@ -36,17 +36,17 @@ $config = $this->item?->getConfig() ?? new Awf\Registry\Registry();
 	</p>
 	<ul>
 		<li>
-			<a href="https://github.com/akeeba/panopticon-connector/releases" target="_blank">
+			<a href="https://github.com/getpanopticon/panopticon-connector/releases" target="_blank">
 				@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_J4_LATER')
 			</a>
 		</li>
 		<li>
-			<a href="https://github.com/akeeba/panopticon_connector_j3/releases" target="_blank">
+			<a href="https://github.com/getpanopticon/panopticon_connector_j3/releases" target="_blank">
 				@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_J3')
 			</a>
 		</li>
 		<li>
-			<a href="https://github.com/akeeba/panopticon-connector-wordpress/releases" target="_blank">
+			<a href="https://github.com/getpanopticon/panopticon-connector-wordpress/releases" target="_blank">
 				@lang('PANOPTICON_SITES_LBL_INSTRUCTIONS_DOWNLOAD_WP')
 			</a>
 		</li>

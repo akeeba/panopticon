@@ -228,7 +228,7 @@ $toolbarButtons = $this->getToolbar()->getButtons();
 				<div class="mt-0 mb-0 text-muted d-flex flex-row gap-2">
 					<div>
 						<span class="fab fa-github text-white" aria-hidden="true"></span>
-						<a href="https://github.com/akeeba/panopticon" target="_blank">
+						<a href="https://github.com/getpanopticon/panopticon" target="_blank">
 							<?= $text->text('PANOPTICON_APP_LBL_SOURCE_CODE') ?>
 						</a>
 					</div>

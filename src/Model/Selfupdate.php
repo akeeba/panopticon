@@ -113,7 +113,7 @@ class Selfupdate extends Model
 		$this->primaryUpdateUrl = $this->container['primaryUpdateUrl'] ??
 		                          'https://getpanopticon.com/update.json';
 		$this->updateStreamUrl  = $this->container['updateStreamUrl'] ??
-		                          'https://api.github.com/repos/akeeba/panopticon/releases';
+		                          'https://api.github.com/repos/getpanopticon/panopticon/releases';
 	}
 
 	/**

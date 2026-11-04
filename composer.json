@@ -7,7 +7,7 @@
 		"joomla",
 		"updates"
 	],
-	"homepage": "https://github.com/akeeba/panopticon",
+	"homepage": "https://github.com/getpanopticon/panopticon",
 	"license": "AGPL-3.0-or-later",
 	"authors": [
 		{
@@ -18,10 +18,10 @@
 		}
 	],
 	"support": {
-		"issues": "https://github.com/akeeba/panopticon/issues",
-		"wiki": "https://github.com/akeeba/panopticon/wiki",
-		"security": "https://github.com/akeeba/panopticon/security/policy",
-		"source": "https://github.com/akeeba/panopticon"
+		"issues": "https://github.com/getpanopticon/panopticon/issues",
+		"wiki": "https://github.com/getpanopticon/panopticon/wiki",
+		"security": "https://github.com/getpanopticon/panopticon/security/policy",
+		"source": "https://github.com/getpanopticon/panopticon"
 	},
 	"funding": [
 		{

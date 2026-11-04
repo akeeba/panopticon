@@ -6050,8 +6050,8 @@ msgstr "Komunikacijska knjižnica korištena od Panopticona (<a href=\"https://g
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_GUZZLE_BLAH2"
-msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
-msgstr "Ovo je neočekivano stanje koje može upućivati na pogrešku u komunikaciji koju još nismo vidjeli, problem u samom Guzzleu, problem s poslužiteljem na kojem ste instalirali Panopticon ili problem u samom Panopticonu. Pretražite otvorene <em>i zatvorene</em> prijave problema <a href=\"https://github.com/akeeba/panopticon/issues?q=is%3Aissue\" target=\"_blank\">u našem GitHub repozitoriju</a>. Ako to nitko drugi nije prijavio, otvorite novu prijavu i pogledat ćemo je."
+msgid "This is an unexpected condition which may indicate a communication error we have not yet seen, a problem within Guzzle itself, a problem with the server you have installed Panopticon on, or a problem in Panopticon itself. Please search the open <em>and closed</em> issues <a href=\"https://github.com/getpanopticon/panopticon/issues?q=is%3Aissue\" target=\"_blank\">on our GitHub repository</a>. If nobody else has reported this, please open an issue and we will take a look."
+msgstr "Ovo je neočekivano stanje koje može upućivati na pogrešku u komunikaciji koju još nismo vidjeli, problem u samom Guzzleu, problem s poslužiteljem na kojem ste instalirali Panopticon ili problem u samom Panopticonu. Pretražite otvorene <em>i zatvorene</em> prijave problema <a href=\"https://github.com/getpanopticon/panopticon/issues?q=is%3Aissue\" target=\"_blank\">u našem GitHub repozitoriju</a>. Ako to nitko drugi nije prijavio, otvorite novu prijavu i pogledat ćemo je."
 
 #, phpformat
 msgctxt "PANOPTICON_SITES_LBL_TROUBLESHOOT_DNS_HEAD"

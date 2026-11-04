@@ -25,7 +25,7 @@ class About extends Model
 {
 	use JsonSanitizerTrait;
 
-	private const GITHUB_REPO = 'akeeba/panopticon';
+	private const GITHUB_REPO = 'getpanopticon/panopticon';
 
 	/**
 	 * Get the top contributors information from GitHub.

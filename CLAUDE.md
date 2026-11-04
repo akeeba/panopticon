@@ -10,15 +10,15 @@ Akeeba Panopticon is a self-hosted PHP application for remotely monitoring and m
 
 Panopticon requires a connector extension on each monitored site:
 
-- **[panopticon_connector_j3](https://github.com/akeeba/panopticon_connector_j3)** — Joomla 3.9 and 3.10 only
-- **[panopticon-connector](https://github.com/akeeba/panopticon-connector)** — Joomla 4.x, 5.x, and 6.x
-- **[panopticon-connector-wordpress](https://github.com/akeeba/panopticon-connector-wordpress)** — WordPress 5.x and 6.x
+- **[panopticon_connector_j3](https://github.com/getpanopticon/panopticon_connector_j3)** — Joomla 3.9 and 3.10 only
+- **[panopticon-connector](https://github.com/getpanopticon/panopticon-connector)** — Joomla 4.x, 5.x, and 6.x
+- **[panopticon-connector-wordpress](https://github.com/getpanopticon/panopticon-connector-wordpress)** — WordPress 5.x and 6.x
 
 ## Documentation Wikis
 
 GitHub Wiki working copies are checked out under `~/Projects/wiki/`:
 
-- `~/Projects/wiki/panopticon` — [Panopticon wiki](https://github.com/akeeba/panopticon/wiki)
+- `~/Projects/wiki/panopticon` — [Panopticon wiki](https://github.com/getpanopticon/panopticon/wiki)
 
 The same convention applies to connector extension wikis (e.g. `~/Projects/wiki/panopticon-connector`).
 

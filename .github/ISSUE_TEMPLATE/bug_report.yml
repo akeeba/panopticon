@@ -6,7 +6,7 @@ assignees:
 body:
   - type: markdown
     attributes:
-      value: "ℹ️ Help keep Issues free from distractions so that Panopticon developers can work more efficiently. If you cannot provide accurate reproduction instructions please [open a new Q&A Discussion](https://github.com/akeeba/panopticon/discussions/new?category=q-a-community-support) instead."
+      value: "ℹ️ Help keep Issues free from distractions so that Panopticon developers can work more efficiently. If you cannot provide accurate reproduction instructions please [open a new Q&A Discussion](https://github.com/getpanopticon/panopticon/discussions/new?category=q-a-community-support) instead."
   - type: markdown
     attributes:
       value: "## The Basics"

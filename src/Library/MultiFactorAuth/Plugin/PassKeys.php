@@ -41,7 +41,7 @@ class PassKeys
 
 	private const METHOD_NAME = 'passkeys';
 
-	private const HELP_URL = 'https://github.com/akeeba/panopticon/wiki/MFA-PassKeys';
+	private const HELP_URL = 'https://github.com/getpanopticon/panopticon/wiki/MFA-PassKeys';
 
 	public function __construct(Observable &$subject, ?Container $container = null, ?Language $language = null)
 	{
