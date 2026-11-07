@@ -52,6 +52,7 @@ config.php
 ### Repository, tooling and agent files
 /.git
 /.claude
+/.junie
 /.plans
 /.qwen
 /.superpowers
