@@ -26,6 +26,7 @@ Reset | Sıfırla |
 Apply | Uygula |
 Search | Ara |
 Filter | Filtrele |
+Action | Eylem |
 First | İlk | Pagination
 Previous | Önceki | Pagination
 Next | Sonraki | Pagination

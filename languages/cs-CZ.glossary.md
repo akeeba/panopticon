@@ -26,6 +26,7 @@ Reset | Obnovit |
 Apply | Použít |
 Search | Hledat |
 Filter | Filtrovat |
+Action | Akce |
 First | První | Pagination
 Previous | Předchozí | Pagination
 Next | Další | Pagination

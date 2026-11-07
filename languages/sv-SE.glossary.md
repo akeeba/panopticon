@@ -26,6 +26,7 @@ Reset | Återställ |
 Apply | Tillämpa |
 Search | Sök |
 Filter | Filtrera |
+Action | Åtgärd |
 First | Första | Pagination
 Previous | Föregående | Pagination
 Next | Nästa | Pagination

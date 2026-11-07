@@ -25,6 +25,7 @@ Reset | Zurücksetzen |
 Apply | Speichern | Used for "Apply" button (save without closing)
 Search | Suchen |
 Filter | Filtern |
+Action | Aktion |
 First | Erste | Pagination
 Previous | Vorherige | Pagination
 Next | Nächste | Pagination

@@ -537,6 +537,12 @@
         </exec>
     </target>
 
+    <target name="test" description="Run the PHPUnit unit and integration test suites">
+        <exec executable="composer" dir="${dirs.root}" passthru="true" checkreturn="true">
+            <arg value="test"/>
+        </exec>
+    </target>
+
     <target name="language" description="Create the INI language files from the PO files">
         <exec executable="php" passthru="true">
             <arg file="${dirs.root}/assets/po_to_ini.php"/>

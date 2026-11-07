@@ -26,6 +26,7 @@ Reset | Επαναφορά |
 Apply | Εφαρμογή |
 Search | Αναζήτηση |
 Filter | Φιλτράρισμα |
+Action | Ενέργεια |
 First | Πρώτη | Pagination
 Previous | Προηγούμενη | Pagination
 Next | Επόμενη | Pagination

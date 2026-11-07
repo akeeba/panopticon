@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 2.5.0-dev202610292114\n"
-"POT-Creation-Date: 2026-10-30 11:24:56\n"
+"Project-Id-Version: 2.5.0\n"
+"POT-Creation-Date: 2026-11-07 10:13:20\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Panopticon ini_to_po 2.5.0-dev202610292114\n"
+"X-Generator: Panopticon ini_to_po 2.5.0\n"
 
 #, phpformat
 msgctxt "LANGUAGE_NAME_IN_ENGLISH"
@@ -11423,6 +11423,11 @@ msgid "Unknown site action ‘%s’"
 msgstr ""
 
 #, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_SITE_ACTION"
+msgid "Site action"
+msgstr ""
+
+#, phpformat
 msgctxt "PANOPTICON_REPORTS_LBL_SITEACTION_JOOMLA_FIX_CORE_UPDATE_SITE"
 msgid "Joomla: Fix Core Update Site"
 msgstr ""
@@ -11465,6 +11470,11 @@ msgstr ""
 #, phpformat
 msgctxt "PANOPTICON_REPORTS_LBL_TABLE_CAPTION"
 msgid "Table of action report entries"
+msgstr ""
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_FILTER_ACTIONS"
+msgid "Filter by action"
 msgstr ""
 
 #, phpformat

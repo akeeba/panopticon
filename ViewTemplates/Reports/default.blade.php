@@ -11,9 +11,43 @@ defined('AKEEBA') || die;
  * @var \Akeeba\Panopticon\View\Reports\Html $this
  * @var \Akeeba\Panopticon\Model\Reports $model
  */
-$model      = $this->getModel();
-$hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
+$model         = $this->getModel();
+$hasAvatars    = $this->getContainer()->appConfig->get('avatars', false);
+$actionOptions = [
+    '' => $this->getLanguage()->text('PANOPTICON_REPORTS_LBL_FILTER_ACTIONS'),
+];
+
+foreach (\Akeeba\Panopticon\Library\Enumerations\ReportAction::cases() as $action)
+{
+    $languageKey = match ($action->value)
+    {
+        'core_update_found' => 'PANOPTICON_REPORTS_LBL_CORE_UPDATE_FOUND',
+        'core_update_installed' => 'PANOPTICON_REPORTS_LBL_CORE_UPDATE_INSTALLED_SUCCESS',
+        'ext_update_found' => 'PANOPTICON_REPORTS_LBL_EXT_UPDATE_FOUND',
+        'ext_update_installed' => 'PANOPTICON_REPORTS_LBL_EXT_UPDATE_INSTALLED_SUCCESS',
+        'backup' => 'PANOPTICON_REPORTS_LBL_BACKUP_TAKEN',
+        'filescanner' => 'PANOPTICON_REPORTS_LBL_FILESCANNER_SUCCESS',
+        'site_action' => 'PANOPTICON_REPORTS_LBL_SITE_ACTION',
+        'site_up' => 'PANOPTICON_MAIN_SITES_LBL_UPTIME_UP',
+        'site_down' => 'PANOPTICON_MAIN_SITES_LBL_UPTIME_DOWN',
+        'core_checksums' => 'PANOPTICON_REPORTS_LBL_CORECHECKSUMS_SUCCESS',
+        'misc_action' => 'PANOPTICON_REPORTS_LBL_MISC',
+    };
+
+    $actionOptions[$action->value] = $this->getLanguage()->text($languageKey);
+}
+
+$js = <<< JS
+window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.js-choice').forEach((element) => {
+        new Choices(element, {allowHTML: false, removeItemButton: true, placeholder: true, placeholderValue: ""});
+    });
+});
+
+JS;
 ?>
+@js('choices/choices.min.js', $this->getContainer()->application)
+@inlinejs($js)
 
 <form action="@route('index.php?view=reports')" method="post" name="adminForm" id="adminForm">
     <!-- Filters -->
@@ -33,6 +67,22 @@ $hasAvatars = $this->getContainer()->appConfig->get('avatars', false);
                         translate: false
                     )
                 }}
+            </div>
+            <div class="choice-large">
+                <label class="visually-hidden" for="action">@lang('PANOPTICON_REPORTS_FIELD_ACTION')</label>
+                <input type="hidden" name="action[]" value="">
+                {{ $this->container->html->select->genericList(
+                    data: $actionOptions,
+                    name: 'action[]',
+                    attribs: [
+                        'class' => 'form-select js-choice',
+                        'multiple' => 'multiple',
+                        'style' => 'min-width: min(20em, 50%)'
+                    ],
+                    selected: array_filter((array) ($model->getState('action', []) ?: [])),
+                    idTag: 'action',
+                    translate: false
+                ) }}
             </div>
             <div>
                 <div class="input-group">

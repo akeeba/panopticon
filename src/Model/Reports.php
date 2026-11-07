@@ -556,6 +556,15 @@ class Reports extends DataModel
 
 	public function buildQuery($overrideLimits = false)
 	{
+		$fltActions = $this->getState('action', []);
+		$fltActions = is_array($fltActions) ? $fltActions : [$fltActions];
+		$fltActions = array_map(
+			fn ($action) => is_string($action) ? ReportAction::tryFrom($action)?->value : null,
+			$fltActions
+		);
+		$fltActions = array_values(array_unique(array_filter($fltActions)));
+		$this->setState('action', $fltActions);
+
 		$query = parent::buildQuery($overrideLimits);
 
 		$this->applySiteVisibilityFilter($query);

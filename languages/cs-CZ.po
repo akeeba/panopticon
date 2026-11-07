@@ -6519,8 +6519,8 @@ msgstr ""
 "Jedná se o neočekávanou situaci, která může znamenat komunikační chybu, "
 "kterou jsme dosud neviděli, problém v Guzzle, problém se serverem, na kterém "
 "máte nainstalován Panopticon, nebo problém přímo v Panopticonu. Prohledejte "
-"otevřené <em>i uzavřené</em> problémy <a href=\"https://github.com/akeeba/"
-"panopticon/issues?q=is%3Aissue\" target=\"_blank\">v našem úložišti na "
+"otevřené <em>i uzavřené</em> problémy <a href=\"https://github.com/"
+"getpanopticon/panopticon/issues?q=is%3Aissue\" target=\"_blank\">v našem úložišti na "
 "GitHubu</a>. Pokud to ještě nikdo nehlásil, otevřete nový problém a my se na "
 "to podíváme."
 
@@ -14142,3 +14142,13 @@ msgstr "Zakázané nástroje MCP"
 msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
 msgid "MCP tools that members of this group may NOT use. Important: access is granted if ANY of a user\'s groups allows a tool. A tool is only blocked for a user when EVERY group they belong to disables it. This is the opposite of Joomla\'s \"deny wins\" logic. The globally disabled tools list in System Configuration always takes precedence."
 msgstr "Nástroje MCP, které členové této skupiny NESMÍ používat. Důležité: přístup je udělen, pokud nástroj povoluje ALESPOŇ JEDNA ze skupin uživatele. Nástroj je uživateli zablokován pouze tehdy, když jej zakazují VŠECHNY skupiny, do kterých patří. Jde tedy o opak logiky Joomly \"vítězí zákaz\". Seznam globálně zakázaných nástrojů v systémové konfiguraci má vždy přednost."
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_FILTER_ACTIONS"
+msgid "Filter by action"
+msgstr "Filtrovat podle akce"
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_SITE_ACTION"
+msgid "Site action"
+msgstr "Akce webu"

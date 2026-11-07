@@ -17823,3 +17823,13 @@ msgstr "Inaktiverade MCP-verktyg"
 msgctxt "PANOPTICON_GROUPS_FIELD_MCP_DISALLOWED_TOOLS_HELP"
 msgid "MCP tools that members of this group may NOT use. Important: access is granted if ANY of a user's groups allows a tool. A tool is only blocked for a user when EVERY group they belong to disables it. This is the opposite of Joomla's \"deny wins\" logic. The globally disabled tools list in System Configuration always takes precedence."
 msgstr "MCP-verktyg som medlemmar i den här gruppen INTE får använda. Viktigt: åtkomst beviljas om NÅGON av en användares grupper tillåter ett verktyg. Ett verktyg blockeras för en användare bara när VARJE grupp de tillhör inaktiverar det. Detta är motsatsen till Joomlas \"nekande vinner\"-logik. Listan över globalt inaktiverade verktyg i systemkonfigurationen har alltid företräde."
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_FILTER_ACTIONS"
+msgid "Filter by action"
+msgstr "Filtrera efter åtgärd"
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_SITE_ACTION"
+msgid "Site action"
+msgstr "Webbplatsåtgärd"

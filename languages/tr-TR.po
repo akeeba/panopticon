@@ -13491,3 +13491,13 @@ msgstr ""
 "engellenir. Bu, Joomla\'nın “reddetme kazanır” mantığının tam tersidir. "
 "Sistem Yapılandırması\'ndaki genel olarak devre dışı bırakılan araçlar "
 "listesi her zaman önceliklidir."
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_FILTER_ACTIONS"
+msgid "Filter by action"
+msgstr "Eyleme göre filtrele"
+
+#, phpformat
+msgctxt "PANOPTICON_REPORTS_LBL_SITE_ACTION"
+msgid "Site action"
+msgstr "Site eylemi"

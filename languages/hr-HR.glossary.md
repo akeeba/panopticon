@@ -26,6 +26,7 @@ Reset | Poništi |
 Apply | Primijeni |
 Search | Pretraži |
 Filter | Filtar |
+Action | Radnja |
 First | Prva | Pagination
 Previous | Prethodna | Pagination
 Next | Sljedeća | Pagination

@@ -26,6 +26,7 @@ Reset | Сбросить |
 Apply | Применить |
 Search | Поиск |
 Filter | Фильтр |
+Action | Действие |
 First | Первая | Pagination
 Previous | Предыдущая | Pagination
 Next | Следующая | Pagination

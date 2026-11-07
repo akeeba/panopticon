@@ -26,6 +26,7 @@ Reset | Réinitialiser |
 Apply | Appliquer |
 Search | Rechercher |
 Filter | Filtrer |
+Action | Action |
 First | Première | Pagination
 Previous | Précédente | Pagination
 Next | Suivante | Pagination
